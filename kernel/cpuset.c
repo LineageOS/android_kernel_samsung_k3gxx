@@ -1425,6 +1425,7 @@ static int cpuset_allow_attach(struct cgroup *cgrp,
 
 	return 0;
 }
+
 static void cpuset_cancel_attach(struct cgroup *cgrp,
 				 struct cgroup_taskset *tset)
 {
@@ -1988,6 +1989,7 @@ struct cgroup_subsys cpuset_subsys = {
 	.css_offline = cpuset_css_offline,
 	.css_free = cpuset_css_free,
 	.can_attach = cpuset_can_attach,
+	.allow_attach = cpuset_allow_attach,
 	.cancel_attach = cpuset_cancel_attach,
 	.attach = cpuset_attach,
 	.subsys_id = cpuset_subsys_id,

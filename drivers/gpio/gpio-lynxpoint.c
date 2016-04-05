@@ -248,15 +248,24 @@ static void lp_gpio_irq_handler(unsigned irq, struct irq_desc *desc)
 	struct lp_gpio *lg = irq_data_get_irq_handler_data(data);
 	struct irq_chip *chip = irq_data_get_irq_chip(data);
 	u32 base, pin, mask;
+<<<<<<< HEAD
 	unsigned long reg, ena, pending;
+=======
+	unsigned long reg, pending;
+>>>>>>> 671a46baf1b... some performance improvements
 	unsigned virq;
 
 	/* check from GPIO controller which pin triggered the interrupt */
 	for (base = 0; base < lg->chip.ngpio; base += 32) {
 		reg = lp_gpio_reg(&lg->chip, base, LP_INT_STAT);
+<<<<<<< HEAD
 		ena = lp_gpio_reg(&lg->chip, base, LP_INT_ENABLE);
 
 		while ((pending = (inl(reg) & inl(ena)))) {
+=======
+
+		while ((pending = inl(reg))) {
+>>>>>>> 671a46baf1b... some performance improvements
 			pin = __ffs(pending);
 			mask = BIT(pin);
 			/* Clear before handling so we don't lose an edge */

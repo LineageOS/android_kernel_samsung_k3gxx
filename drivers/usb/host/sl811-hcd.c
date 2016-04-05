@@ -1251,7 +1251,11 @@ sl811h_hub_control(
 			sl811_write(sl811, SL11H_CTLREG1, sl811->ctrl1);
 
 			mod_timer(&sl811->timer, jiffies
+<<<<<<< HEAD
 					+ msecs_to_jiffies(USB_RESUME_TIMEOUT));
+=======
+					+ msecs_to_jiffies(20));
+>>>>>>> 671a46baf1b... some performance improvements
 			break;
 		case USB_PORT_FEAT_POWER:
 			port_power(sl811, 0);

@@ -215,8 +215,13 @@
 #define AH_WOW_BEACON_MISS		BIT(3)
 
 enum ath_hw_txq_subtype {
+<<<<<<< HEAD
 	ATH_TXQ_AC_BK = 0,
 	ATH_TXQ_AC_BE = 1,
+=======
+	ATH_TXQ_AC_BE = 0,
+	ATH_TXQ_AC_BK = 1,
+>>>>>>> 671a46baf1b... some performance improvements
 	ATH_TXQ_AC_VI = 2,
 	ATH_TXQ_AC_VO = 3,
 };

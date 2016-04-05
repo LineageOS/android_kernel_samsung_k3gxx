@@ -201,8 +201,13 @@ int nla_parse(struct nlattr **tb, int maxtype, const struct nlattr *head,
 	}
 
 	if (unlikely(rem > 0))
+<<<<<<< HEAD
 		pr_warn_ratelimited("netlink: %d bytes leftover after parsing attributes in process `%s'.\n",
 				    rem, current->comm);
+=======
+		printk(KERN_WARNING "netlink: %d bytes leftover after parsing "
+		       "attributes.\n", rem);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	err = 0;
 errout:
@@ -303,6 +308,7 @@ int nla_memcmp(const struct nlattr *nla, const void *data,
  */
 int nla_strcmp(const struct nlattr *nla, const char *str)
 {
+<<<<<<< HEAD
 	int len = strlen(str);
 	char *buf = nla_data(nla);
 	int attrlen = nla_len(nla);
@@ -312,6 +318,11 @@ int nla_strcmp(const struct nlattr *nla, const char *str)
 		attrlen--;
 
 	d = attrlen - len;
+=======
+	int len = strlen(str) + 1;
+	int d = nla_len(nla) - len;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	if (d == 0)
 		d = memcmp(nla_data(nla), str, len);
 

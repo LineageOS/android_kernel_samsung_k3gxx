@@ -158,12 +158,15 @@ posix_acl_equiv_mode(const struct posix_acl *acl, umode_t *mode_p)
 	umode_t mode = 0;
 	int not_equiv = 0;
 
+<<<<<<< HEAD
 	/*
 	 * A null ACL can always be presented as mode bits.
 	 */
 	if (!acl)
 		return 0;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	FOREACH_ACL_ENTRY(pa, acl, pe) {
 		switch (pa->e_tag) {
 			case ACL_USER_OBJ:
@@ -341,6 +344,7 @@ static int posix_acl_create_masq(struct posix_acl *acl, umode_t *mode_p)
         return not_equiv;
 }
 
+<<<<<<< HEAD
 /**
  * posix_acl_update_mode  -  update mode in set_acl
  *
@@ -372,6 +376,8 @@ int posix_acl_update_mode(struct inode *inode, umode_t *mode_p,
 }
 EXPORT_SYMBOL(posix_acl_update_mode);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /*
  * Modify the ACL for the chmod syscall.
  */
@@ -438,6 +444,7 @@ posix_acl_create(struct posix_acl **acl, gfp_t gfp, umode_t *mode_p)
 }
 EXPORT_SYMBOL(posix_acl_create);
 
+<<<<<<< HEAD
 /**
  * posix_acl_update_mode  -  update mode in set_acl
  *
@@ -451,6 +458,8 @@ EXPORT_SYMBOL(posix_acl_create);
  * Called from set_acl inode operations.
  */
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 int
 posix_acl_chmod(struct posix_acl **acl, gfp_t gfp, umode_t mode)
 {

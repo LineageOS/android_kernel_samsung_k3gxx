@@ -967,10 +967,14 @@ static int evergreen_cs_track_check(struct radeon_cs_parser *p)
 	if (track->cb_dirty) {
 		tmp = track->cb_target_mask;
 		for (i = 0; i < 8; i++) {
+<<<<<<< HEAD
 			u32 format = G_028C70_FORMAT(track->cb_color_info[i]);
 
 			if (format != V_028C70_COLOR_INVALID &&
 			    (tmp >> (i * 4)) & 0xF) {
+=======
+			if ((tmp >> (i * 4)) & 0xF) {
+>>>>>>> 671a46baf1b... some performance improvements
 				/* at least one component is enabled */
 				if (track->cb_color_bo[i] == NULL) {
 					dev_warn(p->dev, "%s:%d mask 0x%08X | 0x%08X no cb for %d\n",

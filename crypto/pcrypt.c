@@ -565,4 +565,7 @@ module_exit(pcrypt_exit);
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Steffen Klassert <steffen.klassert@secunet.com>");
 MODULE_DESCRIPTION("Parallel crypto wrapper");
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("pcrypt");
+=======
+>>>>>>> 671a46baf1b... some performance improvements

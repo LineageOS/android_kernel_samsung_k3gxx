@@ -18,7 +18,10 @@
 #include <linux/percpu.h>
 #include <linux/profile.h>
 #include <linux/sched.h>
+<<<<<<< HEAD
 #include <linux/module.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 #include <asm/irq_regs.h>
 
@@ -207,6 +210,7 @@ static void tick_setup_device(struct tick_device *td,
 		tick_setup_oneshot(newdev, handler, next_event);
 }
 
+<<<<<<< HEAD
 static bool tick_check_percpu(struct clock_event_device *curdev,
 			      struct clock_event_device *newdev, int cpu)
 {
@@ -251,6 +255,16 @@ void tick_check_new_device(struct clock_event_device *newdev)
 	struct clock_event_device *curdev;
 	struct tick_device *td;
 	int cpu;
+=======
+/*
+ * Check, if the new registered device should be used.
+ */
+static int tick_check_new_device(struct clock_event_device *newdev)
+{
+	struct clock_event_device *curdev;
+	struct tick_device *td;
+	int cpu, ret = NOTIFY_OK;
+>>>>>>> 671a46baf1b... some performance improvements
 	unsigned long flags;
 
 	raw_spin_lock_irqsave(&tick_device_lock, flags);
@@ -263,6 +277,7 @@ void tick_check_new_device(struct clock_event_device *newdev)
 	curdev = td->evtdev;
 
 	/* cpu local device ? */
+<<<<<<< HEAD
 	if (!tick_check_percpu(curdev, newdev, cpu))
 		goto out_bc;
 
@@ -272,6 +287,42 @@ void tick_check_new_device(struct clock_event_device *newdev)
 
 	if (!try_module_get(newdev->owner))
 		return;
+=======
+	if (!cpumask_equal(newdev->cpumask, cpumask_of(cpu))) {
+
+		/*
+		 * If the cpu affinity of the device interrupt can not
+		 * be set, ignore it.
+		 */
+		if (!irq_can_set_affinity(newdev->irq))
+			goto out_bc;
+
+		/*
+		 * If we have a cpu local device already, do not replace it
+		 * by a non cpu local device
+		 */
+		if (curdev && cpumask_equal(curdev->cpumask, cpumask_of(cpu)))
+			goto out_bc;
+	}
+
+	/*
+	 * If we have an active device, then check the rating and the oneshot
+	 * feature.
+	 */
+	if (curdev) {
+		/*
+		 * Prefer one shot capable devices !
+		 */
+		if ((curdev->features & CLOCK_EVT_FEAT_ONESHOT) &&
+		    !(newdev->features & CLOCK_EVT_FEAT_ONESHOT))
+			goto out_bc;
+		/*
+		 * Check the rating
+		 */
+		if (curdev->rating >= newdev->rating)
+			goto out_bc;
+	}
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/*
 	 * Replace the eventually existing device by the new
@@ -288,14 +339,27 @@ void tick_check_new_device(struct clock_event_device *newdev)
 		tick_oneshot_notify();
 
 	raw_spin_unlock_irqrestore(&tick_device_lock, flags);
+<<<<<<< HEAD
 	return;
+=======
+	return NOTIFY_STOP;
+>>>>>>> 671a46baf1b... some performance improvements
 
 out_bc:
 	/*
 	 * Can the new device be used as a broadcast device ?
 	 */
+<<<<<<< HEAD
 	tick_install_broadcast_device(newdev);
 	raw_spin_unlock_irqrestore(&tick_device_lock, flags);
+=======
+	if (tick_check_broadcast_device(newdev))
+		ret = NOTIFY_STOP;
+
+	raw_spin_unlock_irqrestore(&tick_device_lock, flags);
+
+	return ret;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /*
@@ -369,10 +433,24 @@ static void tick_resume(void)
 	raw_spin_unlock_irqrestore(&tick_device_lock, flags);
 }
 
+<<<<<<< HEAD
 void tick_notify(unsigned long reason, void *dev)
 {
 	switch (reason) {
 
+=======
+/*
+ * Notification about clock event devices
+ */
+static int tick_notify(struct notifier_block *nb, unsigned long reason,
+			       void *dev)
+{
+	switch (reason) {
+
+	case CLOCK_EVT_NOTIFY_ADD:
+		return tick_check_new_device(dev);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	case CLOCK_EVT_NOTIFY_BROADCAST_ON:
 	case CLOCK_EVT_NOTIFY_BROADCAST_OFF:
 	case CLOCK_EVT_NOTIFY_BROADCAST_FORCE:
@@ -406,6 +484,7 @@ void tick_notify(unsigned long reason, void *dev)
 	default:
 		break;
 	}
+<<<<<<< HEAD
 }
 
 /**
@@ -413,5 +492,23 @@ void tick_notify(unsigned long reason, void *dev)
  */
 void __init tick_init(void)
 {
+=======
+
+	return NOTIFY_OK;
+}
+
+static struct notifier_block tick_notifier = {
+	.notifier_call = tick_notify,
+};
+
+/**
+ * tick_init - initialize the tick control
+ *
+ * Register the notifier with the clockevents framework
+ */
+void __init tick_init(void)
+{
+	clockevents_register_notifier(&tick_notifier);
+>>>>>>> 671a46baf1b... some performance improvements
 	tick_broadcast_init();
 }

@@ -332,14 +332,25 @@ static void scsi_device_dev_release_usercontext(struct work_struct *work)
 {
 	struct scsi_device *sdev;
 	struct device *parent;
+<<<<<<< HEAD
+=======
+	struct scsi_target *starget;
+>>>>>>> 671a46baf1b... some performance improvements
 	struct list_head *this, *tmp;
 	unsigned long flags;
 
 	sdev = container_of(work, struct scsi_device, ew.work);
 
 	parent = sdev->sdev_gendev.parent;
+<<<<<<< HEAD
 
 	spin_lock_irqsave(sdev->host->host_lock, flags);
+=======
+	starget = to_scsi_target(parent);
+
+	spin_lock_irqsave(sdev->host->host_lock, flags);
+	starget->reap_ref++;
+>>>>>>> 671a46baf1b... some performance improvements
 	list_del(&sdev->siblings);
 	list_del(&sdev->same_target_siblings);
 	list_del(&sdev->starved_entry);
@@ -359,6 +370,11 @@ static void scsi_device_dev_release_usercontext(struct work_struct *work)
 	/* NULL queue means the device can't be used */
 	sdev->request_queue = NULL;
 
+<<<<<<< HEAD
+=======
+	scsi_target_reap(scsi_target(sdev));
+
+>>>>>>> 671a46baf1b... some performance improvements
 	kfree(sdev->inquiry);
 	kfree(sdev);
 
@@ -789,7 +805,11 @@ sdev_store_queue_ramp_up_period(struct device *dev,
 		return -EINVAL;
 
 	sdev->queue_ramp_up_period = msecs_to_jiffies(period);
+<<<<<<< HEAD
 	return count;
+=======
+	return period;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static struct device_attribute sdev_attr_queue_ramp_up_period =
@@ -865,6 +885,13 @@ int scsi_sysfs_add_sdev(struct scsi_device *sdev)
 	struct request_queue *rq = sdev->request_queue;
 	struct scsi_target *starget = sdev->sdev_target;
 
+<<<<<<< HEAD
+=======
+	error = scsi_device_set_state(sdev, SDEV_RUNNING);
+	if (error)
+		return error;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	error = scsi_target_add(starget);
 	if (error)
 		return error;
@@ -969,6 +996,7 @@ void __scsi_remove_device(struct scsi_device *sdev)
 		sdev->host->hostt->slave_destroy(sdev);
 	transport_destroy_device(dev);
 
+<<<<<<< HEAD
 	/*
 	 * Paired with the kref_get() in scsi_sysfs_initialize().  We have
 	 * remoed sysfs visibility from the device, so make the target
@@ -976,6 +1004,8 @@ void __scsi_remove_device(struct scsi_device *sdev)
 	 */
 	scsi_target_reap(scsi_target(sdev));
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	put_device(dev);
 }
 
@@ -1026,6 +1056,7 @@ static void __scsi_remove_target(struct scsi_target *starget)
 void scsi_remove_target(struct device *dev)
 {
 	struct Scsi_Host *shost = dev_to_shost(dev->parent);
+<<<<<<< HEAD
 	struct scsi_target *starget, *last_target = NULL;
 	unsigned long flags;
 
@@ -1045,6 +1076,33 @@ restart:
 		}
 	}
 	spin_unlock_irqrestore(shost->host_lock, flags);
+=======
+	struct scsi_target *starget, *last = NULL;
+	unsigned long flags;
+
+	/* remove targets being careful to lookup next entry before
+	 * deleting the last
+	 */
+	spin_lock_irqsave(shost->host_lock, flags);
+	list_for_each_entry(starget, &shost->__targets, siblings) {
+		if (starget->state == STARGET_DEL)
+			continue;
+		if (starget->dev.parent == dev || &starget->dev == dev) {
+			/* assuming new targets arrive at the end */
+			starget->reap_ref++;
+			spin_unlock_irqrestore(shost->host_lock, flags);
+			if (last)
+				scsi_target_reap(last);
+			last = starget;
+			__scsi_remove_target(starget);
+			spin_lock_irqsave(shost->host_lock, flags);
+		}
+	}
+	spin_unlock_irqrestore(shost->host_lock, flags);
+
+	if (last)
+		scsi_target_reap(last);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 EXPORT_SYMBOL(scsi_remove_target);
 
@@ -1116,12 +1174,15 @@ void scsi_sysfs_device_initialize(struct scsi_device *sdev)
 	list_add_tail(&sdev->same_target_siblings, &starget->devices);
 	list_add_tail(&sdev->siblings, &shost->__devices);
 	spin_unlock_irqrestore(shost->host_lock, flags);
+<<<<<<< HEAD
 	/*
 	 * device can now only be removed via __scsi_remove_device() so hold
 	 * the target.  Target will be held in CREATED state until something
 	 * beneath it becomes visible (in which case it moves to RUNNING)
 	 */
 	kref_get(&starget->reap_ref);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 int scsi_is_sdev_device(const struct device *dev)

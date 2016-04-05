@@ -6,7 +6,10 @@
 #include <linux/inet.h>
 #include <linux/kthread.h>
 #include <linux/net.h>
+<<<<<<< HEAD
 #include <linux/sched.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #include <linux/slab.h>
 #include <linux/socket.h>
 #include <linux/string.h>
@@ -291,8 +294,12 @@ int ceph_msgr_init(void)
 	if (ceph_msgr_slab_init())
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	ceph_msgr_wq = alloc_workqueue("ceph-msgr",
 				       WQ_NON_REENTRANT | WQ_MEM_RECLAIM, 0);
+=======
+	ceph_msgr_wq = alloc_workqueue("ceph-msgr", WQ_NON_REENTRANT, 0);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (ceph_msgr_wq)
 		return 0;
 
@@ -473,6 +480,7 @@ static int ceph_tcp_connect(struct ceph_connection *con)
 {
 	struct sockaddr_storage *paddr = &con->peer_addr.in_addr;
 	struct socket *sock;
+<<<<<<< HEAD
 	unsigned int noio_flag;
 	int ret;
 
@@ -483,6 +491,13 @@ static int ceph_tcp_connect(struct ceph_connection *con)
 	ret = sock_create_kern(con->peer_addr.in_addr.ss_family, SOCK_STREAM,
 			       IPPROTO_TCP, &sock);
 	memalloc_noio_restore(noio_flag);
+=======
+	int ret;
+
+	BUG_ON(con->sock);
+	ret = sock_create_kern(con->peer_addr.in_addr.ss_family, SOCK_STREAM,
+			       IPPROTO_TCP, &sock);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (ret)
 		return ret;
 	sock->sk->sk_allocation = GFP_NOFS;
@@ -563,7 +578,11 @@ static int ceph_tcp_sendmsg(struct socket *sock, struct kvec *iov,
 	return r;
 }
 
+<<<<<<< HEAD
 static int __ceph_tcp_sendpage(struct socket *sock, struct page *page,
+=======
+static int ceph_tcp_sendpage(struct socket *sock, struct page *page,
+>>>>>>> 671a46baf1b... some performance improvements
 		     int offset, size_t size, bool more)
 {
 	int flags = MSG_DONTWAIT | MSG_NOSIGNAL | (more ? MSG_MORE : MSG_EOR);
@@ -576,6 +595,7 @@ static int __ceph_tcp_sendpage(struct socket *sock, struct page *page,
 	return ret;
 }
 
+<<<<<<< HEAD
 static int ceph_tcp_sendpage(struct socket *sock, struct page *page,
 		     int offset, size_t size, bool more)
 {
@@ -594,6 +614,8 @@ static int ceph_tcp_sendpage(struct socket *sock, struct page *page,
 
 	return ret;
 }
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 /*
  * Shutdown/close the socket for the given connection.
@@ -911,7 +933,11 @@ static void ceph_msg_data_pages_cursor_init(struct ceph_msg_data_cursor *cursor,
 	BUG_ON(page_count > (int)USHRT_MAX);
 	cursor->page_count = (unsigned short)page_count;
 	BUG_ON(length > SIZE_MAX - cursor->page_offset);
+<<<<<<< HEAD
 	cursor->last_piece = cursor->page_offset + cursor->resid <= PAGE_SIZE;
+=======
+	cursor->last_piece = (size_t)cursor->page_offset + length <= PAGE_SIZE;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static struct page *
@@ -1975,6 +2001,7 @@ static int process_connect(struct ceph_connection *con)
 
 	dout("process_connect on %p tag %d\n", con, (int)con->in_tag);
 
+<<<<<<< HEAD
 	if (con->auth_reply_buf) {
 		/*
 		 * Any connection that defines ->get_authorizer()
@@ -1988,6 +2015,8 @@ static int process_connect(struct ceph_connection *con)
 		}
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	switch (con->in_reply.tag) {
 	case CEPH_MSGR_TAG_FEATURES:
 		pr_err("%s%lld %s feature set mismatch,"
@@ -2296,7 +2325,11 @@ static int read_partial_message(struct ceph_connection *con)
 		con->in_base_pos = -front_len - middle_len - data_len -
 			sizeof(m->footer);
 		con->in_tag = CEPH_MSGR_TAG_READY;
+<<<<<<< HEAD
 		return 1;
+=======
+		return 0;
+>>>>>>> 671a46baf1b... some performance improvements
 	} else if ((s64)seq - (s64)con->in_seq > 1) {
 		pr_err("read_partial_message bad seq %lld expected %lld\n",
 		       seq, con->in_seq + 1);
@@ -2329,7 +2362,11 @@ static int read_partial_message(struct ceph_connection *con)
 				sizeof(m->footer);
 			con->in_tag = CEPH_MSGR_TAG_READY;
 			con->in_seq++;
+<<<<<<< HEAD
 			return 1;
+=======
+			return 0;
+>>>>>>> 671a46baf1b... some performance improvements
 		}
 
 		BUG_ON(!con->in_msg);
@@ -3164,7 +3201,11 @@ struct ceph_msg *ceph_msg_new(int type, int front_len, gfp_t flags,
 	INIT_LIST_HEAD(&m->data);
 
 	/* front */
+<<<<<<< HEAD
 	m->front_alloc_len = front_len;
+=======
+	m->front_max = front_len;
+>>>>>>> 671a46baf1b... some performance improvements
 	if (front_len) {
 		if (front_len > PAGE_CACHE_SIZE) {
 			m->front.iov_base = __vmalloc(front_len, flags,
@@ -3339,8 +3380,13 @@ EXPORT_SYMBOL(ceph_msg_last_put);
 
 void ceph_msg_dump(struct ceph_msg *msg)
 {
+<<<<<<< HEAD
 	pr_debug("msg_dump %p (front_alloc_len %d length %zd)\n", msg,
 		 msg->front_alloc_len, msg->data_length);
+=======
+	pr_debug("msg_dump %p (front_max %d length %zd)\n", msg,
+		 msg->front_max, msg->data_length);
+>>>>>>> 671a46baf1b... some performance improvements
 	print_hex_dump(KERN_DEBUG, "header: ",
 		       DUMP_PREFIX_OFFSET, 16, 1,
 		       &msg->hdr, sizeof(msg->hdr), true);

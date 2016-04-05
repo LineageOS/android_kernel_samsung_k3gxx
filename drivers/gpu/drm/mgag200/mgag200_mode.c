@@ -1477,21 +1477,32 @@ static int mga_vga_mode_valid(struct drm_connector *connector,
 		(mga_vga_calculate_mode_bandwidth(mode, bpp)
 			> (32700 * 1024))) {
 		return MODE_BANDWIDTH;
+<<<<<<< HEAD
 	} else if (mdev->type == G200_EH &&
 		(mga_vga_calculate_mode_bandwidth(mode, bpp)
 			> (37500 * 1024))) {
 		return MODE_BANDWIDTH;
 	} else if (mdev->type == G200_ER &&
+=======
+	} else if (mode->type == G200_EH &&
+		(mga_vga_calculate_mode_bandwidth(mode, bpp)
+			> (37500 * 1024))) {
+		return MODE_BANDWIDTH;
+	} else if (mode->type == G200_ER &&
+>>>>>>> 671a46baf1b... some performance improvements
 		(mga_vga_calculate_mode_bandwidth(mode,
 			bpp) > (55000 * 1024))) {
 		return MODE_BANDWIDTH;
 	}
 
+<<<<<<< HEAD
 	if ((mode->hdisplay % 8) != 0 || (mode->hsync_start % 8) != 0 ||
 	    (mode->hsync_end % 8) != 0 || (mode->htotal % 8) != 0) {
 		return MODE_H_ILLEGAL;
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (mode->crtc_hdisplay > 2048 || mode->crtc_hsync_start > 4096 ||
 	    mode->crtc_hsync_end > 4096 || mode->crtc_htotal > 4096 ||
 	    mode->crtc_vdisplay > 2048 || mode->crtc_vsync_start > 4096 ||

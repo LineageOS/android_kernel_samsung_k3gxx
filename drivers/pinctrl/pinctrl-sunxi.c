@@ -1754,6 +1754,15 @@ static int sunxi_pinctrl_gpio_get(struct gpio_chip *chip, unsigned offset)
 	return val;
 }
 
+<<<<<<< HEAD
+=======
+static int sunxi_pinctrl_gpio_direction_output(struct gpio_chip *chip,
+					unsigned offset, int value)
+{
+	return pinctrl_gpio_direction_output(chip->base + offset);
+}
+
+>>>>>>> 671a46baf1b... some performance improvements
 static void sunxi_pinctrl_gpio_set(struct gpio_chip *chip,
 				unsigned offset, int value)
 {
@@ -1764,6 +1773,7 @@ static void sunxi_pinctrl_gpio_set(struct gpio_chip *chip,
 	writel((value & DATA_PINS_MASK) << index, pctl->membase + reg);
 }
 
+<<<<<<< HEAD
 static int sunxi_pinctrl_gpio_direction_output(struct gpio_chip *chip,
 					unsigned offset, int value)
 {
@@ -1771,6 +1781,8 @@ static int sunxi_pinctrl_gpio_direction_output(struct gpio_chip *chip,
 	return pinctrl_gpio_direction_output(chip->base + offset);
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static int sunxi_pinctrl_gpio_of_xlate(struct gpio_chip *gc,
 				const struct of_phandle_args *gpiospec,
 				u32 *flags)

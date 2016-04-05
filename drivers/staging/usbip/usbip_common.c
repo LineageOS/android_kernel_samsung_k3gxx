@@ -784,6 +784,7 @@ int usbip_recv_xbuff(struct usbip_device *ud, struct urb *urb)
 	if (!(size > 0))
 		return 0;
 
+<<<<<<< HEAD
 	if (size > urb->transfer_buffer_length) {
 		/* should not happen, probably malicious packet */
 		if (ud->side == USBIP_STUB) {
@@ -795,6 +796,8 @@ int usbip_recv_xbuff(struct usbip_device *ud, struct urb *urb)
 		}
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	ret = usbip_recv(ud->tcp_socket, urb->transfer_buffer, size);
 	if (ret != size) {
 		dev_err(&urb->dev->dev, "recv xbuf, %d\n", ret);

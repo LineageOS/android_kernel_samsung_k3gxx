@@ -56,6 +56,7 @@ static void configfs_d_iput(struct dentry * dentry,
 	struct configfs_dirent *sd = dentry->d_fsdata;
 
 	if (sd) {
+<<<<<<< HEAD
 		/* Coordinate with configfs_readdir */
 		spin_lock(&configfs_dirent_lock);
 		/* Coordinate with configfs_attach_attr where will increase
@@ -69,6 +70,12 @@ static void configfs_d_iput(struct dentry * dentry,
 		if (atomic_read(&sd->s_count) <= 2)
 			sd->s_dentry = NULL;
 
+=======
+		BUG_ON(sd->s_dentry != dentry);
+		/* Coordinate with configfs_readdir */
+		spin_lock(&configfs_dirent_lock);
+		sd->s_dentry = NULL;
+>>>>>>> 671a46baf1b... some performance improvements
 		spin_unlock(&configfs_dirent_lock);
 		configfs_put(sd);
 	}
@@ -435,11 +442,16 @@ static int configfs_attach_attr(struct configfs_dirent * sd, struct dentry * den
 	struct configfs_attribute * attr = sd->s_element;
 	int error;
 
+<<<<<<< HEAD
 	spin_lock(&configfs_dirent_lock);
 	dentry->d_fsdata = configfs_get(sd);
 	sd->s_dentry = dentry;
 	spin_unlock(&configfs_dirent_lock);
 
+=======
+	dentry->d_fsdata = configfs_get(sd);
+	sd->s_dentry = dentry;
+>>>>>>> 671a46baf1b... some performance improvements
 	error = configfs_create(dentry, (attr->ca_mode & S_IALLUGO) | S_IFREG,
 				configfs_init_file);
 	if (error) {

@@ -39,6 +39,14 @@
 #include <linux/magic.h>
 #include "ecryptfs_kernel.h"
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SDP
+#include "mm.h"
+#include "ecryptfs_sdp_chamber.h"
+#endif
+
+>>>>>>> 671a46baf1b... some performance improvements
 #ifdef CONFIG_WTL_ENCRYPTION_FILTER
 #include <linux/ctype.h>
 #endif
@@ -168,6 +176,14 @@ void ecryptfs_put_lower_file(struct inode *inode)
 	if (atomic_dec_and_mutex_lock(&inode_info->lower_file_count,
 				      &inode_info->lower_file_mutex)) {
 		filemap_write_and_wait(inode->i_mapping);
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SDP
+		if (inode_info->crypt_stat.flags & ECRYPTFS_DEK_IS_SENSITIVE) {
+			ecryptfs_mm_do_sdp_cleanup(inode);
+		}
+#endif
+>>>>>>> 671a46baf1b... some performance improvements
 		fput(inode_info->lower_file);
 		inode_info->lower_file = NULL;
 		mutex_unlock(&inode_info->lower_file_mutex);
@@ -188,6 +204,15 @@ enum { ecryptfs_opt_sig, ecryptfs_opt_ecryptfs_sig,
 #if defined(CONFIG_CRYPTO_FIPS) && !defined(CONFIG_FORCE_DISABLE_FIPS)
        ecryptfs_opt_enable_cc,
 #endif
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SDP
+	ecryptfs_opt_userid, ecryptfs_opt_sdp, ecryptfs_opt_chamber_dirs, ecryptfs_opt_partition_id,
+#endif
+#ifdef CONFIG_DLP
+	   ecryptfs_opt_dlp,
+#endif
+>>>>>>> 671a46baf1b... some performance improvements
        ecryptfs_opt_base, ecryptfs_opt_type, ecryptfs_opt_label,
        ecryptfs_opt_err };
 
@@ -212,6 +237,18 @@ static const match_table_t tokens = {
 #if defined(CONFIG_CRYPTO_FIPS) && !defined(CONFIG_FORCE_DISABLE_FIPS)
 	{ecryptfs_opt_enable_cc, "ecryptfs_enable_cc"},
 #endif
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SDP
+	{ecryptfs_opt_chamber_dirs, "chamber=%s"},
+	{ecryptfs_opt_userid, "userid=%s"},
+    {ecryptfs_opt_sdp, "sdp_enabled"},
+    {ecryptfs_opt_partition_id, "partition_id=%u"},
+#endif
+#ifdef CONFIG_DLP
+	{ecryptfs_opt_dlp, "dlp_enabled"},
+#endif
+>>>>>>> 671a46baf1b... some performance improvements
 	{ecryptfs_opt_base, "base=%s"},
 	{ecryptfs_opt_type, "type=%s"},
 	{ecryptfs_opt_label, "label=%s"},
@@ -255,6 +292,15 @@ static void ecryptfs_init_mount_crypt_stat(
 	mutex_init(&mount_crypt_stat->global_auth_tok_list_mutex);
 	mount_crypt_stat->flags |= ECRYPTFS_MOUNT_CRYPT_STAT_INITIALIZED;
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SDP
+	spin_lock_init(&mount_crypt_stat->chamber_dir_list_lock);
+	INIT_LIST_HEAD(&mount_crypt_stat->chamber_dir_list);
+
+	mount_crypt_stat->partition_id = -1;
+#endif
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void ecryptfs_init_propagate_stat(
@@ -500,6 +546,58 @@ static int ecryptfs_parse_options(struct ecryptfs_sb_info *sbi, char *options,
 			strncpy(cipher_mode, ECRYPTFS_AES_CBC_MODE, ECRYPTFS_MAX_CIPHER_MODE_SIZE);
 			break;
 #endif
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SDP
+		case ecryptfs_opt_userid: {
+			char *userid_src = args[0].from;
+			int userid =
+				(int)simple_strtol(userid_src,
+						&userid_src, 0);
+			sbi->userid = userid;
+			mount_crypt_stat->userid = userid;
+			/*
+			 * Enabling SDP by default for Knox container.
+			 */
+			mount_crypt_stat->flags |= ECRYPTFS_MOUNT_SDP_ENABLED;
+			}
+			break;
+		case ecryptfs_opt_sdp:
+			mount_crypt_stat->flags |= ECRYPTFS_MOUNT_SDP_ENABLED;
+			break;
+		case ecryptfs_opt_chamber_dirs: {
+			char *chamber_dirs = args[0].from;
+			char *token = NULL;
+
+			/**
+			 * chamber directories by mount-option.
+			 * The userid in the mount option is used as engine_id
+			 *
+			 * TODO : This won't work when chamber_dirs mount option comes before
+			 * user_id option.
+			 */
+			printk("%s : chamber dirs : %s\n", __func__, chamber_dirs);
+			while ((token = strsep(&chamber_dirs, "|")) != NULL)
+				if(!is_chamber_directory(mount_crypt_stat, (const unsigned char *)token, NULL))
+					add_chamber_directory(mount_crypt_stat,
+					        mount_crypt_stat->userid, (const unsigned char *)token);
+		}
+		break;
+		case ecryptfs_opt_partition_id: {
+            char *partition_id_str = args[0].from;
+            mount_crypt_stat->partition_id =
+                (int)simple_strtol(partition_id_str,
+                           &partition_id_str, 0);
+            printk("%s : partition_id : %d", __func__, mount_crypt_stat->partition_id);
+		}
+		break;
+#endif
+#ifdef CONFIG_DLP
+		case ecryptfs_opt_dlp:
+			mount_crypt_stat->flags |= ECRYPTFS_MOUNT_DLP_ENABLED;
+		break;
+#endif
+>>>>>>> 671a46baf1b... some performance improvements
 		case ecryptfs_opt_base:
 			base_path_src = args[0].from;
 			base_path_dst = propagate_stat->base_path;
@@ -674,7 +772,10 @@ static struct dentry *ecryptfs_mount(struct file_system_type *fs_type, int flags
 {
 	struct super_block *s, *lower_sb;
 	struct ecryptfs_sb_info *sbi;
+<<<<<<< HEAD
 	struct ecryptfs_mount_crypt_stat *mount_crypt_stat;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	struct ecryptfs_dentry_info *root_info;
 	const char *err = "Getting sb failed";
 	struct inode *inode;
@@ -688,12 +789,22 @@ static struct dentry *ecryptfs_mount(struct file_system_type *fs_type, int flags
 		goto out;
 	}
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SDP
+	sbi->userid = -1;
+#endif
+
+>>>>>>> 671a46baf1b... some performance improvements
 	rc = ecryptfs_parse_options(sbi, raw_data, &check_ruid);
 	if (rc) {
 		err = "Error parsing options";
 		goto out;
 	}
+<<<<<<< HEAD
 	mount_crypt_stat = &sbi->mount_crypt_stat;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	s = sget(fs_type, NULL, set_anon_super, flags, NULL);
 	if (IS_ERR(s)) {
@@ -745,6 +856,7 @@ static struct dentry *ecryptfs_mount(struct file_system_type *fs_type, int flags
 
 	/**
 	 * Set the POSIX ACL flag based on whether they're enabled in the lower
+<<<<<<< HEAD
 	 * mount.
 	 */
 	s->s_flags = flags & ~MS_POSIXACL;
@@ -758,10 +870,18 @@ static struct dentry *ecryptfs_mount(struct file_system_type *fs_type, int flags
 	if (path.dentry->d_sb->s_flags & MS_RDONLY ||
 	    mount_crypt_stat->flags & ECRYPTFS_ENCRYPTED_VIEW_ENABLED)
 		s->s_flags |= MS_RDONLY;
+=======
+	 * mount. Force a read-only eCryptfs mount if the lower mount is ro.
+	 * Allow a ro eCryptfs mount even when the lower mount is rw.
+	 */
+	s->s_flags = flags & ~MS_POSIXACL;
+	s->s_flags |= path.dentry->d_sb->s_flags & (MS_RDONLY | MS_POSIXACL);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	s->s_maxbytes = path.dentry->d_sb->s_maxbytes;
 	s->s_blocksize = path.dentry->d_sb->s_blocksize;
 	s->s_magic = ECRYPTFS_SUPER_MAGIC;
+<<<<<<< HEAD
 	s->s_stack_depth = path.dentry->d_sb->s_stack_depth + 1;
 
 	rc = -EINVAL;
@@ -769,6 +889,8 @@ static struct dentry *ecryptfs_mount(struct file_system_type *fs_type, int flags
 		pr_err("eCryptfs: maximum fs stacking depth exceeded\n");
 		goto out_free;
 	}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	inode = ecryptfs_get_inode(path.dentry->d_inode, s);
 	rc = PTR_ERR(inode);

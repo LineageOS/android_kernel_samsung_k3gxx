@@ -244,8 +244,18 @@ static void i_usX2Y_usbpcm_urb_complete(struct urb *urb)
 		usX2Y_error_urb_status(usX2Y, subs, urb);
 		return;
 	}
+<<<<<<< HEAD
 
 	subs->completed_urb = urb;
+=======
+	if (likely((urb->start_frame & 0xFFFF) == (usX2Y->wait_iso_frame & 0xFFFF)))
+		subs->completed_urb = urb;
+	else {
+		usX2Y_error_sequence(usX2Y, subs, urb);
+		return;
+	}
+
+>>>>>>> 671a46baf1b... some performance improvements
 	capsubs = usX2Y->subs[SNDRV_PCM_STREAM_CAPTURE];
 	capsubs2 = usX2Y->subs[SNDRV_PCM_STREAM_CAPTURE + 2];
 	playbacksubs = usX2Y->subs[SNDRV_PCM_STREAM_PLAYBACK];

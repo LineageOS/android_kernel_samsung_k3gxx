@@ -943,6 +943,7 @@ static int i7300_get_devices(struct mem_ctl_info *mci)
 
 	/* Attempt to 'get' the MCH register we want */
 	pdev = NULL;
+<<<<<<< HEAD
 	while ((pdev = pci_get_device(PCI_VENDOR_ID_INTEL,
 				      PCI_DEVICE_ID_INTEL_I7300_MCH_ERR,
 				      pdev))) {
@@ -957,10 +958,36 @@ static int i7300_get_devices(struct mem_ctl_info *mci)
 			if (!pvt->pci_dev_16_2_fsb_err_regs)
 				pvt->pci_dev_16_2_fsb_err_regs =
 							pci_dev_get(pdev);
+=======
+	while (!pvt->pci_dev_16_1_fsb_addr_map ||
+	       !pvt->pci_dev_16_2_fsb_err_regs) {
+		pdev = pci_get_device(PCI_VENDOR_ID_INTEL,
+				      PCI_DEVICE_ID_INTEL_I7300_MCH_ERR, pdev);
+		if (!pdev) {
+			/* End of list, leave */
+			i7300_printk(KERN_ERR,
+				"'system address,Process Bus' "
+				"device not found:"
+				"vendor 0x%x device 0x%x ERR funcs "
+				"(broken BIOS?)\n",
+				PCI_VENDOR_ID_INTEL,
+				PCI_DEVICE_ID_INTEL_I7300_MCH_ERR);
+			goto error;
+		}
+
+		/* Store device 16 funcs 1 and 2 */
+		switch (PCI_FUNC(pdev->devfn)) {
+		case 1:
+			pvt->pci_dev_16_1_fsb_addr_map = pdev;
+			break;
+		case 2:
+			pvt->pci_dev_16_2_fsb_err_regs = pdev;
+>>>>>>> 671a46baf1b... some performance improvements
 			break;
 		}
 	}
 
+<<<<<<< HEAD
 	if (!pvt->pci_dev_16_1_fsb_addr_map ||
 	    !pvt->pci_dev_16_2_fsb_err_regs) {
 		/* At least one device was not found */
@@ -972,6 +999,8 @@ static int i7300_get_devices(struct mem_ctl_info *mci)
 		goto error;
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	edac_dbg(1, "System Address, processor bus- PCI Bus ID: %s  %x:%x\n",
 		 pci_name(pvt->pci_dev_16_0_fsb_ctlr),
 		 pvt->pci_dev_16_0_fsb_ctlr->vendor,

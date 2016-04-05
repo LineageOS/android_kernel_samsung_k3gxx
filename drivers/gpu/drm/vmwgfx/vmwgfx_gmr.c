@@ -29,9 +29,13 @@
 #include <drm/drmP.h>
 #include <drm/ttm/ttm_bo_driver.h>
 
+<<<<<<< HEAD
 #define VMW_PPN_SIZE (sizeof(unsigned long))
 /* A future safe maximum remap size. */
 #define VMW_PPN_PER_REMAP ((31 * 1024) / VMW_PPN_SIZE)
+=======
+#define VMW_PPN_SIZE sizeof(unsigned long)
+>>>>>>> 671a46baf1b... some performance improvements
 
 static int vmw_gmr2_bind(struct vmw_private *dev_priv,
 			 struct page *pages[],
@@ -40,6 +44,7 @@ static int vmw_gmr2_bind(struct vmw_private *dev_priv,
 {
 	SVGAFifoCmdDefineGMR2 define_cmd;
 	SVGAFifoCmdRemapGMR2 remap_cmd;
+<<<<<<< HEAD
 	uint32_t *cmd;
 	uint32_t *cmd_orig;
 	uint32_t define_size = sizeof(define_cmd) + sizeof(*cmd);
@@ -50,12 +55,22 @@ static int vmw_gmr2_bind(struct vmw_private *dev_priv,
 	uint32_t i;
 
 	cmd_orig = cmd = vmw_fifo_reserve(dev_priv, cmd_size);
+=======
+	uint32_t define_size = sizeof(define_cmd) + 4;
+	uint32_t remap_size = VMW_PPN_SIZE * num_pages + sizeof(remap_cmd) + 4;
+	uint32_t *cmd;
+	uint32_t *cmd_orig;
+	uint32_t i;
+
+	cmd_orig = cmd = vmw_fifo_reserve(dev_priv, define_size + remap_size);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (unlikely(cmd == NULL))
 		return -ENOMEM;
 
 	define_cmd.gmrId = gmr_id;
 	define_cmd.numPages = num_pages;
 
+<<<<<<< HEAD
 	*cmd++ = SVGA_CMD_DEFINE_GMR2;
 	memcpy(cmd, &define_cmd, sizeof(define_cmd));
 	cmd += sizeof(define_cmd) / sizeof(*cmd);
@@ -95,6 +110,32 @@ static int vmw_gmr2_bind(struct vmw_private *dev_priv,
 	BUG_ON(cmd != cmd_orig + cmd_size / sizeof(*cmd));
 
 	vmw_fifo_commit(dev_priv, cmd_size);
+=======
+	remap_cmd.gmrId = gmr_id;
+	remap_cmd.flags = (VMW_PPN_SIZE > sizeof(*cmd)) ?
+		SVGA_REMAP_GMR2_PPN64 : SVGA_REMAP_GMR2_PPN32;
+	remap_cmd.offsetPages = 0;
+	remap_cmd.numPages = num_pages;
+
+	*cmd++ = SVGA_CMD_DEFINE_GMR2;
+	memcpy(cmd, &define_cmd, sizeof(define_cmd));
+	cmd += sizeof(define_cmd) / sizeof(uint32);
+
+	*cmd++ = SVGA_CMD_REMAP_GMR2;
+	memcpy(cmd, &remap_cmd, sizeof(remap_cmd));
+	cmd += sizeof(remap_cmd) / sizeof(uint32);
+
+	for (i = 0; i < num_pages; ++i) {
+		if (VMW_PPN_SIZE <= 4)
+			*cmd = page_to_pfn(*pages++);
+		else
+			*((uint64_t *)cmd) = page_to_pfn(*pages++);
+
+		cmd += VMW_PPN_SIZE / sizeof(*cmd);
+	}
+
+	vmw_fifo_commit(dev_priv, define_size + remap_size);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return 0;
 }

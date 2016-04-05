@@ -308,9 +308,12 @@ static int powermate_probe(struct usb_interface *intf, const struct usb_device_i
 	int error = -ENOMEM;
 
 	interface = intf->cur_altsetting;
+<<<<<<< HEAD
 	if (interface->desc.bNumEndpoints < 1)
 		return -EINVAL;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	endpoint = &interface->endpoint[0].desc;
 	if (!usb_endpoint_is_int_in(endpoint))
 		return -EIO;

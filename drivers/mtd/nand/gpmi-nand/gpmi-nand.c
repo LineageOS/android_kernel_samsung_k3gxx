@@ -264,6 +264,11 @@ static void dma_irq_callback(void *param)
 	struct gpmi_nand_data *this = param;
 	struct completion *dma_c = &this->dma_done;
 
+<<<<<<< HEAD
+=======
+	complete(dma_c);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	switch (this->dma_type) {
 	case DMA_FOR_COMMAND:
 		dma_unmap_sg(this->dev, &this->cmd_sgl, 1, DMA_TO_DEVICE);
@@ -288,8 +293,11 @@ static void dma_irq_callback(void *param)
 	default:
 		pr_err("in wrong DMA operation.\n");
 	}
+<<<<<<< HEAD
 
 	complete(dma_c);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 int start_dma_without_bch_irq(struct gpmi_nand_data *this,

@@ -2317,9 +2317,12 @@ static int gigaset_probe(struct usb_interface *interface,
 		return -ENODEV;
 	}
 
+<<<<<<< HEAD
 	if (hostif->desc.bNumEndpoints < 1)
 		return -ENODEV;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	dev_info(&udev->dev,
 		 "%s: Device matched (Vendor: 0x%x, Product: 0x%x)\n",
 		 __func__, le16_to_cpu(udev->descriptor.idVendor),

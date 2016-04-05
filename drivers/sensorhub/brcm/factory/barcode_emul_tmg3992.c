@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #include "ssp.h"
+=======
+#include "../ssp.h"
+>>>>>>> 671a46baf1b... some performance improvements
 #include <linux/sec_sysfs.h>
 
 #define	VENDOR		"AMS"

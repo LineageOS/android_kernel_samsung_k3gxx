@@ -464,7 +464,11 @@ int comedi_device_attach(struct comedi_device *dev, struct comedi_devconfig *it)
 		ret = comedi_device_postconfig(dev);
 	if (ret < 0) {
 		comedi_device_detach(dev);
+<<<<<<< HEAD
 		module_put(driv->module);
+=======
+		module_put(dev->driver->module);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	/* On success, the driver module count has been incremented. */
 	return ret;

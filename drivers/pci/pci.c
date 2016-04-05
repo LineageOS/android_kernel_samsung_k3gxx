@@ -1127,8 +1127,11 @@ EXPORT_SYMBOL_GPL(pci_load_and_free_saved_state);
 static int do_pci_enable_device(struct pci_dev *dev, int bars)
 {
 	int err;
+<<<<<<< HEAD
 	u16 cmd;
 	u8 pin;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	err = pci_set_power_state(dev, PCI_D0);
 	if (err < 0 && err != -EIO)
@@ -1138,6 +1141,7 @@ static int do_pci_enable_device(struct pci_dev *dev, int bars)
 		return err;
 	pci_fixup_device(pci_fixup_enable, dev);
 
+<<<<<<< HEAD
 	if (dev->msi_enabled || dev->msix_enabled)
 		return 0;
 
@@ -1149,6 +1153,8 @@ static int do_pci_enable_device(struct pci_dev *dev, int bars)
 					      cmd & ~PCI_COMMAND_INTX_DISABLE);
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 }
 
@@ -3667,7 +3673,11 @@ int pci_set_vga_state(struct pci_dev *dev, bool decode,
 	u16 cmd;
 	int rc;
 
+<<<<<<< HEAD
 	WARN_ON((flags & PCI_VGA_STATE_CHANGE_DECODES) && (command_bits & ~(PCI_COMMAND_IO|PCI_COMMAND_MEMORY)));
+=======
+	WARN_ON((flags & PCI_VGA_STATE_CHANGE_DECODES) & (command_bits & ~(PCI_COMMAND_IO|PCI_COMMAND_MEMORY)));
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* ARCH specific VGA enables */
 	rc = pci_set_vga_state_arch(dev, decode, command_bits, flags);

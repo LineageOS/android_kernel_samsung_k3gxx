@@ -135,7 +135,11 @@ int itg3200_probe_trigger(struct iio_dev *indio_dev)
 		goto error_free_irq;
 
 	/* select default trigger */
+<<<<<<< HEAD
 	indio_dev->trig = iio_trigger_get(st->trig);
+=======
+	indio_dev->trig = st->trig;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return 0;
 

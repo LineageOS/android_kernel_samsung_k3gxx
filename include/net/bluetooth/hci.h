@@ -104,7 +104,10 @@ enum {
 enum {
 	HCI_SETUP,
 	HCI_AUTO_OFF,
+<<<<<<< HEAD
 	HCI_RFKILLED,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	HCI_MGMT,
 	HCI_PAIRABLE,
 	HCI_SERVICE_CACHE,

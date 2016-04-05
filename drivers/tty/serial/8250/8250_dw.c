@@ -54,11 +54,16 @@
 
 
 struct dw8250_data {
+<<<<<<< HEAD
 	int		last_mcr;
+=======
+	int		last_lcr;
+>>>>>>> 671a46baf1b... some performance improvements
 	int		line;
 	struct clk	*clk;
 };
 
+<<<<<<< HEAD
 static inline int dw8250_modify_msr(struct uart_port *p, int offset, int value)
 {
 	struct dw8250_data *d = p->private_data;
@@ -79,10 +84,13 @@ static void dw8250_force_idle(struct uart_port *p)
 	(void)p->serial_in(p, UART_RX);
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static void dw8250_serial_out(struct uart_port *p, int offset, int value)
 {
 	struct dw8250_data *d = p->private_data;
 
+<<<<<<< HEAD
 	if (offset == UART_MCR)
 		d->last_mcr = value;
 
@@ -103,19 +111,33 @@ static void dw8250_serial_out(struct uart_port *p, int offset, int value)
 		 * dev_err(p->dev, "Couldn't set LCR to %d\n", value);
 		 */
 	}
+=======
+	if (offset == UART_LCR)
+		d->last_lcr = value;
+
+	offset <<= p->regshift;
+	writeb(value, p->membase + offset);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static unsigned int dw8250_serial_in(struct uart_port *p, int offset)
 {
+<<<<<<< HEAD
 	unsigned int value = readb(p->membase + (offset << p->regshift));
 
 	return dw8250_modify_msr(p, offset, value);
+=======
+	offset <<= p->regshift;
+
+	return readb(p->membase + offset);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void dw8250_serial_out32(struct uart_port *p, int offset, int value)
 {
 	struct dw8250_data *d = p->private_data;
 
+<<<<<<< HEAD
 	if (offset == UART_MCR)
 		d->last_mcr = value;
 
@@ -136,24 +158,47 @@ static void dw8250_serial_out32(struct uart_port *p, int offset, int value)
 		 * dev_err(p->dev, "Couldn't set LCR to %d\n", value);
 		 */
 	}
+=======
+	if (offset == UART_LCR)
+		d->last_lcr = value;
+
+	offset <<= p->regshift;
+	writel(value, p->membase + offset);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static unsigned int dw8250_serial_in32(struct uart_port *p, int offset)
 {
+<<<<<<< HEAD
 	unsigned int value = readl(p->membase + (offset << p->regshift));
 
 	return dw8250_modify_msr(p, offset, value);
+=======
+	offset <<= p->regshift;
+
+	return readl(p->membase + offset);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int dw8250_handle_irq(struct uart_port *p)
 {
+<<<<<<< HEAD
+=======
+	struct dw8250_data *d = p->private_data;
+>>>>>>> 671a46baf1b... some performance improvements
 	unsigned int iir = p->serial_in(p, UART_IIR);
 
 	if (serial8250_handle_irq(p, iir)) {
 		return 1;
 	} else if ((iir & UART_IIR_BUSY) == UART_IIR_BUSY) {
+<<<<<<< HEAD
 		/* Clear the USR */
 		(void)p->serial_in(p, DW_UART_USR);
+=======
+		/* Clear the USR and write the LCR again. */
+		(void)p->serial_in(p, DW_UART_USR);
+		p->serial_out(p, UART_LCR, d->last_lcr);
+>>>>>>> 671a46baf1b... some performance improvements
 
 		return 1;
 	}
@@ -417,8 +462,11 @@ MODULE_DEVICE_TABLE(of, dw8250_of_match);
 static const struct acpi_device_id dw8250_acpi_match[] = {
 	{ "INT33C4", 0 },
 	{ "INT33C5", 0 },
+<<<<<<< HEAD
 	{ "INT3434", 0 },
 	{ "INT3435", 0 },
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	{ "80860F0A", 0 },
 	{ },
 };

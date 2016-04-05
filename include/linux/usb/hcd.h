@@ -410,13 +410,20 @@ extern int usb_hcd_pci_probe(struct pci_dev *dev,
 extern void usb_hcd_pci_remove(struct pci_dev *dev);
 extern void usb_hcd_pci_shutdown(struct pci_dev *dev);
 
+<<<<<<< HEAD
 #ifdef CONFIG_PM
+=======
+#ifdef CONFIG_PM_SLEEP
+>>>>>>> 671a46baf1b... some performance improvements
 extern const struct dev_pm_ops usb_hcd_pci_pm_ops;
 #endif
 #endif /* CONFIG_PCI */
 
 /* pci-ish (pdev null is ok) buffer alloc/mapping support */
+<<<<<<< HEAD
 void usb_init_pool_max(void);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 int hcd_buffer_create(struct usb_hcd *hcd);
 void hcd_buffer_destroy(struct usb_hcd *hcd);
 

@@ -215,13 +215,20 @@ static int move_addr_to_user(struct sockaddr_storage *kaddr, int klen,
 	int err;
 	int len;
 
+<<<<<<< HEAD
 	BUG_ON(klen > sizeof(struct sockaddr_storage));
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	err = get_user(len, ulen);
 	if (err)
 		return err;
 	if (len > klen)
 		len = klen;
+<<<<<<< HEAD
 	if (len < 0)
+=======
+	if (len < 0 || len > sizeof(struct sockaddr_storage))
+>>>>>>> 671a46baf1b... some performance improvements
 		return -EINVAL;
 	if (len) {
 		if (audit_sockaddr(klen, kaddr))
@@ -515,6 +522,7 @@ static ssize_t sockfs_listxattr(struct dentry *dentry, char *buffer,
 	return used;
 }
 
+<<<<<<< HEAD
 int sockfs_setattr(struct dentry *dentry, struct iattr *iattr)
 {
 	int err = simple_setattr(dentry, iattr);
@@ -532,6 +540,11 @@ static const struct inode_operations sockfs_inode_ops = {
 	.getxattr = sockfs_getxattr,
 	.listxattr = sockfs_listxattr,
 	.setattr = sockfs_setattr,
+=======
+static const struct inode_operations sockfs_inode_ops = {
+	.getxattr = sockfs_getxattr,
+	.listxattr = sockfs_listxattr,
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 /**
@@ -1851,10 +1864,15 @@ SYSCALL_DEFINE6(recvfrom, int, fd, void __user *, ubuf, size_t, size,
 	msg.msg_iov = &iov;
 	iov.iov_len = size;
 	iov.iov_base = ubuf;
+<<<<<<< HEAD
 	/* Save some cycles and don't copy the address if not needed */
 	msg.msg_name = addr ? (struct sockaddr *)&address : NULL;
 	/* We assume all kernel code knows the size of sockaddr_storage */
 	msg.msg_namelen = 0;
+=======
+	msg.msg_name = (struct sockaddr *)&address;
+	msg.msg_namelen = sizeof(address);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (sock->file->f_flags & O_NONBLOCK)
 		flags |= MSG_DONTWAIT;
 	err = sock_recvmsg(sock, &msg, size, flags);
@@ -1977,6 +1995,7 @@ struct used_address {
 	unsigned int name_len;
 };
 
+<<<<<<< HEAD
 static int copy_msghdr_from_user(struct msghdr *kmsg,
 				 struct msghdr __user *umsg)
 {
@@ -1991,6 +2010,8 @@ static int copy_msghdr_from_user(struct msghdr *kmsg,
 	return 0;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static int ___sys_sendmsg(struct socket *sock, struct msghdr __user *msg,
 			 struct msghdr *msg_sys, unsigned int flags,
 			 struct used_address *used_address)
@@ -2006,12 +2027,20 @@ static int ___sys_sendmsg(struct socket *sock, struct msghdr __user *msg,
 	int err, ctl_len, total_len;
 
 	err = -EFAULT;
+<<<<<<< HEAD
 	if (MSG_CMSG_COMPAT & flags)
 		err = get_compat_msghdr(msg_sys, msg_compat);
 	else
 		err = copy_msghdr_from_user(msg_sys, msg);
 	if (err)
 		return err;
+=======
+	if (MSG_CMSG_COMPAT & flags) {
+		if (get_compat_msghdr(msg_sys, msg_compat))
+			return -EFAULT;
+	} else if (copy_from_user(msg_sys, msg, sizeof(struct msghdr)))
+		return -EFAULT;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (msg_sys->msg_iovlen > UIO_FASTIOV) {
 		err = -EMSGSIZE;
@@ -2216,12 +2245,20 @@ static int ___sys_recvmsg(struct socket *sock, struct msghdr __user *msg,
 	struct sockaddr __user *uaddr;
 	int __user *uaddr_len;
 
+<<<<<<< HEAD
 	if (MSG_CMSG_COMPAT & flags)
 		err = get_compat_msghdr(msg_sys, msg_compat);
 	else
 		err = copy_msghdr_from_user(msg_sys, msg);
 	if (err)
 		return err;
+=======
+	if (MSG_CMSG_COMPAT & flags) {
+		if (get_compat_msghdr(msg_sys, msg_compat))
+			return -EFAULT;
+	} else if (copy_from_user(msg_sys, msg, sizeof(struct msghdr)))
+		return -EFAULT;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (msg_sys->msg_iovlen > UIO_FASTIOV) {
 		err = -EMSGSIZE;
@@ -2234,6 +2271,7 @@ static int ___sys_recvmsg(struct socket *sock, struct msghdr __user *msg,
 			goto out;
 	}
 
+<<<<<<< HEAD
 	/* Save the user-mode address (verify_iovec will change the
 	 * kernel msghdr to use the kernel address space)
 	 */
@@ -2242,6 +2280,18 @@ static int ___sys_recvmsg(struct socket *sock, struct msghdr __user *msg,
 	if (MSG_CMSG_COMPAT & flags)
 		err = verify_compat_iovec(msg_sys, iov, &addr, VERIFY_WRITE);
 	else
+=======
+	/*
+	 *      Save the user-mode address (verify_iovec will change the
+	 *      kernel msghdr to use the kernel address space)
+	 */
+
+	uaddr = (__force void __user *)msg_sys->msg_name;
+	uaddr_len = COMPAT_NAMELEN(msg);
+	if (MSG_CMSG_COMPAT & flags) {
+		err = verify_compat_iovec(msg_sys, iov, &addr, VERIFY_WRITE);
+	} else
+>>>>>>> 671a46baf1b... some performance improvements
 		err = verify_iovec(msg_sys, iov, &addr, VERIFY_WRITE);
 	if (err < 0)
 		goto out_freeiov;
@@ -2250,9 +2300,12 @@ static int ___sys_recvmsg(struct socket *sock, struct msghdr __user *msg,
 	cmsg_ptr = (unsigned long)msg_sys->msg_control;
 	msg_sys->msg_flags = flags & (MSG_CMSG_CLOEXEC|MSG_CMSG_COMPAT);
 
+<<<<<<< HEAD
 	/* We assume all kernel code knows the size of sockaddr_storage */
 	msg_sys->msg_namelen = 0;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (sock->file->f_flags & O_NONBLOCK)
 		flags |= MSG_DONTWAIT;
 	err = (nosec ? sock_recvmsg_nosec : sock_recvmsg)(sock, msg_sys,
@@ -2344,10 +2397,15 @@ int __sys_recvmmsg(int fd, struct mmsghdr __user *mmsg, unsigned int vlen,
 		return err;
 
 	err = sock_error(sock->sk);
+<<<<<<< HEAD
 	if (err) {
 		datagrams = err;
 		goto out_put;
 	}
+=======
+	if (err)
+		goto out_put;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	entry = mmsg;
 	compat_entry = (struct compat_mmsghdr __user *)mmsg;

@@ -326,8 +326,11 @@ static struct task_struct *dup_task_struct(struct task_struct *orig)
 	if (err)
 		goto free_ti;
 
+<<<<<<< HEAD
 	tsk->flags &= ~PF_SU;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	tsk->stack = ti;
 #ifdef CONFIG_SECCOMP
 	/*
@@ -571,7 +574,10 @@ static struct mm_struct *mm_init(struct mm_struct *mm, struct task_struct *p)
 	mm->cached_hole_size = ~0UL;
 	mm_init_aio(mm);
 	mm_init_owner(mm, p);
+<<<<<<< HEAD
 	clear_tlb_flush_pending(mm);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (likely(!mm_alloc_pgd(mm))) {
 		mm->def_flags = 0;
@@ -803,12 +809,23 @@ void mm_release(struct task_struct *tsk, struct mm_struct *mm)
 	deactivate_mm(tsk, mm);
 
 	/*
+<<<<<<< HEAD
 	 * Signal userspace if we're not exiting with a core dump
 	 * because we want to leave the value intact for debugging
 	 * purposes.
 	 */
 	if (tsk->clear_child_tid) {
 		if (!(tsk->signal->flags & SIGNAL_GROUP_COREDUMP) &&
+=======
+	 * If we're exiting normally, clear a user-space tid field if
+	 * requested.  We leave this alone when dying by signal, to leave
+	 * the value intact in a core dump, and to save the unnecessary
+	 * trouble, say, a killed vfork parent shouldn't touch this mm.
+	 * Userland only wants this done for a sys_exit.
+	 */
+	if (tsk->clear_child_tid) {
+		if (!(tsk->flags & PF_SIGNALED) &&
+>>>>>>> 671a46baf1b... some performance improvements
 		    atomic_read(&mm->mm_users) > 1) {
 			/*
 			 * We don't check the error code - if userspace has
@@ -1244,11 +1261,18 @@ static struct task_struct *copy_process(unsigned long clone_flags,
 		return ERR_PTR(-EINVAL);
 
 	/*
+<<<<<<< HEAD
 	 * If the new process will be in a different pid namespace don't
 	 * allow it to share a thread group or signal handlers with the
 	 * forking task.
 	 */
 	if ((clone_flags & (CLONE_SIGHAND | CLONE_NEWPID)) &&
+=======
+	 * If the new process will be in a different pid namespace
+	 * don't allow the creation of threads.
+	 */
+	if ((clone_flags & (CLONE_VM|CLONE_NEWPID)) &&
+>>>>>>> 671a46baf1b... some performance improvements
 	    (task_active_pid_ns(current) != current->nsproxy->pid_ns))
 		return ERR_PTR(-EINVAL);
 
@@ -1390,7 +1414,11 @@ static struct task_struct *copy_process(unsigned long clone_flags,
 		goto bad_fork_cleanup_policy;
 	retval = audit_alloc(p);
 	if (retval)
+<<<<<<< HEAD
 		goto bad_fork_cleanup_perf;
+=======
+		goto bad_fork_cleanup_policy;
+>>>>>>> 671a46baf1b... some performance improvements
 	/* copy all the process information */
 	retval = copy_semundo(clone_flags, p);
 	if (retval)
@@ -1557,9 +1585,13 @@ static struct task_struct *copy_process(unsigned long clone_flags,
 
 	total_forks++;
 	spin_unlock(&current->sighand->siglock);
+<<<<<<< HEAD
 	syscall_tracepoint_update(p);
 	write_unlock_irq(&tasklist_lock);
 
+=======
+	write_unlock_irq(&tasklist_lock);
+>>>>>>> 671a46baf1b... some performance improvements
 	proc_fork_connector(p);
 	cgroup_post_fork(p);
 	if (clone_flags & CLONE_THREAD)
@@ -1598,9 +1630,14 @@ bad_fork_cleanup_semundo:
 	exit_sem(p);
 bad_fork_cleanup_audit:
 	audit_free(p);
+<<<<<<< HEAD
 bad_fork_cleanup_perf:
 	perf_event_free_task(p);
 bad_fork_cleanup_policy:
+=======
+bad_fork_cleanup_policy:
+	perf_event_free_task(p);
+>>>>>>> 671a46baf1b... some performance improvements
 #ifdef CONFIG_NUMA
 	mpol_put(p->mempolicy);
 bad_fork_cleanup_cgroup:
@@ -1692,12 +1729,19 @@ long do_fork(unsigned long clone_flags,
 	 */
 	if (!IS_ERR(p)) {
 		struct completion vfork;
+<<<<<<< HEAD
 		struct pid *pid;
 
 		trace_sched_process_fork(current, p);
 
 		pid = get_task_pid(p, PIDTYPE_PID);
 		nr = pid_vnr(pid);
+=======
+
+		trace_sched_process_fork(current, p);
+
+		nr = task_pid_vnr(p);
+>>>>>>> 671a46baf1b... some performance improvements
 
 		if (clone_flags & CLONE_PARENT_SETTID)
 			put_user(nr, parent_tidptr);
@@ -1712,6 +1756,7 @@ long do_fork(unsigned long clone_flags,
 
 		/* forking complete and child started to run, tell ptracer */
 		if (unlikely(trace))
+<<<<<<< HEAD
 			ptrace_event_pid(trace, pid);
 
 		if (clone_flags & CLONE_VFORK) {
@@ -1720,6 +1765,14 @@ long do_fork(unsigned long clone_flags,
 		}
 
 		put_pid(pid);
+=======
+			ptrace_event(trace, nr);
+
+		if (clone_flags & CLONE_VFORK) {
+			if (!wait_for_vfork_done(p, &vfork))
+				ptrace_event(PTRACE_EVENT_VFORK_DONE, nr);
+		}
+>>>>>>> 671a46baf1b... some performance improvements
 	} else {
 		nr = PTR_ERR(p);
 	}
@@ -1836,6 +1889,7 @@ static int check_unshare_flags(unsigned long unshare_flags)
 				CLONE_NEWUSER|CLONE_NEWPID))
 		return -EINVAL;
 	/*
+<<<<<<< HEAD
 	 * Not implemented, but pretend it works if there is nothing
 	 * to unshare.  Note that unsharing the address space or the
 	 * signal handlers also need to unshare the signal queues (aka
@@ -1851,6 +1905,15 @@ static int check_unshare_flags(unsigned long unshare_flags)
 	}
 	if (unshare_flags & CLONE_VM) {
 		if (!current_is_single_threaded())
+=======
+	 * Not implemented, but pretend it works if there is nothing to
+	 * unshare. Note that unsharing CLONE_THREAD or CLONE_SIGHAND
+	 * needs to unshare vm.
+	 */
+	if (unshare_flags & (CLONE_THREAD | CLONE_SIGHAND | CLONE_VM)) {
+		/* FIXME: get_task_mm() increments ->mm_users */
+		if (atomic_read(&current->mm->mm_users) > 1)
+>>>>>>> 671a46baf1b... some performance improvements
 			return -EINVAL;
 	}
 
@@ -1924,16 +1987,27 @@ SYSCALL_DEFINE1(unshare, unsigned long, unshare_flags)
 	if (unshare_flags & CLONE_NEWPID)
 		unshare_flags |= CLONE_THREAD;
 	/*
+<<<<<<< HEAD
+=======
+	 * If unsharing a thread from a thread group, must also unshare vm.
+	 */
+	if (unshare_flags & CLONE_THREAD)
+		unshare_flags |= CLONE_VM;
+	/*
+>>>>>>> 671a46baf1b... some performance improvements
 	 * If unsharing vm, must also unshare signal handlers.
 	 */
 	if (unshare_flags & CLONE_VM)
 		unshare_flags |= CLONE_SIGHAND;
 	/*
+<<<<<<< HEAD
 	 * If unsharing a signal handlers, must also unshare the signal queues.
 	 */
 	if (unshare_flags & CLONE_SIGHAND)
 		unshare_flags |= CLONE_THREAD;
 	/*
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	 * If unsharing namespace, must also unshare filesystem information.
 	 */
 	if (unshare_flags & CLONE_NEWNS)

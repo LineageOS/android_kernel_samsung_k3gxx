@@ -142,7 +142,11 @@ static inline struct rtable *ip_route_output_ports(struct net *net, struct flowi
 	flowi4_init_output(fl4, oif, sk ? sk->sk_mark : 0, tos,
 			   RT_SCOPE_UNIVERSE, proto,
 			   sk ? inet_sk_flowi_flags(sk) : 0,
+<<<<<<< HEAD
 			   daddr, saddr, dport, sport);
+=======
+			   daddr, saddr, dport, sport, sk ? sock_i_uid(sk) : 0);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (sk)
 		security_sk_classify_flow(sk, flowi4_to_flowi(fl4));
 	return ip_route_output_flow(net, fl4, sk);
@@ -253,7 +257,12 @@ static inline void ip_route_connect_init(struct flowi4 *fl4, __be32 dst, __be32 
 		flow_flags |= FLOWI_FLAG_CAN_SLEEP;
 
 	flowi4_init_output(fl4, oif, sk->sk_mark, tos, RT_SCOPE_UNIVERSE,
+<<<<<<< HEAD
 			   protocol, flow_flags, dst, src, dport, sport);
+=======
+			   protocol, flow_flags, dst, src, dport, sport,
+			   sock_i_uid(sk));
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static inline struct rtable *ip_route_connect(struct flowi4 *fl4,

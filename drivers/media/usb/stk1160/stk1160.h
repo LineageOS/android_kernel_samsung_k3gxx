@@ -143,6 +143,10 @@ struct stk1160 {
 	int num_alt;
 
 	struct stk1160_isoc_ctl isoc_ctl;
+<<<<<<< HEAD
+=======
+	char urb_buf[255];	 /* urb control msg buffer */
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* frame properties */
 	int width;		  /* current frame width */

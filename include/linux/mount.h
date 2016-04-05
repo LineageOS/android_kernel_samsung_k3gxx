@@ -43,6 +43,7 @@ struct mnt_namespace;
  */
 #define MNT_SHARED_MASK	(MNT_UNBINDABLE)
 #define MNT_PROPAGATION_MASK	(MNT_SHARED | MNT_UNBINDABLE)
+<<<<<<< HEAD
 #define MNT_USER_SETTABLE_MASK  (MNT_NOSUID | MNT_NODEV | MNT_NOEXEC \
 				 | MNT_NOATIME | MNT_NODIRATIME | MNT_RELATIME \
 				 | MNT_READONLY)
@@ -59,12 +60,22 @@ struct mnt_namespace;
 #define MNT_LOCK_NODEV		0x200000
 #define MNT_LOCK_READONLY	0x400000
 #define MNT_MARKED		0x4000000
+=======
+
+
+#define MNT_INTERNAL	0x4000
+
+#define MNT_LOCK_READONLY	0x400000
+>>>>>>> 671a46baf1b... some performance improvements
 
 struct vfsmount {
 	struct dentry *mnt_root;	/* root of the mounted tree */
 	struct super_block *mnt_sb;	/* pointer to superblock */
 	int mnt_flags;
+<<<<<<< HEAD
 	void *data;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 struct file; /* forward dec */

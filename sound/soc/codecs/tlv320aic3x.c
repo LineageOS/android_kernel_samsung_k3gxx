@@ -140,7 +140,12 @@ static const u8 aic3x_reg[AIC3X_CACHEREGNUM] = {
 static int snd_soc_dapm_put_volsw_aic3x(struct snd_kcontrol *kcontrol,
 					struct snd_ctl_elem_value *ucontrol)
 {
+<<<<<<< HEAD
 	struct snd_soc_codec *codec = snd_soc_dapm_kcontrol_codec(kcontrol);
+=======
+	struct snd_soc_dapm_widget_list *wlist = snd_kcontrol_chip(kcontrol);
+	struct snd_soc_dapm_widget *widget = wlist->widgets[0];
+>>>>>>> 671a46baf1b... some performance improvements
 	struct soc_mixer_control *mc =
 		(struct soc_mixer_control *)kcontrol->private_value;
 	unsigned int reg = mc->reg;
@@ -188,6 +193,7 @@ static int snd_soc_dapm_put_volsw_aic3x(struct snd_kcontrol *kcontrol,
 		}
 	}
 
+<<<<<<< HEAD
 	change = snd_soc_test_bits(codec, val, mask, reg);
 	if (change) {
 		update.kcontrol = kcontrol;
@@ -199,6 +205,8 @@ static int snd_soc_dapm_put_volsw_aic3x(struct snd_kcontrol *kcontrol,
 			&update);
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	mutex_unlock(&widget->codec->mutex);
 
 	if (found)

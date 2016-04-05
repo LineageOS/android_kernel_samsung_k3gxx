@@ -20,7 +20,11 @@
 #include <net/route.h>
 #include <net/tcp_states.h>
 
+<<<<<<< HEAD
 int __ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+=======
+int ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	struct inet_sock *inet = inet_sk(sk);
 	struct sockaddr_in *usin = (struct sockaddr_in *) uaddr;
@@ -39,6 +43,11 @@ int __ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len
 
 	sk_dst_reset(sk);
 
+<<<<<<< HEAD
+=======
+	lock_sock(sk);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	oif = sk->sk_bound_dev_if;
 	saddr = inet->inet_saddr;
 	if (ipv4_is_multicast(usin->sin_addr.s_addr)) {
@@ -55,7 +64,11 @@ int __ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len
 	if (IS_ERR(rt)) {
 		err = PTR_ERR(rt);
 		if (err == -ENETUNREACH)
+<<<<<<< HEAD
 			IP_INC_STATS(sock_net(sk), IPSTATS_MIB_OUTNOROUTES);
+=======
+			IP_INC_STATS_BH(sock_net(sk), IPSTATS_MIB_OUTNOROUTES);
+>>>>>>> 671a46baf1b... some performance improvements
 		goto out;
 	}
 
@@ -79,6 +92,7 @@ int __ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len
 	sk_dst_set(sk, &rt->dst);
 	err = 0;
 out:
+<<<<<<< HEAD
 	return err;
 }
 EXPORT_SYMBOL(__ip4_datagram_connect);
@@ -98,11 +112,19 @@ EXPORT_SYMBOL(ip4_datagram_connect);
  * socket lock, we need to use sk_dst_set() here,
  * even if we own the socket lock.
  */
+=======
+	release_sock(sk);
+	return err;
+}
+EXPORT_SYMBOL(ip4_datagram_connect);
+
+>>>>>>> 671a46baf1b... some performance improvements
 void ip4_datagram_release_cb(struct sock *sk)
 {
 	const struct inet_sock *inet = inet_sk(sk);
 	const struct ip_options_rcu *inet_opt;
 	__be32 daddr = inet->inet_daddr;
+<<<<<<< HEAD
 	struct dst_entry *dst;
 	struct flowi4 fl4;
 	struct rtable *rt;
@@ -114,6 +136,15 @@ void ip4_datagram_release_cb(struct sock *sk)
 		rcu_read_unlock();
 		return;
 	}
+=======
+	struct flowi4 fl4;
+	struct rtable *rt;
+
+	if (! __sk_dst_get(sk) || __sk_dst_check(sk, 0))
+		return;
+
+	rcu_read_lock();
+>>>>>>> 671a46baf1b... some performance improvements
 	inet_opt = rcu_dereference(inet->inet_opt);
 	if (inet_opt && inet_opt->opt.srr)
 		daddr = inet_opt->opt.faddr;
@@ -121,10 +152,15 @@ void ip4_datagram_release_cb(struct sock *sk)
 				   inet->inet_saddr, inet->inet_dport,
 				   inet->inet_sport, sk->sk_protocol,
 				   RT_CONN_FLAGS(sk), sk->sk_bound_dev_if);
+<<<<<<< HEAD
 
 	dst = !IS_ERR(rt) ? &rt->dst : NULL;
 	sk_dst_set(sk, dst);
 
+=======
+	if (!IS_ERR(rt))
+		__sk_dst_set(sk, &rt->dst);
+>>>>>>> 671a46baf1b... some performance improvements
 	rcu_read_unlock();
 }
 EXPORT_SYMBOL_GPL(ip4_datagram_release_cb);

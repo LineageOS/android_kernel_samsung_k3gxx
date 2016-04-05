@@ -876,6 +876,7 @@ static void bond_mc_swap(struct bonding *bond, struct slave *new_active,
 	}
 }
 
+<<<<<<< HEAD
 static struct slave *bond_get_old_active(struct bonding *bond,
 					 struct slave *new_active)
 {
@@ -893,6 +894,8 @@ static struct slave *bond_get_old_active(struct bonding *bond,
 	return NULL;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /*
  * bond_do_fail_over_mac
  *
@@ -936,9 +939,12 @@ static void bond_do_fail_over_mac(struct bonding *bond,
 		write_unlock_bh(&bond->curr_slave_lock);
 		read_unlock(&bond->lock);
 
+<<<<<<< HEAD
 		if (!old_active)
 			old_active = bond_get_old_active(bond, new_active);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		if (old_active) {
 			memcpy(tmp_mac, new_active->dev->dev_addr, ETH_ALEN);
 			memcpy(saddr.sa_data, old_active->dev->dev_addr,
@@ -1565,10 +1571,16 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev)
 			   bond_dev->name, slave_dev->name);
 	}
 
+<<<<<<< HEAD
 	/* already in-use? */
 	if (netdev_is_rx_handler_busy(slave_dev)) {
 		netdev_err(bond_dev,
 			   "Error: Device is in use and cannot be enslaved\n");
+=======
+	/* already enslaved */
+	if (slave_dev->flags & IFF_SLAVE) {
+		pr_debug("Error, Device was already enslaved\n");
+>>>>>>> 671a46baf1b... some performance improvements
 		return -EBUSY;
 	}
 
@@ -2012,7 +2024,10 @@ static int __bond_release_one(struct net_device *bond_dev,
 	struct bonding *bond = netdev_priv(bond_dev);
 	struct slave *slave, *oldcurrent;
 	struct sockaddr addr;
+<<<<<<< HEAD
 	int old_flags = bond_dev->flags;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	netdev_features_t old_features = bond_dev->features;
 
 	/* slave is not a slave or master is not master of this slave */
@@ -2145,6 +2160,7 @@ static int __bond_release_one(struct net_device *bond_dev,
 	 * already taken care of above when we detached the slave
 	 */
 	if (!USES_PRIMARY(bond->params.mode)) {
+<<<<<<< HEAD
 		/* unset promiscuity level from slave
 		 * NOTE: The NETDEV_CHANGEADDR call above may change the value
 		 * of the IFF_PROMISC flag in the bond_dev, but we need the
@@ -2157,6 +2173,14 @@ static int __bond_release_one(struct net_device *bond_dev,
 
 		/* unset allmulti level from slave */
 		if (old_flags & IFF_ALLMULTI)
+=======
+		/* unset promiscuity level from slave */
+		if (bond_dev->flags & IFF_PROMISC)
+			dev_set_promiscuity(slave_dev, -1);
+
+		/* unset allmulti level from slave */
+		if (bond_dev->flags & IFF_ALLMULTI)
+>>>>>>> 671a46baf1b... some performance improvements
 			dev_set_allmulti(slave_dev, -1);
 
 		/* flush master's mc_list from slave */
@@ -2209,7 +2233,10 @@ static int  bond_release_and_destroy(struct net_device *bond_dev,
 		bond_dev->priv_flags |= IFF_DISABLE_NETPOLL;
 		pr_info("%s: destroying bond %s.\n",
 			bond_dev->name, bond_dev->name);
+<<<<<<< HEAD
 		bond_remove_proc_entry(bond);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		unregister_netdevice(bond_dev);
 	}
 	return ret;
@@ -3799,17 +3826,24 @@ static int bond_neigh_init(struct neighbour *n)
  * The bonding ndo_neigh_setup is called at init time beofre any
  * slave exists. So we must declare proxy setup function which will
  * be used at run time to resolve the actual slave neigh param setup.
+<<<<<<< HEAD
  *
  * It's also called by master devices (such as vlans) to setup their
  * underlying devices. In that case - do nothing, we're already set up from
  * our init.
+=======
+>>>>>>> 671a46baf1b... some performance improvements
  */
 static int bond_neigh_setup(struct net_device *dev,
 			    struct neigh_parms *parms)
 {
+<<<<<<< HEAD
 	/* modify only our neigh_parms */
 	if (parms->dev == dev)
 		parms->neigh_setup = bond_neigh_init;
+=======
+	parms->neigh_setup   = bond_neigh_init;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return 0;
 }
@@ -5017,7 +5051,10 @@ static int __init bonding_init(void)
 out:
 	return res;
 err:
+<<<<<<< HEAD
 	bond_destroy_debugfs();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	rtnl_link_unregister(&bond_link_ops);
 err_link:
 	unregister_pernet_subsys(&bond_net_ops);

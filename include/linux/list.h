@@ -373,6 +373,7 @@ static inline void list_splice_tail_init(struct list_head *list,
 	(!list_empty(ptr) ? list_first_entry(ptr, type, member) : NULL)
 
 /**
+<<<<<<< HEAD
  * list_next_entry - get the next element in list
  * @pos:	the type * to cursor
  * @member:	the name of the list_struct within the struct.
@@ -389,6 +390,8 @@ static inline void list_splice_tail_init(struct list_head *list,
 	list_entry((pos)->member.prev, typeof(*(pos)), member)
 
 /**
+=======
+>>>>>>> 671a46baf1b... some performance improvements
  * list_for_each	-	iterate over a list
  * @pos:	the &struct list_head to use as a loop cursor.
  * @head:	the head for your list.

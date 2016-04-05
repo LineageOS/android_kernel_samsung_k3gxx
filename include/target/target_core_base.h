@@ -614,7 +614,10 @@ struct se_dev_attrib {
 	u32		unmap_granularity;
 	u32		unmap_granularity_alignment;
 	u32		max_write_same_len;
+<<<<<<< HEAD
 	u32		max_bytes_per_io;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	struct se_device *da_dev;
 	struct config_group da_group;
 };
@@ -729,7 +732,10 @@ struct se_port_stat_grps {
 struct se_lun {
 #define SE_LUN_LINK_MAGIC			0xffff7771
 	u32			lun_link_magic;
+<<<<<<< HEAD
 	bool			lun_shutdown;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* See transport_lun_status_table */
 	enum transport_lun_status_table lun_status;
 	u32			lun_access;

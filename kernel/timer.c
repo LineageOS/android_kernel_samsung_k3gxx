@@ -872,7 +872,11 @@ unsigned long apply_slack(struct timer_list *timer, unsigned long expires)
 
 	bit = find_last_bit(&mask, BITS_PER_LONG);
 
+<<<<<<< HEAD
 	mask = (1UL << bit) - 1;
+=======
+	mask = (1 << bit) - 1;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	expires_limit = expires_limit & ~(mask);
 
@@ -989,12 +993,17 @@ EXPORT_SYMBOL(add_timer);
  */
 void add_timer_on(struct timer_list *timer, int cpu)
 {
+<<<<<<< HEAD
 	struct tvec_base *new_base = per_cpu(tvec_bases, cpu);
 	struct tvec_base *base;
+=======
+	struct tvec_base *base = per_cpu(tvec_bases, cpu);
+>>>>>>> 671a46baf1b... some performance improvements
 	unsigned long flags;
 
 	timer_stats_timer_set_start_info(timer);
 	BUG_ON(timer_pending(timer) || !timer->function);
+<<<<<<< HEAD
 
 	/*
 	 * If @timer was on a different CPU, it should be migrated with the
@@ -1009,6 +1018,10 @@ void add_timer_on(struct timer_list *timer, int cpu)
 		spin_lock(&base->lock);
 		timer_set_base(timer, base);
 	}
+=======
+	spin_lock_irqsave(&base->lock, flags);
+	timer_set_base(timer, base);
+>>>>>>> 671a46baf1b... some performance improvements
 	debug_activate(timer, timer->expires);
 	internal_add_timer(base, timer);
 	/*

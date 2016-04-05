@@ -45,9 +45,13 @@
 /* Size of the original descriptors of the Driving Force (and Pro) wheels */
 #define DF_RDESC_ORIG_SIZE	130
 #define DFP_RDESC_ORIG_SIZE	97
+<<<<<<< HEAD
 #define FV_RDESC_ORIG_SIZE	130
 #define MOMO_RDESC_ORIG_SIZE	87
 #define MOMO2_RDESC_ORIG_SIZE	87
+=======
+#define MOMO_RDESC_ORIG_SIZE	87
+>>>>>>> 671a46baf1b... some performance improvements
 
 /* Fixed report descriptors for Logitech Driving Force (and Pro)
  * wheel controllers
@@ -172,6 +176,7 @@ static __u8 dfp_rdesc_fixed[] = {
 0xC0                /*  End Collection                          */
 };
 
+<<<<<<< HEAD
 static __u8 fv_rdesc_fixed[] = {
 0x05, 0x01,         /*  Usage Page (Desktop),                   */
 0x09, 0x04,         /*  Usage (Joystik),                        */
@@ -239,6 +244,8 @@ static __u8 fv_rdesc_fixed[] = {
 0xC0                /*  End Collection                          */
 };
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static __u8 momo_rdesc_fixed[] = {
 0x05, 0x01,         /*  Usage Page (Desktop),               */
 0x09, 0x04,         /*  Usage (Joystik),                    */
@@ -285,6 +292,7 @@ static __u8 momo_rdesc_fixed[] = {
 0xC0                /*  End Collection                      */
 };
 
+<<<<<<< HEAD
 static __u8 momo2_rdesc_fixed[] = {
 0x05, 0x01,         /*  Usage Page (Desktop),               */
 0x09, 0x04,         /*  Usage (Joystik),                    */
@@ -333,6 +341,8 @@ static __u8 momo2_rdesc_fixed[] = {
 0xC0                /*  End Collection                      */
 };
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /*
  * Certain Logitech keyboards send in report #3 keys which are far
  * above the logical maximum described in descriptor. This extends
@@ -392,6 +402,7 @@ static __u8 *lg_report_fixup(struct hid_device *hdev, __u8 *rdesc,
 		}
 		break;
 
+<<<<<<< HEAD
 	case USB_DEVICE_ID_LOGITECH_MOMO_WHEEL2:
 		if (*rsize == MOMO2_RDESC_ORIG_SIZE) {
 			hid_info(hdev,
@@ -410,6 +421,8 @@ static __u8 *lg_report_fixup(struct hid_device *hdev, __u8 *rdesc,
 		}
 		break;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	case USB_DEVICE_ID_LOGITECH_DFP_WHEEL:
 		if (*rsize == DFP_RDESC_ORIG_SIZE) {
 			hid_info(hdev,
@@ -627,7 +640,10 @@ static int lg_input_mapped(struct hid_device *hdev, struct hid_input *hi,
 		case USB_DEVICE_ID_LOGITECH_G27_WHEEL:
 		case USB_DEVICE_ID_LOGITECH_WII_WHEEL:
 		case USB_DEVICE_ID_LOGITECH_MOMO_WHEEL2:
+<<<<<<< HEAD
 		case USB_DEVICE_ID_LOGITECH_VIBRATION_WHEEL:
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			field->application = HID_GD_MULTIAXIS;
 			break;
 		default:
@@ -775,8 +791,11 @@ static const struct hid_device_id lg_devices[] = {
 		.driver_data = LG_NOGET | LG_FF4 },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_MOMO_WHEEL2),
 		.driver_data = LG_FF4 },
+<<<<<<< HEAD
 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_VIBRATION_WHEEL),
 		.driver_data = LG_FF2 },
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_G25_WHEEL),
 		.driver_data = LG_FF4 },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_DFGT_WHEEL),
@@ -790,7 +809,11 @@ static const struct hid_device_id lg_devices[] = {
 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_WINGMAN_FFG),
 		.driver_data = LG_FF },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_RUMBLEPAD2),
+<<<<<<< HEAD
 		.driver_data = LG_NOGET | LG_FF2 },
+=======
+		.driver_data = LG_FF2 },
+>>>>>>> 671a46baf1b... some performance improvements
 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_FLIGHT_SYSTEM_G940),
 		.driver_data = LG_FF3 },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_SPACENAVIGATOR),

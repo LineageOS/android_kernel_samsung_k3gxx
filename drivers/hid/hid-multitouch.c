@@ -244,12 +244,20 @@ static struct mt_class mt_classes[] = {
 	{ .name	= MT_CLS_GENERALTOUCH_TWOFINGERS,
 		.quirks	= MT_QUIRK_NOT_SEEN_MEANS_UP |
 			MT_QUIRK_VALID_IS_INRANGE |
+<<<<<<< HEAD
 			MT_QUIRK_SLOT_IS_CONTACTID,
+=======
+			MT_QUIRK_SLOT_IS_CONTACTNUMBER,
+>>>>>>> 671a46baf1b... some performance improvements
 		.maxcontacts = 2
 	},
 	{ .name	= MT_CLS_GENERALTOUCH_PWT_TENFINGERS,
 		.quirks	= MT_QUIRK_NOT_SEEN_MEANS_UP |
+<<<<<<< HEAD
 			MT_QUIRK_SLOT_IS_CONTACTID
+=======
+			MT_QUIRK_SLOT_IS_CONTACTNUMBER
+>>>>>>> 671a46baf1b... some performance improvements
 	},
 
 	{ .name = MT_CLS_FLATFROG,
@@ -1201,6 +1209,7 @@ static const struct hid_device_id mt_devices[] = {
 	{ .driver_data = MT_CLS_GENERALTOUCH_PWT_TENFINGERS,
 		MT_USB_DEVICE(USB_VENDOR_ID_GENERAL_TOUCH,
 			USB_DEVICE_ID_GENERAL_TOUCH_WIN8_PWT_TENFINGERS) },
+<<<<<<< HEAD
 	{ .driver_data = MT_CLS_GENERALTOUCH_TWOFINGERS,
 		MT_USB_DEVICE(USB_VENDOR_ID_GENERAL_TOUCH,
 			USB_DEVICE_ID_GENERAL_TOUCH_WIN8_PIT_0101) },
@@ -1216,6 +1225,8 @@ static const struct hid_device_id mt_devices[] = {
 	{ .driver_data = MT_CLS_GENERALTOUCH_PWT_TENFINGERS,
 		MT_USB_DEVICE(USB_VENDOR_ID_GENERAL_TOUCH,
 			USB_DEVICE_ID_GENERAL_TOUCH_WIN8_PIT_E100) },
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* Gametel game controller */
 	{ .driver_data = MT_CLS_NSMU,
@@ -1327,6 +1338,7 @@ static const struct hid_device_id mt_devices[] = {
 		MT_USB_DEVICE(USB_VENDOR_ID_QUANTA,
 			USB_DEVICE_ID_QUANTA_OPTICAL_TOUCH_3008) },
 
+<<<<<<< HEAD
 	/* SiS panels */
 	{ .driver_data = MT_CLS_DEFAULT,
 		HID_USB_DEVICE(USB_VENDOR_ID_SIS2_TOUCH,
@@ -1335,6 +1347,8 @@ static const struct hid_device_id mt_devices[] = {
 		HID_USB_DEVICE(USB_VENDOR_ID_SIS2_TOUCH,
 		USB_DEVICE_ID_SIS817_TOUCH) },
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* Stantum panels */
 	{ .driver_data = MT_CLS_CONFIDENCE,
 		MT_USB_DEVICE(USB_VENDOR_ID_STANTUM,
@@ -1363,12 +1377,15 @@ static const struct hid_device_id mt_devices[] = {
 	{ .driver_data = MT_CLS_NSMU,
 		MT_USB_DEVICE(USB_VENDOR_ID_UNITEC,
 			USB_DEVICE_ID_UNITEC_USB_TOUCH_0A19) },
+<<<<<<< HEAD
 
 	/* Wistron panels */
 	{ .driver_data = MT_CLS_NSMU,
 		MT_USB_DEVICE(USB_VENDOR_ID_WISTRON,
 			USB_DEVICE_ID_WISTRON_OPTICAL_TOUCH) },
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* XAT */
 	{ .driver_data = MT_CLS_NSMU,
 		MT_USB_DEVICE(USB_VENDOR_ID_XAT,

@@ -76,12 +76,15 @@ static inline bool mei_cl_cmp_id(const struct mei_cl *cl1,
 		(cl1->host_client_id == cl2->host_client_id) &&
 		(cl1->me_client_id == cl2->me_client_id);
 }
+<<<<<<< HEAD
 static inline bool mei_cl_is_transitioning(struct mei_cl *cl)
 {
 	return (MEI_FILE_INITIALIZING == cl->state ||
 		MEI_FILE_DISCONNECTED == cl->state ||
 		MEI_FILE_DISCONNECTING == cl->state);
 }
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 
 int mei_cl_flow_ctrl_creds(struct mei_cl *cl);

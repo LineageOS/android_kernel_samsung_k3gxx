@@ -120,6 +120,7 @@ static void cdc_mbim_unbind(struct usbnet *dev, struct usb_interface *intf)
 	cdc_ncm_unbind(dev, intf);
 }
 
+<<<<<<< HEAD
 /* verify that the ethernet protocol is IPv4 or IPv6 */
 static bool is_ip_proto(__be16 proto)
 {
@@ -130,6 +131,8 @@ static bool is_ip_proto(__be16 proto)
 	}
 	return false;
 }
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 static struct sk_buff *cdc_mbim_tx_fixup(struct usbnet *dev, struct sk_buff *skb, gfp_t flags)
 {
@@ -138,7 +141,10 @@ static struct sk_buff *cdc_mbim_tx_fixup(struct usbnet *dev, struct sk_buff *skb
 	struct cdc_ncm_ctx *ctx = info->ctx;
 	__le32 sign = cpu_to_le32(USB_CDC_MBIM_NDP16_IPS_SIGN);
 	u16 tci = 0;
+<<<<<<< HEAD
 	bool is_ip;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	u8 *c;
 
 	if (!ctx)
@@ -148,6 +154,7 @@ static struct sk_buff *cdc_mbim_tx_fixup(struct usbnet *dev, struct sk_buff *skb
 		if (skb->len <= ETH_HLEN)
 			goto error;
 
+<<<<<<< HEAD
 		/* Some applications using e.g. packet sockets will
 		 * bypass the VLAN acceleration and create tagged
 		 * ethernet frames directly.  We primarily look for
@@ -164,16 +171,34 @@ static struct sk_buff *cdc_mbim_tx_fixup(struct usbnet *dev, struct sk_buff *skb
 			skb_pull(skb, ETH_HLEN);
 		}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		/* mapping VLANs to MBIM sessions:
 		 *   no tag     => IPS session <0>
 		 *   1 - 255    => IPS session <vlanid>
 		 *   256 - 511  => DSS session <vlanid - 256>
 		 *   512 - 4095 => unsupported, drop
 		 */
+<<<<<<< HEAD
 		switch (tci & 0x0f00) {
 		case 0x0000: /* VLAN ID 0 - 255 */
 			if (!is_ip)
 				goto error;
+=======
+		vlan_get_tag(skb, &tci);
+
+		switch (tci & 0x0f00) {
+		case 0x0000: /* VLAN ID 0 - 255 */
+			/* verify that datagram is IPv4 or IPv6 */
+			skb_reset_mac_header(skb);
+			switch (eth_hdr(skb)->h_proto) {
+			case htons(ETH_P_IP):
+			case htons(ETH_P_IPV6):
+				break;
+			default:
+				goto error;
+			}
+>>>>>>> 671a46baf1b... some performance improvements
 			c = (u8 *)&sign;
 			c[3] = tci;
 			break;
@@ -187,6 +212,10 @@ static struct sk_buff *cdc_mbim_tx_fixup(struct usbnet *dev, struct sk_buff *skb
 				  "unsupported tci=0x%04x\n", tci);
 			goto error;
 		}
+<<<<<<< HEAD
+=======
+		skb_pull(skb, ETH_HLEN);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	spin_lock_bh(&ctx->mtx);
@@ -417,10 +446,13 @@ static const struct usb_device_id mbim_devs[] = {
 	{ USB_DEVICE_AND_INTERFACE_INFO(0x1199, 0x68a2, USB_CLASS_COMM, USB_CDC_SUBCLASS_MBIM, USB_CDC_PROTO_NONE),
 	  .driver_info = (unsigned long)&cdc_mbim_info_zlp,
 	},
+<<<<<<< HEAD
 	/* HP hs2434 Mobile Broadband Module needs ZLPs */
 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3f0, 0x4b1d, USB_CLASS_COMM, USB_CDC_SUBCLASS_MBIM, USB_CDC_PROTO_NONE),
 	  .driver_info = (unsigned long)&cdc_mbim_info_zlp,
 	},
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	{ USB_INTERFACE_INFO(USB_CLASS_COMM, USB_CDC_SUBCLASS_MBIM, USB_CDC_PROTO_NONE),
 	  .driver_info = (unsigned long)&cdc_mbim_info,
 	},

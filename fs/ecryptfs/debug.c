@@ -95,6 +95,38 @@ void ecryptfs_dump_auth_tok(struct ecryptfs_auth_tok *auth_tok)
  *
  * Dump hexadecimal representation of char array
  */
+<<<<<<< HEAD
 void ecryptfs_dump_hex(char *data, int bytes)
 {
 }
+=======
+#ifndef CONFIG_SDP
+void ecryptfs_dump_hex(char *data, int bytes)
+{
+	int i = 0;
+	int add_newline = 1;
+
+	if (ecryptfs_verbosity < 1)
+		return;
+	if (bytes != 0) {
+		printk(KERN_DEBUG "0x%.2x.", (unsigned char)data[i]);
+		i++;
+	}
+	while (i < bytes) {
+		printk("0x%.2x.", (unsigned char)data[i]);
+		i++;
+		if (i % 16 == 0) {
+			printk("\n");
+			add_newline = 0;
+		} else
+			add_newline = 1;
+	}
+	if (add_newline)
+		printk("\n");
+}
+#else
+void ecryptfs_dump_hex(char *data, int bytes)
+{
+}
+#endif
+>>>>>>> 671a46baf1b... some performance improvements

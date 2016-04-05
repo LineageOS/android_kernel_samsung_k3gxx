@@ -518,9 +518,15 @@ static isdnloop_stat isdnloop_cmd_table[] =
 static void
 isdnloop_fake_err(isdnloop_card *card)
 {
+<<<<<<< HEAD
 	char buf[64];
 
 	snprintf(buf, sizeof(buf), "E%s", card->omsg);
+=======
+	char buf[60];
+
+	sprintf(buf, "E%s", card->omsg);
+>>>>>>> 671a46baf1b... some performance improvements
 	isdnloop_fake(card, buf, -1);
 	isdnloop_fake(card, "NAK", -1);
 }
@@ -903,8 +909,11 @@ isdnloop_parse_cmd(isdnloop_card *card)
 	case 7:
 		/* 0x;EAZ */
 		p += 3;
+<<<<<<< HEAD
 		if (strlen(p) >= sizeof(card->eazlist[0]))
 			break;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		strcpy(card->eazlist[ch - 1], p);
 		break;
 	case 8:
@@ -1072,12 +1081,15 @@ isdnloop_start(isdnloop_card *card, isdnloop_sdef *sdefp)
 		return -EBUSY;
 	if (copy_from_user((char *) &sdef, (char *) sdefp, sizeof(sdef)))
 		return -EFAULT;
+<<<<<<< HEAD
 
 	for (i = 0; i < 3; i++) {
 		if (!memchr(sdef.num[i], 0, sizeof(sdef.num[i])))
 			return -EINVAL;
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	spin_lock_irqsave(&card->isdnloop_lock, flags);
 	switch (sdef.ptype) {
 	case ISDN_PTYPE_EURO:
@@ -1091,10 +1103,15 @@ isdnloop_start(isdnloop_card *card, isdnloop_sdef *sdefp)
 			spin_unlock_irqrestore(&card->isdnloop_lock, flags);
 			return -ENOMEM;
 		}
+<<<<<<< HEAD
 		for (i = 0; i < 3; i++) {
 			strlcpy(card->s0num[i], sdef.num[i],
 				sizeof(card->s0num[0]));
 		}
+=======
+		for (i = 0; i < 3; i++)
+			strcpy(card->s0num[i], sdef.num[i]);
+>>>>>>> 671a46baf1b... some performance improvements
 		break;
 	case ISDN_PTYPE_1TR6:
 		if (isdnloop_fake(card, "DRV1.04TC-1TR6-CAPI-CNS-BASIS-29.11.95",
@@ -1107,7 +1124,11 @@ isdnloop_start(isdnloop_card *card, isdnloop_sdef *sdefp)
 			spin_unlock_irqrestore(&card->isdnloop_lock, flags);
 			return -ENOMEM;
 		}
+<<<<<<< HEAD
 		strlcpy(card->s0num[0], sdef.num[0], sizeof(card->s0num[0]));
+=======
+		strcpy(card->s0num[0], sdef.num[0]);
+>>>>>>> 671a46baf1b... some performance improvements
 		card->s0num[1][0] = '\0';
 		card->s0num[2][0] = '\0';
 		break;
@@ -1135,7 +1156,11 @@ isdnloop_command(isdn_ctrl *c, isdnloop_card *card)
 {
 	ulong a;
 	int i;
+<<<<<<< HEAD
 	char cbuf[80];
+=======
+	char cbuf[60];
+>>>>>>> 671a46baf1b... some performance improvements
 	isdn_ctrl cmd;
 	isdnloop_cdef cdef;
 
@@ -1200,6 +1225,10 @@ isdnloop_command(isdn_ctrl *c, isdnloop_card *card)
 			break;
 		if ((c->arg & 255) < ISDNLOOP_BCH) {
 			char *p;
+<<<<<<< HEAD
+=======
+			char dial[50];
+>>>>>>> 671a46baf1b... some performance improvements
 			char dcode[4];
 
 			a = c->arg;
@@ -1211,10 +1240,17 @@ isdnloop_command(isdn_ctrl *c, isdnloop_card *card)
 			} else
 				/* Normal Dial */
 				strcpy(dcode, "CAL");
+<<<<<<< HEAD
 			snprintf(cbuf, sizeof(cbuf),
 				 "%02d;D%s_R%s,%02d,%02d,%s\n", (int) (a + 1),
 				 dcode, p, c->parm.setup.si1,
 				 c->parm.setup.si2, c->parm.setup.eazmsn);
+=======
+			strcpy(dial, p);
+			sprintf(cbuf, "%02d;D%s_R%s,%02d,%02d,%s\n", (int) (a + 1),
+				dcode, dial, c->parm.setup.si1,
+				c->parm.setup.si2, c->parm.setup.eazmsn);
+>>>>>>> 671a46baf1b... some performance improvements
 			i = isdnloop_writecmd(cbuf, strlen(cbuf), 0, card);
 		}
 		break;

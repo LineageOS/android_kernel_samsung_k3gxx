@@ -1078,7 +1078,10 @@ static void srpt_unmap_sg_to_ib_sge(struct srpt_rdma_ch *ch,
 static int srpt_map_sg_to_ib_sge(struct srpt_rdma_ch *ch,
 				 struct srpt_send_ioctx *ioctx)
 {
+<<<<<<< HEAD
 	struct ib_device *dev = ch->sport->sdev->device;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	struct se_cmd *cmd;
 	struct scatterlist *sg, *sg_orig;
 	int sg_cnt;
@@ -1125,7 +1128,11 @@ static int srpt_map_sg_to_ib_sge(struct srpt_rdma_ch *ch,
 
 	db = ioctx->rbufs;
 	tsize = cmd->data_length;
+<<<<<<< HEAD
 	dma_len = ib_sg_dma_len(dev, &sg[0]);
+=======
+	dma_len = sg_dma_len(&sg[0]);
+>>>>>>> 671a46baf1b... some performance improvements
 	riu = ioctx->rdma_ius;
 
 	/*
@@ -1156,8 +1163,12 @@ static int srpt_map_sg_to_ib_sge(struct srpt_rdma_ch *ch,
 					++j;
 					if (j < count) {
 						sg = sg_next(sg);
+<<<<<<< HEAD
 						dma_len = ib_sg_dma_len(
 								dev, sg);
+=======
+						dma_len = sg_dma_len(sg);
+>>>>>>> 671a46baf1b... some performance improvements
 					}
 				}
 			} else {
@@ -1194,8 +1205,13 @@ static int srpt_map_sg_to_ib_sge(struct srpt_rdma_ch *ch,
 	tsize = cmd->data_length;
 	riu = ioctx->rdma_ius;
 	sg = sg_orig;
+<<<<<<< HEAD
 	dma_len = ib_sg_dma_len(dev, &sg[0]);
 	dma_addr = ib_sg_dma_address(dev, &sg[0]);
+=======
+	dma_len = sg_dma_len(&sg[0]);
+	dma_addr = sg_dma_address(&sg[0]);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* this second loop is really mapped sg_addres to rdma_iu->ib_sge */
 	for (i = 0, j = 0;
@@ -1218,10 +1234,15 @@ static int srpt_map_sg_to_ib_sge(struct srpt_rdma_ch *ch,
 					++j;
 					if (j < count) {
 						sg = sg_next(sg);
+<<<<<<< HEAD
 						dma_len = ib_sg_dma_len(
 								dev, sg);
 						dma_addr = ib_sg_dma_address(
 								dev, sg);
+=======
+						dma_len = sg_dma_len(sg);
+						dma_addr = sg_dma_address(sg);
+>>>>>>> 671a46baf1b... some performance improvements
 					}
 				}
 			} else {
@@ -1592,7 +1613,11 @@ static int srpt_build_tskmgmt_rsp(struct srpt_rdma_ch *ch,
 	int resp_data_len;
 	int resp_len;
 
+<<<<<<< HEAD
 	resp_data_len = 4;
+=======
+	resp_data_len = (rsp_code == SRP_TSK_MGMT_SUCCESS) ? 0 : 4;
+>>>>>>> 671a46baf1b... some performance improvements
 	resp_len = sizeof(*srp_rsp) + resp_data_len;
 
 	srp_rsp = ioctx->ioctx.buf;
@@ -1604,9 +1629,17 @@ static int srpt_build_tskmgmt_rsp(struct srpt_rdma_ch *ch,
 				    + atomic_xchg(&ch->req_lim_delta, 0));
 	srp_rsp->tag = tag;
 
+<<<<<<< HEAD
 	srp_rsp->flags |= SRP_RSP_FLAG_RSPVALID;
 	srp_rsp->resp_data_len = cpu_to_be32(resp_data_len);
 	srp_rsp->data[3] = rsp_code;
+=======
+	if (rsp_code != SRP_TSK_MGMT_SUCCESS) {
+		srp_rsp->flags |= SRP_RSP_FLAG_RSPVALID;
+		srp_rsp->resp_data_len = cpu_to_be32(resp_data_len);
+		srp_rsp->data[3] = rsp_code;
+	}
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return resp_len;
 }
@@ -2101,7 +2134,10 @@ static int srpt_create_ch_ib(struct srpt_rdma_ch *ch)
 	if (!qp_init)
 		goto out;
 
+<<<<<<< HEAD
 retry:
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	ch->cq = ib_create_cq(sdev->device, srpt_completion, NULL, ch,
 			      ch->rq_size + srp_sq_size, 0);
 	if (IS_ERR(ch->cq)) {
@@ -2125,6 +2161,7 @@ retry:
 	ch->qp = ib_create_qp(sdev->pd, qp_init);
 	if (IS_ERR(ch->qp)) {
 		ret = PTR_ERR(ch->qp);
+<<<<<<< HEAD
 		if (ret == -ENOMEM) {
 			srp_sq_size /= 2;
 			if (srp_sq_size >= MIN_SRPT_SQ_SIZE) {
@@ -2132,6 +2169,8 @@ retry:
 				goto retry;
 			}
 		}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		printk(KERN_ERR "failed to create_qp ret= %d\n", ret);
 		goto err_destroy_cq;
 	}
@@ -2368,8 +2407,11 @@ static void srpt_release_channel_work(struct work_struct *w)
 	transport_deregister_session(se_sess);
 	ch->sess = NULL;
 
+<<<<<<< HEAD
 	ib_destroy_cm_id(ch->cm_id);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	srpt_destroy_ch_ib(ch);
 
 	srpt_free_ioctx_ring((struct srpt_ioctx **)ch->ioctx_ring,
@@ -2380,6 +2422,11 @@ static void srpt_release_channel_work(struct work_struct *w)
 	list_del(&ch->list);
 	spin_unlock_irq(&sdev->spinlock);
 
+<<<<<<< HEAD
+=======
+	ib_destroy_cm_id(ch->cm_id);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	if (ch->release_done)
 		complete(ch->release_done);
 

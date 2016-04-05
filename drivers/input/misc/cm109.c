@@ -669,10 +669,13 @@ static int cm109_usb_probe(struct usb_interface *intf,
 	int error = -ENOMEM;
 
 	interface = intf->cur_altsetting;
+<<<<<<< HEAD
 
 	if (interface->desc.bNumEndpoints < 1)
 		return -ENODEV;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	endpoint = &interface->endpoint[0].desc;
 
 	if (!usb_endpoint_is_int_in(endpoint))

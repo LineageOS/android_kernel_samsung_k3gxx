@@ -4,3 +4,7 @@ xipImage
 bootpImage
 uImage
 *.dtb
+<<<<<<< HEAD
+=======
+zImage-dtb
+>>>>>>> 671a46baf1b... some performance improvements

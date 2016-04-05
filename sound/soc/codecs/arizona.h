@@ -94,11 +94,14 @@ struct arizona_priv {
 	int num_inputs;
 	unsigned int in_pending;
 
+<<<<<<< HEAD
 	unsigned int out_up_pending;
 	unsigned int out_up_delay;
 	unsigned int out_down_pending;
 	unsigned int out_down_delay;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	unsigned int spk_mute_cache;
 	unsigned int spk_thr2_cache;
 };
@@ -249,6 +252,7 @@ extern unsigned int arizona_v2_mixer_values[ARIZONA_V2_NUM_MIXER_INPUTS];
 			snd_soc_get_value_enum_double,        \
 			arizona_put_sample_rate_enum)
 
+<<<<<<< HEAD
 #define ARIZONA_EQ_CONTROL(xname, xbase)                      \
 {	.iface = SNDRV_CTL_ELEM_IFACE_MIXER, .name = xname,   \
 	.info = snd_soc_bytes_info, .get = snd_soc_bytes_get, \
@@ -262,6 +266,15 @@ extern unsigned int arizona_v2_mixer_values[ARIZONA_V2_NUM_MIXER_INPUTS];
 	.put = arizona_lhpf_coeff_put, .private_value =       \
 	((unsigned long)&(struct soc_bytes) { .base = xbase,  \
 	 .num_regs = 1 }) }
+=======
+#define ARIZONA_EQ_CONTROL(xname, xbase) \
+{	.iface = SNDRV_CTL_ELEM_IFACE_MIXER, .name = xname,	   \
+	.info = snd_soc_bytes_info, .get = snd_soc_bytes_get,      \
+	.put = arizona_eq_coeff_put, .private_value =		   \
+	((unsigned long)&(struct soc_bytes)			   \
+		{.base = xbase, .num_regs = 20, \
+		 .mask = ~ARIZONA_EQ1_B1_MODE }) }
+>>>>>>> 671a46baf1b... some performance improvements
 
 #define CLEARWATER_OSR_ENUM_SIZE 5
 #define ARIZONA_RATE_ENUM_SIZE 5
@@ -326,9 +339,12 @@ extern int arizona_out_ev(struct snd_soc_dapm_widget *w,
 extern int arizona_hp_ev(struct snd_soc_dapm_widget *w,
 			 struct snd_kcontrol *kcontrol,
 			 int event);
+<<<<<<< HEAD
 extern int clearwater_hp_ev(struct snd_soc_dapm_widget *w,
 			    struct snd_kcontrol *kcontrol,
 			    int event);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 extern int arizona_anc_ev(struct snd_soc_dapm_widget *w,
 			  struct snd_kcontrol *kcontrol,
 			  int event);
@@ -343,24 +359,37 @@ extern int arizona_put_sample_rate_enum(struct snd_kcontrol *kcontrol,
 
 extern int arizona_eq_coeff_put(struct snd_kcontrol *kcontrol,
 				struct snd_ctl_elem_value *ucontrol);
+<<<<<<< HEAD
 extern int arizona_lhpf_coeff_put(struct snd_kcontrol *kcontrol,
 				  struct snd_ctl_elem_value *ucontrol);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 extern int arizona_set_sysclk(struct snd_soc_codec *codec, int clk_id,
 			      int source, unsigned int freq, int dir);
 
 extern int arizona_cache_and_clear_sources(struct arizona *arizona,
 					   const int *sources,
+<<<<<<< HEAD
 					   unsigned int *cache,
+=======
+					   int *cache,
+>>>>>>> 671a46baf1b... some performance improvements
 					   int lim);
 
 extern int arizona_restore_sources(struct arizona *arizona,
 				   const int *sources,
+<<<<<<< HEAD
 				   unsigned int *cache,
 				   int lim);
 
 extern void clearwater_spin_sysclk(struct arizona *arizona);
 
+=======
+				   int *cache,
+				   int lim);
+
+>>>>>>> 671a46baf1b... some performance improvements
 extern const struct snd_soc_dai_ops arizona_dai_ops;
 extern const struct snd_soc_dai_ops arizona_simple_dai_ops;
 
@@ -417,6 +446,11 @@ extern int arizona_set_ez2ctrl_cb(struct snd_soc_codec *codec,
 extern int arizona_set_custom_jd(struct snd_soc_codec *codec,
 				 const struct arizona_jd_state *custom_jd);
 
+<<<<<<< HEAD
+=======
+extern int florida_put_dre(struct snd_kcontrol *kcontrol,
+			   struct snd_ctl_elem_value *ucontrol);
+>>>>>>> 671a46baf1b... some performance improvements
 extern int clearwater_put_dre(struct snd_kcontrol *kcontrol,
 			      struct snd_ctl_elem_value *ucontrol);
 

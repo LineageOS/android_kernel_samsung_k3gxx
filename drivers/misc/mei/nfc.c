@@ -292,7 +292,11 @@ static int mei_nfc_if_version(struct mei_nfc_dev *ndev)
 		return -ENOMEM;
 
 	bytes_recv = __mei_cl_recv(cl, (u8 *)reply, if_version_length);
+<<<<<<< HEAD
 	if (bytes_recv < if_version_length) {
+=======
+	if (bytes_recv < 0 || bytes_recv < sizeof(struct mei_nfc_reply)) {
+>>>>>>> 671a46baf1b... some performance improvements
 		dev_err(&dev->pdev->dev, "Could not read IF version\n");
 		ret = -EIO;
 		goto err;
@@ -342,10 +346,16 @@ static int mei_nfc_send(struct mei_cl_device *cldev, u8 *buf, size_t length)
 	ndev = (struct mei_nfc_dev *) cldev->priv_data;
 	dev = ndev->cl->dev;
 
+<<<<<<< HEAD
 	err = -ENOMEM;
 	mei_buf = kzalloc(length + MEI_NFC_HEADER_SIZE, GFP_KERNEL);
 	if (!mei_buf)
 		goto out;
+=======
+	mei_buf = kzalloc(length + MEI_NFC_HEADER_SIZE, GFP_KERNEL);
+	if (!mei_buf)
+		return -ENOMEM;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	hdr = (struct mei_nfc_hci_hdr *) mei_buf;
 	hdr->cmd = MEI_NFC_CMD_HCI_SEND;
@@ -355,9 +365,18 @@ static int mei_nfc_send(struct mei_cl_device *cldev, u8 *buf, size_t length)
 	hdr->data_size = length;
 
 	memcpy(mei_buf + MEI_NFC_HEADER_SIZE, buf, length);
+<<<<<<< HEAD
 	err = __mei_cl_send(ndev->cl, mei_buf, length + MEI_NFC_HEADER_SIZE);
 	if (err < 0)
 		goto out;
+=======
+
+	err = __mei_cl_send(ndev->cl, mei_buf, length + MEI_NFC_HEADER_SIZE);
+	if (err < 0)
+		return err;
+
+	kfree(mei_buf);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (!wait_event_interruptible_timeout(ndev->send_wq,
 				ndev->recv_req_id == ndev->req_id, HZ)) {
@@ -366,8 +385,12 @@ static int mei_nfc_send(struct mei_cl_device *cldev, u8 *buf, size_t length)
 	} else {
 		ndev->req_id++;
 	}
+<<<<<<< HEAD
 out:
 	kfree(mei_buf);
+=======
+
+>>>>>>> 671a46baf1b... some performance improvements
 	return err;
 }
 
@@ -484,11 +507,16 @@ int mei_nfc_host_init(struct mei_device *dev)
 	if (ndev->cl_info)
 		return 0;
 
+<<<<<<< HEAD
 	ndev->cl_info = mei_cl_allocate(dev);
 	ndev->cl = mei_cl_allocate(dev);
 
 	cl = ndev->cl;
 	cl_info = ndev->cl_info;
+=======
+	cl_info = mei_cl_allocate(dev);
+	cl = mei_cl_allocate(dev);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (!cl || !cl_info) {
 		ret = -ENOMEM;
@@ -529,9 +557,16 @@ int mei_nfc_host_init(struct mei_device *dev)
 
 	cl->device_uuid = mei_nfc_guid;
 
+<<<<<<< HEAD
 
 	list_add_tail(&cl->device_link, &dev->device_list);
 
+=======
+	list_add_tail(&cl->device_link, &dev->device_list);
+
+	ndev->cl_info = cl_info;
+	ndev->cl = cl;
+>>>>>>> 671a46baf1b... some performance improvements
 	ndev->req_id = 1;
 
 	INIT_WORK(&ndev->init_work, mei_nfc_init);

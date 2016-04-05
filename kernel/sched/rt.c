@@ -898,8 +898,13 @@ static int sched_rt_runtime_exceeded(struct rt_rq *rt_rq)
 #ifdef CONFIG_SEC_DEBUG_RT_THROTTLE_ACTIVE
 				sec_debug_aux_log(SEC_DEBUG_AUXLOG_IRQ, "TSK:%llu %s[%d]", rt_rq->rq->clock_task - rt_rq->rt_time, current->comm, current->pid);
 #endif
+<<<<<<< HEAD
                 
 				printk_deferred("sched: RT throttling activated - [%d:%s]rq->clock_task: %llu rt_time:%llu\n",
+=======
+
+				printk_sched("sched: RT throttling activated - [%d:%s]rq->clock_task: %llu rt_time:%llu\n",
+>>>>>>> 671a46baf1b... some performance improvements
 						current->pid, current->comm, rt_rq->rq->clock_task, rt_rq->rt_time);
 			}
 		} else {
@@ -972,6 +977,7 @@ inc_rt_prio_smp(struct rt_rq *rt_rq, int prio, int prev_prio)
 {
 	struct rq *rq = rq_of_rt_rq(rt_rq);
 
+<<<<<<< HEAD
 #ifdef CONFIG_RT_GROUP_SCHED
 	/*
 	 * Change rq's cpupri only if rt_rq is the top queue.
@@ -979,6 +985,8 @@ inc_rt_prio_smp(struct rt_rq *rt_rq, int prio, int prev_prio)
 	if (&rq->rt != rt_rq)
 		return;
 #endif
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (rq->online && prio < prev_prio)
 		cpupri_set(&rq->rd->cpupri, rq->cpu, prio);
 }
@@ -988,6 +996,7 @@ dec_rt_prio_smp(struct rt_rq *rt_rq, int prio, int prev_prio)
 {
 	struct rq *rq = rq_of_rt_rq(rt_rq);
 
+<<<<<<< HEAD
 #ifdef CONFIG_RT_GROUP_SCHED
 	/*
 	 * Change rq's cpupri only if rt_rq is the top queue.
@@ -995,6 +1004,8 @@ dec_rt_prio_smp(struct rt_rq *rt_rq, int prio, int prev_prio)
 	if (&rq->rt != rt_rq)
 		return;
 #endif
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (rq->online && rt_rq->highest_prio.curr != prev_prio)
 		cpupri_set(&rq->rd->cpupri, rq->cpu, rt_rq->highest_prio.curr);
 }

@@ -265,19 +265,30 @@ try_misrouted_irq(unsigned int irq, struct irq_desc *desc,
 	return action && (action->flags & IRQF_IRQPOLL);
 }
 
+<<<<<<< HEAD
 #define SPURIOUS_DEFERRED	0x80000000
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 void note_interrupt(unsigned int irq, struct irq_desc *desc,
 		    irqreturn_t action_ret)
 {
 	if (desc->istate & IRQS_POLL_INPROGRESS)
 		return;
 
+<<<<<<< HEAD
+=======
+	/* we get here again via the threaded handler */
+	if (action_ret == IRQ_WAKE_THREAD)
+		return;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	if (bad_action_ret(action_ret)) {
 		report_bad_irq(irq, desc, action_ret);
 		return;
 	}
 
+<<<<<<< HEAD
 	/*
 	 * We cannot call note_interrupt from the threaded handler
 	 * because we need to look at the compound of all handlers
@@ -378,6 +389,8 @@ void note_interrupt(unsigned int irq, struct irq_desc *desc,
 		}
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (unlikely(action_ret == IRQ_NONE)) {
 		/*
 		 * If we are seeing only the odd spurious IRQ caused by

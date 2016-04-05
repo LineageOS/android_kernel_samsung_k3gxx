@@ -196,10 +196,15 @@ static long ceph_ioctl_get_dataloc(struct file *file, void __user *arg)
 	r = ceph_calc_file_object_mapping(&ci->i_layout, dl.file_offset, len,
 					  &dl.object_no, &dl.object_offset,
 					  &olen);
+<<<<<<< HEAD
 	if (r < 0) {
 		up_read(&osdc->map_sem);
 		return -EIO;
 	}
+=======
+	if (r < 0)
+		return -EIO;
+>>>>>>> 671a46baf1b... some performance improvements
 	dl.file_offset -= dl.object_offset;
 	dl.object_size = ceph_file_layout_object_size(ci->i_layout);
 	dl.block_size = ceph_file_layout_su(ci->i_layout);
@@ -211,12 +216,17 @@ static long ceph_ioctl_get_dataloc(struct file *file, void __user *arg)
 	snprintf(dl.object_name, sizeof(dl.object_name), "%llx.%08llx",
 		 ceph_ino(inode), dl.object_no);
 
+<<<<<<< HEAD
 	r = ceph_calc_ceph_pg(&pgid, dl.object_name, osdc->osdmap,
 				ceph_file_layout_pg_pool(ci->i_layout));
 	if (r < 0) {
 		up_read(&osdc->map_sem);
 		return r;
 	}
+=======
+	ceph_calc_ceph_pg(&pgid, dl.object_name, osdc->osdmap,
+		ceph_file_layout_pg_pool(ci->i_layout));
+>>>>>>> 671a46baf1b... some performance improvements
 
 	dl.osd = ceph_calc_pg_primary(osdc->osdmap, pgid);
 	if (dl.osd >= 0) {

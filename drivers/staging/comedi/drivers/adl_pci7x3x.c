@@ -119,6 +119,7 @@ static int adl_pci7x3x_do_insn_bits(struct comedi_device *dev,
 	unsigned int bits = data[1];
 
 	if (mask) {
+<<<<<<< HEAD
 		unsigned int val;
 
 		s->state &= ~mask;
@@ -134,6 +135,12 @@ static int adl_pci7x3x_do_insn_bits(struct comedi_device *dev,
 			val |= val << 16;
 		}
 		outl(val, dev->iobase + reg);
+=======
+		s->state &= ~mask;
+		s->state |= (bits & mask);
+
+		outl(s->state, dev->iobase + reg);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	/*

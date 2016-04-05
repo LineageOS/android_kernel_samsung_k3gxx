@@ -374,7 +374,10 @@ static struct scsi_host_template ips_driver_template = {
 	.sg_tablesize		= IPS_MAX_SG,
 	.cmd_per_lun		= 3,
 	.use_clustering		= ENABLE_CLUSTERING,
+<<<<<<< HEAD
 	.no_write_same		= 1,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 

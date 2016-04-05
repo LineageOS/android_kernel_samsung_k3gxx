@@ -71,7 +71,10 @@
 #include <linux/crypto.h>
 #include <linux/slab.h>
 #include <linux/file.h>
+<<<<<<< HEAD
 #include <linux/compat.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 #include <net/ip.h>
 #include <net/icmp.h>
@@ -821,9 +824,12 @@ static int sctp_send_asconf_del_ip(struct sock		*sk,
 			goto skip_mkasconf;
 		}
 
+<<<<<<< HEAD
 		if (laddr == NULL)
 			return -EINVAL;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		/* We do not need RCU protection throughout this loop
 		 * because this is done under a socket lock from the
 		 * setsockopt call.
@@ -1231,12 +1237,18 @@ static int __sctp_connect(struct sock* sk,
 
 	timeo = sock_sndtimeo(sk, f_flags & O_NONBLOCK);
 
+<<<<<<< HEAD
 	if (assoc_id)
 		*assoc_id = asoc->assoc_id;
 	err = sctp_wait_for_connect(asoc, &timeo);
 	/* Note: the asoc may be freed after the return of
 	 * sctp_wait_for_connect.
 	 */
+=======
+	err = sctp_wait_for_connect(asoc, &timeo);
+	if ((err == 0 || err == -EINPROGRESS) && assoc_id)
+		*assoc_id = asoc->assoc_id;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* Don't free association on exit. */
 	asoc = NULL;
@@ -1388,6 +1400,7 @@ SCTP_STATIC int sctp_setsockopt_connectx(struct sock* sk,
 /*
  * New (hopefully final) interface for the API.
  * We use the sctp_getaddrs_old structure so that use-space library
+<<<<<<< HEAD
  * can avoid any unnecessary allocations. The only different part
  * is that we store the actual length of the address buffer into the
  * addrs_num structure member. That way we can re-use the existing
@@ -1401,6 +1414,13 @@ struct compat_sctp_getaddrs_old {
 };
 #endif
 
+=======
+ * can avoid any unnecessary allocations.   The only defferent part
+ * is that we store the actual length of the address buffer into the
+ * addrs_num structure member.  That way we can re-use the existing
+ * code.
+ */
+>>>>>>> 671a46baf1b... some performance improvements
 SCTP_STATIC int sctp_getsockopt_connectx3(struct sock* sk, int len,
 					char __user *optval,
 					int __user *optlen)
@@ -1409,6 +1429,7 @@ SCTP_STATIC int sctp_getsockopt_connectx3(struct sock* sk, int len,
 	sctp_assoc_t assoc_id = 0;
 	int err = 0;
 
+<<<<<<< HEAD
 #ifdef CONFIG_COMPAT
 	if (is_compat_task()) {
 		struct compat_sctp_getaddrs_old param32;
@@ -1433,6 +1454,18 @@ SCTP_STATIC int sctp_getsockopt_connectx3(struct sock* sk, int len,
 	err = __sctp_setsockopt_connectx(sk, (struct sockaddr __user *)
 					 param.addrs, param.addr_num,
 					 &assoc_id);
+=======
+	if (len < sizeof(param))
+		return -EINVAL;
+
+	if (copy_from_user(&param, optval, sizeof(param)))
+		return -EFAULT;
+
+	err = __sctp_setsockopt_connectx(sk,
+			(struct sockaddr __user *)param.addrs,
+			param.addr_num, &assoc_id);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	if (err == 0 || err == -EINPROGRESS) {
 		if (copy_to_user(optval, &assoc_id, sizeof(assoc_id)))
 			return -EFAULT;
@@ -1536,7 +1569,12 @@ SCTP_STATIC void sctp_close(struct sock *sk, long timeout)
 			struct sctp_chunk *chunk;
 
 			chunk = sctp_make_abort_user(asoc, NULL, 0);
+<<<<<<< HEAD
 			sctp_primitive_ABORT(net, asoc, chunk);
+=======
+			if (chunk)
+				sctp_primitive_ABORT(net, asoc, chunk);
+>>>>>>> 671a46baf1b... some performance improvements
 		} else
 			sctp_primitive_SHUTDOWN(net, asoc, NULL);
 	}
@@ -1550,10 +1588,15 @@ SCTP_STATIC void sctp_close(struct sock *sk, long timeout)
 
 	/* Supposedly, no process has access to the socket, but
 	 * the net layers still may.
+<<<<<<< HEAD
 	 * Also, sctp_destroy_sock() needs to be called with addr_wq_lock
 	 * held and that should be grabbed before socket lock.
 	 */
 	spin_lock_bh(&net->sctp.addr_wq_lock);
+=======
+	 */
+	sctp_local_bh_disable();
+>>>>>>> 671a46baf1b... some performance improvements
 	sctp_bh_lock_sock(sk);
 
 	/* Hold the sock, since sk_common_release() will put sock_put()
@@ -1563,7 +1606,11 @@ SCTP_STATIC void sctp_close(struct sock *sk, long timeout)
 	sk_common_release(sk);
 
 	sctp_bh_unlock_sock(sk);
+<<<<<<< HEAD
 	spin_unlock_bh(&net->sctp.addr_wq_lock);
+=======
+	sctp_local_bh_enable();
+>>>>>>> 671a46baf1b... some performance improvements
 
 	sock_put(sk);
 
@@ -3322,10 +3369,17 @@ static int sctp_setsockopt_auth_chunk(struct sock *sk,
 				      char __user *optval,
 				      unsigned int optlen)
 {
+<<<<<<< HEAD
 	struct sctp_endpoint *ep = sctp_sk(sk)->ep;
 	struct sctp_authchunk val;
 
 	if (!ep->auth_enable)
+=======
+	struct net *net = sock_net(sk);
+	struct sctp_authchunk val;
+
+	if (!net->sctp.auth_enable)
+>>>>>>> 671a46baf1b... some performance improvements
 		return -EACCES;
 
 	if (optlen != sizeof(struct sctp_authchunk))
@@ -3342,7 +3396,11 @@ static int sctp_setsockopt_auth_chunk(struct sock *sk,
 	}
 
 	/* add this chunk id to the endpoint */
+<<<<<<< HEAD
 	return sctp_auth_ep_add_chunkid(ep, val.sauth_chunk);
+=======
+	return sctp_auth_ep_add_chunkid(sctp_sk(sk)->ep, val.sauth_chunk);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /*
@@ -3355,12 +3413,20 @@ static int sctp_setsockopt_hmac_ident(struct sock *sk,
 				      char __user *optval,
 				      unsigned int optlen)
 {
+<<<<<<< HEAD
 	struct sctp_endpoint *ep = sctp_sk(sk)->ep;
+=======
+	struct net *net = sock_net(sk);
+>>>>>>> 671a46baf1b... some performance improvements
 	struct sctp_hmacalgo *hmacs;
 	u32 idents;
 	int err;
 
+<<<<<<< HEAD
 	if (!ep->auth_enable)
+=======
+	if (!net->sctp.auth_enable)
+>>>>>>> 671a46baf1b... some performance improvements
 		return -EACCES;
 
 	if (optlen < sizeof(struct sctp_hmacalgo))
@@ -3377,7 +3443,11 @@ static int sctp_setsockopt_hmac_ident(struct sock *sk,
 		goto out;
 	}
 
+<<<<<<< HEAD
 	err = sctp_auth_ep_set_hmacs(ep, hmacs);
+=======
+	err = sctp_auth_ep_set_hmacs(sctp_sk(sk)->ep, hmacs);
+>>>>>>> 671a46baf1b... some performance improvements
 out:
 	kfree(hmacs);
 	return err;
@@ -3393,12 +3463,20 @@ static int sctp_setsockopt_auth_key(struct sock *sk,
 				    char __user *optval,
 				    unsigned int optlen)
 {
+<<<<<<< HEAD
 	struct sctp_endpoint *ep = sctp_sk(sk)->ep;
+=======
+	struct net *net = sock_net(sk);
+>>>>>>> 671a46baf1b... some performance improvements
 	struct sctp_authkey *authkey;
 	struct sctp_association *asoc;
 	int ret;
 
+<<<<<<< HEAD
 	if (!ep->auth_enable)
+=======
+	if (!net->sctp.auth_enable)
+>>>>>>> 671a46baf1b... some performance improvements
 		return -EACCES;
 
 	if (optlen <= sizeof(struct sctp_authkey))
@@ -3419,7 +3497,11 @@ static int sctp_setsockopt_auth_key(struct sock *sk,
 		goto out;
 	}
 
+<<<<<<< HEAD
 	ret = sctp_auth_set_key(ep, asoc, authkey);
+=======
+	ret = sctp_auth_set_key(sctp_sk(sk)->ep, asoc, authkey);
+>>>>>>> 671a46baf1b... some performance improvements
 out:
 	kzfree(authkey);
 	return ret;
@@ -3435,11 +3517,19 @@ static int sctp_setsockopt_active_key(struct sock *sk,
 				      char __user *optval,
 				      unsigned int optlen)
 {
+<<<<<<< HEAD
 	struct sctp_endpoint *ep = sctp_sk(sk)->ep;
 	struct sctp_authkeyid val;
 	struct sctp_association *asoc;
 
 	if (!ep->auth_enable)
+=======
+	struct net *net = sock_net(sk);
+	struct sctp_authkeyid val;
+	struct sctp_association *asoc;
+
+	if (!net->sctp.auth_enable)
+>>>>>>> 671a46baf1b... some performance improvements
 		return -EACCES;
 
 	if (optlen != sizeof(struct sctp_authkeyid))
@@ -3451,7 +3541,12 @@ static int sctp_setsockopt_active_key(struct sock *sk,
 	if (!asoc && val.scact_assoc_id && sctp_style(sk, UDP))
 		return -EINVAL;
 
+<<<<<<< HEAD
 	return sctp_auth_set_active_key(ep, asoc, val.scact_keynumber);
+=======
+	return sctp_auth_set_active_key(sctp_sk(sk)->ep, asoc,
+					val.scact_keynumber);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /*
@@ -3463,11 +3558,19 @@ static int sctp_setsockopt_del_key(struct sock *sk,
 				   char __user *optval,
 				   unsigned int optlen)
 {
+<<<<<<< HEAD
 	struct sctp_endpoint *ep = sctp_sk(sk)->ep;
 	struct sctp_authkeyid val;
 	struct sctp_association *asoc;
 
 	if (!ep->auth_enable)
+=======
+	struct net *net = sock_net(sk);
+	struct sctp_authkeyid val;
+	struct sctp_association *asoc;
+
+	if (!net->sctp.auth_enable)
+>>>>>>> 671a46baf1b... some performance improvements
 		return -EACCES;
 
 	if (optlen != sizeof(struct sctp_authkeyid))
@@ -3479,7 +3582,12 @@ static int sctp_setsockopt_del_key(struct sock *sk,
 	if (!asoc && val.scact_assoc_id && sctp_style(sk, UDP))
 		return -EINVAL;
 
+<<<<<<< HEAD
 	return sctp_auth_del_key_id(ep, asoc, val.scact_keynumber);
+=======
+	return sctp_auth_del_key_id(sctp_sk(sk)->ep, asoc,
+				    val.scact_keynumber);
+>>>>>>> 671a46baf1b... some performance improvements
 
 }
 
@@ -3512,7 +3620,10 @@ static int sctp_setsockopt_auto_asconf(struct sock *sk, char __user *optval,
 	if ((val && sp->do_auto_asconf) || (!val && !sp->do_auto_asconf))
 		return 0;
 
+<<<<<<< HEAD
 	spin_lock_bh(&sock_net(sk)->sctp.addr_wq_lock);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (val == 0 && sp->do_auto_asconf) {
 		list_del(&sp->auto_asconf_list);
 		sp->do_auto_asconf = 0;
@@ -3521,7 +3632,10 @@ static int sctp_setsockopt_auto_asconf(struct sock *sk, char __user *optval,
 		    &sock_net(sk)->sctp.auto_asconf_splist);
 		sp->do_auto_asconf = 1;
 	}
+<<<<<<< HEAD
 	spin_unlock_bh(&sock_net(sk)->sctp.addr_wq_lock);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 }
 
@@ -4013,6 +4127,7 @@ SCTP_STATIC int sctp_init_sock(struct sock *sk)
 	local_bh_disable();
 	percpu_counter_inc(&sctp_sockets_allocated);
 	sock_prot_inuse_add(net, sk->sk_prot, 1);
+<<<<<<< HEAD
 
 	/* Nothing can fail after this block, otherwise
 	 * sctp_destroy_sock() will be called without addr_wq_lock held
@@ -4027,14 +4142,26 @@ SCTP_STATIC int sctp_init_sock(struct sock *sk)
 		sp->do_auto_asconf = 0;
 	}
 
+=======
+	if (net->sctp.default_auto_asconf) {
+		list_add_tail(&sp->auto_asconf_list,
+		    &net->sctp.auto_asconf_splist);
+		sp->do_auto_asconf = 1;
+	} else
+		sp->do_auto_asconf = 0;
+>>>>>>> 671a46baf1b... some performance improvements
 	local_bh_enable();
 
 	return 0;
 }
 
+<<<<<<< HEAD
 /* Cleanup any SCTP per socket resources. Must be called with
  * sock_net(sk)->sctp.addr_wq_lock held if sp->do_auto_asconf is true
  */
+=======
+/* Cleanup any SCTP per socket resources.  */
+>>>>>>> 671a46baf1b... some performance improvements
 SCTP_STATIC void sctp_destroy_sock(struct sock *sk)
 {
 	struct sctp_sock *sp;
@@ -4262,7 +4389,11 @@ static int sctp_getsockopt_disable_fragments(struct sock *sk, int len,
 static int sctp_getsockopt_events(struct sock *sk, int len, char __user *optval,
 				  int __user *optlen)
 {
+<<<<<<< HEAD
 	if (len == 0)
+=======
+	if (len <= 0)
+>>>>>>> 671a46baf1b... some performance improvements
 		return -EINVAL;
 	if (len > sizeof(struct sctp_event_subscribe))
 		len = sizeof(struct sctp_event_subscribe);
@@ -4310,12 +4441,15 @@ int sctp_do_peeloff(struct sock *sk, sctp_assoc_t id, struct socket **sockp)
 	if (!asoc)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	/* If there is a thread waiting on more sndbuf space for
 	 * sending on this asoc, it cannot be peeled.
 	 */
 	if (waitqueue_active(&asoc->wait))
 		return -EBUSY;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* An association cannot be branched off from an already peeled-off
 	 * socket, nor is this supported for tcp style sockets.
 	 */
@@ -5388,16 +5522,27 @@ static int sctp_getsockopt_maxburst(struct sock *sk, int len,
 static int sctp_getsockopt_hmac_ident(struct sock *sk, int len,
 				    char __user *optval, int __user *optlen)
 {
+<<<<<<< HEAD
 	struct sctp_endpoint *ep = sctp_sk(sk)->ep;
+=======
+	struct net *net = sock_net(sk);
+>>>>>>> 671a46baf1b... some performance improvements
 	struct sctp_hmacalgo  __user *p = (void __user *)optval;
 	struct sctp_hmac_algo_param *hmacs;
 	__u16 data_len = 0;
 	u32 num_idents;
 
+<<<<<<< HEAD
 	if (!ep->auth_enable)
 		return -EACCES;
 
 	hmacs = ep->auth_hmacs_list;
+=======
+	if (!net->sctp.auth_enable)
+		return -EACCES;
+
+	hmacs = sctp_sk(sk)->ep->auth_hmacs_list;
+>>>>>>> 671a46baf1b... some performance improvements
 	data_len = ntohs(hmacs->param_hdr.length) - sizeof(sctp_paramhdr_t);
 
 	if (len < sizeof(struct sctp_hmacalgo) + data_len)
@@ -5418,11 +5563,19 @@ static int sctp_getsockopt_hmac_ident(struct sock *sk, int len,
 static int sctp_getsockopt_active_key(struct sock *sk, int len,
 				    char __user *optval, int __user *optlen)
 {
+<<<<<<< HEAD
 	struct sctp_endpoint *ep = sctp_sk(sk)->ep;
 	struct sctp_authkeyid val;
 	struct sctp_association *asoc;
 
 	if (!ep->auth_enable)
+=======
+	struct net *net = sock_net(sk);
+	struct sctp_authkeyid val;
+	struct sctp_association *asoc;
+
+	if (!net->sctp.auth_enable)
+>>>>>>> 671a46baf1b... some performance improvements
 		return -EACCES;
 
 	if (len < sizeof(struct sctp_authkeyid))
@@ -5437,7 +5590,11 @@ static int sctp_getsockopt_active_key(struct sock *sk, int len,
 	if (asoc)
 		val.scact_keynumber = asoc->active_key_id;
 	else
+<<<<<<< HEAD
 		val.scact_keynumber = ep->active_key_id;
+=======
+		val.scact_keynumber = sctp_sk(sk)->ep->active_key_id;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	len = sizeof(struct sctp_authkeyid);
 	if (put_user(len, optlen))
@@ -5451,7 +5608,11 @@ static int sctp_getsockopt_active_key(struct sock *sk, int len,
 static int sctp_getsockopt_peer_auth_chunks(struct sock *sk, int len,
 				    char __user *optval, int __user *optlen)
 {
+<<<<<<< HEAD
 	struct sctp_endpoint *ep = sctp_sk(sk)->ep;
+=======
+	struct net *net = sock_net(sk);
+>>>>>>> 671a46baf1b... some performance improvements
 	struct sctp_authchunks __user *p = (void __user *)optval;
 	struct sctp_authchunks val;
 	struct sctp_association *asoc;
@@ -5459,7 +5620,11 @@ static int sctp_getsockopt_peer_auth_chunks(struct sock *sk, int len,
 	u32    num_chunks = 0;
 	char __user *to;
 
+<<<<<<< HEAD
 	if (!ep->auth_enable)
+=======
+	if (!net->sctp.auth_enable)
+>>>>>>> 671a46baf1b... some performance improvements
 		return -EACCES;
 
 	if (len < sizeof(struct sctp_authchunks))
@@ -5495,7 +5660,11 @@ num:
 static int sctp_getsockopt_local_auth_chunks(struct sock *sk, int len,
 				    char __user *optval, int __user *optlen)
 {
+<<<<<<< HEAD
 	struct sctp_endpoint *ep = sctp_sk(sk)->ep;
+=======
+	struct net *net = sock_net(sk);
+>>>>>>> 671a46baf1b... some performance improvements
 	struct sctp_authchunks __user *p = (void __user *)optval;
 	struct sctp_authchunks val;
 	struct sctp_association *asoc;
@@ -5503,7 +5672,11 @@ static int sctp_getsockopt_local_auth_chunks(struct sock *sk, int len,
 	u32    num_chunks = 0;
 	char __user *to;
 
+<<<<<<< HEAD
 	if (!ep->auth_enable)
+=======
+	if (!net->sctp.auth_enable)
+>>>>>>> 671a46baf1b... some performance improvements
 		return -EACCES;
 
 	if (len < sizeof(struct sctp_authchunks))
@@ -5520,7 +5693,11 @@ static int sctp_getsockopt_local_auth_chunks(struct sock *sk, int len,
 	if (asoc)
 		ch = (struct sctp_chunks_param*)asoc->c.auth_chunks;
 	else
+<<<<<<< HEAD
 		ch = ep->auth_chunk_list;
+=======
+		ch = sctp_sk(sk)->ep->auth_chunk_list;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (!ch)
 		goto num;
@@ -5779,9 +5956,12 @@ SCTP_STATIC int sctp_getsockopt(struct sock *sk, int level, int optname,
 	if (get_user(len, optlen))
 		return -EFAULT;
 
+<<<<<<< HEAD
 	if (len < 0)
 		return -EINVAL;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	sctp_lock_sock(sk);
 
 	switch (optname) {
@@ -6181,9 +6361,12 @@ int sctp_inet_listen(struct socket *sock, int backlog)
 	if (sock->state != SS_UNCONNECTED)
 		goto out;
 
+<<<<<<< HEAD
 	if (!sctp_sstate(sk, LISTENING) && !sctp_sstate(sk, CLOSED))
 		goto out;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* If backlog is zero, disable listening. */
 	if (!backlog) {
 		if (sctp_sstate(sk, CLOSED))
@@ -6245,7 +6428,11 @@ unsigned int sctp_poll(struct file *file, struct socket *sock, poll_table *wait)
 	/* Is there any exceptional events?  */
 	if (sk->sk_err || !skb_queue_empty(&sk->sk_error_queue))
 		mask |= POLLERR |
+<<<<<<< HEAD
 			(sock_flag(sk, SOCK_SELECT_ERR_QUEUE) ? POLLPRI : 0);
+=======
+			sock_flag(sk, SOCK_SELECT_ERR_QUEUE) ? POLLPRI : 0;
+>>>>>>> 671a46baf1b... some performance improvements
 	if (sk->sk_shutdown & RCV_SHUTDOWN)
 		mask |= POLLRDHUP | POLLIN | POLLRDNORM;
 	if (sk->sk_shutdown == SHUTDOWN_MASK)
@@ -6608,6 +6795,7 @@ static void __sctp_write_space(struct sctp_association *asoc)
 	}
 }
 
+<<<<<<< HEAD
 static void sctp_wake_up_waiters(struct sock *sk,
 				 struct sctp_association *asoc)
 {
@@ -6648,6 +6836,8 @@ static void sctp_wake_up_waiters(struct sock *sk,
 	}
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* Do accounting for the sndbuf space.
  * Decrement the used sndbuf space of the corresponding association by the
  * data size which was just transmitted(freed).
@@ -6675,7 +6865,11 @@ static void sctp_wfree(struct sk_buff *skb)
 	sk_mem_uncharge(sk, skb->truesize);
 
 	sock_wfree(skb);
+<<<<<<< HEAD
 	sctp_wake_up_waiters(sk, asoc);
+=======
+	__sctp_write_space(asoc);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	sctp_association_put(asoc);
 }
@@ -6733,6 +6927,10 @@ static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
 		 */
 		sctp_release_sock(sk);
 		current_timeo = schedule_timeout(current_timeo);
+<<<<<<< HEAD
+=======
+		BUG_ON(sk != asoc->base.sk);
+>>>>>>> 671a46baf1b... some performance improvements
 		sctp_lock_sock(sk);
 
 		*timeo_p = current_timeo;
@@ -6982,6 +7180,7 @@ void sctp_copy_sock(struct sock *newsk, struct sock *sk,
 	newinet->mc_ttl = 1;
 	newinet->mc_index = 0;
 	newinet->mc_list = NULL;
+<<<<<<< HEAD
 
 	if (newsk->sk_flags & SK_FLAGS_TIMESTAMP)
 		net_enable_timestamp();
@@ -6998,6 +7197,8 @@ static inline void sctp_copy_descendant(struct sock *sk_to,
 		ancestor_size += sizeof(struct ipv6_pinfo);
 
 	__inet_sk_copy_descendant(sk_to, sk_from, ancestor_size);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /* Populate the fields of the newsk from the oldsk and migrate the assoc
@@ -7014,6 +7215,10 @@ static void sctp_sock_migrate(struct sock *oldsk, struct sock *newsk,
 	struct sk_buff *skb, *tmp;
 	struct sctp_ulpevent *event;
 	struct sctp_bind_hashbucket *head;
+<<<<<<< HEAD
+=======
+	struct list_head tmplist;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* Migrate socket buffer sizes and all the socket level options to the
 	 * new socket.
@@ -7021,7 +7226,16 @@ static void sctp_sock_migrate(struct sock *oldsk, struct sock *newsk,
 	newsk->sk_sndbuf = oldsk->sk_sndbuf;
 	newsk->sk_rcvbuf = oldsk->sk_rcvbuf;
 	/* Brute force copy old sctp opt. */
+<<<<<<< HEAD
 	sctp_copy_descendant(newsk, oldsk);
+=======
+	if (oldsp->do_auto_asconf) {
+		memcpy(&tmplist, &newsp->auto_asconf_list, sizeof(tmplist));
+		inet_sk_copy_descendant(newsk, oldsk);
+		memcpy(&newsp->auto_asconf_list, &tmplist, sizeof(tmplist));
+	} else
+		inet_sk_copy_descendant(newsk, oldsk);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* Restore the ep value that was overwritten with the above structure
 	 * copy.
@@ -7165,6 +7379,7 @@ struct proto sctp_prot = {
 
 #if IS_ENABLED(CONFIG_IPV6)
 
+<<<<<<< HEAD
 #include <net/transp_v6.h>
 static void sctp_v6_destroy_sock(struct sock *sk)
 {
@@ -7172,6 +7387,8 @@ static void sctp_v6_destroy_sock(struct sock *sk)
 	inet6_destroy_sock(sk);
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 struct proto sctpv6_prot = {
 	.name		= "SCTPv6",
 	.owner		= THIS_MODULE,
@@ -7181,7 +7398,11 @@ struct proto sctpv6_prot = {
 	.accept		= sctp_accept,
 	.ioctl		= sctp_ioctl,
 	.init		= sctp_init_sock,
+<<<<<<< HEAD
 	.destroy	= sctp_v6_destroy_sock,
+=======
+	.destroy	= sctp_destroy_sock,
+>>>>>>> 671a46baf1b... some performance improvements
 	.shutdown	= sctp_shutdown,
 	.setsockopt	= sctp_setsockopt,
 	.getsockopt	= sctp_getsockopt,

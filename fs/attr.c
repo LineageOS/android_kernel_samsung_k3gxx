@@ -167,7 +167,11 @@ void setattr_copy(struct inode *inode, const struct iattr *attr)
 }
 EXPORT_SYMBOL(setattr_copy);
 
+<<<<<<< HEAD
 int notify_change2(struct vfsmount *mnt, struct dentry * dentry, struct iattr * attr)
+=======
+int notify_change(struct dentry * dentry, struct iattr * attr)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	struct inode *inode = dentry->d_inode;
 	umode_t mode = inode->i_mode;
@@ -182,6 +186,14 @@ int notify_change2(struct vfsmount *mnt, struct dentry * dentry, struct iattr * 
 			return -EPERM;
 	}
 
+<<<<<<< HEAD
+=======
+	if ((ia_valid & ATTR_SIZE) && IS_I_VERSION(inode)) {
+		if (attr->ia_size != inode->i_size)
+			inode_inc_iversion(inode);
+	}
+
+>>>>>>> 671a46baf1b... some performance improvements
 	if ((ia_valid & ATTR_MODE)) {
 		umode_t amode = attr->ia_mode;
 		/* Flag setting protected by i_mutex */
@@ -239,9 +251,13 @@ int notify_change2(struct vfsmount *mnt, struct dentry * dentry, struct iattr * 
 	if (error)
 		return error;
 
+<<<<<<< HEAD
 	if (mnt && inode->i_op->setattr2)
 		error = inode->i_op->setattr2(mnt, dentry, attr);
 	else if (inode->i_op->setattr)
+=======
+	if (inode->i_op->setattr)
+>>>>>>> 671a46baf1b... some performance improvements
 		error = inode->i_op->setattr(dentry, attr);
 	else
 		error = simple_setattr(dentry, attr);
@@ -254,10 +270,13 @@ int notify_change2(struct vfsmount *mnt, struct dentry * dentry, struct iattr * 
 
 	return error;
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL(notify_change2);
 
 int notify_change(struct dentry * dentry, struct iattr * attr)
 {
 	return notify_change2(NULL, dentry, attr);
 }
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 EXPORT_SYMBOL(notify_change);

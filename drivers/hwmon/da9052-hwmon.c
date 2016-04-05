@@ -194,7 +194,11 @@ static ssize_t da9052_hwmon_show_name(struct device *dev,
 				      struct device_attribute *devattr,
 				      char *buf)
 {
+<<<<<<< HEAD
 	return sprintf(buf, "da9052\n");
+=======
+	return sprintf(buf, "da9052-hwmon\n");
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static ssize_t show_label(struct device *dev,

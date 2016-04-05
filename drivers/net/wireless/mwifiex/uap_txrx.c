@@ -34,7 +34,10 @@ static void mwifiex_uap_queue_bridged_pkt(struct mwifiex_private *priv,
 	struct mwifiex_txinfo *tx_info;
 	int hdr_chop;
 	struct timeval tv;
+<<<<<<< HEAD
 	struct ethhdr *p_ethhdr;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	u8 rfc1042_eth_hdr[ETH_ALEN] = { 0xaa, 0xaa, 0x03, 0x00, 0x00, 0x00 };
 
 	uap_rx_pd = (struct uap_rxpd *)(skb->data);
@@ -49,6 +52,7 @@ static void mwifiex_uap_queue_bridged_pkt(struct mwifiex_private *priv,
 	}
 
 	if (!memcmp(&rx_pkt_hdr->rfc1042_hdr,
+<<<<<<< HEAD
 		    rfc1042_eth_hdr, sizeof(rfc1042_eth_hdr))) {
 		/* Replace the 803 header and rfc1042 header (llc/snap) with
 		 * an Ethernet II header, keep the src/dst and snap_type
@@ -79,6 +83,16 @@ static void mwifiex_uap_queue_bridged_pkt(struct mwifiex_private *priv,
 		/* Chop off the rxpd */
 		hdr_chop = (u8 *)&rx_pkt_hdr->eth803_hdr - (u8 *)uap_rx_pd;
 	}
+=======
+		    rfc1042_eth_hdr, sizeof(rfc1042_eth_hdr)))
+		/* Chop off the rxpd + the excess memory from
+		 * 802.2/llc/snap header that was removed.
+		 */
+		hdr_chop = (u8 *)eth_hdr - (u8 *)uap_rx_pd;
+	else
+		/* Chop off the rxpd */
+		hdr_chop = (u8 *)&rx_pkt_hdr->eth803_hdr - (u8 *)uap_rx_pd;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* Chop off the leading header bytes so the it points
 	 * to the start of either the reconstructed EthII frame

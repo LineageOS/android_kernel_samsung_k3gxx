@@ -101,12 +101,15 @@ static const struct dmi_system_id __initconst i8042_dmi_noloop_table[] = {
 	},
 	{
 		.matches = {
+<<<<<<< HEAD
 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
 			DMI_MATCH(DMI_PRODUCT_NAME, "X750LN"),
 		},
 	},
 	{
 		.matches = {
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			DMI_MATCH(DMI_SYS_VENDOR, "Compaq"),
 			DMI_MATCH(DMI_PRODUCT_NAME , "ProLiant"),
 			DMI_MATCH(DMI_PRODUCT_VERSION, "8500"),
@@ -120,6 +123,7 @@ static const struct dmi_system_id __initconst i8042_dmi_noloop_table[] = {
 		},
 	},
 	{
+<<<<<<< HEAD
 		/* Dell Embedded Box PC 3000 */
 		.matches = {
 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
@@ -127,6 +131,8 @@ static const struct dmi_system_id __initconst i8042_dmi_noloop_table[] = {
 		},
 	},
 	{
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		/* OQO Model 01 */
 		.matches = {
 			DMI_MATCH(DMI_SYS_VENDOR, "OQO"),
@@ -159,6 +165,7 @@ static const struct dmi_system_id __initconst i8042_dmi_noloop_table[] = {
 		},
 	},
 	{
+<<<<<<< HEAD
 		/* Medion Akoya E7225 */
 		.matches = {
 			DMI_MATCH(DMI_SYS_VENDOR, "Medion"),
@@ -167,6 +174,8 @@ static const struct dmi_system_id __initconst i8042_dmi_noloop_table[] = {
 		},
 	},
 	{
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		/* Blue FB5601 */
 		.matches = {
 			DMI_MATCH(DMI_SYS_VENDOR, "blue"),
@@ -218,12 +227,15 @@ static const struct dmi_system_id __initconst i8042_dmi_noloop_table[] = {
 			DMI_MATCH(DMI_PRODUCT_VERSION, "Rev 1"),
 		},
 	},
+<<<<<<< HEAD
 	{
 		.matches = {
 			DMI_MATCH(DMI_SYS_VENDOR, "PEGATRON CORPORATION"),
 			DMI_MATCH(DMI_PRODUCT_NAME, "C15B"),
 		},
 	},
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	{ }
 };
 
@@ -271,6 +283,7 @@ static const struct dmi_system_id __initconst i8042_dmi_nomux_table[] = {
 		},
 	},
 	{
+<<<<<<< HEAD
 		/* Fujitsu Lifebook U745 */
 		.matches = {
 			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU"),
@@ -278,6 +291,8 @@ static const struct dmi_system_id __initconst i8042_dmi_nomux_table[] = {
 		},
 	},
 	{
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		/* Fujitsu T70H */
 		.matches = {
 			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU"),
@@ -436,6 +451,7 @@ static const struct dmi_system_id __initconst i8042_dmi_nomux_table[] = {
 		},
 	},
 	{
+<<<<<<< HEAD
 		/* Acer Aspire 7738 */
 		.matches = {
 			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
@@ -443,6 +459,8 @@ static const struct dmi_system_id __initconst i8042_dmi_nomux_table[] = {
 		},
 	},
 	{
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		/* Gericom Bellagio */
 		.matches = {
 			DMI_MATCH(DMI_SYS_VENDOR, "Gericom"),
@@ -499,6 +517,7 @@ static const struct dmi_system_id __initconst i8042_dmi_nomux_table[] = {
 			DMI_MATCH(DMI_PRODUCT_NAME, "HP Pavilion dv4 Notebook PC"),
 		},
 	},
+<<<<<<< HEAD
 	{
 		/* Avatar AVIU-145A6 */
 		.matches = {
@@ -506,6 +525,8 @@ static const struct dmi_system_id __initconst i8042_dmi_nomux_table[] = {
 			DMI_MATCH(DMI_PRODUCT_NAME, "IC4I"),
 		},
 	},
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	{ }
 };
 
@@ -587,6 +608,7 @@ static const struct dmi_system_id __initconst i8042_dmi_reset_table[] = {
 			DMI_MATCH(DMI_PRODUCT_NAME, "20046"),
 		},
 	},
+<<<<<<< HEAD
 	{
 		/* Clevo P650RS, 650RP6, Sager NP8152-S, and others */
 		.matches = {
@@ -594,6 +616,8 @@ static const struct dmi_system_id __initconst i8042_dmi_reset_table[] = {
 			DMI_MATCH(DMI_PRODUCT_NAME, "P65xRP"),
 		},
 	},
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	{ }
 };
 
@@ -656,6 +680,7 @@ static const struct dmi_system_id __initconst i8042_dmi_notimeout_table[] = {
 			DMI_MATCH(DMI_PRODUCT_NAME, "HP Pavilion dv4 Notebook PC"),
 		},
 	},
+<<<<<<< HEAD
 	{
 		/* Fujitsu A544 laptop */
 		/* https://bugzilla.redhat.com/show_bug.cgi?id=1111138 */
@@ -680,6 +705,8 @@ static const struct dmi_system_id __initconst i8042_dmi_notimeout_table[] = {
 			DMI_MATCH(DMI_PRODUCT_NAME, "LIFEBOOK U574"),
 		},
 	},
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	{ }
 };
 
@@ -763,6 +790,7 @@ static const struct dmi_system_id __initconst i8042_dmi_dritek_table[] = {
 	{ }
 };
 
+<<<<<<< HEAD
 /*
  * Some laptops need keyboard reset before probing for the trackpad to get
  * it detected, initialised & finally work.
@@ -792,6 +820,8 @@ static const struct dmi_system_id __initconst i8042_dmi_kbdreset_table[] = {
 	{ }
 };
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #endif /* CONFIG_X86 */
 
 #ifdef CONFIG_PNP
@@ -873,7 +903,10 @@ static struct pnp_device_id pnp_kbd_devids[] = {
 	{ .id = "CPQA0D7", .driver_data = 0 },
 	{ .id = "", },
 };
+<<<<<<< HEAD
 MODULE_DEVICE_TABLE(pnp, pnp_kbd_devids);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 static struct pnp_driver i8042_pnp_kbd_driver = {
 	.name           = "i8042 kbd",
@@ -895,7 +928,10 @@ static struct pnp_device_id pnp_aux_devids[] = {
 	{ .id = "SYN0801", .driver_data = 0 },
 	{ .id = "", },
 };
+<<<<<<< HEAD
 MODULE_DEVICE_TABLE(pnp, pnp_aux_devids);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 static struct pnp_driver i8042_pnp_aux_driver = {
 	.name           = "i8042 aux",
@@ -1072,9 +1108,12 @@ static int __init i8042_platform_init(void)
 	if (dmi_check_system(i8042_dmi_dritek_table))
 		i8042_dritek = true;
 
+<<<<<<< HEAD
 	if (dmi_check_system(i8042_dmi_kbdreset_table))
 		i8042_kbdreset = true;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	 * A20 was already enabled during early kernel init. But some buggy
 	 * BIOSes (in MSI Laptops) require A20 to be enabled using 8042 to

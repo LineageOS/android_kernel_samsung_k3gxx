@@ -229,7 +229,11 @@ armada_370_xp_handle_irq(struct pt_regs *regs)
 						ARMADA_370_XP_IN_DRBEL_CAUSE_OFFS)
 				& IPI_DOORBELL_MASK;
 
+<<<<<<< HEAD
 			writel(~ipimask, per_cpu_int_base +
+=======
+			writel(~IPI_DOORBELL_MASK, per_cpu_int_base +
+>>>>>>> 671a46baf1b... some performance improvements
 				ARMADA_370_XP_IN_DRBEL_CAUSE_OFFS);
 
 			/* Handle all pending doorbells */

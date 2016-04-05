@@ -237,6 +237,7 @@ struct packet_skb_cb {
 static void __fanout_unlink(struct sock *sk, struct packet_sock *po);
 static void __fanout_link(struct sock *sk, struct packet_sock *po);
 
+<<<<<<< HEAD
 static struct net_device *packet_cached_dev_get(struct packet_sock *po)
 {
 	struct net_device *dev;
@@ -261,6 +262,8 @@ static void packet_cached_dev_reset(struct packet_sock *po)
 	RCU_INIT_POINTER(po->cached_dev, NULL);
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* register_prot_hook must be invoked with the po->bind_lock held,
  * or from a context in which asynchronous accesses to the packet
  * socket is not possible (packet_create()).
@@ -268,13 +271,19 @@ static void packet_cached_dev_reset(struct packet_sock *po)
 static void register_prot_hook(struct sock *sk)
 {
 	struct packet_sock *po = pkt_sk(sk);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (!po->running) {
 		if (po->fanout)
 			__fanout_link(sk, po);
 		else
 			dev_add_pack(&po->prot_hook);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		sock_hold(sk);
 		po->running = 1;
 	}
@@ -292,12 +301,18 @@ static void __unregister_prot_hook(struct sock *sk, bool sync)
 	struct packet_sock *po = pkt_sk(sk);
 
 	po->running = 0;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (po->fanout)
 		__fanout_unlink(sk, po);
 	else
 		__dev_remove_pack(&po->prot_hook);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	__sock_put(sk);
 
 	if (sync) {
@@ -460,9 +475,15 @@ static void prb_shutdown_retire_blk_timer(struct packet_sock *po,
 
 	pkc = tx_ring ? &po->tx_ring.prb_bdqc : &po->rx_ring.prb_bdqc;
 
+<<<<<<< HEAD
 	spin_lock_bh(&rb_queue->lock);
 	pkc->delete_blk_timer = 1;
 	spin_unlock_bh(&rb_queue->lock);
+=======
+	spin_lock(&rb_queue->lock);
+	pkc->delete_blk_timer = 1;
+	spin_unlock(&rb_queue->lock);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	prb_del_retire_blk_timer(pkc);
 }
@@ -565,7 +586,10 @@ static void init_prb_bdqc(struct packet_sock *po,
 	p1->tov_in_jiffies = msecs_to_jiffies(p1->retire_blk_tov);
 	p1->blk_sizeof_priv = req_u->req3.tp_sizeof_priv;
 
+<<<<<<< HEAD
 	p1->max_frame_len = p1->kblk_size - BLK_PLUS_PRIV(p1->blk_sizeof_priv);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	prb_init_ft_ops(p1, req_u);
 	prb_setup_retire_blk_timer(po, tx_ring);
 	prb_open_block(p1, pbd);
@@ -1150,6 +1174,19 @@ static void packet_sock_destruct(struct sock *sk)
 	sk_refcnt_debug_dec(sk);
 }
 
+<<<<<<< HEAD
+=======
+static int fanout_rr_next(struct packet_fanout *f, unsigned int num)
+{
+	int x = atomic_read(&f->rr_cur) + 1;
+
+	if (x >= num)
+		x = 0;
+
+	return x;
+}
+
+>>>>>>> 671a46baf1b... some performance improvements
 static unsigned int fanout_demux_hash(struct packet_fanout *f,
 				      struct sk_buff *skb,
 				      unsigned int num)
@@ -1161,9 +1198,19 @@ static unsigned int fanout_demux_lb(struct packet_fanout *f,
 				    struct sk_buff *skb,
 				    unsigned int num)
 {
+<<<<<<< HEAD
 	unsigned int val = atomic_inc_return(&f->rr_cur);
 
 	return val % num;
+=======
+	int cur, old;
+
+	cur = atomic_read(&f->rr_cur);
+	while ((old = atomic_cmpxchg(&f->rr_cur, cur,
+				     fanout_rr_next(f, num))) != cur)
+		cur = old;
+	return cur;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static unsigned int fanout_demux_cpu(struct packet_fanout *f,
@@ -1203,7 +1250,11 @@ static int packet_rcv_fanout(struct sk_buff *skb, struct net_device *dev,
 			     struct packet_type *pt, struct net_device *orig_dev)
 {
 	struct packet_fanout *f = pt->af_packet_priv;
+<<<<<<< HEAD
 	unsigned int num = ACCESS_ONCE(f->num_members);
+=======
+	unsigned int num = f->num_members;
+>>>>>>> 671a46baf1b... some performance improvements
 	struct packet_sock *po;
 	unsigned int idx;
 
@@ -1257,8 +1308,11 @@ static void __fanout_link(struct sock *sk, struct packet_sock *po)
 	f->arr[f->num_members] = sk;
 	smp_wmb();
 	f->num_members++;
+<<<<<<< HEAD
 	if (f->num_members == 1)
 		dev_add_pack(&f->prot_hook);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	spin_unlock(&f->lock);
 }
 
@@ -1275,8 +1329,11 @@ static void __fanout_unlink(struct sock *sk, struct packet_sock *po)
 	BUG_ON(i >= f->num_members);
 	f->arr[i] = f->arr[f->num_members - 1];
 	f->num_members--;
+<<<<<<< HEAD
 	if (f->num_members == 0)
 		__dev_remove_pack(&f->prot_hook);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	spin_unlock(&f->lock);
 }
 
@@ -1308,6 +1365,7 @@ static int fanout_add(struct sock *sk, u16 id, u16 type_flags)
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	mutex_lock(&fanout_mutex);
 
 	err = -EINVAL;
@@ -1318,6 +1376,15 @@ static int fanout_add(struct sock *sk, u16 id, u16 type_flags)
 	if (po->fanout)
 		goto out;
 
+=======
+	if (!po->running)
+		return -EINVAL;
+
+	if (po->fanout)
+		return -EALREADY;
+
+	mutex_lock(&fanout_mutex);
+>>>>>>> 671a46baf1b... some performance improvements
 	match = NULL;
 	list_for_each_entry(f, &fanout_list, list) {
 		if (f->id == id &&
@@ -1347,6 +1414,10 @@ static int fanout_add(struct sock *sk, u16 id, u16 type_flags)
 		match->prot_hook.func = packet_rcv_fanout;
 		match->prot_hook.af_packet_priv = match;
 		match->prot_hook.id_match = match_fanout_group;
+<<<<<<< HEAD
+=======
+		dev_add_pack(&match->prot_hook);
+>>>>>>> 671a46baf1b... some performance improvements
 		list_add(&match->list, &fanout_list);
 	}
 	err = -EINVAL;
@@ -1367,16 +1438,21 @@ out:
 	return err;
 }
 
+<<<<<<< HEAD
 /* If pkt_sk(sk)->fanout->sk_ref is zero, this function removes
  * pkt_sk(sk)->fanout from fanout_list and returns pkt_sk(sk)->fanout.
  * It is the responsibility of the caller to call fanout_release_data() and
  * free the returned packet_fanout (after synchronize_net())
  */
 static struct packet_fanout *fanout_release(struct sock *sk)
+=======
+static void fanout_release(struct sock *sk)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	struct packet_sock *po = pkt_sk(sk);
 	struct packet_fanout *f;
 
+<<<<<<< HEAD
 	mutex_lock(&fanout_mutex);
 	f = po->fanout;
 	if (f) {
@@ -1390,6 +1466,21 @@ static struct packet_fanout *fanout_release(struct sock *sk)
 	mutex_unlock(&fanout_mutex);
 
 	return f;
+=======
+	f = po->fanout;
+	if (!f)
+		return;
+
+	mutex_lock(&fanout_mutex);
+	po->fanout = NULL;
+
+	if (atomic_dec_and_test(&f->sk_ref)) {
+		list_del(&f->list);
+		dev_remove_pack(&f->prot_hook);
+		kfree(f);
+	}
+	mutex_unlock(&fanout_mutex);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static const struct proto_ops packet_ops;
@@ -1801,6 +1892,7 @@ static int tpacket_rcv(struct sk_buff *skb, struct net_device *dev,
 			if ((int)snaplen < 0)
 				snaplen = 0;
 		}
+<<<<<<< HEAD
 	} else if (unlikely(macoff + snaplen >
 			    GET_PBDQC_FROM_RB(&po->rx_ring)->max_frame_len)) {
 		u32 nval;
@@ -1813,6 +1905,8 @@ static int tpacket_rcv(struct sk_buff *skb, struct net_device *dev,
 			snaplen = 0;
 			macoff = GET_PBDQC_FROM_RB(&po->rx_ring)->max_frame_len;
 		}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	spin_lock(&sk->sk_receive_queue.lock);
 	h.raw = packet_current_rx_frame(po, skb,
@@ -2084,6 +2178,10 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
 	struct sk_buff *skb;
 	struct net_device *dev;
 	__be16 proto;
+<<<<<<< HEAD
+=======
+	bool need_rls_dev = false;
+>>>>>>> 671a46baf1b... some performance improvements
 	int err, reserve = 0;
 	void *ph;
 	struct sockaddr_ll *saddr = (struct sockaddr_ll *)msg->msg_name;
@@ -2095,8 +2193,13 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
 
 	mutex_lock(&po->pg_vec_lock);
 
+<<<<<<< HEAD
 	if (likely(saddr == NULL)) {
 		dev	= packet_cached_dev_get(po);
+=======
+	if (saddr == NULL) {
+		dev = po->prot_hook.dev;
+>>>>>>> 671a46baf1b... some performance improvements
 		proto	= po->num;
 		addr	= NULL;
 	} else {
@@ -2110,17 +2213,30 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
 		proto	= saddr->sll_protocol;
 		addr	= saddr->sll_addr;
 		dev = dev_get_by_index(sock_net(&po->sk), saddr->sll_ifindex);
+<<<<<<< HEAD
+=======
+		need_rls_dev = true;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	err = -ENXIO;
 	if (unlikely(dev == NULL))
 		goto out;
+<<<<<<< HEAD
+=======
+
+	reserve = dev->hard_header_len;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	err = -ENETDOWN;
 	if (unlikely(!(dev->flags & IFF_UP)))
 		goto out_put;
 
+<<<<<<< HEAD
 	reserve = dev->hard_header_len;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	size_max = po->tx_ring.frame_size
 		- (po->tp_hdrlen - sizeof(struct sockaddr_ll));
 
@@ -2197,7 +2313,12 @@ out_status:
 	__packet_set_status(po, ph, status);
 	kfree_skb(skb);
 out_put:
+<<<<<<< HEAD
 	dev_put(dev);
+=======
+	if (need_rls_dev)
+		dev_put(dev);
+>>>>>>> 671a46baf1b... some performance improvements
 out:
 	mutex_unlock(&po->pg_vec_lock);
 	return err;
@@ -2235,6 +2356,10 @@ static int packet_snd(struct socket *sock,
 	struct sk_buff *skb;
 	struct net_device *dev;
 	__be16 proto;
+<<<<<<< HEAD
+=======
+	bool need_rls_dev = false;
+>>>>>>> 671a46baf1b... some performance improvements
 	unsigned char *addr;
 	int err, reserve = 0;
 	struct virtio_net_hdr vnet_hdr = { 0 };
@@ -2242,15 +2367,24 @@ static int packet_snd(struct socket *sock,
 	int vnet_hdr_len;
 	struct packet_sock *po = pkt_sk(sk);
 	unsigned short gso_type = 0;
+<<<<<<< HEAD
 	int hlen, tlen, linear;
+=======
+	int hlen, tlen;
+>>>>>>> 671a46baf1b... some performance improvements
 	int extra_len = 0;
 
 	/*
 	 *	Get and verify the address.
 	 */
 
+<<<<<<< HEAD
 	if (likely(saddr == NULL)) {
 		dev	= packet_cached_dev_get(po);
+=======
+	if (saddr == NULL) {
+		dev = po->prot_hook.dev;
+>>>>>>> 671a46baf1b... some performance improvements
 		proto	= po->num;
 		addr	= NULL;
 	} else {
@@ -2262,6 +2396,7 @@ static int packet_snd(struct socket *sock,
 		proto	= saddr->sll_protocol;
 		addr	= saddr->sll_addr;
 		dev = dev_get_by_index(sock_net(sk), saddr->sll_ifindex);
+<<<<<<< HEAD
 	}
 
 	err = -ENXIO;
@@ -2273,6 +2408,21 @@ static int packet_snd(struct socket *sock,
 
 	if (sock->type == SOCK_RAW)
 		reserve = dev->hard_header_len;
+=======
+		need_rls_dev = true;
+	}
+
+	err = -ENXIO;
+	if (dev == NULL)
+		goto out_unlock;
+	if (sock->type == SOCK_RAW)
+		reserve = dev->hard_header_len;
+
+	err = -ENETDOWN;
+	if (!(dev->flags & IFF_UP))
+		goto out_unlock;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	if (po->has_vnet_hdr) {
 		vnet_hdr_len = sizeof(vnet_hdr);
 
@@ -2336,9 +2486,13 @@ static int packet_snd(struct socket *sock,
 	err = -ENOBUFS;
 	hlen = LL_RESERVED_SPACE(dev);
 	tlen = dev->needed_tailroom;
+<<<<<<< HEAD
 	linear = vnet_hdr.hdr_len;
 	linear = max(linear, min_t(int, len, dev->hard_header_len));
 	skb = packet_alloc_skb(sk, hlen + tlen, hlen, len, linear,
+=======
+	skb = packet_alloc_skb(sk, hlen + tlen, hlen, len, vnet_hdr.hdr_len,
+>>>>>>> 671a46baf1b... some performance improvements
 			       msg->msg_flags & MSG_DONTWAIT, &err);
 	if (skb == NULL)
 		goto out_unlock;
@@ -2408,14 +2562,23 @@ static int packet_snd(struct socket *sock,
 	if (err > 0 && (err = net_xmit_errno(err)) != 0)
 		goto out_unlock;
 
+<<<<<<< HEAD
 	dev_put(dev);
+=======
+	if (need_rls_dev)
+		dev_put(dev);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return len;
 
 out_free:
 	kfree_skb(skb);
 out_unlock:
+<<<<<<< HEAD
 	if (dev)
+=======
+	if (dev && need_rls_dev)
+>>>>>>> 671a46baf1b... some performance improvements
 		dev_put(dev);
 out:
 	return err;
@@ -2441,7 +2604,10 @@ static int packet_release(struct socket *sock)
 {
 	struct sock *sk = sock->sk;
 	struct packet_sock *po;
+<<<<<<< HEAD
 	struct packet_fanout *f;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	struct net *net;
 	union tpacket_req_u req_u;
 
@@ -2461,8 +2627,11 @@ static int packet_release(struct socket *sock)
 
 	spin_lock(&po->bind_lock);
 	unregister_prot_hook(sk, false);
+<<<<<<< HEAD
 	packet_cached_dev_reset(po);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (po->prot_hook.dev) {
 		dev_put(po->prot_hook.dev);
 		po->prot_hook.dev = NULL;
@@ -2481,6 +2650,7 @@ static int packet_release(struct socket *sock)
 		packet_set_ring(sk, &req_u, 1, 1);
 	}
 
+<<<<<<< HEAD
 	f = fanout_release(sk);
 
 	synchronize_net();
@@ -2488,6 +2658,11 @@ static int packet_release(struct socket *sock)
 	if (f) {
 		kfree(f);
 	}
+=======
+	fanout_release(sk);
+
+	synchronize_net();
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	 *	Now the socket is dead. No more input will appear.
 	 */
@@ -2522,16 +2697,25 @@ static int packet_do_bind(struct sock *sk, struct net_device *dev, __be16 protoc
 
 	spin_lock(&po->bind_lock);
 	unregister_prot_hook(sk, true);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	po->num = protocol;
 	po->prot_hook.type = protocol;
 	if (po->prot_hook.dev)
 		dev_put(po->prot_hook.dev);
+<<<<<<< HEAD
 
 	po->prot_hook.dev = dev;
 	po->ifindex = dev ? dev->ifindex : 0;
 
 	packet_cached_dev_assign(po, dev);
+=======
+	po->prot_hook.dev = dev;
+
+	po->ifindex = dev ? dev->ifindex : 0;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (protocol == 0)
 		goto out_unlock;
@@ -2558,7 +2742,11 @@ static int packet_bind_spkt(struct socket *sock, struct sockaddr *uaddr,
 			    int addr_len)
 {
 	struct sock *sk = sock->sk;
+<<<<<<< HEAD
 	char name[sizeof(uaddr->sa_data) + 1];
+=======
+	char name[15];
+>>>>>>> 671a46baf1b... some performance improvements
 	struct net_device *dev;
 	int err = -ENODEV;
 
@@ -2568,11 +2756,15 @@ static int packet_bind_spkt(struct socket *sock, struct sockaddr *uaddr,
 
 	if (addr_len != sizeof(struct sockaddr))
 		return -EINVAL;
+<<<<<<< HEAD
 	/* uaddr->sa_data comes from the userspace, it's not guaranteed to be
 	 * zero-terminated.
 	 */
 	memcpy(name, uaddr->sa_data, sizeof(uaddr->sa_data));
 	name[sizeof(uaddr->sa_data)] = 0;
+=======
+	strlcpy(name, uaddr->sa_data, sizeof(name));
+>>>>>>> 671a46baf1b... some performance improvements
 
 	dev = dev_get_by_name(sock_net(sk), name);
 	if (dev)
@@ -2650,8 +2842,11 @@ static int packet_create(struct net *net, struct socket *sock, int protocol,
 	sk->sk_family = PF_PACKET;
 	po->num = proto;
 
+<<<<<<< HEAD
 	packet_cached_dev_reset(po);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	sk->sk_destruct = packet_sock_destruct;
 	sk_refcnt_debug_inc(sk);
 
@@ -2742,6 +2937,10 @@ static int packet_recvmsg(struct kiocb *iocb, struct socket *sock,
 	struct sock *sk = sock->sk;
 	struct sk_buff *skb;
 	int copied, err;
+<<<<<<< HEAD
+=======
+	struct sockaddr_ll *sll;
+>>>>>>> 671a46baf1b... some performance improvements
 	int vnet_hdr_len = 0;
 
 	err = -EINVAL;
@@ -2824,10 +3023,29 @@ static int packet_recvmsg(struct kiocb *iocb, struct socket *sock,
 			goto out_free;
 	}
 
+<<<<<<< HEAD
 	/* You lose any data beyond the buffer you gave. If it worries
 	 * a user program they can ask the device for its MTU
 	 * anyway.
 	 */
+=======
+	/*
+	 *	If the address length field is there to be filled in, we fill
+	 *	it in now.
+	 */
+
+	sll = &PACKET_SKB_CB(skb)->sa.ll;
+	if (sock->type == SOCK_PACKET)
+		msg->msg_namelen = sizeof(struct sockaddr_pkt);
+	else
+		msg->msg_namelen = sll->sll_halen + offsetof(struct sockaddr_ll, sll_addr);
+
+	/*
+	 *	You lose any data beyond the buffer you gave. If it worries a
+	 *	user program they can ask the device for its MTU anyway.
+	 */
+
+>>>>>>> 671a46baf1b... some performance improvements
 	copied = skb->len;
 	if (copied > len) {
 		copied = len;
@@ -2840,6 +3058,7 @@ static int packet_recvmsg(struct kiocb *iocb, struct socket *sock,
 
 	sock_recv_ts_and_drops(msg, sk, skb);
 
+<<<<<<< HEAD
 	if (msg->msg_name) {
 		/* If the address length field is there to be filled
 		 * in, we fill it in now.
@@ -2854,6 +3073,11 @@ static int packet_recvmsg(struct kiocb *iocb, struct socket *sock,
 		memcpy(msg->msg_name, &PACKET_SKB_CB(skb)->sa,
 		       msg->msg_namelen);
 	}
+=======
+	if (msg->msg_name)
+		memcpy(msg->msg_name, &PACKET_SKB_CB(skb)->sa,
+		       msg->msg_namelen);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (pkt_sk(sk)->auxdata) {
 		struct tpacket_auxdata aux;
@@ -3019,7 +3243,10 @@ static int packet_mc_add(struct sock *sk, struct packet_mreq_max *mreq)
 	i->ifindex = mreq->mr_ifindex;
 	i->alen = mreq->mr_alen;
 	memcpy(i->addr, mreq->mr_address, i->alen);
+<<<<<<< HEAD
 	memset(i->addr + i->alen, 0, sizeof(i->addr) - i->alen);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	i->count = 1;
 	i->next = po->mclist;
 	po->mclist = i;
@@ -3183,6 +3410,7 @@ packet_setsockopt(struct socket *sock, int level, int optname, char __user *optv
 
 		if (optlen != sizeof(val))
 			return -EINVAL;
+<<<<<<< HEAD
 		if (copy_from_user(&val, optval, sizeof(val)))
 			return -EFAULT;
 		if (val > INT_MAX)
@@ -3196,6 +3424,14 @@ packet_setsockopt(struct socket *sock, int level, int optname, char __user *optv
 		}
 		release_sock(sk);
 		return ret;
+=======
+		if (po->rx_ring.pg_vec || po->tx_ring.pg_vec)
+			return -EBUSY;
+		if (copy_from_user(&val, optval, sizeof(val)))
+			return -EFAULT;
+		po->tp_reserve = val;
+		return 0;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	case PACKET_LOSS:
 	{
@@ -3319,11 +3555,17 @@ static int packet_getsockopt(struct socket *sock, int level, int optname,
 
 		if (po->tp_version == TPACKET_V3) {
 			lv = sizeof(struct tpacket_stats_v3);
+<<<<<<< HEAD
 			st.stats3.tp_packets += st.stats3.tp_drops;
 			data = &st.stats3;
 		} else {
 			lv = sizeof(struct tpacket_stats);
 			st.stats1.tp_packets += st.stats1.tp_drops;
+=======
+			data = &st.stats3;
+		} else {
+			lv = sizeof(struct tpacket_stats);
+>>>>>>> 671a46baf1b... some performance improvements
 			data = &st.stats1;
 		}
 
@@ -3343,8 +3585,11 @@ static int packet_getsockopt(struct socket *sock, int level, int optname,
 	case PACKET_HDRLEN:
 		if (len > sizeof(int))
 			len = sizeof(int);
+<<<<<<< HEAD
 		if (len < sizeof(int))
 			return -EINVAL;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		if (copy_from_user(&val, optval, len))
 			return -EFAULT;
 		switch (val) {
@@ -3420,7 +3665,10 @@ static int packet_notifier(struct notifier_block *this, unsigned long msg, void 
 						sk->sk_error_report(sk);
 				}
 				if (msg == NETDEV_UNREGISTER) {
+<<<<<<< HEAD
 					packet_cached_dev_reset(po);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 					po->ifindex = -1;
 					if (po->prot_hook.dev)
 						dev_put(po->prot_hook.dev);
@@ -3680,10 +3928,13 @@ static int packet_set_ring(struct sock *sk, union tpacket_req_u *req_u,
 			goto out;
 		if (unlikely(req->tp_block_size & (PAGE_SIZE - 1)))
 			goto out;
+<<<<<<< HEAD
 		if (po->tp_version >= TPACKET_V3 &&
 		    req->tp_block_size <=
 			  BLK_PLUS_PRIV((u64)req_u->req3.tp_sizeof_priv))
 			goto out;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		if (unlikely(req->tp_frame_size < po->tp_hdrlen +
 					po->tp_reserve))
 			goto out;
@@ -3693,8 +3944,11 @@ static int packet_set_ring(struct sock *sk, union tpacket_req_u *req_u,
 		rb->frames_per_block = req->tp_block_size/req->tp_frame_size;
 		if (unlikely(rb->frames_per_block <= 0))
 			goto out;
+<<<<<<< HEAD
 		if (unlikely(req->tp_block_size > UINT_MAX / req->tp_block_nr))
 			goto out;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		if (unlikely((rb->frames_per_block * req->tp_block_nr) !=
 					req->tp_frame_nr))
 			goto out;
@@ -3711,7 +3965,11 @@ static int packet_set_ring(struct sock *sk, union tpacket_req_u *req_u,
 		 */
 			if (!tx_ring)
 				init_prb_bdqc(po, rb, pg_vec, req_u, tx_ring);
+<<<<<<< HEAD
 			break;
+=======
+				break;
+>>>>>>> 671a46baf1b... some performance improvements
 		default:
 			break;
 		}

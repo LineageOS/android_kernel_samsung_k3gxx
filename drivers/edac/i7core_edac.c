@@ -1334,6 +1334,7 @@ static int i7core_get_onedevice(struct pci_dev **prev,
 	 * is at addr 8086:2c40, instead of 8086:2c41. So, we need
 	 * to probe for the alternate address in case of failure
 	 */
+<<<<<<< HEAD
 	if (dev_descr->dev_id == PCI_DEVICE_ID_INTEL_I7_NONCORE && !pdev) {
 		pci_dev_get(*prev);	/* pci_get_device will put it */
 		pdev = pci_get_device(PCI_VENDOR_ID_INTEL,
@@ -1347,6 +1348,16 @@ static int i7core_get_onedevice(struct pci_dev **prev,
 				      PCI_DEVICE_ID_INTEL_LYNNFIELD_NONCORE_ALT,
 				      *prev);
 	}
+=======
+	if (dev_descr->dev_id == PCI_DEVICE_ID_INTEL_I7_NONCORE && !pdev)
+		pdev = pci_get_device(PCI_VENDOR_ID_INTEL,
+				      PCI_DEVICE_ID_INTEL_I7_NONCORE_ALT, *prev);
+
+	if (dev_descr->dev_id == PCI_DEVICE_ID_INTEL_LYNNFIELD_NONCORE && !pdev)
+		pdev = pci_get_device(PCI_VENDOR_ID_INTEL,
+				      PCI_DEVICE_ID_INTEL_LYNNFIELD_NONCORE_ALT,
+				      *prev);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (!pdev) {
 		if (*prev) {
@@ -1878,7 +1889,11 @@ static int i7core_mce_check_error(struct notifier_block *nb, unsigned long val,
 
 	i7_dev = get_i7core_dev(mce->socketid);
 	if (!i7_dev)
+<<<<<<< HEAD
 		return NOTIFY_DONE;
+=======
+		return NOTIFY_BAD;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	mci = i7_dev->mci;
 	pvt = mci->pvt_info;

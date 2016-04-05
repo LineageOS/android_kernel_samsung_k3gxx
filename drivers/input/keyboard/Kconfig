@@ -2,7 +2,11 @@
 # Input core configuration
 #
 menuconfig INPUT_KEYBOARD
+<<<<<<< HEAD
 	bool "Keyboards"
+=======
+	bool "Keyboards" if EXPERT || !X86
+>>>>>>> 671a46baf1b... some performance improvements
 	default y
 	help
 	  Say Y here, and a list of supported keyboards will be displayed.
@@ -79,7 +83,11 @@ config KEYBOARD_ATARI
 	  module will be called atakbd.
 
 config KEYBOARD_ATKBD
+<<<<<<< HEAD
 	tristate "AT keyboard"
+=======
+	tristate "AT keyboard" if EXPERT || !X86
+>>>>>>> 671a46baf1b... some performance improvements
 	default y
 	select SERIO
 	select SERIO_LIBPS2

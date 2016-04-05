@@ -78,8 +78,11 @@ enum {
 	BWD_HW,
 };
 
+<<<<<<< HEAD
 static struct dentry *debugfs_dir;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* Translate memory window 0,1 to BAR 2,4 */
 #define MW_TO_BAR(mw)	(mw * 2 + 2)
 
@@ -533,9 +536,15 @@ static int ntb_xeon_setup(struct ntb_device *ndev)
 	}
 
 	if (val & SNB_PPD_DEV_TYPE)
+<<<<<<< HEAD
 		ndev->dev_type = NTB_DEV_USD;
 	else
 		ndev->dev_type = NTB_DEV_DSD;
+=======
+		ndev->dev_type = NTB_DEV_DSD;
+	else
+		ndev->dev_type = NTB_DEV_USD;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	ndev->reg_ofs.pdb = ndev->reg_base + SNB_PDOORBELL_OFFSET;
 	ndev->reg_ofs.pdb_mask = ndev->reg_base + SNB_PDBMSK_OFFSET;
@@ -549,7 +558,11 @@ static int ntb_xeon_setup(struct ntb_device *ndev)
 	if (ndev->conn_type == NTB_CONN_B2B) {
 		ndev->reg_ofs.sdb = ndev->reg_base + SNB_B2B_DOORBELL_OFFSET;
 		ndev->reg_ofs.spad_write = ndev->reg_base + SNB_B2B_SPAD_OFFSET;
+<<<<<<< HEAD
 		ndev->limits.max_spads = SNB_MAX_B2B_SPADS;
+=======
+		ndev->limits.max_spads = SNB_MAX_SPADS;
+>>>>>>> 671a46baf1b... some performance improvements
 	} else {
 		ndev->reg_ofs.sdb = ndev->reg_base + SNB_SDOORBELL_OFFSET;
 		ndev->reg_ofs.spad_write = ndev->reg_base + SNB_SPAD_OFFSET;
@@ -646,6 +659,7 @@ static int ntb_device_setup(struct ntb_device *ndev)
 		rc = -ENODEV;
 	}
 
+<<<<<<< HEAD
 	if (rc)
 		return rc;
 
@@ -656,6 +670,12 @@ static int ntb_device_setup(struct ntb_device *ndev)
 	writew(PCI_COMMAND_MEMORY | PCI_COMMAND_MASTER, ndev->reg_ofs.spci_cmd);
 
 	return 0;
+=======
+	/* Enable Bus Master and Memory Space on the secondary side */
+	writew(PCI_COMMAND_MEMORY | PCI_COMMAND_MASTER, ndev->reg_ofs.spci_cmd);
+
+	return rc;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void ntb_device_free(struct ntb_device *ndev)
@@ -1000,6 +1020,7 @@ static void ntb_free_callbacks(struct ntb_device *ndev)
 	kfree(ndev->db_cb);
 }
 
+<<<<<<< HEAD
 static void ntb_setup_debugfs(struct ntb_device *ndev)
 {
 	if (!debugfs_initialized())
@@ -1022,6 +1043,8 @@ static void ntb_free_debugfs(struct ntb_device *ndev)
 	}
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static int ntb_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 {
 	struct ntb_device *ndev;
@@ -1034,7 +1057,10 @@ static int ntb_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	ndev->pdev = pdev;
 	ndev->link_status = NTB_LINK_DOWN;
 	pci_set_drvdata(pdev, ndev);
+<<<<<<< HEAD
 	ntb_setup_debugfs(ndev);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	rc = pci_enable_device(pdev);
 	if (rc)
@@ -1131,7 +1157,10 @@ err2:
 err1:
 	pci_disable_device(pdev);
 err:
+<<<<<<< HEAD
 	ntb_free_debugfs(ndev);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	kfree(ndev);
 
 	dev_err(&pdev->dev, "Error loading %s module\n", KBUILD_MODNAME);
@@ -1161,7 +1190,10 @@ static void ntb_pci_remove(struct pci_dev *pdev)
 	iounmap(ndev->reg_base);
 	pci_release_selected_regions(pdev, NTB_BAR_MASK);
 	pci_disable_device(pdev);
+<<<<<<< HEAD
 	ntb_free_debugfs(ndev);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	kfree(ndev);
 }
 

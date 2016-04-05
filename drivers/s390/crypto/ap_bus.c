@@ -44,7 +44,10 @@
 #include <linux/hrtimer.h>
 #include <linux/ktime.h>
 #include <asm/facility.h>
+<<<<<<< HEAD
 #include <linux/crypto.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 #include "ap_bus.h"
 

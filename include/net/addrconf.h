@@ -73,10 +73,13 @@ extern int			ipv6_chk_home_addr(struct net *net,
 						   const struct in6_addr *addr);
 #endif
 
+<<<<<<< HEAD
 bool ipv6_chk_custom_prefix(const struct in6_addr *addr,
 				   const unsigned int prefix_len,
 				   struct net_device *dev);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 extern int			ipv6_chk_prefix(const struct in6_addr *addr,
 						struct net_device *dev);
 

@@ -3333,7 +3333,10 @@ static void qeth_l3_remove_device(struct ccwgroup_device *cgdev)
 		qeth_l3_set_offline(cgdev);
 
 	if (card->dev) {
+<<<<<<< HEAD
 		netif_napi_del(&card->napi);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		unregister_netdev(card->dev);
 		card->dev = NULL;
 	}

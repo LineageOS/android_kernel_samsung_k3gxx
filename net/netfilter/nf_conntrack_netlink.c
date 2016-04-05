@@ -3132,7 +3132,10 @@ static void __exit ctnetlink_exit(void)
 #ifdef CONFIG_NETFILTER_NETLINK_QUEUE_CT
 	RCU_INIT_POINTER(nfq_ct_hook, NULL);
 #endif
+<<<<<<< HEAD
 	synchronize_rcu();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 module_init(ctnetlink_init);

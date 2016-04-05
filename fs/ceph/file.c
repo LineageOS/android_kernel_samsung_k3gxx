@@ -313,9 +313,15 @@ static int striped_read(struct inode *inode,
 {
 	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
 	struct ceph_inode_info *ci = ceph_inode(inode);
+<<<<<<< HEAD
 	u64 pos, this_len, left;
 	int io_align, page_align;
 	int pages_left;
+=======
+	u64 pos, this_len;
+	int io_align, page_align;
+	int left, pages_left;
+>>>>>>> 671a46baf1b... some performance improvements
 	int read;
 	struct page **page_pos;
 	int ret;
@@ -346,6 +352,7 @@ more:
 		ret = 0;
 	hit_stripe = this_len < left;
 	was_short = ret >= 0 && ret < this_len;
+<<<<<<< HEAD
 	dout("striped_read %llu~%llu (read %u) got %d%s%s\n", pos, left, read,
 	     ret, hit_stripe ? " HITSTRIPE" : "", was_short ? " SHORT" : "");
 
@@ -362,12 +369,26 @@ more:
 		}
 
 		didpages = (page_align + ret) >> PAGE_CACHE_SHIFT;
+=======
+	dout("striped_read %llu~%u (read %u) got %d%s%s\n", pos, left, read,
+	     ret, hit_stripe ? " HITSTRIPE" : "", was_short ? " SHORT" : "");
+
+	if (ret > 0) {
+		int didpages = (page_align + ret) >> PAGE_CACHE_SHIFT;
+
+		if (read < pos - off) {
+			dout(" zero gap %llu to %llu\n", off + read, pos);
+			ceph_zero_page_vector_range(page_align + read,
+						    pos - off - read, pages);
+		}
+>>>>>>> 671a46baf1b... some performance improvements
 		pos += ret;
 		read = pos - off;
 		left -= ret;
 		page_pos += didpages;
 		pages_left -= didpages;
 
+<<<<<<< HEAD
 		/* hit stripe and need continue*/
 		if (left && hit_stripe && pos < inode->i_size)
 			goto more;
@@ -380,6 +401,32 @@ more:
 			*checkeof = 1;
 	}
 
+=======
+		/* hit stripe? */
+		if (left && hit_stripe)
+			goto more;
+	}
+
+	if (was_short) {
+		/* did we bounce off eof? */
+		if (pos + left > inode->i_size)
+			*checkeof = 1;
+
+		/* zero trailing bytes (inside i_size) */
+		if (left > 0 && pos < inode->i_size) {
+			if (pos + left > inode->i_size)
+				left = inode->i_size - pos;
+
+			dout("zero tail %d\n", left);
+			ceph_zero_page_vector_range(page_align + read, left,
+						    pages);
+			read += left;
+		}
+	}
+
+	if (ret >= 0)
+		ret = read;
+>>>>>>> 671a46baf1b... some performance improvements
 	dout("striped_read returns %d\n", ret);
 	return ret;
 }
@@ -611,8 +658,11 @@ out:
 		if (check_caps)
 			ceph_check_caps(ceph_inode(inode), CHECK_CAPS_AUTHONLY,
 					NULL);
+<<<<<<< HEAD
 	} else if (ret != -EOLDSNAPC && written > 0) {
 		ret = written;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	return ret;
 }

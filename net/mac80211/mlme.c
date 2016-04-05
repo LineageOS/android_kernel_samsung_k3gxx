@@ -31,12 +31,18 @@
 #include "led.h"
 
 #define IEEE80211_AUTH_TIMEOUT		(HZ / 5)
+<<<<<<< HEAD
 #define IEEE80211_AUTH_TIMEOUT_LONG	(HZ / 2)
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #define IEEE80211_AUTH_TIMEOUT_SHORT	(HZ / 10)
 #define IEEE80211_AUTH_MAX_TRIES	3
 #define IEEE80211_AUTH_WAIT_ASSOC	(HZ * 5)
 #define IEEE80211_ASSOC_TIMEOUT		(HZ / 5)
+<<<<<<< HEAD
 #define IEEE80211_ASSOC_TIMEOUT_LONG	(HZ / 2)
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #define IEEE80211_ASSOC_TIMEOUT_SHORT	(HZ / 10)
 #define IEEE80211_ASSOC_MAX_TRIES	3
 
@@ -310,7 +316,10 @@ ieee80211_determine_chantype(struct ieee80211_sub_if_data *sdata,
 	switch (vht_oper->chan_width) {
 	case IEEE80211_VHT_CHANWIDTH_USE_HT:
 		vht_chandef.width = chandef->width;
+<<<<<<< HEAD
 		vht_chandef.center_freq1 = chandef->center_freq1;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		break;
 	case IEEE80211_VHT_CHANWIDTH_80MHZ:
 		vht_chandef.width = NL80211_CHAN_WIDTH_80;
@@ -360,6 +369,7 @@ ieee80211_determine_chantype(struct ieee80211_sub_if_data *sdata,
 	ret = 0;
 
 out:
+<<<<<<< HEAD
 	/*
 	 * When tracking the current AP, don't do any further checks if the
 	 * new chandef is identical to the one we're currently using for the
@@ -382,6 +392,8 @@ out:
 	    cfg80211_chandef_identical(chandef, &sdata->vif.bss_conf.chandef))
 		return ret;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* don't print the message below for VHT mismatch if VHT is disabled */
 	if (ret & IEEE80211_STA_DISABLE_VHT)
 		vht_chandef = *chandef;
@@ -3074,7 +3086,11 @@ ieee80211_rx_mgmt_beacon(struct ieee80211_sub_if_data *sdata,
 
 	if (ifmgd->rssi_min_thold != ifmgd->rssi_max_thold &&
 	    ifmgd->count_beacon_signal >= IEEE80211_SIGNAL_AVE_MIN_COUNT) {
+<<<<<<< HEAD
 		int sig = ifmgd->ave_beacon_signal / 16;
+=======
+		int sig = ifmgd->ave_beacon_signal;
+>>>>>>> 671a46baf1b... some performance improvements
 		int last_sig = ifmgd->last_ave_beacon_signal;
 
 		/*
@@ -3495,6 +3511,7 @@ static int ieee80211_probe_auth(struct ieee80211_sub_if_data *sdata)
 
 	if (tx_flags == 0) {
 		auth_data->timeout = jiffies + IEEE80211_AUTH_TIMEOUT;
+<<<<<<< HEAD
 		auth_data->timeout_started = true;
 		run_again(ifmgd, auth_data->timeout);
 	} else {
@@ -3502,6 +3519,12 @@ static int ieee80211_probe_auth(struct ieee80211_sub_if_data *sdata)
 			round_jiffies_up(jiffies + IEEE80211_AUTH_TIMEOUT_LONG);
 		auth_data->timeout_started = true;
 		run_again(ifmgd, auth_data->timeout);
+=======
+		ifmgd->auth_data->timeout_started = true;
+		run_again(ifmgd, auth_data->timeout);
+	} else {
+		auth_data->timeout_started = false;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	return 0;
@@ -3538,11 +3561,15 @@ static int ieee80211_do_assoc(struct ieee80211_sub_if_data *sdata)
 		assoc_data->timeout_started = true;
 		run_again(&sdata->u.mgd, assoc_data->timeout);
 	} else {
+<<<<<<< HEAD
 		assoc_data->timeout =
 			round_jiffies_up(jiffies +
 					 IEEE80211_ASSOC_TIMEOUT_LONG);
 		assoc_data->timeout_started = true;
 		run_again(&sdata->u.mgd, assoc_data->timeout);
+=======
+		assoc_data->timeout_started = false;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	return 0;
@@ -3754,6 +3781,7 @@ static void ieee80211_restart_sta_timer(struct ieee80211_sub_if_data *sdata)
 }
 
 #ifdef CONFIG_PM
+<<<<<<< HEAD
 void ieee80211_mgd_quiesce(struct ieee80211_sub_if_data *sdata)
 {
 	struct ieee80211_if_managed *ifmgd = &sdata->u.mgd;
@@ -3780,6 +3808,8 @@ void ieee80211_mgd_quiesce(struct ieee80211_sub_if_data *sdata)
 	mutex_unlock(&ifmgd->mtx);
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 void ieee80211_sta_restart(struct ieee80211_sub_if_data *sdata)
 {
 	struct ieee80211_if_managed *ifmgd = &sdata->u.mgd;
@@ -4395,7 +4425,12 @@ int ieee80211_mgd_assoc(struct ieee80211_sub_if_data *sdata,
 	rcu_read_unlock();
 
 	if (bss->wmm_used && bss->uapsd_supported &&
+<<<<<<< HEAD
 	    (sdata->local->hw.flags & IEEE80211_HW_SUPPORTS_UAPSD)) {
+=======
+	    (sdata->local->hw.flags & IEEE80211_HW_SUPPORTS_UAPSD) &&
+	    sdata->wmm_acm != 0xff) {
+>>>>>>> 671a46baf1b... some performance improvements
 		assoc_data->uapsd = true;
 		ifmgd->flags |= IEEE80211_STA_UAPSD_ENABLED;
 	} else {

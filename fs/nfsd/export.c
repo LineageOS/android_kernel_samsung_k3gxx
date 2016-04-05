@@ -536,12 +536,22 @@ static int svc_export_parse(struct cache_detail *cd, char *mesg, int mlen)
 		if (err)
 			goto out3;
 		exp.ex_anon_uid= make_kuid(&init_user_ns, an_int);
+<<<<<<< HEAD
+=======
+		if (!uid_valid(exp.ex_anon_uid))
+			goto out3;
+>>>>>>> 671a46baf1b... some performance improvements
 
 		/* anon gid */
 		err = get_int(&mesg, &an_int);
 		if (err)
 			goto out3;
 		exp.ex_anon_gid= make_kgid(&init_user_ns, an_int);
+<<<<<<< HEAD
+=======
+		if (!gid_valid(exp.ex_anon_gid))
+			goto out3;
+>>>>>>> 671a46baf1b... some performance improvements
 
 		/* fsid */
 		err = get_int(&mesg, &an_int);
@@ -579,6 +589,7 @@ static int svc_export_parse(struct cache_detail *cd, char *mesg, int mlen)
 				   exp.ex_uuid);
 		if (err)
 			goto out4;
+<<<<<<< HEAD
 		/*
 		 * For some reason exportfs has been passing down an
 		 * invalid (-1) uid & gid on the "dummy" export which it
@@ -590,6 +601,8 @@ static int svc_export_parse(struct cache_detail *cd, char *mesg, int mlen)
 			goto out4;
 		if (!gid_valid(exp.ex_anon_gid))
 			goto out4;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	expp = svc_export_lookup(&exp);

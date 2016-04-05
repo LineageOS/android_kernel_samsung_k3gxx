@@ -1624,7 +1624,10 @@ again:
 		 * shortening the size of the delalloc range we're searching
 		 */
 		free_extent_state(cached_state);
+<<<<<<< HEAD
 		cached_state = NULL;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		if (!loops) {
 			unsigned long offset = (*start) & (PAGE_CACHE_SIZE - 1);
 			max_bytes = PAGE_CACHE_SIZE - offset;
@@ -2357,7 +2360,11 @@ int end_extent_writepage(struct page *page, int err, u64 start, u64 end)
 {
 	int uptodate = (err == 0);
 	struct extent_io_tree *tree;
+<<<<<<< HEAD
 	int ret = 0;
+=======
+	int ret;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	tree = &BTRFS_I(page->mapping->host)->io_tree;
 
@@ -2371,8 +2378,11 @@ int end_extent_writepage(struct page *page, int err, u64 start, u64 end)
 	if (!uptodate) {
 		ClearPageUptodate(page);
 		SetPageError(page);
+<<<<<<< HEAD
 		ret = ret < 0 ? ret : -EIO;
 		mapping_set_error(page->mapping, ret);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	return 0;
 }
@@ -4080,11 +4090,16 @@ int extent_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
 		}
 		ret = fiemap_fill_next_extent(fieinfo, em_start, disko,
 					      em_len, flags);
+<<<<<<< HEAD
 		if (ret) {
 			if (ret == 1)
 				ret = 0;
 			goto out_free;
 		}
+=======
+		if (ret)
+			goto out_free;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 out_free:
 	free_extent_map(em);
@@ -4661,6 +4676,7 @@ int read_extent_buffer_pages(struct extent_io_tree *tree,
 			lock_page(page);
 		}
 		locked_pages++;
+<<<<<<< HEAD
 	}
 	/*
 	 * We need to firstly lock all pages to make sure that
@@ -4669,12 +4685,17 @@ int read_extent_buffer_pages(struct extent_io_tree *tree,
 	 */
 	for (i = start_i; i < num_pages; i++) {
 		page = eb->pages[i];
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		if (!PageUptodate(page)) {
 			num_reads++;
 			all_uptodate = 0;
 		}
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (all_uptodate) {
 		if (start_i == 0)
 			set_bit(EXTENT_BUFFER_UPTODATE, &eb->bflags);

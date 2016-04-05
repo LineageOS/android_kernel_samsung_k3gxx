@@ -93,7 +93,11 @@ SYSCALL_DEFINE5(add_key, const char __user *, _type,
 	payload = NULL;
 
 	vm = false;
+<<<<<<< HEAD
 	if (plen) {
+=======
+	if (_payload) {
+>>>>>>> 671a46baf1b... some performance improvements
 		ret = -ENOMEM;
 		payload = kmalloc(plen, GFP_KERNEL | __GFP_NOWARN);
 		if (!payload) {
@@ -271,8 +275,12 @@ error:
  * Create and join an anonymous session keyring or join a named session
  * keyring, creating it if necessary.  A named session keyring must have Search
  * permission for it to be joined.  Session keyrings without this permit will
+<<<<<<< HEAD
  * be skipped over.  It is not permitted for userspace to create or join
  * keyrings whose name begin with a dot.
+=======
+ * be skipped over.
+>>>>>>> 671a46baf1b... some performance improvements
  *
  * If successful, the ID of the joined session keyring will be returned.
  */
@@ -289,16 +297,24 @@ long keyctl_join_session_keyring(const char __user *_name)
 			ret = PTR_ERR(name);
 			goto error;
 		}
+<<<<<<< HEAD
 
 		ret = -EPERM;
 		if (name[0] == '.')
 			goto error_name;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	/* join the session */
 	ret = join_session_keyring(name);
+<<<<<<< HEAD
 error_name:
 	kfree(name);
+=======
+	kfree(name);
+
+>>>>>>> 671a46baf1b... some performance improvements
 error:
 	return ret;
 }
@@ -327,7 +343,11 @@ long keyctl_update_key(key_serial_t id,
 
 	/* pull the payload in if one was supplied */
 	payload = NULL;
+<<<<<<< HEAD
 	if (plen) {
+=======
+	if (_payload) {
+>>>>>>> 671a46baf1b... some performance improvements
 		ret = -ENOMEM;
 		payload = kmalloc(plen, GFP_KERNEL);
 		if (!payload)
@@ -757,7 +777,11 @@ can_read_key:
 		down_read(&key->sem);
 		ret = key_validate(key);
 		if (ret == 0)
+<<<<<<< HEAD
 			ret = key->type->read(key, buffer, buflen);
+=======
+ 			ret = key->type->read(key, buffer, buflen);
+>>>>>>> 671a46baf1b... some performance improvements
 		up_read(&key->sem);
 	}
 
@@ -1245,8 +1269,13 @@ error:
  * Read or set the default keyring in which request_key() will cache keys and
  * return the old setting.
  *
+<<<<<<< HEAD
  * If a thread or process keyring is specified then it will be created if it
  * doesn't yet exist.  The old setting will be returned if successful.
+=======
+ * If a process keyring is specified then this will be created if it doesn't
+ * yet exist.  The old setting will be returned if successful.
+>>>>>>> 671a46baf1b... some performance improvements
  */
 long keyctl_set_reqkey_keyring(int reqkey_defl)
 {
@@ -1271,8 +1300,16 @@ long keyctl_set_reqkey_keyring(int reqkey_defl)
 
 	case KEY_REQKEY_DEFL_PROCESS_KEYRING:
 		ret = install_process_keyring_to_cred(new);
+<<<<<<< HEAD
 		if (ret < 0)
 			goto error;
+=======
+		if (ret < 0) {
+			if (ret != -EEXIST)
+				goto error;
+			ret = 0;
+		}
+>>>>>>> 671a46baf1b... some performance improvements
 		goto set;
 
 	case KEY_REQKEY_DEFL_DEFAULT:

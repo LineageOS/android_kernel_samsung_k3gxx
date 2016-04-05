@@ -159,6 +159,7 @@ static inline bool balloon_page_movable(struct page *page)
 }
 
 /*
+<<<<<<< HEAD
  * isolated_balloon_page - identify an isolated balloon page on private
  *			   compaction/migration page lists.
  *
@@ -179,6 +180,8 @@ static inline bool isolated_balloon_page(struct page *page)
 }
 
 /*
+=======
+>>>>>>> 671a46baf1b... some performance improvements
  * balloon_page_insert - insert a page into the balloon's page list and make
  *		         the page->mapping assignment accordingly.
  * @page    : page to be assigned as a 'balloon page'
@@ -263,11 +266,14 @@ static inline bool balloon_page_movable(struct page *page)
 	return false;
 }
 
+<<<<<<< HEAD
 static inline bool isolated_balloon_page(struct page *page)
 {
 	return false;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static inline bool balloon_page_isolate(struct page *page)
 {
 	return false;

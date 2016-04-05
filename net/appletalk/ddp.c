@@ -1489,6 +1489,11 @@ static int atalk_rcv(struct sk_buff *skb, struct net_device *dev,
 		goto drop;
 
 	/* Queue packet (standard) */
+<<<<<<< HEAD
+=======
+	skb->sk = sock;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	if (sock_queue_rcv_skb(sock, skb) < 0)
 		goto drop;
 
@@ -1642,6 +1647,10 @@ static int atalk_sendmsg(struct kiocb *iocb, struct socket *sock, struct msghdr 
 	if (!skb)
 		goto out;
 
+<<<<<<< HEAD
+=======
+	skb->sk = sk;
+>>>>>>> 671a46baf1b... some performance improvements
 	skb_reserve(skb, ddp_dl->header_length);
 	skb_reserve(skb, dev->hard_header_len);
 	skb->dev = dev;
@@ -1732,6 +1741,10 @@ static int atalk_recvmsg(struct kiocb *iocb, struct socket *sock, struct msghdr 
 			 size_t size, int flags)
 {
 	struct sock *sk = sock->sk;
+<<<<<<< HEAD
+=======
+	struct sockaddr_at *sat = (struct sockaddr_at *)msg->msg_name;
+>>>>>>> 671a46baf1b... some performance improvements
 	struct ddpehdr *ddp;
 	int copied = 0;
 	int offset = 0;
@@ -1760,6 +1773,7 @@ static int atalk_recvmsg(struct kiocb *iocb, struct socket *sock, struct msghdr 
 	}
 	err = skb_copy_datagram_iovec(skb, offset, msg->msg_iov, copied);
 
+<<<<<<< HEAD
 	if (!err && msg->msg_name) {
 		struct sockaddr_at *sat = msg->msg_name;
 		sat->sat_family      = AF_APPLETALK;
@@ -1767,6 +1781,16 @@ static int atalk_recvmsg(struct kiocb *iocb, struct socket *sock, struct msghdr 
 		sat->sat_addr.s_node = ddp->deh_snode;
 		sat->sat_addr.s_net  = ddp->deh_snet;
 		msg->msg_namelen     = sizeof(*sat);
+=======
+	if (!err) {
+		if (sat) {
+			sat->sat_family      = AF_APPLETALK;
+			sat->sat_port        = ddp->deh_sport;
+			sat->sat_addr.s_node = ddp->deh_snode;
+			sat->sat_addr.s_net  = ddp->deh_snet;
+		}
+		msg->msg_namelen = sizeof(*sat);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	skb_free_datagram(sk, skb);	/* Free the datagram. */

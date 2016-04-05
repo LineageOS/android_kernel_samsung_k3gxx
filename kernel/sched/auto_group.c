@@ -77,6 +77,11 @@ static inline struct autogroup *autogroup_create(void)
 	if (IS_ERR(tg))
 		goto out_free;
 
+<<<<<<< HEAD
+=======
+	sched_online_group(tg, &root_task_group);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	kref_init(&ag->kref);
 	init_rwsem(&ag->lock);
 	ag->id = atomic_inc_return(&autogroup_seq_nr);
@@ -96,7 +101,10 @@ static inline struct autogroup *autogroup_create(void)
 #endif
 	tg->autogroup = ag;
 
+<<<<<<< HEAD
 	sched_online_group(tg, &root_task_group);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return ag;
 
 out_free:

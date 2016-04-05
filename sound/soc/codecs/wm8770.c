@@ -196,8 +196,13 @@ static const char *ain_text[] = {
 	"AIN5", "AIN6", "AIN7", "AIN8"
 };
 
+<<<<<<< HEAD
 static SOC_ENUM_DOUBLE_DECL(ain_enum,
 			    WM8770_ADCMUX, 0, 4, ain_text);
+=======
+static const struct soc_enum ain_enum =
+	SOC_ENUM_DOUBLE(WM8770_ADCMUX, 0, 4, 8, ain_text);
+>>>>>>> 671a46baf1b... some performance improvements
 
 static const struct snd_kcontrol_new ain_mux =
 	SOC_DAPM_ENUM("Capture Mux", ain_enum);

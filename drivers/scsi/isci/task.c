@@ -801,7 +801,11 @@ int isci_task_I_T_nexus_reset(struct domain_device *dev)
 		/* XXX: need to cleanup any ireqs targeting this
 		 * domain_device
 		 */
+<<<<<<< HEAD
 		ret = -ENODEV;
+=======
+		ret = TMF_RESP_FUNC_COMPLETE;
+>>>>>>> 671a46baf1b... some performance improvements
 		goto out;
 	}
 

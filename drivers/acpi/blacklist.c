@@ -327,6 +327,7 @@ static struct dmi_system_id acpi_osi_dmi_table[] __initdata = {
 		     DMI_MATCH(DMI_PRODUCT_VERSION, "ThinkPad T500"),
 		},
 	},
+<<<<<<< HEAD
 	/*
 	 * Without this this EEEpc exports a non working WMI interface, with
 	 * this it exports a working "good old" eeepc_laptop interface, fixing
@@ -340,6 +341,8 @@ static struct dmi_system_id acpi_osi_dmi_table[] __initdata = {
 		     DMI_MATCH(DMI_PRODUCT_NAME, "1015PX"),
 		},
 	},
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	{}
 };
 

@@ -11,7 +11,10 @@ struct sock;
 struct sock_diag_handler {
 	__u8 family;
 	int (*dump)(struct sk_buff *skb, struct nlmsghdr *nlh);
+<<<<<<< HEAD
 	int (*destroy)(struct sk_buff *skb, struct nlmsghdr *nlh);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 int sock_diag_register(const struct sock_diag_handler *h);
@@ -24,8 +27,14 @@ int sock_diag_check_cookie(void *sk, __u32 *cookie);
 void sock_diag_save_cookie(void *sk, __u32 *cookie);
 
 int sock_diag_put_meminfo(struct sock *sk, struct sk_buff *skb, int attr);
+<<<<<<< HEAD
 int sock_diag_put_filterinfo(bool may_report_filterinfo, struct sock *sk,
 			     struct sk_buff *skb, int attrtype);
 
 int sock_diag_destroy(struct sock *sk, int err);
+=======
+int sock_diag_put_filterinfo(struct user_namespace *user_ns, struct sock *sk,
+			     struct sk_buff *skb, int attrtype);
+
+>>>>>>> 671a46baf1b... some performance improvements
 #endif

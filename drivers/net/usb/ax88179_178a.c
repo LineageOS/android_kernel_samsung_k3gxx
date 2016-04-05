@@ -695,7 +695,10 @@ static int ax88179_set_mac_addr(struct net_device *net, void *p)
 {
 	struct usbnet *dev = netdev_priv(net);
 	struct sockaddr *addr = p;
+<<<<<<< HEAD
 	int ret;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (netif_running(net))
 		return -EBUSY;
@@ -705,12 +708,17 @@ static int ax88179_set_mac_addr(struct net_device *net, void *p)
 	memcpy(net->dev_addr, addr->sa_data, ETH_ALEN);
 
 	/* Set the MAC address */
+<<<<<<< HEAD
 	ret = ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_NODE_ID, ETH_ALEN,
 				 ETH_ALEN, net->dev_addr);
 	if (ret < 0)
 		return ret;
 
 	return 0;
+=======
+	return ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_NODE_ID, ETH_ALEN,
+				 ETH_ALEN, net->dev_addr);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static const struct net_device_ops ax88179_netdev_ops = {
@@ -1114,10 +1122,13 @@ static int ax88179_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
 	u16 hdr_off;
 	u32 *pkt_hdr;
 
+<<<<<<< HEAD
 	/* This check is no longer done by usbnet */
 	if (skb->len < dev->net->hard_header_len)
 		return 0;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	skb_trim(skb, skb->len - 4);
 	memcpy(&rx_hdr, skb_tail_pointer(skb), 4);
 	le32_to_cpus(&rx_hdr);

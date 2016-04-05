@@ -19,6 +19,10 @@
 #include <linux/mount.h>
 #include <linux/init.h>
 #include <linux/idr.h>
+<<<<<<< HEAD
+=======
+#include <linux/namei.h>
+>>>>>>> 671a46baf1b... some performance improvements
 #include <linux/bitops.h>
 #include <linux/spinlock.h>
 #include <linux/completion.h>
@@ -162,6 +166,20 @@ void proc_free_inum(unsigned int inum)
 	spin_unlock_irqrestore(&proc_inum_lock, flags);
 }
 
+<<<<<<< HEAD
+=======
+static void *proc_follow_link(struct dentry *dentry, struct nameidata *nd)
+{
+	nd_set_link(nd, __PDE_DATA(dentry->d_inode));
+	return NULL;
+}
+
+static const struct inode_operations proc_link_inode_operations = {
+	.readlink	= generic_readlink,
+	.follow_link	= proc_follow_link,
+};
+
+>>>>>>> 671a46baf1b... some performance improvements
 /*
  * As some entries in /proc are volatile, we want to 
  * get rid of unused dentries.  This could be made 

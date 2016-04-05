@@ -13,7 +13,10 @@
 #include <linux/poll.h>
 #include <linux/uio.h>
 #include <linux/miscdevice.h>
+<<<<<<< HEAD
 #include <linux/namei.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #include <linux/pagemap.h>
 #include <linux/file.h>
 #include <linux/slab.h>
@@ -824,8 +827,13 @@ static int fuse_try_move_page(struct fuse_copy_state *cs, struct page **pagep)
 
 	newpage = buf->page;
 
+<<<<<<< HEAD
 	if (!PageUptodate(newpage))
 		SetPageUptodate(newpage);
+=======
+	if (WARN_ON(!PageUptodate(newpage)))
+		return -EIO;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	ClearPageMappedToDisk(newpage);
 
@@ -1301,6 +1309,25 @@ static ssize_t fuse_dev_read(struct kiocb *iocb, const struct iovec *iov,
 	return fuse_dev_do_read(fc, file, &cs, iov_length(iov, nr_segs));
 }
 
+<<<<<<< HEAD
+=======
+static int fuse_dev_pipe_buf_steal(struct pipe_inode_info *pipe,
+				   struct pipe_buffer *buf)
+{
+	return 1;
+}
+
+static const struct pipe_buf_operations fuse_dev_pipe_buf_ops = {
+	.can_merge = 0,
+	.map = generic_pipe_buf_map,
+	.unmap = generic_pipe_buf_unmap,
+	.confirm = generic_pipe_buf_confirm,
+	.release = generic_pipe_buf_release,
+	.steal = fuse_dev_pipe_buf_steal,
+	.get = generic_pipe_buf_get,
+};
+
+>>>>>>> 671a46baf1b... some performance improvements
 static ssize_t fuse_dev_splice_read(struct file *in, loff_t *ppos,
 				    struct pipe_inode_info *pipe,
 				    size_t len, unsigned int flags)
@@ -1347,11 +1374,15 @@ static ssize_t fuse_dev_splice_read(struct file *in, loff_t *ppos,
 		buf->page = bufs[page_nr].page;
 		buf->offset = bufs[page_nr].offset;
 		buf->len = bufs[page_nr].len;
+<<<<<<< HEAD
 		/*
 		 * Need to be careful about this.  Having buf->ops in module
 		 * code can Oops if the buffer persists after module unload.
 		 */
 		buf->ops = &nosteal_pipe_buf_ops;
+=======
+		buf->ops = &fuse_dev_pipe_buf_ops;
+>>>>>>> 671a46baf1b... some performance improvements
 
 		pipe->nrbufs++;
 		page_nr++;
@@ -1730,9 +1761,12 @@ copy_finish:
 static int fuse_notify(struct fuse_conn *fc, enum fuse_notify_code code,
 		       unsigned int size, struct fuse_copy_state *cs)
 {
+<<<<<<< HEAD
 	/* Don't try to move pages (yet) */
 	cs->move_pages = 0;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	switch (code) {
 	case FUSE_NOTIFY_POLL:
 		return fuse_notify_poll(fc, size, cs);
@@ -1875,10 +1909,13 @@ static ssize_t fuse_dev_do_write(struct fuse_conn *fc,
 	spin_unlock(&fc->lock);
 
 	err = copy_out_args(cs, &req->out, nbytes);
+<<<<<<< HEAD
 	if (req->in.h.opcode == FUSE_CANONICAL_PATH) {
 		req->out.h.error = kern_path((char *)req->out.args[0].value, 0,
 							req->canonical_path);
 	}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	fuse_copy_finish(cs);
 
 	spin_lock(&fc->lock);

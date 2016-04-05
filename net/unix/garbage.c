@@ -130,7 +130,10 @@ void unix_inflight(struct user_struct *user, struct file *fp)
 
 	if (s) {
 		struct unix_sock *u = unix_sk(s);
+<<<<<<< HEAD
         
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		if (atomic_long_inc_return(&u->inflight) == 1) {
 			BUG_ON(!list_empty(&u->link));
 			list_add_tail(&u->link, &gc_inflight_list);
@@ -138,8 +141,14 @@ void unix_inflight(struct user_struct *user, struct file *fp)
 			BUG_ON(list_empty(&u->link));
 		}
 		unix_tot_inflight++;
+<<<<<<< HEAD
 	}
 	user->unix_inflight++;
+=======
+		user->unix_inflight++;
+	}
+	fp->f_cred->user->unix_inflight++;
+>>>>>>> 671a46baf1b... some performance improvements
 	spin_unlock(&unix_gc_lock);
 }
 
@@ -151,14 +160,23 @@ void unix_notinflight(struct user_struct *user, struct file *fp)
 
 	if (s) {
 		struct unix_sock *u = unix_sk(s);
+<<<<<<< HEAD
 
 		BUG_ON(!atomic_long_read(&u->inflight));
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		BUG_ON(list_empty(&u->link));
 		if (atomic_long_dec_and_test(&u->inflight))
 			list_del_init(&u->link);
 		unix_tot_inflight--;
+<<<<<<< HEAD
 	}
 	user->unix_inflight--;
+=======
+		user->unix_inflight--;
+	}
+	fp->f_cred->user->unix_inflight--;
+>>>>>>> 671a46baf1b... some performance improvements
 	spin_unlock(&unix_gc_lock);
 }
 
@@ -359,6 +377,7 @@ void unix_gc(void)
 	}
 	list_del(&cursor);
 
+<<<<<<< HEAD
 	/* Now gc_candidates contains only garbage.  Restore original
 	 * inflight counters for these as well, and remove the skbuffs
 	 * which are creating the cycle(s).
@@ -367,6 +386,8 @@ void unix_gc(void)
 	list_for_each_entry(u, &gc_candidates, link)
 		scan_children(&u->sk, inc_inflight, &hitlist);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	 * not_cycle_list contains those sockets which do not make up a
 	 * cycle.  Restore these to the inflight list.
@@ -377,6 +398,18 @@ void unix_gc(void)
 		list_move_tail(&u->link, &gc_inflight_list);
 	}
 
+<<<<<<< HEAD
+=======
+	/*
+	 * Now gc_candidates contains only garbage.  Restore original
+	 * inflight counters for these as well, and remove the skbuffs
+	 * which are creating the cycle(s).
+	 */
+	skb_queue_head_init(&hitlist);
+	list_for_each_entry(u, &gc_candidates, link)
+	scan_children(&u->sk, inc_inflight, &hitlist);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	spin_unlock(&unix_gc_lock);
 
 	/* Here we are. Hitlist is filled. Die. */

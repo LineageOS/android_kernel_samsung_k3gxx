@@ -153,5 +153,9 @@ module_exit(sha1_generic_mod_fini);
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("SHA1 Secure Hash Algorithm");
 
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("sha1");
 MODULE_ALIAS_CRYPTO("sha1-generic");
+=======
+MODULE_ALIAS("sha1");
+>>>>>>> 671a46baf1b... some performance improvements

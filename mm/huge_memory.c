@@ -1166,7 +1166,11 @@ alloc:
 
 	if (unlikely(!new_page)) {
 		count_vm_event(THP_FAULT_FALLBACK);
+<<<<<<< HEAD
 		if (!page) {
+=======
+		if (is_huge_zero_pmd(orig_pmd)) {
+>>>>>>> 671a46baf1b... some performance improvements
 			ret = do_huge_pmd_wp_zero_page_fallback(mm, vma,
 					address, pmd, orig_pmd, haddr);
 		} else {
@@ -1190,7 +1194,11 @@ alloc:
 		goto out;
 	}
 
+<<<<<<< HEAD
 	if (!page)
+=======
+	if (is_huge_zero_pmd(orig_pmd))
+>>>>>>> 671a46baf1b... some performance improvements
 		clear_huge_page(new_page, haddr, HPAGE_PMD_NR);
 	else
 		copy_user_huge_page(new_page, page, haddr, vma, HPAGE_PMD_NR);
@@ -1215,7 +1223,11 @@ alloc:
 		page_add_new_anon_rmap(new_page, vma, haddr);
 		set_pmd_at(mm, haddr, pmd, entry);
 		update_mmu_cache_pmd(vma, address, pmd);
+<<<<<<< HEAD
 		if (!page) {
+=======
+		if (is_huge_zero_pmd(orig_pmd)) {
+>>>>>>> 671a46baf1b... some performance improvements
 			add_mm_counter(mm, MM_ANONPAGES, HPAGE_PMD_NR);
 			put_huge_zero_page();
 		} else {
@@ -1235,6 +1247,7 @@ out_unlock:
 	return ret;
 }
 
+<<<<<<< HEAD
 /*
  * foll_force can write to even unwritable pmd's, but only
  * after we've gone through a cow cycle and they are dirty.
@@ -1247,6 +1260,8 @@ static inline bool can_follow_write_pmd(pmd_t pmd, struct page *page,
 		 page && PageAnon(page));
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 struct page *follow_trans_huge_pmd(struct vm_area_struct *vma,
 				   unsigned long addr,
 				   pmd_t *pmd,
@@ -1257,16 +1272,25 @@ struct page *follow_trans_huge_pmd(struct vm_area_struct *vma,
 
 	assert_spin_locked(&mm->page_table_lock);
 
+<<<<<<< HEAD
+=======
+	if (flags & FOLL_WRITE && !pmd_write(*pmd))
+		goto out;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	/* Avoid dumping huge zero page */
 	if ((flags & FOLL_DUMP) && is_huge_zero_pmd(*pmd))
 		return ERR_PTR(-EFAULT);
 
 	page = pmd_page(*pmd);
 	VM_BUG_ON(!PageHead(page));
+<<<<<<< HEAD
 
 	if (flags & FOLL_WRITE && !can_follow_write_pmd(*pmd, page, flags))
 		return NULL;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (flags & FOLL_TOUCH) {
 		pmd_t _pmd;
 		/*
@@ -1301,6 +1325,7 @@ out:
 int do_huge_pmd_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 				unsigned long addr, pmd_t pmd, pmd_t *pmdp)
 {
+<<<<<<< HEAD
 	struct anon_vma *anon_vma = NULL;
 	struct page *page;
 	unsigned long haddr = addr & HPAGE_PMD_MASK;
@@ -1308,12 +1333,20 @@ int do_huge_pmd_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 	int target_nid;
 	bool page_locked;
 	bool migrated = false;
+=======
+	struct page *page;
+	unsigned long haddr = addr & HPAGE_PMD_MASK;
+	int target_nid;
+	int current_nid = -1;
+	bool migrated;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	spin_lock(&mm->page_table_lock);
 	if (unlikely(!pmd_same(pmd, *pmdp)))
 		goto out_unlock;
 
 	page = pmd_page(pmd);
+<<<<<<< HEAD
 	page_nid = page_to_nid(page);
 	count_vm_numa_event(NUMA_HINT_FAULTS);
 	if (page_nid == this_nid)
@@ -1347,12 +1380,30 @@ int do_huge_pmd_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 	if (!page_locked)
 		lock_page(page);
 	anon_vma = page_lock_anon_vma_read(page);
+=======
+	get_page(page);
+	current_nid = page_to_nid(page);
+	count_vm_numa_event(NUMA_HINT_FAULTS);
+	if (current_nid == numa_node_id())
+		count_vm_numa_event(NUMA_HINT_FAULTS_LOCAL);
+
+	target_nid = mpol_misplaced(page, vma, haddr);
+	if (target_nid == -1) {
+		put_page(page);
+		goto clear_pmdnuma;
+	}
+
+	/* Acquire the page lock to serialise THP migrations */
+	spin_unlock(&mm->page_table_lock);
+	lock_page(page);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* Confirm the PTE did not while locked */
 	spin_lock(&mm->page_table_lock);
 	if (unlikely(!pmd_same(pmd, *pmdp))) {
 		unlock_page(page);
 		put_page(page);
+<<<<<<< HEAD
 		page_nid = -1;
 		goto out_unlock;
 	}
@@ -1384,10 +1435,31 @@ int do_huge_pmd_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 	goto out;
 clear_pmdnuma:
 	BUG_ON(!PageLocked(page));
+=======
+		goto out_unlock;
+	}
+	spin_unlock(&mm->page_table_lock);
+
+	/* Migrate the THP to the requested node */
+	migrated = migrate_misplaced_transhuge_page(mm, vma,
+				pmdp, pmd, addr, page, target_nid);
+	if (!migrated)
+		goto check_same;
+
+	task_numa_fault(target_nid, HPAGE_PMD_NR, true);
+	return 0;
+
+check_same:
+	spin_lock(&mm->page_table_lock);
+	if (unlikely(!pmd_same(pmd, *pmdp)))
+		goto out_unlock;
+clear_pmdnuma:
+>>>>>>> 671a46baf1b... some performance improvements
 	pmd = pmd_mknonnuma(pmd);
 	set_pmd_at(mm, haddr, pmdp, pmd);
 	VM_BUG_ON(pmd_numa(*pmdp));
 	update_mmu_cache_pmd(vma, addr, pmdp);
+<<<<<<< HEAD
 	unlock_page(page);
 out_unlock:
 	spin_unlock(&mm->page_table_lock);
@@ -1399,6 +1471,12 @@ out:
 	if (page_nid != -1)
 		task_numa_fault(page_nid, HPAGE_PMD_NR, migrated);
 
+=======
+out_unlock:
+	spin_unlock(&mm->page_table_lock);
+	if (current_nid != -1)
+		task_numa_fault(current_nid, HPAGE_PMD_NR, false);
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 }
 
@@ -1746,24 +1824,39 @@ static int __split_huge_page_map(struct page *page,
 	if (pmd) {
 		pgtable = pgtable_trans_huge_withdraw(mm);
 		pmd_populate(mm, &_pmd, pgtable);
+<<<<<<< HEAD
 		if (pmd_write(*pmd))
 			BUG_ON(page_mapcount(page) != 1);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 		haddr = address;
 		for (i = 0; i < HPAGE_PMD_NR; i++, haddr += PAGE_SIZE) {
 			pte_t *pte, entry;
 			BUG_ON(PageCompound(page+i));
+<<<<<<< HEAD
 			/*
 			 * Note that pmd_numa is not transferred deliberately
 			 * to avoid any possibility that pte_numa leaks to
 			 * a PROT_NONE VMA by accident.
 			 */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			entry = mk_pte(page + i, vma->vm_page_prot);
 			entry = maybe_mkwrite(pte_mkdirty(entry), vma);
 			if (!pmd_write(*pmd))
 				entry = pte_wrprotect(entry);
+<<<<<<< HEAD
 			if (!pmd_young(*pmd))
 				entry = pte_mkold(entry);
+=======
+			else
+				BUG_ON(page_mapcount(page) != 1);
+			if (!pmd_young(*pmd))
+				entry = pte_mkold(entry);
+			if (pmd_numa(*pmd))
+				entry = pte_mknuma(entry);
+>>>>>>> 671a46baf1b... some performance improvements
 			pte = pte_offset_map(&_pmd, haddr);
 			BUG_ON(!pte_none(*pte));
 			set_pte_at(mm, haddr, pte, entry);
@@ -2342,8 +2435,11 @@ static void collapse_huge_page(struct mm_struct *mm,
 		goto out;
 
 	vma = find_vma(mm, address);
+<<<<<<< HEAD
 	if (!vma)
 		goto out;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	hstart = (vma->vm_start + ~HPAGE_PMD_MASK) & HPAGE_PMD_MASK;
 	hend = vma->vm_end & HPAGE_PMD_MASK;
 	if (address < hstart || address + HPAGE_PMD_SIZE > hend)
@@ -2755,7 +2851,10 @@ void __split_huge_page_pmd(struct vm_area_struct *vma, unsigned long address,
 
 	mmun_start = haddr;
 	mmun_end   = haddr + HPAGE_PMD_SIZE;
+<<<<<<< HEAD
 again:
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	mmu_notifier_invalidate_range_start(mm, mmun_start, mmun_end);
 	spin_lock(&mm->page_table_lock);
 	if (unlikely(!pmd_trans_huge(*pmd))) {
@@ -2778,6 +2877,7 @@ again:
 	split_huge_page(page);
 
 	put_page(page);
+<<<<<<< HEAD
 
 	/*
 	 * We don't always have down_write of mmap_sem here: a racing
@@ -2786,6 +2886,9 @@ again:
 	 */
 	if (unlikely(pmd_trans_huge(*pmd)))
 		goto again;
+=======
+	BUG_ON(pmd_trans_huge(*pmd));
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 void split_huge_page_pmd_mm(struct mm_struct *mm, unsigned long address,

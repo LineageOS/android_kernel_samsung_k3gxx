@@ -94,7 +94,11 @@ static const u32 evergreen_golden_registers[] =
 	0x8c1c, 0xffffffff, 0x00001010,
 	0x28350, 0xffffffff, 0x00000000,
 	0xa008, 0xffffffff, 0x00010000,
+<<<<<<< HEAD
 	0x5c4, 0xffffffff, 0x00000001,
+=======
+	0x5cc, 0xffffffff, 0x00000001,
+>>>>>>> 671a46baf1b... some performance improvements
 	0x9508, 0xffffffff, 0x00000002,
 	0x913c, 0x0000000f, 0x0000000a
 };
@@ -381,7 +385,11 @@ static const u32 cedar_golden_registers[] =
 	0x8c1c, 0xffffffff, 0x00001010,
 	0x28350, 0xffffffff, 0x00000000,
 	0xa008, 0xffffffff, 0x00010000,
+<<<<<<< HEAD
 	0x5c4, 0xffffffff, 0x00000001,
+=======
+	0x5cc, 0xffffffff, 0x00000001,
+>>>>>>> 671a46baf1b... some performance improvements
 	0x9508, 0xffffffff, 0x00000002
 };
 
@@ -540,7 +548,11 @@ static const u32 juniper_mgcg_init[] =
 static const u32 supersumo_golden_registers[] =
 {
 	0x5eb4, 0xffffffff, 0x00000002,
+<<<<<<< HEAD
 	0x5c4, 0xffffffff, 0x00000001,
+=======
+	0x5cc, 0xffffffff, 0x00000001,
+>>>>>>> 671a46baf1b... some performance improvements
 	0x7030, 0xffffffff, 0x00000011,
 	0x7c30, 0xffffffff, 0x00000011,
 	0x6104, 0x01000300, 0x00000000,
@@ -624,7 +636,11 @@ static const u32 sumo_golden_registers[] =
 static const u32 wrestler_golden_registers[] =
 {
 	0x5eb4, 0xffffffff, 0x00000002,
+<<<<<<< HEAD
 	0x5c4, 0xffffffff, 0x00000001,
+=======
+	0x5cc, 0xffffffff, 0x00000001,
+>>>>>>> 671a46baf1b... some performance improvements
 	0x7030, 0xffffffff, 0x00000011,
 	0x7c30, 0xffffffff, 0x00000011,
 	0x6104, 0x01000300, 0x00000000,
@@ -1718,8 +1734,12 @@ static u32 evergreen_line_buffer_adjust(struct radeon_device *rdev,
 					struct drm_display_mode *mode,
 					struct drm_display_mode *other_mode)
 {
+<<<<<<< HEAD
 	u32 tmp, buffer_alloc, i;
 	u32 pipe_offset = radeon_crtc->crtc_id * 0x20;
+=======
+	u32 tmp;
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	 * Line Buffer Setup
 	 * There are 3 line buffers, each one shared by 2 display controllers.
@@ -1742,6 +1762,7 @@ static u32 evergreen_line_buffer_adjust(struct radeon_device *rdev,
 	 * non-linked crtcs for maximum line buffer allocation.
 	 */
 	if (radeon_crtc->base.enabled && mode) {
+<<<<<<< HEAD
 		if (other_mode) {
 			tmp = 0; /* 1/2 */
 			buffer_alloc = 1;
@@ -1753,12 +1774,21 @@ static u32 evergreen_line_buffer_adjust(struct radeon_device *rdev,
 		tmp = 0;
 		buffer_alloc = 0;
 	}
+=======
+		if (other_mode)
+			tmp = 0; /* 1/2 */
+		else
+			tmp = 2; /* whole */
+	} else
+		tmp = 0;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* second controller of the pair uses second half of the lb */
 	if (radeon_crtc->crtc_id % 2)
 		tmp += 4;
 	WREG32(DC_LB_MEMORY_SPLIT + radeon_crtc->crtc_offset, tmp);
 
+<<<<<<< HEAD
 	if (ASIC_IS_DCE41(rdev) || ASIC_IS_DCE5(rdev)) {
 		WREG32(PIPE0_DMIF_BUFFER_CONTROL + pipe_offset,
 		       DMIF_BUFFERS_ALLOCATED(buffer_alloc));
@@ -1770,6 +1800,8 @@ static u32 evergreen_line_buffer_adjust(struct radeon_device *rdev,
 		}
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (radeon_crtc->base.enabled && mode) {
 		switch (tmp) {
 		case 0:
@@ -2379,7 +2411,10 @@ void evergreen_mc_stop(struct radeon_device *rdev, struct evergreen_mc_save *sav
 					WREG32(EVERGREEN_CRTC_UPDATE_LOCK + crtc_offsets[i], 1);
 					tmp |= EVERGREEN_CRTC_BLANK_DATA_EN;
 					WREG32(EVERGREEN_CRTC_BLANK_CONTROL + crtc_offsets[i], tmp);
+<<<<<<< HEAD
 					WREG32(EVERGREEN_CRTC_UPDATE_LOCK + crtc_offsets[i], 0);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 				}
 			} else {
 				tmp = RREG32(EVERGREEN_CRTC_CONTROL + crtc_offsets[i]);
@@ -2991,7 +3026,11 @@ static void evergreen_gpu_init(struct radeon_device *rdev)
 		rdev->config.evergreen.sx_max_export_size = 256;
 		rdev->config.evergreen.sx_max_export_pos_size = 64;
 		rdev->config.evergreen.sx_max_export_smx_size = 192;
+<<<<<<< HEAD
 		rdev->config.evergreen.max_hw_contexts = 4;
+=======
+		rdev->config.evergreen.max_hw_contexts = 8;
+>>>>>>> 671a46baf1b... some performance improvements
 		rdev->config.evergreen.sq_num_cf_insts = 2;
 
 		rdev->config.evergreen.sc_prim_fifo_size = 0x40;
@@ -3793,8 +3832,13 @@ void evergreen_disable_interrupt_state(struct radeon_device *rdev)
 		WREG32(GRPH_INT_CONTROL + EVERGREEN_CRTC5_REGISTER_OFFSET, 0);
 	}
 
+<<<<<<< HEAD
 	/* only one DAC on DCE5 */
 	if (!ASIC_IS_DCE5(rdev))
+=======
+	/* only one DAC on DCE6 */
+	if (!ASIC_IS_DCE6(rdev))
+>>>>>>> 671a46baf1b... some performance improvements
 		WREG32(DACA_AUTODETECT_INT_CONTROL, 0);
 	WREG32(DACB_AUTODETECT_INT_CONTROL, 0);
 
@@ -4016,9 +4060,12 @@ int evergreen_irq_set(struct radeon_device *rdev)
 	WREG32(AFMT_AUDIO_PACKET_CONTROL + EVERGREEN_CRTC4_REGISTER_OFFSET, afmt5);
 	WREG32(AFMT_AUDIO_PACKET_CONTROL + EVERGREEN_CRTC5_REGISTER_OFFSET, afmt6);
 
+<<<<<<< HEAD
 	/* posting read */
 	RREG32(SRBM_STATUS);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 }
 

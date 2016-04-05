@@ -37,8 +37,13 @@ static void radeon_do_test_moves(struct radeon_device *rdev, int flag)
 	struct radeon_bo **gtt_obj = NULL;
 	struct radeon_fence *fence = NULL;
 	uint64_t gtt_addr, vram_addr;
+<<<<<<< HEAD
 	unsigned n, size;
 	int i, r, ring;
+=======
+	unsigned i, n, size;
+	int r, ring;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	switch (flag) {
 	case RADEON_TEST_COPY_DMA:

@@ -34,3 +34,10 @@ obj-$(CONFIG_TIMA)     += tima_uevent/tima_uevent.o
 
 #TZ ICCC
 obj-$(CONFIG_TZ_ICCC)	  += tz_iccc/
+<<<<<<< HEAD
+=======
+
+# Knox SDP
+obj-$(CONFIG_SDP) += sdp/
+obj-$(CONFIG_SDP) += sdp/built-in.o
+>>>>>>> 671a46baf1b... some performance improvements

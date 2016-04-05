@@ -1022,6 +1022,7 @@ static int atmel_startup(struct uart_port *port)
 static void atmel_shutdown(struct uart_port *port)
 {
 	struct atmel_uart_port *atmel_port = to_atmel_uart_port(port);
+<<<<<<< HEAD
 
 	/*
 	 * Clear out any scheduled tasklets before
@@ -1032,14 +1033,21 @@ static void atmel_shutdown(struct uart_port *port)
 	/*
 	 * Ensure everything is stopped and
 	 * disable all interrupts, port and break condition.
+=======
+	/*
+	 * Ensure everything is stopped.
+>>>>>>> 671a46baf1b... some performance improvements
 	 */
 	atmel_stop_rx(port);
 	atmel_stop_tx(port);
 
+<<<<<<< HEAD
 	UART_PUT_CR(port, ATMEL_US_RSTSTA);
 	UART_PUT_IDR(port, -1);
 
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	 * Shut-down the DMA.
 	 */
@@ -1066,6 +1074,15 @@ static void atmel_shutdown(struct uart_port *port)
 	}
 
 	/*
+<<<<<<< HEAD
+=======
+	 * Disable all interrupts, port and break condition.
+	 */
+	UART_PUT_CR(port, ATMEL_US_RSTSTA);
+	UART_PUT_IDR(port, -1);
+
+	/*
+>>>>>>> 671a46baf1b... some performance improvements
 	 * Free the interrupt
 	 */
 	free_irq(port->irq, port);

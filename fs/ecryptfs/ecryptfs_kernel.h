@@ -40,6 +40,15 @@
 #include <linux/ecryptfs.h>
 #include <linux/crypto.h>
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SDP
+#include <sdp/dek_common.h>
+#include <linux/list.h>
+#include <linux/spinlock.h>
+#endif
+
+>>>>>>> 671a46baf1b... some performance improvements
 #ifdef CONFIG_WTL_ENCRYPTION_FILTER
 #define ENC_NAME_FILTER_MAX_INSTANCE 5
 #define ENC_NAME_FILTER_MAX_LEN (256*5)
@@ -60,6 +69,13 @@
 #define ECRYPTFS_BASE_PATH_SIZE 1024
 #define ECRYPTFS_LABEL_SIZE 1024
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SDP
+#define PKG_NAME_SIZE 16
+#endif
+
+>>>>>>> 671a46baf1b... some performance improvements
 void ecryptfs_dump_auth_tok(struct ecryptfs_auth_tok *auth_tok);
 extern void ecryptfs_to_hex(char *dst, char *src, size_t src_size);
 extern void ecryptfs_from_hex(char *dst, char *src, int dst_size);
@@ -252,6 +268,18 @@ struct ecryptfs_crypt_stat {
 #ifdef CONFIG_WTL_ENCRYPTION_FILTER
 #define ECRYPTFS_ENCRYPTED_OTHER_DEVICE 0x00008000
 #endif
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SDP
+#define ECRYPTFS_DEK_SDP_ENABLED      0x00100000
+#define ECRYPTFS_DEK_IS_SENSITIVE     0x00200000
+#define ECRYPTFS_DEK_MULTI_ENGINE     0x00400000 // eCryptfs header contains engine id.
+#define ECRYPTFS_SDP_IS_CHAMBER_DIR   0x02000000
+#endif
+#ifdef CONFIG_DLP
+#define ECRYPTFS_DLP_ENABLED		  0x04000000
+#endif
+>>>>>>> 671a46baf1b... some performance improvements
 
 	u32 flags;
 	unsigned int file_version;
@@ -273,6 +301,13 @@ struct ecryptfs_crypt_stat {
 	struct mutex cs_tfm_mutex;
 	struct mutex cs_hash_tfm_mutex;
 	struct mutex cs_mutex;
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SDP
+	int engine_id;
+	dek_t sdp_dek;
+#endif
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 /* inode private data. */
@@ -370,6 +405,15 @@ struct ecryptfs_mount_crypt_stat {
 #if defined(CONFIG_CRYPTO_FIPS) && !defined(CONFIG_FORCE_DISABLE_FIPS)
 #define ECRYPTFS_ENABLE_CC                     0x00000400
 #endif
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SDP
+#define ECRYPTFS_MOUNT_SDP_ENABLED             0x80000000
+#endif
+#ifdef CONFIG_DLP
+#define ECRYPTFS_MOUNT_DLP_ENABLED             0x40000000
+#endif
+>>>>>>> 671a46baf1b... some performance improvements
 
 	u32 flags;
 	struct list_head global_auth_tok_list;
@@ -388,6 +432,15 @@ struct ecryptfs_mount_crypt_stat {
 	char enc_filter_ext[ENC_EXT_FILTER_MAX_INSTANCE]
 				[ENC_EXT_FILTER_MAX_LEN + 1];
 #endif
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SDP
+	int userid;
+	struct list_head chamber_dir_list;
+	spinlock_t chamber_dir_list_lock;
+	int partition_id;
+#endif
+>>>>>>> 671a46baf1b... some performance improvements
 
 };
 
@@ -416,6 +469,12 @@ struct ecryptfs_sb_info {
 	struct ecryptfs_mount_crypt_stat mount_crypt_stat;
 	struct backing_dev_info bdi;
 	struct ecryptfs_propagate_stat propagate_stat;
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SDP
+	int userid;
+#endif
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 /* file private data. */

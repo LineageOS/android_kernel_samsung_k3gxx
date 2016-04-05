@@ -326,9 +326,12 @@ struct v4l2_fh;
  * @done_wq:	waitqueue for processes waiting for buffers ready to be dequeued
  * @alloc_ctx:	memory type/allocator-specific contexts for each plane
  * @streaming:	current streaming state
+<<<<<<< HEAD
  * @waiting_for_buffers: used in poll() to check if vb2 is still waiting for
  *		buffers. Only set for capture queues if qbuf has not yet been
  *		called since poll() needs to return POLLERR in that situation.
+=======
+>>>>>>> 671a46baf1b... some performance improvements
  * @fileio:	file io emulator internal data, used only if emulator is active
  */
 struct vb2_queue {
@@ -362,7 +365,10 @@ struct vb2_queue {
 	unsigned int			plane_sizes[VIDEO_MAX_PLANES];
 
 	unsigned int			streaming:1;
+<<<<<<< HEAD
 	unsigned int			waiting_for_buffers:1;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	struct vb2_fileio_data		*fileio;
 

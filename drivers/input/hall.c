@@ -165,7 +165,11 @@ static void flip_cover_work(struct work_struct *work)
 
 	if(first == second) {
 		flip_cover = first;
+<<<<<<< HEAD
 		input_report_switch(ddata->input, SW_LID, !flip_cover);
+=======
+		input_report_switch(ddata->input, SW_FLIP, flip_cover);
+>>>>>>> 671a46baf1b... some performance improvements
 		input_sync(ddata->input);
 	}
 }
@@ -198,7 +202,11 @@ static void flip_cover_work(struct work_struct *work)
 #endif
 	flip_cover = first;
 	input_report_switch(ddata->input,
+<<<<<<< HEAD
 			SW_LID, !flip_cover);
+=======
+			SW_FLIP, flip_cover);
+>>>>>>> 671a46baf1b... some performance improvements
 	input_sync(ddata->input);
 }
 #endif
@@ -370,7 +378,11 @@ static int hall_probe(struct platform_device *pdev)
 	input->dev.parent = &pdev->dev;
 
 	input->evbit[0] |= BIT_MASK(EV_SW);
+<<<<<<< HEAD
 	input_set_capability(input, EV_SW, SW_LID);
+=======
+	input_set_capability(input, EV_SW, SW_FLIP);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	input->open = hall_open;
 	input->close = hall_close;

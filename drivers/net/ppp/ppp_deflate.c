@@ -246,7 +246,11 @@ static int z_compress(void *arg, unsigned char *rptr, unsigned char *obuf,
 	/*
 	 * See if we managed to reduce the size of the packet.
 	 */
+<<<<<<< HEAD
 	if (olen < isize && olen <= osize) {
+=======
+	if (olen < isize) {
+>>>>>>> 671a46baf1b... some performance improvements
 		state->stats.comp_bytes += olen;
 		state->stats.comp_packets++;
 	} else {

@@ -74,6 +74,7 @@ static void for_each_companion(struct pci_dev *pdev, struct usb_hcd *hcd,
 		if (companion->bus != pdev->bus ||
 				PCI_SLOT(companion->devfn) != slot)
 			continue;
+<<<<<<< HEAD
 
 		/*
 		 * Companion device should be either UHCI,OHCI or EHCI host
@@ -85,6 +86,10 @@ static void for_each_companion(struct pci_dev *pdev, struct usb_hcd *hcd,
 
 		companion_hcd = pci_get_drvdata(companion);
 		if (!companion_hcd || !companion_hcd->self.root_hub)
+=======
+		companion_hcd = pci_get_drvdata(companion);
+		if (!companion_hcd)
+>>>>>>> 671a46baf1b... some performance improvements
 			continue;
 		fn(pdev, hcd, companion, companion_hcd);
 	}

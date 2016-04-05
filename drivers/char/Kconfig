@@ -594,12 +594,19 @@ config TELCLOCK
 	  controlling the behavior of this hardware.
 
 config DEVPORT
+<<<<<<< HEAD
 	bool "/dev/port character device"
 	depends on ISA || PCI
 	default y
 	help
 	  Say Y here if you want to support the /dev/port device. The /dev/port
 	  device is similar to /dev/mem, but for I/O ports.
+=======
+	bool
+	depends on !M68K
+	depends on ISA || PCI
+	default y
+>>>>>>> 671a46baf1b... some performance improvements
 
 config DCC_TTY
 	tristate "DCC tty driver"

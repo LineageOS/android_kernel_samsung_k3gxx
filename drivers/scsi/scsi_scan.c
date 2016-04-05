@@ -320,7 +320,10 @@ static void scsi_target_destroy(struct scsi_target *starget)
 	struct Scsi_Host *shost = dev_to_shost(dev->parent);
 	unsigned long flags;
 
+<<<<<<< HEAD
 	starget->state = STARGET_DEL;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	transport_destroy_device(dev);
 	spin_lock_irqsave(shost->host_lock, flags);
 	if (shost->hostt->target_destroy)
@@ -372,6 +375,7 @@ static struct scsi_target *__scsi_find_target(struct device *parent,
 }
 
 /**
+<<<<<<< HEAD
  * scsi_target_reap_ref_release - remove target from visibility
  * @kref: the reap_ref in the target being released
  *
@@ -403,6 +407,8 @@ static void scsi_target_reap_ref_put(struct scsi_target *starget)
 }
 
 /**
+=======
+>>>>>>> 671a46baf1b... some performance improvements
  * scsi_alloc_target - allocate a new or find an existing target
  * @parent:	parent of the target (need not be a scsi host)
  * @channel:	target channel number (zero if no channels)
@@ -424,7 +430,11 @@ static struct scsi_target *scsi_alloc_target(struct device *parent,
 		+ shost->transportt->target_size;
 	struct scsi_target *starget;
 	struct scsi_target *found_target;
+<<<<<<< HEAD
 	int error, ref_got;
+=======
+	int error;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	starget = kzalloc(size, GFP_KERNEL);
 	if (!starget) {
@@ -433,7 +443,11 @@ static struct scsi_target *scsi_alloc_target(struct device *parent,
 	}
 	dev = &starget->dev;
 	device_initialize(dev);
+<<<<<<< HEAD
 	kref_init(&starget->reap_ref);
+=======
+	starget->reap_ref = 1;
+>>>>>>> 671a46baf1b... some performance improvements
 	dev->parent = get_device(parent);
 	dev_set_name(dev, "target%d:%d:%d", shost->host_no, channel, id);
 	dev->bus = &scsi_bus_type;
@@ -473,6 +487,7 @@ static struct scsi_target *scsi_alloc_target(struct device *parent,
 	return starget;
 
  found:
+<<<<<<< HEAD
 	/*
 	 * release routine already fired if kref is zero, so if we can still
 	 * take the reference, the target must be alive.  If we can't, it must
@@ -503,6 +518,31 @@ static struct scsi_target *scsi_alloc_target(struct device *parent,
 	goto retry;
 }
 
+=======
+	found_target->reap_ref++;
+	spin_unlock_irqrestore(shost->host_lock, flags);
+	if (found_target->state != STARGET_DEL) {
+		put_device(dev);
+		return found_target;
+	}
+	/* Unfortunately, we found a dying target; need to
+	 * wait until it's dead before we can get a new one */
+	put_device(&found_target->dev);
+	flush_scheduled_work();
+	goto retry;
+}
+
+static void scsi_target_reap_usercontext(struct work_struct *work)
+{
+	struct scsi_target *starget =
+		container_of(work, struct scsi_target, ew.work);
+
+	transport_remove_device(&starget->dev);
+	device_del(&starget->dev);
+	scsi_target_destroy(starget);
+}
+
+>>>>>>> 671a46baf1b... some performance improvements
 /**
  * scsi_target_reap - check to see if target is in use and destroy if not
  * @starget: target to be checked
@@ -513,6 +553,7 @@ static struct scsi_target *scsi_alloc_target(struct device *parent,
  */
 void scsi_target_reap(struct scsi_target *starget)
 {
+<<<<<<< HEAD
 	/*
 	 * serious problem if this triggers: STARGET_DEL is only set in the if
 	 * the reap_ref drops to zero, so we're trying to do another final put
@@ -520,6 +561,30 @@ void scsi_target_reap(struct scsi_target *starget)
 	 */
 	BUG_ON(starget->state == STARGET_DEL);
 	scsi_target_reap_ref_put(starget);
+=======
+	struct Scsi_Host *shost = dev_to_shost(starget->dev.parent);
+	unsigned long flags;
+	enum scsi_target_state state;
+	int empty = 0;
+
+	spin_lock_irqsave(shost->host_lock, flags);
+	state = starget->state;
+	if (--starget->reap_ref == 0 && list_empty(&starget->devices)) {
+		empty = 1;
+		starget->state = STARGET_DEL;
+	}
+	spin_unlock_irqrestore(shost->host_lock, flags);
+
+	if (!empty)
+		return;
+
+	BUG_ON(state == STARGET_DEL);
+	if (state == STARGET_CREATED)
+		scsi_target_destroy(starget);
+	else
+		execute_in_process_context(scsi_target_reap_usercontext,
+					   &starget->ew);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /**
@@ -1517,12 +1582,19 @@ static int scsi_report_lun_scan(struct scsi_target *starget, int bflags,
  out_err:
 	kfree(lun_data);
  out:
+<<<<<<< HEAD
+=======
+	scsi_device_put(sdev);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (scsi_device_created(sdev))
 		/*
 		 * the sdev we used didn't appear in the report luns scan
 		 */
 		__scsi_remove_device(sdev);
+<<<<<<< HEAD
 	scsi_device_put(sdev);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return ret;
 }
 
@@ -1551,10 +1623,13 @@ struct scsi_device *__scsi_add_device(struct Scsi_Host *shost, uint channel,
 	}
 	mutex_unlock(&shost->scan_mutex);
 	scsi_autopm_put_target(starget);
+<<<<<<< HEAD
 	/*
 	 * paired with scsi_alloc_target().  Target will be destroyed unless
 	 * scsi_probe_and_add_lun made an underlying device visible
 	 */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	scsi_target_reap(starget);
 	put_device(&starget->dev);
 
@@ -1635,10 +1710,15 @@ static void __scsi_scan_target(struct device *parent, unsigned int channel,
 
  out_reap:
 	scsi_autopm_put_target(starget);
+<<<<<<< HEAD
 	/*
 	 * paired with scsi_alloc_target(): determine if the target has
 	 * any children at all and if not, nuke it
 	 */
+=======
+	/* now determine if the target has any children at all
+	 * and if not, nuke it */
+>>>>>>> 671a46baf1b... some performance improvements
 	scsi_target_reap(starget);
 
 	put_device(&starget->dev);

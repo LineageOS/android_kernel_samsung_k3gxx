@@ -193,7 +193,10 @@ bnad_txcmpl_process(struct bnad *bnad, struct bna_tcb *tcb)
 		return 0;
 
 	hw_cons = *(tcb->hw_consumer_index);
+<<<<<<< HEAD
 	rmb();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	cons = tcb->consumer_index;
 	q_depth = tcb->q_depth;
 
@@ -2904,12 +2907,20 @@ bnad_start_xmit(struct sk_buff *skb, struct net_device *netdev)
 	BNA_QE_INDX_INC(prod, q_depth);
 	tcb->producer_index = prod;
 
+<<<<<<< HEAD
 	wmb();
+=======
+	smp_mb();
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (unlikely(!test_bit(BNAD_TXQ_TX_STARTED, &tcb->flags)))
 		return NETDEV_TX_OK;
 
 	bna_txq_prod_indx_doorbell(tcb);
+<<<<<<< HEAD
+=======
+	smp_mb();
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return NETDEV_TX_OK;
 }

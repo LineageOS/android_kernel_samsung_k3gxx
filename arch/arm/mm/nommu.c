@@ -87,16 +87,26 @@ void __iomem *__arm_ioremap_pfn_caller(unsigned long pfn, unsigned long offset,
 	return __arm_ioremap_pfn(pfn, offset, size, mtype);
 }
 
+<<<<<<< HEAD
 void __iomem *__arm_ioremap(phys_addr_t phys_addr, size_t size,
+=======
+void __iomem *__arm_ioremap(unsigned long phys_addr, size_t size,
+>>>>>>> 671a46baf1b... some performance improvements
 			    unsigned int mtype)
 {
 	return (void __iomem *)phys_addr;
 }
 EXPORT_SYMBOL(__arm_ioremap);
 
+<<<<<<< HEAD
 void __iomem * (*arch_ioremap_caller)(phys_addr_t, size_t, unsigned int, void *);
 
 void __iomem *__arm_ioremap_caller(phys_addr_t phys_addr, size_t size,
+=======
+void __iomem * (*arch_ioremap_caller)(unsigned long, size_t, unsigned int, void *);
+
+void __iomem *__arm_ioremap_caller(unsigned long phys_addr, size_t size,
+>>>>>>> 671a46baf1b... some performance improvements
 				   unsigned int mtype, void *caller)
 {
 	return __arm_ioremap(phys_addr, size, mtype);

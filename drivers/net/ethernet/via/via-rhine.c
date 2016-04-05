@@ -32,7 +32,11 @@
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
 #define DRV_NAME	"via-rhine"
+<<<<<<< HEAD
 #define DRV_VERSION	"1.5.1"
+=======
+#define DRV_VERSION	"1.5.0"
+>>>>>>> 671a46baf1b... some performance improvements
 #define DRV_RELDATE	"2010-10-09"
 
 #include <linux/types.h>
@@ -1611,7 +1615,10 @@ static void rhine_reset_task(struct work_struct *work)
 		goto out_unlock;
 
 	napi_disable(&rp->napi);
+<<<<<<< HEAD
 	netif_tx_disable(dev);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	spin_lock_bh(&rp->lock);
 
 	/* clear all descriptors */
@@ -1695,12 +1702,16 @@ static netdev_tx_t rhine_start_tx(struct sk_buff *skb,
 		cpu_to_le32(TXDESC | (skb->len >= ETH_ZLEN ? skb->len : ETH_ZLEN));
 
 	if (unlikely(vlan_tx_tag_present(skb))) {
+<<<<<<< HEAD
 		u16 vid_pcp = vlan_tx_tag_get(skb);
 
 		/* drop CFI/DEI bit, register needs VID and PCP */
 		vid_pcp = (vid_pcp & VLAN_VID_MASK) |
 			  ((vid_pcp & VLAN_PRIO_MASK) >> 1);
 		rp->tx_ring[entry].tx_status = cpu_to_le32((vid_pcp) << 16);
+=======
+		rp->tx_ring[entry].tx_status = cpu_to_le32((vlan_tx_tag_get(skb)) << 16);
+>>>>>>> 671a46baf1b... some performance improvements
 		/* request tagging */
 		rp->tx_ring[entry].desc_length |= cpu_to_le32(0x020000);
 	}

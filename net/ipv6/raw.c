@@ -459,11 +459,22 @@ static int rawv6_recvmsg(struct kiocb *iocb, struct sock *sk,
 	if (flags & MSG_OOB)
 		return -EOPNOTSUPP;
 
+<<<<<<< HEAD
 	if (flags & MSG_ERRQUEUE)
 		return ipv6_recv_error(sk, msg, len, addr_len);
 
 	if (np->rxpmtu && np->rxopt.bits.rxpmtu)
 		return ipv6_recv_rxpmtu(sk, msg, len, addr_len);
+=======
+	if (addr_len)
+		*addr_len=sizeof(*sin6);
+
+	if (flags & MSG_ERRQUEUE)
+		return ipv6_recv_error(sk, msg, len);
+
+	if (np->rxpmtu && np->rxopt.bits.rxpmtu)
+		return ipv6_recv_rxpmtu(sk, msg, len);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	skb = skb_recv_datagram(sk, flags, noblock, &err);
 	if (!skb)
@@ -497,7 +508,10 @@ static int rawv6_recvmsg(struct kiocb *iocb, struct sock *sk,
 		sin6->sin6_flowinfo = 0;
 		sin6->sin6_scope_id = ipv6_iface_scope_id(&sin6->sin6_addr,
 							  IP6CB(skb)->iif);
+<<<<<<< HEAD
 		*addr_len = sizeof(*sin6);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	sock_recv_ts_and_drops(msg, sk, skb);
@@ -578,11 +592,16 @@ static int rawv6_push_pending_frames(struct sock *sk, struct flowi6 *fl6,
 	}
 
 	offset += skb_transport_offset(skb);
+<<<<<<< HEAD
 	err = skb_copy_bits(skb, offset, &csum, 2);
 	if (err < 0) {
 		ip6_flush_pending_frames(sk);
 		goto out;
 	}
+=======
+	if (skb_copy_bits(skb, offset, &csum, 2))
+		BUG();
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* in case cksum was not initialized */
 	if (unlikely(csum))
@@ -763,6 +782,10 @@ static int rawv6_sendmsg(struct kiocb *iocb, struct sock *sk,
 	memset(&fl6, 0, sizeof(fl6));
 
 	fl6.flowi6_mark = sk->sk_mark;
+<<<<<<< HEAD
+=======
+	fl6.flowi6_uid = sock_i_uid(sk);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (sin6) {
 		if (addr_len < SIN6_LEN_RFC2133)
@@ -1137,7 +1160,11 @@ static int rawv6_ioctl(struct sock *sk, int cmd, unsigned long arg)
 		spin_lock_bh(&sk->sk_receive_queue.lock);
 		skb = skb_peek(&sk->sk_receive_queue);
 		if (skb != NULL)
+<<<<<<< HEAD
 			amount = skb->len;
+=======
+			amount = skb->tail - skb->transport_header;
+>>>>>>> 671a46baf1b... some performance improvements
 		spin_unlock_bh(&sk->sk_receive_queue.lock);
 		return put_user(amount, (int __user *)arg);
 	}
@@ -1323,7 +1350,11 @@ void raw6_proc_exit(void)
 #endif	/* CONFIG_PROC_FS */
 
 /* Same as inet6_dgram_ops, sans udp_poll.  */
+<<<<<<< HEAD
 const struct proto_ops inet6_sockraw_ops = {
+=======
+static const struct proto_ops inet6_sockraw_ops = {
+>>>>>>> 671a46baf1b... some performance improvements
 	.family		   = PF_INET6,
 	.owner		   = THIS_MODULE,
 	.release	   = inet6_release,

@@ -312,7 +312,10 @@ struct sw_tx_bd {
 	u8		flags;
 /* Set on the first BD descriptor when there is a split BD */
 #define BNX2X_TSO_SPLIT_BD		(1<<0)
+<<<<<<< HEAD
 #define BNX2X_HAS_SECOND_PBD		(1<<1)
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 struct sw_rx_page {

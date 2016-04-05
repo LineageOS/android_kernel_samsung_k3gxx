@@ -1303,7 +1303,11 @@ static int uhci_submit_isochronous(struct uhci_hcd *uhci, struct urb *urb,
 		}
 
 		/* Fell behind? */
+<<<<<<< HEAD
 		if (!uhci_frame_before_eq(next, frame)) {
+=======
+		if (uhci_frame_before_eq(frame, next)) {
+>>>>>>> 671a46baf1b... some performance improvements
 
 			/* USB_ISO_ASAP: Round up to the first available slot */
 			if (urb->transfer_flags & URB_ISO_ASAP)
@@ -1311,17 +1315,26 @@ static int uhci_submit_isochronous(struct uhci_hcd *uhci, struct urb *urb,
 						-qh->period;
 
 			/*
+<<<<<<< HEAD
 			 * Not ASAP: Use the next slot in the stream,
 			 * no matter what.
+=======
+			 * Not ASAP: Use the next slot in the stream.  If
+			 * the entire URB falls before the threshold, fail.
+>>>>>>> 671a46baf1b... some performance improvements
 			 */
 			else if (!uhci_frame_before_eq(next,
 					frame + (urb->number_of_packets - 1) *
 						qh->period))
+<<<<<<< HEAD
 				dev_dbg(uhci_dev(uhci), "iso underrun %p (%u+%u < %u)\n",
 						urb, frame,
 						(urb->number_of_packets - 1) *
 							qh->period,
 						next);
+=======
+				return -EXDEV;
+>>>>>>> 671a46baf1b... some performance improvements
 		}
 	}
 

@@ -761,8 +761,12 @@ out:
 	 */
 	if (sdio->boundary) {
 		ret = dio_send_cur_page(dio, sdio, map_bh);
+<<<<<<< HEAD
 		if (sdio->bio)
 			dio_bio_submit(dio, sdio);
+=======
+		dio_bio_submit(dio, sdio);
+>>>>>>> 671a46baf1b... some performance improvements
 		page_cache_release(sdio->cur_page);
 		sdio->cur_page = NULL;
 	}
@@ -936,7 +940,10 @@ do_holes:
 						i_size_aligned >> blkbits) {
 					/* We hit eof */
 					page_cache_release(page);
+<<<<<<< HEAD
 					dio_cleanup(dio, sdio);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 					goto out;
 				}
 				zero_user(page, block_in_page << blkbits,

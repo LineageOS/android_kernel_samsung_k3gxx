@@ -65,11 +65,18 @@ int roccat_common2_send(struct usb_device *usb_dev, uint report_id,
 EXPORT_SYMBOL_GPL(roccat_common2_send);
 
 enum roccat_common2_control_states {
+<<<<<<< HEAD
 	ROCCAT_COMMON_CONTROL_STATUS_CRITICAL = 0,
 	ROCCAT_COMMON_CONTROL_STATUS_OK = 1,
 	ROCCAT_COMMON_CONTROL_STATUS_INVALID = 2,
 	ROCCAT_COMMON_CONTROL_STATUS_BUSY = 3,
 	ROCCAT_COMMON_CONTROL_STATUS_CRITICAL_NEW = 4,
+=======
+	ROCCAT_COMMON_CONTROL_STATUS_OVERLOAD = 0,
+	ROCCAT_COMMON_CONTROL_STATUS_OK = 1,
+	ROCCAT_COMMON_CONTROL_STATUS_INVALID = 2,
+	ROCCAT_COMMON_CONTROL_STATUS_WAIT = 3,
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 static int roccat_common2_receive_control_status(struct usb_device *usb_dev)
@@ -89,12 +96,22 @@ static int roccat_common2_receive_control_status(struct usb_device *usb_dev)
 		switch (control.value) {
 		case ROCCAT_COMMON_CONTROL_STATUS_OK:
 			return 0;
+<<<<<<< HEAD
 		case ROCCAT_COMMON_CONTROL_STATUS_BUSY:
 			msleep(500);
 			continue;
 		case ROCCAT_COMMON_CONTROL_STATUS_INVALID:
 		case ROCCAT_COMMON_CONTROL_STATUS_CRITICAL:
 		case ROCCAT_COMMON_CONTROL_STATUS_CRITICAL_NEW:
+=======
+		case ROCCAT_COMMON_CONTROL_STATUS_WAIT:
+			msleep(500);
+			continue;
+		case ROCCAT_COMMON_CONTROL_STATUS_INVALID:
+
+		case ROCCAT_COMMON_CONTROL_STATUS_OVERLOAD:
+			/* seems to be critical - replug necessary */
+>>>>>>> 671a46baf1b... some performance improvements
 			return -EINVAL;
 		default:
 			dev_err(&usb_dev->dev,

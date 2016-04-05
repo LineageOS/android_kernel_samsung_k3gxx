@@ -26,6 +26,7 @@
 static unsigned int                     busfreq;   /* FSB, in 10 kHz */
 static unsigned int                     max_multiplier;
 
+<<<<<<< HEAD
 static unsigned int			param_busfreq = 0;
 static unsigned int			param_max_multiplier = 0;
 
@@ -72,26 +73,53 @@ static const struct {
 };
 
 #define FREQ_RANGE		3000
+=======
+
+/* Clock ratio multiplied by 10 - see table 27 in AMD#23446 */
+static struct cpufreq_frequency_table clock_ratio[] = {
+	{45,  /* 000 -> 4.5x */ 0},
+	{50,  /* 001 -> 5.0x */ 0},
+	{40,  /* 010 -> 4.0x */ 0},
+	{55,  /* 011 -> 5.5x */ 0},
+	{20,  /* 100 -> 2.0x */ 0},
+	{30,  /* 101 -> 3.0x */ 0},
+	{60,  /* 110 -> 6.0x */ 0},
+	{35,  /* 111 -> 3.5x */ 0},
+	{0, CPUFREQ_TABLE_END}
+};
+
+>>>>>>> 671a46baf1b... some performance improvements
 
 /**
  * powernow_k6_get_cpu_multiplier - returns the current FSB multiplier
  *
+<<<<<<< HEAD
  * Returns the current setting of the frequency multiplier. Core clock
+=======
+ *   Returns the current setting of the frequency multiplier. Core clock
+>>>>>>> 671a46baf1b... some performance improvements
  * speed is frequency of the Front-Side Bus multiplied with this value.
  */
 static int powernow_k6_get_cpu_multiplier(void)
 {
+<<<<<<< HEAD
 	unsigned long invalue = 0;
 	u32 msrval;
 
 	local_irq_disable();
 
+=======
+	u64 invalue = 0;
+	u32 msrval;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	msrval = POWERNOW_IOPORT + 0x1;
 	wrmsr(MSR_K6_EPMR, msrval, 0); /* enable the PowerNow port */
 	invalue = inl(POWERNOW_IOPORT + 0x8);
 	msrval = POWERNOW_IOPORT + 0x0;
 	wrmsr(MSR_K6_EPMR, msrval, 0); /* disable it again */
 
+<<<<<<< HEAD
 	local_irq_enable();
 
 	return clock_ratio[register_to_index[(invalue >> 5)&7]].index;
@@ -128,6 +156,11 @@ static void powernow_k6_set_cpu_multiplier(unsigned int best_i)
 	write_cr0(cr0);
 	local_irq_enable();
 }
+=======
+	return clock_ratio[(invalue >> 5)&7].index;
+}
+
+>>>>>>> 671a46baf1b... some performance improvements
 
 /**
  * powernow_k6_set_state - set the PowerNow! multiplier
@@ -138,6 +171,11 @@ static void powernow_k6_set_cpu_multiplier(unsigned int best_i)
 static void powernow_k6_set_state(struct cpufreq_policy *policy,
 		unsigned int best_i)
 {
+<<<<<<< HEAD
+=======
+	unsigned long outvalue = 0, invalue = 0;
+	unsigned long msrval;
+>>>>>>> 671a46baf1b... some performance improvements
 	struct cpufreq_freqs freqs;
 
 	if (clock_ratio[best_i].index > max_multiplier) {
@@ -150,7 +188,22 @@ static void powernow_k6_set_state(struct cpufreq_policy *policy,
 
 	cpufreq_notify_transition(policy, &freqs, CPUFREQ_PRECHANGE);
 
+<<<<<<< HEAD
 	powernow_k6_set_cpu_multiplier(best_i);
+=======
+	/* we now need to transform best_i to the BVC format, see AMD#23446 */
+
+	outvalue = (1<<12) | (1<<10) | (1<<9) | (best_i<<5);
+
+	msrval = POWERNOW_IOPORT + 0x1;
+	wrmsr(MSR_K6_EPMR, msrval, 0); /* enable the PowerNow port */
+	invalue = inl(POWERNOW_IOPORT + 0x8);
+	invalue = invalue & 0xf;
+	outvalue = outvalue | invalue;
+	outl(outvalue , (POWERNOW_IOPORT + 0x8));
+	msrval = POWERNOW_IOPORT + 0x0;
+	wrmsr(MSR_K6_EPMR, msrval, 0); /* disable it again */
+>>>>>>> 671a46baf1b... some performance improvements
 
 	cpufreq_notify_transition(policy, &freqs, CPUFREQ_POSTCHANGE);
 
@@ -195,15 +248,23 @@ static int powernow_k6_target(struct cpufreq_policy *policy,
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 671a46baf1b... some performance improvements
 static int powernow_k6_cpu_init(struct cpufreq_policy *policy)
 {
 	unsigned int i, f;
 	int result;
+<<<<<<< HEAD
 	unsigned khz;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (policy->cpu != 0)
 		return -ENODEV;
 
+<<<<<<< HEAD
 	max_multiplier = 0;
 	khz = cpu_khz;
 	for (i = 0; i < ARRAY_SIZE(usual_frequency_table); i++) {
@@ -246,6 +307,11 @@ have_max_multiplier:
 	busfreq = khz / max_multiplier;
 have_busfreq:
 	param_busfreq = busfreq * 10;
+=======
+	/* get frequencies */
+	max_multiplier = powernow_k6_get_cpu_multiplier();
+	busfreq = cpu_khz / max_multiplier;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* table init */
 	for (i = 0; (clock_ratio[i].frequency != CPUFREQ_TABLE_END); i++) {
@@ -257,7 +323,11 @@ have_busfreq:
 	}
 
 	/* cpuinfo and default policy values */
+<<<<<<< HEAD
 	policy->cpuinfo.transition_latency = 500000;
+=======
+	policy->cpuinfo.transition_latency = 200000;
+>>>>>>> 671a46baf1b... some performance improvements
 	policy->cur = busfreq * max_multiplier;
 
 	result = cpufreq_frequency_table_cpuinfo(policy, clock_ratio);

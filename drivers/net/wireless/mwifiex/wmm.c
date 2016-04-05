@@ -556,8 +556,12 @@ mwifiex_clean_txrx(struct mwifiex_private *priv)
 	mwifiex_wmm_delete_all_ralist(priv);
 	memcpy(tos_to_tid, ac_to_tid, sizeof(tos_to_tid));
 
+<<<<<<< HEAD
 	if (priv->adapter->if_ops.clean_pcie_ring &&
 	    !priv->adapter->surprise_removed)
+=======
+	if (priv->adapter->if_ops.clean_pcie_ring)
+>>>>>>> 671a46baf1b... some performance improvements
 		priv->adapter->if_ops.clean_pcie_ring(priv->adapter);
 	spin_unlock_irqrestore(&priv->wmm.ra_list_spinlock, flags);
 }
@@ -1237,7 +1241,12 @@ mwifiex_dequeue_tx_packet(struct mwifiex_adapter *adapter)
 		if (mwifiex_is_amsdu_allowed(priv, tid) &&
 		    mwifiex_is_11n_aggragation_possible(priv, ptr,
 							adapter->tx_buf_size))
+<<<<<<< HEAD
 			mwifiex_11n_aggregate_pkt(priv, ptr, ptr_index, flags);
+=======
+			mwifiex_11n_aggregate_pkt(priv, ptr, INTF_HEADER_LEN,
+						  ptr_index, flags);
+>>>>>>> 671a46baf1b... some performance improvements
 			/* ra_list_spinlock has been freed in
 			   mwifiex_11n_aggregate_pkt() */
 		else

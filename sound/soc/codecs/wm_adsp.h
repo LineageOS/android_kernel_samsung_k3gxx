@@ -20,6 +20,11 @@
 
 #include "wmfw.h"
 
+<<<<<<< HEAD
+=======
+struct regulator;
+
+>>>>>>> 671a46baf1b... some performance improvements
 struct wm_adsp_region {
 	int type;
 	unsigned int base;
@@ -27,9 +32,18 @@ struct wm_adsp_region {
 
 struct wm_adsp_alg_region {
 	struct list_head list;
+<<<<<<< HEAD
 	unsigned int alg;
 	int type;
 	unsigned int base;
+=======
+	unsigned int block;
+	unsigned int alg;
+	int type;
+	unsigned int base;
+	unsigned int offset;
+	size_t len;
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 struct wm_adsp_buffer_region {
@@ -83,20 +97,31 @@ struct wm_adsp {
 
 	unsigned int rate_cache;
 	struct mutex rate_lock;
+<<<<<<< HEAD
 	int (*rate_put_cb) (struct wm_adsp *adsp, unsigned int mask,
 			    unsigned int val);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	struct list_head alg_regions;
 
 	int fw_id;
+<<<<<<< HEAD
 	int fw_id_version;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	const struct wm_adsp_region *mem;
 	int num_mems;
 
 	int fw;
+<<<<<<< HEAD
 	int fw_ver;
 	u32 running;
+=======
+	bool running;
+	int fw_ver;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	struct mutex ctl_lock;
 	struct list_head ctl_list;
@@ -119,6 +144,7 @@ struct wm_adsp {
 
 	struct mutex *fw_lock;
 	struct work_struct boot_work;
+<<<<<<< HEAD
 
 #ifdef CONFIG_DEBUG_FS
 	struct dentry *debugfs_root;
@@ -126,6 +152,8 @@ struct wm_adsp {
 	char *bin_file_loaded;
 #endif
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 #define WM_ADSP1(wname, num) \
@@ -145,6 +173,7 @@ extern const struct snd_kcontrol_new wm_adsp1_fw_controls[];
 extern const struct snd_kcontrol_new wm_adsp2_fw_controls[];
 extern const struct snd_kcontrol_new wm_adsp2v2_fw_controls[];
 
+<<<<<<< HEAD
 int wm_adsp1_init(struct wm_adsp *dsp);
 int wm_adsp2_init(struct wm_adsp *dsp, struct mutex *fw_lock);
 
@@ -162,6 +191,10 @@ void wm_adsp_cleanup_debugfs(struct wm_adsp *dsp)
 }
 #endif
 
+=======
+int wm_adsp1_init(struct wm_adsp *adsp);
+int wm_adsp2_init(struct wm_adsp *adsp, struct mutex *fw_lock);
+>>>>>>> 671a46baf1b... some performance improvements
 int wm_adsp1_event(struct snd_soc_dapm_widget *w,
 		   struct snd_kcontrol *kcontrol, int event);
 

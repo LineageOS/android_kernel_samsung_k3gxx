@@ -121,10 +121,24 @@ static struct dmi_system_id __cpuinitdata processor_power_dmi_table[] = {
  */
 static void acpi_safe_halt(void)
 {
+<<<<<<< HEAD
 	if (!tif_need_resched()) {
 		safe_halt();
 		local_irq_disable();
 	}
+=======
+	current_thread_info()->status &= ~TS_POLLING;
+	/*
+	 * TS_POLLING-cleared state must be visible before we
+	 * test NEED_RESCHED:
+	 */
+	smp_mb();
+	if (!need_resched()) {
+		safe_halt();
+		local_irq_disable();
+	}
+	current_thread_info()->status |= TS_POLLING;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 #ifdef ARCH_APICTIMER_STOPS_ON_C3
@@ -732,11 +746,14 @@ static int acpi_idle_enter_c1(struct cpuidle_device *dev,
 	if (unlikely(!pr))
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (cx->entry_method == ACPI_CSTATE_FFH) {
 		if (current_set_polling_and_test())
 			return -EINVAL;
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	lapic_timer_state_broadcast(pr, cx, 1);
 	acpi_idle_do_entry(cx);
 
@@ -790,9 +807,24 @@ static int acpi_idle_enter_simple(struct cpuidle_device *dev,
 	if (unlikely(!pr))
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (cx->entry_method == ACPI_CSTATE_FFH) {
 		if (current_set_polling_and_test())
 			return -EINVAL;
+=======
+	if (cx->entry_method != ACPI_CSTATE_FFH) {
+		current_thread_info()->status &= ~TS_POLLING;
+		/*
+		 * TS_POLLING-cleared state must be visible before we test
+		 * NEED_RESCHED:
+		 */
+		smp_mb();
+
+		if (unlikely(need_resched())) {
+			current_thread_info()->status |= TS_POLLING;
+			return -EINVAL;
+		}
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	/*
@@ -810,6 +842,12 @@ static int acpi_idle_enter_simple(struct cpuidle_device *dev,
 
 	sched_clock_idle_wakeup_event(0);
 
+<<<<<<< HEAD
+=======
+	if (cx->entry_method != ACPI_CSTATE_FFH)
+		current_thread_info()->status |= TS_POLLING;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	lapic_timer_state_broadcast(pr, cx, 0);
 	return index;
 }
@@ -846,9 +884,24 @@ static int acpi_idle_enter_bm(struct cpuidle_device *dev,
 		}
 	}
 
+<<<<<<< HEAD
 	if (cx->entry_method == ACPI_CSTATE_FFH) {
 		if (current_set_polling_and_test())
 			return -EINVAL;
+=======
+	if (cx->entry_method != ACPI_CSTATE_FFH) {
+		current_thread_info()->status &= ~TS_POLLING;
+		/*
+		 * TS_POLLING-cleared state must be visible before we test
+		 * NEED_RESCHED:
+		 */
+		smp_mb();
+
+		if (unlikely(need_resched())) {
+			current_thread_info()->status |= TS_POLLING;
+			return -EINVAL;
+		}
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	acpi_unlazy_tlb(smp_processor_id());
@@ -894,6 +947,12 @@ static int acpi_idle_enter_bm(struct cpuidle_device *dev,
 
 	sched_clock_idle_wakeup_event(0);
 
+<<<<<<< HEAD
+=======
+	if (cx->entry_method != ACPI_CSTATE_FFH)
+		current_thread_info()->status |= TS_POLLING;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	lapic_timer_state_broadcast(pr, cx, 0);
 	return index;
 }
@@ -978,7 +1037,11 @@ static int acpi_processor_setup_cpuidle_states(struct acpi_processor *pr)
 		return -EINVAL;
 
 	drv->safe_state_index = -1;
+<<<<<<< HEAD
 	for (i = CPUIDLE_DRIVER_STATE_START; i < CPUIDLE_STATE_MAX; i++) {
+=======
+	for (i = 0; i < CPUIDLE_STATE_MAX; i++) {
+>>>>>>> 671a46baf1b... some performance improvements
 		drv->states[i].name[0] = '\0';
 		drv->states[i].desc[0] = '\0';
 	}
@@ -1101,9 +1164,15 @@ int acpi_processor_cst_has_changed(struct acpi_processor *pr)
 
 	if (pr->id == 0 && cpuidle_get_driver() == &acpi_idle_driver) {
 
+<<<<<<< HEAD
 		/* Protect against cpu-hotplug */
 		get_online_cpus();
 		cpuidle_pause_and_lock();
+=======
+		cpuidle_pause_and_lock();
+		/* Protect against cpu-hotplug */
+		get_online_cpus();
+>>>>>>> 671a46baf1b... some performance improvements
 
 		/* Disable all cpuidle devices */
 		for_each_online_cpu(cpu) {
@@ -1130,8 +1199,13 @@ int acpi_processor_cst_has_changed(struct acpi_processor *pr)
 				cpuidle_enable_device(dev);
 			}
 		}
+<<<<<<< HEAD
 		cpuidle_resume_and_unlock();
 		put_online_cpus();
+=======
+		put_online_cpus();
+		cpuidle_resume_and_unlock();
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	return 0;

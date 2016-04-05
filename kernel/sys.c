@@ -2346,7 +2346,10 @@ SYSCALL_DEFINE5(prctl, int, option, unsigned long, arg2, unsigned long, arg3,
 		unsigned long, arg4, unsigned long, arg5)
 {
 	struct task_struct *me = current;
+<<<<<<< HEAD
 	struct task_struct *tsk;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	unsigned char comm[sizeof(me->comm)];
 	long error;
 
@@ -2470,10 +2473,17 @@ SYSCALL_DEFINE5(prctl, int, option, unsigned long, arg2, unsigned long, arg3,
 			else
 				return -EINVAL;
 			break;
+<<<<<<< HEAD
+=======
+		case PR_SET_VMA:
+			error = prctl_set_vma(arg2, arg3, arg4, arg5);
+			break;
+>>>>>>> 671a46baf1b... some performance improvements
 		default:
 			return -EINVAL;
 		}
 		break;
+<<<<<<< HEAD
 	case PR_SET_VMA:
 		error = prctl_set_vma(arg2, arg3, arg4, arg5);
 		break;
@@ -2494,6 +2504,8 @@ SYSCALL_DEFINE5(prctl, int, option, unsigned long, arg2, unsigned long, arg3,
 		put_task_struct(tsk);
 		error = 0;
 		break;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	case PR_MCE_KILL_GET:
 		if (arg2 | arg3 | arg4 | arg5)
 			return -EINVAL;

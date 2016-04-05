@@ -342,6 +342,7 @@ int ttm_bo_move_memcpy(struct ttm_buffer_object *bo,
 	if (ret)
 		goto out;
 
+<<<<<<< HEAD
 	/*
 	 * Single TTM move. NOP.
 	 */
@@ -361,6 +362,21 @@ int ttm_bo_move_memcpy(struct ttm_buffer_object *bo,
 		ret = ttm->bdev->driver->ttm_tt_populate(ttm);
 		if (ret)
 			goto out1;
+=======
+	if (old_iomap == NULL && new_iomap == NULL)
+		goto out2;
+	if (old_iomap == NULL && ttm == NULL)
+		goto out2;
+
+	if (ttm->state == tt_unpopulated) {
+		ret = ttm->bdev->driver->ttm_tt_populate(ttm);
+		if (ret) {
+			/* if we fail here don't nuke the mm node
+			 * as the bo still owns it */
+			old_copy.mm_node = NULL;
+			goto out1;
+		}
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	add = 0;
@@ -386,8 +402,16 @@ int ttm_bo_move_memcpy(struct ttm_buffer_object *bo,
 						   prot);
 		} else
 			ret = ttm_copy_io_page(new_iomap, old_iomap, page);
+<<<<<<< HEAD
 		if (ret)
 			goto out1;
+=======
+		if (ret) {
+			/* failing here, means keep old copy as-is */
+			old_copy.mm_node = NULL;
+			goto out1;
+		}
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	mb();
 out2:
@@ -405,12 +429,16 @@ out1:
 	ttm_mem_reg_iounmap(bdev, old_mem, new_iomap);
 out:
 	ttm_mem_reg_iounmap(bdev, &old_copy, old_iomap);
+<<<<<<< HEAD
 
 	/*
 	 * On error, keep the mm node!
 	 */
 	if (!ret)
 		ttm_bo_mem_put(bo, &old_copy);
+=======
+	ttm_bo_mem_put(bo, &old_copy);
+>>>>>>> 671a46baf1b... some performance improvements
 	return ret;
 }
 EXPORT_SYMBOL(ttm_bo_move_memcpy);

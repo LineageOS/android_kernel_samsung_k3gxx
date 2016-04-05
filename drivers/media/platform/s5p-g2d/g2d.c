@@ -784,7 +784,10 @@ static int g2d_probe(struct platform_device *pdev)
 	}
 	*vfd = g2d_videodev;
 	vfd->lock = &dev->mutex;
+<<<<<<< HEAD
 	vfd->v4l2_dev = &dev->v4l2_dev;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	ret = video_register_device(vfd, VFL_TYPE_GRABBER, 0);
 	if (ret) {
 		v4l2_err(&dev->v4l2_dev, "Failed to register video device\n");

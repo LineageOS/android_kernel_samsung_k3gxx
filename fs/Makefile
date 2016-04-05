@@ -68,7 +68,10 @@ obj-$(CONFIG_EXT2_FS)		+= ext2/
 # We place ext4 after ext2 so plain ext2 root fs's are mounted using ext2
 # unless explicitly requested by rootfstype
 obj-$(CONFIG_EXT4_FS)		+= ext4/
+<<<<<<< HEAD
 obj-$(CONFIG_SDCARD_FS)		+= sdcardfs/
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 obj-$(CONFIG_JBD)		+= jbd/
 obj-$(CONFIG_JBD2)		+= jbd2/
 obj-$(CONFIG_CRAMFS)		+= cramfs/
@@ -107,6 +110,10 @@ obj-$(CONFIG_QNX6FS_FS)		+= qnx6/
 obj-$(CONFIG_AUTOFS4_FS)	+= autofs4/
 obj-$(CONFIG_ADFS_FS)		+= adfs/
 obj-$(CONFIG_FUSE_FS)		+= fuse/
+<<<<<<< HEAD
+=======
+obj-$(CONFIG_SDCARD_FS)		+= sdcardfs/
+>>>>>>> 671a46baf1b... some performance improvements
 obj-$(CONFIG_UDF_FS)		+= udf/
 obj-$(CONFIG_SUN_OPENPROMFS)	+= openpromfs/
 obj-$(CONFIG_OMFS_FS)		+= omfs/

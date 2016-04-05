@@ -11,7 +11,10 @@
 #include <acpi/acpi.h>
 #include <acpi/acpi_bus.h>
 #include <linux/pci.h>
+<<<<<<< HEAD
 #include <linux/delay.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 #include "radeon_acpi.h"
 
@@ -216,8 +219,12 @@ static int radeon_atpx_verify_interface(struct radeon_atpx *atpx)
 	memcpy(&output, info->buffer.pointer, size);
 
 	/* TODO: check version? */
+<<<<<<< HEAD
 	printk("ATPX version %u, functions 0x%08x\n",
 	       output.version, output.function_bits);
+=======
+	printk("ATPX version %u\n", output.version);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	radeon_atpx_parse_functions(&atpx->functions, output.function_bits);
 
@@ -253,10 +260,13 @@ static int radeon_atpx_set_discrete_state(struct radeon_atpx *atpx, u8 state)
 		if (!info)
 			return -EIO;
 		kfree(info);
+<<<<<<< HEAD
 
 		/* 200ms delay is required after off */
 		if (state == 0)
 			msleep(200);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	return 0;
 }
@@ -528,6 +538,7 @@ static bool radeon_atpx_detect(void)
 		has_atpx |= (radeon_atpx_pci_probe_handle(pdev) == true);
 	}
 
+<<<<<<< HEAD
 	/* some newer PX laptops mark the dGPU as a non-VGA display device */
 	while ((pdev = pci_get_class(PCI_CLASS_DISPLAY_OTHER << 8, pdev)) != NULL) {
 		vga_count++;
@@ -535,6 +546,8 @@ static bool radeon_atpx_detect(void)
 		has_atpx |= (radeon_atpx_pci_probe_handle(pdev) == true);
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (has_atpx && vga_count == 2) {
 		acpi_get_name(radeon_atpx_priv.atpx.handle, ACPI_FULL_PATHNAME, &buffer);
 		printk(KERN_INFO "VGA switcheroo: detected switching method %s handle\n",

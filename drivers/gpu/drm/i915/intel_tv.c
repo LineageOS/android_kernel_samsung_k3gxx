@@ -856,10 +856,13 @@ intel_enable_tv(struct intel_encoder *encoder)
 	struct drm_device *dev = encoder->base.dev;
 	struct drm_i915_private *dev_priv = dev->dev_private;
 
+<<<<<<< HEAD
 	/* Prevents vblank waits from timing out in intel_tv_detect_type() */
 	intel_wait_for_vblank(encoder->base.dev,
 			      to_intel_crtc(encoder->base.crtc)->pipe);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	I915_WRITE(TV_CTL, I915_READ(TV_CTL) | TV_ENC_ENABLE);
 }
 
@@ -925,6 +928,7 @@ intel_tv_compute_config(struct intel_encoder *encoder,
 	DRM_DEBUG_KMS("forcing bpc to 8 for TV\n");
 	pipe_config->pipe_bpp = 8*3;
 
+<<<<<<< HEAD
 	/* TV has it's own notion of sync and other mode flags, so clear them. */
 	pipe_config->adjusted_mode.flags = 0;
 
@@ -933,6 +937,8 @@ intel_tv_compute_config(struct intel_encoder *encoder,
 	 * or whether userspace is doing something stupid.
 	 */
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return true;
 }
 

@@ -191,6 +191,11 @@ static int cpu_notify(unsigned long val, void *v)
 	return __cpu_notify(val, v, -1, NULL);
 }
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_HOTPLUG_CPU
+
+>>>>>>> 671a46baf1b... some performance improvements
 static void cpu_notify_nofail(unsigned long val, void *v)
 {
 	BUG_ON(cpu_notify(val, v));
@@ -205,7 +210,10 @@ void __ref unregister_cpu_notifier(struct notifier_block *nb)
 }
 EXPORT_SYMBOL(unregister_cpu_notifier);
 
+<<<<<<< HEAD
 #ifdef CONFIG_HOTPLUG_CPU
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /**
  * clear_tasks_mm_cpumask - Safely clear tasks' mm_cpumask for a CPU
  * @cpu: a CPU id
@@ -741,12 +749,19 @@ void set_cpu_present(unsigned int cpu, bool present)
 
 void set_cpu_online(unsigned int cpu, bool online)
 {
+<<<<<<< HEAD
 	if (online) {
 		cpumask_set_cpu(cpu, to_cpumask(cpu_online_bits));
 		cpumask_set_cpu(cpu, to_cpumask(cpu_active_bits));
 	} else {
 		cpumask_clear_cpu(cpu, to_cpumask(cpu_online_bits));
 	}
+=======
+	if (online)
+		cpumask_set_cpu(cpu, to_cpumask(cpu_online_bits));
+	else
+		cpumask_clear_cpu(cpu, to_cpumask(cpu_online_bits));
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 void set_cpu_active(unsigned int cpu, bool active)

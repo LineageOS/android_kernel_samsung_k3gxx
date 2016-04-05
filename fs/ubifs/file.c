@@ -54,7 +54,10 @@
 #include <linux/mount.h>
 #include <linux/namei.h>
 #include <linux/slab.h>
+<<<<<<< HEAD
 #include <linux/migrate.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 static int read_block(struct inode *inode, void *addr, unsigned int block,
 		      struct ubifs_data_node *dn)
@@ -1423,6 +1426,7 @@ static int ubifs_set_page_dirty(struct page *page)
 	return ret;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MIGRATION
 static int ubifs_migrate_page(struct address_space *mapping,
 		struct page *newpage, struct page *page, enum migrate_mode mode)
@@ -1443,6 +1447,8 @@ static int ubifs_migrate_page(struct address_space *mapping,
 }
 #endif
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static int ubifs_releasepage(struct page *page, gfp_t unused_gfp_flags)
 {
 	/*
@@ -1545,7 +1551,12 @@ static int ubifs_vm_page_mkwrite(struct vm_area_struct *vma,
 	}
 
 	wait_for_stable_page(page);
+<<<<<<< HEAD
 	return VM_FAULT_LOCKED;
+=======
+	unlock_page(page);
+	return 0;
+>>>>>>> 671a46baf1b... some performance improvements
 
 out_unlock:
 	unlock_page(page);
@@ -1579,9 +1590,12 @@ const struct address_space_operations ubifs_file_address_operations = {
 	.write_end      = ubifs_write_end,
 	.invalidatepage = ubifs_invalidatepage,
 	.set_page_dirty = ubifs_set_page_dirty,
+<<<<<<< HEAD
 #ifdef CONFIG_MIGRATION
 	.migratepage	= ubifs_migrate_page,
 #endif
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	.releasepage    = ubifs_releasepage,
 };
 

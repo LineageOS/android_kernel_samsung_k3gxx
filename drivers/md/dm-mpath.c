@@ -86,7 +86,10 @@ struct multipath {
 	unsigned queue_if_no_path:1;	/* Queue I/O if last path fails? */
 	unsigned saved_queue_if_no_path:1; /* Saved state during suspension */
 	unsigned retain_attached_hw_handler:1; /* If there's already a hw_handler present, don't change it. */
+<<<<<<< HEAD
 	unsigned pg_init_disabled:1;	/* pg_init is not currently allowed */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	unsigned pg_init_retries;	/* Number of times to retry pg_init */
 	unsigned pg_init_count;		/* Number of times pg_init called */
@@ -498,8 +501,12 @@ static void process_queued_ios(struct work_struct *work)
 	    (!pgpath && !m->queue_if_no_path))
 		must_queue = 0;
 
+<<<<<<< HEAD
 	if (m->pg_init_required && !m->pg_init_in_progress && pgpath &&
 	    !m->pg_init_disabled)
+=======
+	if (m->pg_init_required && !m->pg_init_in_progress && pgpath)
+>>>>>>> 671a46baf1b... some performance improvements
 		__pg_init_all_paths(m);
 
 	spin_unlock_irqrestore(&m->lock, flags);
@@ -944,20 +951,26 @@ static void multipath_wait_for_pg_init_completion(struct multipath *m)
 
 static void flush_multipath_work(struct multipath *m)
 {
+<<<<<<< HEAD
 	unsigned long flags;
 
 	spin_lock_irqsave(&m->lock, flags);
 	m->pg_init_disabled = 1;
 	spin_unlock_irqrestore(&m->lock, flags);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	flush_workqueue(kmpath_handlerd);
 	multipath_wait_for_pg_init_completion(m);
 	flush_workqueue(kmultipathd);
 	flush_work(&m->trigger_event);
+<<<<<<< HEAD
 
 	spin_lock_irqsave(&m->lock, flags);
 	m->pg_init_disabled = 0;
 	spin_unlock_irqrestore(&m->lock, flags);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void multipath_dtr(struct dm_target *ti)
@@ -1176,7 +1189,11 @@ static int pg_init_limit_reached(struct multipath *m, struct pgpath *pgpath)
 
 	spin_lock_irqsave(&m->lock, flags);
 
+<<<<<<< HEAD
 	if (m->pg_init_count <= m->pg_init_retries && !m->pg_init_disabled)
+=======
+	if (m->pg_init_count <= m->pg_init_retries)
+>>>>>>> 671a46baf1b... some performance improvements
 		m->pg_init_required = 1;
 	else
 		limit_reached = 1;
@@ -1296,6 +1313,7 @@ static int do_end_io(struct multipath *m, struct request *clone,
 	if (!error && !clone->errors)
 		return 0;	/* I/O complete */
 
+<<<<<<< HEAD
 	if (error == -EOPNOTSUPP || error == -EREMOTEIO || error == -EILSEQ) {
 		if ((clone->cmd_flags & REQ_WRITE_SAME) &&
 		    !clone->q->limits.max_write_same_sectors) {
@@ -1307,6 +1325,10 @@ static int do_end_io(struct multipath *m, struct request *clone,
 		}
 		return error;
 	}
+=======
+	if (error == -EOPNOTSUPP || error == -EREMOTEIO || error == -EILSEQ)
+		return error;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (mpio->pgpath)
 		fail_path(mpio->pgpath);
@@ -1711,7 +1733,11 @@ out:
  *---------------------------------------------------------------*/
 static struct target_type multipath_target = {
 	.name = "multipath",
+<<<<<<< HEAD
 	.version = {1, 6, 0},
+=======
+	.version = {1, 5, 1},
+>>>>>>> 671a46baf1b... some performance improvements
 	.module = THIS_MODULE,
 	.ctr = multipath_ctr,
 	.dtr = multipath_dtr,

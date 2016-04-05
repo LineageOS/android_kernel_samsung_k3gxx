@@ -213,6 +213,7 @@ static int gssp_call(struct net *net, struct rpc_message *msg)
 	return status;
 }
 
+<<<<<<< HEAD
 static void gssp_free_receive_pages(struct gssx_arg_accept_sec_context *arg)
 {
 	int i;
@@ -233,6 +234,8 @@ static int gssp_alloc_receive_pages(struct gssx_arg_accept_sec_context *arg)
 		return -ENOMEM;
 	return 0;
 }
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 /*
  * Public functions
@@ -281,16 +284,22 @@ int gssp_accept_sec_context_upcall(struct net *net,
 		arg.context_handle = &ctxh;
 	res.output_token->len = GSSX_max_output_token_sz;
 
+<<<<<<< HEAD
 	ret = gssp_alloc_receive_pages(&arg);
 	if (ret)
 		return ret;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* use nfs/ for targ_name ? */
 
 	ret = gssp_call(net, &msg);
 
+<<<<<<< HEAD
 	gssp_free_receive_pages(&arg);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* we need to fetch all data even in case of error so
 	 * that we can free special strctures is they have been allocated */
 	data->major_status = res.status.major_status;

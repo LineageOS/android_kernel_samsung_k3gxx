@@ -6,8 +6,11 @@
 
 #define XT_BPF_MAX_NUM_INSTR	64
 
+<<<<<<< HEAD
 struct sk_filter;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 struct xt_bpf_info {
 	__u16 bpf_program_num_elem;
 	struct sock_filter bpf_program[XT_BPF_MAX_NUM_INSTR];

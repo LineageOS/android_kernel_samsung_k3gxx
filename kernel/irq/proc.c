@@ -12,7 +12,10 @@
 #include <linux/seq_file.h>
 #include <linux/interrupt.h>
 #include <linux/kernel_stat.h>
+<<<<<<< HEAD
 #include <linux/mutex.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 #include "internals.h"
 
@@ -310,6 +313,7 @@ void register_handler_proc(unsigned int irq, struct irqaction *action)
 
 void register_irq_proc(unsigned int irq, struct irq_desc *desc)
 {
+<<<<<<< HEAD
 	static DEFINE_MUTEX(register_lock);
 	char name [MAX_NAMELEN];
 
@@ -326,13 +330,24 @@ void register_irq_proc(unsigned int irq, struct irq_desc *desc)
 	if (desc->dir)
 		goto out_unlock;
 
+=======
+	char name [MAX_NAMELEN];
+
+	if (!root_irq_dir || (desc->irq_data.chip == &no_irq_chip) || desc->dir)
+		return;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	memset(name, 0, MAX_NAMELEN);
 	sprintf(name, "%d", irq);
 
 	/* create /proc/irq/1234 */
 	desc->dir = proc_mkdir(name, root_irq_dir);
 	if (!desc->dir)
+<<<<<<< HEAD
 		goto out_unlock;
+=======
+		return;
+>>>>>>> 671a46baf1b... some performance improvements
 
 #ifdef CONFIG_SMP
 	/* create /proc/irq/<irq>/smp_affinity */
@@ -353,9 +368,12 @@ void register_irq_proc(unsigned int irq, struct irq_desc *desc)
 
 	proc_create_data("spurious", 0444, desc->dir,
 			 &irq_spurious_proc_fops, (void *)(long)irq);
+<<<<<<< HEAD
 
 out_unlock:
 	mutex_unlock(&register_lock);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 void unregister_irq_proc(unsigned int irq, struct irq_desc *desc)

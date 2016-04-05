@@ -70,7 +70,11 @@ struct trace_uprobe {
 	(sizeof(struct probe_arg) * (n)))
 
 static int register_uprobe_event(struct trace_uprobe *tu);
+<<<<<<< HEAD
 static int unregister_uprobe_event(struct trace_uprobe *tu);
+=======
+static void unregister_uprobe_event(struct trace_uprobe *tu);
+>>>>>>> 671a46baf1b... some performance improvements
 
 static DEFINE_MUTEX(uprobe_lock);
 static LIST_HEAD(uprobe_list);
@@ -164,6 +168,7 @@ static struct trace_uprobe *find_probe_event(const char *event, const char *grou
 }
 
 /* Unregister a trace_uprobe and probe_event: call with locking uprobe_lock */
+<<<<<<< HEAD
 static int unregister_trace_uprobe(struct trace_uprobe *tu)
 {
 	int ret;
@@ -175,6 +180,13 @@ static int unregister_trace_uprobe(struct trace_uprobe *tu)
 	list_del(&tu->list);
 	free_trace_uprobe(tu);
 	return 0;
+=======
+static void unregister_trace_uprobe(struct trace_uprobe *tu)
+{
+	list_del(&tu->list);
+	unregister_uprobe_event(tu);
+	free_trace_uprobe(tu);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /* Register a trace_uprobe and probe_event */
@@ -187,12 +199,18 @@ static int register_trace_uprobe(struct trace_uprobe *tu)
 
 	/* register as an event */
 	old_tp = find_probe_event(tu->call.name, tu->call.class->system);
+<<<<<<< HEAD
 	if (old_tp) {
 		/* delete old event */
 		ret = unregister_trace_uprobe(old_tp);
 		if (ret)
 			goto end;
 	}
+=======
+	if (old_tp)
+		/* delete old event */
+		unregister_trace_uprobe(old_tp);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	ret = register_uprobe_event(tu);
 	if (ret) {
@@ -265,8 +283,11 @@ static int create_trace_uprobe(int argc, char **argv)
 		group = UPROBE_EVENT_SYSTEM;
 
 	if (is_delete) {
+<<<<<<< HEAD
 		int ret;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		if (!event) {
 			pr_info("Delete command needs an event name.\n");
 			return -EINVAL;
@@ -280,9 +301,15 @@ static int create_trace_uprobe(int argc, char **argv)
 			return -ENOENT;
 		}
 		/* delete an event */
+<<<<<<< HEAD
 		ret = unregister_trace_uprobe(tu);
 		mutex_unlock(&uprobe_lock);
 		return ret;
+=======
+		unregister_trace_uprobe(tu);
+		mutex_unlock(&uprobe_lock);
+		return 0;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	if (argc < 2) {
@@ -419,20 +446,32 @@ fail_address_parse:
 	return ret;
 }
 
+<<<<<<< HEAD
 static int cleanup_all_probes(void)
 {
 	struct trace_uprobe *tu;
 	int ret = 0;
+=======
+static void cleanup_all_probes(void)
+{
+	struct trace_uprobe *tu;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	mutex_lock(&uprobe_lock);
 	while (!list_empty(&uprobe_list)) {
 		tu = list_entry(uprobe_list.next, struct trace_uprobe, list);
+<<<<<<< HEAD
 		ret = unregister_trace_uprobe(tu);
 		if (ret)
 			break;
 	}
 	mutex_unlock(&uprobe_lock);
 	return ret;
+=======
+		unregister_trace_uprobe(tu);
+	}
+	mutex_unlock(&uprobe_lock);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /* Probes listing interfaces */
@@ -477,6 +516,7 @@ static const struct seq_operations probes_seq_op = {
 
 static int probes_open(struct inode *inode, struct file *file)
 {
+<<<<<<< HEAD
 	int ret;
 
 	if ((file->f_mode & FMODE_WRITE) && (file->f_flags & O_TRUNC)) {
@@ -484,6 +524,10 @@ static int probes_open(struct inode *inode, struct file *file)
 		if (ret)
 			return ret;
 	}
+=======
+	if ((file->f_mode & FMODE_WRITE) && (file->f_flags & O_TRUNC))
+		cleanup_all_probes();
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return seq_open(file, &probes_seq_op);
 }
@@ -990,6 +1034,7 @@ static int register_uprobe_event(struct trace_uprobe *tu)
 	return ret;
 }
 
+<<<<<<< HEAD
 static int unregister_uprobe_event(struct trace_uprobe *tu)
 {
 	int ret;
@@ -1001,6 +1046,14 @@ static int unregister_uprobe_event(struct trace_uprobe *tu)
 	kfree(tu->call.print_fmt);
 	tu->call.print_fmt = NULL;
 	return 0;
+=======
+static void unregister_uprobe_event(struct trace_uprobe *tu)
+{
+	/* tu->event is unregistered in trace_remove_event_call() */
+	trace_remove_event_call(&tu->call);
+	kfree(tu->call.print_fmt);
+	tu->call.print_fmt = NULL;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /* Make a trace interface for controling probe points */

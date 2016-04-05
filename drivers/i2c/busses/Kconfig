@@ -108,9 +108,12 @@ config I2C_I801
 	    Lynx Point-LP (PCH)
 	    Avoton (SOC)
 	    Wellsburg (PCH)
+<<<<<<< HEAD
 	    Coleto Creek (PCH)
 	    Wildcat Point-LP (PCH)
 	    BayTrail (SOC)
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	  This driver can also be built as a module.  If so, the module
 	  will be called i2c-i801.

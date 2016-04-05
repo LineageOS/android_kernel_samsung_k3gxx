@@ -114,18 +114,29 @@ static void usb_parse_ss_endpoint_companion(struct device *ddev, int cfgno,
 				cfgno, inum, asnum, ep->desc.bEndpointAddress);
 		ep->ss_ep_comp.bmAttributes = 16;
 	} else if (usb_endpoint_xfer_isoc(&ep->desc) &&
+<<<<<<< HEAD
 		   USB_SS_MULT(desc->bmAttributes) > 3) {
 		dev_warn(ddev, "Isoc endpoint has Mult of %d in "
 				"config %d interface %d altsetting %d ep %d: "
 				"setting to 3\n",
 				USB_SS_MULT(desc->bmAttributes),
+=======
+			desc->bmAttributes > 2) {
+		dev_warn(ddev, "Isoc endpoint has Mult of %d in "
+				"config %d interface %d altsetting %d ep %d: "
+				"setting to 3\n", desc->bmAttributes + 1,
+>>>>>>> 671a46baf1b... some performance improvements
 				cfgno, inum, asnum, ep->desc.bEndpointAddress);
 		ep->ss_ep_comp.bmAttributes = 2;
 	}
 
 	if (usb_endpoint_xfer_isoc(&ep->desc))
+<<<<<<< HEAD
 		max_tx = (desc->bMaxBurst + 1) *
 			(USB_SS_MULT(desc->bmAttributes)) *
+=======
+		max_tx = (desc->bMaxBurst + 1) * (desc->bmAttributes + 1) *
+>>>>>>> 671a46baf1b... some performance improvements
 			usb_endpoint_maxp(&ep->desc);
 	else if (usb_endpoint_xfer_int(&ep->desc))
 		max_tx = usb_endpoint_maxp(&ep->desc) *
@@ -144,6 +155,7 @@ static void usb_parse_ss_endpoint_companion(struct device *ddev, int cfgno,
 	}
 }
 
+<<<<<<< HEAD
 static const unsigned short low_speed_maxpacket_maxes[4] = {
 	[USB_ENDPOINT_XFER_CONTROL] = 8,
 	[USB_ENDPOINT_XFER_ISOC] = 0,
@@ -169,6 +181,8 @@ static const unsigned short super_speed_maxpacket_maxes[4] = {
 	[USB_ENDPOINT_XFER_INT] = 1024,
 };
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static int usb_parse_endpoint(struct device *ddev, int cfgno, int inum,
     int asnum, struct usb_host_interface *ifp, int num_ep,
     unsigned char *buffer, int size)
@@ -177,8 +191,11 @@ static int usb_parse_endpoint(struct device *ddev, int cfgno, int inum,
 	struct usb_endpoint_descriptor *d;
 	struct usb_host_endpoint *endpoint;
 	int n, i, j, retval;
+<<<<<<< HEAD
 	unsigned int maxp;
 	const unsigned short *maxpacket_maxes;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	d = (struct usb_endpoint_descriptor *) buffer;
 	buffer += d->bLength;
@@ -207,6 +224,7 @@ static int usb_parse_endpoint(struct device *ddev, int cfgno, int inum,
 	if (ifp->desc.bNumEndpoints >= num_ep)
 		goto skip_to_next_endpoint_or_interface_descriptor;
 
+<<<<<<< HEAD
 	/* Check for duplicate endpoint addresses */
 	for (i = 0; i < ifp->desc.bNumEndpoints; ++i) {
 		if (ifp->endpoint[i].desc.bEndpointAddress ==
@@ -217,16 +235,23 @@ static int usb_parse_endpoint(struct device *ddev, int cfgno, int inum,
 		}
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	endpoint = &ifp->endpoint[ifp->desc.bNumEndpoints];
 	++ifp->desc.bNumEndpoints;
 
 	memcpy(&endpoint->desc, d, n);
 	INIT_LIST_HEAD(&endpoint->urb_list);
 
+<<<<<<< HEAD
 	/*
 	 * Fix up bInterval values outside the legal range.
 	 * Use 10 or 8 ms if no proper value can be guessed.
 	 */
+=======
+	/* Fix up bInterval values outside the legal range. Use 32 ms if no
+	 * proper value can be guessed. */
+>>>>>>> 671a46baf1b... some performance improvements
 	i = 0;		/* i = min, j = max, n = default */
 	j = 255;
 	if (usb_endpoint_xfer_int(d)) {
@@ -234,6 +259,7 @@ static int usb_parse_endpoint(struct device *ddev, int cfgno, int inum,
 		switch (to_usb_device(ddev)->speed) {
 		case USB_SPEED_SUPER:
 		case USB_SPEED_HIGH:
+<<<<<<< HEAD
 			/*
 			 * Many device manufacturers are using full-speed
 			 * bInterval values in high-speed interrupt endpoint
@@ -252,6 +278,22 @@ static int usb_parse_endpoint(struct device *ddev, int cfgno, int inum,
 			 * polling so we'll allow it.
 			 */
 			n = 10;
+=======
+			/* Many device manufacturers are using full-speed
+			 * bInterval values in high-speed interrupt endpoint
+			 * descriptors. Try to fix those and fall back to a
+			 * 32 ms default value otherwise. */
+			n = fls(d->bInterval*8);
+			if (n == 0)
+				n = 9;	/* 32 ms = 2^(9-1) uframes */
+			j = 16;
+			break;
+		default:		/* USB_SPEED_FULL or _LOW */
+			/* For low-speed, 10 ms is the official minimum.
+			 * But some "overclocked" devices might want faster
+			 * polling so we'll allow it. */
+			n = 32;
+>>>>>>> 671a46baf1b... some performance improvements
 			break;
 		}
 	} else if (usb_endpoint_xfer_isoc(d)) {
@@ -259,10 +301,17 @@ static int usb_parse_endpoint(struct device *ddev, int cfgno, int inum,
 		j = 16;
 		switch (to_usb_device(ddev)->speed) {
 		case USB_SPEED_HIGH:
+<<<<<<< HEAD
 			n = 7;		/* 8 ms = 2^(7-1) uframes */
 			break;
 		default:		/* USB_SPEED_FULL */
 			n = 4;		/* 8 ms = 2^(4-1) frames */
+=======
+			n = 9;		/* 32 ms = 2^(9-1) uframes */
+			break;
+		default:		/* USB_SPEED_FULL */
+			n = 6;		/* 32 ms = 2^(6-1) frames */
+>>>>>>> 671a46baf1b... some performance improvements
 			break;
 		}
 	}
@@ -290,6 +339,7 @@ static int usb_parse_endpoint(struct device *ddev, int cfgno, int inum,
 			endpoint->desc.wMaxPacketSize = cpu_to_le16(8);
 	}
 
+<<<<<<< HEAD
 	/* Validate the wMaxPacketSize field */
 	maxp = usb_endpoint_maxp(&endpoint->desc);
 
@@ -325,6 +375,8 @@ static int usb_parse_endpoint(struct device *ddev, int cfgno, int inum,
 		endpoint->desc.wMaxPacketSize = cpu_to_le16(i | maxp);
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	 * Some buggy high speed devices have bulk endpoints using
 	 * maxpacket sizes other than 512.  High speed HCDs may not
@@ -332,6 +384,12 @@ static int usb_parse_endpoint(struct device *ddev, int cfgno, int inum,
 	 */
 	if (to_usb_device(ddev)->speed == USB_SPEED_HIGH
 			&& usb_endpoint_xfer_bulk(d)) {
+<<<<<<< HEAD
+=======
+		unsigned maxp;
+
+		maxp = usb_endpoint_maxp(&endpoint->desc) & 0x07ff;
+>>>>>>> 671a46baf1b... some performance improvements
 		if (maxp != 512)
 			dev_warn(ddev, "config %d interface %d altsetting %d "
 				"bulk endpoint 0x%X has invalid maxpacket %d\n",
@@ -501,8 +559,12 @@ static int usb_parse_configuration(struct usb_device *dev, int cfgidx,
 
 	memcpy(&config->desc, buffer, USB_DT_CONFIG_SIZE);
 	if (config->desc.bDescriptorType != USB_DT_CONFIG ||
+<<<<<<< HEAD
 	    config->desc.bLength < USB_DT_CONFIG_SIZE ||
 	    config->desc.bLength > size) {
+=======
+	    config->desc.bLength < USB_DT_CONFIG_SIZE) {
+>>>>>>> 671a46baf1b... some performance improvements
 		dev_err(ddev, "invalid descriptor for config index %d: "
 		    "type = 0x%X, length = %d\n", cfgidx,
 		    config->desc.bDescriptorType, config->desc.bLength);
@@ -728,6 +790,13 @@ void usb_destroy_configuration(struct usb_device *dev)
  *
  * hub-only!! ... and only in reset path, or usb_new_device()
  * (used by real hubs and virtual root hubs)
+<<<<<<< HEAD
+=======
+ *
+ * NOTE: if this is a WUSB device and is not authorized, we skip the
+ *       whole thing. A non-authorized USB device has no
+ *       configurations.
+>>>>>>> 671a46baf1b... some performance improvements
  */
 int usb_get_configuration(struct usb_device *dev)
 {
@@ -739,6 +808,11 @@ int usb_get_configuration(struct usb_device *dev)
 	struct usb_config_descriptor *desc;
 
 	cfgno = 0;
+<<<<<<< HEAD
+=======
+	if (dev->authorized == 0)	/* Not really an error */
+		goto out_not_authorized;
+>>>>>>> 671a46baf1b... some performance improvements
 	result = -ENOMEM;
 	if (ncfg > USB_MAXCONFIG) {
 		dev_warn(ddev, "too many configurations: %d, "
@@ -795,10 +869,13 @@ int usb_get_configuration(struct usb_device *dev)
 			result = -ENOMEM;
 			goto err;
 		}
+<<<<<<< HEAD
 
 		if (dev->quirks & USB_QUIRK_DELAY_INIT)
 			msleep(100);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		result = usb_get_descriptor(dev, USB_DT_CONFIG, cfgno,
 		    bigbuffer, length);
 		if (result < 0) {
@@ -826,6 +903,10 @@ int usb_get_configuration(struct usb_device *dev)
 
 err:
 	kfree(desc);
+<<<<<<< HEAD
+=======
+out_not_authorized:
+>>>>>>> 671a46baf1b... some performance improvements
 	dev->descriptor.bNumConfigurations = cfgno;
 err2:
 	if (result == -ENOMEM)

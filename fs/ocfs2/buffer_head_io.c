@@ -90,6 +90,10 @@ int ocfs2_write_block(struct ocfs2_super *osb, struct buffer_head *bh,
 		 * information for this bh as it's not marked locally
 		 * uptodate. */
 		ret = -EIO;
+<<<<<<< HEAD
+=======
+		put_bh(bh);
+>>>>>>> 671a46baf1b... some performance improvements
 		mlog_errno(ret);
 	}
 
@@ -419,6 +423,10 @@ int ocfs2_write_super_or_backup(struct ocfs2_super *osb,
 
 	if (!buffer_uptodate(bh)) {
 		ret = -EIO;
+<<<<<<< HEAD
+=======
+		put_bh(bh);
+>>>>>>> 671a46baf1b... some performance improvements
 		mlog_errno(ret);
 	}
 

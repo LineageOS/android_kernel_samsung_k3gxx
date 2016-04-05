@@ -5,7 +5,10 @@
 #include <linux/sched.h>		/* For struct task_struct.  */
 #include <linux/err.h>			/* for IS_ERR_VALUE */
 #include <linux/bug.h>			/* For BUG_ON.  */
+<<<<<<< HEAD
 #include <linux/pid_namespace.h>	/* For task_active_pid_ns.  */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #include <uapi/linux/ptrace.h>
 
 /*
@@ -56,6 +59,7 @@ extern void exit_ptrace(struct task_struct *tracer);
 #define PTRACE_MODE_READ	0x01
 #define PTRACE_MODE_ATTACH	0x02
 #define PTRACE_MODE_NOAUDIT	0x04
+<<<<<<< HEAD
 #define PTRACE_MODE_FSCREDS 0x08
 #define PTRACE_MODE_REALCREDS 0x10
 
@@ -79,6 +83,9 @@ extern void exit_ptrace(struct task_struct *tracer);
  * of the caller) or through an explicit syscall such as
  * process_vm_writev or ptrace (and should use the real credentials).
  */
+=======
+/* Returns true on success, false on denial. */
+>>>>>>> 671a46baf1b... some performance improvements
 extern bool ptrace_may_access(struct task_struct *task, unsigned int mode);
 
 static inline int ptrace_reparented(struct task_struct *child)
@@ -152,6 +159,7 @@ static inline void ptrace_event(int event, unsigned long message)
 }
 
 /**
+<<<<<<< HEAD
  * ptrace_event_pid - possibly stop for a ptrace event notification
  * @event:	%PTRACE_EVENT_* value to report
  * @pid:	process identifier for %PTRACE_GETEVENTMSG to return
@@ -183,6 +191,8 @@ static inline void ptrace_event_pid(int event, struct pid *pid)
 }
 
 /**
+=======
+>>>>>>> 671a46baf1b... some performance improvements
  * ptrace_init_task - initialize ptrace state for a new child
  * @child:		new child task
  * @ptrace:		true if child should be ptrace'd by parent's tracer
@@ -359,9 +369,12 @@ static inline void user_single_step_siginfo(struct task_struct *tsk,
  * calling arch_ptrace_stop() when it would be superfluous.  For example,
  * if the thread has not been back to user mode since the last stop, the
  * thread state might indicate that nothing needs to be done.
+<<<<<<< HEAD
  *
  * This is guaranteed to be invoked once before a task stops for ptrace and
  * may include arch-specific operations necessary prior to a ptrace stop.
+=======
+>>>>>>> 671a46baf1b... some performance improvements
  */
 #define arch_ptrace_stop_needed(code, info)	(0)
 #endif

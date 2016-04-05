@@ -50,7 +50,11 @@ find_acceptable_alias(struct dentry *result,
 
 	inode = result->d_inode;
 	spin_lock(&inode->i_lock);
+<<<<<<< HEAD
 	hlist_for_each_entry(dentry, &inode->i_dentry, d_u.d_alias) {
+=======
+	hlist_for_each_entry(dentry, &inode->i_dentry, d_alias) {
+>>>>>>> 671a46baf1b... some performance improvements
 		dget(dentry);
 		spin_unlock(&inode->i_lock);
 		if (toput)
@@ -212,7 +216,10 @@ reconnect_path(struct vfsmount *mnt, struct dentry *target_dir, char *nbuf)
 }
 
 struct getdents_callback {
+<<<<<<< HEAD
 	struct dir_context ctx;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	char *name;		/* name that was found. It already points to a
 				   buffer NAME_MAX+1 is size */
 	unsigned long ino;	/* the inum we are looking for */
@@ -272,18 +279,29 @@ static int get_name(const struct path *path, char *name, struct dentry *child)
 		goto out;
 
 	error = -EINVAL;
+<<<<<<< HEAD
 	if (!file->f_op->readdir && !file->f_op->iterate)
+=======
+	if (!file->f_op->readdir)
+>>>>>>> 671a46baf1b... some performance improvements
 		goto out_close;
 
 	buffer.name = name;
 	buffer.ino = child->d_inode->i_ino;
 	buffer.found = 0;
 	buffer.sequence = 0;
+<<<<<<< HEAD
 	buffer.ctx.actor = filldir_one;
 	while (1) {
 		int old_seq = buffer.sequence;
 
 		error = iterate_dir(file, &buffer.ctx);
+=======
+	while (1) {
+		int old_seq = buffer.sequence;
+
+		error = vfs_readdir(file, filldir_one, &buffer);
+>>>>>>> 671a46baf1b... some performance improvements
 		if (buffer.found) {
 			error = 0;
 			break;

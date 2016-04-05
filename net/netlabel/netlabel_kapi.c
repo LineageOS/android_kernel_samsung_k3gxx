@@ -700,11 +700,15 @@ socket_setattr_return:
  */
 void netlbl_sock_delattr(struct sock *sk)
 {
+<<<<<<< HEAD
 	switch (sk->sk_family) {
 	case AF_INET:
 		cipso_v4_sock_delattr(sk);
 		break;
 	}
+=======
+	cipso_v4_sock_delattr(sk);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /**
@@ -883,11 +887,15 @@ req_setattr_return:
 */
 void netlbl_req_delattr(struct request_sock *req)
 {
+<<<<<<< HEAD
 	switch (req->rsk_ops->family) {
 	case AF_INET:
 		cipso_v4_req_delattr(req);
 		break;
 	}
+=======
+	cipso_v4_req_delattr(req);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /**

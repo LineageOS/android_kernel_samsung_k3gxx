@@ -1532,7 +1532,11 @@ void brcmf_usb_exit(void)
 	brcmf_release_fw(&fw_image_list);
 }
 
+<<<<<<< HEAD
 void brcmf_usb_register(void)
+=======
+void brcmf_usb_init(void)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	brcmf_dbg(USB, "Enter\n");
 	INIT_LIST_HEAD(&fw_image_list);

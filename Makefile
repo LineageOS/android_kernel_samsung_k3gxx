@@ -1,8 +1,14 @@
 VERSION = 3
 PATCHLEVEL = 10
+<<<<<<< HEAD
 SUBLEVEL = 108
 EXTRAVERSION =
 NAME = END-OF-LIFE
+=======
+SUBLEVEL = 9
+EXTRAVERSION =
+NAME = TOSSUG Baby Fish
+>>>>>>> 671a46baf1b... some performance improvements
 
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
@@ -194,7 +200,11 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
 # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
 export KBUILD_BUILDHOST := $(SUBARCH)
 ARCH		?=arm
+<<<<<<< HEAD
 CROSS_COMPILE	?=$(srctree)/../../../prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
+=======
+CROSS_COMPILE	?=../PLATFORM/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin/arm-eabi-
+>>>>>>> 671a46baf1b... some performance improvements
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
@@ -242,7 +252,11 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 
 HOSTCC       = gcc
 HOSTCXX      = g++
+<<<<<<< HEAD
 HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89
+=======
+HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer
+>>>>>>> 671a46baf1b... some performance improvements
 HOSTCXXFLAGS = -O2
 
 # Decide whether to build built-in, modular, or both.
@@ -380,8 +394,12 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
 		   -fno-delete-null-pointer-checks \
+<<<<<<< HEAD
 		   -std=gnu89
 		   
+=======
+		   -fdiagnostics-show-option -Werror
+>>>>>>> 671a46baf1b... some performance improvements
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
@@ -578,10 +596,15 @@ endif # $(dot-config)
 # Defaults to vmlinux, but the arch makefile usually adds further targets
 all: vmlinux
 
+<<<<<<< HEAD
 KBUILD_CFLAGS	+= $(call cc-disable-warning,maybe-uninitialized,)
 
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= -Os
+=======
+ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
+KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
+>>>>>>> 671a46baf1b... some performance improvements
 else
 KBUILD_CFLAGS	+= -O2
 endif
@@ -624,8 +647,11 @@ KBUILD_CFLAGS	+= -fomit-frame-pointer
 endif
 endif
 
+<<<<<<< HEAD
 KBUILD_CFLAGS   += $(call cc-option, -fno-var-tracking-assignments)
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 ifdef CONFIG_DEBUG_INFO
 KBUILD_CFLAGS	+= -g
 KBUILD_AFLAGS	+= -gdwarf-2

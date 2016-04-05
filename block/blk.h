@@ -96,7 +96,11 @@ static inline struct request *__elv_next_request(struct request_queue *q)
 			q->flush_queue_delayed = 1;
 			return NULL;
 		}
+<<<<<<< HEAD
 		if (unlikely(blk_queue_bypass(q)) ||
+=======
+		if (unlikely(blk_queue_dying(q)) ||
+>>>>>>> 671a46baf1b... some performance improvements
 		    !q->elevator->type->ops.elevator_dispatch_fn(q, 0))
 			return NULL;
 	}

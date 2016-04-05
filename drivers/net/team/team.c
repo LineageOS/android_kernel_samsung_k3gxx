@@ -42,7 +42,13 @@
 
 static struct team_port *team_port_get_rcu(const struct net_device *dev)
 {
+<<<<<<< HEAD
 	return rcu_dereference(dev->rx_handler_data);
+=======
+	struct team_port *port = rcu_dereference(dev->rx_handler_data);
+
+	return team_port_exists(dev) ? port : NULL;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static struct team_port *team_port_get_rtnl(const struct net_device *dev)
@@ -1215,8 +1221,11 @@ static int team_user_linkup_option_get(struct team *team,
 	return 0;
 }
 
+<<<<<<< HEAD
 static void __team_carrier_check(struct team *team);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static int team_user_linkup_option_set(struct team *team,
 				       struct team_gsetter_ctx *ctx)
 {
@@ -1224,7 +1233,10 @@ static int team_user_linkup_option_set(struct team *team,
 
 	port->user.linkup = ctx->data.bool_val;
 	team_refresh_port_linkup(port);
+<<<<<<< HEAD
 	__team_carrier_check(port->team);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 }
 
@@ -1244,7 +1256,10 @@ static int team_user_linkup_en_option_set(struct team *team,
 
 	port->user.linkup_enabled = ctx->data.bool_val;
 	team_refresh_port_linkup(port);
+<<<<<<< HEAD
 	__team_carrier_check(port->team);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 }
 
@@ -1521,11 +1536,19 @@ static int team_set_mac_address(struct net_device *dev, void *p)
 	if (dev->type == ARPHRD_ETHER && !is_valid_ether_addr(addr->sa_data))
 		return -EADDRNOTAVAIL;
 	memcpy(dev->dev_addr, addr->sa_data, dev->addr_len);
+<<<<<<< HEAD
 	mutex_lock(&team->lock);
 	list_for_each_entry(port, &team->port_list, list)
 		if (team->ops.port_change_dev_addr)
 			team->ops.port_change_dev_addr(team, port);
 	mutex_unlock(&team->lock);
+=======
+	rcu_read_lock();
+	list_for_each_entry_rcu(port, &team->port_list, list)
+		if (team->ops.port_change_dev_addr)
+			team->ops.port_change_dev_addr(team, port);
+	rcu_read_unlock();
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 }
 
@@ -1540,7 +1563,10 @@ static int team_change_mtu(struct net_device *dev, int new_mtu)
 	 * to traverse list in reverse under rcu_read_lock
 	 */
 	mutex_lock(&team->lock);
+<<<<<<< HEAD
 	team->port_mtu_change_allowed = true;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	list_for_each_entry(port, &team->port_list, list) {
 		err = dev_set_mtu(port->dev, new_mtu);
 		if (err) {
@@ -1549,7 +1575,10 @@ static int team_change_mtu(struct net_device *dev, int new_mtu)
 			goto unwind;
 		}
 	}
+<<<<<<< HEAD
 	team->port_mtu_change_allowed = false;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	mutex_unlock(&team->lock);
 
 	dev->mtu = new_mtu;
@@ -1559,7 +1588,10 @@ static int team_change_mtu(struct net_device *dev, int new_mtu)
 unwind:
 	list_for_each_entry_continue_reverse(port, &team->port_list, list)
 		dev_set_mtu(port->dev, dev->mtu);
+<<<<<<< HEAD
 	team->port_mtu_change_allowed = false;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	mutex_unlock(&team->lock);
 
 	return err;
@@ -1636,10 +1668,17 @@ static int team_vlan_rx_kill_vid(struct net_device *dev, __be16 proto, u16 vid)
 	struct team *team = netdev_priv(dev);
 	struct team_port *port;
 
+<<<<<<< HEAD
 	mutex_lock(&team->lock);
 	list_for_each_entry(port, &team->port_list, list)
 		vlan_vid_del(port->dev, proto, vid);
 	mutex_unlock(&team->lock);
+=======
+	rcu_read_lock();
+	list_for_each_entry_rcu(port, &team->port_list, list)
+		vlan_vid_del(port->dev, proto, vid);
+	rcu_read_unlock();
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return 0;
 }
@@ -2121,10 +2160,15 @@ start_again:
 
 	hdr = genlmsg_put(skb, portid, seq, &team_nl_family, flags | NLM_F_MULTI,
 			  TEAM_CMD_OPTIONS_GET);
+<<<<<<< HEAD
 	if (!hdr) {
 		nlmsg_free(skb);
 		return -EMSGSIZE;
 	}
+=======
+	if (!hdr)
+		return -EMSGSIZE;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (nla_put_u32(skb, TEAM_ATTR_TEAM_IFINDEX, team->dev->ifindex))
 		goto nla_put_failure;
@@ -2391,10 +2435,15 @@ start_again:
 
 	hdr = genlmsg_put(skb, portid, seq, &team_nl_family, flags | NLM_F_MULTI,
 			  TEAM_CMD_PORT_LIST_GET);
+<<<<<<< HEAD
 	if (!hdr) {
 		nlmsg_free(skb);
 		return -EMSGSIZE;
 	}
+=======
+	if (!hdr)
+		return -EMSGSIZE;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (nla_put_u32(skb, TEAM_ATTR_TEAM_IFINDEX, team->dev->ifindex))
 		goto nla_put_failure;
@@ -2683,9 +2732,13 @@ static int team_device_event(struct notifier_block *unused,
 		break;
 	case NETDEV_CHANGEMTU:
 		/* Forbid to change mtu of underlaying device */
+<<<<<<< HEAD
 		if (!port->team->port_mtu_change_allowed)
 			return NOTIFY_BAD;
 		break;
+=======
+		return NOTIFY_BAD;
+>>>>>>> 671a46baf1b... some performance improvements
 	case NETDEV_PRE_TYPE_CHANGE:
 		/* Forbid to change type of underlaying device */
 		return NOTIFY_BAD;

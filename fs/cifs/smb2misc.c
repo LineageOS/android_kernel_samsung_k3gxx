@@ -413,6 +413,7 @@ cifs_ses_oplock_break(struct work_struct *work)
 }
 
 static bool
+<<<<<<< HEAD
 smb2_tcon_has_lease(struct cifs_tcon *tcon, struct smb2_lease_break *rsp,
 		    struct smb2_lease_break_work *lw)
 {
@@ -483,6 +484,21 @@ smb2_is_valid_lease_break(char *buffer)
 	struct cifs_ses *ses;
 	struct cifs_tcon *tcon;
 	struct smb2_lease_break_work *lw;
+=======
+smb2_is_valid_lease_break(char *buffer, struct TCP_Server_Info *server)
+{
+	struct smb2_lease_break *rsp = (struct smb2_lease_break *)buffer;
+	struct list_head *tmp, *tmp1, *tmp2;
+	struct cifs_ses *ses;
+	struct cifs_tcon *tcon;
+	struct cifsInodeInfo *cinode;
+	struct cifsFileInfo *cfile;
+	struct cifs_pending_open *open;
+	struct smb2_lease_break_work *lw;
+	bool found;
+	int ack_req = le32_to_cpu(rsp->Flags &
+				  SMB2_NOTIFY_BREAK_LEASE_FLAG_ACK_REQUIRED);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	lw = kmalloc(sizeof(struct smb2_lease_break_work), GFP_KERNEL);
 	if (!lw)
@@ -495,6 +511,7 @@ smb2_is_valid_lease_break(char *buffer)
 
 	/* look up tcon based on tid & uid */
 	spin_lock(&cifs_tcp_ses_lock);
+<<<<<<< HEAD
 	list_for_each(tmp, &cifs_tcp_ses_list) {
 		server = list_entry(tmp, struct TCP_Server_Info, tcp_ses_list);
 
@@ -515,6 +532,73 @@ smb2_is_valid_lease_break(char *buffer)
 			}
 			spin_unlock(&cifs_file_list_lock);
 		}
+=======
+	list_for_each(tmp, &server->smb_ses_list) {
+		ses = list_entry(tmp, struct cifs_ses, smb_ses_list);
+
+		spin_lock(&cifs_file_list_lock);
+		list_for_each(tmp1, &ses->tcon_list) {
+			tcon = list_entry(tmp1, struct cifs_tcon, tcon_list);
+
+			cifs_stats_inc(&tcon->stats.cifs_stats.num_oplock_brks);
+			list_for_each(tmp2, &tcon->openFileList) {
+				cfile = list_entry(tmp2, struct cifsFileInfo,
+						   tlist);
+				cinode = CIFS_I(cfile->dentry->d_inode);
+
+				if (memcmp(cinode->lease_key, rsp->LeaseKey,
+					   SMB2_LEASE_KEY_SIZE))
+					continue;
+
+				cifs_dbg(FYI, "found in the open list\n");
+				cifs_dbg(FYI, "lease key match, lease break 0x%d\n",
+					 le32_to_cpu(rsp->NewLeaseState));
+
+				smb2_set_oplock_level(cinode,
+				  smb2_map_lease_to_oplock(rsp->NewLeaseState));
+
+				if (ack_req)
+					cfile->oplock_break_cancelled = false;
+				else
+					cfile->oplock_break_cancelled = true;
+
+				queue_work(cifsiod_wq, &cfile->oplock_break);
+
+				spin_unlock(&cifs_file_list_lock);
+				spin_unlock(&cifs_tcp_ses_lock);
+				return true;
+			}
+
+			found = false;
+			list_for_each_entry(open, &tcon->pending_opens, olist) {
+				if (memcmp(open->lease_key, rsp->LeaseKey,
+					   SMB2_LEASE_KEY_SIZE))
+					continue;
+
+				if (!found && ack_req) {
+					found = true;
+					memcpy(lw->lease_key, open->lease_key,
+					       SMB2_LEASE_KEY_SIZE);
+					lw->tlink = cifs_get_tlink(open->tlink);
+					queue_work(cifsiod_wq,
+						   &lw->lease_break);
+				}
+
+				cifs_dbg(FYI, "found in the pending open list\n");
+				cifs_dbg(FYI, "lease key match, lease break 0x%d\n",
+					 le32_to_cpu(rsp->NewLeaseState));
+
+				open->oplock =
+				  smb2_map_lease_to_oplock(rsp->NewLeaseState);
+			}
+			if (found) {
+				spin_unlock(&cifs_file_list_lock);
+				spin_unlock(&cifs_tcp_ses_lock);
+				return true;
+			}
+		}
+		spin_unlock(&cifs_file_list_lock);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	spin_unlock(&cifs_tcp_ses_lock);
 	kfree(lw);
@@ -540,7 +624,11 @@ smb2_is_valid_oplock_break(char *buffer, struct TCP_Server_Info *server)
 	if (rsp->StructureSize !=
 				smb2_rsp_struct_sizes[SMB2_OPLOCK_BREAK_HE]) {
 		if (le16_to_cpu(rsp->StructureSize) == 44)
+<<<<<<< HEAD
 			return smb2_is_valid_lease_break(buffer);
+=======
+			return smb2_is_valid_lease_break(buffer, server);
+>>>>>>> 671a46baf1b... some performance improvements
 		else
 			return false;
 	}

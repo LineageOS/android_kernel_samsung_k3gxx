@@ -305,6 +305,7 @@ static void scsi_host_dev_release(struct device *dev)
 		kfree(queuedata);
 	}
 
+<<<<<<< HEAD
 	if (shost->shost_state == SHOST_CREATED) {
 		/*
 		 * Free the shost_dev device name here if scsi_host_alloc()
@@ -316,6 +317,8 @@ static void scsi_host_dev_release(struct device *dev)
 		kfree(dev_name(&shost->shost_dev));
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	scsi_destroy_command_freelist(shost);
 	if (shost->bqt)
 		blk_free_tags(shost->bqt);
@@ -399,7 +402,10 @@ struct Scsi_Host *scsi_host_alloc(struct scsi_host_template *sht, int privsize)
 	shost->unchecked_isa_dma = sht->unchecked_isa_dma;
 	shost->use_clustering = sht->use_clustering;
 	shost->ordered_tag = sht->ordered_tag;
+<<<<<<< HEAD
 	shost->no_write_same = sht->no_write_same;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (sht->supported_mode == MODE_UNKNOWN)
 		/* means we didn't set it ... default to INITIATOR */

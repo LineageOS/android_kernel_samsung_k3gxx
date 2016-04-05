@@ -759,10 +759,15 @@ void *rds_ib_get_mr(struct scatterlist *sg, unsigned long nents,
 	}
 
 	ibmr = rds_ib_alloc_fmr(rds_ibdev);
+<<<<<<< HEAD
 	if (IS_ERR(ibmr)) {
 		rds_ib_dev_put(rds_ibdev);
 		return ibmr;
 	}
+=======
+	if (IS_ERR(ibmr))
+		return ibmr;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	ret = rds_ib_map_fmr(rds_ibdev, ibmr, sg, nents);
 	if (ret == 0)

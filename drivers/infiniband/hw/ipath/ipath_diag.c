@@ -326,7 +326,11 @@ static ssize_t ipath_diagpkt_write(struct file *fp,
 				   size_t count, loff_t *off)
 {
 	u32 __iomem *piobuf;
+<<<<<<< HEAD
 	u32 plen, pbufn, maxlen_reserve;
+=======
+	u32 plen, clen, pbufn;
+>>>>>>> 671a46baf1b... some performance improvements
 	struct ipath_diag_pkt odp;
 	struct ipath_diag_xpkt dp;
 	u32 *tmpbuf = NULL;
@@ -335,12 +339,20 @@ static ssize_t ipath_diagpkt_write(struct file *fp,
 	u64 val;
 	u32 l_state, lt_state; /* LinkState, LinkTrainingState */
 
+<<<<<<< HEAD
+=======
+	if (count < sizeof(odp)) {
+		ret = -EINVAL;
+		goto bail;
+	}
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (count == sizeof(dp)) {
 		if (copy_from_user(&dp, data, sizeof(dp))) {
 			ret = -EFAULT;
 			goto bail;
 		}
+<<<<<<< HEAD
 	} else if (count == sizeof(odp)) {
 		if (copy_from_user(&odp, data, sizeof(odp))) {
 			ret = -EFAULT;
@@ -353,6 +365,34 @@ static ssize_t ipath_diagpkt_write(struct file *fp,
 	} else {
 		ret = -EINVAL;
 		goto bail;
+=======
+	} else if (copy_from_user(&odp, data, sizeof(odp))) {
+		ret = -EFAULT;
+		goto bail;
+	}
+
+	/*
+	 * Due to padding/alignment issues (lessened with new struct)
+	 * the old and new structs are the same length. We need to
+	 * disambiguate them, which we can do because odp.len has never
+	 * been less than the total of LRH+BTH+DETH so far, while
+	 * dp.unit (same offset) unit is unlikely to get that high.
+	 * Similarly, dp.data, the pointer to user at the same offset
+	 * as odp.unit, is almost certainly at least one (512byte)page
+	 * "above" NULL. The if-block below can be omitted if compatibility
+	 * between a new driver and older diagnostic code is unimportant.
+	 * compatibility the other direction (new diags, old driver) is
+	 * handled in the diagnostic code, with a warning.
+	 */
+	if (dp.unit >= 20 && dp.data < 512) {
+		/* very probable version mismatch. Fix it up */
+		memcpy(&odp, &dp, sizeof(odp));
+		/* We got a legacy dp, copy elements to dp */
+		dp.unit = odp.unit;
+		dp.data = odp.data;
+		dp.len = odp.len;
+		dp.pbc_wd = 0; /* Indicate we need to compute PBC wd */
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	/* send count must be an exact number of dwords */
@@ -361,7 +401,11 @@ static ssize_t ipath_diagpkt_write(struct file *fp,
 		goto bail;
 	}
 
+<<<<<<< HEAD
 	plen = dp.len >> 2;
+=======
+	clen = dp.len >> 2;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	dd = ipath_lookup(dp.unit);
 	if (!dd || !(dd->ipath_flags & IPATH_PRESENT) ||
@@ -404,6 +448,7 @@ static ssize_t ipath_diagpkt_write(struct file *fp,
 		goto bail;
 	}
 
+<<<<<<< HEAD
 	/*
 	 * need total length before first word written, plus 2 Dwords. One Dword
 	 * is for padding so we get the full user data when not aligned on
@@ -420,6 +465,18 @@ static ssize_t ipath_diagpkt_write(struct file *fp,
 
 	plen = sizeof(u32) + dp.len;
 
+=======
+	/* need total length before first word written */
+	/* +1 word is for the qword padding */
+	plen = sizeof(u32) + dp.len;
+
+	if ((plen + 4) > dd->ipath_ibmaxlen) {
+		ipath_dbg("Pkt len 0x%x > ibmaxlen %x\n",
+			  plen - 4, dd->ipath_ibmaxlen);
+		ret = -EINVAL;
+		goto bail;	/* before writing pbc */
+	}
+>>>>>>> 671a46baf1b... some performance improvements
 	tmpbuf = vmalloc(plen);
 	if (!tmpbuf) {
 		dev_info(&dd->pcidev->dev, "Unable to allocate tmp buffer, "
@@ -461,11 +518,19 @@ static ssize_t ipath_diagpkt_write(struct file *fp,
 	 */
 	if (dd->ipath_flags & IPATH_PIO_FLUSH_WC) {
 		ipath_flush_wc();
+<<<<<<< HEAD
 		__iowrite32_copy(piobuf + 2, tmpbuf, plen - 1);
 		ipath_flush_wc();
 		__raw_writel(tmpbuf[plen - 1], piobuf + plen + 1);
 	} else
 		__iowrite32_copy(piobuf + 2, tmpbuf, plen);
+=======
+		__iowrite32_copy(piobuf + 2, tmpbuf, clen - 1);
+		ipath_flush_wc();
+		__raw_writel(tmpbuf[clen - 1], piobuf + clen + 1);
+	} else
+		__iowrite32_copy(piobuf + 2, tmpbuf, clen);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	ipath_flush_wc();
 

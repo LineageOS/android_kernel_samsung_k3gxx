@@ -44,6 +44,7 @@
 #include <sound/compress_offload.h>
 #include <sound/compress_driver.h>
 
+<<<<<<< HEAD
 /* struct snd_compr_codec_caps overflows the ioctl bit size for some
  * architectures, so we need to disable the relevant ioctls.
  */
@@ -51,6 +52,8 @@
 #define COMPR_CODEC_CAPS_OVERFLOW
 #endif
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* TODO:
  * - add substream support for multiple devices in case of
  *	SND_DYNAMIC_MINORS is not used
@@ -391,7 +394,12 @@ static unsigned int snd_compr_poll(struct file *f, poll_table *wait)
 		return -EFAULT;
 
 	mutex_lock(&stream->device->lock);
+<<<<<<< HEAD
 	if (stream->runtime->state == SNDRV_PCM_STATE_OPEN) {
+=======
+	if (stream->runtime->state == SNDRV_PCM_STATE_PAUSED ||
+			stream->runtime->state == SNDRV_PCM_STATE_OPEN) {
+>>>>>>> 671a46baf1b... some performance improvements
 		retval = -EBADFD;
 		goto out;
 	}
@@ -445,7 +453,10 @@ out:
 	return retval;
 }
 
+<<<<<<< HEAD
 #ifndef COMPR_CODEC_CAPS_OVERFLOW
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static int
 snd_compr_get_codec_caps(struct snd_compr_stream *stream, unsigned long arg)
 {
@@ -469,7 +480,10 @@ out:
 	kfree(caps);
 	return retval;
 }
+<<<<<<< HEAD
 #endif /* !COMPR_CODEC_CAPS_OVERFLOW */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 /* revisit this with snd_pcm_preallocate_xxx */
 static int snd_compr_allocate_buffer(struct snd_compr_stream *stream,
@@ -686,13 +700,19 @@ static int snd_compr_stop(struct snd_compr_stream *stream)
 		return -EPERM;
 	retval = stream->ops->trigger(stream, SNDRV_PCM_TRIGGER_STOP);
 	if (!retval) {
+<<<<<<< HEAD
 		snd_compr_drain_notify(stream);
+=======
+		stream->runtime->state = SNDRV_PCM_STATE_SETUP;
+		wake_up(&stream->runtime->sleep);
+>>>>>>> 671a46baf1b... some performance improvements
 		stream->runtime->total_bytes_available = 0;
 		stream->runtime->total_bytes_transferred = 0;
 	}
 	return retval;
 }
 
+<<<<<<< HEAD
 static int snd_compress_wait_for_drain(struct snd_compr_stream *stream)
 {
 	int ret;
@@ -728,6 +748,8 @@ static int snd_compress_wait_for_drain(struct snd_compr_stream *stream)
 	return ret;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static int snd_compr_drain(struct snd_compr_stream *stream)
 {
 	int retval;
@@ -735,6 +757,7 @@ static int snd_compr_drain(struct snd_compr_stream *stream)
 	if (stream->runtime->state == SNDRV_PCM_STATE_PREPARED ||
 			stream->runtime->state == SNDRV_PCM_STATE_SETUP)
 		return -EPERM;
+<<<<<<< HEAD
 
 	retval = stream->ops->trigger(stream, SND_COMPR_TRIGGER_DRAIN);
 	if (retval) {
@@ -744,6 +767,14 @@ static int snd_compr_drain(struct snd_compr_stream *stream)
 	}
 
 	return snd_compress_wait_for_drain(stream);
+=======
+	retval = stream->ops->trigger(stream, SND_COMPR_TRIGGER_DRAIN);
+	if (!retval) {
+		stream->runtime->state = SNDRV_PCM_STATE_DRAINING;
+		wake_up(&stream->runtime->sleep);
+	}
+	return retval;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int snd_compr_next_track(struct snd_compr_stream *stream)
@@ -779,6 +810,7 @@ static int snd_compr_partial_drain(struct snd_compr_stream *stream)
 		return -EPERM;
 
 	retval = stream->ops->trigger(stream, SND_COMPR_TRIGGER_PARTIAL_DRAIN);
+<<<<<<< HEAD
 	if (retval) {
 		pr_debug("Partial drain returned failure\n");
 		wake_up(&stream->runtime->sleep);
@@ -808,6 +840,11 @@ static int snd_compr_set_next_track_param(struct snd_compr_stream *stream,
 	if (retval != 0)
 		return retval;
 	return 0;
+=======
+
+	stream->next_track = false;
+	return retval;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static long snd_compr_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
@@ -830,11 +867,17 @@ static long snd_compr_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
 	case _IOC_NR(SNDRV_COMPRESS_GET_CAPS):
 		retval = snd_compr_get_caps(stream, arg);
 		break;
+<<<<<<< HEAD
 #ifndef COMPR_CODEC_CAPS_OVERFLOW
 	case _IOC_NR(SNDRV_COMPRESS_GET_CODEC_CAPS):
 		retval = snd_compr_get_codec_caps(stream, arg);
 		break;
 #endif
+=======
+	case _IOC_NR(SNDRV_COMPRESS_GET_CODEC_CAPS):
+		retval = snd_compr_get_codec_caps(stream, arg);
+		break;
+>>>>>>> 671a46baf1b... some performance improvements
 	case _IOC_NR(SNDRV_COMPRESS_SET_PARAMS):
 		retval = snd_compr_set_params(stream, arg);
 		break;
@@ -874,9 +917,12 @@ static long snd_compr_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
 	case _IOC_NR(SNDRV_COMPRESS_NEXT_TRACK):
 		retval = snd_compr_next_track(stream);
 		break;
+<<<<<<< HEAD
 	case _IOC_NR(SNDRV_COMPRESS_SET_NEXT_TRACK_PARAM):
 		retval = snd_compr_set_next_track_param(stream, arg);
 		break;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	}
 	mutex_unlock(&stream->device->lock);

@@ -24,9 +24,12 @@
 #include <linux/dvb/frontend.h>
 #include "dvb_frontend.h"
 
+<<<<<<< HEAD
 /* Max transfer size done by I2C transfer functions */
 #define MAX_XFER_SIZE  80
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* Registers (Write-only) */
 #define XREG_INIT         0x00
 #define XREG_RF_FREQ      0x02
@@ -289,6 +292,7 @@ static void free_firmware(struct xc2028_data *priv)
 	int i;
 	tuner_dbg("%s called\n", __func__);
 
+<<<<<<< HEAD
 	/* free allocated f/w string */
 	if (priv->fname != firmware_name)
 		kfree(priv->fname);
@@ -297,6 +301,8 @@ static void free_firmware(struct xc2028_data *priv)
 	priv->state = XC2028_NO_FIRMWARE;
 	memset(&priv->cur_fw, 0, sizeof(priv->cur_fw));
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (!priv->firm)
 		return;
 
@@ -307,6 +313,12 @@ static void free_firmware(struct xc2028_data *priv)
 
 	priv->firm = NULL;
 	priv->firm_size = 0;
+<<<<<<< HEAD
+=======
+	priv->state = XC2028_NO_FIRMWARE;
+
+	memset(&priv->cur_fw, 0, sizeof(priv->cur_fw));
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int load_all_firmwares(struct dvb_frontend *fe,
@@ -555,10 +567,14 @@ static int load_firmware(struct dvb_frontend *fe, unsigned int type,
 {
 	struct xc2028_data *priv = fe->tuner_priv;
 	int                pos, rc;
+<<<<<<< HEAD
 	unsigned char      *p, *endp, buf[MAX_XFER_SIZE];
 
 	if (priv->ctrl.max_len > sizeof(buf))
 		priv->ctrl.max_len = sizeof(buf);
+=======
+	unsigned char      *p, *endp, buf[priv->ctrl.max_len];
+>>>>>>> 671a46baf1b... some performance improvements
 
 	tuner_dbg("%s called\n", __func__);
 
@@ -895,9 +911,15 @@ read_not_reliable:
 	return 0;
 
 fail:
+<<<<<<< HEAD
 	free_firmware(priv);
 	priv->state = XC2028_SLEEP;
 
+=======
+	priv->state = XC2028_SLEEP;
+
+	memset(&priv->cur_fw, 0, sizeof(priv->cur_fw));
+>>>>>>> 671a46baf1b... some performance improvements
 	if (retry_count < 8) {
 		msleep(50);
 		retry_count++;
@@ -1319,8 +1341,16 @@ static int xc2028_dvb_release(struct dvb_frontend *fe)
 	mutex_lock(&xc2028_list_mutex);
 
 	/* only perform final cleanup if this is the last instance */
+<<<<<<< HEAD
 	if (hybrid_tuner_report_instance_count(priv) == 1)
 		free_firmware(priv);
+=======
+	if (hybrid_tuner_report_instance_count(priv) == 1) {
+		free_firmware(priv);
+		kfree(priv->ctrl.fname);
+		priv->ctrl.fname = NULL;
+	}
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (priv)
 		hybrid_tuner_release_state(priv);
@@ -1383,8 +1413,21 @@ static int xc2028_set_config(struct dvb_frontend *fe, void *priv_cfg)
 
 	/*
 	 * Copy the config data.
+<<<<<<< HEAD
 	 */
 	memcpy(&priv->ctrl, p, sizeof(priv->ctrl));
+=======
+	 * For the firmware name, keep a local copy of the string,
+	 * in order to avoid troubles during device release.
+	 */
+	kfree(priv->ctrl.fname);
+	memcpy(&priv->ctrl, p, sizeof(priv->ctrl));
+	if (p->fname) {
+		priv->ctrl.fname = kstrdup(p->fname, GFP_KERNEL);
+		if (priv->ctrl.fname == NULL)
+			rc = -ENOMEM;
+	}
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/*
 	 * If firmware name changed, frees firmware. As free_firmware will
@@ -1399,6 +1442,7 @@ static int xc2028_set_config(struct dvb_frontend *fe, void *priv_cfg)
 
 	if (priv->state == XC2028_NO_FIRMWARE) {
 		if (!firmware_name[0])
+<<<<<<< HEAD
 			priv->fname = kstrdup(p->fname, GFP_KERNEL);
 		else
 			priv->fname = firmware_name;
@@ -1408,6 +1452,12 @@ static int xc2028_set_config(struct dvb_frontend *fe, void *priv_cfg)
 			goto unlock;
 		}
 
+=======
+			priv->fname = priv->ctrl.fname;
+		else
+			priv->fname = firmware_name;
+
+>>>>>>> 671a46baf1b... some performance improvements
 		rc = request_firmware_nowait(THIS_MODULE, 1,
 					     priv->fname,
 					     priv->i2c_props.adap->dev.parent,
@@ -1420,7 +1470,10 @@ static int xc2028_set_config(struct dvb_frontend *fe, void *priv_cfg)
 		} else
 			priv->state = XC2028_WAITING_FIRMWARE;
 	}
+<<<<<<< HEAD
 unlock:
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	mutex_unlock(&priv->lock);
 
 	return rc;

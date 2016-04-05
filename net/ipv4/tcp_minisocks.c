@@ -405,7 +405,10 @@ struct sock *tcp_create_openreq_child(struct sock *sk, struct request_sock *req,
 		newtp->srtt = 0;
 		newtp->mdev = TCP_TIMEOUT_INIT;
 		newicsk->icsk_rto = TCP_TIMEOUT_INIT;
+<<<<<<< HEAD
 		newicsk->icsk_ack.lrcvtime = tcp_time_stamp;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 		newtp->packets_out = 0;
 		newtp->retrans_out = 0;
@@ -512,6 +515,11 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
 	__be32 flg = tcp_flag_word(th) & (TCP_FLAG_RST|TCP_FLAG_SYN|TCP_FLAG_ACK);
 	bool paws_reject = false;
 
+<<<<<<< HEAD
+=======
+	BUG_ON(fastopen == (sk->sk_state == TCP_LISTEN));
+
+>>>>>>> 671a46baf1b... some performance improvements
 	tmp_opt.saw_tstamp = 0;
 	if (th->doff > (sizeof(struct tcphdr)>>2)) {
 		tcp_parse_options(skb, &tmp_opt, 0, NULL);

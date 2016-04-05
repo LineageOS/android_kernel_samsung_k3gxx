@@ -870,11 +870,18 @@ static int usblp_wwait(struct usblp *usblp, int nonblock)
 
 	add_wait_queue(&usblp->wwait, &waita);
 	for (;;) {
+<<<<<<< HEAD
+=======
+		set_current_state(TASK_INTERRUPTIBLE);
+>>>>>>> 671a46baf1b... some performance improvements
 		if (mutex_lock_interruptible(&usblp->mut)) {
 			rc = -EINTR;
 			break;
 		}
+<<<<<<< HEAD
 		set_current_state(TASK_INTERRUPTIBLE);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		rc = usblp_wtest(usblp, nonblock);
 		mutex_unlock(&usblp->mut);
 		if (rc <= 0)

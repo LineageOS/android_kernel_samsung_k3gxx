@@ -44,7 +44,11 @@ static inline int cpu_idle_poll(void)
 	rcu_idle_enter();
 	trace_cpu_idle_rcuidle(0, smp_processor_id());
 	local_irq_enable();
+<<<<<<< HEAD
 	while (!tif_need_resched())
+=======
+	while (!need_resched())
+>>>>>>> 671a46baf1b... some performance improvements
 		cpu_relax();
 	trace_cpu_idle_rcuidle(PWR_EVENT_EXIT, smp_processor_id());
 	rcu_idle_exit();
@@ -92,7 +96,12 @@ static void cpu_idle_loop(void)
 			if (cpu_idle_force_poll || tick_check_broadcast_expired()) {
 				cpu_idle_poll();
 			} else {
+<<<<<<< HEAD
 				if (!current_clr_polling_and_test()) {
+=======
+				current_clr_polling();
+				if (!need_resched()) {
+>>>>>>> 671a46baf1b... some performance improvements
 					stop_critical_timings();
 					rcu_idle_enter();
 					arch_cpu_idle();
@@ -102,7 +111,11 @@ static void cpu_idle_loop(void)
 				} else {
 					local_irq_enable();
 				}
+<<<<<<< HEAD
 				__current_set_polling();
+=======
+				current_set_polling();
+>>>>>>> 671a46baf1b... some performance improvements
 			}
 			arch_cpu_idle_exit();
 		}
@@ -128,7 +141,11 @@ void cpu_startup_entry(enum cpuhp_state state)
 	 */
 	boot_init_stack_canary();
 #endif
+<<<<<<< HEAD
 	__current_set_polling();
+=======
+	current_set_polling();
+>>>>>>> 671a46baf1b... some performance improvements
 	arch_cpu_idle_prepare();
 	cpu_idle_loop();
 }

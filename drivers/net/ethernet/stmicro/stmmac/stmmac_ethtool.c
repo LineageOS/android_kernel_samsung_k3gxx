@@ -731,6 +731,7 @@ static int stmmac_get_ts_info(struct net_device *dev,
 {
 	struct stmmac_priv *priv = netdev_priv(dev);
 
+<<<<<<< HEAD
 	if ((priv->dma_cap.time_stamp || priv->dma_cap.atime_stamp)) {
 
 		info->so_timestamping = SOF_TIMESTAMPING_TX_SOFTWARE |
@@ -738,6 +739,12 @@ static int stmmac_get_ts_info(struct net_device *dev,
 					SOF_TIMESTAMPING_RX_SOFTWARE |
 					SOF_TIMESTAMPING_RX_HARDWARE |
 					SOF_TIMESTAMPING_SOFTWARE |
+=======
+	if ((priv->hwts_tx_en) && (priv->hwts_rx_en)) {
+
+		info->so_timestamping = SOF_TIMESTAMPING_TX_HARDWARE |
+					SOF_TIMESTAMPING_RX_HARDWARE |
+>>>>>>> 671a46baf1b... some performance improvements
 					SOF_TIMESTAMPING_RAW_HARDWARE;
 
 		if (priv->ptp_clock)

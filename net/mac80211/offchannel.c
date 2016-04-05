@@ -333,7 +333,11 @@ void ieee80211_sw_roc_work(struct work_struct *work)
 		container_of(work, struct ieee80211_roc_work, work.work);
 	struct ieee80211_sub_if_data *sdata = roc->sdata;
 	struct ieee80211_local *local = sdata->local;
+<<<<<<< HEAD
 	bool started, on_channel;
+=======
+	bool started;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	mutex_lock(&local->mtx);
 
@@ -354,6 +358,7 @@ void ieee80211_sw_roc_work(struct work_struct *work)
 	if (!roc->started) {
 		struct ieee80211_roc_work *dep;
 
+<<<<<<< HEAD
 		WARN_ON(local->use_chanctx);
 
 		/* If actually operating on the desired channel (with at least
@@ -372,6 +377,15 @@ void ieee80211_sw_roc_work(struct work_struct *work)
 			local->tmp_channel = roc->chan;
 			ieee80211_hw_config(local, 0);
 		}
+=======
+		/* start this ROC */
+
+		/* switch channel etc */
+		ieee80211_recalc_idle(local);
+
+		local->tmp_channel = roc->chan;
+		ieee80211_hw_config(local, 0);
+>>>>>>> 671a46baf1b... some performance improvements
 
 		/* tell userspace or send frame */
 		ieee80211_handle_roc_started(roc);
@@ -390,10 +404,16 @@ void ieee80211_sw_roc_work(struct work_struct *work)
  finish:
 		list_del(&roc->list);
 		started = roc->started;
+<<<<<<< HEAD
 		on_channel = roc->on_channel;
 		ieee80211_roc_notify_destroy(roc, !roc->abort);
 
 		if (started && !on_channel) {
+=======
+		ieee80211_roc_notify_destroy(roc, !roc->abort);
+
+		if (started) {
+>>>>>>> 671a46baf1b... some performance improvements
 			ieee80211_flush_queues(local, NULL);
 
 			local->tmp_channel = NULL;

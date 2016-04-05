@@ -1,5 +1,8 @@
 # UAPI Header export list
+<<<<<<< HEAD
 header-y += android/
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 header-y += byteorder/
 header-y += can/
 header-y += caif/
@@ -402,8 +405,11 @@ header-y += veth.h
 header-y += vfio.h
 header-y += vhost.h
 header-y += videodev2.h
+<<<<<<< HEAD
 header-y += videodev2_exynos_camera.h
 header-y += videodev2_exynos_media.h
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 header-y += virtio_9p.h
 header-y += virtio_balloon.h
 header-y += virtio_blk.h

@@ -76,7 +76,11 @@ static int usb_serial_device_probe(struct device *dev)
 	retval = device_create_file(dev, &dev_attr_port_number);
 	if (retval) {
 		if (driver->port_remove)
+<<<<<<< HEAD
 			driver->port_remove(port);
+=======
+			retval = driver->port_remove(port);
+>>>>>>> 671a46baf1b... some performance improvements
 		goto exit_with_autopm;
 	}
 
@@ -98,12 +102,16 @@ static int usb_serial_device_remove(struct device *dev)
 	struct usb_serial_port *port;
 	int retval = 0;
 	int minor;
+<<<<<<< HEAD
 	int autopm_err;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	port = to_usb_serial_port(dev);
 	if (!port)
 		return -ENODEV;
 
+<<<<<<< HEAD
 	/*
 	 * Make sure suspend/resume doesn't race against port_remove.
 	 *
@@ -111,6 +119,10 @@ static int usb_serial_device_remove(struct device *dev)
 	 * autopm_get fails.
 	 */
 	autopm_err = usb_autopm_get_interface(port->serial->interface);
+=======
+	/* make sure suspend/resume doesn't race against port_remove */
+	usb_autopm_get_interface(port->serial->interface);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	minor = port->number;
 	tty_unregister_device(usb_serial_tty_driver, minor);
@@ -124,9 +136,13 @@ static int usb_serial_device_remove(struct device *dev)
 	dev_info(dev, "%s converter now disconnected from ttyUSB%d\n",
 		 driver->description, minor);
 
+<<<<<<< HEAD
 	if (!autopm_err)
 		usb_autopm_put_interface(port->serial->interface);
 
+=======
+	usb_autopm_put_interface(port->serial->interface);
+>>>>>>> 671a46baf1b... some performance improvements
 	return retval;
 }
 

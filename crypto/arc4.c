@@ -166,4 +166,7 @@ module_exit(arc4_exit);
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("ARC4 Cipher Algorithm");
 MODULE_AUTHOR("Jon Oberheide <jon@oberheide.org>");
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("arc4");
+=======
+>>>>>>> 671a46baf1b... some performance improvements

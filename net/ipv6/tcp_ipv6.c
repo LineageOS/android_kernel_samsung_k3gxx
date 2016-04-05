@@ -253,6 +253,10 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
 	fl6.flowi6_mark = sk->sk_mark;
 	fl6.fl6_dport = usin->sin6_port;
 	fl6.fl6_sport = inet->inet_sport;
+<<<<<<< HEAD
+=======
+	fl6.flowi6_uid = sock_i_uid(sk);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	opt = rcu_dereference_protected(np->opt, sock_owned_by_user(sk));
 	final_p = fl6_update_dst(&fl6, opt, &final);
@@ -384,12 +388,19 @@ static void tcp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
 	np = inet6_sk(sk);
 
 	if (type == NDISC_REDIRECT) {
+<<<<<<< HEAD
 		if (!sock_owned_by_user(sk)) {
 			struct dst_entry *dst = __sk_dst_check(sk, np->dst_cookie);
 
 			if (dst)
 				dst->ops->redirect(dst, sk, skb);
 		}
+=======
+		struct dst_entry *dst = __sk_dst_check(sk, np->dst_cookie);
+
+		if (dst)
+			dst->ops->redirect(dst, sk, skb);
+>>>>>>> 671a46baf1b... some performance improvements
 		goto out;
 	}
 
@@ -908,6 +919,7 @@ static void tcp_v6_timewait_ack(struct sock *sk, struct sk_buff *skb)
 static void tcp_v6_reqsk_send_ack(struct sock *sk, struct sk_buff *skb,
 				  struct request_sock *req)
 {
+<<<<<<< HEAD
 	/* RFC 7323 2.3
 	 * The window field (SEG.WND) of every outgoing segment, with the
 	 * exception of <SYN> segments, MUST be right-shifted by
@@ -916,6 +928,10 @@ static void tcp_v6_reqsk_send_ack(struct sock *sk, struct sk_buff *skb,
 	tcp_v6_send_ack(skb, tcp_rsk(req)->snt_isn + 1, tcp_rsk(req)->rcv_isn + 1,
 			req->rcv_wnd >> inet_rsk(req)->rcv_wscale,
 			tcp_time_stamp, req->ts_recent,
+=======
+	tcp_v6_send_ack(skb, tcp_rsk(req)->snt_isn + 1, tcp_rsk(req)->rcv_isn + 1,
+			req->rcv_wnd, tcp_time_stamp, req->ts_recent,
+>>>>>>> 671a46baf1b... some performance improvements
 			tcp_v6_md5_do_lookup(sk, &ipv6_hdr(skb)->daddr), 0);
 }
 
@@ -1311,7 +1327,11 @@ static __sum16 tcp_v6_checksum_init(struct sk_buff *skb)
 }
 
 /* The socket must have it's spinlock held when we get
+<<<<<<< HEAD
  * here, unless it is a TCP_LISTEN socket.
+=======
+ * here.
+>>>>>>> 671a46baf1b... some performance improvements
  *
  * We have a potential double-lock case here, so even when
  * doing backlog processing we use the BH locking scheme.
@@ -1340,7 +1360,11 @@ static int tcp_v6_do_rcv(struct sock *sk, struct sk_buff *skb)
 		goto discard;
 #endif
 
+<<<<<<< HEAD
 	if (tcp_filter(sk, skb))
+=======
+	if (sk_filter(sk, skb))
+>>>>>>> 671a46baf1b... some performance improvements
 		goto discard;
 
 	/*
@@ -1442,7 +1466,11 @@ ipv6_pktoptions:
 		if (np->rxopt.bits.rxhlim || np->rxopt.bits.rxohlim)
 			np->mcast_hops = ipv6_hdr(opt_skb)->hop_limit;
 		if (np->rxopt.bits.rxtclass)
+<<<<<<< HEAD
 			np->rcv_tclass = ipv6_get_dsfield(ipv6_hdr(opt_skb));
+=======
+			np->rcv_tclass = ipv6_get_dsfield(ipv6_hdr(skb));
+>>>>>>> 671a46baf1b... some performance improvements
 		if (ipv6_opt_accepted(sk, opt_skb)) {
 			skb_set_owner_r(opt_skb, sk);
 			opt_skb = xchg(&np->pktoptions, opt_skb);
@@ -1511,6 +1539,7 @@ process:
 	if (!xfrm6_policy_check(sk, XFRM_POLICY_IN, skb))
 		goto discard_and_relse;
 
+<<<<<<< HEAD
 	if (tcp_filter(sk, skb))
 		goto discard_and_relse;
 	th = (const struct tcphdr *)skb->data;
@@ -1523,6 +1552,13 @@ process:
 		goto put_and_return;
 	}
 
+=======
+	if (sk_filter(sk, skb))
+		goto discard_and_relse;
+
+	skb->dev = NULL;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	bh_lock_sock_nested(sk);
 	ret = 0;
 	if (!sock_owned_by_user(sk)) {
@@ -1546,7 +1582,10 @@ process:
 	}
 	bh_unlock_sock(sk);
 
+<<<<<<< HEAD
 put_and_return:
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	sock_put(sk);
 	return ret ? -1 : 0;
 
@@ -1640,7 +1679,11 @@ static void tcp_v6_early_demux(struct sk_buff *skb)
 		skb->sk = sk;
 		skb->destructor = sock_edemux;
 		if (sk->sk_state != TCP_TIME_WAIT) {
+<<<<<<< HEAD
 			struct dst_entry *dst = ACCESS_ONCE(sk->sk_rx_dst);
+=======
+			struct dst_entry *dst = sk->sk_rx_dst;
+>>>>>>> 671a46baf1b... some performance improvements
 
 			if (dst)
 				dst = dst_check(dst, inet6_sk(sk)->rx_dst_cookie);
@@ -1675,7 +1718,10 @@ static const struct inet_connection_sock_af_ops ipv6_specific = {
 	.compat_setsockopt = compat_ipv6_setsockopt,
 	.compat_getsockopt = compat_ipv6_getsockopt,
 #endif
+<<<<<<< HEAD
 	.mtu_reduced	   = tcp_v6_mtu_reduced,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 #ifdef CONFIG_TCP_MD5SIG
@@ -1707,7 +1753,10 @@ static const struct inet_connection_sock_af_ops ipv6_mapped = {
 	.compat_setsockopt = compat_ipv6_setsockopt,
 	.compat_getsockopt = compat_ipv6_getsockopt,
 #endif
+<<<<<<< HEAD
 	.mtu_reduced	   = tcp_v4_mtu_reduced,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 #ifdef CONFIG_TCP_MD5SIG
@@ -1791,9 +1840,13 @@ static void get_tcp6_sock(struct seq_file *seq, struct sock *sp, int i)
 	destp = ntohs(inet->inet_dport);
 	srcp  = ntohs(inet->inet_sport);
 
+<<<<<<< HEAD
 	if (icsk->icsk_pending == ICSK_TIME_RETRANS ||
 	    icsk->icsk_pending == ICSK_TIME_EARLY_RETRANS ||
 	    icsk->icsk_pending == ICSK_TIME_LOSS_PROBE) {
+=======
+	if (icsk->icsk_pending == ICSK_TIME_RETRANS) {
+>>>>>>> 671a46baf1b... some performance improvements
 		timer_active	= 1;
 		timer_expires	= icsk->icsk_timeout;
 	} else if (icsk->icsk_pending == ICSK_TIME_PROBE0) {
@@ -1947,6 +2000,10 @@ struct proto tcpv6_prot = {
 	.sendpage		= tcp_sendpage,
 	.backlog_rcv		= tcp_v6_do_rcv,
 	.release_cb		= tcp_release_cb,
+<<<<<<< HEAD
+=======
+	.mtu_reduced		= tcp_v6_mtu_reduced,
+>>>>>>> 671a46baf1b... some performance improvements
 	.hash			= tcp_v6_hash,
 	.unhash			= inet_unhash,
 	.get_port		= inet_csk_get_port,

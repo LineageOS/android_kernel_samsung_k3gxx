@@ -71,6 +71,7 @@ static inline void inet_diag_unlock_handler(
 	mutex_unlock(&inet_diag_table_mutex);
 }
 
+<<<<<<< HEAD
 static size_t inet_sk_attr_size(void)
 {
 	return	  nla_total_size(sizeof(struct tcp_info))
@@ -85,6 +86,8 @@ static size_t inet_sk_attr_size(void)
 		+ 64;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 int inet_sk_diag_fill(struct sock *sk, struct inet_connection_sock *icsk,
 			      struct sk_buff *skb, struct inet_diag_req_v2 *req,
 			      struct user_namespace *user_ns,		      	
@@ -120,10 +123,13 @@ int inet_sk_diag_fill(struct sock *sk, struct inet_connection_sock *icsk,
 
 	r->id.idiag_sport = inet->inet_sport;
 	r->id.idiag_dport = inet->inet_dport;
+<<<<<<< HEAD
 
 	memset(&r->id.idiag_src, 0, sizeof(r->id.idiag_src));
 	memset(&r->id.idiag_dst, 0, sizeof(r->id.idiag_dst));
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	r->id.idiag_src[0] = inet->inet_rcv_saddr;
 	r->id.idiag_dst[0] = inet->inet_daddr;
 
@@ -258,6 +264,7 @@ static int inet_twsk_diag_fill(struct inet_timewait_sock *tw,
 
 	r->idiag_family	      = tw->tw_family;
 	r->idiag_retrans      = 0;
+<<<<<<< HEAD
 
 	r->id.idiag_if	      = tw->tw_bound_dev_if;
 	sock_diag_save_cookie(tw, r->id.idiag_cookie);
@@ -271,6 +278,14 @@ static int inet_twsk_diag_fill(struct inet_timewait_sock *tw,
 	r->id.idiag_src[0]    = tw->tw_rcv_saddr;
 	r->id.idiag_dst[0]    = tw->tw_daddr;
 
+=======
+	r->id.idiag_if	      = tw->tw_bound_dev_if;
+	sock_diag_save_cookie(tw, r->id.idiag_cookie);
+	r->id.idiag_sport     = tw->tw_sport;
+	r->id.idiag_dport     = tw->tw_dport;
+	r->id.idiag_src[0]    = tw->tw_rcv_saddr;
+	r->id.idiag_dst[0]    = tw->tw_daddr;
+>>>>>>> 671a46baf1b... some performance improvements
 	r->idiag_state	      = tw->tw_substate;
 	r->idiag_timer	      = 3;
 	r->idiag_expires      = DIV_ROUND_UP(tmo * 1000, HZ);
@@ -340,7 +355,13 @@ int inet_diag_dump_one_icsk(struct inet_hashinfo *hashinfo, struct sk_buff *in_s
 	if (err)
 		goto out;
 
+<<<<<<< HEAD
 	rep = nlmsg_new(inet_sk_attr_size(), GFP_KERNEL);
+=======
+	rep = nlmsg_new(sizeof(struct inet_diag_msg) +
+			sizeof(struct inet_diag_meminfo) +
+			sizeof(struct tcp_info) + 64, GFP_KERNEL);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (!rep) {
 		err = -ENOMEM;
 		goto out;
@@ -755,6 +776,7 @@ static int inet_diag_fill_req(struct sk_buff *skb, struct sock *sk,
 
 	r->id.idiag_sport = inet->inet_sport;
 	r->id.idiag_dport = ireq->rmt_port;
+<<<<<<< HEAD
 
 	memset(&r->id.idiag_src, 0, sizeof(r->id.idiag_src));
 	memset(&r->id.idiag_dst, 0, sizeof(r->id.idiag_dst));
@@ -762,6 +784,10 @@ static int inet_diag_fill_req(struct sk_buff *skb, struct sock *sk,
 	r->id.idiag_src[0] = ireq->loc_addr;
 	r->id.idiag_dst[0] = ireq->rmt_addr;
 
+=======
+	r->id.idiag_src[0] = ireq->loc_addr;
+	r->id.idiag_dst[0] = ireq->rmt_addr;
+>>>>>>> 671a46baf1b... some performance improvements
 	r->idiag_expires = jiffies_to_msecs(tmo);
 	r->idiag_rqueue = 0;
 	r->idiag_wqueue = 0;
@@ -973,7 +999,11 @@ next_normal:
 			++num;
 		}
 
+<<<<<<< HEAD
 		if (r->idiag_states & (TCPF_TIME_WAIT | TCPF_FIN_WAIT2)) {
+=======
+		if (r->idiag_states & TCPF_TIME_WAIT) {
+>>>>>>> 671a46baf1b... some performance improvements
 			struct inet_timewait_sock *tw;
 
 			inet_twsk_for_each(tw, node,
@@ -983,8 +1013,11 @@ next_normal:
 
 				if (num < s_num)
 					goto next_dying;
+<<<<<<< HEAD
 				if (!(r->idiag_states & (1 << tw->tw_substate)))
 					goto next_dying;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 				if (r->sdiag_family != AF_UNSPEC &&
 						tw->tw_family != r->sdiag_family)
 					goto next_dying;

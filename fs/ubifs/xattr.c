@@ -167,7 +167,10 @@ out_cancel:
 	host_ui->xattr_cnt -= 1;
 	host_ui->xattr_size -= CALC_DENT_SIZE(nm->len);
 	host_ui->xattr_size -= CALC_XATTR_BYTES(size);
+<<<<<<< HEAD
 	host_ui->xattr_names -= nm->len;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	mutex_unlock(&host_ui->ui_mutex);
 out_free:
 	make_bad_inode(inode);
@@ -515,7 +518,10 @@ out_cancel:
 	host_ui->xattr_cnt += 1;
 	host_ui->xattr_size += CALC_DENT_SIZE(nm->len);
 	host_ui->xattr_size += CALC_XATTR_BYTES(ui->data_len);
+<<<<<<< HEAD
 	host_ui->xattr_names += nm->len;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	mutex_unlock(&host_ui->ui_mutex);
 	ubifs_release_budget(c, &req);
 	make_bad_inode(inode);

@@ -92,6 +92,7 @@ static DEFINE_MUTEX(cgroup_mutex);
 static DEFINE_MUTEX(cgroup_root_mutex);
 
 /*
+<<<<<<< HEAD
  * cgroup destruction makes heavy use of work items and there can be a lot
  * of concurrent destructions.  Use a separate workqueue so that cgroup
  * destruction work items don't end up filling up max_active of system_wq
@@ -100,6 +101,8 @@ static DEFINE_MUTEX(cgroup_root_mutex);
 static struct workqueue_struct *cgroup_destroy_wq;
 
 /*
+=======
+>>>>>>> 671a46baf1b... some performance improvements
  * Generate an array of cgroup subsystem pointers. At boot time, this is
  * populated with the built in subsystems, and modular subsystems are
  * registered after that. The mutable section of this array is protected by
@@ -881,7 +884,11 @@ static void cgroup_free_rcu(struct rcu_head *head)
 {
 	struct cgroup *cgrp = container_of(head, struct cgroup, rcu_head);
 
+<<<<<<< HEAD
 	queue_work(cgroup_destroy_wq, &cgrp->free_work);
+=======
+	schedule_work(&cgrp->free_work);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void cgroup_diput(struct dentry *dentry, struct inode *inode)
@@ -984,7 +991,11 @@ static void cgroup_d_remove_dir(struct dentry *dentry)
 	parent = dentry->d_parent;
 	spin_lock(&parent->d_lock);
 	spin_lock_nested(&dentry->d_lock, DENTRY_D_LOCK_NESTED);
+<<<<<<< HEAD
 	list_del_init(&dentry->d_child);
+=======
+	list_del_init(&dentry->d_u.d_child);
+>>>>>>> 671a46baf1b... some performance improvements
 	spin_unlock(&dentry->d_lock);
 	spin_unlock(&parent->d_lock);
 	remove_dir(dentry);
@@ -2130,6 +2141,7 @@ static int cgroup_allow_attach(struct cgroup *cgrp, struct cgroup_taskset *tset)
 	return 0;
 }
 
+<<<<<<< HEAD
 int subsys_cgroup_allow_attach(struct cgroup *cgrp, struct cgroup_taskset *tset)
 {
 	const struct cred *cred = current_cred(), *tcred;
@@ -2149,6 +2161,8 @@ int subsys_cgroup_allow_attach(struct cgroup *cgrp, struct cgroup_taskset *tset)
 	return 0;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /*
  * Find the task_struct of the task to attach by vpid and pass it along to the
  * function to attach either it or all tasks in its threadgroup. Will lock
@@ -4746,6 +4760,7 @@ out:
 	return err;
 }
 
+<<<<<<< HEAD
 static int __init cgroup_wq_init(void)
 {
 	/*
@@ -4762,6 +4777,8 @@ static int __init cgroup_wq_init(void)
 }
 core_initcall(cgroup_wq_init);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /*
  * proc_cgroup_show()
  *  - Print task's cgroup paths into seq_file, one line for each hierarchy
@@ -5072,7 +5089,11 @@ void __css_put(struct cgroup_subsys_state *css)
 
 	v = css_unbias_refcnt(atomic_dec_return(&css->refcnt));
 	if (v == 0)
+<<<<<<< HEAD
 		queue_work(cgroup_destroy_wq, &css->dput_work);
+=======
+		schedule_work(&css->dput_work);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 EXPORT_SYMBOL_GPL(__css_put);
 

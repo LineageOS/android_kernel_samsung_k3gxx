@@ -151,7 +151,12 @@ static struct inode *v9fs_qid_iget_dotl(struct super_block *sb,
 	unlock_new_inode(inode);
 	return inode;
 error:
+<<<<<<< HEAD
 	iget_failed(inode);
+=======
+	unlock_new_inode(inode);
+	iput(inode);
+>>>>>>> 671a46baf1b... some performance improvements
 	return ERR_PTR(retval);
 
 }

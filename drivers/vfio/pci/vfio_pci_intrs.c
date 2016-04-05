@@ -468,7 +468,11 @@ static int vfio_msi_enable(struct vfio_pci_device *vdev, int nvec, bool msix)
 	if (!is_irq_none(vdev))
 		return -EINVAL;
 
+<<<<<<< HEAD
 	vdev->ctx = kcalloc(nvec, sizeof(struct vfio_pci_irq_ctx), GFP_KERNEL);
+=======
+	vdev->ctx = kzalloc(nvec * sizeof(struct vfio_pci_irq_ctx), GFP_KERNEL);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (!vdev->ctx)
 		return -ENOMEM;
 

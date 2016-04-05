@@ -184,4 +184,7 @@ module_exit(michael_mic_exit);
 MODULE_LICENSE("GPL v2");
 MODULE_DESCRIPTION("Michael MIC");
 MODULE_AUTHOR("Jouni Malinen <j@w1.fi>");
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("michael_mic");
+=======
+>>>>>>> 671a46baf1b... some performance improvements

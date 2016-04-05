@@ -604,6 +604,7 @@ intel_dp_i2c_aux_ch(struct i2c_adapter *adapter, int mode,
 			DRM_DEBUG_KMS("aux_ch native nack\n");
 			return -EREMOTEIO;
 		case AUX_NATIVE_REPLY_DEFER:
+<<<<<<< HEAD
 			/*
 			 * For now, just give more slack to branch devices. We
 			 * could check the DPCD for I2C bit rate capabilities,
@@ -616,6 +617,9 @@ intel_dp_i2c_aux_ch(struct i2c_adapter *adapter, int mode,
 				usleep_range(500, 600);
 			else
 				usleep_range(300, 400);
+=======
+			udelay(100);
+>>>>>>> 671a46baf1b... some performance improvements
 			continue;
 		default:
 			DRM_ERROR("aux_ch invalid native reply 0x%02x\n",
@@ -2277,6 +2281,7 @@ g4x_dp_detect(struct intel_dp *intel_dp)
 		return status;
 	}
 
+<<<<<<< HEAD
 	if (IS_VALLEYVIEW(dev)) {
 		switch (intel_dig_port->port) {
 		case PORT_B:
@@ -2305,6 +2310,20 @@ g4x_dp_detect(struct intel_dp *intel_dp)
 		default:
 			return connector_status_unknown;
 		}
+=======
+	switch (intel_dig_port->port) {
+	case PORT_B:
+		bit = PORTB_HOTPLUG_LIVE_STATUS;
+		break;
+	case PORT_C:
+		bit = PORTC_HOTPLUG_LIVE_STATUS;
+		break;
+	case PORT_D:
+		bit = PORTD_HOTPLUG_LIVE_STATUS;
+		break;
+	default:
+		return connector_status_unknown;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	if ((I915_READ(PORT_HOTPLUG_STAT) & bit) == 0)

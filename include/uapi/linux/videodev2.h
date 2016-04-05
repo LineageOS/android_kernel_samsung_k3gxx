@@ -963,6 +963,7 @@ struct v4l2_standard {
 };
 
 /*
+<<<<<<< HEAD
  *	V I D E O	T I M I N G S	D V	P R E S E T
  */
 struct v4l2_dv_preset {
@@ -1035,6 +1036,8 @@ struct v4l2_dv_enum_preset {
 #define		V4L2_DV_1080P30_TB		44
 
 /*
+=======
+>>>>>>> 671a46baf1b... some performance improvements
  *	D V 	B T	T I M I N G S
  */
 
@@ -1205,6 +1208,10 @@ struct v4l2_dv_timings_cap {
 	};
 };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 671a46baf1b... some performance improvements
 /*
  *	V I D E O   I N P U T S
  */
@@ -1249,7 +1256,10 @@ struct v4l2_input {
 #define V4L2_IN_ST_VTR         0x04000000  /* VTR time constant */
 
 /* capabilities flags */
+<<<<<<< HEAD
 #define V4L2_IN_CAP_PRESETS		0x00000001 /* Supports S_DV_PRESET */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #define V4L2_IN_CAP_DV_TIMINGS		0x00000002 /* Supports S_DV_TIMINGS */
 #define V4L2_IN_CAP_CUSTOM_TIMINGS	V4L2_IN_CAP_DV_TIMINGS /* For compatibility */
 #define V4L2_IN_CAP_STD			0x00000004 /* Supports S_STD */
@@ -1273,7 +1283,10 @@ struct v4l2_output {
 #define V4L2_OUTPUT_TYPE_ANALOGVGAOVERLAY	3
 
 /* capabilities flags */
+<<<<<<< HEAD
 #define V4L2_OUT_CAP_PRESETS		0x00000001 /* Supports S_DV_PRESET */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #define V4L2_OUT_CAP_DV_TIMINGS		0x00000002 /* Supports S_DV_TIMINGS */
 #define V4L2_OUT_CAP_CUSTOM_TIMINGS	V4L2_OUT_CAP_DV_TIMINGS /* For compatibility */
 #define V4L2_OUT_CAP_STD		0x00000004 /* Supports S_STD */
@@ -2001,10 +2014,13 @@ struct v4l2_create_buffers {
 
 #define VIDIOC_S_HW_FREQ_SEEK	 _IOW('V', 82, struct v4l2_hw_freq_seek)
 
+<<<<<<< HEAD
 #define	VIDIOC_ENUM_DV_PRESETS	_IOWR('V', 83, struct v4l2_dv_enum_preset)
 #define	VIDIOC_S_DV_PRESET	_IOWR('V', 84, struct v4l2_dv_preset)
 #define	VIDIOC_G_DV_PRESET	_IOWR('V', 85, struct v4l2_dv_preset)
 #define	VIDIOC_QUERY_DV_PRESET	_IOR('V',  86, struct v4l2_dv_preset)
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #define	VIDIOC_S_DV_TIMINGS	_IOWR('V', 87, struct v4l2_dv_timings)
 #define	VIDIOC_G_DV_TIMINGS	_IOWR('V', 88, struct v4l2_dv_timings)
 #define	VIDIOC_DQEVENT		 _IOR('V', 89, struct v4l2_event)

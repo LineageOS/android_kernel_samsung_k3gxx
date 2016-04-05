@@ -395,4 +395,7 @@ module_exit(rmd320_mod_fini);
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Adrian-Ken Rueegsegger <ken@codelabs.ch>");
 MODULE_DESCRIPTION("RIPEMD-320 Message Digest");
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("rmd320");
+=======
+>>>>>>> 671a46baf1b... some performance improvements

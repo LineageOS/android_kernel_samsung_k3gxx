@@ -335,7 +335,11 @@ static void esd_usb2_rx_can_msg(struct esd_usb2_net_priv *priv,
 		}
 
 		cf->can_id = id & ESD_IDMASK;
+<<<<<<< HEAD
 		cf->can_dlc = get_can_dlc(msg->msg.rx.dlc & ~ESD_RTR);
+=======
+		cf->can_dlc = get_can_dlc(msg->msg.rx.dlc);
+>>>>>>> 671a46baf1b... some performance improvements
 
 		if (id & ESD_EXTID)
 			cf->can_id |= CAN_EFF_FLAG;
@@ -1132,7 +1136,10 @@ static void esd_usb2_disconnect(struct usb_interface *intf)
 			}
 		}
 		unlink_all_urbs(dev);
+<<<<<<< HEAD
 		kfree(dev);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 }
 

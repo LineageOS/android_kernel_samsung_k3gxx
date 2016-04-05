@@ -771,8 +771,11 @@ static long aac_compat_do_ioctl(struct aac_dev *dev, unsigned cmd, unsigned long
 static int aac_compat_ioctl(struct scsi_device *sdev, int cmd, void __user *arg)
 {
 	struct aac_dev *dev = (struct aac_dev *)sdev->host->hostdata;
+<<<<<<< HEAD
 	if (!capable(CAP_SYS_RAWIO))
 		return -EPERM;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return aac_compat_do_ioctl(dev, cmd, (unsigned long)arg);
 }
 
@@ -1081,7 +1084,10 @@ static struct scsi_host_template aac_driver_template = {
 #endif
 	.use_clustering			= ENABLE_CLUSTERING,
 	.emulated			= 1,
+<<<<<<< HEAD
 	.no_write_same			= 1,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 static void __aac_shutdown(struct aac_dev * aac)

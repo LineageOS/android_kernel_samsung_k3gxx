@@ -299,6 +299,7 @@ static int xen_initial_domain_console_init(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 static void xen_console_update_evtchn(struct xencons_info *info)
 {
 	if (xen_hvm_domain()) {
@@ -320,6 +321,13 @@ void xen_console_resume(void)
 			xen_console_update_evtchn(info);
 		rebind_evtchn_irq(info->evtchn, info->irq);
 	}
+=======
+void xen_console_resume(void)
+{
+	struct xencons_info *info = vtermno_to_xencons(HVC_COOKIE);
+	if (info != NULL && info->irq)
+		rebind_evtchn_irq(info->evtchn, info->irq);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void xencons_disconnect_backend(struct xencons_info *info)
@@ -652,7 +660,10 @@ struct console xenboot_console = {
 	.name		= "xenboot",
 	.write		= xenboot_write_console,
 	.flags		= CON_PRINTBUFFER | CON_BOOT | CON_ANYTIME,
+<<<<<<< HEAD
 	.index		= -1,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 #endif	/* CONFIG_EARLY_PRINTK */
 

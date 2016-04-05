@@ -50,6 +50,7 @@ OPTIONS
 --scale::
 	scale/normalize counter values
 
+<<<<<<< HEAD
 -d::
 --detailed::
 	print more detailed statistics, can be specified up to 3 times
@@ -58,6 +59,8 @@ OPTIONS
         -d -d:     more detailed events, dTLB and iTLB events
      -d -d -d:     very detailed events, adding prefetch events
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 -r::
 --repeat=<n>::
 	repeat command and print average + stddev (max: 100). 0 means forever.

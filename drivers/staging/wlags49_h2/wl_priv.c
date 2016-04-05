@@ -570,7 +570,10 @@ int wvlan_uil_put_info(struct uilreq *urq, struct wl_private *lp)
 	ltv_t                   *pLtv;
 	bool_t                  ltvAllocated = FALSE;
 	ENCSTRCT                sEncryption;
+<<<<<<< HEAD
 	size_t			len;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 #ifdef USE_WDS
 	hcf_16                  hcfPort  = HCF_PORT_0;
@@ -687,8 +690,12 @@ int wvlan_uil_put_info(struct uilreq *urq, struct wl_private *lp)
 					break;
 				case CFG_CNF_OWN_NAME:
 					memset(lp->StationName, 0, sizeof(lp->StationName));
+<<<<<<< HEAD
 					len = min_t(size_t, pLtv->u.u16[0], sizeof(lp->StationName));
 					strlcpy(lp->StationName, &pLtv->u.u8[2], len);
+=======
+					memcpy((void *)lp->StationName, (void *)&pLtv->u.u8[2], (size_t)pLtv->u.u16[0]);
+>>>>>>> 671a46baf1b... some performance improvements
 					pLtv->u.u16[0] = CNV_INT_TO_LITTLE(pLtv->u.u16[0]);
 					break;
 				case CFG_CNF_LOAD_BALANCING:
@@ -1785,7 +1792,10 @@ int wvlan_set_station_nickname(struct net_device *dev,
 {
 	struct wl_private *lp = wl_priv(dev);
 	unsigned long flags;
+<<<<<<< HEAD
 	size_t len;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	int         ret = 0;
 	/*------------------------------------------------------------------------*/
 
@@ -1796,8 +1806,13 @@ int wvlan_set_station_nickname(struct net_device *dev,
 	wl_lock(lp, &flags);
 
 	memset(lp->StationName, 0, sizeof(lp->StationName));
+<<<<<<< HEAD
 	len = min_t(size_t, wrqu->data.length, sizeof(lp->StationName));
 	strlcpy(lp->StationName, extra, len);
+=======
+
+	memcpy(lp->StationName, extra, wrqu->data.length);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* Commit the adapter parameters */
 	wl_apply(lp);

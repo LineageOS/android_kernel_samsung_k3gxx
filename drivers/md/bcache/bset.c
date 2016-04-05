@@ -918,6 +918,7 @@ struct bkey *bch_next_recurse_key(struct btree *b, struct bkey *search)
 
 /* Mergesort */
 
+<<<<<<< HEAD
 static void sort_key_next(struct btree_iter *iter,
 			  struct btree_iter_set *i)
 {
@@ -931,11 +932,19 @@ static struct bkey *btree_sort_fixup(struct btree_iter *iter, struct bkey *tmp)
 {
 	while (iter->used > 1) {
 		struct btree_iter_set *top = iter->data, *i = top + 1;
+=======
+static void btree_sort_fixup(struct btree_iter *iter)
+{
+	while (iter->used > 1) {
+		struct btree_iter_set *top = iter->data, *i = top + 1;
+		struct bkey *k;
+>>>>>>> 671a46baf1b... some performance improvements
 
 		if (iter->used > 2 &&
 		    btree_iter_cmp(i[0], i[1]))
 			i++;
 
+<<<<<<< HEAD
 		if (bkey_cmp(top->k, &START_KEY(i->k)) <= 0)
 			break;
 
@@ -971,6 +980,21 @@ static struct bkey *btree_sort_fixup(struct btree_iter *iter, struct bkey *tmp)
 	}
 
 	return NULL;
+=======
+		for (k = i->k;
+		     k != i->end && bkey_cmp(top->k, &START_KEY(k)) > 0;
+		     k = bkey_next(k))
+			if (top->k > i->k)
+				__bch_cut_front(top->k, k);
+			else if (KEY_SIZE(k))
+				bch_cut_back(&START_KEY(k), top->k);
+
+		if (top->k < i->k || k == i->k)
+			break;
+
+		heap_sift(iter, i - top, btree_iter_cmp);
+	}
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void btree_mergesort(struct btree *b, struct bset *out,
@@ -978,13 +1002,17 @@ static void btree_mergesort(struct btree *b, struct bset *out,
 			    bool fixup, bool remove_stale)
 {
 	struct bkey *k, *last = NULL;
+<<<<<<< HEAD
 	BKEY_PADDED(k) tmp;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	bool (*bad)(struct btree *, const struct bkey *) = remove_stale
 		? bch_ptr_bad
 		: bch_ptr_invalid;
 
 	while (!btree_iter_end(iter)) {
 		if (fixup && !b->level)
+<<<<<<< HEAD
 			k = btree_sort_fixup(iter, &tmp.k);
 		else
 			k = NULL;
@@ -992,6 +1020,11 @@ static void btree_mergesort(struct btree *b, struct bset *out,
 		if (!k)
 			k = bch_btree_iter_next(iter);
 
+=======
+			btree_sort_fixup(iter);
+
+		k = bch_btree_iter_next(iter);
+>>>>>>> 671a46baf1b... some performance improvements
 		if (bad(b, k))
 			continue;
 

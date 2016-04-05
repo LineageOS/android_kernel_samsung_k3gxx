@@ -582,6 +582,7 @@ int radeon_bo_fault_reserve_notify(struct ttm_buffer_object *bo)
 	rbo = container_of(bo, struct radeon_bo, tbo);
 	radeon_bo_check_tiling(rbo, 0, 0);
 	rdev = rbo->rdev;
+<<<<<<< HEAD
 	if (bo->mem.mem_type != TTM_PL_VRAM)
 		return 0;
 
@@ -606,6 +607,24 @@ int radeon_bo_fault_reserve_notify(struct ttm_buffer_object *bo)
 	if ((offset + size) > rdev->mc.visible_vram_size)
 		return -EINVAL;
 
+=======
+	if (bo->mem.mem_type == TTM_PL_VRAM) {
+		size = bo->mem.num_pages << PAGE_SHIFT;
+		offset = bo->mem.start << PAGE_SHIFT;
+		if ((offset + size) > rdev->mc.visible_vram_size) {
+			/* hurrah the memory is not visible ! */
+			radeon_ttm_placement_from_domain(rbo, RADEON_GEM_DOMAIN_VRAM);
+			rbo->placement.lpfn = rdev->mc.visible_vram_size >> PAGE_SHIFT;
+			r = ttm_bo_validate(bo, &rbo->placement, false, false);
+			if (unlikely(r != 0))
+				return r;
+			offset = bo->mem.start << PAGE_SHIFT;
+			/* this should not happen */
+			if ((offset + size) > rdev->mc.visible_vram_size)
+				return -EINVAL;
+		}
+	}
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 }
 

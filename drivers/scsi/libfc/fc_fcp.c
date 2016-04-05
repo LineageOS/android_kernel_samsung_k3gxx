@@ -1039,6 +1039,7 @@ restart:
 		fc_fcp_pkt_hold(fsp);
 		spin_unlock_irqrestore(&si->scsi_queue_lock, flags);
 
+<<<<<<< HEAD
 		spin_lock_bh(&fsp->scsi_pkt_lock);
 		if (!(fsp->state & FC_SRB_COMPL)) {
 			fsp->state |= FC_SRB_COMPL;
@@ -1059,6 +1060,13 @@ restart:
 			fc_io_compl(fsp);
 		}
 		spin_unlock_bh(&fsp->scsi_pkt_lock);
+=======
+		if (!fc_fcp_lock_pkt(fsp)) {
+			fc_fcp_cleanup_cmd(fsp, error);
+			fc_io_compl(fsp);
+			fc_fcp_unlock_pkt(fsp);
+		}
+>>>>>>> 671a46baf1b... some performance improvements
 
 		fc_fcp_pkt_release(fsp);
 		spin_lock_irqsave(&si->scsi_queue_lock, flags);

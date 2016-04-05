@@ -161,11 +161,19 @@ static int at91_adc_channel_init(struct iio_dev *idev)
 	return idev->num_channels;
 }
 
+<<<<<<< HEAD
 static int at91_adc_get_trigger_value_by_name(struct iio_dev *idev,
+=======
+static u8 at91_adc_get_trigger_value_by_name(struct iio_dev *idev,
+>>>>>>> 671a46baf1b... some performance improvements
 					     struct at91_adc_trigger *triggers,
 					     const char *trigger_name)
 {
 	struct at91_adc_state *st = iio_priv(idev);
+<<<<<<< HEAD
+=======
+	u8 value = 0;
+>>>>>>> 671a46baf1b... some performance improvements
 	int i;
 
 	for (i = 0; i < st->trigger_number; i++) {
@@ -178,16 +186,26 @@ static int at91_adc_get_trigger_value_by_name(struct iio_dev *idev,
 			return -ENOMEM;
 
 		if (strcmp(trigger_name, name) == 0) {
+<<<<<<< HEAD
 			kfree(name);
 			if (triggers[i].value == 0)
 				return -EINVAL;
 			return triggers[i].value;
+=======
+			value = triggers[i].value;
+			kfree(name);
+			break;
+>>>>>>> 671a46baf1b... some performance improvements
 		}
 
 		kfree(name);
 	}
 
+<<<<<<< HEAD
 	return -EINVAL;
+=======
+	return value;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int at91_adc_configure_trigger(struct iio_trigger *trig, bool state)
@@ -197,14 +215,23 @@ static int at91_adc_configure_trigger(struct iio_trigger *trig, bool state)
 	struct iio_buffer *buffer = idev->buffer;
 	struct at91_adc_reg_desc *reg = st->registers;
 	u32 status = at91_adc_readl(st, reg->trigger_register);
+<<<<<<< HEAD
 	int value;
+=======
+	u8 value;
+>>>>>>> 671a46baf1b... some performance improvements
 	u8 bit;
 
 	value = at91_adc_get_trigger_value_by_name(idev,
 						   st->trigger_list,
 						   idev->trig->name);
+<<<<<<< HEAD
 	if (value < 0)
 		return value;
+=======
+	if (value == 0)
+		return -EINVAL;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (state) {
 		st->buffer = kmalloc(idev->scan_bytes, GFP_KERNEL);

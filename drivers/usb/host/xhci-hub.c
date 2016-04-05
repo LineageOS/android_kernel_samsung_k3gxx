@@ -275,9 +275,12 @@ static int xhci_stop_device(struct xhci_hcd *xhci, int slot_id, int suspend)
 
 	ret = 0;
 	virt_dev = xhci->devs[slot_id];
+<<<<<<< HEAD
 	if (!virt_dev)
 		return -ENODEV;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	cmd = xhci_alloc_command(xhci, false, true, GFP_NOIO);
 	if (!cmd) {
 		xhci_dbg(xhci, "Couldn't allocate command structure.\n");
@@ -289,7 +292,11 @@ static int xhci_stop_device(struct xhci_hcd *xhci, int slot_id, int suspend)
 		if (virt_dev->eps[i].ring && virt_dev->eps[i].ring->dequeue)
 			xhci_queue_stop_endpoint(xhci, slot_id, i, suspend);
 	}
+<<<<<<< HEAD
 	cmd->command_trb = xhci_find_next_enqueue(xhci->cmd_ring);
+=======
+	cmd->command_trb = xhci->cmd_ring->enqueue;
+>>>>>>> 671a46baf1b... some performance improvements
 	list_add_tail(&cmd->cmd_list, &virt_dev->cmd_list);
 	xhci_queue_stop_endpoint(xhci, slot_id, 0, suspend);
 	xhci_ring_cmd_db(xhci);
@@ -465,12 +472,17 @@ void xhci_test_and_clear_bit(struct xhci_hcd *xhci, __le32 __iomem **port_array,
 }
 
 /* Updates Link Status for super Speed port */
+<<<<<<< HEAD
 static void xhci_hub_report_link_state(struct xhci_hcd *xhci,
 		u32 *status, u32 status_reg)
+=======
+static void xhci_hub_report_link_state(u32 *status, u32 status_reg)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	u32 pls = status_reg & PORT_PLS_MASK;
 
 	/* resume state is a xHCI internal state.
+<<<<<<< HEAD
 	 * Do not report it to usb core, instead, pretend to be U3,
 	 * thus usb core knows it's not ready for transfer
 	 */
@@ -478,6 +490,12 @@ static void xhci_hub_report_link_state(struct xhci_hcd *xhci,
 		*status |= USB_SS_PORT_LS_U3;
 		return;
 	}
+=======
+	 * Do not report it to usb core.
+	 */
+	if (pls == XDEV_RESUME)
+		return;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* When the CAS bit is set then warm reset
 	 * should be performed on port
@@ -508,8 +526,12 @@ static void xhci_hub_report_link_state(struct xhci_hcd *xhci,
 		 * in which sometimes the port enters compliance mode
 		 * caused by a delay on the host-device negotiation.
 		 */
+<<<<<<< HEAD
 		if ((xhci->quirks & XHCI_COMP_MODE_QUIRK) &&
 				(pls == USB_SS_PORT_LS_COMP_MOD))
+=======
+		if (pls == USB_SS_PORT_LS_COMP_MOD)
+>>>>>>> 671a46baf1b... some performance improvements
 			pls |= USB_PORT_STAT_CONNECTION;
 	}
 
@@ -694,7 +716,11 @@ int xhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
 		}
 		/* Update Port Link State for super speed ports*/
 		if (hcd->speed == HCD_USB3) {
+<<<<<<< HEAD
 			xhci_hub_report_link_state(xhci, &status, temp);
+=======
+			xhci_hub_report_link_state(&status, temp);
+>>>>>>> 671a46baf1b... some performance improvements
 			/*
 			 * Verify if all USB3 Ports Have entered U0 already.
 			 * Delete Compliance Mode Timer if so.
@@ -1051,10 +1077,17 @@ int xhci_bus_suspend(struct usb_hcd *hcd)
 	spin_lock_irqsave(&xhci->lock, flags);
 
 	if (hcd->self.root_hub->do_remote_wakeup) {
+<<<<<<< HEAD
 		if (bus_state->resuming_ports ||	/* USB2 */
 		    bus_state->port_remote_wakeup) {	/* USB3 */
 			spin_unlock_irqrestore(&xhci->lock, flags);
 			xhci_dbg(xhci, "suspend failed because a port is resuming\n");
+=======
+		if (bus_state->resuming_ports) {
+			spin_unlock_irqrestore(&xhci->lock, flags);
+			xhci_dbg(xhci, "suspend failed because "
+						"a port is resuming\n");
+>>>>>>> 671a46baf1b... some performance improvements
 			return -EBUSY;
 		}
 	}

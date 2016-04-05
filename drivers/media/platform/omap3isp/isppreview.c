@@ -1079,7 +1079,10 @@ static void preview_config_input_format(struct isp_prev_device *prev,
  */
 static void preview_config_input_size(struct isp_prev_device *prev, u32 active)
 {
+<<<<<<< HEAD
 	const struct v4l2_mbus_framefmt *format = &prev->formats[PREV_PAD_SINK];
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	struct isp_device *isp = to_isp_device(prev);
 	unsigned int sph = prev->crop.left;
 	unsigned int eph = prev->crop.left + prev->crop.width - 1;
@@ -1087,6 +1090,7 @@ static void preview_config_input_size(struct isp_prev_device *prev, u32 active)
 	unsigned int elv = prev->crop.top + prev->crop.height - 1;
 	u32 features;
 
+<<<<<<< HEAD
 	if (format->code != V4L2_MBUS_FMT_Y8_1X8 &&
 	    format->code != V4L2_MBUS_FMT_Y10_1X10) {
 		sph -= 2;
@@ -1095,6 +1099,8 @@ static void preview_config_input_size(struct isp_prev_device *prev, u32 active)
 		elv += 2;
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	features = (prev->params.params[0].features & active)
 		 | (prev->params.params[1].features & ~active);
 

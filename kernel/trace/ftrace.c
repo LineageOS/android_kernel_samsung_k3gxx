@@ -85,8 +85,11 @@ int function_trace_stop __read_mostly;
 
 /* Current function tracing op */
 struct ftrace_ops *function_trace_op __read_mostly = &ftrace_list_end;
+<<<<<<< HEAD
 /* What to set function_trace_op to */
 static struct ftrace_ops *set_function_trace_op;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 /* List for set_ftrace_pid's pids. */
 LIST_HEAD(ftrace_pids);
@@ -280,6 +283,7 @@ static void update_global_ops(void)
 	global_ops.func = func;
 }
 
+<<<<<<< HEAD
 static void ftrace_sync(struct work_struct *work)
 {
 	/*
@@ -303,6 +307,8 @@ static void update_function_graph_func(void);
 static inline void update_function_graph_func(void) { }
 #endif
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static void update_ftrace_function(void)
 {
 	ftrace_func_t func;
@@ -321,6 +327,7 @@ static void update_ftrace_function(void)
 	     !FTRACE_FORCE_LIST_FUNC)) {
 		/* Set the ftrace_ops that the arch callback uses */
 		if (ftrace_ops_list == &global_ops)
+<<<<<<< HEAD
 			set_function_trace_op = ftrace_global_list;
 		else
 			set_function_trace_op = ftrace_ops_list;
@@ -376,6 +383,18 @@ static void update_ftrace_function(void)
 	/* OK, we are all set to update the ftrace_trace_function now! */
 #endif /* !CONFIG_DYNAMIC_FTRACE */
 
+=======
+			function_trace_op = ftrace_global_list;
+		else
+			function_trace_op = ftrace_ops_list;
+		func = ftrace_ops_list->func;
+	} else {
+		/* Just use the default ftrace_ops */
+		function_trace_op = &ftrace_list_end;
+		func = ftrace_ops_list_func;
+	}
+
+>>>>>>> 671a46baf1b... some performance improvements
 	ftrace_trace_function = func;
 }
 
@@ -437,6 +456,12 @@ static int remove_ftrace_list_ops(struct ftrace_ops **list,
 
 static int __register_ftrace_function(struct ftrace_ops *ops)
 {
+<<<<<<< HEAD
+=======
+	if (unlikely(ftrace_disabled))
+		return -ENODEV;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	if (FTRACE_WARN_ON(ops == &global_ops))
 		return -EINVAL;
 
@@ -484,6 +509,12 @@ static int __unregister_ftrace_function(struct ftrace_ops *ops)
 {
 	int ret;
 
+<<<<<<< HEAD
+=======
+	if (ftrace_disabled)
+		return -ENODEV;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	if (WARN_ON(!(ops->flags & FTRACE_OPS_FL_ENABLED)))
 		return -EBUSY;
 
@@ -498,6 +529,19 @@ static int __unregister_ftrace_function(struct ftrace_ops *ops)
 	} else if (ops->flags & FTRACE_OPS_FL_CONTROL) {
 		ret = remove_ftrace_list_ops(&ftrace_control_list,
 					     &control_ops, ops);
+<<<<<<< HEAD
+=======
+		if (!ret) {
+			/*
+			 * The ftrace_ops is now removed from the list,
+			 * so there'll be no new users. We must ensure
+			 * all current users are done before we free
+			 * the control data.
+			 */
+			synchronize_sched();
+			control_ops_free(ops);
+		}
+>>>>>>> 671a46baf1b... some performance improvements
 	} else
 		ret = remove_ftrace_ops(&ftrace_ops_list, ops);
 
@@ -507,6 +551,16 @@ static int __unregister_ftrace_function(struct ftrace_ops *ops)
 	if (ftrace_enabled)
 		update_ftrace_function();
 
+<<<<<<< HEAD
+=======
+	/*
+	 * Dynamic ops may be freed, we must make sure that all
+	 * callers are done before leaving this function.
+	 */
+	if (ops->flags & FTRACE_OPS_FL_DYNAMIC)
+		synchronize_sched();
+
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 }
 
@@ -803,7 +857,11 @@ static int ftrace_profile_init(void)
 	int cpu;
 	int ret = 0;
 
+<<<<<<< HEAD
 	for_each_possible_cpu(cpu) {
+=======
+	for_each_online_cpu(cpu) {
+>>>>>>> 671a46baf1b... some performance improvements
 		ret = ftrace_profile_init_cpu(cpu);
 		if (ret)
 			break;
@@ -1995,6 +2053,7 @@ void ftrace_modify_all_code(int command)
 	else if (command & FTRACE_DISABLE_CALLS)
 		ftrace_replace_code(0);
 
+<<<<<<< HEAD
 	if (command & FTRACE_UPDATE_TRACE_FUNC) {
 		function_trace_op = set_function_trace_op;
 		smp_wmb();
@@ -2003,6 +2062,10 @@ void ftrace_modify_all_code(int command)
 			smp_call_function(ftrace_sync_ipi, NULL, 1);
 		ftrace_update_ftrace_func(ftrace_trace_function);
 	}
+=======
+	if (command & FTRACE_UPDATE_TRACE_FUNC)
+		ftrace_update_ftrace_func(ftrace_trace_function);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (command & FTRACE_START_FUNC_RET)
 		ftrace_enable_ftrace_graph_caller();
@@ -2091,15 +2154,21 @@ static void ftrace_startup_enable(int command)
 static int ftrace_startup(struct ftrace_ops *ops, int command)
 {
 	bool hash_enable = true;
+<<<<<<< HEAD
 	int ret;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (unlikely(ftrace_disabled))
 		return -ENODEV;
 
+<<<<<<< HEAD
 	ret = __register_ftrace_function(ops);
 	if (ret)
 		return ret;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	ftrace_start_up++;
 	command |= FTRACE_UPDATE_CALLS;
 
@@ -2121,6 +2190,7 @@ static int ftrace_startup(struct ftrace_ops *ops, int command)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int ftrace_shutdown(struct ftrace_ops *ops, int command)
 {
 	bool hash_disable = true;
@@ -2132,6 +2202,14 @@ static int ftrace_shutdown(struct ftrace_ops *ops, int command)
 	ret = __unregister_ftrace_function(ops);
 	if (ret)
 		return ret;
+=======
+static void ftrace_shutdown(struct ftrace_ops *ops, int command)
+{
+	bool hash_disable = true;
+
+	if (unlikely(ftrace_disabled))
+		return;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	ftrace_start_up--;
 	/*
@@ -2165,6 +2243,7 @@ static int ftrace_shutdown(struct ftrace_ops *ops, int command)
 		command |= FTRACE_UPDATE_TRACE_FUNC;
 	}
 
+<<<<<<< HEAD
 	if (!command || !ftrace_enabled) {
 		/*
 		 * If these are control ops, they still need their
@@ -2201,6 +2280,12 @@ static int ftrace_shutdown(struct ftrace_ops *ops, int command)
 	}
 
 	return 0;
+=======
+	if (!command || !ftrace_enabled)
+		return;
+
+	ftrace_run_update_code(command);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void ftrace_startup_sysctl(void)
@@ -3052,13 +3137,23 @@ static void __enable_ftrace_function_probe(void)
 	if (i == FTRACE_FUNC_HASHSIZE)
 		return;
 
+<<<<<<< HEAD
 	ret = ftrace_startup(&trace_probe_ops, 0);
+=======
+	ret = __register_ftrace_function(&trace_probe_ops);
+	if (!ret)
+		ret = ftrace_startup(&trace_probe_ops, 0);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	ftrace_probe_registered = 1;
 }
 
 static void __disable_ftrace_function_probe(void)
 {
+<<<<<<< HEAD
+=======
+	int ret;
+>>>>>>> 671a46baf1b... some performance improvements
 	int i;
 
 	if (!ftrace_probe_registered)
@@ -3071,7 +3166,13 @@ static void __disable_ftrace_function_probe(void)
 	}
 
 	/* no more funcs left */
+<<<<<<< HEAD
 	ftrace_shutdown(&trace_probe_ops, 0);
+=======
+	ret = __unregister_ftrace_function(&trace_probe_ops);
+	if (!ret)
+		ftrace_shutdown(&trace_probe_ops, 0);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	ftrace_probe_registered = 0;
 }
@@ -4159,11 +4260,24 @@ static void ftrace_init_module(struct module *mod,
 	ftrace_process_locs(mod, start, end);
 }
 
+<<<<<<< HEAD
 void ftrace_module_init(struct module *mod)
 {
 	ftrace_init_module(mod, mod->ftrace_callsites,
 			   mod->ftrace_callsites +
 			   mod->num_ftrace_callsites);
+=======
+static int ftrace_module_notify_enter(struct notifier_block *self,
+				      unsigned long val, void *data)
+{
+	struct module *mod = data;
+
+	if (val == MODULE_STATE_COMING)
+		ftrace_init_module(mod, mod->ftrace_callsites,
+				   mod->ftrace_callsites +
+				   mod->num_ftrace_callsites);
+	return 0;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int ftrace_module_notify_exit(struct notifier_block *self,
@@ -4177,6 +4291,14 @@ static int ftrace_module_notify_exit(struct notifier_block *self,
 	return 0;
 }
 #else
+<<<<<<< HEAD
+=======
+static int ftrace_module_notify_enter(struct notifier_block *self,
+				      unsigned long val, void *data)
+{
+	return 0;
+}
+>>>>>>> 671a46baf1b... some performance improvements
 static int ftrace_module_notify_exit(struct notifier_block *self,
 				     unsigned long val, void *data)
 {
@@ -4184,6 +4306,14 @@ static int ftrace_module_notify_exit(struct notifier_block *self,
 }
 #endif /* CONFIG_MODULES */
 
+<<<<<<< HEAD
+=======
+struct notifier_block ftrace_module_enter_nb = {
+	.notifier_call = ftrace_module_notify_enter,
+	.priority = INT_MAX,	/* Run before anything that can use kprobes */
+};
+
+>>>>>>> 671a46baf1b... some performance improvements
 struct notifier_block ftrace_module_exit_nb = {
 	.notifier_call = ftrace_module_notify_exit,
 	.priority = INT_MIN,	/* Run after anything that can remove kprobes */
@@ -4220,6 +4350,13 @@ void __init ftrace_init(void)
 				  __start_mcount_loc,
 				  __stop_mcount_loc);
 
+<<<<<<< HEAD
+=======
+	ret = register_module_notifier(&ftrace_module_enter_nb);
+	if (ret)
+		pr_warning("Failed to register trace ftrace module enter notifier\n");
+
+>>>>>>> 671a46baf1b... some performance improvements
 	ret = register_module_notifier(&ftrace_module_exit_nb);
 	if (ret)
 		pr_warning("Failed to register trace ftrace module exit notifier\n");
@@ -4249,6 +4386,7 @@ core_initcall(ftrace_nodyn_init);
 static inline int ftrace_init_dyn_debugfs(struct dentry *d_tracer) { return 0; }
 static inline void ftrace_startup_enable(int command) { }
 /* Keep as macros so we do not need to define the commands */
+<<<<<<< HEAD
 # define ftrace_startup(ops, command)					\
 	({								\
 		int ___ret = __register_ftrace_function(ops);		\
@@ -4258,6 +4396,14 @@ static inline void ftrace_startup_enable(int command) { }
 	})
 # define ftrace_shutdown(ops, command) __unregister_ftrace_function(ops)
 
+=======
+# define ftrace_startup(ops, command)			\
+	({						\
+		(ops)->flags |= FTRACE_OPS_FL_ENABLED;	\
+		0;					\
+	})
+# define ftrace_shutdown(ops, command)	do { } while (0)
+>>>>>>> 671a46baf1b... some performance improvements
 # define ftrace_startup_sysctl()	do { } while (0)
 # define ftrace_shutdown_sysctl()	do { } while (0)
 
@@ -4657,7 +4803,13 @@ int register_ftrace_function(struct ftrace_ops *ops)
 
 	mutex_lock(&ftrace_lock);
 
+<<<<<<< HEAD
 	ret = ftrace_startup(ops, 0);
+=======
+	ret = __register_ftrace_function(ops);
+	if (!ret)
+		ret = ftrace_startup(ops, 0);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	mutex_unlock(&ftrace_lock);
 
@@ -4676,7 +4828,13 @@ int unregister_ftrace_function(struct ftrace_ops *ops)
 	int ret;
 
 	mutex_lock(&ftrace_lock);
+<<<<<<< HEAD
 	ret = ftrace_shutdown(ops, 0);
+=======
+	ret = __unregister_ftrace_function(ops);
+	if (!ret)
+		ftrace_shutdown(ops, 0);
+>>>>>>> 671a46baf1b... some performance improvements
 	mutex_unlock(&ftrace_lock);
 
 	return ret;
@@ -4736,7 +4894,10 @@ int ftrace_graph_entry_stub(struct ftrace_graph_ent *trace)
 trace_func_graph_ret_t ftrace_graph_return =
 			(trace_func_graph_ret_t)ftrace_stub;
 trace_func_graph_ent_t ftrace_graph_entry = ftrace_graph_entry_stub;
+<<<<<<< HEAD
 static trace_func_graph_ent_t __ftrace_graph_entry = ftrace_graph_entry_stub;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 /* Try to assign a return stack array on FTRACE_RETSTACK_ALLOC_SIZE tasks. */
 static int alloc_retstack_tasklist(struct ftrace_ret_stack **ret_stack_list)
@@ -4871,6 +5032,7 @@ ftrace_suspend_notifier_call(struct notifier_block *bl, unsigned long state,
 	return NOTIFY_DONE;
 }
 
+<<<<<<< HEAD
 /* Just a place holder for function graph */
 static struct ftrace_ops fgraph_ops __read_mostly = {
 	.func		= ftrace_stub,
@@ -4902,6 +5064,8 @@ static void update_function_graph_func(void)
 		ftrace_graph_entry = ftrace_graph_entry_test;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 int register_ftrace_graph(trace_func_graph_ret_t retfunc,
 			trace_func_graph_ent_t entryfunc)
 {
@@ -4926,6 +5090,7 @@ int register_ftrace_graph(trace_func_graph_ret_t retfunc,
 	}
 
 	ftrace_graph_return = retfunc;
+<<<<<<< HEAD
 
 	/*
 	 * Update the indirect function to the entryfunc, and the
@@ -4938,6 +5103,11 @@ int register_ftrace_graph(trace_func_graph_ret_t retfunc,
 	update_function_graph_func();
 
 	ret = ftrace_startup(&fgraph_ops, FTRACE_START_FUNC_RET);
+=======
+	ftrace_graph_entry = entryfunc;
+
+	ret = ftrace_startup(&global_ops, FTRACE_START_FUNC_RET);
+>>>>>>> 671a46baf1b... some performance improvements
 
 out:
 	mutex_unlock(&ftrace_lock);
@@ -4954,8 +5124,12 @@ void unregister_ftrace_graph(void)
 	ftrace_graph_active--;
 	ftrace_graph_return = (trace_func_graph_ret_t)ftrace_stub;
 	ftrace_graph_entry = ftrace_graph_entry_stub;
+<<<<<<< HEAD
 	__ftrace_graph_entry = ftrace_graph_entry_stub;
 	ftrace_shutdown(&fgraph_ops, FTRACE_STOP_FUNC_RET);
+=======
+	ftrace_shutdown(&global_ops, FTRACE_STOP_FUNC_RET);
+>>>>>>> 671a46baf1b... some performance improvements
 	unregister_pm_notifier(&ftrace_suspend_notifier);
 	unregister_trace_sched_switch(ftrace_graph_probe_sched_switch, NULL);
 

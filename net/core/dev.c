@@ -927,7 +927,11 @@ bool dev_valid_name(const char *name)
 		return false;
 
 	while (*name) {
+<<<<<<< HEAD
 		if (*name == '/' || *name == ':' || isspace(*name))
+=======
+		if (*name == '/' || isspace(*name))
+>>>>>>> 671a46baf1b... some performance improvements
 			return false;
 		name++;
 	}
@@ -1559,6 +1563,7 @@ EXPORT_SYMBOL(call_netdevice_notifiers);
 
 static struct static_key netstamp_needed __read_mostly;
 #ifdef HAVE_JUMP_LABEL
+<<<<<<< HEAD
 static atomic_t netstamp_needed_deferred;
 static atomic_t netstamp_wanted;
 static void netstamp_clear(struct work_struct *work)
@@ -1573,11 +1578,19 @@ static void netstamp_clear(struct work_struct *work)
 		static_key_disable(&netstamp_needed);
 }
 static DECLARE_WORK(netstamp_work, netstamp_clear);
+=======
+/* We are not allowed to call static_key_slow_dec() from irq context
+ * If net_disable_timestamp() is called from irq context, defer the
+ * static_key_slow_dec() calls.
+ */
+static atomic_t netstamp_needed_deferred;
+>>>>>>> 671a46baf1b... some performance improvements
 #endif
 
 void net_enable_timestamp(void)
 {
 #ifdef HAVE_JUMP_LABEL
+<<<<<<< HEAD
 	int wanted;
 
 	while (1) {
@@ -1592,12 +1605,24 @@ void net_enable_timestamp(void)
 #else
 	static_key_slow_inc(&netstamp_needed);
 #endif
+=======
+	int deferred = atomic_xchg(&netstamp_needed_deferred, 0);
+
+	if (deferred) {
+		while (--deferred)
+			static_key_slow_dec(&netstamp_needed);
+		return;
+	}
+#endif
+	static_key_slow_inc(&netstamp_needed);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 EXPORT_SYMBOL(net_enable_timestamp);
 
 void net_disable_timestamp(void)
 {
 #ifdef HAVE_JUMP_LABEL
+<<<<<<< HEAD
 	int wanted;
 
 	while (1) {
@@ -1612,6 +1637,14 @@ void net_disable_timestamp(void)
 #else
 	static_key_slow_dec(&netstamp_needed);
 #endif
+=======
+	if (in_interrupt()) {
+		atomic_inc(&netstamp_needed_deferred);
+		return;
+	}
+#endif
+	static_key_slow_dec(&netstamp_needed);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 EXPORT_SYMBOL(net_disable_timestamp);
 
@@ -2256,7 +2289,11 @@ int skb_checksum_help(struct sk_buff *skb)
 			goto out;
 	}
 
+<<<<<<< HEAD
 	*(__sum16 *)(skb->data + offset) = csum_fold(csum) ?: CSUM_MANGLED_0;
+=======
+	*(__sum16 *)(skb->data + offset) = csum_fold(csum);
+>>>>>>> 671a46baf1b... some performance improvements
 out_set_summed:
 	skb->ip_summed = CHECKSUM_NONE;
 out:
@@ -2342,10 +2379,16 @@ EXPORT_SYMBOL(skb_mac_gso_segment);
 static inline bool skb_needs_check(struct sk_buff *skb, bool tx_path)
 {
 	if (tx_path)
+<<<<<<< HEAD
 		return skb->ip_summed != CHECKSUM_PARTIAL &&
 		       skb->ip_summed != CHECKSUM_NONE;
 
 	return skb->ip_summed == CHECKSUM_NONE;
+=======
+		return skb->ip_summed != CHECKSUM_PARTIAL;
+	else
+		return skb->ip_summed == CHECKSUM_NONE;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /**
@@ -2362,12 +2405,20 @@ static inline bool skb_needs_check(struct sk_buff *skb, bool tx_path)
 struct sk_buff *__skb_gso_segment(struct sk_buff *skb,
 				  netdev_features_t features, bool tx_path)
 {
+<<<<<<< HEAD
 	struct sk_buff *segs;
 
 	if (unlikely(skb_needs_check(skb, tx_path))) {
 		int err;
 
 		/* We're going to init ->check field in TCP or UDP header */
+=======
+	if (unlikely(skb_needs_check(skb, tx_path))) {
+		int err;
+
+		skb_warn_bad_offload(skb);
+
+>>>>>>> 671a46baf1b... some performance improvements
 		if (skb_header_cloned(skb) &&
 		    (err = pskb_expand_head(skb, 0, 0, GFP_ATOMIC)))
 			return ERR_PTR(err);
@@ -2377,12 +2428,16 @@ struct sk_buff *__skb_gso_segment(struct sk_buff *skb,
 	skb_reset_mac_header(skb);
 	skb_reset_mac_len(skb);
 
+<<<<<<< HEAD
 	segs = skb_mac_gso_segment(skb, features);
 
 	if (unlikely(skb_needs_check(skb, tx_path)))
 		skb_warn_bad_offload(skb);
 
 	return segs;
+=======
+	return skb_mac_gso_segment(skb, features);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 EXPORT_SYMBOL(__skb_gso_segment);
 
@@ -2403,7 +2458,11 @@ EXPORT_SYMBOL(netdev_rx_csum_fault);
  * 2. No high memory really exists on this machine.
  */
 
+<<<<<<< HEAD
 static int illegal_highdma(const struct net_device *dev, struct sk_buff *skb)
+=======
+static int illegal_highdma(struct net_device *dev, struct sk_buff *skb)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 #ifdef CONFIG_HIGHMEM
 	int i;
@@ -2483,20 +2542,31 @@ static int dev_gso_segment(struct sk_buff *skb, netdev_features_t features)
 }
 
 static netdev_features_t harmonize_features(struct sk_buff *skb,
+<<<<<<< HEAD
 					    __be16 protocol,
 					    const struct net_device *dev,
 					    netdev_features_t features)
+=======
+	__be16 protocol, netdev_features_t features)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	if (skb->ip_summed != CHECKSUM_NONE &&
 	    !can_checksum_protocol(features, protocol)) {
 		features &= ~NETIF_F_ALL_CSUM;
+<<<<<<< HEAD
 	}
 	if (illegal_highdma(dev, skb))
 		features &= ~NETIF_F_SG;
+=======
+	} else if (illegal_highdma(skb->dev, skb)) {
+		features &= ~NETIF_F_SG;
+	}
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return features;
 }
 
+<<<<<<< HEAD
 netdev_features_t netif_skb_dev_features(struct sk_buff *skb,
 					 const struct net_device *dev)
 {
@@ -2504,12 +2574,21 @@ netdev_features_t netif_skb_dev_features(struct sk_buff *skb,
 	netdev_features_t features = dev->features;
 
 	if (skb_shinfo(skb)->gso_segs > dev->gso_max_segs)
+=======
+netdev_features_t netif_skb_features(struct sk_buff *skb)
+{
+	__be16 protocol = skb->protocol;
+	netdev_features_t features = skb->dev->features;
+
+	if (skb_shinfo(skb)->gso_segs > skb->dev->gso_max_segs)
+>>>>>>> 671a46baf1b... some performance improvements
 		features &= ~NETIF_F_GSO_MASK;
 
 	if (protocol == htons(ETH_P_8021Q) || protocol == htons(ETH_P_8021AD)) {
 		struct vlan_ethhdr *veh = (struct vlan_ethhdr *)skb->data;
 		protocol = veh->h_vlan_encapsulated_proto;
 	} else if (!vlan_tx_tag_present(skb)) {
+<<<<<<< HEAD
 		return harmonize_features(skb, protocol, dev, features);
 	}
 
@@ -2518,16 +2597,33 @@ netdev_features_t netif_skb_dev_features(struct sk_buff *skb,
 
 	if (protocol != htons(ETH_P_8021Q) && protocol != htons(ETH_P_8021AD)) {
 		return harmonize_features(skb, protocol, dev, features);
+=======
+		return harmonize_features(skb, protocol, features);
+	}
+
+	features &= (skb->dev->vlan_features | NETIF_F_HW_VLAN_CTAG_TX |
+					       NETIF_F_HW_VLAN_STAG_TX);
+
+	if (protocol != htons(ETH_P_8021Q) && protocol != htons(ETH_P_8021AD)) {
+		return harmonize_features(skb, protocol, features);
+>>>>>>> 671a46baf1b... some performance improvements
 	} else {
 		features &= NETIF_F_SG | NETIF_F_HIGHDMA | NETIF_F_FRAGLIST |
 				NETIF_F_GEN_CSUM | NETIF_F_HW_VLAN_CTAG_TX |
 				NETIF_F_HW_VLAN_STAG_TX;
+<<<<<<< HEAD
 		return harmonize_features(skb, protocol, dev, features);
 	}
 
 	return harmonize_features(skb, protocol, dev, features);
 }
 EXPORT_SYMBOL(netif_skb_dev_features);
+=======
+		return harmonize_features(skb, protocol, features);
+	}
+}
+EXPORT_SYMBOL(netif_skb_features);
+>>>>>>> 671a46baf1b... some performance improvements
 
 /*
  * Returns true if either:
@@ -3375,6 +3471,7 @@ out:
 #endif
 
 /**
+<<<<<<< HEAD
  *	netdev_is_rx_handler_busy - check if receive handler is registered
  *	@dev: device to check
  *
@@ -3391,6 +3488,8 @@ bool netdev_is_rx_handler_busy(struct net_device *dev)
 EXPORT_SYMBOL_GPL(netdev_is_rx_handler_busy);
 
 /**
+=======
+>>>>>>> 671a46baf1b... some performance improvements
  *	netdev_rx_handler_register - register receive handler
  *	@dev: device to register a handler for
  *	@rx_handler: receive handler to register
@@ -3488,6 +3587,11 @@ static int __netif_receive_skb_core(struct sk_buff *skb, bool pfmemalloc)
 
 	pt_prev = NULL;
 
+<<<<<<< HEAD
+=======
+	rcu_read_lock();
+
+>>>>>>> 671a46baf1b... some performance improvements
 another_round:
 	skb->skb_iif = skb->dev->ifindex;
 
@@ -3497,7 +3601,11 @@ another_round:
 	    skb->protocol == cpu_to_be16(ETH_P_8021AD)) {
 		skb = vlan_untag(skb);
 		if (unlikely(!skb))
+<<<<<<< HEAD
 			goto out;
+=======
+			goto unlock;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 #ifdef CONFIG_NET_CLS_ACT
@@ -3522,7 +3630,11 @@ skip_taps:
 #ifdef CONFIG_NET_CLS_ACT
 	skb = handle_ing(skb, &pt_prev, &ret, orig_dev);
 	if (!skb)
+<<<<<<< HEAD
 		goto out;
+=======
+		goto unlock;
+>>>>>>> 671a46baf1b... some performance improvements
 ncls:
 #endif
 
@@ -3537,7 +3649,11 @@ ncls:
 		if (vlan_do_receive(&skb))
 			goto another_round;
 		else if (unlikely(!skb))
+<<<<<<< HEAD
 			goto out;
+=======
+			goto unlock;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	rx_handler = rcu_dereference(skb->dev->rx_handler);
@@ -3549,7 +3665,11 @@ ncls:
 		switch (rx_handler(&skb)) {
 		case RX_HANDLER_CONSUMED:
 			ret = NET_RX_SUCCESS;
+<<<<<<< HEAD
 			goto out;
+=======
+			goto unlock;
+>>>>>>> 671a46baf1b... some performance improvements
 		case RX_HANDLER_ANOTHER:
 			goto another_round;
 		case RX_HANDLER_EXACT:
@@ -3601,6 +3721,11 @@ drop:
 		ret = NET_RX_DROP;
 	}
 
+<<<<<<< HEAD
+=======
+unlock:
+	rcu_read_unlock();
+>>>>>>> 671a46baf1b... some performance improvements
 out:
 	return ret;
 }
@@ -3647,30 +3772,51 @@ static int __netif_receive_skb(struct sk_buff *skb)
  */
 int netif_receive_skb(struct sk_buff *skb)
 {
+<<<<<<< HEAD
 	int ret;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	net_timestamp_check(netdev_tstamp_prequeue, skb);
 
 	if (skb_defer_rx_timestamp(skb))
 		return NET_RX_SUCCESS;
 
+<<<<<<< HEAD
 	rcu_read_lock();
 
 #ifdef CONFIG_RPS
 	if (static_key_false(&rps_needed)) {
 		struct rps_dev_flow voidflow, *rflow = &voidflow;
 		int cpu = get_rps_cpu(skb->dev, skb, &rflow);
+=======
+#ifdef CONFIG_RPS
+	if (static_key_false(&rps_needed)) {
+		struct rps_dev_flow voidflow, *rflow = &voidflow;
+		int cpu, ret;
+
+		rcu_read_lock();
+
+		cpu = get_rps_cpu(skb->dev, skb, &rflow);
+>>>>>>> 671a46baf1b... some performance improvements
 
 		if (cpu >= 0) {
 			ret = enqueue_to_backlog(skb, cpu, &rflow->last_qtail);
 			rcu_read_unlock();
 			return ret;
 		}
+<<<<<<< HEAD
 	}
 #endif
 	ret = __netif_receive_skb(skb);
 	rcu_read_unlock();
 	return ret;
+=======
+		rcu_read_unlock();
+	}
+#endif
+	return __netif_receive_skb(skb);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 EXPORT_SYMBOL(netif_receive_skb);
 
@@ -3920,9 +4066,13 @@ static void skb_gro_reset_offset(struct sk_buff *skb)
 	    pinfo->nr_frags &&
 	    !PageHighMem(skb_frag_page(frag0))) {
 		NAPI_GRO_CB(skb)->frag0 = skb_frag_address(frag0);
+<<<<<<< HEAD
 		NAPI_GRO_CB(skb)->frag0_len = min_t(unsigned int,
 						    skb_frag_size(frag0),
 						    skb->end - skb->tail);
+=======
+		NAPI_GRO_CB(skb)->frag0_len = skb_frag_size(frag0);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 }
 
@@ -3942,7 +4092,10 @@ static void napi_reuse_skb(struct napi_struct *napi, struct sk_buff *skb)
 	skb->vlan_tci = 0;
 	skb->dev = napi->dev;
 	skb->skb_iif = 0;
+<<<<<<< HEAD
 	skb->truesize = SKB_TRUESIZE(skb_end_offset(skb));
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	napi->skb = skb;
 }
@@ -4085,10 +4238,15 @@ static int process_backlog(struct napi_struct *napi, int quota)
 		unsigned int qlen;
 
 		while ((skb = __skb_dequeue(&sd->process_queue))) {
+<<<<<<< HEAD
 			rcu_read_lock();
 			local_irq_enable();
 			__netif_receive_skb(skb);
 			rcu_read_unlock();
+=======
+			local_irq_enable();
+			__netif_receive_skb(skb);
+>>>>>>> 671a46baf1b... some performance improvements
 			local_irq_disable();
 			input_queue_head_incr(sd);
 			if (++work >= quota) {
@@ -4533,7 +4691,11 @@ static void dev_change_rx_flags(struct net_device *dev, int flags)
 {
 	const struct net_device_ops *ops = dev->netdev_ops;
 
+<<<<<<< HEAD
 	if (ops->ndo_change_rx_flags)
+=======
+	if ((dev->flags & IFF_UP) && ops->ndo_change_rx_flags)
+>>>>>>> 671a46baf1b... some performance improvements
 		ops->ndo_change_rx_flags(dev, flags);
 }
 
@@ -4684,7 +4846,10 @@ void __dev_set_rx_mode(struct net_device *dev)
 	if (ops->ndo_set_rx_mode)
 		ops->ndo_set_rx_mode(dev);
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL(__dev_set_rx_mode);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 void dev_set_rx_mode(struct net_device *dev)
 {
@@ -5646,7 +5811,11 @@ struct rtnl_link_stats64 *dev_get_stats(struct net_device *dev,
 	} else {
 		netdev_stats_to_stats64(storage, &dev->stats);
 	}
+<<<<<<< HEAD
 	storage->rx_dropped += (unsigned long)atomic_long_read(&dev->rx_dropped);
+=======
+	storage->rx_dropped += atomic_long_read(&dev->rx_dropped);
+>>>>>>> 671a46baf1b... some performance improvements
 	return storage;
 }
 EXPORT_SYMBOL(dev_get_stats);
@@ -5876,9 +6045,12 @@ EXPORT_SYMBOL(unregister_netdevice_queue);
 /**
  *	unregister_netdevice_many - unregister many devices
  *	@head: list of devices
+<<<<<<< HEAD
  *
  *  Note: As most callers use a stack allocated list_head,
  *  we force a list_del() to make sure stack wont be corrupted later.
+=======
+>>>>>>> 671a46baf1b... some performance improvements
  */
 void unregister_netdevice_many(struct list_head *head)
 {
@@ -5888,7 +6060,10 @@ void unregister_netdevice_many(struct list_head *head)
 		rollback_registered_many(head);
 		list_for_each_entry(dev, head, unreg_list)
 			net_set_todo(dev);
+<<<<<<< HEAD
 		list_del(head);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 }
 EXPORT_SYMBOL(unregister_netdevice_many);
@@ -6064,6 +6239,7 @@ static int dev_cpu_callback(struct notifier_block *nfb,
 		oldsd->output_queue = NULL;
 		oldsd->output_queue_tailp = &oldsd->output_queue;
 	}
+<<<<<<< HEAD
 	/* Append NAPI poll list from offline CPU, with one exception :
 	 * process_backlog() must be called by cpu owning percpu backlog.
 	 * We properly handle process_queue & input_pkt_queue later.
@@ -6078,6 +6254,12 @@ static int dev_cpu_callback(struct notifier_block *nfb,
 			napi->state = 0;
 		else
 			____napi_schedule(sd, napi);
+=======
+	/* Append NAPI poll list from offline CPU. */
+	if (!list_empty(&oldsd->poll_list)) {
+		list_splice_init(&oldsd->poll_list, &sd->poll_list);
+		raise_softirq_irqoff(NET_RX_SOFTIRQ);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	raise_softirq_irqoff(NET_TX_SOFTIRQ);
@@ -6088,7 +6270,11 @@ static int dev_cpu_callback(struct notifier_block *nfb,
 		netif_rx(skb);
 		input_queue_head_incr(oldsd);
 	}
+<<<<<<< HEAD
 	while ((skb = skb_dequeue(&oldsd->input_pkt_queue))) {
+=======
+	while ((skb = __skb_dequeue(&oldsd->input_pkt_queue))) {
+>>>>>>> 671a46baf1b... some performance improvements
 		netif_rx(skb);
 		input_queue_head_incr(oldsd);
 	}
@@ -6315,6 +6501,10 @@ static void __net_exit default_device_exit_batch(struct list_head *net_list)
 		}
 	}
 	unregister_netdevice_many(&dev_kill_list);
+<<<<<<< HEAD
+=======
+	list_del(&dev_kill_list);
+>>>>>>> 671a46baf1b... some performance improvements
 	rtnl_unlock();
 }
 

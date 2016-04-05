@@ -133,6 +133,7 @@ static unsigned long sel_last_ino = SEL_INO_NEXT - 1;
 static ssize_t sel_read_enforce(struct file *filp, char __user *buf,
 				size_t count, loff_t *ppos)
 {
+<<<<<<< HEAD
 	int display_state = selinux_enforcing;
 	char tmpbuf[TMPBUFLEN];
 	ssize_t length;
@@ -241,6 +242,18 @@ out:
 static const struct file_operations sel_enforce_ops = {
 	.read		= sel_read_enforce,
 	.write		= sel_write_enforce,
+=======
+	char tmpbuf[TMPBUFLEN];
+	ssize_t length;
+
+	length = scnprintf(tmpbuf, TMPBUFLEN, "%d", selinux_enforcing);
+	return simple_read_from_buffer(buf, count, ppos, tmpbuf, length);
+}
+
+static const struct file_operations sel_enforce_ops = {
+	.read		= sel_read_enforce,
+	.write		= NULL,
+>>>>>>> 671a46baf1b... some performance improvements
 	.llseek		= generic_file_llseek,
 };
 
@@ -1237,7 +1250,11 @@ static void sel_remove_entries(struct dentry *de)
 	spin_lock(&de->d_lock);
 	node = de->d_subdirs.next;
 	while (node != &de->d_subdirs) {
+<<<<<<< HEAD
 		struct dentry *d = list_entry(node, struct dentry, d_child);
+=======
+		struct dentry *d = list_entry(node, struct dentry, d_u.d_child);
+>>>>>>> 671a46baf1b... some performance improvements
 
 		spin_lock_nested(&d->d_lock, DENTRY_D_LOCK_NESTED);
 		list_del_init(node);
@@ -1711,12 +1728,20 @@ static void sel_remove_classes(void)
 
 	list_for_each(class_node, &class_dir->d_subdirs) {
 		struct dentry *class_subdir = list_entry(class_node,
+<<<<<<< HEAD
 					struct dentry, d_child);
+=======
+					struct dentry, d_u.d_child);
+>>>>>>> 671a46baf1b... some performance improvements
 		struct list_head *class_subdir_node;
 
 		list_for_each(class_subdir_node, &class_subdir->d_subdirs) {
 			struct dentry *d = list_entry(class_subdir_node,
+<<<<<<< HEAD
 						struct dentry, d_child);
+=======
+						struct dentry, d_u.d_child);
+>>>>>>> 671a46baf1b... some performance improvements
 
 			if (d->d_inode)
 				if (d->d_inode->i_mode & S_IFDIR)

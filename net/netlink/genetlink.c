@@ -364,7 +364,11 @@ int genl_unregister_ops(struct genl_family *family, struct genl_ops *ops)
 EXPORT_SYMBOL(genl_unregister_ops);
 
 /**
+<<<<<<< HEAD
  * __genl_register_family - register a generic netlink family
+=======
+ * genl_register_family - register a generic netlink family
+>>>>>>> 671a46baf1b... some performance improvements
  * @family: generic netlink family
  *
  * Registers the specified family after validating it first. Only one
@@ -374,7 +378,11 @@ EXPORT_SYMBOL(genl_unregister_ops);
  *
  * Return 0 on success or a negative error code.
  */
+<<<<<<< HEAD
 int __genl_register_family(struct genl_family *family)
+=======
+int genl_register_family(struct genl_family *family)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	int err = -EINVAL;
 
@@ -430,10 +438,17 @@ errout_locked:
 errout:
 	return err;
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL(__genl_register_family);
 
 /**
  * __genl_register_family_with_ops - register a generic netlink family
+=======
+EXPORT_SYMBOL(genl_register_family);
+
+/**
+ * genl_register_family_with_ops - register a generic netlink family
+>>>>>>> 671a46baf1b... some performance improvements
  * @family: generic netlink family
  * @ops: operations to be registered
  * @n_ops: number of elements to register
@@ -457,12 +472,20 @@ EXPORT_SYMBOL(__genl_register_family);
  *
  * Return 0 on success or a negative error code.
  */
+<<<<<<< HEAD
 int __genl_register_family_with_ops(struct genl_family *family,
+=======
+int genl_register_family_with_ops(struct genl_family *family,
+>>>>>>> 671a46baf1b... some performance improvements
 	struct genl_ops *ops, size_t n_ops)
 {
 	int err, i;
 
+<<<<<<< HEAD
 	err = __genl_register_family(family);
+=======
+	err = genl_register_family(family);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (err)
 		return err;
 
@@ -476,7 +499,11 @@ err_out:
 	genl_unregister_family(family);
 	return err;
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL(__genl_register_family_with_ops);
+=======
+EXPORT_SYMBOL(genl_register_family_with_ops);
+>>>>>>> 671a46baf1b... some performance improvements
 
 /**
  * genl_unregister_family - unregister generic netlink family
@@ -544,6 +571,7 @@ void *genlmsg_put(struct sk_buff *skb, u32 portid, u32 seq,
 }
 EXPORT_SYMBOL(genlmsg_put);
 
+<<<<<<< HEAD
 static int genl_lock_dumpit(struct sk_buff *skb, struct netlink_callback *cb)
 {
 	struct genl_ops *ops = cb->data;
@@ -568,6 +596,8 @@ static int genl_lock_done(struct netlink_callback *cb)
 	return rc;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static int genl_family_rcv_msg(struct genl_family *family,
 			       struct sk_buff *skb,
 			       struct nlmsghdr *nlh)
@@ -592,15 +622,27 @@ static int genl_family_rcv_msg(struct genl_family *family,
 		return -EOPNOTSUPP;
 
 	if ((ops->flags & GENL_ADMIN_PERM) &&
+<<<<<<< HEAD
 	    !netlink_capable(skb, CAP_NET_ADMIN))
 		return -EPERM;
 
 	if (nlh->nlmsg_flags & NLM_F_DUMP) {
 		int rc;
+=======
+	    !capable(CAP_NET_ADMIN))
+		return -EPERM;
+
+	if (nlh->nlmsg_flags & NLM_F_DUMP) {
+		struct netlink_dump_control c = {
+			.dump = ops->dumpit,
+			.done = ops->done,
+		};
+>>>>>>> 671a46baf1b... some performance improvements
 
 		if (ops->dumpit == NULL)
 			return -EOPNOTSUPP;
 
+<<<<<<< HEAD
 		if (!family->parallel_ops) {
 			struct netlink_dump_control c = {
 				.module = family->module,
@@ -624,6 +666,9 @@ static int genl_family_rcv_msg(struct genl_family *family,
 		}
 
 		return rc;
+=======
+		return netlink_dump_start(net->genl_sock, skb, nlh, &c);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	if (ops->doit == NULL)

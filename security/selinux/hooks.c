@@ -53,7 +53,10 @@
 #include <net/ip.h>		/* for local_port_range[] */
 #include <net/sock.h>
 #include <net/tcp.h>		/* struct or_callable used in sock_rcv_skb */
+<<<<<<< HEAD
 #include <net/inet_connection_sock.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #include <net/net_namespace.h>
 #include <net/netlabel.h>
 #include <linux/uaccess.h>
@@ -141,6 +144,7 @@ extern struct security_operations *security_ops;
 /* SECMARK reference count */
 static atomic_t selinux_secmark_refcount = ATOMIC_INIT(0);
 
+<<<<<<< HEAD
 #ifdef CONFIG_SECURITY_SELINUX_DEVELOP
 int selinux_enforcing;
 
@@ -161,6 +165,9 @@ static int __init enforcing_setup(char *str)
 }
 __setup("enforcing=", enforcing_setup);
 #endif
+=======
+int selinux_enforcing = 0;
+>>>>>>> 671a46baf1b... some performance improvements
 
 #ifdef CONFIG_SECURITY_SELINUX_BOOTPARAM
 int selinux_enabled = CONFIG_SECURITY_SELINUX_BOOTPARAM_VALUE;
@@ -169,10 +176,14 @@ static int __init selinux_enabled_setup(char *str)
 {
 	unsigned long enabled;
 	if (!strict_strtoul(str, 0, &enabled))
+<<<<<<< HEAD
 #if defined(SELINUX_ALWAYS_ENFORCE) || \
 	defined(SELINUX_DEFAULT_ENFORCE) || \
     defined(SELINUX_ALWAYS_PERMISSIVE) || \
 	defined(SELINUX_DEFAULT_PERMISSIVE)
+=======
+#ifdef CONFIG_ALWAYS_ENFORCE
+>>>>>>> 671a46baf1b... some performance improvements
 		selinux_enabled = 1;
 #else
 		selinux_enabled = enabled ? 1 : 0;
@@ -201,6 +212,7 @@ static int selinux_secmark_enabled(void)
 	return (atomic_read(&selinux_secmark_refcount) > 0);
 }
 
+<<<<<<< HEAD
 static int selinux_netcache_avc_callback(u32 event)
 {
 	if (event == AVC_CALLBACK_RESET) {
@@ -212,6 +224,8 @@ static int selinux_netcache_avc_callback(u32 event)
 	return 0;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /*
  * initialise the security for the init task
  */
@@ -760,10 +774,14 @@ static int selinux_set_mnt_opts(struct super_block *sb,
 	}
 
 	if (strcmp(sb->s_type->name, "proc") == 0)
+<<<<<<< HEAD
 		sbsec->flags |= SE_SBPROC | SE_SBGENFS;
 
 	if (strcmp(sb->s_type->name, "debugfs") == 0)
 		sbsec->flags |= SE_SBGENFS;
+=======
+		sbsec->flags |= SE_SBPROC;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* Determine the labeling behavior to use for this filesystem type. */
 	rc = security_fs_use((sbsec->flags & SE_SBPROC) ? "proc" : sb->s_type->name, &sbsec->behavior, &sbsec->sid);
@@ -1256,6 +1274,7 @@ static inline u16 socket_type_to_security_class(int family, int type, int protoc
 	return SECCLASS_SOCKET;
 }
 
+<<<<<<< HEAD
 static int selinux_genfs_get_sid(struct dentry *dentry,
 				 u16 tclass,
 				 u16 flags,
@@ -1263,6 +1282,14 @@ static int selinux_genfs_get_sid(struct dentry *dentry,
 {
 	int rc;
 	struct super_block *sb = dentry->d_inode->i_sb;
+=======
+#ifdef CONFIG_PROC_FS
+static int selinux_proc_get_sid(struct dentry *dentry,
+				u16 tclass,
+				u32 *sid)
+{
+	int rc;
+>>>>>>> 671a46baf1b... some performance improvements
 	char *buffer, *path;
 
 	buffer = (char *)__get_free_page(GFP_KERNEL);
@@ -1273,6 +1300,7 @@ static int selinux_genfs_get_sid(struct dentry *dentry,
 	if (IS_ERR(path))
 		rc = PTR_ERR(path);
 	else {
+<<<<<<< HEAD
 		if (flags & SE_SBPROC) {
 			/* each process gets a /proc/PID/ entry. Strip off the
 			 * PID part to get a valid selinux labeling.
@@ -1283,10 +1311,31 @@ static int selinux_genfs_get_sid(struct dentry *dentry,
 			}
 		}
 		rc = security_genfs_sid(sb->s_type->name, path, tclass, sid);
+=======
+		/* each process gets a /proc/PID/ entry. Strip off the
+		 * PID part to get a valid selinux labeling.
+		 * e.g. /proc/1/net/rpc/nfs -> /net/rpc/nfs */
+		while (path[1] >= '0' && path[1] <= '9') {
+			path[1] = '/';
+			path++;
+		}
+		rc = security_genfs_sid("proc", path, tclass, sid);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	free_page((unsigned long)buffer);
 	return rc;
 }
+<<<<<<< HEAD
+=======
+#else
+static int selinux_proc_get_sid(struct dentry *dentry,
+				u16 tclass,
+				u32 *sid)
+{
+	return -EINVAL;
+}
+#endif
+>>>>>>> 671a46baf1b... some performance improvements
 
 /* The inode's security attributes must be initialized before first use. */
 static int inode_doinit_with_dentry(struct inode *inode, struct dentry *opt_dentry)
@@ -1448,6 +1497,7 @@ static int inode_doinit_with_dentry(struct inode *inode, struct dentry *opt_dent
 		/* Default to the fs superblock SID. */
 		isec->sid = sbsec->sid;
 
+<<<<<<< HEAD
 		if ((sbsec->flags & SE_SBGENFS) && !S_ISLNK(inode->i_mode)) {
 			/* We must have a dentry to determine the label on
 			 * procfs inodes */
@@ -1477,6 +1527,18 @@ static int inode_doinit_with_dentry(struct inode *inode, struct dentry *opt_dent
 			if (rc)
 				goto out_unlock;
 			isec->sid = sid;
+=======
+		if ((sbsec->flags & SE_SBPROC) && !S_ISLNK(inode->i_mode)) {
+			if (opt_dentry) {
+				isec->sclass = inode_mode_to_security_class(inode->i_mode);
+				rc = selinux_proc_get_sid(opt_dentry,
+							  isec->sclass,
+							  &sid);
+				if (rc)
+					goto out_unlock;
+				isec->sid = sid;
+			}
+>>>>>>> 671a46baf1b... some performance improvements
 		}
 		break;
 	}
@@ -2975,7 +3037,10 @@ static int selinux_inode_follow_link(struct dentry *dentry, struct nameidata *na
 
 static noinline int audit_inode_permission(struct inode *inode,
 					   u32 perms, u32 audited, u32 denied,
+<<<<<<< HEAD
 					   int result,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 					   unsigned flags)
 {
 	struct common_audit_data ad;
@@ -2988,7 +3053,11 @@ static noinline int audit_inode_permission(struct inode *inode,
 	ad.u.inode = inode;
 
 	rc = slow_avc_audit(current_sid(), isec->sid, isec->sclass, perms,
+<<<<<<< HEAD
 			    audited, denied, result, &ad, flags);
+=======
+			    audited, denied, &ad, flags);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (rc)
 		return rc;
 	return 0;
@@ -3032,7 +3101,11 @@ static int selinux_inode_permission(struct inode *inode, int mask)
 	if (likely(!audited))
 		return rc;
 
+<<<<<<< HEAD
 	rc2 = audit_inode_permission(inode, perms, audited, denied, rc, flags);
+=======
+	rc2 = audit_inode_permission(inode, perms, audited, denied, flags);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (rc2)
 		return rc2;
 	return rc;
@@ -3061,8 +3134,12 @@ static int selinux_inode_setattr(struct dentry *dentry, struct iattr *iattr)
 			ATTR_ATIME_SET | ATTR_MTIME_SET | ATTR_TIMES_SET))
 		return dentry_has_perm(cred, dentry, FILE__SETATTR);
 
+<<<<<<< HEAD
 	if (selinux_policycap_openperm && (ia_valid & ATTR_SIZE)
 			&& !(ia_valid & ATTR_FILE))
+=======
+	if (selinux_policycap_openperm && (ia_valid & ATTR_SIZE))
+>>>>>>> 671a46baf1b... some performance improvements
 		av |= FILE__OPEN;
 
 	return dentry_has_perm(cred, dentry, av);
@@ -3404,8 +3481,11 @@ int ioctl_has_perm(const struct cred *cred, struct file *file,
 	struct lsm_ioctlop_audit ioctl;
 	u32 ssid = cred_sid(cred);
 	int rc;
+<<<<<<< HEAD
 	u8 driver = cmd >> 8;
 	u8 xperm = cmd & 0xff;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	ad.type = LSM_AUDIT_DATA_IOCTL_OP;
 	ad.u.op = &ioctl;
@@ -3424,8 +3504,13 @@ int ioctl_has_perm(const struct cred *cred, struct file *file,
 	if (unlikely(IS_PRIVATE(inode)))
 		return 0;
 
+<<<<<<< HEAD
 	rc = avc_has_extended_perms(ssid, isec->sid, isec->sclass,
 			requested, driver, xperm, &ad);
+=======
+	rc = avc_has_operation(ssid, isec->sid, isec->sclass,
+			requested, cmd, &ad);
+>>>>>>> 671a46baf1b... some performance improvements
 out:
 	return rc;
 }
@@ -3520,16 +3605,22 @@ error:
 
 static int selinux_mmap_addr(unsigned long addr)
 {
+<<<<<<< HEAD
 	int rc;
 
 	/* do DAC check on address space usage */
 	rc = cap_mmap_addr(addr);
 	if (rc)
 		return rc;
+=======
+	int rc = 0;
+	u32 sid = current_sid();
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if ((rc = security_integrity_current()))
 		return rc;
 
+<<<<<<< HEAD
 	if (addr < CONFIG_LSM_MMAP_MIN_ADDR) {
 		u32 sid = current_sid();
 		rc = avc_has_perm(sid, sid, SECCLASS_MEMPROTECT,
@@ -3537,6 +3628,23 @@ static int selinux_mmap_addr(unsigned long addr)
 	}
 
 	return rc;
+=======
+	/*
+	 * notice that we are intentionally putting the SELinux check before
+	 * the secondary cap_file_mmap check.  This is such a likely attempt
+	 * at bad behaviour/exploit that we always want to get the AVC, even
+	 * if DAC would have also denied the operation.
+	 */
+	if (addr < CONFIG_LSM_MMAP_MIN_ADDR) {
+		rc = avc_has_perm(sid, sid, SECCLASS_MEMPROTECT,
+				  MEMPROTECT__MMAP_ZERO, NULL);
+		if (rc)
+			return rc;
+	}
+
+	/* do DAC check on address space usage */
+	return cap_mmap_addr(addr);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int selinux_mmap_file(struct file *file, unsigned long reqprot,
@@ -4275,7 +4383,11 @@ static int selinux_skb_peerlbl_sid(struct sk_buff *skb, u16 family, u32 *sid)
 	u32 nlbl_sid;
 	u32 nlbl_type;
 
+<<<<<<< HEAD
 	selinux_xfrm_skb_sid(skb, &xfrm_sid);
+=======
+	selinux_skb_xfrm_sid(skb, &xfrm_sid);
+>>>>>>> 671a46baf1b... some performance improvements
 	selinux_netlbl_skbuff_getsid(skb, family, &nlbl_type, &nlbl_sid);
 
 	err = security_net_peersid_resolve(nlbl_sid, nlbl_type, xfrm_sid, sid);
@@ -4289,6 +4401,7 @@ static int selinux_skb_peerlbl_sid(struct sk_buff *skb, u16 family, u32 *sid)
 	return 0;
 }
 
+<<<<<<< HEAD
 /**
  * selinux_conn_sid - Determine the child socket label for a connection
  * @sk_sid: the parent socket's SID
@@ -4313,6 +4426,8 @@ static int selinux_conn_sid(u32 sk_sid, u32 skb_sid, u32 *conn_sid)
 	return err;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* socket security operations */
 
 static int socket_sockcreate_sid(const struct task_security_struct *tsec,
@@ -4744,15 +4859,24 @@ static int selinux_socket_unix_may_send(struct socket *sock,
 			    &ad);
 }
 
+<<<<<<< HEAD
 static int selinux_inet_sys_rcv_skb(struct net *ns, int ifindex,
 				    char *addrp, u16 family, u32 peer_sid,
+=======
+static int selinux_inet_sys_rcv_skb(int ifindex, char *addrp, u16 family,
+				    u32 peer_sid,
+>>>>>>> 671a46baf1b... some performance improvements
 				    struct common_audit_data *ad)
 {
 	int err;
 	u32 if_sid;
 	u32 node_sid;
 
+<<<<<<< HEAD
 	err = sel_netif_sid(ns, ifindex, &if_sid);
+=======
+	err = sel_netif_sid(ifindex, &if_sid);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (err)
 		return err;
 	err = avc_has_perm(peer_sid, if_sid,
@@ -4849,18 +4973,28 @@ static int selinux_socket_sock_rcv_skb(struct sock *sk, struct sk_buff *skb)
 		err = selinux_skb_peerlbl_sid(skb, family, &peer_sid);
 		if (err)
 			return err;
+<<<<<<< HEAD
 		err = selinux_inet_sys_rcv_skb(sock_net(sk), skb->skb_iif,
 					       addrp, family, peer_sid, &ad);
+=======
+		err = selinux_inet_sys_rcv_skb(skb->skb_iif, addrp, family,
+					       peer_sid, &ad);
+>>>>>>> 671a46baf1b... some performance improvements
 		if (err) {
 			selinux_netlbl_err(skb, err, 0);
 			return err;
 		}
 		err = avc_has_perm(sk_sid, peer_sid, SECCLASS_PEER,
 				   PEER__RECV, &ad);
+<<<<<<< HEAD
 		if (err) {
 			selinux_netlbl_err(skb, err, 0);
 			return err;
 		}
+=======
+		if (err)
+			selinux_netlbl_err(skb, err, 0);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	if (secmark_active) {
@@ -5010,7 +5144,11 @@ static int selinux_inet_conn_request(struct sock *sk, struct sk_buff *skb,
 	struct sk_security_struct *sksec = sk->sk_security;
 	int err;
 	u16 family = sk->sk_family;
+<<<<<<< HEAD
 	u32 connsid;
+=======
+	u32 newsid;
+>>>>>>> 671a46baf1b... some performance improvements
 	u32 peersid;
 	int rc;
 
@@ -5024,11 +5162,24 @@ static int selinux_inet_conn_request(struct sock *sk, struct sk_buff *skb,
 	err = selinux_skb_peerlbl_sid(skb, family, &peersid);
 	if (err)
 		return err;
+<<<<<<< HEAD
 	err = selinux_conn_sid(sksec->sid, peersid, &connsid);
 	if (err)
 		return err;
 	req->secid = connsid;
 	req->peer_secid = peersid;
+=======
+	if (peersid == SECSID_NULL) {
+		req->secid = sksec->sid;
+		req->peer_secid = SECSID_NULL;
+	} else {
+		err = security_sid_mls_copy(sksec->sid, peersid, &newsid);
+		if (err)
+			return err;
+		req->secid = newsid;
+		req->peer_secid = peersid;
+	}
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return selinux_netlbl_inet_conn_request(req, family);
 }
@@ -5204,6 +5355,7 @@ static int selinux_nlmsg_perm(struct sock *sk, struct sk_buff *skb)
 				  "SELinux:  unrecognized netlink message"
 				  " type=%hu for sclass=%hu\n",
 				  nlh->nlmsg_type, sksec->sclass);
+<<<<<<< HEAD
 #if defined(SELINUX_ALWAYS_ENFORCE)
 			if (security_get_allow_unknown())
 #elif defined(SELINUX_ALWAYS_PERMISSIVE)
@@ -5214,6 +5366,10 @@ static int selinux_nlmsg_perm(struct sock *sk, struct sk_buff *skb)
 			 * means the if would be completley useless
 			 */
 			// if (!selinux_enforcing || security_get_allow_unknown())
+=======
+#ifdef CONFIG_ALWAYS_ENFORCE
+			if (security_get_allow_unknown())
+>>>>>>> 671a46baf1b... some performance improvements
 #else
 			if (!selinux_enforcing || security_get_allow_unknown())
 #endif
@@ -5233,8 +5389,12 @@ out:
 
 #ifdef CONFIG_NETFILTER
 
+<<<<<<< HEAD
 static unsigned int selinux_ip_forward(struct sk_buff *skb,
 				       const struct net_device *indev,
+=======
+static unsigned int selinux_ip_forward(struct sk_buff *skb, int ifindex,
+>>>>>>> 671a46baf1b... some performance improvements
 				       u16 family)
 {
 	int err;
@@ -5260,14 +5420,23 @@ static unsigned int selinux_ip_forward(struct sk_buff *skb,
 
 	ad.type = LSM_AUDIT_DATA_NET;
 	ad.u.net = &net;
+<<<<<<< HEAD
 	ad.u.net->netif = indev->ifindex;
+=======
+	ad.u.net->netif = ifindex;
+>>>>>>> 671a46baf1b... some performance improvements
 	ad.u.net->family = family;
 	if (selinux_parse_skb(skb, &ad, &addrp, 1, NULL) != 0)
 		return NF_DROP;
 
 	if (peerlbl_active) {
+<<<<<<< HEAD
 		err = selinux_inet_sys_rcv_skb(dev_net(indev), indev->ifindex,
 					       addrp, family, peer_sid, &ad);
+=======
+		err = selinux_inet_sys_rcv_skb(ifindex, addrp, family,
+					       peer_sid, &ad);
+>>>>>>> 671a46baf1b... some performance improvements
 		if (err) {
 			selinux_netlbl_err(skb, err, 1);
 			return NF_DROP;
@@ -5296,7 +5465,11 @@ static unsigned int selinux_ipv4_forward(unsigned int hooknum,
 					 const struct net_device *out,
 					 int (*okfn)(struct sk_buff *))
 {
+<<<<<<< HEAD
 	return selinux_ip_forward(skb, in, PF_INET);
+=======
+	return selinux_ip_forward(skb, in->ifindex, PF_INET);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 #if defined(CONFIG_IPV6) || defined(CONFIG_IPV6_MODULE)
@@ -5306,14 +5479,21 @@ static unsigned int selinux_ipv6_forward(unsigned int hooknum,
 					 const struct net_device *out,
 					 int (*okfn)(struct sk_buff *))
 {
+<<<<<<< HEAD
 	return selinux_ip_forward(skb, in, PF_INET6);
+=======
+	return selinux_ip_forward(skb, in->ifindex, PF_INET6);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 #endif	/* IPV6 */
 
 static unsigned int selinux_ip_output(struct sk_buff *skb,
 				      u16 family)
 {
+<<<<<<< HEAD
 	struct sock *sk;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	u32 sid;
 
 	if (!netlbl_enabled())
@@ -5322,6 +5502,7 @@ static unsigned int selinux_ip_output(struct sk_buff *skb,
 	/* we do this in the LOCAL_OUT path and not the POST_ROUTING path
 	 * because we want to make sure we apply the necessary labeling
 	 * before IPsec is applied so we can leverage AH protection */
+<<<<<<< HEAD
 	sk = skb->sk;
 	if (sk) {
 		struct sk_security_struct *sksec;
@@ -5343,6 +5524,10 @@ static unsigned int selinux_ip_output(struct sk_buff *skb,
 
 		/* standard practice, label using the parent socket */
 		sksec = sk->sk_security;
+=======
+	if (skb->sk) {
+		struct sk_security_struct *sksec = skb->sk->sk_security;
+>>>>>>> 671a46baf1b... some performance improvements
 		sid = sksec->sid;
 	} else
 		sid = SECINITSID_KERNEL;
@@ -5394,13 +5579,20 @@ static unsigned int selinux_ip_postroute_compat(struct sk_buff *skb,
 	return NF_ACCEPT;
 }
 
+<<<<<<< HEAD
 static unsigned int selinux_ip_postroute(struct sk_buff *skb,
 					 const struct net_device *outdev,
+=======
+static unsigned int selinux_ip_postroute(struct sk_buff *skb, int ifindex,
+>>>>>>> 671a46baf1b... some performance improvements
 					 u16 family)
 {
 	u32 secmark_perm;
 	u32 peer_sid;
+<<<<<<< HEAD
 	int ifindex = outdev->ifindex;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	struct sock *sk;
 	struct common_audit_data ad;
 	struct lsm_network_audit net = {0,};
@@ -5414,6 +5606,7 @@ static unsigned int selinux_ip_postroute(struct sk_buff *skb,
 	 * as fast and as clean as possible. */
 	if (!selinux_policycap_netpeer)
 		return selinux_ip_postroute_compat(skb, ifindex, family);
+<<<<<<< HEAD
 
 	secmark_active = selinux_secmark_enabled();
 	peerlbl_active = netlbl_enabled() || selinux_xfrm_enabled();
@@ -5422,12 +5615,15 @@ static unsigned int selinux_ip_postroute(struct sk_buff *skb,
 
 	sk = skb->sk;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #ifdef CONFIG_XFRM
 	/* If skb->dst->xfrm is non-NULL then the packet is undergoing an IPsec
 	 * packet transformation so allow the packet to pass without any checks
 	 * since we'll have another chance to perform access control checks
 	 * when the packet is on it's final way out.
 	 * NOTE: there appear to be some IPv6 multicast cases where skb->dst
+<<<<<<< HEAD
 	 *       is NULL, in this case go ahead and apply access control.
 	 *       is NULL, in this case go ahead and apply access control.
 	 * NOTE: if this is a local socket (skb->sk != NULL) that is in the
@@ -5445,6 +5641,23 @@ static unsigned int selinux_ip_postroute(struct sk_buff *skb,
 		 * from the kernel or it is being forwarded; check the packet
 		 * to determine which and if the packet is being forwarded
 		 * query the packet directly to determine the security label. */
+=======
+	 *       is NULL, in this case go ahead and apply access control. */
+	if (skb_dst(skb) != NULL && skb_dst(skb)->xfrm != NULL)
+		return NF_ACCEPT;
+#endif
+	secmark_active = selinux_secmark_enabled();
+	peerlbl_active = netlbl_enabled() || selinux_xfrm_enabled();
+	if (!secmark_active && !peerlbl_active)
+		return NF_ACCEPT;
+
+	/* if the packet is being forwarded then get the peer label from the
+	 * packet itself; otherwise check to see if it is from a local
+	 * application or the kernel, if from an application get the peer label
+	 * from the sending socket, otherwise use the kernel's sid */
+	sk = skb->sk;
+	if (sk == NULL) {
+>>>>>>> 671a46baf1b... some performance improvements
 		if (skb->skb_iif) {
 			secmark_perm = PACKET__FORWARD_OUT;
 			if (selinux_skb_peerlbl_sid(skb, family, &peer_sid))
@@ -5453,6 +5666,7 @@ static unsigned int selinux_ip_postroute(struct sk_buff *skb,
 			secmark_perm = PACKET__SEND;
 			peer_sid = SECINITSID_KERNEL;
 		}
+<<<<<<< HEAD
 	} else if (sk->sk_state == TCP_LISTEN) {
 		/* Locally generated packet but the associated socket is in the
 		 * listening state which means this is a SYN-ACK packet.  In
@@ -5492,6 +5706,9 @@ static unsigned int selinux_ip_postroute(struct sk_buff *skb,
 	} else {
 		/* Locally generated packet, fetch the security label from the
 		 * associated socket. */
+=======
+	} else {
+>>>>>>> 671a46baf1b... some performance improvements
 		struct sk_security_struct *sksec = sk->sk_security;
 		peer_sid = sksec->sid;
 		secmark_perm = PACKET__SEND;
@@ -5513,7 +5730,11 @@ static unsigned int selinux_ip_postroute(struct sk_buff *skb,
 		u32 if_sid;
 		u32 node_sid;
 
+<<<<<<< HEAD
 		if (sel_netif_sid(dev_net(outdev), ifindex, &if_sid))
+=======
+		if (sel_netif_sid(ifindex, &if_sid))
+>>>>>>> 671a46baf1b... some performance improvements
 			return NF_DROP;
 		if (avc_has_perm(peer_sid, if_sid,
 				 SECCLASS_NETIF, NETIF__EGRESS, &ad))
@@ -5535,7 +5756,11 @@ static unsigned int selinux_ipv4_postroute(unsigned int hooknum,
 					   const struct net_device *out,
 					   int (*okfn)(struct sk_buff *))
 {
+<<<<<<< HEAD
 	return selinux_ip_postroute(skb, out, PF_INET);
+=======
+	return selinux_ip_postroute(skb, out->ifindex, PF_INET);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 #if defined(CONFIG_IPV6) || defined(CONFIG_IPV6_MODULE)
@@ -5545,7 +5770,11 @@ static unsigned int selinux_ipv6_postroute(unsigned int hooknum,
 					   const struct net_device *out,
 					   int (*okfn)(struct sk_buff *))
 {
+<<<<<<< HEAD
 	return selinux_ip_postroute(skb, out, PF_INET6);
+=======
+	return selinux_ip_postroute(skb, out->ifindex, PF_INET6);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 #endif	/* IPV6 */
 
@@ -6148,7 +6377,11 @@ static int selinux_setprocattr(struct task_struct *p,
 		return error;
 
 	/* Obtain a SID for the context, if one was specified. */
+<<<<<<< HEAD
 	if (size && str[0] && str[0] != '\n') {
+=======
+	if (size && str[1] && str[1] != '\n') {
+>>>>>>> 671a46baf1b... some performance improvements
 		if (str[size-1] == '\n') {
 			str[size-1] = 0;
 			size--;
@@ -6223,11 +6456,19 @@ static int selinux_setprocattr(struct task_struct *p,
 		/* Check for ptracing, and update the task SID if ok.
 		   Otherwise, leave SID unchanged and fail. */
 		ptsid = 0;
+<<<<<<< HEAD
 		rcu_read_lock();
 		tracer = ptrace_parent(p);
 		if (tracer)
 			ptsid = task_sid(tracer);
 		rcu_read_unlock();
+=======
+		task_lock(p);
+		tracer = ptrace_parent(p);
+		if (tracer)
+			ptsid = task_sid(tracer);
+		task_unlock(p);
+>>>>>>> 671a46baf1b... some performance improvements
 
 		if (tracer) {
 			error = avc_has_perm(ptsid, sid, SECCLASS_PROCESS,
@@ -6605,9 +6846,14 @@ static struct security_operations selinux_ops = {
 static __init int selinux_init(void)
 {
 	if (!security_module_enable(&selinux_ops)) {
+<<<<<<< HEAD
 #if defined(SELINUX_ALWAYS_ENFORCE) || \
 	defined(SELINUX_ALWAYS_PERMISSIVE)
 		selinux_enabled = 1;	
+=======
+#ifdef CONFIG_ALWAYS_ENFORCE
+		selinux_enabled = 1;
+>>>>>>> 671a46baf1b... some performance improvements
 #else
 		selinux_enabled = 0;
 #endif
@@ -6633,6 +6879,7 @@ static __init int selinux_init(void)
 
 	if (register_security(&selinux_ops))
 		panic("SELinux: Unable to register with kernel.\n");
+<<<<<<< HEAD
 
 	if (avc_add_callback(selinux_netcache_avc_callback, AVC_CALLBACK_RESET))
 		panic("SELinux: Unable to register AVC netcache callback\n");
@@ -6641,6 +6888,10 @@ static __init int selinux_init(void)
 	selinux_enforcing = 1;
 #elif defined(SELINUX_ALWAYS_PERMISSIVE)
 	selinux_enforcing = 0;
+=======
+#ifdef CONFIG_ALWAYS_ENFORCE
+	selinux_enforcing = 1;
+>>>>>>> 671a46baf1b... some performance improvements
 #endif
 	if (selinux_enforcing)
 		printk(KERN_DEBUG "SELinux:  Starting in enforcing mode\n");
@@ -6718,8 +6969,12 @@ static struct nf_hook_ops selinux_ipv6_ops[] = {
 static int __init selinux_nf_ip_init(void)
 {
 	int err = 0;
+<<<<<<< HEAD
 #if defined(SELINUX_ALWAYS_ENFORCE) || \
 	defined(SELINUX_ALWAYS_PERMISSIVE)
+=======
+#ifdef CONFIG_ALWAYS_ENFORCE
+>>>>>>> 671a46baf1b... some performance improvements
 	selinux_enabled = 1;
 #endif
 	if (!selinux_enabled)

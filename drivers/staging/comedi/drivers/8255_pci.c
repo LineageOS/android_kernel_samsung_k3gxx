@@ -59,7 +59,10 @@ Configuration Options: not applicable, uses PCI auto config
 #include "../comedidev.h"
 
 #include "8255.h"
+<<<<<<< HEAD
 #include "mite.h"
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 enum pci_8255_boardid {
 	BOARD_ADLINK_PCI7224,
@@ -67,8 +70,12 @@ enum pci_8255_boardid {
 	BOARD_ADLINK_PCI7296,
 	BOARD_CB_PCIDIO24,
 	BOARD_CB_PCIDIO24H,
+<<<<<<< HEAD
 	BOARD_CB_PCIDIO48H_OLD,
 	BOARD_CB_PCIDIO48H_NEW,
+=======
+	BOARD_CB_PCIDIO48H,
+>>>>>>> 671a46baf1b... some performance improvements
 	BOARD_CB_PCIDIO96H,
 	BOARD_NI_PCIDIO96,
 	BOARD_NI_PCIDIO96B,
@@ -83,7 +90,10 @@ struct pci_8255_boardinfo {
 	const char *name;
 	int dio_badr;
 	int n_8255;
+<<<<<<< HEAD
 	unsigned int has_mite:1;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 static const struct pci_8255_boardinfo pci_8255_boards[] = {
@@ -112,16 +122,23 @@ static const struct pci_8255_boardinfo pci_8255_boards[] = {
 		.dio_badr	= 2,
 		.n_8255		= 1,
 	},
+<<<<<<< HEAD
 	[BOARD_CB_PCIDIO48H_OLD] = {
+=======
+	[BOARD_CB_PCIDIO48H] = {
+>>>>>>> 671a46baf1b... some performance improvements
 		.name		= "cb_pci-dio48h",
 		.dio_badr	= 1,
 		.n_8255		= 2,
 	},
+<<<<<<< HEAD
 	[BOARD_CB_PCIDIO48H_NEW] = {
 		.name		= "cb_pci-dio48h",
 		.dio_badr	= 2,
 		.n_8255		= 2,
 	},
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	[BOARD_CB_PCIDIO96H] = {
 		.name		= "cb_pci-dio96h",
 		.dio_badr	= 2,
@@ -131,43 +148,64 @@ static const struct pci_8255_boardinfo pci_8255_boards[] = {
 		.name		= "ni_pci-dio-96",
 		.dio_badr	= 1,
 		.n_8255		= 4,
+<<<<<<< HEAD
 		.has_mite	= 1,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	},
 	[BOARD_NI_PCIDIO96B] = {
 		.name		= "ni_pci-dio-96b",
 		.dio_badr	= 1,
 		.n_8255		= 4,
+<<<<<<< HEAD
 		.has_mite	= 1,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	},
 	[BOARD_NI_PXI6508] = {
 		.name		= "ni_pxi-6508",
 		.dio_badr	= 1,
 		.n_8255		= 4,
+<<<<<<< HEAD
 		.has_mite	= 1,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	},
 	[BOARD_NI_PCI6503] = {
 		.name		= "ni_pci-6503",
 		.dio_badr	= 1,
 		.n_8255		= 1,
+<<<<<<< HEAD
 		.has_mite	= 1,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	},
 	[BOARD_NI_PCI6503B] = {
 		.name		= "ni_pci-6503b",
 		.dio_badr	= 1,
 		.n_8255		= 1,
+<<<<<<< HEAD
 		.has_mite	= 1,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	},
 	[BOARD_NI_PCI6503X] = {
 		.name		= "ni_pci-6503x",
 		.dio_badr	= 1,
 		.n_8255		= 1,
+<<<<<<< HEAD
 		.has_mite	= 1,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	},
 	[BOARD_NI_PXI_6503] = {
 		.name		= "ni_pxi-6503",
 		.dio_badr	= 1,
 		.n_8255		= 1,
+<<<<<<< HEAD
 		.has_mite	= 1,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	},
 };
 
@@ -175,6 +213,7 @@ struct pci_8255_private {
 	void __iomem *mmio_base;
 };
 
+<<<<<<< HEAD
 static int pci_8255_mite_init(struct pci_dev *pcidev)
 {
 	void __iomem *mite_base;
@@ -194,6 +233,8 @@ static int pci_8255_mite_init(struct pci_dev *pcidev)
 	return 0;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static int pci_8255_mmio(int dir, int port, int data, unsigned long iobase)
 {
 	void __iomem *mmio_base = (void __iomem *)iobase;
@@ -233,12 +274,15 @@ static int pci_8255_auto_attach(struct comedi_device *dev,
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	if (board->has_mite) {
 		ret = pci_8255_mite_init(pcidev);
 		if (ret)
 			return ret;
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	is_mmio = (pci_resource_flags(pcidev, board->dio_badr) &
 		   IORESOURCE_MEM) != 0;
 	if (is_mmio) {
@@ -310,10 +354,14 @@ static DEFINE_PCI_DEVICE_TABLE(pci_8255_pci_table) = {
 	{ PCI_VDEVICE(ADLINK, 0x7296), BOARD_ADLINK_PCI7296 },
 	{ PCI_VDEVICE(CB, 0x0028), BOARD_CB_PCIDIO24 },
 	{ PCI_VDEVICE(CB, 0x0014), BOARD_CB_PCIDIO24H },
+<<<<<<< HEAD
 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_CB, 0x000b, 0x0000, 0x0000),
 	  .driver_data = BOARD_CB_PCIDIO48H_OLD },
 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_CB, 0x000b, PCI_VENDOR_ID_CB, 0x000b),
 	  .driver_data = BOARD_CB_PCIDIO48H_NEW },
+=======
+	{ PCI_VDEVICE(CB, 0x000b), BOARD_CB_PCIDIO48H },
+>>>>>>> 671a46baf1b... some performance improvements
 	{ PCI_VDEVICE(CB, 0x0017), BOARD_CB_PCIDIO96H },
 	{ PCI_VDEVICE(NI, 0x0160), BOARD_NI_PCIDIO96 },
 	{ PCI_VDEVICE(NI, 0x1630), BOARD_NI_PCIDIO96B },

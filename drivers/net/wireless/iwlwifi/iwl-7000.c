@@ -67,6 +67,7 @@
 #include "iwl-agn-hw.h"
 
 /* Highest firmware API version supported */
+<<<<<<< HEAD
 #define IWL7260_UCODE_API_MAX	7
 #define IWL3160_UCODE_API_MAX	7
 
@@ -77,6 +78,18 @@
 /* Lowest firmware API version supported */
 #define IWL7260_UCODE_API_MIN	7
 #define IWL3160_UCODE_API_MIN	7
+=======
+#define IWL7260_UCODE_API_MAX	6
+#define IWL3160_UCODE_API_MAX	6
+
+/* Oldest version we won't warn about */
+#define IWL7260_UCODE_API_OK	6
+#define IWL3160_UCODE_API_OK	6
+
+/* Lowest firmware API version supported */
+#define IWL7260_UCODE_API_MIN	6
+#define IWL3160_UCODE_API_MIN	6
+>>>>>>> 671a46baf1b... some performance improvements
 
 /* NVM versions */
 #define IWL7260_NVM_VERSION		0x0a1d
@@ -125,12 +138,17 @@ static const struct iwl_ht_params iwl7000_ht_params = {
 
 
 const struct iwl_cfg iwl7260_2ac_cfg = {
+<<<<<<< HEAD
 	.name = "Intel(R) Dual Band Wireless AC 7260",
+=======
+	.name = "Intel(R) Dual Band Wireless AC7260",
+>>>>>>> 671a46baf1b... some performance improvements
 	.fw_name_pre = IWL7260_FW_PRE,
 	IWL_DEVICE_7000,
 	.ht_params = &iwl7000_ht_params,
 	.nvm_ver = IWL7260_NVM_VERSION,
 	.nvm_calib_ver = IWL7260_TX_POWER_VERSION,
+<<<<<<< HEAD
 	.host_interrupt_operation_mode = true,
 };
 
@@ -176,12 +194,21 @@ const struct iwl_cfg iwl3160_2n_cfg = {
 
 const struct iwl_cfg iwl3160_n_cfg = {
 	.name = "Intel(R) Wireless N 3160",
+=======
+};
+
+const struct iwl_cfg iwl3160_ac_cfg = {
+	.name = "Intel(R) Dual Band Wireless AC3160",
+>>>>>>> 671a46baf1b... some performance improvements
 	.fw_name_pre = IWL3160_FW_PRE,
 	IWL_DEVICE_7000,
 	.ht_params = &iwl7000_ht_params,
 	.nvm_ver = IWL3160_NVM_VERSION,
 	.nvm_calib_ver = IWL3160_TX_POWER_VERSION,
+<<<<<<< HEAD
 	.host_interrupt_operation_mode = true,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 MODULE_FIRMWARE(IWL7260_MODULE_FIRMWARE(IWL7260_UCODE_API_OK));

@@ -767,6 +767,12 @@ static void neigh_periodic_work(struct work_struct *work)
 	nht = rcu_dereference_protected(tbl->nht,
 					lockdep_is_held(&tbl->lock));
 
+<<<<<<< HEAD
+=======
+	if (atomic_read(&tbl->entries) < tbl->gc_thresh1)
+		goto out;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	 *	periodically recompute ReachableTime from random function
 	 */
@@ -779,9 +785,12 @@ static void neigh_periodic_work(struct work_struct *work)
 				neigh_rand_reach_time(p->base_reachable_time);
 	}
 
+<<<<<<< HEAD
 	if (atomic_read(&tbl->entries) < tbl->gc_thresh1)
 		goto out;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	for (i = 0 ; i < (1 << nht->hash_shift); i++) {
 		np = &nht->hash_buckets[i];
 
@@ -875,8 +884,12 @@ static void neigh_probe(struct neighbour *neigh)
 	if (skb)
 		skb = skb_copy(skb, GFP_ATOMIC);
 	write_unlock(&neigh->lock);
+<<<<<<< HEAD
 	if (neigh->ops->solicit)
 		neigh->ops->solicit(neigh, skb);
+=======
+	neigh->ops->solicit(neigh, skb);
+>>>>>>> 671a46baf1b... some performance improvements
 	atomic_inc(&neigh->probes);
 	kfree_skb(skb);
 }
@@ -1278,7 +1291,11 @@ int neigh_compat_output(struct neighbour *neigh, struct sk_buff *skb)
 
 	if (dev_hard_header(skb, dev, ntohs(skb->protocol), NULL, NULL,
 			    skb->len) < 0 &&
+<<<<<<< HEAD
 	    dev_rebuild_header(skb))
+=======
+	    dev->header_ops->rebuild(skb))
+>>>>>>> 671a46baf1b... some performance improvements
 		return 0;
 
 	return dev_queue_xmit(skb);
@@ -1449,6 +1466,7 @@ struct neigh_parms *neigh_parms_alloc(struct net_device *dev,
 		atomic_set(&p->refcnt, 1);
 		p->reachable_time =
 				neigh_rand_reach_time(p->base_reachable_time);
+<<<<<<< HEAD
 		dev_hold(dev);
 		p->dev = dev;
 		write_pnet(&p->net, hold_net(net));
@@ -1457,10 +1475,21 @@ struct neigh_parms *neigh_parms_alloc(struct net_device *dev,
 		if (ops->ndo_neigh_setup && ops->ndo_neigh_setup(dev, p)) {
 			release_net(net);
 			dev_put(dev);
+=======
+
+		if (ops->ndo_neigh_setup && ops->ndo_neigh_setup(dev, p)) {
+>>>>>>> 671a46baf1b... some performance improvements
 			kfree(p);
 			return NULL;
 		}
 
+<<<<<<< HEAD
+=======
+		dev_hold(dev);
+		p->dev = dev;
+		write_pnet(&p->net, hold_net(net));
+		p->sysctl_table = NULL;
+>>>>>>> 671a46baf1b... some performance improvements
 		write_lock_bh(&tbl->lock);
 		p->next		= tbl->parms.next;
 		tbl->parms.next = p;

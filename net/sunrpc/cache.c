@@ -930,7 +930,11 @@ static unsigned int cache_poll(struct file *filp, poll_table *wait,
 	poll_wait(filp, &queue_wait, wait);
 
 	/* alway allow write */
+<<<<<<< HEAD
 	mask = POLLOUT | POLLWRNORM;
+=======
+	mask = POLL_OUT | POLLWRNORM;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (!rp)
 		return mask;
@@ -1221,7 +1225,11 @@ int qword_get(char **bpp, char *dest, int bufsize)
 	if (bp[0] == '\\' && bp[1] == 'x') {
 		/* HEX STRING */
 		bp += 2;
+<<<<<<< HEAD
 		while (len < bufsize - 1) {
+=======
+		while (len < bufsize) {
+>>>>>>> 671a46baf1b... some performance improvements
 			int h, l;
 
 			h = hex_to_bin(bp[0]);

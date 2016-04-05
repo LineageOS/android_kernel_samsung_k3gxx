@@ -11,7 +11,10 @@ struct iscsit_transport {
 	int (*iscsit_setup_np)(struct iscsi_np *, struct __kernel_sockaddr_storage *);
 	int (*iscsit_accept_np)(struct iscsi_np *, struct iscsi_conn *);
 	void (*iscsit_free_np)(struct iscsi_np *);
+<<<<<<< HEAD
 	void (*iscsit_wait_conn)(struct iscsi_conn *);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	void (*iscsit_free_conn)(struct iscsi_conn *);
 	struct iscsi_cmd *(*iscsit_alloc_cmd)(struct iscsi_conn *, gfp_t);
 	int (*iscsit_get_login_rx)(struct iscsi_conn *, struct iscsi_login *);

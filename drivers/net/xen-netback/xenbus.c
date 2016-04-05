@@ -24,6 +24,7 @@
 struct backend_info {
 	struct xenbus_device *dev;
 	struct xenvif *vif;
+<<<<<<< HEAD
 
 	/* This is the state that will be reflected in xenstore when any
 	 * active hotplug script completes.
@@ -35,29 +36,46 @@ struct backend_info {
 	u8 have_hotplug_status_watch:1;
 
 	const char *hotplug_script;
+=======
+	enum xenbus_state frontend_state;
+	struct xenbus_watch hotplug_status_watch;
+	u8 have_hotplug_status_watch:1;
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 static int connect_rings(struct backend_info *);
 static void connect(struct backend_info *);
 static void backend_create_xenvif(struct backend_info *be);
 static void unregister_hotplug_status_watch(struct backend_info *be);
+<<<<<<< HEAD
 static void set_backend_state(struct backend_info *be,
 			      enum xenbus_state state);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 static int netback_remove(struct xenbus_device *dev)
 {
 	struct backend_info *be = dev_get_drvdata(&dev->dev);
 
+<<<<<<< HEAD
 	set_backend_state(be, XenbusStateClosed);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	unregister_hotplug_status_watch(be);
 	if (be->vif) {
 		kobject_uevent(&dev->dev.kobj, KOBJ_OFFLINE);
 		xenbus_rm(XBT_NIL, dev->nodename, "hotplug-status");
+<<<<<<< HEAD
 		xenvif_free(be->vif);
 		be->vif = NULL;
 	}
 	kfree(be->hotplug_script);
+=======
+		xenvif_disconnect(be->vif);
+		be->vif = NULL;
+	}
+>>>>>>> 671a46baf1b... some performance improvements
 	kfree(be);
 	dev_set_drvdata(&dev->dev, NULL);
 	return 0;
@@ -75,7 +93,10 @@ static int netback_probe(struct xenbus_device *dev,
 	struct xenbus_transaction xbt;
 	int err;
 	int sg;
+<<<<<<< HEAD
 	const char *script;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	struct backend_info *be = kzalloc(sizeof(struct backend_info),
 					  GFP_KERNEL);
 	if (!be) {
@@ -136,6 +157,7 @@ static int netback_probe(struct xenbus_device *dev,
 		goto fail;
 	}
 
+<<<<<<< HEAD
 	script = xenbus_read(XBT_NIL, dev->nodename, "script", NULL);
 	if (IS_ERR(script)) {
 		err = PTR_ERR(script);
@@ -145,12 +167,17 @@ static int netback_probe(struct xenbus_device *dev,
 
 	be->hotplug_script = script;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	err = xenbus_switch_state(dev, XenbusStateInitWait);
 	if (err)
 		goto fail;
 
+<<<<<<< HEAD
 	be->state = XenbusStateInitWait;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* This kicks hotplug scripts, so do it immediately. */
 	backend_create_xenvif(be);
 
@@ -175,6 +202,7 @@ static int netback_uevent(struct xenbus_device *xdev,
 			  struct kobj_uevent_env *env)
 {
 	struct backend_info *be = dev_get_drvdata(&xdev->dev);
+<<<<<<< HEAD
 
 	if (!be)
 		return 0;
@@ -183,6 +211,24 @@ static int netback_uevent(struct xenbus_device *xdev,
 		return -ENOMEM;
 
 	if (!be->vif)
+=======
+	char *val;
+
+	val = xenbus_read(XBT_NIL, xdev->nodename, "script", NULL);
+	if (IS_ERR(val)) {
+		int err = PTR_ERR(val);
+		xenbus_dev_fatal(xdev, err, "reading script");
+		return err;
+	} else {
+		if (add_uevent_var(env, "script=%s", val)) {
+			kfree(val);
+			return -ENOMEM;
+		}
+		kfree(val);
+	}
+
+	if (!be || !be->vif)
+>>>>>>> 671a46baf1b... some performance improvements
 		return 0;
 
 	return add_uevent_var(env, "vif=%s", be->vif->dev->name);
@@ -215,6 +261,7 @@ static void backend_create_xenvif(struct backend_info *be)
 	kobject_uevent(&dev->dev.kobj, KOBJ_ONLINE);
 }
 
+<<<<<<< HEAD
 static void backend_disconnect(struct backend_info *be)
 {
 	if (be->vif)
@@ -322,6 +369,17 @@ static void set_backend_state(struct backend_info *be,
 		default:
 			BUG();
 		}
+=======
+
+static void disconnect_backend(struct xenbus_device *dev)
+{
+	struct backend_info *be = dev_get_drvdata(&dev->dev);
+
+	if (be->vif) {
+		xenbus_rm(XBT_NIL, dev->nodename, "hotplug-status");
+		xenvif_disconnect(be->vif);
+		be->vif = NULL;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 }
 
@@ -333,19 +391,32 @@ static void frontend_changed(struct xenbus_device *dev,
 {
 	struct backend_info *be = dev_get_drvdata(&dev->dev);
 
+<<<<<<< HEAD
 	pr_debug("%s -> %s\n", dev->otherend, xenbus_strstate(frontend_state));
+=======
+	pr_debug("frontend state %s", xenbus_strstate(frontend_state));
+>>>>>>> 671a46baf1b... some performance improvements
 
 	be->frontend_state = frontend_state;
 
 	switch (frontend_state) {
 	case XenbusStateInitialising:
+<<<<<<< HEAD
 		set_backend_state(be, XenbusStateInitWait);
+=======
+		if (dev->state == XenbusStateClosed) {
+			printk(KERN_INFO "%s: %s: prepare for reconnect\n",
+			       __func__, dev->nodename);
+			xenbus_switch_state(dev, XenbusStateInitWait);
+		}
+>>>>>>> 671a46baf1b... some performance improvements
 		break;
 
 	case XenbusStateInitialised:
 		break;
 
 	case XenbusStateConnected:
+<<<<<<< HEAD
 		set_backend_state(be, XenbusStateConnected);
 		break;
 
@@ -355,11 +426,32 @@ static void frontend_changed(struct xenbus_device *dev,
 
 	case XenbusStateClosed:
 		set_backend_state(be, XenbusStateClosed);
+=======
+		if (dev->state == XenbusStateConnected)
+			break;
+		backend_create_xenvif(be);
+		if (be->vif)
+			connect(be);
+		break;
+
+	case XenbusStateClosing:
+		if (be->vif)
+			kobject_uevent(&dev->dev.kobj, KOBJ_OFFLINE);
+		disconnect_backend(dev);
+		xenbus_switch_state(dev, XenbusStateClosing);
+		break;
+
+	case XenbusStateClosed:
+		xenbus_switch_state(dev, XenbusStateClosed);
+>>>>>>> 671a46baf1b... some performance improvements
 		if (xenbus_dev_is_online(dev))
 			break;
 		/* fall through if not online */
 	case XenbusStateUnknown:
+<<<<<<< HEAD
 		set_backend_state(be, XenbusStateClosed);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		device_unregister(&dev->dev);
 		break;
 
@@ -452,9 +544,13 @@ static void hotplug_status_changed(struct xenbus_watch *watch,
 	if (IS_ERR(str))
 		return;
 	if (len == sizeof("connected")-1 && !memcmp(str, "connected", len)) {
+<<<<<<< HEAD
 		/* Complete any pending state change */
 		xenbus_switch_state(be->dev, be->state);
 
+=======
+		xenbus_switch_state(be->dev, XenbusStateConnected);
+>>>>>>> 671a46baf1b... some performance improvements
 		/* Not interested in this watch anymore. */
 		unregister_hotplug_status_watch(be);
 	}
@@ -484,8 +580,17 @@ static void connect(struct backend_info *be)
 	err = xenbus_watch_pathfmt(dev, &be->hotplug_status_watch,
 				   hotplug_status_changed,
 				   "%s/%s", dev->nodename, "hotplug-status");
+<<<<<<< HEAD
 	if (!err)
 		be->have_hotplug_status_watch = 1;
+=======
+	if (err) {
+		/* Switch now, since we can't do a watch. */
+		xenbus_switch_state(dev, XenbusStateConnected);
+	} else {
+		be->have_hotplug_status_watch = 1;
+	}
+>>>>>>> 671a46baf1b... some performance improvements
 
 	netif_wake_queue(be->vif->dev);
 }

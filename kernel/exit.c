@@ -571,6 +571,12 @@ static void reparent_leader(struct task_struct *father, struct task_struct *p,
 				struct list_head *dead)
 {
 	list_move_tail(&p->sibling, &p->real_parent->children);
+<<<<<<< HEAD
+=======
+
+	if (p->exit_state == EXIT_DEAD)
+		return;
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	 * If this is a threaded reparent there is no need to
 	 * notify anyone anything has happened.
@@ -578,6 +584,7 @@ static void reparent_leader(struct task_struct *father, struct task_struct *p,
 	if (same_thread_group(p->real_parent, father))
 		return;
 
+<<<<<<< HEAD
 	/*
 	 * We don't want people slaying init.
 	 *
@@ -591,6 +598,11 @@ static void reparent_leader(struct task_struct *father, struct task_struct *p,
 	if (p->exit_state == EXIT_DEAD)
 		return;
 
+=======
+	/* We don't want people slaying init.  */
+	p->exit_signal = SIGCHLD;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	/* If it has exited notify the new parent about this child's death. */
 	if (!p->ptrace &&
 	    p->exit_state == EXIT_ZOMBIE && thread_group_empty(p)) {
@@ -761,11 +773,14 @@ void do_exit(long code)
 	}
 
 	exit_signals(tsk);  /* sets PF_EXITING */
+<<<<<<< HEAD
 
 	if (tsk->flags & PF_SU) {
 		su_exit();
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	 * tsk->flags are checked in the futex code to protect against
 	 * an exiting task cleaning up the robust pi futexes.
@@ -807,8 +822,11 @@ void do_exit(long code)
 	exit_shm(tsk);
 	exit_files(tsk);
 	exit_fs(tsk);
+<<<<<<< HEAD
 	if (group_dead)
 		disassociate_ctty(1);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	exit_task_namespaces(tsk);
 	exit_task_work(tsk);
 	check_stack_usage();
@@ -824,9 +842,19 @@ void do_exit(long code)
 
 	cgroup_exit(tsk, 1);
 
+<<<<<<< HEAD
 	module_put(task_thread_info(tsk)->exec_domain->module);
 
 	proc_exit_connector(tsk);
+=======
+	if (group_dead)
+		disassociate_ctty(1);
+
+	module_put(task_thread_info(tsk)->exec_domain->module);
+
+	proc_exit_connector(tsk);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	 * FIXME: do that only when needed, using sched_exit tracepoint
 	 */

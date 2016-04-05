@@ -20,8 +20,13 @@ nouveau_mc(void *obj)
 	return (void *)nv_device(obj)->subdev[NVDEV_SUBDEV_MC];
 }
 
+<<<<<<< HEAD
 #define nouveau_mc_create(p,e,o,m,d)                                           \
 	nouveau_mc_create_((p), (e), (o), (m), sizeof(**d), (void **)d)
+=======
+#define nouveau_mc_create(p,e,o,d)                                             \
+	nouveau_mc_create_((p), (e), (o), sizeof(**d), (void **)d)
+>>>>>>> 671a46baf1b... some performance improvements
 #define nouveau_mc_destroy(p) ({                                               \
 	struct nouveau_mc *pmc = (p); _nouveau_mc_dtor(nv_object(pmc));        \
 })
@@ -33,8 +38,12 @@ nouveau_mc(void *obj)
 })
 
 int  nouveau_mc_create_(struct nouveau_object *, struct nouveau_object *,
+<<<<<<< HEAD
 			struct nouveau_oclass *, const struct nouveau_mc_intr *,
 			int, void **);
+=======
+			struct nouveau_oclass *, int, void **);
+>>>>>>> 671a46baf1b... some performance improvements
 void _nouveau_mc_dtor(struct nouveau_object *);
 int  _nouveau_mc_init(struct nouveau_object *);
 int  _nouveau_mc_fini(struct nouveau_object *, bool);

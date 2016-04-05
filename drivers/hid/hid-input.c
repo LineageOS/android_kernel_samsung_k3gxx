@@ -317,9 +317,12 @@ static const struct hid_device_id hid_battery_quirks[] = {
 			       USB_DEVICE_ID_APPLE_ALU_WIRELESS_2011_ANSI),
 	  HID_BATTERY_QUIRK_PERCENT | HID_BATTERY_QUIRK_FEATURE },
 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE,
+<<<<<<< HEAD
 			       USB_DEVICE_ID_APPLE_ALU_WIRELESS_2011_ISO),
 	  HID_BATTERY_QUIRK_PERCENT | HID_BATTERY_QUIRK_FEATURE },
 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		USB_DEVICE_ID_APPLE_ALU_WIRELESS_ANSI),
 	  HID_BATTERY_QUIRK_PERCENT | HID_BATTERY_QUIRK_FEATURE },
 	{}
@@ -343,7 +346,11 @@ static int hidinput_get_battery_property(struct power_supply *psy,
 {
 	struct hid_device *dev = container_of(psy, struct hid_device, battery);
 	int ret = 0;
+<<<<<<< HEAD
 	__u8 *buf;
+=======
+	__u8 buf[2] = {};
+>>>>>>> 671a46baf1b... some performance improvements
 
 	switch (prop) {
 	case POWER_SUPPLY_PROP_PRESENT:
@@ -352,6 +359,7 @@ static int hidinput_get_battery_property(struct power_supply *psy,
 		break;
 
 	case POWER_SUPPLY_PROP_CAPACITY:
+<<<<<<< HEAD
 
 		buf = kmalloc(2 * sizeof(__u8), GFP_KERNEL);
 		if (!buf) {
@@ -360,12 +368,19 @@ static int hidinput_get_battery_property(struct power_supply *psy,
 		}
 		ret = dev->hid_get_raw_report(dev, dev->battery_report_id,
 					      buf, 2,
+=======
+		ret = dev->hid_get_raw_report(dev, dev->battery_report_id,
+					      buf, sizeof(buf),
+>>>>>>> 671a46baf1b... some performance improvements
 					      dev->battery_report_type);
 
 		if (ret != 2) {
 			if (ret >= 0)
 				ret = -EINVAL;
+<<<<<<< HEAD
 			kfree(buf);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			break;
 		}
 
@@ -374,7 +389,10 @@ static int hidinput_get_battery_property(struct power_supply *psy,
 		    buf[1] <= dev->battery_max)
 			val->intval = (100 * (buf[1] - dev->battery_min)) /
 				(dev->battery_max - dev->battery_min);
+<<<<<<< HEAD
 		kfree(buf);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		break;
 
 	case POWER_SUPPLY_PROP_MODEL_NAME:
@@ -488,10 +506,13 @@ static void hidinput_configure_usage(struct hid_input *hidinput, struct hid_fiel
 	if (field->flags & HID_MAIN_ITEM_CONSTANT)
 		goto ignore;
 
+<<<<<<< HEAD
 	/* Ignore if report count is out of bounds. */
 	if (field->report_count < 1)
 		goto ignore;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* only LED usages are supported in output fields */
 	if (field->report_type == HID_OUTPUT_REPORT &&
 			(usage->hid & HID_USAGE_PAGE) != HID_UP_LED) {
@@ -1066,6 +1087,7 @@ void hidinput_hid_event(struct hid_device *hid, struct hid_field *field, struct 
 		return;
 	}
 
+<<<<<<< HEAD
 	/*
 	 * Ignore reports for absolute data if the data didn't change. This is
 	 * not only an optimization but also fixes 'dead' key reports. Some
@@ -1085,6 +1107,10 @@ void hidinput_hid_event(struct hid_device *hid, struct hid_field *field, struct 
 
 	/* report the usage code as scancode if the key status has changed */
 	if (usage->type == EV_KEY && (!!test_bit(usage->code, input->key)) != value)
+=======
+	/* report the usage code as scancode if the key status has changed */
+	if (usage->type == EV_KEY && !!test_bit(usage->code, input->key) != value)
+>>>>>>> 671a46baf1b... some performance improvements
 		input_event(input, EV_MSC, MSC_SCAN, usage->hid);
 
 	input_event(input, usage->type, usage->code, value);
@@ -1187,11 +1213,15 @@ static void report_features(struct hid_device *hid)
 
 	rep_enum = &hid->report_enum[HID_FEATURE_REPORT];
 	list_for_each_entry(rep, &rep_enum->report_list, list)
+<<<<<<< HEAD
 		for (i = 0; i < rep->maxfield; i++) {
 			/* Ignore if report count is out of bounds. */
 			if (rep->field[i]->report_count < 1)
 				continue;
 
+=======
+		for (i = 0; i < rep->maxfield; i++)
+>>>>>>> 671a46baf1b... some performance improvements
 			for (j = 0; j < rep->field[i]->maxusage; j++) {
 				/* Verify if Battery Strength feature is available */
 				hidinput_setup_battery(hid, HID_FEATURE_REPORT, rep->field[i]);
@@ -1200,7 +1230,10 @@ static void report_features(struct hid_device *hid)
 					drv->feature_mapping(hid, rep->field[i],
 							     rep->field[i]->usage + j);
 			}
+<<<<<<< HEAD
 		}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static struct hid_input *hidinput_allocate(struct hid_device *hid)

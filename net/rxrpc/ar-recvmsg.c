@@ -87,7 +87,11 @@ int rxrpc_recvmsg(struct kiocb *iocb, struct socket *sock,
 		if (!skb) {
 			/* nothing remains on the queue */
 			if (copied &&
+<<<<<<< HEAD
 			    (flags & MSG_PEEK || timeo == 0))
+=======
+			    (msg->msg_flags & MSG_PEEK || timeo == 0))
+>>>>>>> 671a46baf1b... some performance improvements
 				goto out;
 
 			/* wait for a message to turn up */
@@ -143,6 +147,7 @@ int rxrpc_recvmsg(struct kiocb *iocb, struct socket *sock,
 
 		/* copy the peer address and timestamp */
 		if (!continue_call) {
+<<<<<<< HEAD
 			if (msg->msg_name) {
 				size_t len =
 					sizeof(call->conn->trans->peer->srx);
@@ -150,6 +155,12 @@ int rxrpc_recvmsg(struct kiocb *iocb, struct socket *sock,
 				       &call->conn->trans->peer->srx, len);
 				msg->msg_namelen = len;
 			}
+=======
+			if (msg->msg_name && msg->msg_namelen > 0)
+				memcpy(msg->msg_name,
+				       &call->conn->trans->peer->srx,
+				       sizeof(call->conn->trans->peer->srx));
+>>>>>>> 671a46baf1b... some performance improvements
 			sock_recv_ts_and_drops(msg, &rx->sk, skb);
 		}
 

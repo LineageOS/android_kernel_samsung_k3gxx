@@ -57,7 +57,10 @@
 #include <linux/skbuff.h>
 #include <linux/can.h>
 #include <linux/can/core.h>
+<<<<<<< HEAD
 #include <linux/can/skb.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #include <linux/ratelimit.h>
 #include <net/net_namespace.h>
 #include <net/sock.h>
@@ -262,9 +265,12 @@ int can_send(struct sk_buff *skb, int loop)
 		goto inval_skb;
 	}
 
+<<<<<<< HEAD
 	skb->ip_summed = CHECKSUM_UNNECESSARY;
 
 	skb_reset_mac_header(skb);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	skb_reset_network_header(skb);
 	skb_reset_transport_header(skb);
 
@@ -294,7 +300,11 @@ int can_send(struct sk_buff *skb, int loop)
 				return -ENOMEM;
 			}
 
+<<<<<<< HEAD
 			can_skb_set_owner(newskb, skb->sk);
+=======
+			newskb->sk = skb->sk;
+>>>>>>> 671a46baf1b... some performance improvements
 			newskb->ip_summed = CHECKSUM_UNNECESSARY;
 			newskb->pkt_type = PACKET_BROADCAST;
 		}
@@ -425,7 +435,10 @@ static struct hlist_head *find_rcv_list(canid_t *can_id, canid_t *mask,
  * @func: callback function on filter match
  * @data: returned parameter for callback function
  * @ident: string for calling module indentification
+<<<<<<< HEAD
  * @sk: socket pointer (might be NULL)
+=======
+>>>>>>> 671a46baf1b... some performance improvements
  *
  * Description:
  *  Invokes the callback function with the received sk_buff and the given
@@ -449,7 +462,11 @@ static struct hlist_head *find_rcv_list(canid_t *can_id, canid_t *mask,
  */
 int can_rx_register(struct net_device *dev, canid_t can_id, canid_t mask,
 		    void (*func)(struct sk_buff *, void *), void *data,
+<<<<<<< HEAD
 		    char *ident, struct sock *sk)
+=======
+		    char *ident)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	struct receiver *r;
 	struct hlist_head *rl;
@@ -477,7 +494,10 @@ int can_rx_register(struct net_device *dev, canid_t can_id, canid_t mask,
 		r->func    = func;
 		r->data    = data;
 		r->ident   = ident;
+<<<<<<< HEAD
 		r->sk      = sk;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 		hlist_add_head_rcu(&r->list, rl);
 		d->entries++;
@@ -502,11 +522,16 @@ EXPORT_SYMBOL(can_rx_register);
 static void can_rx_delete_receiver(struct rcu_head *rp)
 {
 	struct receiver *r = container_of(rp, struct receiver, rcu);
+<<<<<<< HEAD
 	struct sock *sk = r->sk;
 
 	kmem_cache_free(rcv_cache, r);
 	if (sk)
 		sock_put(sk);
+=======
+
+	kmem_cache_free(rcv_cache, r);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /**
@@ -581,11 +606,16 @@ void can_rx_unregister(struct net_device *dev, canid_t can_id, canid_t mask,
 	spin_unlock(&can_rcvlists_lock);
 
 	/* schedule the receiver item for deletion */
+<<<<<<< HEAD
 	if (r) {
 		if (r->sk)
 			sock_hold(r->sk);
 		call_rcu(&r->rcu, can_rx_delete_receiver);
 	}
+=======
+	if (r)
+		call_rcu(&r->rcu, can_rx_delete_receiver);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 EXPORT_SYMBOL(can_rx_unregister);
 

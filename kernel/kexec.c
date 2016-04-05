@@ -47,9 +47,12 @@ u32 vmcoreinfo_note[VMCOREINFO_NOTE_SIZE/4];
 size_t vmcoreinfo_size;
 size_t vmcoreinfo_max_size = sizeof(vmcoreinfo_data);
 
+<<<<<<< HEAD
 /* Flag to indicate we are going to kexec a new kernel */
 bool kexec_in_progress = false;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* Location of the reserved area for the crash kernel */
 struct resource crashk_res = {
 	.name  = "Crash kernel",
@@ -1681,7 +1684,10 @@ int kernel_kexec(void)
 	} else
 #endif
 	{
+<<<<<<< HEAD
 		kexec_in_progress = true;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		kernel_restart_prepare(NULL);
 		printk(KERN_EMERG "Starting new kernel\n");
 		machine_shutdown();

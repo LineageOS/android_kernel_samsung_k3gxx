@@ -656,7 +656,12 @@ static int perf_session_queue_event(struct perf_session *s, union perf_event *ev
 		return -ETIME;
 
 	if (timestamp < s->ordered_samples.last_flush) {
+<<<<<<< HEAD
 		s->stats.nr_unordered_events++;
+=======
+		printf("Warning: Timestamp below last timeslice flush\n");
+		return -EINVAL;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	if (!list_empty(sc)) {
@@ -810,7 +815,10 @@ static struct machine *
 					       union perf_event *event)
 {
 	const u8 cpumode = event->header.misc & PERF_RECORD_MISC_CPUMODE_MASK;
+<<<<<<< HEAD
 	struct machine *machine;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (perf_guest &&
 	    ((cpumode == PERF_RECORD_MISC_GUEST_KERNEL) ||
@@ -822,11 +830,15 @@ static struct machine *
 		else
 			pid = event->ip.pid;
 
+<<<<<<< HEAD
 		machine = perf_session__find_machine(session, pid);
 		if (!machine)
 			machine = perf_session__findnew_machine(session,
 						DEFAULT_GUEST_KERNEL_ID);
 		return machine;
+=======
+		return perf_session__findnew_machine(session, pid);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	return &session->machines.host;
@@ -1056,8 +1068,11 @@ static void perf_session__warn_about_errors(const struct perf_session *session,
 			    "Do you have a KVM guest running and not using 'perf kvm'?\n",
 			    session->stats.nr_unprocessable_samples);
 	}
+<<<<<<< HEAD
 	if (session->stats.nr_unordered_events != 0)
 		ui__warning("%u out of order events recorded.\n", session->stats.nr_unordered_events);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 #define session_done()	(*(volatile int *)(&session_done))

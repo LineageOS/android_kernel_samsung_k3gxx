@@ -216,8 +216,11 @@ xfs_growfs_data_private(
 	 */
 	nfree = 0;
 	for (agno = nagcount - 1; agno >= oagcount; agno--, new -= agsize) {
+<<<<<<< HEAD
 		__be32	*agfl_bno;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		/*
 		 * AG freespace header block
 		 */
@@ -277,10 +280,15 @@ xfs_growfs_data_private(
 			agfl->agfl_seqno = cpu_to_be32(agno);
 			uuid_copy(&agfl->agfl_uuid, &mp->m_sb.sb_uuid);
 		}
+<<<<<<< HEAD
 
 		agfl_bno = XFS_BUF_TO_AGFL_BNO(mp, bp);
 		for (bucket = 0; bucket < XFS_AGFL_SIZE(mp); bucket++)
 			agfl_bno[bucket] = cpu_to_be32(NULLAGBLOCK);
+=======
+		for (bucket = 0; bucket < XFS_AGFL_SIZE(mp); bucket++)
+			agfl->agfl_bno[bucket] = cpu_to_be32(NULLAGBLOCK);
+>>>>>>> 671a46baf1b... some performance improvements
 
 		error = xfs_bwrite(bp);
 		xfs_buf_relse(bp);

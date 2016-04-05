@@ -282,7 +282,11 @@ static void perl_process_tracepoint(union perf_event *perf_event __maybe_unused,
 
 	event = find_cache_event(evsel);
 	if (!event)
+<<<<<<< HEAD
 		die("ug! no event found for type %" PRIu64, (u64)evsel->attr.config);
+=======
+		die("ug! no event found for type %" PRIu64, evsel->attr.config);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	pid = raw_field_value(event, "common_pid", data);
 

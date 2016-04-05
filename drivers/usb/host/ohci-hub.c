@@ -90,6 +90,7 @@ __acquires(ohci->lock)
 	dl_done_list (ohci);
 	finish_unlinks (ohci, ohci_frame_no(ohci));
 
+<<<<<<< HEAD
 	/*
 	 * Some controllers don't handle "global" suspend properly if
 	 * there are unsuspended ports.  For these controllers, put all
@@ -108,6 +109,8 @@ __acquires(ohci->lock)
 		}
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* maybe resume can wake root hub */
 	if (ohci_to_hcd(ohci)->self.root_hub->do_remote_wakeup || autostop) {
 		ohci->hc_control |= OHCI_CTRL_RWE;

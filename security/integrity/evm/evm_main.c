@@ -20,7 +20,10 @@
 #include <linux/integrity.h>
 #include <linux/evm.h>
 #include <crypto/hash.h>
+<<<<<<< HEAD
 #include <crypto/algapi.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #include "evm.h"
 
 int evm_initialized;
@@ -129,7 +132,11 @@ static enum integrity_status evm_verify_hmac(struct dentry *dentry,
 				   xattr_value_len, calc.digest);
 		if (rc)
 			break;
+<<<<<<< HEAD
 		rc = crypto_memneq(xattr_data->digest, calc.digest,
+=======
+		rc = memcmp(xattr_data->digest, calc.digest,
+>>>>>>> 671a46baf1b... some performance improvements
 			    sizeof(calc.digest));
 		if (rc)
 			rc = -EINVAL;
@@ -276,15 +283,21 @@ static int evm_protect_xattr(struct dentry *dentry, const char *xattr_name,
  * @xattr_value: pointer to the new extended attribute value
  * @xattr_value_len: pointer to the new extended attribute value length
  *
+<<<<<<< HEAD
  * Before allowing the 'security.evm' protected xattr to be updated,
  * verify the existing value is valid.  As only the kernel should have
  * access to the EVM encrypted key needed to calculate the HMAC, prevent
  * userspace from writing HMAC value.  Writing 'security.evm' requires
  * requires CAP_SYS_ADMIN privileges.
+=======
+ * Updating 'security.evm' requires CAP_SYS_ADMIN privileges and that
+ * the current value is valid.
+>>>>>>> 671a46baf1b... some performance improvements
  */
 int evm_inode_setxattr(struct dentry *dentry, const char *xattr_name,
 		       const void *xattr_value, size_t xattr_value_len)
 {
+<<<<<<< HEAD
 	const struct evm_ima_xattr_data *xattr_data = xattr_value;
 
 	if (strcmp(xattr_name, XATTR_NAME_EVM) == 0) {
@@ -293,6 +306,8 @@ int evm_inode_setxattr(struct dentry *dentry, const char *xattr_name,
 		if (xattr_data->type != EVM_IMA_XATTR_DIGSIG)
 			return -EPERM;
 	}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return evm_protect_xattr(dentry, xattr_name, xattr_value,
 				 xattr_value_len);
 }

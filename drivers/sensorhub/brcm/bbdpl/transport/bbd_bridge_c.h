@@ -28,9 +28,15 @@
 #include <linux/string.h>
 
 /* #include "rpc_engine.h" */
+<<<<<<< HEAD
 // #include "transport/bbd_packet_layer_c.h"
 #include "transport_layer_c.h"
 #include "utils/stream_codec_c.h"
+=======
+// #include "../transport/bbd_packet_layer_c.h"
+#include "transport_layer_c.h"
+#include "../utils/stream_codec_c.h"
+>>>>>>> 671a46baf1b... some performance improvements
 
 #define MAX_RPC_HEADER_SIZE   4                           /* 2 for SeqId, 2 for Size */
 #define MAX_TRANSACTION_SIZE  MAX_OUTGOING_PACKET_SIZE    /* maximum size per transaction */

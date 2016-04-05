@@ -523,7 +523,11 @@ static int wm8904_get_deemph(struct snd_kcontrol *kcontrol,
 	struct snd_soc_codec *codec = snd_kcontrol_chip(kcontrol);
 	struct wm8904_priv *wm8904 = snd_soc_codec_get_drvdata(codec);
 
+<<<<<<< HEAD
 	ucontrol->value.integer.value[0] = wm8904->deemph;
+=======
+	ucontrol->value.enumerated.item[0] = wm8904->deemph;
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 }
 
@@ -532,7 +536,11 @@ static int wm8904_put_deemph(struct snd_kcontrol *kcontrol,
 {
 	struct snd_soc_codec *codec = snd_kcontrol_chip(kcontrol);
 	struct wm8904_priv *wm8904 = snd_soc_codec_get_drvdata(codec);
+<<<<<<< HEAD
 	int deemph = ucontrol->value.integer.value[0];
+=======
+	int deemph = ucontrol->value.enumerated.item[0];
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (deemph > 1)
 		return -EINVAL;
@@ -1449,7 +1457,11 @@ static int wm8904_set_fmt(struct snd_soc_dai *dai, unsigned int fmt)
 
 	switch (fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
 	case SND_SOC_DAIFMT_DSP_B:
+<<<<<<< HEAD
 		aif1 |= 0x3 | WM8904_AIF_LRCLK_INV;
+=======
+		aif1 |= WM8904_AIF_LRCLK_INV;
+>>>>>>> 671a46baf1b... some performance improvements
 	case SND_SOC_DAIFMT_DSP_A:
 		aif1 |= 0x3;
 		break;

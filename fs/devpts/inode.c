@@ -498,7 +498,10 @@ static void devpts_kill_sb(struct super_block *sb)
 {
 	struct pts_fs_info *fsi = DEVPTS_SB(sb);
 
+<<<<<<< HEAD
 	ida_destroy(&fsi->allocated_ptys);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	kfree(fsi);
 	kill_litter_super(sb);
 }
@@ -564,6 +567,7 @@ void devpts_kill_index(struct inode *ptmx_inode, int idx)
 	mutex_unlock(&allocated_ptys_lock);
 }
 
+<<<<<<< HEAD
 /*
  * pty code needs to hold extra references in case of last /dev/tty close
  */
@@ -584,6 +588,8 @@ void devpts_del_ref(struct inode *ptmx_inode)
 	deactivate_super(sb);
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /**
  * devpts_pty_new -- create a new inode in /dev/pts/
  * @ptmx_inode: inode of the master

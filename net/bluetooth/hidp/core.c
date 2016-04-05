@@ -231,22 +231,34 @@ static void hidp_input_report(struct hidp_session *session, struct sk_buff *skb)
 
 static int hidp_send_report(struct hidp_session *session, struct hid_report *report)
 {
+<<<<<<< HEAD
 	unsigned char hdr;
 	u8 *buf;
 	int rsize, ret;
 
 	buf = hid_alloc_report_buf(report, GFP_ATOMIC);
 	if (!buf)
+=======
+	unsigned char buf[32], hdr;
+	int rsize;
+
+	rsize = ((report->size - 1) >> 3) + 1 + (report->id > 0);
+	if (rsize > sizeof(buf))
+>>>>>>> 671a46baf1b... some performance improvements
 		return -EIO;
 
 	hid_output_report(report, buf);
 	hdr = HIDP_TRANS_DATA | HIDP_DATA_RTYPE_OUPUT;
 
+<<<<<<< HEAD
 	rsize = ((report->size - 1) >> 3) + 1 + (report->id > 0);
 	ret = hidp_send_intr_message(session, hdr, buf, rsize);
 
 	kfree(buf);
 	return ret;
+=======
+	return hidp_send_intr_message(session, hdr, buf, rsize);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int hidp_get_raw_report(struct hid_device *hid,
@@ -396,6 +408,7 @@ static void hidp_idle_timeout(unsigned long arg)
 {
 	struct hidp_session *session = (struct hidp_session *) arg;
 
+<<<<<<< HEAD
 	/* The HIDP user-space API only contains calls to add and remove
 	 * devices. There is no way to forward events of any kind. Therefore,
 	 * we have to forcefully disconnect a device on idle-timeouts. This is
@@ -410,6 +423,8 @@ static void hidp_idle_timeout(unsigned long arg)
 	wake_up_interruptible(sk_sleep(session->intr_sock->sk));
 	wake_up_interruptible(sk_sleep(session->ctrl_sock->sk));
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	hidp_session_terminate(session);
 }
 

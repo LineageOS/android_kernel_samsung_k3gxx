@@ -116,8 +116,13 @@ static const struct {
 	.header = {
 		.magic = cpu_to_le32(FUNCTIONFS_DESCRIPTORS_MAGIC),
 		.length = cpu_to_le32(sizeof descriptors),
+<<<<<<< HEAD
 		.fs_count = cpu_to_le32(3),
 		.hs_count = cpu_to_le32(3),
+=======
+		.fs_count = 3,
+		.hs_count = 3,
+>>>>>>> 671a46baf1b... some performance improvements
 	},
 	.fs_descs = {
 		.intf = {

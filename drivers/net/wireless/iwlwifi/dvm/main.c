@@ -252,6 +252,7 @@ static void iwl_bg_bt_runtime_config(struct work_struct *work)
 	struct iwl_priv *priv =
 		container_of(work, struct iwl_priv, bt_runtime_config);
 
+<<<<<<< HEAD
 	mutex_lock(&priv->mutex);
 	if (test_bit(STATUS_EXIT_PENDING, &priv->status))
 		goto out;
@@ -263,6 +264,15 @@ static void iwl_bg_bt_runtime_config(struct work_struct *work)
 	iwlagn_send_advance_bt_config(priv);
 out:
 	mutex_unlock(&priv->mutex);
+=======
+	if (test_bit(STATUS_EXIT_PENDING, &priv->status))
+		return;
+
+	/* dont send host command if rf-kill is on */
+	if (!iwl_is_ready_rf(priv))
+		return;
+	iwlagn_send_advance_bt_config(priv);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void iwl_bg_bt_full_concurrency(struct work_struct *work)

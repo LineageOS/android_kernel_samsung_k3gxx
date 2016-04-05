@@ -144,7 +144,10 @@ static struct usb_device_id rtl871x_usb_id_tbl[] = {
 	{USB_DEVICE(0x0DF6, 0x0058)},
 	{USB_DEVICE(0x0DF6, 0x0049)},
 	{USB_DEVICE(0x0DF6, 0x004C)},
+<<<<<<< HEAD
 	{USB_DEVICE(0x0DF6, 0x006C)},
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	{USB_DEVICE(0x0DF6, 0x0064)},
 	/* Skyworth */
 	{USB_DEVICE(0x14b2, 0x3300)},
@@ -359,10 +362,13 @@ static u8 key_2char2num(u8 hch, u8 lch)
 	return (hex_to_bin(hch) << 4) | hex_to_bin(lch);
 }
 
+<<<<<<< HEAD
 static const struct device_type wlan_type = {
 	.name = "wlan",
 };
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /*
  * drv_init() - a device potentially for us
  *
@@ -398,7 +404,10 @@ static int r871xu_drv_init(struct usb_interface *pusb_intf,
 	padapter->pusb_intf = pusb_intf;
 	usb_set_intfdata(pusb_intf, pnetdev);
 	SET_NETDEV_DEV(pnetdev, &pusb_intf->dev);
+<<<<<<< HEAD
 	pnetdev->dev.type = &wlan_type;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* step 2. */
 	padapter->dvobj_init = &r8712_usb_dvobj_init;
 	padapter->dvobj_deinit = &r8712_usb_dvobj_deinit;

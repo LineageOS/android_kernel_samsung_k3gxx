@@ -313,6 +313,7 @@ out:
 	return err;
 }
 
+<<<<<<< HEAD
 static phys_addr_t kvm_kaddr_to_phys(void *kaddr)
 {
 	if (!is_vmalloc_addr(kaddr)) {
@@ -324,6 +325,8 @@ static phys_addr_t kvm_kaddr_to_phys(void *kaddr)
 	}
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /**
  * create_hyp_mappings - duplicate a kernel virtual address range in Hyp mode
  * @from:	The virtual kernel start address of the range
@@ -335,6 +338,7 @@ static phys_addr_t kvm_kaddr_to_phys(void *kaddr)
  */
 int create_hyp_mappings(void *from, void *to)
 {
+<<<<<<< HEAD
 	phys_addr_t phys_addr;
 	unsigned long virt_addr;
 	unsigned long start = KERN_TO_HYP((unsigned long)from);
@@ -356,6 +360,18 @@ int create_hyp_mappings(void *from, void *to)
 	}
 
 	return 0;
+=======
+	unsigned long phys_addr = virt_to_phys(from);
+	unsigned long start = KERN_TO_HYP((unsigned long)from);
+	unsigned long end = KERN_TO_HYP((unsigned long)to);
+
+	/* Check for a valid kernel memory mapping */
+	if (!virt_addr_valid(from) || !virt_addr_valid(to - 1))
+		return -EINVAL;
+
+	return __create_hyp_mappings(hyp_pgd, start, end,
+				     __phys_to_pfn(phys_addr), PAGE_HYP);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /**

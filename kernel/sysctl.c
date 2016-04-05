@@ -147,11 +147,14 @@ static int min_percpu_pagelist_fract = 8;
 static int ngroups_max = NGROUPS_MAX;
 static const int cap_last_cap = CAP_LAST_CAP;
 
+<<<<<<< HEAD
 /*this is needed for proc_doulongvec_minmax of sysctl_hung_task_timeout_secs */
 #ifdef CONFIG_DETECT_HUNG_TASK
 static unsigned long hung_task_timeout_max = (LONG_MAX/HZ);
 #endif
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #ifdef CONFIG_INOTIFY_USER
 #include <linux/inotify.h>
 #endif
@@ -974,7 +977,10 @@ static struct ctl_table kern_table[] = {
 		.maxlen		= sizeof(unsigned long),
 		.mode		= 0644,
 		.proc_handler	= proc_dohung_task_timeout_secs,
+<<<<<<< HEAD
 		.extra2		= &hung_task_timeout_max,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	},
 	{
 		.procname	= "hung_task_warnings",
@@ -1052,6 +1058,7 @@ static struct ctl_table kern_table[] = {
 		.maxlen		= sizeof(sysctl_perf_event_sample_rate),
 		.mode		= 0644,
 		.proc_handler	= perf_proc_update_handler,
+<<<<<<< HEAD
 		.extra1		= &one,
 	},
 	{
@@ -1062,6 +1069,8 @@ static struct ctl_table kern_table[] = {
 		.proc_handler	= perf_cpu_time_max_percent_handler,
 		.extra1		= &zero,
 		.extra2		= &one_hundred,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	},
 #endif
 #ifdef CONFIG_KMEMCHECK
@@ -1481,6 +1490,7 @@ static struct ctl_table vm_table[] = {
 		.mode		= 0644,
 		.proc_handler	= proc_doulongvec_minmax,
 	},
+<<<<<<< HEAD
 #ifdef CONFIG_HAVE_ARCH_MMAP_RND_BITS
 	{
 		.procname	= "mmap_rnd_bits",
@@ -1503,6 +1513,8 @@ static struct ctl_table vm_table[] = {
 		.extra2		= (void *)&mmap_rnd_compat_bits_max,
 	},
 #endif
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	{ }
 };
 
@@ -2268,7 +2280,10 @@ static int __do_proc_doulongvec_minmax(void *data, struct ctl_table *table, int 
 				break;
 			if (neg)
 				continue;
+<<<<<<< HEAD
 			val = convmul * val / convdiv;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			if ((min && val < *min) || (max && val > *max))
 				continue;
 			*i = val;

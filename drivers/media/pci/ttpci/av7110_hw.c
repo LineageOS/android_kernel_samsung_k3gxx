@@ -22,7 +22,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  * Or, point your browser to http://www.gnu.org/copyleft/gpl.html
  *
+<<<<<<< HEAD
  * the project's page is at http://www.linuxtv.org/
+=======
+ * the project's page is at http://www.linuxtv.org/ 
+>>>>>>> 671a46baf1b... some performance improvements
  */
 
 /* for debugging ARM communication: */
@@ -40,6 +44,7 @@
 
 #define _NOHANDSHAKE
 
+<<<<<<< HEAD
 /*
  * Max transfer size done by av7110_fw_cmd()
  *
@@ -48,6 +53,8 @@
  */
 #define MAX_XFER_SIZE  8
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /****************************************************************************
  * DEBI functions
  ****************************************************************************/
@@ -496,11 +503,16 @@ static int av7110_send_fw_cmd(struct av7110 *av7110, u16* buf, int length)
 int av7110_fw_cmd(struct av7110 *av7110, int type, int com, int num, ...)
 {
 	va_list args;
+<<<<<<< HEAD
 	u16 buf[MAX_XFER_SIZE];
+=======
+	u16 buf[num + 2];
+>>>>>>> 671a46baf1b... some performance improvements
 	int i, ret;
 
 //	dprintk(4, "%p\n", av7110);
 
+<<<<<<< HEAD
 	if (2 + num > sizeof(buf)) {
 		printk(KERN_WARNING
 		       "%s: %s len=%d is too big!\n",
@@ -508,6 +520,8 @@ int av7110_fw_cmd(struct av7110 *av7110, int type, int com, int num, ...)
 		return -EINVAL;
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	buf[0] = ((type << 8) | com);
 	buf[1] = num;
 

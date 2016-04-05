@@ -963,6 +963,55 @@ int of_property_read_string(struct device_node *np, const char *propname,
 EXPORT_SYMBOL_GPL(of_property_read_string);
 
 /**
+<<<<<<< HEAD
+=======
+ * of_property_read_string_index - Find and read a string from a multiple
+ * strings property.
+ * @np:		device node from which the property value is to be read.
+ * @propname:	name of the property to be searched.
+ * @index:	index of the string in the list of strings
+ * @out_string:	pointer to null terminated return string, modified only if
+ *		return value is 0.
+ *
+ * Search for a property in a device tree node and retrieve a null
+ * terminated string value (pointer to data, not a copy) in the list of strings
+ * contained in that property.
+ * Returns 0 on success, -EINVAL if the property does not exist, -ENODATA if
+ * property does not have a value, and -EILSEQ if the string is not
+ * null-terminated within the length of the property data.
+ *
+ * The out_string pointer is modified only if a valid string can be decoded.
+ */
+int of_property_read_string_index(struct device_node *np, const char *propname,
+				  int index, const char **output)
+{
+	struct property *prop = of_find_property(np, propname, NULL);
+	int i = 0;
+	size_t l = 0, total = 0;
+	const char *p;
+
+	if (!prop)
+		return -EINVAL;
+	if (!prop->value)
+		return -ENODATA;
+	if (strnlen(prop->value, prop->length) >= prop->length)
+		return -EILSEQ;
+
+	p = prop->value;
+
+	for (i = 0; total < prop->length; total += l, p += l) {
+		l = strlen(p) + 1;
+		if (i++ == index) {
+			*output = p;
+			return 0;
+		}
+	}
+	return -ENODATA;
+}
+EXPORT_SYMBOL_GPL(of_property_read_string_index);
+
+/**
+>>>>>>> 671a46baf1b... some performance improvements
  * of_property_match_string() - Find string in a list and return index
  * @np: pointer to node containing string list property
  * @propname: string list property name
@@ -988,7 +1037,11 @@ int of_property_match_string(struct device_node *np, const char *propname,
 	end = p + prop->length;
 
 	for (i = 0; p < end; i++, p += l) {
+<<<<<<< HEAD
 		l = strnlen(p, end - p) + 1;
+=======
+		l = strlen(p) + 1;
+>>>>>>> 671a46baf1b... some performance improvements
 		if (p + l > end)
 			return -EILSEQ;
 		pr_debug("comparing %s with %s\n", string, p);
@@ -1000,6 +1053,7 @@ int of_property_match_string(struct device_node *np, const char *propname,
 EXPORT_SYMBOL_GPL(of_property_match_string);
 
 /**
+<<<<<<< HEAD
  * of_property_read_string_util() - Utility helper for parsing string properties
  * @np:		device node from which the property value is to be read.
  * @propname:	name of the property to be searched.
@@ -1016,11 +1070,31 @@ int of_property_read_string_helper(struct device_node *np, const char *propname,
 	struct property *prop = of_find_property(np, propname, NULL);
 	int l = 0, i = 0;
 	const char *p, *end;
+=======
+ * of_property_count_strings - Find and return the number of strings from a
+ * multiple strings property.
+ * @np:		device node from which the property value is to be read.
+ * @propname:	name of the property to be searched.
+ *
+ * Search for a property in a device tree node and retrieve the number of null
+ * terminated string contain in it. Returns the number of strings on
+ * success, -EINVAL if the property does not exist, -ENODATA if property
+ * does not have a value, and -EILSEQ if the string is not null-terminated
+ * within the length of the property data.
+ */
+int of_property_count_strings(struct device_node *np, const char *propname)
+{
+	struct property *prop = of_find_property(np, propname, NULL);
+	int i = 0;
+	size_t l = 0, total = 0;
+	const char *p;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (!prop)
 		return -EINVAL;
 	if (!prop->value)
 		return -ENODATA;
+<<<<<<< HEAD
 	p = prop->value;
 	end = p + prop->length;
 
@@ -1035,6 +1109,19 @@ int of_property_read_string_helper(struct device_node *np, const char *propname,
 	return i <= 0 ? -ENODATA : i;
 }
 EXPORT_SYMBOL_GPL(of_property_read_string_helper);
+=======
+	if (strnlen(prop->value, prop->length) >= prop->length)
+		return -EILSEQ;
+
+	p = prop->value;
+
+	for (i = 0; total < prop->length; total += l, p += l, i++)
+		l = strlen(p) + 1;
+
+	return i;
+}
+EXPORT_SYMBOL_GPL(of_property_count_strings);
+>>>>>>> 671a46baf1b... some performance improvements
 
 /**
  * of_parse_phandle - Resolve a phandle property to a device_node pointer
@@ -1585,7 +1672,10 @@ void of_alias_scan(void * (*dt_alloc)(u64 size, u64 align))
 		ap = dt_alloc(sizeof(*ap) + len + 1, 4);
 		if (!ap)
 			continue;
+<<<<<<< HEAD
 		memset(ap, 0, sizeof(*ap) + len + 1);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		ap->alias = start;
 		of_alias_add(ap, np, id, start, len);
 	}

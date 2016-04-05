@@ -569,7 +569,11 @@ static int mode_select_handle_sense(struct scsi_device *sdev,
 			/*
 			 * Command Lock contention
 			 */
+<<<<<<< HEAD
 			err = SCSI_DH_IMM_RETRY;
+=======
+			err = SCSI_DH_RETRY;
+>>>>>>> 671a46baf1b... some performance improvements
 		break;
 	default:
 		break;
@@ -619,8 +623,11 @@ retry:
 		err = mode_select_handle_sense(sdev, h->sense);
 		if (err == SCSI_DH_RETRY && retry_cnt--)
 			goto retry;
+<<<<<<< HEAD
 		if (err == SCSI_DH_IMM_RETRY)
 			goto retry;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	if (err == SCSI_DH_OK) {
 		h->state = RDAC_STATE_ACTIVE;

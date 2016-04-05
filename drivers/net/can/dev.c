@@ -22,7 +22,10 @@
 #include <linux/slab.h>
 #include <linux/netdevice.h>
 #include <linux/if_arp.h>
+<<<<<<< HEAD
 #include <linux/workqueue.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #include <linux/can.h>
 #include <linux/can/dev.h>
 #include <linux/can/skb.h>
@@ -325,10 +328,26 @@ void can_put_echo_skb(struct sk_buff *skb, struct net_device *dev,
 	}
 
 	if (!priv->echo_skb[idx]) {
+<<<<<<< HEAD
 
 		skb = can_create_echo_skb(skb);
 		if (!skb)
 			return;
+=======
+		struct sock *srcsk = skb->sk;
+
+		if (atomic_read(&skb->users) != 1) {
+			struct sk_buff *old_skb = skb;
+
+			skb = skb_clone(old_skb, GFP_ATOMIC);
+			kfree_skb(old_skb);
+			if (!skb)
+				return;
+		} else
+			skb_orphan(skb);
+
+		skb->sk = srcsk;
+>>>>>>> 671a46baf1b... some performance improvements
 
 		/* make settings for echo to reduce code in irq context */
 		skb->protocol = htons(ETH_P_CAN);
@@ -386,7 +405,11 @@ void can_free_echo_skb(struct net_device *dev, unsigned int idx)
 	BUG_ON(idx >= priv->echo_skb_max);
 
 	if (priv->echo_skb[idx]) {
+<<<<<<< HEAD
 		dev_kfree_skb_any(priv->echo_skb[idx]);
+=======
+		kfree_skb(priv->echo_skb[idx]);
+>>>>>>> 671a46baf1b... some performance improvements
 		priv->echo_skb[idx] = NULL;
 	}
 }
@@ -395,8 +418,14 @@ EXPORT_SYMBOL_GPL(can_free_echo_skb);
 /*
  * CAN device restart for bus-off recovery
  */
+<<<<<<< HEAD
 static void can_restart(struct net_device *dev)
 {
+=======
+static void can_restart(unsigned long data)
+{
+	struct net_device *dev = (struct net_device *)data;
+>>>>>>> 671a46baf1b... some performance improvements
 	struct can_priv *priv = netdev_priv(dev);
 	struct net_device_stats *stats = &dev->stats;
 	struct sk_buff *skb;
@@ -436,6 +465,7 @@ restart:
 		netdev_err(dev, "Error %d during restart", err);
 }
 
+<<<<<<< HEAD
 static void can_restart_work(struct work_struct *work)
 {
 	struct delayed_work *dwork = to_delayed_work(work);
@@ -444,6 +474,8 @@ static void can_restart_work(struct work_struct *work)
 	can_restart(priv->dev);
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 int can_restart_now(struct net_device *dev)
 {
 	struct can_priv *priv = netdev_priv(dev);
@@ -457,8 +489,13 @@ int can_restart_now(struct net_device *dev)
 	if (priv->state != CAN_STATE_BUS_OFF)
 		return -EBUSY;
 
+<<<<<<< HEAD
 	cancel_delayed_work_sync(&priv->restart_work);
 	can_restart(dev);
+=======
+	/* Runs as soon as possible in the timer context */
+	mod_timer(&priv->restart_timer, jiffies);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return 0;
 }
@@ -480,8 +517,13 @@ void can_bus_off(struct net_device *dev)
 	priv->can_stats.bus_off++;
 
 	if (priv->restart_ms)
+<<<<<<< HEAD
 		schedule_delayed_work(&priv->restart_work,
 				      msecs_to_jiffies(priv->restart_ms));
+=======
+		mod_timer(&priv->restart_timer,
+			  jiffies + (priv->restart_ms * HZ) / 1000);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 EXPORT_SYMBOL_GPL(can_bus_off);
 
@@ -511,6 +553,7 @@ struct sk_buff *alloc_can_skb(struct net_device *dev, struct can_frame **cf)
 	skb->pkt_type = PACKET_BROADCAST;
 	skb->ip_summed = CHECKSUM_UNNECESSARY;
 
+<<<<<<< HEAD
 	skb_reset_mac_header(skb);
 	skb_reset_network_header(skb);
 	skb_reset_transport_header(skb);
@@ -519,6 +562,8 @@ struct sk_buff *alloc_can_skb(struct net_device *dev, struct can_frame **cf)
 	skb_reset_network_header(skb);
 	skb_reset_transport_header(skb);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	can_skb_reserve(skb);
 	can_skb_prv(skb)->ifindex = dev->ifindex;
 
@@ -564,7 +609,10 @@ struct net_device *alloc_candev(int sizeof_priv, unsigned int echo_skb_max)
 		return NULL;
 
 	priv = netdev_priv(dev);
+<<<<<<< HEAD
 	priv->dev = dev;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (echo_skb_max) {
 		priv->echo_skb_max = echo_skb_max;
@@ -574,7 +622,11 @@ struct net_device *alloc_candev(int sizeof_priv, unsigned int echo_skb_max)
 
 	priv->state = CAN_STATE_STOPPED;
 
+<<<<<<< HEAD
 	INIT_DELAYED_WORK(&priv->restart_work, can_restart_work);
+=======
+	init_timer(&priv->restart_timer);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return dev;
 }
@@ -608,6 +660,11 @@ int open_candev(struct net_device *dev)
 	if (!netif_carrier_ok(dev))
 		netif_carrier_on(dev);
 
+<<<<<<< HEAD
+=======
+	setup_timer(&priv->restart_timer, can_restart, (unsigned long)dev);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 }
 EXPORT_SYMBOL_GPL(open_candev);
@@ -622,7 +679,11 @@ void close_candev(struct net_device *dev)
 {
 	struct can_priv *priv = netdev_priv(dev);
 
+<<<<<<< HEAD
 	cancel_delayed_work_sync(&priv->restart_work);
+=======
+	del_timer_sync(&priv->restart_timer);
+>>>>>>> 671a46baf1b... some performance improvements
 	can_flush_echo_skb(dev);
 }
 EXPORT_SYMBOL_GPL(close_candev);
@@ -658,6 +719,7 @@ static int can_changelink(struct net_device *dev,
 		if (dev->flags & IFF_UP)
 			return -EBUSY;
 		cm = nla_data(data[IFLA_CAN_CTRLMODE]);
+<<<<<<< HEAD
 
 		/* check whether changed bits are allowed to be modified */
 		if (cm->mask & ~priv->ctrlmode_supported)
@@ -666,6 +728,12 @@ static int can_changelink(struct net_device *dev,
 		/* clear bits to be modified and copy the flag values */
 		priv->ctrlmode &= ~cm->mask;
 		priv->ctrlmode |= (cm->flags & cm->mask);
+=======
+		if (cm->flags & ~priv->ctrlmode_supported)
+			return -EOPNOTSUPP;
+		priv->ctrlmode &= ~cm->mask;
+		priv->ctrlmode |= cm->flags;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	if (data[IFLA_CAN_BITTIMING]) {
@@ -715,6 +783,7 @@ static size_t can_get_size(const struct net_device *dev)
 	size_t size;
 
 	size = nla_total_size(sizeof(u32));   /* IFLA_CAN_STATE */
+<<<<<<< HEAD
 	size += nla_total_size(sizeof(struct can_ctrlmode));  /* IFLA_CAN_CTRLMODE */
 	size += nla_total_size(sizeof(u32));  /* IFLA_CAN_RESTART_MS */
 	size += nla_total_size(sizeof(struct can_bittiming)); /* IFLA_CAN_BITTIMING */
@@ -723,6 +792,16 @@ static size_t can_get_size(const struct net_device *dev)
 		size += nla_total_size(sizeof(struct can_berr_counter));
 	if (priv->bittiming_const)	      /* IFLA_CAN_BITTIMING_CONST */
 		size += nla_total_size(sizeof(struct can_bittiming_const));
+=======
+	size += sizeof(struct can_ctrlmode);  /* IFLA_CAN_CTRLMODE */
+	size += nla_total_size(sizeof(u32));  /* IFLA_CAN_RESTART_MS */
+	size += sizeof(struct can_bittiming); /* IFLA_CAN_BITTIMING */
+	size += sizeof(struct can_clock);     /* IFLA_CAN_CLOCK */
+	if (priv->do_get_berr_counter)        /* IFLA_CAN_BERR_COUNTER */
+		size += sizeof(struct can_berr_counter);
+	if (priv->bittiming_const)	      /* IFLA_CAN_BITTIMING_CONST */
+		size += sizeof(struct can_bittiming_const);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return size;
 }
@@ -779,11 +858,14 @@ static int can_newlink(struct net *src_net, struct net_device *dev,
 	return -EOPNOTSUPP;
 }
 
+<<<<<<< HEAD
 static void can_dellink(struct net_device *dev, struct list_head *head)
 {
 	return;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static struct rtnl_link_ops can_link_ops __read_mostly = {
 	.kind		= "can",
 	.maxtype	= IFLA_CAN_MAX,
@@ -791,7 +873,10 @@ static struct rtnl_link_ops can_link_ops __read_mostly = {
 	.setup		= can_setup,
 	.newlink	= can_newlink,
 	.changelink	= can_changelink,
+<<<<<<< HEAD
 	.dellink	= can_dellink,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	.get_size	= can_get_size,
 	.fill_info	= can_fill_info,
 	.get_xstats_size = can_get_xstats_size,

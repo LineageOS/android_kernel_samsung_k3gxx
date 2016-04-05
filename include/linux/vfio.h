@@ -76,4 +76,21 @@ extern int vfio_register_iommu_driver(const struct vfio_iommu_driver_ops *ops);
 extern void vfio_unregister_iommu_driver(
 				const struct vfio_iommu_driver_ops *ops);
 
+<<<<<<< HEAD
+=======
+/**
+ * offsetofend(TYPE, MEMBER)
+ *
+ * @TYPE: The type of the structure
+ * @MEMBER: The member within the structure to get the end offset of
+ *
+ * Simple helper macro for dealing with variable sized structures passed
+ * from user space.  This allows us to easily determine if the provided
+ * structure is sized to include various fields.
+ */
+#define offsetofend(TYPE, MEMBER) ({				\
+	TYPE tmp;						\
+	offsetof(TYPE, MEMBER) + sizeof(tmp.MEMBER); })		\
+
+>>>>>>> 671a46baf1b... some performance improvements
 #endif /* VFIO_H */

@@ -31,7 +31,10 @@
 #include <linux/memcontrol.h>
 #include <linux/gfp.h>
 #include <linux/uio.h>
+<<<<<<< HEAD
 #include <linux/hugetlb.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 #include "internal.h"
 
@@ -95,6 +98,7 @@ static void put_compound_page(struct page *page)
 			 * still hot on arches that do not support
 			 * this_cpu_cmpxchg_double().
 			 */
+<<<<<<< HEAD
 			if (PageSlab(page_head) || PageHeadHuge(page_head)) {
 				if (likely(PageTail(page))) {
 					/*
@@ -120,6 +124,16 @@ static void put_compound_page(struct page *page)
 					 * reallocated as slab on
 					 * x86).
 					 */
+=======
+			if (PageSlab(page_head)) {
+				if (PageTail(page)) {
+					if (put_page_testzero(page_head))
+						VM_BUG_ON(1);
+
+					atomic_dec(&page->_mapcount);
+					goto skip_lock_tail;
+				} else
+>>>>>>> 671a46baf1b... some performance improvements
 					goto skip_lock;
 			}
 			/*
@@ -133,6 +147,7 @@ static void put_compound_page(struct page *page)
 				/* __split_huge_page_refcount run before us */
 				compound_unlock_irqrestore(page_head, flags);
 skip_lock:
+<<<<<<< HEAD
 				if (put_page_testzero(page_head)) {
 					/*
 					 * The head page may have been
@@ -154,6 +169,10 @@ skip_lock:
 					else
 						__put_single_page(page_head);
 				}
+=======
+				if (put_page_testzero(page_head))
+					__put_single_page(page_head);
+>>>>>>> 671a46baf1b... some performance improvements
 out_put_single:
 				if (put_page_testzero(page))
 					__put_single_page(page);
@@ -175,6 +194,10 @@ out_put_single:
 			VM_BUG_ON(atomic_read(&page->_count) != 0);
 			compound_unlock_irqrestore(page_head, flags);
 
+<<<<<<< HEAD
+=======
+skip_lock_tail:
+>>>>>>> 671a46baf1b... some performance improvements
 			if (put_page_testzero(page_head)) {
 				if (PageHead(page_head))
 					__put_compound_page(page_head);
@@ -220,6 +243,7 @@ bool __get_page_tail(struct page *page)
 	unsigned long flags;
 	bool got = false;
 	struct page *page_head = compound_head(page);
+<<<<<<< HEAD
 
 	if (likely(page != page_head && get_page_unless_zero(page_head))) {
 		/* Ref to put_compound_page() comment. */
@@ -243,6 +267,16 @@ bool __get_page_tail(struct page *page)
 				 * (only possible if reallocated as
 				 * slab on x86).
 				 */
+=======
+	if (likely(page != page_head && get_page_unless_zero(page_head))) {
+
+		/* Ref to put_compound_page() comment. */
+		if (PageSlab(page_head)) {
+			if (likely(PageTail(page))) {
+				__get_page_tail_foll(page, false);
+				return true;
+			} else {
+>>>>>>> 671a46baf1b... some performance improvements
 				put_page(page_head);
 				return false;
 			}

@@ -504,12 +504,18 @@ byte 5:
 * reg_10
 
    bit   7   6   5   4   3   2   1   0
+<<<<<<< HEAD
          0   0   0   0   R   F   T   A
 
          A: 1 = enable absolute tracking
          T: 1 = enable two finger mode auto correct
          F: 1 = disable ABS Position Filter
          R: 1 = enable real hardware resolution
+=======
+         0   0   0   0   0   0   0   A
+
+         A: 1 = enable absolute tracking
+>>>>>>> 671a46baf1b... some performance improvements
 
 6.2 Native absolute mode 6 byte packet format
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

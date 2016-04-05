@@ -937,6 +937,7 @@ int rtl92ce_hw_init(struct ieee80211_hw *hw)
 	bool is92c;
 	int err;
 	u8 tmp_u1b;
+<<<<<<< HEAD
 	unsigned long flags;
 
 	rtlpci->being_init_adapter = true;
@@ -951,12 +952,20 @@ int rtl92ce_hw_init(struct ieee80211_hw *hw)
 	local_save_flags(flags);
 	local_irq_enable();
 
+=======
+
+	rtlpci->being_init_adapter = true;
+>>>>>>> 671a46baf1b... some performance improvements
 	rtlpriv->intf_ops->disable_aspm(hw);
 	rtstatus = _rtl92ce_init_mac(hw);
 	if (!rtstatus) {
 		RT_TRACE(rtlpriv, COMP_ERR, DBG_EMERG, "Init MAC failed\n");
 		err = 1;
+<<<<<<< HEAD
 		goto exit;
+=======
+		return err;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	err = rtl92c_download_fw(hw);
@@ -964,7 +973,11 @@ int rtl92ce_hw_init(struct ieee80211_hw *hw)
 		RT_TRACE(rtlpriv, COMP_ERR, DBG_WARNING,
 			 "Failed to download FW. Init HW without FW now..\n");
 		err = 1;
+<<<<<<< HEAD
 		goto exit;
+=======
+		return err;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	rtlhal->last_hmeboxnum = 0;
@@ -1044,8 +1057,11 @@ int rtl92ce_hw_init(struct ieee80211_hw *hw)
 		RT_TRACE(rtlpriv, COMP_INIT, DBG_TRACE, "under 1.5V\n");
 	}
 	rtl92c_dm_init(hw);
+<<<<<<< HEAD
 exit:
 	local_irq_restore(flags);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	rtlpci->being_init_adapter = false;
 	return err;
 }

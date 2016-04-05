@@ -200,7 +200,10 @@ struct fw_device {
 	unsigned irmc:1;
 	unsigned bc_implemented:2;
 
+<<<<<<< HEAD
 	work_func_t workfn;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	struct delayed_work work;
 	struct fw_attribute_group attribute_group;
 };

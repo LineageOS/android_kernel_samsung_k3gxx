@@ -26,7 +26,10 @@
 #include <linux/math64.h>
 #include <linux/uaccess.h>
 #include <linux/ioport.h>
+<<<<<<< HEAD
 #include <linux/cred.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #include <net/addrconf.h>
 
 #include <asm/page.h>		/* for PAGE_SIZE */
@@ -1119,6 +1122,7 @@ char *pointer(const char *fmt, char *buf, char *end, void *ptr,
 				spec.field_width = default_width;
 			return string(buf, end, "pK-error", spec);
 		}
+<<<<<<< HEAD
 
 		switch (kptr_restrict) {
 		case 0:
@@ -1150,6 +1154,13 @@ char *pointer(const char *fmt, char *buf, char *end, void *ptr,
 		}
 		break;
 
+=======
+		if (!((kptr_restrict == 0) ||
+		      (kptr_restrict == 1 &&
+		       has_capability_noaudit(current, CAP_SYSLOG))))
+			ptr = NULL;
+		break;
+>>>>>>> 671a46baf1b... some performance improvements
 	case 'N':
 		switch (fmt[1]) {
 		case 'F':

@@ -18,7 +18,10 @@
 
 #include <linux/mmc/card.h>
 #include <linux/mmc/host.h>
+<<<<<<< HEAD
 #include <linux/sched/rt.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #include "queue.h"
 
 #include <asm/topology.h>
@@ -40,7 +43,11 @@ static int mmc_prep_request(struct request_queue *q, struct request *req)
 		return BLKPREP_KILL;
 	}
 
+<<<<<<< HEAD
 	if (mq && (mmc_card_removed(mq->card) || mmc_access_rpmb(mq)))
+=======
+	if (mq && mmc_card_removed(mq->card))
+>>>>>>> 671a46baf1b... some performance improvements
 		return BLKPREP_KILL;
 
 	req->cmd_flags |= REQ_DONTPREP;
@@ -99,11 +106,14 @@ static int mmc_queue_thread(void *d)
 	struct request_queue *q = mq->queue;
 	int rt, issue;
 
+<<<<<<< HEAD
         struct sched_param scheduler_params = {0};
         scheduler_params.sched_priority = 1;
 
         sched_setscheduler(current, SCHED_FIFO, &scheduler_params);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	current->flags |= PF_MEMALLOC;
 
 #if defined(CONFIG_SOC_EXYNOS5430) || defined(CONFIG_SOC_EXYNOS5433)

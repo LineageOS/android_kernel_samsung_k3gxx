@@ -31,7 +31,10 @@ enum can_mode {
  * CAN common private data
  */
 struct can_priv {
+<<<<<<< HEAD
 	struct net_device *dev;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	struct can_device_stats can_stats;
 
 	struct can_bittiming bittiming;
@@ -43,7 +46,11 @@ struct can_priv {
 	u32 ctrlmode_supported;
 
 	int restart_ms;
+<<<<<<< HEAD
 	struct delayed_work restart_work;
+=======
+	struct timer_list restart_timer;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	int (*do_set_bittiming)(struct net_device *dev);
 	int (*do_set_mode)(struct net_device *dev, enum can_mode mode);

@@ -180,6 +180,11 @@ static int bcm63xx_txrx_bufs(struct spi_device *spi, struct spi_transfer *first,
 			       transfer_list);
 	}
 
+<<<<<<< HEAD
+=======
+	len -= prepend_len;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	init_completion(&bs->done);
 
 	/* Fill in the Message control register */

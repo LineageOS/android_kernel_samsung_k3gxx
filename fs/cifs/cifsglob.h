@@ -74,6 +74,14 @@
 #define SERVER_NAME_LENGTH 40
 #define SERVER_NAME_LEN_WITH_NULL     (SERVER_NAME_LENGTH + 1)
 
+<<<<<<< HEAD
+=======
+/* used to define string lengths for reversing unicode strings */
+/*         (256+1)*2 = 514                                     */
+/*           (max path length + 1 for null) * 2 for unicode    */
+#define MAX_NAME 514
+
+>>>>>>> 671a46baf1b... some performance improvements
 /* SMB echo "timeout" -- FIXME: tunable? */
 #define SMB_ECHO_INTERVAL (60 * HZ)
 
@@ -365,6 +373,7 @@ struct smb_version_operations {
 	void (*new_lease_key)(struct cifs_fid *fid);
 	int (*calc_signature)(struct smb_rqst *rqst,
 				   struct TCP_Server_Info *server);
+<<<<<<< HEAD
 	ssize_t (*query_all_EAs)(const unsigned int, struct cifs_tcon *,
 			const unsigned char *, const unsigned char *, char *,
 			size_t, const struct nls_table *, int);
@@ -377,6 +386,8 @@ struct smb_version_operations {
 			int);
 	/* check if we need to issue closedir */
 	bool (*dir_needs_close)(struct cifsFileInfo *);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 struct smb_version_values {
@@ -576,8 +587,11 @@ struct TCP_Server_Info {
 #ifdef CONFIG_CIFS_SMB2
 	unsigned int	max_read;
 	unsigned int	max_write;
+<<<<<<< HEAD
 	struct delayed_work reconnect; /* reconnect workqueue job */
 	struct mutex reconnect_mutex; /* prevent simultaneous reconnects */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #endif /* CONFIG_CIFS_SMB2 */
 };
 
@@ -752,7 +766,10 @@ cap_unix(struct cifs_ses *ses)
 struct cifs_tcon {
 	struct list_head tcon_list;
 	int tc_count;
+<<<<<<< HEAD
 	struct list_head rlist; /* reconnect list */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	struct list_head openFileList;
 	struct cifs_ses *ses;	/* pointer to session associated with */
 	char treeName[MAX_TREE_SIZE + 1]; /* UNC name of resource in ASCII */
@@ -826,6 +843,10 @@ struct cifs_tcon {
 	bool need_reconnect:1; /* connection reset, tid now invalid */
 #ifdef CONFIG_CIFS_SMB2
 	bool print:1;		/* set if connection to printer share */
+<<<<<<< HEAD
+=======
+	bool bad_network_name:1; /* set if ret status STATUS_BAD_NETWORK_NAME */
+>>>>>>> 671a46baf1b... some performance improvements
 	__u32 capabilities;
 	__u32 share_flags;
 	__u32 maximal_access;

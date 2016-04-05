@@ -658,12 +658,19 @@ static int dma_push_rx(struct eg20t_port *priv, int size)
 		dev_warn(port->dev, "Rx overrun: dropping %u bytes\n",
 			 size - room);
 	if (!room)
+<<<<<<< HEAD
 		goto out;
+=======
+		return room;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	tty_insert_flip_string(tport, sg_virt(&priv->sg_rx), size);
 
 	port->icount.rx += room;
+<<<<<<< HEAD
 out:
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	tty_kref_put(tty);
 
 	return room;
@@ -1072,8 +1079,11 @@ static void pch_uart_err_ir(struct eg20t_port *priv, unsigned int lsr)
 	if (tty == NULL) {
 		for (i = 0; error_msg[i] != NULL; i++)
 			dev_err(&priv->pdev->dev, error_msg[i]);
+<<<<<<< HEAD
 	} else {
 		tty_kref_put(tty);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 }
 

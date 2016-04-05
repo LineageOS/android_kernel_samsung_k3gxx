@@ -183,7 +183,13 @@ static acpi_status pnpacpi_allocated_resource(struct acpi_resource *res,
 	struct resource r;
 	int i, flags;
 
+<<<<<<< HEAD
 	if (acpi_dev_resource_address_space(res, &r)
+=======
+	if (acpi_dev_resource_memory(res, &r)
+	    || acpi_dev_resource_io(res, &r)
+	    || acpi_dev_resource_address_space(res, &r)
+>>>>>>> 671a46baf1b... some performance improvements
 	    || acpi_dev_resource_ext_address_space(res, &r)) {
 		pnp_add_resource(dev, &r);
 		return AE_OK;
@@ -215,6 +221,7 @@ static acpi_status pnpacpi_allocated_resource(struct acpi_resource *res,
 	}
 
 	switch (res->type) {
+<<<<<<< HEAD
 	case ACPI_RESOURCE_TYPE_MEMORY24:
 	case ACPI_RESOURCE_TYPE_MEMORY32:
 	case ACPI_RESOURCE_TYPE_FIXED_MEMORY32:
@@ -226,6 +233,8 @@ static acpi_status pnpacpi_allocated_resource(struct acpi_resource *res,
 		if (acpi_dev_resource_io(res, &r))
 			pnp_add_resource(dev, &r);
 		break;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	case ACPI_RESOURCE_TYPE_DMA:
 		dma = &res->data.dma;
 		if (dma->channel_count > 0 && dma->channels[0] != (u8) -1)

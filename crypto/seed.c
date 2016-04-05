@@ -476,4 +476,7 @@ module_exit(seed_fini);
 MODULE_DESCRIPTION("SEED Cipher Algorithm");
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Hye-Shik Chang <perky@FreeBSD.org>, Kim Hyun <hkim@kisa.or.kr>");
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("seed");
+=======
+>>>>>>> 671a46baf1b... some performance improvements

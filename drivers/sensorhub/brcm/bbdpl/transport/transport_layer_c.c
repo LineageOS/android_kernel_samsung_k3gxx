@@ -22,11 +22,19 @@
  * tabstop = 8
  */
 
+<<<<<<< HEAD
 #include "utils/bbd_utils.h"
 #include "bbd_internal.h"
 #include "bbd_packet_layer_c.h"
 #include "utils/crc8bits_c.h"
 #include "utils/stream_codec_c.h"
+=======
+#include "../utils/bbd_utils.h"
+#include "../bbd_internal.h"
+#include "bbd_packet_layer_c.h"
+#include "../utils/crc8bits_c.h"
+#include "../utils/stream_codec_c.h"
+>>>>>>> 671a46baf1b... some performance improvements
 #include "bbd_bridge_c.h"
 
 /*

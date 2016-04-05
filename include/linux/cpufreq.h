@@ -107,7 +107,10 @@ struct cpufreq_policy {
 	unsigned int		policy; /* see above */
 	struct cpufreq_governor	*governor; /* see below */
 	void			*governor_data;
+<<<<<<< HEAD
 	bool			governor_enabled; /* governor start/stop flag */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	struct work_struct	update; /* if update_policy() needs to be
 					 * called, but you're in IRQ context */
@@ -226,7 +229,10 @@ void cpufreq_unregister_governor(struct cpufreq_governor *governor);
 
 #define CPUFREQ_RELATION_L 0  /* lowest frequency at or above target */
 #define CPUFREQ_RELATION_H 1  /* highest frequency below or at target */
+<<<<<<< HEAD
 #define CPUFREQ_RELATION_C 2  /* closest frequency to target */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 struct freq_attr;
 

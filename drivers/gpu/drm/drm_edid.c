@@ -68,8 +68,11 @@
 #define EDID_QUIRK_DETAILED_SYNC_PP		(1 << 6)
 /* Force reduced-blanking timings for detailed modes */
 #define EDID_QUIRK_FORCE_REDUCED_BLANKING	(1 << 7)
+<<<<<<< HEAD
 /* Force 8bpc */
 #define EDID_QUIRK_FORCE_8BPC			(1 << 8)
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 struct detailed_mode_closure {
 	struct drm_connector *connector;
@@ -127,12 +130,15 @@ static struct edid_quirk {
 
 	/* ViewSonic VA2026w */
 	{ "VSC", 5020, EDID_QUIRK_FORCE_REDUCED_BLANKING },
+<<<<<<< HEAD
 
 	/* Medion MD 30217 PG */
 	{ "MED", 0x7b8, EDID_QUIRK_PREFER_LARGE_75 },
 
 	/* Panel in Samsung NP700G7A-S01PL notebook reports 6bpc */
 	{ "SEC", 0xd033, EDID_QUIRK_FORCE_8BPC },
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 /*
@@ -2960,9 +2966,12 @@ int drm_add_edid_modes(struct drm_connector *connector, struct edid *edid)
 
 	drm_add_display_info(edid, &connector->display_info);
 
+<<<<<<< HEAD
 	if (quirks & EDID_QUIRK_FORCE_8BPC)
 		connector->display_info.bpc = 8;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return num_modes;
 }
 EXPORT_SYMBOL(drm_add_edid_modes);

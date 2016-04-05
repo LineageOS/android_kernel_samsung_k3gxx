@@ -56,6 +56,7 @@ ENTRY(cpu_v7_switch_mm)
 	mov	pc, lr
 ENDPROC(cpu_v7_switch_mm)
 
+<<<<<<< HEAD
 #ifdef __ARMEB__
 #define rl r3
 #define rh r2
@@ -64,6 +65,8 @@ ENDPROC(cpu_v7_switch_mm)
 #define rh r3
 #endif
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /*
  * cpu_v7_set_pte_ext(ptep, pte)
  *
@@ -73,6 +76,7 @@ ENDPROC(cpu_v7_switch_mm)
  */
 ENTRY(cpu_v7_set_pte_ext)
 #ifdef CONFIG_MMU
+<<<<<<< HEAD
 	tst	rl, #L_PTE_VALID
 	beq	1f
 	tst	rh, #1 << (57 - 32)		@ L_PTE_NONE
@@ -85,6 +89,15 @@ ENTRY(cpu_v7_set_pte_ext)
 	orrne	rl, #PTE_AP2
 	biceq	rl, #PTE_AP2
 
+=======
+	tst	r2, #L_PTE_VALID
+	beq	1f
+	tst	r3, #1 << (57 - 32)		@ L_PTE_NONE
+	bicne	r2, #L_PTE_VALID
+	bne	1f
+	tst	r3, #1 << (55 - 32)		@ L_PTE_DIRTY
+	orreq	r2, #L_PTE_RDONLY
+>>>>>>> 671a46baf1b... some performance improvements
 1:	strd	r2, r3, [r0]
 	ALT_SMP(W(nop))
 	ALT_UP (mcr	p15, 0, r0, c7, c10, 1)		@ flush_pte

@@ -1514,7 +1514,11 @@ int perf_evsel__open_strerror(struct perf_evsel *evsel,
 	switch (err) {
 	case EPERM:
 	case EACCES:
+<<<<<<< HEAD
 		return scnprintf(msg, size,
+=======
+		return scnprintf(msg, size, "%s",
+>>>>>>> 671a46baf1b... some performance improvements
 		 "You may not have permission to collect %sstats.\n"
 		 "Consider tweaking /proc/sys/kernel/perf_event_paranoid:\n"
 		 " -1 - Not paranoid at all\n"

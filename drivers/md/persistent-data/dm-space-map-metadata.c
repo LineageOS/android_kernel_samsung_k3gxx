@@ -384,6 +384,7 @@ static int sm_metadata_new_block(struct dm_space_map *sm, dm_block_t *b)
 	struct sm_metadata *smm = container_of(sm, struct sm_metadata, sm);
 
 	int r = sm_metadata_new_block_(sm, b);
+<<<<<<< HEAD
 	if (r) {
 		DMERR("unable to allocate new metadata block");
 		return r;
@@ -394,6 +395,14 @@ static int sm_metadata_new_block(struct dm_space_map *sm, dm_block_t *b)
 		DMERR("couldn't get free block count");
 		return r;
 	}
+=======
+	if (r)
+		DMERR("unable to allocate new metadata block");
+
+	r = sm_metadata_get_nr_free(sm, &count);
+	if (r)
+		DMERR("couldn't get free block count");
+>>>>>>> 671a46baf1b... some performance improvements
 
 	check_threshold(&smm->threshold, count);
 
@@ -493,9 +502,13 @@ static int sm_bootstrap_get_nr_blocks(struct dm_space_map *sm, dm_block_t *count
 {
 	struct sm_metadata *smm = container_of(sm, struct sm_metadata, sm);
 
+<<<<<<< HEAD
 	*count = smm->ll.nr_blocks;
 
 	return 0;
+=======
+	return smm->ll.nr_blocks;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int sm_bootstrap_get_nr_free(struct dm_space_map *sm, dm_block_t *count)
@@ -610,12 +623,17 @@ static int sm_metadata_extend(struct dm_space_map *sm, dm_block_t extra_blocks)
 	 * Flick into a mode where all blocks get allocated in the new area.
 	 */
 	smm->begin = old_len;
+<<<<<<< HEAD
 	memcpy(sm, &bootstrap_ops, sizeof(*sm));
+=======
+	memcpy(&smm->sm, &bootstrap_ops, sizeof(smm->sm));
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/*
 	 * Extend.
 	 */
 	r = sm_ll_extend(&smm->ll, extra_blocks);
+<<<<<<< HEAD
 	if (r)
 		goto out;
 
@@ -642,6 +660,16 @@ out:
 	 * Switch back to normal behaviour.
 	 */
 	memcpy(sm, &ops, sizeof(*sm));
+=======
+
+	/*
+	 * Switch back to normal behaviour.
+	 */
+	memcpy(&smm->sm, &ops, sizeof(smm->sm));
+	for (i = old_len; !r && i < smm->begin; i++)
+		r = sm_ll_inc(&smm->ll, i, &ev);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	return r;
 }
 
@@ -679,6 +707,7 @@ int dm_sm_metadata_create(struct dm_space_map *sm,
 	memcpy(&smm->sm, &bootstrap_ops, sizeof(smm->sm));
 
 	r = sm_ll_new_metadata(&smm->ll, tm);
+<<<<<<< HEAD
 	if (!r) {
 		r = sm_ll_extend(&smm->ll, nr_blocks);
 	}
@@ -686,6 +715,17 @@ int dm_sm_metadata_create(struct dm_space_map *sm,
 	if (r)
 		return r;
 
+=======
+	if (r)
+		return r;
+
+	r = sm_ll_extend(&smm->ll, nr_blocks);
+	if (r)
+		return r;
+
+	memcpy(&smm->sm, &ops, sizeof(smm->sm));
+
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	 * Now we need to update the newly created data structures with the
 	 * allocated blocks that they were built from.

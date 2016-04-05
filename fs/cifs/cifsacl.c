@@ -1027,6 +1027,7 @@ id_mode_to_cifs_acl(struct inode *inode, const char *path, __u64 nmode,
 	__u32 secdesclen = 0;
 	struct cifs_ntsd *pntsd = NULL; /* acl obtained from server */
 	struct cifs_ntsd *pnntsd = NULL; /* modified acl to be sent to server */
+<<<<<<< HEAD
 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
 	struct tcon_link *tlink = cifs_sb_tlink(cifs_sb);
 	struct cifs_tcon *tcon;
@@ -1034,10 +1035,13 @@ id_mode_to_cifs_acl(struct inode *inode, const char *path, __u64 nmode,
 	if (IS_ERR(tlink))
 		return PTR_ERR(tlink);
 	tcon = tlink_tcon(tlink);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	cifs_dbg(NOISY, "set ACL from mode for %s\n", path);
 
 	/* Get the security descriptor */
+<<<<<<< HEAD
 
 	if (tcon->ses->server->ops->get_acl == NULL) {
 		cifs_put_tlink(tlink);
@@ -1051,6 +1055,13 @@ id_mode_to_cifs_acl(struct inode *inode, const char *path, __u64 nmode,
 		cifs_dbg(VFS, "%s: error %d getting sec desc\n", __func__, rc);
 		cifs_put_tlink(tlink);
 		return rc;
+=======
+	pntsd = get_cifs_acl(CIFS_SB(inode->i_sb), inode, path, &secdesclen);
+	if (IS_ERR(pntsd)) {
+		rc = PTR_ERR(pntsd);
+		cifs_dbg(VFS, "%s: error %d getting sec desc\n", __func__, rc);
+		goto out;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	/*
@@ -1063,7 +1074,10 @@ id_mode_to_cifs_acl(struct inode *inode, const char *path, __u64 nmode,
 	pnntsd = kmalloc(secdesclen, GFP_KERNEL);
 	if (!pnntsd) {
 		kfree(pntsd);
+<<<<<<< HEAD
 		cifs_put_tlink(tlink);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		return -ENOMEM;
 	}
 
@@ -1072,6 +1086,7 @@ id_mode_to_cifs_acl(struct inode *inode, const char *path, __u64 nmode,
 
 	cifs_dbg(NOISY, "build_sec_desc rc: %d\n", rc);
 
+<<<<<<< HEAD
 	if (tcon->ses->server->ops->set_acl == NULL)
 		rc = -EOPNOTSUPP;
 
@@ -1085,5 +1100,16 @@ id_mode_to_cifs_acl(struct inode *inode, const char *path, __u64 nmode,
 
 	kfree(pnntsd);
 	kfree(pntsd);
+=======
+	if (!rc) {
+		/* Set the security descriptor */
+		rc = set_cifs_acl(pnntsd, secdesclen, inode, path, aclflag);
+		cifs_dbg(NOISY, "set_cifs_acl rc: %d\n", rc);
+	}
+
+	kfree(pnntsd);
+	kfree(pntsd);
+out:
+>>>>>>> 671a46baf1b... some performance improvements
 	return rc;
 }

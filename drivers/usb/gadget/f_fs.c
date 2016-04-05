@@ -141,8 +141,11 @@ struct ffs_data {
 	struct usb_request		*ep0req;		/* P: mutex */
 	struct completion		ep0req_completion;	/* P: mutex */
 	int				ep0req_status;		/* P: mutex */
+<<<<<<< HEAD
 	struct completion		epin_completion;
 	struct completion		epout_completion;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* reference counter */
 	atomic_t			ref;
@@ -203,12 +206,18 @@ struct ffs_data {
 	 */
 	const void			*raw_descs;
 	unsigned			raw_descs_length;
+<<<<<<< HEAD
 	unsigned			raw_fs_hs_descs_length;
 	unsigned			raw_ss_descs_offset;
 	unsigned			raw_ss_descs_length;
 	unsigned			fs_descs_count;
 	unsigned			hs_descs_count;
 	unsigned			ss_descs_count;
+=======
+	unsigned			raw_fs_descs_length;
+	unsigned			fs_descs_count;
+	unsigned			hs_descs_count;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	unsigned short			strings_count;
 	unsigned short			interfaces_count;
@@ -306,8 +315,13 @@ struct ffs_ep {
 	struct usb_ep			*ep;	/* P: ffs->eps_lock */
 	struct usb_request		*req;	/* P: epfile->mutex */
 
+<<<<<<< HEAD
 	/* [0]: full speed, [1]: high speed, [2]: super speed */
 	struct usb_endpoint_descriptor	*descs[3];
+=======
+	/* [0]: full speed, [1]: high speed */
+	struct usb_endpoint_descriptor	*descs[2];
+>>>>>>> 671a46baf1b... some performance improvements
 
 	u8				num;
 
@@ -318,7 +332,10 @@ struct ffs_epfile {
 	/* Protects ep->ep and ep->req. */
 	struct mutex			mutex;
 	wait_queue_head_t		wait;
+<<<<<<< HEAD
 	atomic_t			error;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	struct ffs_data			*ffs;
 	struct ffs_ep			*ep;	/* P: ffs->eps_lock */
@@ -747,11 +764,16 @@ static const struct file_operations ffs_ep0_operations = {
 
 static void ffs_epfile_io_complete(struct usb_ep *_ep, struct usb_request *req)
 {
+<<<<<<< HEAD
 	struct ffs_ep *ep = _ep->driver_data;
 	ENTER();
 
 	/* req may be freed during unbind */
 	if (ep && ep->req && likely(req->context)) {
+=======
+	ENTER();
+	if (likely(req->context)) {
+>>>>>>> 671a46baf1b... some performance improvements
 		struct ffs_ep *ep = _ep->driver_data;
 		ep->status = req->status ? req->status : req->actual;
 		complete(req->context);
@@ -763,6 +785,7 @@ static ssize_t ffs_epfile_io(struct file *file,
 {
 	struct ffs_epfile *epfile = file->private_data;
 	struct ffs_ep *ep;
+<<<<<<< HEAD
 	struct ffs_data *ffs = epfile->ffs;
 	char *data = NULL;
 	ssize_t ret;
@@ -773,6 +796,11 @@ static ssize_t ffs_epfile_io(struct file *file,
 
 	if (atomic_read(&epfile->error))
 		return -ENODEV;
+=======
+	char *data = NULL;
+	ssize_t ret;
+	int halt;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	goto first_try;
 	do {
@@ -794,6 +822,7 @@ first_try:
 				goto error;
 			}
 
+<<<<<<< HEAD
 			/* Don't wait on write if device is offline */
 			if (!read) {
 				ret = -ENODEV;
@@ -812,6 +841,11 @@ first_try:
 			}
 			if (!ep) {
 				ret = -ENODEV;
+=======
+			if (wait_event_interruptible(epfile->wait,
+						     (ep = epfile->ep))) {
+				ret = -EINTR;
+>>>>>>> 671a46baf1b... some performance improvements
 				goto error;
 			}
 		}
@@ -825,7 +859,11 @@ first_try:
 
 		/* Allocate & copy */
 		if (!halt && !data) {
+<<<<<<< HEAD
 			data = kzalloc(buffer_len, GFP_KERNEL);
+=======
+			data = kzalloc(len, GFP_KERNEL);
+>>>>>>> 671a46baf1b... some performance improvements
 			if (unlikely(!data))
 				return -ENOMEM;
 
@@ -862,6 +900,7 @@ first_try:
 		ret = -EBADMSG;
 	} else {
 		/* Fire the request */
+<<<<<<< HEAD
 		struct completion *done;
 
 		struct usb_request *req = ep->req;
@@ -876,12 +915,22 @@ first_try:
 			INIT_COMPLETION(ffs->epin_completion);
 			req->context  = done = &ffs->epin_completion;
 		}
+=======
+		DECLARE_COMPLETION_ONSTACK(done);
+
+		struct usb_request *req = ep->req;
+		req->context  = &done;
+		req->complete = ffs_epfile_io_complete;
+		req->buf      = data;
+		req->length   = len;
+>>>>>>> 671a46baf1b... some performance improvements
 
 		ret = usb_ep_queue(ep->ep, req, GFP_ATOMIC);
 
 		spin_unlock_irq(&epfile->ffs->eps_lock);
 
 		if (unlikely(ret < 0)) {
+<<<<<<< HEAD
 			ret = -EIO;
 		} else if (unlikely(wait_for_completion_interruptible(done))) {
 			spin_lock_irq(&epfile->ffs->eps_lock);
@@ -910,6 +959,17 @@ first_try:
 				else if (unlikely(copy_to_user(buf, data, ret)))
 					ret = -EFAULT;
 			}
+=======
+			/* nop */
+		} else if (unlikely(wait_for_completion_interruptible(&done))) {
+			ret = -EINTR;
+			usb_ep_dequeue(ep->ep, req);
+		} else {
+			ret = ep->status;
+			if (read && ret > 0 &&
+			    unlikely(copy_to_user(buf, data, ret)))
+				ret = -EFAULT;
+>>>>>>> 671a46baf1b... some performance improvements
 		}
 	}
 
@@ -948,7 +1008,10 @@ ffs_epfile_open(struct inode *inode, struct file *file)
 
 	file->private_data = epfile;
 	ffs_data_opened(epfile->ffs);
+<<<<<<< HEAD
 	atomic_set(&epfile->error, 0);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return 0;
 }
@@ -960,9 +1023,13 @@ ffs_epfile_release(struct inode *inode, struct file *file)
 
 	ENTER();
 
+<<<<<<< HEAD
 	atomic_set(&epfile->error, 1);
 	ffs_data_closed(epfile->ffs);
 	file->private_data = NULL;
+=======
+	ffs_data_closed(epfile->ffs);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return 0;
 }
@@ -1094,19 +1161,50 @@ struct ffs_sb_fill_data {
 	struct ffs_file_perms perms;
 	umode_t root_mode;
 	const char *dev_name;
+<<<<<<< HEAD
 	struct ffs_data *ffs_data;
+=======
+	union {
+		/* set by ffs_fs_mount(), read by ffs_sb_fill() */
+		void *private_data;
+		/* set by ffs_sb_fill(), read by ffs_fs_mount */
+		struct ffs_data *ffs_data;
+	};
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 static int ffs_sb_fill(struct super_block *sb, void *_data, int silent)
 {
 	struct ffs_sb_fill_data *data = _data;
 	struct inode	*inode;
+<<<<<<< HEAD
 	struct ffs_data	*ffs = data->ffs_data;
 
 	ENTER();
 
 	ffs->sb              = sb;
 	data->ffs_data       = NULL;
+=======
+	struct ffs_data	*ffs;
+
+	ENTER();
+
+	/* Initialise data */
+	ffs = ffs_data_new();
+	if (unlikely(!ffs))
+		goto Enomem;
+
+	ffs->sb              = sb;
+	ffs->dev_name        = kstrdup(data->dev_name, GFP_KERNEL);
+	if (unlikely(!ffs->dev_name))
+		goto Enomem;
+	ffs->file_perms      = data->perms;
+	ffs->private_data    = data->private_data;
+
+	/* used by the caller of this function */
+	data->ffs_data       = ffs;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	sb->s_fs_info        = ffs;
 	sb->s_blocksize      = PAGE_CACHE_SIZE;
 	sb->s_blocksize_bits = PAGE_CACHE_SHIFT;
@@ -1122,14 +1220,27 @@ static int ffs_sb_fill(struct super_block *sb, void *_data, int silent)
 				  &data->perms);
 	sb->s_root = d_make_root(inode);
 	if (unlikely(!sb->s_root))
+<<<<<<< HEAD
 		return -ENOMEM;
+=======
+		goto Enomem;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* EP0 file */
 	if (unlikely(!ffs_sb_create_file(sb, "ep0", ffs,
 					 &ffs_ep0_operations, NULL)))
+<<<<<<< HEAD
 		return -ENOMEM;
 
 	return 0;
+=======
+		goto Enomem;
+
+	return 0;
+
+Enomem:
+	return -ENOMEM;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int ffs_fs_parse_opts(struct ffs_sb_fill_data *data, char *opts)
@@ -1232,7 +1343,10 @@ ffs_fs_mount(struct file_system_type *t, int flags,
 	struct dentry *rv;
 	int ret;
 	void *ffs_dev;
+<<<<<<< HEAD
 	struct ffs_data	*ffs;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	ENTER();
 
@@ -1240,6 +1354,7 @@ ffs_fs_mount(struct file_system_type *t, int flags,
 	if (unlikely(ret < 0))
 		return ERR_PTR(ret);
 
+<<<<<<< HEAD
 	ffs = ffs_data_new();
 	if (unlikely(!ffs))
 		return ERR_PTR(-ENOMEM);
@@ -1264,6 +1379,20 @@ ffs_fs_mount(struct file_system_type *t, int flags,
 		functionfs_release_dev_callback(data.ffs_data);
 		ffs_data_put(data.ffs_data);
 	}
+=======
+	ffs_dev = functionfs_acquire_dev_callback(dev_name);
+	if (IS_ERR(ffs_dev))
+		return ffs_dev;
+
+	data.dev_name = dev_name;
+	data.private_data = ffs_dev;
+	rv = mount_nodev(t, flags, &data, ffs_sb_fill);
+
+	/* data.ffs_data is set by ffs_sb_fill */
+	if (IS_ERR(rv))
+		functionfs_release_dev_callback(data.ffs_data);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	return rv;
 }
 
@@ -1375,8 +1504,11 @@ static struct ffs_data *ffs_data_new(void)
 	spin_lock_init(&ffs->eps_lock);
 	init_waitqueue_head(&ffs->ev.waitq);
 	init_completion(&ffs->ep0req_completion);
+<<<<<<< HEAD
 	init_completion(&ffs->epout_completion);
 	init_completion(&ffs->epin_completion);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* XXX REVISIT need to update it in some places, or do we? */
 	ffs->ev.can_stall = 1;
@@ -1413,12 +1545,18 @@ static void ffs_data_reset(struct ffs_data *ffs)
 	ffs->stringtabs = NULL;
 
 	ffs->raw_descs_length = 0;
+<<<<<<< HEAD
 	ffs->raw_fs_hs_descs_length = 0;
 	ffs->raw_ss_descs_offset = 0;
 	ffs->raw_ss_descs_length = 0;
 	ffs->fs_descs_count = 0;
 	ffs->hs_descs_count = 0;
 	ffs->ss_descs_count = 0;
+=======
+	ffs->raw_fs_descs_length = 0;
+	ffs->fs_descs_count = 0;
+	ffs->hs_descs_count = 0;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	ffs->strings_count = 0;
 	ffs->interfaces_count = 0;
@@ -1454,6 +1592,7 @@ static int functionfs_bind(struct ffs_data *ffs, struct usb_composite_dev *cdev)
 	ffs->ep0req->context = ffs;
 
 	lang = ffs->stringtabs;
+<<<<<<< HEAD
 	if (lang) {
 		for (; *lang; ++lang) {
 			struct usb_string *str = (*lang)->strings;
@@ -1461,6 +1600,13 @@ static int functionfs_bind(struct ffs_data *ffs, struct usb_composite_dev *cdev)
 			for (; str->s; ++id, ++str)
 				str->id = id;
 		}
+=======
+	for (lang = ffs->stringtabs; *lang; ++lang) {
+		struct usb_string *str = (*lang)->strings;
+		int id = first_id;
+		for (; str->s; ++id, ++str)
+			str->id = id;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	ffs->gadget = cdev->gadget;
@@ -1580,7 +1726,10 @@ static void ffs_func_free(struct ffs_function *func)
 		if (ep->ep && ep->req)
 			usb_ep_free_request(ep->ep, ep->req);
 		ep->req = NULL;
+<<<<<<< HEAD
 		ep->ep = NULL;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		++ep;
 	} while (--count);
 	spin_unlock_irqrestore(&func->ffs->eps_lock, flags);
@@ -1606,12 +1755,18 @@ static void ffs_func_eps_disable(struct ffs_function *func)
 
 	spin_lock_irqsave(&func->ffs->eps_lock, flags);
 	do {
+<<<<<<< HEAD
 		atomic_set(&epfile->error, 1);
 		/* pending requests get nuked */
 		if (likely(ep->ep)) {
 			usb_ep_disable(ep->ep);
 			ep->ep->driver_data = NULL;
 		}
+=======
+		/* pending requests get nuked */
+		if (likely(ep->ep))
+			usb_ep_disable(ep->ep);
+>>>>>>> 671a46baf1b... some performance improvements
 		epfile->ep = NULL;
 
 		++ep;
@@ -1632,6 +1787,7 @@ static int ffs_func_eps_enable(struct ffs_function *func)
 	spin_lock_irqsave(&func->ffs->eps_lock, flags);
 	do {
 		struct usb_endpoint_descriptor *ds;
+<<<<<<< HEAD
 		int desc_idx;
 
 		if (ffs->gadget->speed == USB_SPEED_SUPER)
@@ -1641,6 +1797,9 @@ static int ffs_func_eps_enable(struct ffs_function *func)
 		else
 			desc_idx = 0;
 
+=======
+		int desc_idx = ffs->gadget->speed == USB_SPEED_HIGH ? 1 : 0;
+>>>>>>> 671a46baf1b... some performance improvements
 		ds = ep->descs[desc_idx];
 		if (!ds) {
 			ret = -EINVAL;
@@ -1780,12 +1939,15 @@ static int __must_check ffs_do_desc(char *data, unsigned len,
 	}
 		break;
 
+<<<<<<< HEAD
 	case USB_DT_SS_ENDPOINT_COMP:
 		pr_vdebug("EP SS companion descriptor\n");
 		if (length != sizeof(struct usb_ss_ep_comp_descriptor))
 			goto inv_length;
 		break;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	case USB_DT_OTHER_SPEED_CONFIG:
 	case USB_DT_INTERFACE_POWER:
 	case USB_DT_DEBUG:
@@ -1896,8 +2058,13 @@ static int __ffs_data_do_entity(enum ffs_entity_type type,
 static int __ffs_data_got_descs(struct ffs_data *ffs,
 				char *const _data, size_t len)
 {
+<<<<<<< HEAD
 	unsigned fs_count, hs_count, ss_count = 0;
 	int fs_len, hs_len, ss_len, ss_magic, ret = -EINVAL;
+=======
+	unsigned fs_count, hs_count;
+	int fs_len, ret = -EINVAL;
+>>>>>>> 671a46baf1b... some performance improvements
 	char *data = _data;
 
 	ENTER();
@@ -1929,6 +2096,7 @@ static int __ffs_data_got_descs(struct ffs_data *ffs,
 	}
 
 	if (likely(hs_count)) {
+<<<<<<< HEAD
 		hs_len = ffs_do_descs(hs_count, data, len,
 				   __ffs_data_do_entity, ffs);
 		if (unlikely(hs_len < 0)) {
@@ -1966,12 +2134,20 @@ static int __ffs_data_got_descs(struct ffs_data *ffs,
 		ret = ss_len;
 	} else {
 		ss_len = 0;
+=======
+		ret = ffs_do_descs(hs_count, data, len,
+				   __ffs_data_do_entity, ffs);
+		if (unlikely(ret < 0))
+			goto error;
+	} else {
+>>>>>>> 671a46baf1b... some performance improvements
 		ret = 0;
 	}
 
 	if (unlikely(len != ret))
 		goto einval;
 
+<<<<<<< HEAD
 	ffs->raw_fs_hs_descs_length	 = fs_len + hs_len;
 	ffs->raw_ss_descs_length	 = ss_len;
 	ffs->raw_descs_length		 = ffs->raw_fs_hs_descs_length + ss_len;
@@ -1981,6 +2157,13 @@ static int __ffs_data_got_descs(struct ffs_data *ffs,
 	ffs->ss_descs_count		 = ss_count;
 	if (ffs->ss_descs_count)
 		ffs->raw_ss_descs_offset = 16 + ffs->raw_fs_hs_descs_length + 8;
+=======
+	ffs->raw_fs_descs_length = fs_len;
+	ffs->raw_descs_length    = fs_len + ret;
+	ffs->raw_descs           = _data;
+	ffs->fs_descs_count      = fs_count;
+	ffs->hs_descs_count      = hs_count;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return 0;
 
@@ -2204,13 +2387,19 @@ static int __ffs_func_bind_do_descs(enum ffs_entity_type type, u8 *valuep,
 	 * If hs_descriptors is not NULL then we are reading hs
 	 * descriptors now
 	 */
+<<<<<<< HEAD
 	const int is_hs = func->function.hs_descriptors != NULL;
 	const int is_ss = func->function.ss_descriptors != NULL;
 	unsigned ep_desc_id, idx;
+=======
+	const int isHS = func->function.hs_descriptors != NULL;
+	unsigned idx;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (type != FFS_DESCRIPTOR)
 		return 0;
 
+<<<<<<< HEAD
 	if (is_ss) {
 		func->function.ss_descriptors[(long)valuep] = desc;
 		ep_desc_id = 2;
@@ -2221,6 +2410,12 @@ static int __ffs_func_bind_do_descs(enum ffs_entity_type type, u8 *valuep,
 		func->function.fs_descriptors[(long)valuep]    = desc;
 		ep_desc_id = 0;
 	}
+=======
+	if (isHS)
+		func->function.hs_descriptors[(long)valuep] = desc;
+	else
+		func->function.fs_descriptors[(long)valuep]    = desc;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (!desc || desc->bDescriptorType != USB_DT_ENDPOINT)
 		return 0;
@@ -2228,6 +2423,7 @@ static int __ffs_func_bind_do_descs(enum ffs_entity_type type, u8 *valuep,
 	idx = (ds->bEndpointAddress & USB_ENDPOINT_NUMBER_MASK) - 1;
 	ffs_ep = func->eps + idx;
 
+<<<<<<< HEAD
 	if (unlikely(ffs_ep->descs[ep_desc_id])) {
 		pr_vdebug("two %sspeed descriptors for EP %d\n",
 			  is_ss ? "super" : "high/full",
@@ -2235,6 +2431,15 @@ static int __ffs_func_bind_do_descs(enum ffs_entity_type type, u8 *valuep,
 		return -EINVAL;
 	}
 	ffs_ep->descs[ep_desc_id] = ds;
+=======
+	if (unlikely(ffs_ep->descs[isHS])) {
+		pr_vdebug("two %sspeed descriptors for EP %d\n",
+			  isHS ? "high" : "full",
+			  ds->bEndpointAddress & USB_ENDPOINT_NUMBER_MASK);
+		return -EINVAL;
+	}
+	ffs_ep->descs[isHS] = ds;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	ffs_dump_mem(": Original  ep desc", ds, ds->bLength);
 	if (ffs_ep->ep) {
@@ -2329,10 +2534,15 @@ static int ffs_func_bind(struct usb_configuration *c,
 	const int full = !!func->ffs->fs_descs_count;
 	const int high = gadget_is_dualspeed(func->gadget) &&
 		func->ffs->hs_descs_count;
+<<<<<<< HEAD
 	const int super = gadget_is_superspeed(func->gadget) &&
 		func->ffs->ss_descs_count;
 
 	int fs_len, hs_len, ret;
+=======
+
+	int ret;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* Make it a single chunk, less management later on */
 	struct {
@@ -2341,16 +2551,27 @@ static int ffs_func_bind(struct usb_configuration *c,
 			*fs_descs[full ? ffs->fs_descs_count + 1 : 0];
 		struct usb_descriptor_header
 			*hs_descs[high ? ffs->hs_descs_count + 1 : 0];
+<<<<<<< HEAD
 		struct usb_descriptor_header
 			*ss_descs[super ? ffs->ss_descs_count + 1 : 0];
 		short inums[ffs->interfaces_count];
 		char raw_descs[ffs->raw_descs_length];
+=======
+		short inums[ffs->interfaces_count];
+		char raw_descs[high ? ffs->raw_descs_length
+				    : ffs->raw_fs_descs_length];
+>>>>>>> 671a46baf1b... some performance improvements
 	} *data;
 
 	ENTER();
 
+<<<<<<< HEAD
 	/* Only high/super speed but not supported by gadget? */
 	if (unlikely(!(full | high | super)))
+=======
+	/* Only high speed but not supported by gadget? */
+	if (unlikely(!(full | high)))
+>>>>>>> 671a46baf1b... some performance improvements
 		return -ENOTSUPP;
 
 	/* Allocate */
@@ -2360,6 +2581,7 @@ static int ffs_func_bind(struct usb_configuration *c,
 
 	/* Zero */
 	memset(data->eps, 0, sizeof data->eps);
+<<<<<<< HEAD
 	/* Copy only raw (hs,fs) descriptors (until ss_magic and ss_count) */
 	memcpy(data->raw_descs, ffs->raw_descs + 16,
 				ffs->raw_fs_hs_descs_length);
@@ -2369,6 +2591,9 @@ static int ffs_func_bind(struct usb_configuration *c,
 			ffs->raw_descs + ffs->raw_ss_descs_offset,
 			ffs->raw_ss_descs_length);
 
+=======
+	memcpy(data->raw_descs, ffs->raw_descs + 16, sizeof data->raw_descs);
+>>>>>>> 671a46baf1b... some performance improvements
 	memset(data->inums, 0xff, sizeof data->inums);
 	for (ret = ffs->eps_count; ret; --ret)
 		data->eps[ret].num = -1;
@@ -2384,6 +2609,7 @@ static int ffs_func_bind(struct usb_configuration *c,
 	 */
 	if (likely(full)) {
 		func->function.fs_descriptors = data->fs_descs;
+<<<<<<< HEAD
 		fs_len = ffs_do_descs(ffs->fs_descs_count,
 				   data->raw_descs,
 				   sizeof(data->raw_descs),
@@ -2394,10 +2620,21 @@ static int ffs_func_bind(struct usb_configuration *c,
 		}
 	} else {
 		fs_len = 0;
+=======
+		ret = ffs_do_descs(ffs->fs_descs_count,
+				   data->raw_descs,
+				   sizeof data->raw_descs,
+				   __ffs_func_bind_do_descs, func);
+		if (unlikely(ret < 0))
+			goto error;
+	} else {
+		ret = 0;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	if (likely(high)) {
 		func->function.hs_descriptors = data->hs_descs;
+<<<<<<< HEAD
 		hs_len = ffs_do_descs(ffs->hs_descs_count,
 				   data->raw_descs + fs_len,
 				   (sizeof(data->raw_descs)) - fs_len,
@@ -2418,6 +2655,12 @@ static int ffs_func_bind(struct usb_configuration *c,
 				   __ffs_func_bind_do_descs, func);
 		if (unlikely(ret < 0))
 			goto error;
+=======
+		ret = ffs_do_descs(ffs->hs_descs_count,
+				   data->raw_descs + ret,
+				   (sizeof data->raw_descs) - ret,
+				   __ffs_func_bind_do_descs, func);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	/*
@@ -2426,9 +2669,14 @@ static int ffs_func_bind(struct usb_configuration *c,
 	 * now.
 	 */
 	ret = ffs_do_descs(ffs->fs_descs_count +
+<<<<<<< HEAD
 			   (high ? ffs->hs_descs_count : 0) +
 			   (super ? ffs->ss_descs_count : 0),
 			   data->raw_descs, sizeof(data->raw_descs),
+=======
+			   (high ? ffs->hs_descs_count : 0),
+			   data->raw_descs, sizeof data->raw_descs,
+>>>>>>> 671a46baf1b... some performance improvements
 			   __ffs_func_bind_do_nums, func);
 	if (unlikely(ret < 0))
 		goto error;
@@ -2476,10 +2724,15 @@ static int ffs_func_set_alt(struct usb_function *f,
 			return intf;
 	}
 
+<<<<<<< HEAD
 	if (ffs->func) {
 		ffs_func_eps_disable(ffs->func);
 		ffs->func = NULL;
 	}
+=======
+	if (ffs->func)
+		ffs_func_eps_disable(ffs->func);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (ffs->state != FFS_ACTIVE)
 		return -ENODEV;

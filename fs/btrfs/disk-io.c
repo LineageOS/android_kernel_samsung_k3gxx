@@ -2437,7 +2437,10 @@ int open_ctree(struct super_block *sb,
 		       "unsupported option features (%Lx).\n",
 		       (unsigned long long)features);
 		err = -EINVAL;
+<<<<<<< HEAD
 		brelse(bh);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		goto fail_alloc;
 	}
 
@@ -3162,8 +3165,11 @@ static int barrier_all_devices(struct btrfs_fs_info *info)
 	/* send down all the barriers */
 	head = &info->fs_devices->devices;
 	list_for_each_entry_rcu(dev, head, dev_list) {
+<<<<<<< HEAD
 		if (dev->missing)
 			continue;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		if (!dev->bdev) {
 			errors_send++;
 			continue;
@@ -3178,8 +3184,11 @@ static int barrier_all_devices(struct btrfs_fs_info *info)
 
 	/* wait for all the barriers */
 	list_for_each_entry_rcu(dev, head, dev_list) {
+<<<<<<< HEAD
 		if (dev->missing)
 			continue;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		if (!dev->bdev) {
 			errors_wait++;
 			continue;
@@ -3519,11 +3528,14 @@ int close_ctree(struct btrfs_root *root)
 
 	btrfs_free_block_groups(fs_info);
 
+<<<<<<< HEAD
 	/*
 	 * we must make sure there is not any read request to
 	 * submit after we stopping all workers.
 	 */
 	invalidate_inode_pages2(fs_info->btree_inode->i_mapping);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	btrfs_stop_all_workers(fs_info);
 
 	del_fs_roots(fs_info);
@@ -3858,6 +3870,15 @@ again:
 		if (ret)
 			break;
 
+<<<<<<< HEAD
+=======
+		/* opt_discard */
+		if (btrfs_test_opt(root, DISCARD))
+			ret = btrfs_error_discard_extent(root, start,
+							 end + 1 - start,
+							 NULL);
+
+>>>>>>> 671a46baf1b... some performance improvements
 		clear_extent_dirty(unpin, start, end, GFP_NOFS);
 		btrfs_error_unpin_extent_range(root, start, end);
 		cond_resched();

@@ -1099,8 +1099,11 @@ static int device_close(struct net_device *dev)
     memset(pMgmt->abyCurrBSSID, 0, 6);
     pMgmt->eCurrState = WMAC_STATE_IDLE;
 
+<<<<<<< HEAD
 	pDevice->flags &= ~DEVICE_FLAGS_OPENED;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
     device_free_tx_bufs(pDevice);
     device_free_rx_bufs(pDevice);
     device_free_int_bufs(pDevice);
@@ -1112,6 +1115,10 @@ static int device_close(struct net_device *dev)
     usb_free_urb(pDevice->pInterruptURB);
 
     BSSvClearNodeDBTable(pDevice, 0);
+<<<<<<< HEAD
+=======
+    pDevice->flags &=(~DEVICE_FLAGS_OPENED);
+>>>>>>> 671a46baf1b... some performance improvements
 
     DBG_PRT(MSG_LEVEL_DEBUG, KERN_INFO "device_close2 \n");
 

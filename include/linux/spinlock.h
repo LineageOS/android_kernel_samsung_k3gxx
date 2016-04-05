@@ -117,6 +117,7 @@ do {								\
 #endif /*arch_spin_is_contended*/
 #endif
 
+<<<<<<< HEAD
 /*
  * Despite its name it doesn't necessarily has to be a full barrier.
  * It should only guarantee that a STORE before the critical section
@@ -128,6 +129,11 @@ do {								\
  */
 #ifndef smp_mb__before_spinlock
 #define smp_mb__before_spinlock()	smp_wmb()
+=======
+/* The lock does not imply full memory barrier. */
+#ifndef ARCH_HAS_SMP_MB_AFTER_LOCK
+static inline void smp_mb__after_lock(void) { smp_mb(); }
+>>>>>>> 671a46baf1b... some performance improvements
 #endif
 
 /**

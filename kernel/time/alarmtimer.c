@@ -456,6 +456,7 @@ static enum alarmtimer_type clock2alarm(clockid_t clockid)
 static enum alarmtimer_restart alarm_handle_timer(struct alarm *alarm,
 							ktime_t now)
 {
+<<<<<<< HEAD
 	unsigned long flags;
 	struct k_itimer *ptr = container_of(alarm, struct k_itimer,
 						it.alarm.alarmtimer);
@@ -466,16 +467,28 @@ static enum alarmtimer_restart alarm_handle_timer(struct alarm *alarm,
 		if (posix_timer_event(ptr, 0) != 0)
 			ptr->it_overrun++;
 	}
+=======
+	struct k_itimer *ptr = container_of(alarm, struct k_itimer,
+						it.alarm.alarmtimer);
+	if (posix_timer_event(ptr, 0) != 0)
+		ptr->it_overrun++;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* Re-add periodic timers */
 	if (ptr->it.alarm.interval.tv64) {
 		ptr->it_overrun += alarm_forward(alarm, now,
 						ptr->it.alarm.interval);
+<<<<<<< HEAD
 		result = ALARMTIMER_RESTART;
 	}
 	spin_unlock_irqrestore(&ptr->it_lock, flags);
 
 	return result;
+=======
+		return ALARMTIMER_RESTART;
+	}
+	return ALARMTIMER_NORESTART;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /**
@@ -490,7 +503,11 @@ static int alarm_clock_getres(const clockid_t which_clock, struct timespec *tp)
 	clockid_t baseid = alarm_bases[clock2alarm(which_clock)].base_clockid;
 
 	if (!alarmtimer_get_rtcdev())
+<<<<<<< HEAD
 		return -EINVAL;
+=======
+		return -ENOTSUPP;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return hrtimer_get_res(baseid, tp);
 }
@@ -507,7 +524,11 @@ static int alarm_clock_get(clockid_t which_clock, struct timespec *tp)
 	struct alarm_base *base = &alarm_bases[clock2alarm(which_clock)];
 
 	if (!alarmtimer_get_rtcdev())
+<<<<<<< HEAD
 		return -EINVAL;
+=======
+		return -ENOTSUPP;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	*tp = ktime_to_timespec(base->gettime());
 	return 0;
@@ -585,6 +606,7 @@ static int alarm_timer_set(struct k_itimer *timr, int flags,
 				struct itimerspec *new_setting,
 				struct itimerspec *old_setting)
 {
+<<<<<<< HEAD
 	ktime_t exp;
 
 	if (!rtcdev)
@@ -593,6 +615,11 @@ static int alarm_timer_set(struct k_itimer *timr, int flags,
 	if (flags & ~TIMER_ABSTIME)
 		return -EINVAL;
 
+=======
+	if (!rtcdev)
+		return -ENOTSUPP;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	if (old_setting)
 		alarm_timer_get(timr, old_setting);
 
@@ -602,6 +629,7 @@ static int alarm_timer_set(struct k_itimer *timr, int flags,
 
 	/* start the timer */
 	timr->it.alarm.interval = timespec_to_ktime(new_setting->it_interval);
+<<<<<<< HEAD
 	exp = timespec_to_ktime(new_setting->it_value);
 	/* Convert (if necessary) to absolute time */
 	if (flags != TIMER_ABSTIME) {
@@ -612,6 +640,10 @@ static int alarm_timer_set(struct k_itimer *timr, int flags,
 	}
 
 	alarm_start(&timr->it.alarm.alarmtimer, exp);
+=======
+	alarm_start(&timr->it.alarm.alarmtimer,
+			timespec_to_ktime(new_setting->it_value));
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 }
 
@@ -743,9 +775,12 @@ static int alarm_timer_nsleep(const clockid_t which_clock, int flags,
 	if (!alarmtimer_get_rtcdev())
 		return -ENOTSUPP;
 
+<<<<<<< HEAD
 	if (flags & ~TIMER_ABSTIME)
 		return -EINVAL;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (!capable(CAP_WAKE_ALARM))
 		return -EPERM;
 

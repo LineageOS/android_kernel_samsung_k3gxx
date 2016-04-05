@@ -11,9 +11,13 @@
 #define CAN_SKB_H
 
 #include <linux/types.h>
+<<<<<<< HEAD
 #include <linux/skbuff.h>
 #include <linux/can.h>
 #include <net/sock.h>
+=======
+#include <linux/can.h>
+>>>>>>> 671a46baf1b... some performance improvements
 
 /*
  * The struct can_skb_priv is used to transport additional information along
@@ -44,6 +48,7 @@ static inline void can_skb_reserve(struct sk_buff *skb)
 	skb_reserve(skb, sizeof(struct can_skb_priv));
 }
 
+<<<<<<< HEAD
 static inline void can_skb_destructor(struct sk_buff *skb)
 {
 	sock_put(skb->sk);
@@ -80,4 +85,6 @@ static inline struct sk_buff *can_create_echo_skb(struct sk_buff *skb)
 	return skb;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #endif /* CAN_SKB_H */

@@ -101,6 +101,7 @@ int __ieee80211_suspend(struct ieee80211_hw *hw, struct cfg80211_wowlan *wowlan)
 
 	/* remove all interfaces that were created in the driver */
 	list_for_each_entry(sdata, &local->interfaces, list) {
+<<<<<<< HEAD
 		if (!ieee80211_sdata_running(sdata))
 			continue;
 		switch (sdata->vif.type) {
@@ -115,6 +116,13 @@ int __ieee80211_suspend(struct ieee80211_hw *hw, struct cfg80211_wowlan *wowlan)
 		}
 
 		flush_delayed_work(&sdata->dec_tailroom_needed_wk);
+=======
+		if (!ieee80211_sdata_running(sdata) ||
+		    sdata->vif.type == NL80211_IFTYPE_AP_VLAN ||
+		    sdata->vif.type == NL80211_IFTYPE_MONITOR)
+			continue;
+
+>>>>>>> 671a46baf1b... some performance improvements
 		drv_remove_interface(local, sdata);
 	}
 

@@ -330,7 +330,11 @@ static int trace__sys_enter(struct trace *trace, struct perf_evsel *evsel,
 
 	if (!strcmp(sc->name, "exit_group") || !strcmp(sc->name, "exit")) {
 		if (!trace->duration_filter) {
+<<<<<<< HEAD
 			trace__fprintf_entry_head(trace, thread, 1, ttrace->entry_time, stdout);
+=======
+			trace__fprintf_entry_head(trace, thread, 1, sample->time, stdout);
+>>>>>>> 671a46baf1b... some performance improvements
 			printf("%-70s\n", ttrace->entry_str);
 		}
 	} else
@@ -364,7 +368,11 @@ static int trace__sys_exit(struct trace *trace, struct perf_evsel *evsel,
 	} else if (trace->duration_filter)
 		goto out;
 
+<<<<<<< HEAD
 	trace__fprintf_entry_head(trace, thread, duration, ttrace->entry_time, stdout);
+=======
+	trace__fprintf_entry_head(trace, thread, duration, sample->time, stdout);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (ttrace->entry_pending) {
 		printf("%-70s", ttrace->entry_str);

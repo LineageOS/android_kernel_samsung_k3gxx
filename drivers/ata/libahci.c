@@ -486,8 +486,13 @@ void ahci_save_initial_config(struct device *dev,
 		}
 	}
 
+<<<<<<< HEAD
 	/* fabricate port_map from cap.nr_ports for < AHCI 1.3 */
 	if (!port_map && vers < 0x10300) {
+=======
+	/* fabricate port_map from cap.nr_ports */
+	if (!port_map) {
+>>>>>>> 671a46baf1b... some performance improvements
 		port_map = (1 << ahci_nr_ports(cap)) - 1;
 		dev_warn(dev, "forcing PORTS_IMPL to 0x%x\n", port_map);
 
@@ -1244,6 +1249,7 @@ static int ahci_exec_polled_cmd(struct ata_port *ap, int pmp,
 	ata_tf_to_fis(tf, pmp, is_cmd, fis);
 	ahci_fill_cmd_slot(pp, 0, cmd_fis_len | flags | (pmp << 12));
 
+<<<<<<< HEAD
 	/* set port value for softreset of Port Multiplier */
 	if (pp->fbs_enabled && pp->fbs_last_dev != pmp) {
 		tmp = readl(port_mmio + PORT_FBS);
@@ -1253,6 +1259,8 @@ static int ahci_exec_polled_cmd(struct ata_port *ap, int pmp,
 		pp->fbs_last_dev = pmp;
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* issue & wait */
 	writel(1, port_mmio + PORT_CMD_ISSUE);
 
@@ -1275,11 +1283,17 @@ int ahci_do_softreset(struct ata_link *link, unsigned int *class,
 {
 	struct ata_port *ap = link->ap;
 	struct ahci_host_priv *hpriv = ap->host->private_data;
+<<<<<<< HEAD
 	struct ahci_port_priv *pp = ap->private_data;
 	const char *reason = NULL;
 	unsigned long now, msecs;
 	struct ata_taskfile tf;
 	bool fbs_disabled = false;
+=======
+	const char *reason = NULL;
+	unsigned long now, msecs;
+	struct ata_taskfile tf;
+>>>>>>> 671a46baf1b... some performance improvements
 	int rc;
 
 	DPRINTK("ENTER\n");
@@ -1289,6 +1303,7 @@ int ahci_do_softreset(struct ata_link *link, unsigned int *class,
 	if (rc && rc != -EOPNOTSUPP)
 		ata_link_warn(link, "failed to reset engine (errno=%d)\n", rc);
 
+<<<<<<< HEAD
 	/*
 	 * According to AHCI-1.2 9.3.9: if FBS is enable, software shall
 	 * clear PxFBS.EN to '0' prior to issuing software reset to devices
@@ -1299,6 +1314,8 @@ int ahci_do_softreset(struct ata_link *link, unsigned int *class,
 		fbs_disabled = true;
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	ata_tf_init(link->device, &tf);
 
 	/* issue the first D2H Register FIS */
@@ -1339,10 +1356,13 @@ int ahci_do_softreset(struct ata_link *link, unsigned int *class,
 	} else
 		*class = ahci_dev_classify(ap);
 
+<<<<<<< HEAD
 	/* re-enable FBS if disabled before */
 	if (fbs_disabled)
 		ahci_enable_fbs(ap);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	DPRINTK("EXIT, class=%u\n", *class);
 	return 0;
 
@@ -1693,7 +1713,12 @@ static void ahci_handle_port_interrupt(struct ata_port *ap,
 	if (unlikely(resetting))
 		status &= ~PORT_IRQ_BAD_PMP;
 
+<<<<<<< HEAD
 	if (sata_lpm_ignore_phy_events(&ap->link)) {
+=======
+	/* if LPM is enabled, PHYRDY doesn't mean anything */
+	if (ap->link.lpm_policy > ATA_LPM_MAX_POWER) {
+>>>>>>> 671a46baf1b... some performance improvements
 		status &= ~PORT_IRQ_PHYRDY;
 		ahci_scr_write(&ap->link, SCR_ERROR, SERR_PHYRDY_CHG);
 	}

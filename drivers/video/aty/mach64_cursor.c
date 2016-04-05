@@ -5,7 +5,10 @@
 #include <linux/fb.h>
 #include <linux/init.h>
 #include <linux/string.h>
+<<<<<<< HEAD
 #include "../fb_draw.h"
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 #include <asm/io.h>
 
@@ -158,12 +161,16 @@ static int atyfb_cursor(struct fb_info *info, struct fb_cursor *cursor)
 
 	    for (i = 0; i < height; i++) {
 		for (j = 0; j < width; j++) {
+<<<<<<< HEAD
 			u16 l = 0xaaaa;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			b = *src++;
 			m = *msk++;
 			switch (cursor->rop) {
 			case ROP_XOR:
 			    // Upper 4 bits of mask data
+<<<<<<< HEAD
 			    l = cursor_bits_lookup[(b ^ m) >> 4] |
 			    // Lower 4 bits of mask
 				    (cursor_bits_lookup[(b ^ m) & 0x0f] << 8);
@@ -185,6 +192,21 @@ static int atyfb_cursor(struct fb_info *info, struct fb_cursor *cursor)
 			}
 			fb_writeb(l & 0xff, dst++);
 			fb_writeb(l >> 8, dst++);
+=======
+			    fb_writeb(cursor_bits_lookup[(b ^ m) >> 4], dst++);
+			    // Lower 4 bits of mask
+			    fb_writeb(cursor_bits_lookup[(b ^ m) & 0x0f],
+				      dst++);
+			    break;
+			case ROP_COPY:
+			    // Upper 4 bits of mask data
+			    fb_writeb(cursor_bits_lookup[(b & m) >> 4], dst++);
+			    // Lower 4 bits of mask
+			    fb_writeb(cursor_bits_lookup[(b & m) & 0x0f],
+				      dst++);
+			    break;
+			}
+>>>>>>> 671a46baf1b... some performance improvements
 		}
 		dst += offset;
 	    }

@@ -88,11 +88,15 @@ test_delete()
 		exit 1
 	fi
 
+<<<<<<< HEAD
 	rm $file 2>/dev/null
 	if [ $? -ne 0 ]; then
 		chattr -i $file
 		rm $file
 	fi
+=======
+	rm $file
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if [ -e $file ]; then
 		echo "$file couldn't be deleted" >&2
@@ -115,7 +119,10 @@ test_zero_size_delete()
 		exit 1
 	fi
 
+<<<<<<< HEAD
 	chattr -i $file
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	printf "$attrs" > $file
 
 	if [ -e $file ]; then
@@ -146,11 +153,15 @@ test_valid_filenames()
 			echo "$file could not be created" >&2
 			ret=1
 		else
+<<<<<<< HEAD
 			rm $file 2>/dev/null
 			if [ $? -ne 0 ]; then
 				chattr -i $file
 				rm $file
 			fi
+=======
+			rm $file
+>>>>>>> 671a46baf1b... some performance improvements
 		fi
 	done
 
@@ -183,11 +194,15 @@ test_invalid_filenames()
 
 		if [ -e $file ]; then
 			echo "Creating $file should have failed" >&2
+<<<<<<< HEAD
 			rm $file 2>/dev/null
 			if [ $? -ne 0 ]; then
 				chattr -i $file
 				rm $file
 			fi
+=======
+			rm $file
+>>>>>>> 671a46baf1b... some performance improvements
 			ret=1
 		fi
 	done

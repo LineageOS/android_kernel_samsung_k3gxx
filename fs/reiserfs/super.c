@@ -184,6 +184,7 @@ static int remove_save_link_only(struct super_block *s,
 static int reiserfs_quota_on_mount(struct super_block *, int);
 #endif
 
+<<<<<<< HEAD
 /*
  * Look for uncompleted unlinks and truncates and complete them
  *
@@ -193,6 +194,9 @@ static int reiserfs_quota_on_mount(struct super_block *, int);
  * cpu worklets to complete flush_async_commits() that in turn wait for the
  * superblock write lock.
  */
+=======
+/* look for uncompleted unlinks and truncates and complete them */
+>>>>>>> 671a46baf1b... some performance improvements
 static int finish_unfinished(struct super_block *s)
 {
 	INITIALIZE_PATH(path);
@@ -239,9 +243,13 @@ static int finish_unfinished(struct super_block *s)
 				quota_enabled[i] = 0;
 				continue;
 			}
+<<<<<<< HEAD
 			reiserfs_write_unlock(s);
 			ret = reiserfs_quota_on_mount(s, i);
 			reiserfs_write_lock(s);
+=======
+			ret = reiserfs_quota_on_mount(s, i);
+>>>>>>> 671a46baf1b... some performance improvements
 			if (ret < 0)
 				reiserfs_warning(s, "reiserfs-2500",
 						 "cannot turn on journaled "

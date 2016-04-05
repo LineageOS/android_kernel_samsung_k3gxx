@@ -353,9 +353,12 @@ batadv_purge_outstanding_packets(struct batadv_priv *bat_priv,
 
 		if (pending) {
 			hlist_del(&forw_packet->list);
+<<<<<<< HEAD
 			if (!forw_packet->own)
 				atomic_inc(&bat_priv->batman_queue_left);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			batadv_forw_packet_free(forw_packet);
 		}
 	}
@@ -382,9 +385,12 @@ batadv_purge_outstanding_packets(struct batadv_priv *bat_priv,
 
 		if (pending) {
 			hlist_del(&forw_packet->list);
+<<<<<<< HEAD
 			if (!forw_packet->own)
 				atomic_inc(&bat_priv->bcast_queue_left);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			batadv_forw_packet_free(forw_packet);
 		}
 	}

@@ -27,6 +27,7 @@ static char *tpm_device_name = "TPM";
 static acpi_status ppi_callback(acpi_handle handle, u32 level, void *context,
 				void **return_value)
 {
+<<<<<<< HEAD
 	acpi_status status = AE_OK;
 	struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
 
@@ -39,6 +40,17 @@ static acpi_status ppi_callback(acpi_handle handle, u32 level, void *context,
 	}
 
 	return status;
+=======
+	acpi_status status;
+	struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
+	status = acpi_get_name(handle, ACPI_FULL_PATHNAME, &buffer);
+	if (strstr(buffer.pointer, context) != NULL) {
+		*return_value = handle;
+		kfree(buffer.pointer);
+		return AE_CTRL_TERMINATE;
+	}
+	return AE_OK;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static inline void ppi_assign_params(union acpi_object params[4],
@@ -172,7 +184,11 @@ static ssize_t tpm_store_ppi_request(struct device *dev,
 	 * is updated with function index from SUBREQ to SUBREQ2 since PPI
 	 * version 1.1
 	 */
+<<<<<<< HEAD
 	if (strcmp(version, "1.1") < 0)
+=======
+	if (strcmp(version, "1.1") == -1)
+>>>>>>> 671a46baf1b... some performance improvements
 		params[2].integer.value = TPM_PPI_FN_SUBREQ;
 	else
 		params[2].integer.value = TPM_PPI_FN_SUBREQ2;
@@ -182,7 +198,11 @@ static ssize_t tpm_store_ppi_request(struct device *dev,
 	 * string/package type. For PPI version 1.0 and 1.1, use buffer type
 	 * for compatibility, and use package type since 1.2 according to spec.
 	 */
+<<<<<<< HEAD
 	if (strcmp(version, "1.2") < 0) {
+=======
+	if (strcmp(version, "1.2") == -1) {
+>>>>>>> 671a46baf1b... some performance improvements
 		params[3].type = ACPI_TYPE_BUFFER;
 		params[3].buffer.length = sizeof(req);
 		sscanf(buf, "%d", &req);
@@ -248,7 +268,11 @@ static ssize_t tpm_show_ppi_transition_action(struct device *dev,
 	 * (e.g. Capella with PPI 1.0) need integer/string/buffer type, so for
 	 * compatibility, define params[3].type as buffer, if PPI version < 1.2
 	 */
+<<<<<<< HEAD
 	if (strcmp(version, "1.2") < 0) {
+=======
+	if (strcmp(version, "1.2") == -1) {
+>>>>>>> 671a46baf1b... some performance improvements
 		params[3].type = ACPI_TYPE_BUFFER;
 		params[3].buffer.length =  0;
 		params[3].buffer.pointer = NULL;
@@ -390,7 +414,11 @@ static ssize_t show_ppi_operations(char *buf, u32 start, u32 end)
 	kfree(output.pointer);
 	output.length = ACPI_ALLOCATE_BUFFER;
 	output.pointer = NULL;
+<<<<<<< HEAD
 	if (strcmp(version, "1.2") < 0)
+=======
+	if (strcmp(version, "1.2") == -1)
+>>>>>>> 671a46baf1b... some performance improvements
 		return -EPERM;
 
 	params[2].integer.value = TPM_PPI_FN_GETOPR;

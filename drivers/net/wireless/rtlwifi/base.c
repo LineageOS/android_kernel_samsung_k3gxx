@@ -37,7 +37,10 @@
 
 #include <linux/ip.h>
 #include <linux/module.h>
+<<<<<<< HEAD
 #include <linux/udp.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 /*
  *NOTICE!!!: This file will be very big, we should
@@ -1067,6 +1070,7 @@ u8 rtl_is_special_data(struct ieee80211_hw *hw, struct sk_buff *skb, u8 is_tx)
 	if (!ieee80211_is_data(fc))
 		return false;
 
+<<<<<<< HEAD
 	ip = (const struct iphdr *)(skb->data + mac_hdr_len +
 				    SNAP_SIZE + PROTOC_TYPE_SIZE);
 	ether_type = be16_to_cpup((__be16 *)
@@ -1113,6 +1117,66 @@ u8 rtl_is_special_data(struct ieee80211_hw *hw, struct sk_buff *skb, u8 is_tx)
 		ppsc->last_delaylps_stamp_jiffies = jiffies;
 	}
 	return true;
+=======
+
+	ip = (struct iphdr *)((u8 *) skb->data + mac_hdr_len +
+			      SNAP_SIZE + PROTOC_TYPE_SIZE);
+	ether_type = *(u16 *) ((u8 *) skb->data + mac_hdr_len + SNAP_SIZE);
+	/*	ether_type = ntohs(ether_type); */
+
+	if (ETH_P_IP == ether_type) {
+		if (IPPROTO_UDP == ip->protocol) {
+			struct udphdr *udp = (struct udphdr *)((u8 *) ip +
+							       (ip->ihl << 2));
+			if (((((u8 *) udp)[1] == 68) &&
+			     (((u8 *) udp)[3] == 67)) ||
+			    ((((u8 *) udp)[1] == 67) &&
+			     (((u8 *) udp)[3] == 68))) {
+				/*
+				 * 68 : UDP BOOTP client
+				 * 67 : UDP BOOTP server
+				 */
+				RT_TRACE(rtlpriv, (COMP_SEND | COMP_RECV),
+					 DBG_DMESG, "dhcp %s !!\n",
+					 is_tx ? "Tx" : "Rx");
+
+				if (is_tx) {
+					rtlpriv->enter_ps = false;
+					schedule_work(&rtlpriv->
+						      works.lps_change_work);
+					ppsc->last_delaylps_stamp_jiffies =
+					    jiffies;
+				}
+
+				return true;
+			}
+		}
+	} else if (ETH_P_ARP == ether_type) {
+		if (is_tx) {
+			rtlpriv->enter_ps = false;
+			schedule_work(&rtlpriv->works.lps_change_work);
+			ppsc->last_delaylps_stamp_jiffies = jiffies;
+		}
+
+		return true;
+	} else if (ETH_P_PAE == ether_type) {
+		RT_TRACE(rtlpriv, (COMP_SEND | COMP_RECV), DBG_DMESG,
+			 "802.1X %s EAPOL pkt!!\n", is_tx ? "Tx" : "Rx");
+
+		if (is_tx) {
+			rtlpriv->enter_ps = false;
+			schedule_work(&rtlpriv->works.lps_change_work);
+			ppsc->last_delaylps_stamp_jiffies = jiffies;
+		}
+
+		return true;
+	} else if (ETH_P_IPV6 == ether_type) {
+		/* IPv6 */
+		return true;
+	}
+
+	return false;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /*********************************************************
@@ -1392,9 +1456,15 @@ void rtl_watchdog_wq_callback(void *data)
 		if (((rtlpriv->link_info.num_rx_inperiod +
 		      rtlpriv->link_info.num_tx_inperiod) > 8) ||
 		    (rtlpriv->link_info.num_rx_inperiod > 2))
+<<<<<<< HEAD
 			rtlpriv->enter_ps = false;
 		else
 			rtlpriv->enter_ps = true;
+=======
+			rtlpriv->enter_ps = true;
+		else
+			rtlpriv->enter_ps = false;
+>>>>>>> 671a46baf1b... some performance improvements
 
 		/* LeisurePS only work in infra mode. */
 		schedule_work(&rtlpriv->works.lps_change_work);
@@ -1427,8 +1497,12 @@ void rtl_watchdog_wq_callback(void *data)
 			/* if we can't recv beacon for 6s, we should
 			 * reconnect this AP
 			 */
+<<<<<<< HEAD
 			if ((rtlpriv->link_info.roam_times >= 3) &&
 			    !is_zero_ether_addr(rtlpriv->mac80211.bssid)) {
+=======
+			if (rtlpriv->link_info.roam_times >= 3) {
+>>>>>>> 671a46baf1b... some performance improvements
 				RT_TRACE(rtlpriv, COMP_ERR, DBG_EMERG,
 					 "AP off, try to reconnect now\n");
 				rtlpriv->link_info.roam_times = 0;

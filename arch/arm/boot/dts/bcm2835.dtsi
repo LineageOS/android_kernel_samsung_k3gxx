@@ -85,8 +85,11 @@
 			reg = <0x7e205000 0x1000>;
 			interrupts = <2 21>;
 			clocks = <&clk_i2c>;
+<<<<<<< HEAD
 			#address-cells = <1>;
 			#size-cells = <0>;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			status = "disabled";
 		};
 
@@ -95,8 +98,11 @@
 			reg = <0x7e804000 0x1000>;
 			interrupts = <2 21>;
 			clocks = <&clk_i2c>;
+<<<<<<< HEAD
 			#address-cells = <1>;
 			#size-cells = <0>;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			status = "disabled";
 		};
 

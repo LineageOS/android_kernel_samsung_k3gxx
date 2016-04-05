@@ -303,7 +303,10 @@ static __u8 *kye_report_fixup(struct hid_device *hdev, __u8 *rdesc,
 		}
 		break;
 	case USB_DEVICE_ID_KYE_MOUSEPEN_I608X:
+<<<<<<< HEAD
 	case USB_DEVICE_ID_KYE_MOUSEPEN_I608X_2:
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		if (*rsize == MOUSEPEN_I608X_RDESC_ORIG_SIZE) {
 			rdesc = mousepen_i608x_rdesc_fixed;
 			*rsize = sizeof(mousepen_i608x_rdesc_fixed);
@@ -384,7 +387,10 @@ static int kye_probe(struct hid_device *hdev, const struct hid_device_id *id)
 	switch (id->product) {
 	case USB_DEVICE_ID_KYE_EASYPEN_I405X:
 	case USB_DEVICE_ID_KYE_MOUSEPEN_I608X:
+<<<<<<< HEAD
 	case USB_DEVICE_ID_KYE_MOUSEPEN_I608X_2:
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	case USB_DEVICE_ID_KYE_EASYPEN_M610X:
 		ret = kye_tablet_enable(hdev);
 		if (ret) {
@@ -408,8 +414,11 @@ static const struct hid_device_id kye_devices[] = {
 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE,
 				USB_DEVICE_ID_KYE_MOUSEPEN_I608X) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE,
+<<<<<<< HEAD
 				USB_DEVICE_ID_KYE_MOUSEPEN_I608X_2) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 				USB_DEVICE_ID_KYE_EASYPEN_M610X) },
 	{ }
 };

@@ -170,4 +170,7 @@ module_exit(crc32c_mod_fini);
 MODULE_AUTHOR("Clay Haapala <chaapala@cisco.com>");
 MODULE_DESCRIPTION("CRC32c (Castagnoli) calculations wrapper for lib/crc32c");
 MODULE_LICENSE("GPL");
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("crc32c");
+=======
+>>>>>>> 671a46baf1b... some performance improvements

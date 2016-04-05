@@ -265,14 +265,18 @@ static int synaptics_identify(struct psmouse *psmouse)
  * Read touchpad resolution and maximum reported coordinates
  * Resolution is left zero if touchpad does not support the query
  */
+<<<<<<< HEAD
 
 static const int *quirk_min_max;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static int synaptics_resolution(struct psmouse *psmouse)
 {
 	struct synaptics_data *priv = psmouse->private;
 	unsigned char resp[3];
 
+<<<<<<< HEAD
 	if (quirk_min_max) {
 		priv->x_min = quirk_min_max[0];
 		priv->x_max = quirk_min_max[1];
@@ -281,6 +285,8 @@ static int synaptics_resolution(struct psmouse *psmouse)
 		return 0;
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (SYN_ID_MAJOR(priv->identity) < 4)
 		return 0;
 
@@ -549,6 +555,7 @@ static int synaptics_parse_hw_state(const unsigned char buf[],
 			 ((buf[0] & 0x04) >> 1) |
 			 ((buf[3] & 0x04) >> 2));
 
+<<<<<<< HEAD
 		if ((SYN_CAP_ADV_GESTURE(priv->ext_cap_0c) ||
 			SYN_CAP_IMAGE_SENSOR(priv->ext_cap_0c)) &&
 		    hw->w == 2) {
@@ -604,6 +611,12 @@ static int synaptics_parse_hw_state(const unsigned char buf[],
 			hw->left = priv->report_press;
 
 		} else if (SYN_CAP_CLICKPAD(priv->ext_cap_0c)) {
+=======
+		hw->left  = (buf[0] & 0x01) ? 1 : 0;
+		hw->right = (buf[0] & 0x02) ? 1 : 0;
+
+		if (SYN_CAP_CLICKPAD(priv->ext_cap_0c)) {
+>>>>>>> 671a46baf1b... some performance improvements
 			/*
 			 * Clickpad's button is transmitted as middle button,
 			 * however, since it is primary button, we will report
@@ -622,6 +635,24 @@ static int synaptics_parse_hw_state(const unsigned char buf[],
 			hw->down = ((buf[0] ^ buf[3]) & 0x02) ? 1 : 0;
 		}
 
+<<<<<<< HEAD
+=======
+		if ((SYN_CAP_ADV_GESTURE(priv->ext_cap_0c) ||
+			SYN_CAP_IMAGE_SENSOR(priv->ext_cap_0c)) &&
+		    hw->w == 2) {
+			synaptics_parse_agm(buf, priv, hw);
+			return 1;
+		}
+
+		hw->x = (((buf[3] & 0x10) << 8) |
+			 ((buf[1] & 0x0f) << 8) |
+			 buf[4]);
+		hw->y = (((buf[3] & 0x20) << 7) |
+			 ((buf[1] & 0xf0) << 4) |
+			 buf[5]);
+		hw->z = buf[2];
+
+>>>>>>> 671a46baf1b... some performance improvements
 		if (SYN_CAP_MULTI_BUTTON_NO(priv->ext_cap) &&
 		    ((buf[0] ^ buf[3]) & 0x02)) {
 			switch (SYN_CAP_MULTI_BUTTON_NO(priv->ext_cap) & ~0x01) {
@@ -1532,6 +1563,7 @@ static const struct dmi_system_id __initconst olpc_dmi_table[] = {
 	{ }
 };
 
+<<<<<<< HEAD
 static const struct dmi_system_id min_max_dmi_table[] __initconst = {
 #if defined(CONFIG_DMI)
 	{
@@ -1638,6 +1670,12 @@ void __init synaptics_module_init(void)
 	min_max_dmi = dmi_first_match(min_max_dmi_table);
 	if (min_max_dmi)
 		quirk_min_max = min_max_dmi->driver_data;
+=======
+void __init synaptics_module_init(void)
+{
+	impaired_toshiba_kbc = dmi_check_system(toshiba_dmi_table);
+	broken_olpc_ec = dmi_check_system(olpc_dmi_table);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int __synaptics_init(struct psmouse *psmouse, bool absolute_mode)

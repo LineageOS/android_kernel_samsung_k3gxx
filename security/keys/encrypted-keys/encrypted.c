@@ -315,6 +315,7 @@ static struct key *request_user_key(const char *master_desc, u8 **master_key,
 
 	down_read(&ukey->sem);
 	upayload = ukey->payload.data;
+<<<<<<< HEAD
 	if (!upayload) {
 		/* key was revoked before we acquired its semaphore */
 		up_read(&ukey->sem);
@@ -322,6 +323,8 @@ static struct key *request_user_key(const char *master_desc, u8 **master_key,
 		ukey = ERR_PTR(-EKEYREVOKED);
 		goto error;
 	}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	*master_key = upayload->data;
 	*master_keylen = upayload->datalen;
 error:
@@ -435,7 +438,11 @@ static int init_blkcipher_desc(struct blkcipher_desc *desc, const u8 *key,
 static struct key *request_master_key(struct encrypted_key_payload *epayload,
 				      u8 **master_key, size_t *master_keylen)
 {
+<<<<<<< HEAD
 	struct key *mkey = ERR_PTR(-EINVAL);
+=======
+	struct key *mkey = NULL;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (!strncmp(epayload->master_desc, KEY_TRUSTED_PREFIX,
 		     KEY_TRUSTED_PREFIX_LEN)) {
@@ -1025,6 +1032,7 @@ static int __init init_encrypted(void)
 	ret = encrypted_shash_alloc();
 	if (ret < 0)
 		return ret;
+<<<<<<< HEAD
 	ret = aes_get_sizes();
 	if (ret < 0)
 		goto out;
@@ -1032,6 +1040,12 @@ static int __init init_encrypted(void)
 	if (ret < 0)
 		goto out;
 	return 0;
+=======
+	ret = register_key_type(&key_type_encrypted);
+	if (ret < 0)
+		goto out;
+	return aes_get_sizes();
+>>>>>>> 671a46baf1b... some performance improvements
 out:
 	encrypted_shash_release();
 	return ret;

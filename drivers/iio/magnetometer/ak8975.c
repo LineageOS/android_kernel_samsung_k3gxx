@@ -276,6 +276,11 @@ static int ak8975_read_axis(struct iio_dev *indio_dev, int index, int *val)
 {
 	struct ak8975_data *data = iio_priv(indio_dev);
 	struct i2c_client *client = data->client;
+<<<<<<< HEAD
+=======
+	u16 meas_reg;
+	s16 raw;
+>>>>>>> 671a46baf1b... some performance improvements
 	int ret;
 
 	mutex_lock(&data->lock);
@@ -320,11 +325,24 @@ static int ak8975_read_axis(struct iio_dev *indio_dev, int index, int *val)
 		dev_err(&client->dev, "Read axis data fails\n");
 		goto exit;
 	}
+<<<<<<< HEAD
 
 	mutex_unlock(&data->lock);
 
 	/* Clamp to valid range. */
 	*val = clamp_t(s16, ret, -4096, 4095);
+=======
+	meas_reg = ret;
+
+	mutex_unlock(&data->lock);
+
+	/* Endian conversion of the measured values. */
+	raw = (s16) (le16_to_cpu(meas_reg));
+
+	/* Clamp to valid range. */
+	raw = clamp_t(s16, raw, -4096, 4095);
+	*val = raw;
+>>>>>>> 671a46baf1b... some performance improvements
 	return IIO_VAL_INT;
 
 exit:

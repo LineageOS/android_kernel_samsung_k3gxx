@@ -166,7 +166,10 @@ struct ip_tunnel *ip_tunnel_lookup(struct ip_tunnel_net *itn,
 
 	hlist_for_each_entry_rcu(t, head, hash_node) {
 		if (remote != t->parms.iph.daddr ||
+<<<<<<< HEAD
 		    t->parms.iph.saddr != 0 ||
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		    !(t->dev->flags & IFF_UP))
 			continue;
 
@@ -183,11 +186,18 @@ struct ip_tunnel *ip_tunnel_lookup(struct ip_tunnel_net *itn,
 	head = &itn->tunnels[hash];
 
 	hlist_for_each_entry_rcu(t, head, hash_node) {
+<<<<<<< HEAD
 		if ((local != t->parms.iph.saddr || t->parms.iph.daddr != 0) &&
 		    (local != t->parms.iph.daddr || !ipv4_is_multicast(local)))
 			continue;
 
 		if (!(t->dev->flags & IFF_UP))
+=======
+		if ((local != t->parms.iph.saddr &&
+		     (local != t->parms.iph.daddr ||
+		      !ipv4_is_multicast(local))) ||
+		    !(t->dev->flags & IFF_UP))
+>>>>>>> 671a46baf1b... some performance improvements
 			continue;
 
 		if (!ip_tunnel_key_match(&t->parms, flags, key))
@@ -204,8 +214,11 @@ struct ip_tunnel *ip_tunnel_lookup(struct ip_tunnel_net *itn,
 
 	hlist_for_each_entry_rcu(t, head, hash_node) {
 		if (t->parms.i_key != key ||
+<<<<<<< HEAD
 		    t->parms.iph.saddr != 0 ||
 		    t->parms.iph.daddr != 0 ||
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		    !(t->dev->flags & IFF_UP))
 			continue;
 
@@ -406,7 +419,11 @@ static struct ip_tunnel *ip_tunnel_create(struct net *net,
 }
 
 int ip_tunnel_rcv(struct ip_tunnel *tunnel, struct sk_buff *skb,
+<<<<<<< HEAD
 		  const struct tnl_ptk_info *tpi, int hdr_len, bool log_ecn_error)
+=======
+		  const struct tnl_ptk_info *tpi, bool log_ecn_error)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	struct pcpu_tstats *tstats;
 	const struct iphdr *iph = ip_hdr(skb);
@@ -417,7 +434,11 @@ int ip_tunnel_rcv(struct ip_tunnel *tunnel, struct sk_buff *skb,
 	skb->protocol = tpi->proto;
 
 	skb->mac_header = skb->network_header;
+<<<<<<< HEAD
 	__pskb_pull(skb, hdr_len);
+=======
+	__pskb_pull(skb, tunnel->hlen);
+>>>>>>> 671a46baf1b... some performance improvements
 	skb_postpull_rcsum(skb, skb_transport_header(skb), tunnel->hlen);
 #ifdef CONFIG_NET_IPGRE_BROADCAST
 	if (ipv4_is_multicast(iph->daddr)) {
@@ -640,7 +661,10 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
 				tunnel->err_time + IPTUNNEL_ERR_TIMEO)) {
 			tunnel->err_count--;
 
+<<<<<<< HEAD
 			memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			dst_link_failure(skb);
 		} else
 			tunnel->err_count = 0;
@@ -664,6 +688,7 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
 
 	max_headroom = LL_RESERVED_SPACE(tdev) + sizeof(struct iphdr)
 					       + rt->dst.header_len;
+<<<<<<< HEAD
 	if (max_headroom > dev->needed_headroom)
 		dev->needed_headroom = max_headroom;
 
@@ -671,6 +696,15 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
 		dev->stats.tx_dropped++;
 		dev_kfree_skb(skb);
 		return;
+=======
+	if (max_headroom > dev->needed_headroom) {
+		dev->needed_headroom = max_headroom;
+		if (skb_cow_head(skb, dev->needed_headroom)) {
+			dev->stats.tx_dropped++;
+			dev_kfree_skb(skb);
+			return;
+		}
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	skb_dst_drop(skb);
@@ -691,7 +725,11 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
 	iph->daddr	=	fl4.daddr;
 	iph->saddr	=	fl4.saddr;
 	iph->ttl	=	ttl;
+<<<<<<< HEAD
 	__ip_select_ident(iph, skb_shinfo(skb)->gso_segs ?: 1);
+=======
+	tunnel_ip_select_ident(skb, inner_iph, &rt->dst);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	iptunnel_xmit(skb, dev);
 	return;

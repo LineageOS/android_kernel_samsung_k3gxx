@@ -1193,7 +1193,10 @@ out_passthru:
 		ida_pci_info_struct pciinfo;
 
 		if (!arg) return -EINVAL;
+<<<<<<< HEAD
 		memset(&pciinfo, 0, sizeof(pciinfo));
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		pciinfo.bus = host->pci_dev->bus->number;
 		pciinfo.dev_fn = host->pci_dev->devfn;
 		pciinfo.board_id = host->board_id;

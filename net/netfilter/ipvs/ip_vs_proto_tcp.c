@@ -373,6 +373,7 @@ static const char *const tcp_state_name_table[IP_VS_TCP_S_LAST+1] = {
 	[IP_VS_TCP_S_LAST]		=	"BUG!",
 };
 
+<<<<<<< HEAD
 static const bool tcp_state_active_table[IP_VS_TCP_S_LAST] = {
 	[IP_VS_TCP_S_NONE]		=	false,
 	[IP_VS_TCP_S_ESTABLISHED]	=	true,
@@ -387,6 +388,8 @@ static const bool tcp_state_active_table[IP_VS_TCP_S_LAST] = {
 	[IP_VS_TCP_S_SYNACK]		=	true,
 };
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #define sNO IP_VS_TCP_S_NONE
 #define sES IP_VS_TCP_S_ESTABLISHED
 #define sSS IP_VS_TCP_S_SYN_SENT
@@ -410,6 +413,7 @@ static const char * tcp_state_name(int state)
 	return tcp_state_name_table[state] ? tcp_state_name_table[state] : "?";
 }
 
+<<<<<<< HEAD
 static bool tcp_state_active(int state)
 {
 	if (state >= IP_VS_TCP_S_LAST)
@@ -417,6 +421,8 @@ static bool tcp_state_active(int state)
 	return tcp_state_active_table[state];
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static struct tcp_states_t tcp_states [] = {
 /*	INPUT */
 /*        sNO, sES, sSS, sSR, sFW, sTW, sCL, sCW, sLA, sLI, sSA	*/
@@ -539,12 +545,20 @@ set_tcp_state(struct ip_vs_proto_data *pd, struct ip_vs_conn *cp,
 
 		if (dest) {
 			if (!(cp->flags & IP_VS_CONN_F_INACTIVE) &&
+<<<<<<< HEAD
 			    !tcp_state_active(new_state)) {
+=======
+			    (new_state != IP_VS_TCP_S_ESTABLISHED)) {
+>>>>>>> 671a46baf1b... some performance improvements
 				atomic_dec(&dest->activeconns);
 				atomic_inc(&dest->inactconns);
 				cp->flags |= IP_VS_CONN_F_INACTIVE;
 			} else if ((cp->flags & IP_VS_CONN_F_INACTIVE) &&
+<<<<<<< HEAD
 				   tcp_state_active(new_state)) {
+=======
+				   (new_state == IP_VS_TCP_S_ESTABLISHED)) {
+>>>>>>> 671a46baf1b... some performance improvements
 				atomic_inc(&dest->activeconns);
 				atomic_dec(&dest->inactconns);
 				cp->flags &= ~IP_VS_CONN_F_INACTIVE;

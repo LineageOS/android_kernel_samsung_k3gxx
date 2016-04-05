@@ -546,6 +546,69 @@ void scsi_run_host_queues(struct Scsi_Host *shost)
 
 static void __scsi_release_buffers(struct scsi_cmnd *, int);
 
+<<<<<<< HEAD
+=======
+/*
+ * Function:    scsi_end_request()
+ *
+ * Purpose:     Post-processing of completed commands (usually invoked at end
+ *		of upper level post-processing and scsi_io_completion).
+ *
+ * Arguments:   cmd	 - command that is complete.
+ *              error    - 0 if I/O indicates success, < 0 for I/O error.
+ *              bytes    - number of bytes of completed I/O
+ *		requeue  - indicates whether we should requeue leftovers.
+ *
+ * Lock status: Assumed that lock is not held upon entry.
+ *
+ * Returns:     cmd if requeue required, NULL otherwise.
+ *
+ * Notes:       This is called for block device requests in order to
+ *              mark some number of sectors as complete.
+ * 
+ *		We are guaranteeing that the request queue will be goosed
+ *		at some point during this call.
+ * Notes:	If cmd was requeued, upon return it will be a stale pointer.
+ */
+static struct scsi_cmnd *scsi_end_request(struct scsi_cmnd *cmd, int error,
+					  int bytes, int requeue)
+{
+	struct request_queue *q = cmd->device->request_queue;
+	struct request *req = cmd->request;
+
+	/*
+	 * If there are blocks left over at the end, set up the command
+	 * to queue the remainder of them.
+	 */
+	if (blk_end_request(req, error, bytes)) {
+		/* kill remainder if no retrys */
+		if (error && scsi_noretry_cmd(cmd))
+			blk_end_request_all(req, error);
+		else {
+			if (requeue) {
+				/*
+				 * Bleah.  Leftovers again.  Stick the
+				 * leftovers in the front of the
+				 * queue, and goose the queue again.
+				 */
+				scsi_release_buffers(cmd);
+				scsi_requeue_command(q, cmd);
+				cmd = NULL;
+			}
+			return cmd;
+		}
+	}
+
+	/*
+	 * This will goose the queue request function at the end, so we don't
+	 * need to worry about launching another command.
+	 */
+	__scsi_release_buffers(cmd, 0);
+	scsi_next_command(cmd);
+	return NULL;
+}
+
+>>>>>>> 671a46baf1b... some performance improvements
 static inline unsigned int scsi_sgtable_index(unsigned short nents)
 {
 	unsigned int index;
@@ -675,9 +738,22 @@ static int __scsi_error_from_host_byte(struct scsi_cmnd *cmd, int result)
  *
  * Returns:     Nothing
  *
+<<<<<<< HEAD
  * Notes:       We will finish off the specified number of sectors.  If we
  *		are done, the command block will be released and the queue
  *		function will be goosed.  If we are not done then we have to
+=======
+ * Notes:       This function is matched in terms of capabilities to
+ *              the function that created the scatter-gather list.
+ *              In other words, if there are no bounce buffers
+ *              (the normal case for most drivers), we don't need
+ *              the logic to deal with cleaning up afterwards.
+ *
+ *		We must call scsi_end_request().  This will finish off
+ *		the specified number of sectors.  If we are done, the
+ *		command block will be released and the queue function
+ *		will be goosed.  If we are not done then we have to
+>>>>>>> 671a46baf1b... some performance improvements
  *		figure out what to do next:
  *
  *		a) We can call scsi_requeue_command().  The request
@@ -686,7 +762,11 @@ static int __scsi_error_from_host_byte(struct scsi_cmnd *cmd, int result)
  *		   be used if we made forward progress, or if we want
  *		   to switch from READ(10) to READ(6) for example.
  *
+<<<<<<< HEAD
  *		b) We can call __scsi_queue_insert().  The request will
+=======
+ *		b) We can call scsi_queue_insert().  The request will
+>>>>>>> 671a46baf1b... some performance improvements
  *		   be put back on the queue and retried using the same
  *		   command as before, possibly after a delay.
  *
@@ -748,6 +828,7 @@ void scsi_io_completion(struct scsi_cmnd *cmd, unsigned int good_bytes)
 			scsi_next_command(cmd);
 			return;
 		}
+<<<<<<< HEAD
 	} else if (blk_rq_bytes(req) == 0 && result && !sense_deferred) {
 		/*
 		 * Certain non BLOCK_PC requests are commands that don't
@@ -756,6 +837,8 @@ void scsi_io_completion(struct scsi_cmnd *cmd, unsigned int good_bytes)
 		 * This sets the error explicitly for the problem case.
 		 */
 		error = __scsi_error_from_host_byte(cmd, result);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	/* no bidi support for !REQ_TYPE_BLOCK_PC yet */
@@ -790,6 +873,7 @@ void scsi_io_completion(struct scsi_cmnd *cmd, unsigned int good_bytes)
 	}
 
 	/*
+<<<<<<< HEAD
 	 * special case: failed zero length commands always need to
 	 * drop down into the retry code. Otherwise, if we finished
 	 * all bytes in the request we are done now.
@@ -812,6 +896,14 @@ void scsi_io_completion(struct scsi_cmnd *cmd, unsigned int good_bytes)
 	 */
 	if (result == 0)
 		goto requeue;
+=======
+	 * A number of bytes were successfully read.  If there
+	 * are leftovers and there is some kind of error
+	 * (result != 0), retry the rest.
+	 */
+	if (scsi_end_request(cmd, error, good_bytes, result == 0) == NULL)
+		return;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	error = __scsi_error_from_host_byte(cmd, result);
 
@@ -933,6 +1025,10 @@ void scsi_io_completion(struct scsi_cmnd *cmd, unsigned int good_bytes)
 	switch (action) {
 	case ACTION_FAIL:
 		/* Give up and fail the remainder of the request */
+<<<<<<< HEAD
+=======
+		scsi_release_buffers(cmd);
+>>>>>>> 671a46baf1b... some performance improvements
 		if (!(req->cmd_flags & REQ_QUIET)) {
 			if (description)
 				scmd_printk(KERN_INFO, cmd, "%s\n",
@@ -942,11 +1038,20 @@ void scsi_io_completion(struct scsi_cmnd *cmd, unsigned int good_bytes)
 				scsi_print_sense("", cmd);
 			scsi_print_command(cmd);
 		}
+<<<<<<< HEAD
 		if (!blk_end_request_err(req, error))
 			goto next_command;
 		/*FALLTHRU*/
 	case ACTION_REPREP:
 	requeue:
+=======
+		if (blk_end_request_err(req, error))
+			scsi_requeue_command(q, cmd);
+		else
+			scsi_next_command(cmd);
+		break;
+	case ACTION_REPREP:
+>>>>>>> 671a46baf1b... some performance improvements
 		/* Unprep the request and put it back at the head of the queue.
 		 * A new command will be prepared and issued.
 		 */
@@ -962,11 +1067,14 @@ void scsi_io_completion(struct scsi_cmnd *cmd, unsigned int good_bytes)
 		__scsi_queue_insert(cmd, SCSI_MLQUEUE_DEVICE_BUSY, 0);
 		break;
 	}
+<<<<<<< HEAD
 	return;
 
 next_command:
 	__scsi_release_buffers(cmd, 0);
 	scsi_next_command(cmd);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int scsi_init_sgtable(struct request *req, struct scsi_data_buffer *sdb,
@@ -1009,12 +1117,17 @@ static int scsi_init_sgtable(struct request *req, struct scsi_data_buffer *sdb,
 int scsi_init_io(struct scsi_cmnd *cmd, gfp_t gfp_mask)
 {
 	struct request *rq = cmd->request;
+<<<<<<< HEAD
 	int error;
 
 	if (WARN_ON_ONCE(!rq->nr_phys_segments))
 		return -EINVAL;
 
 	error = scsi_init_sgtable(rq, &cmd->sdb, gfp_mask);
+=======
+
+	int error = scsi_init_sgtable(rq, &cmd->sdb, gfp_mask);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (error)
 		goto err_exit;
 
@@ -1106,7 +1219,15 @@ int scsi_setup_blk_pc_cmnd(struct scsi_device *sdev, struct request *req)
 	 * submit a request without an attached bio.
 	 */
 	if (req->bio) {
+<<<<<<< HEAD
 		int ret = scsi_init_io(cmd, GFP_ATOMIC);
+=======
+		int ret;
+
+		BUG_ON(!req->nr_phys_segments);
+
+		ret = scsi_init_io(cmd, GFP_ATOMIC);
+>>>>>>> 671a46baf1b... some performance improvements
 		if (unlikely(ret))
 			return ret;
 	} else {
@@ -1150,6 +1271,14 @@ int scsi_setup_fs_cmnd(struct scsi_device *sdev, struct request *req)
 			return ret;
 	}
 
+<<<<<<< HEAD
+=======
+	/*
+	 * Filesystem requests must transfer data.
+	 */
+	BUG_ON(!req->nr_phys_segments);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	cmd = scsi_get_cmd_from_req(sdev, req);
 	if (unlikely(!cmd))
 		return BLKPREP_DEFER;
@@ -1189,11 +1318,17 @@ int scsi_prep_state_check(struct scsi_device *sdev, struct request *req)
 				    "rejecting I/O to dead device\n");
 			ret = BLKPREP_KILL;
 			break;
+<<<<<<< HEAD
 		case SDEV_BLOCK:
 		case SDEV_CREATED_BLOCK:
 			ret = BLKPREP_DEFER;
 			break;
 		case SDEV_QUIESCE:
+=======
+		case SDEV_QUIESCE:
+		case SDEV_BLOCK:
+		case SDEV_CREATED_BLOCK:
+>>>>>>> 671a46baf1b... some performance improvements
 			/*
 			 * If the devices is blocked we defer normal commands.
 			 */

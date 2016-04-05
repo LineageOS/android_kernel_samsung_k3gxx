@@ -1089,7 +1089,10 @@ static void gsm_control_modem(struct gsm_mux *gsm, u8 *data, int clen)
 {
 	unsigned int addr = 0;
 	unsigned int modem = 0;
+<<<<<<< HEAD
 	unsigned int brk = 0;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	struct gsm_dlci *dlci;
 	int len = clen;
 	u8 *dp = data;
@@ -1116,6 +1119,7 @@ static void gsm_control_modem(struct gsm_mux *gsm, u8 *data, int clen)
 		if (len == 0)
 			return;
 	}
+<<<<<<< HEAD
 	len--;
 	if (len > 0) {
 		while (gsm_read_ea(&brk, *dp++) == 0) {
@@ -1126,6 +1130,8 @@ static void gsm_control_modem(struct gsm_mux *gsm, u8 *data, int clen)
 		modem <<= 7;
 		modem |= (brk & 0x7f);
 	}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	tty = tty_port_tty_get(&dlci->port);
 	gsm_process_modem(tty, dlci, modem, clen);
 	if (tty) {

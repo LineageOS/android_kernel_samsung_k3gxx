@@ -112,6 +112,7 @@ static const char *ata_lpm_policy_names[] = {
 	[ATA_LPM_MIN_POWER]	= "min_power",
 };
 
+<<<<<<< HEAD
 static ssize_t ata_scsi_lpm_store(struct device *device,
 				  struct device_attribute *attr,
 				  const char *buf, size_t count)
@@ -120,6 +121,14 @@ static ssize_t ata_scsi_lpm_store(struct device *device,
 	struct ata_port *ap = ata_shost_to_port(shost);
 	struct ata_link *link;
 	struct ata_device *dev;
+=======
+static ssize_t ata_scsi_lpm_store(struct device *dev,
+				  struct device_attribute *attr,
+				  const char *buf, size_t count)
+{
+	struct Scsi_Host *shost = class_to_shost(dev);
+	struct ata_port *ap = ata_shost_to_port(shost);
+>>>>>>> 671a46baf1b... some performance improvements
 	enum ata_lpm_policy policy;
 	unsigned long flags;
 
@@ -135,6 +144,7 @@ static ssize_t ata_scsi_lpm_store(struct device *device,
 		return -EINVAL;
 
 	spin_lock_irqsave(ap->lock, flags);
+<<<<<<< HEAD
 
 	ata_for_each_link(link, ap, EDGE) {
 		ata_for_each_dev(dev, &ap->link, ENABLED) {
@@ -149,6 +159,12 @@ static ssize_t ata_scsi_lpm_store(struct device *device,
 	ata_port_schedule_eh(ap);
 out_unlock:
 	spin_unlock_irqrestore(ap->lock, flags);
+=======
+	ap->target_lpm_policy = policy;
+	ata_port_schedule_eh(ap);
+	spin_unlock_irqrestore(ap->lock, flags);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	return count;
 }
 
@@ -673,6 +689,7 @@ static int ata_ioc32(struct ata_port *ap)
 int ata_sas_scsi_ioctl(struct ata_port *ap, struct scsi_device *scsidev,
 		     int cmd, void __user *arg)
 {
+<<<<<<< HEAD
 	unsigned long val;
 	int rc = -EINVAL;
 	unsigned long flags;
@@ -685,6 +702,21 @@ int ata_sas_scsi_ioctl(struct ata_port *ap, struct scsi_device *scsidev,
 		return put_user(val, (unsigned long __user *)arg);
 
 	case HDIO_SET_32BIT:
+=======
+	int val = -EINVAL, rc = -EINVAL;
+	unsigned long flags;
+
+	switch (cmd) {
+	case ATA_IOC_GET_IO32:
+		spin_lock_irqsave(ap->lock, flags);
+		val = ata_ioc32(ap);
+		spin_unlock_irqrestore(ap->lock, flags);
+		if (copy_to_user(arg, &val, 1))
+			return -EFAULT;
+		return 0;
+
+	case ATA_IOC_SET_IO32:
+>>>>>>> 671a46baf1b... some performance improvements
 		val = (unsigned long) arg;
 		rc = 0;
 		spin_lock_irqsave(ap->lock, flags);
@@ -2511,8 +2543,12 @@ static unsigned int ata_scsiop_read_cap(struct ata_scsi_args *args, u8 *rbuf)
 		rbuf[14] = (lowest_aligned >> 8) & 0x3f;
 		rbuf[15] = lowest_aligned;
 
+<<<<<<< HEAD
 		if (ata_id_has_trim(args->id) &&
 		    !(dev->horkage & ATA_HORKAGE_NOTRIM)) {
+=======
+		if (ata_id_has_trim(args->id)) {
+>>>>>>> 671a46baf1b... some performance improvements
 			rbuf[14] |= 0x80; /* TPE */
 
 			if (ata_id_has_zero_after_trim(args->id))
@@ -2794,12 +2830,19 @@ static unsigned int atapi_xlat(struct ata_queued_cmd *qc)
 static struct ata_device *ata_find_dev(struct ata_port *ap, int devno)
 {
 	if (!sata_pmp_attached(ap)) {
+<<<<<<< HEAD
 		if (likely(devno >= 0 &&
 			   devno < ata_link_max_devices(&ap->link)))
 			return &ap->link.device[devno];
 	} else {
 		if (likely(devno >= 0 &&
 			   devno < ap->nr_pmp_links))
+=======
+		if (likely(devno < ata_link_max_devices(&ap->link)))
+			return &ap->link.device[devno];
+	} else {
+		if (likely(devno < ap->nr_pmp_links))
+>>>>>>> 671a46baf1b... some performance improvements
 			return &ap->pmp_link[devno].device[0];
 	}
 
@@ -3628,7 +3671,10 @@ int ata_scsi_add_hosts(struct ata_host *host, struct scsi_host_template *sht)
 		shost->max_lun = 1;
 		shost->max_channel = 1;
 		shost->max_cmd_len = 16;
+<<<<<<< HEAD
 		shost->no_write_same = 1;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 		/* Schedule policy is determined by ->qc_defer()
 		 * callback and it needs to see every deferred qc.
@@ -3878,6 +3924,7 @@ void ata_scsi_hotplug(struct work_struct *work)
 		return;
 	}
 
+<<<<<<< HEAD
 	/*
 	 * XXX - UGLY HACK
 	 *
@@ -3899,6 +3946,8 @@ void ata_scsi_hotplug(struct work_struct *work)
 		msleep(10);
 #endif
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	DPRINTK("ENTER\n");
 	mutex_lock(&ap->scsi_scan_mutex);
 

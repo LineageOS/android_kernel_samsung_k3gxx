@@ -676,6 +676,10 @@ static int mxc_nand_correct_data_v2_v3(struct mtd_info *mtd, u_char *dat,
 		ecc_stat >>= 4;
 	} while (--no_subpages);
 
+<<<<<<< HEAD
+=======
+	mtd->ecc_stats.corrected += ret;
+>>>>>>> 671a46baf1b... some performance improvements
 	pr_debug("%d Symbol Correctable RS-ECC Error\n", ret);
 
 	return ret;

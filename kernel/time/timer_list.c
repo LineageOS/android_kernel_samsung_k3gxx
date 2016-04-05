@@ -265,9 +265,16 @@ static inline void timer_list_header(struct seq_file *m, u64 now)
 static int timer_list_show(struct seq_file *m, void *v)
 {
 	struct timer_list_iter *iter = v;
+<<<<<<< HEAD
 
 	if (iter->cpu == -1 && !iter->second_pass)
 		timer_list_header(m, iter->now);
+=======
+	u64 now = ktime_to_ns(ktime_get());
+
+	if (iter->cpu == -1 && !iter->second_pass)
+		timer_list_header(m, now);
+>>>>>>> 671a46baf1b... some performance improvements
 	else if (!iter->second_pass)
 		print_cpu(m, iter->cpu, iter->now);
 #ifdef CONFIG_GENERIC_CLOCKEVENTS
@@ -297,6 +304,7 @@ void sysrq_timer_list_show(void)
 	return;
 }
 
+<<<<<<< HEAD
 static void *move_iter(struct timer_list_iter *iter, loff_t offset)
 {
 	for (; offset; offset--) {
@@ -312,10 +320,30 @@ static void *move_iter(struct timer_list_iter *iter, loff_t offset)
 			return NULL;
 #endif
 		}
+=======
+static void *timer_list_start(struct seq_file *file, loff_t *offset)
+{
+	struct timer_list_iter *iter = file->private;
+
+	if (!*offset) {
+		iter->cpu = -1;
+		iter->now = ktime_to_ns(ktime_get());
+	} else if (iter->cpu >= nr_cpu_ids) {
+#ifdef CONFIG_GENERIC_CLOCKEVENTS
+		if (!iter->second_pass) {
+			iter->cpu = -1;
+			iter->second_pass = true;
+		} else
+			return NULL;
+#else
+		return NULL;
+#endif
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	return iter;
 }
 
+<<<<<<< HEAD
 static void *timer_list_start(struct seq_file *file, loff_t *offset)
 {
 	struct timer_list_iter *iter = file->private;
@@ -332,6 +360,14 @@ static void *timer_list_next(struct seq_file *file, void *v, loff_t *offset)
 	struct timer_list_iter *iter = file->private;
 	++*offset;
 	return move_iter(iter, 1);
+=======
+static void *timer_list_next(struct seq_file *file, void *v, loff_t *offset)
+{
+	struct timer_list_iter *iter = file->private;
+	iter->cpu = cpumask_next(iter->cpu, cpu_online_mask);
+	++*offset;
+	return timer_list_start(file, offset);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void timer_list_stop(struct seq_file *seq, void *v)

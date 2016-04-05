@@ -401,7 +401,10 @@ struct virtio_device_id {
 /*
  * For Hyper-V devices we use the device guid as the id.
  */
+<<<<<<< HEAD
 #define vmbus_device_id hv_vmbus_device_id
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 struct hv_vmbus_device_id {
 	__u8 guid[16];
 	kernel_ulong_t driver_data;	/* Data private to the driver */
@@ -461,8 +464,12 @@ enum dmi_field {
 };
 
 struct dmi_strmatch {
+<<<<<<< HEAD
 	unsigned char slot:7;
 	unsigned char exact_match:1;
+=======
+	unsigned char slot;
+>>>>>>> 671a46baf1b... some performance improvements
 	char substr[79];
 };
 
@@ -480,8 +487,12 @@ struct dmi_system_id {
  */
 #define dmi_device_id dmi_system_id
 
+<<<<<<< HEAD
 #define DMI_MATCH(a, b)	{ .slot = a, .substr = b }
 #define DMI_EXACT_MATCH(a, b)	{ .slot = a, .substr = b, .exact_match = 1 }
+=======
+#define DMI_MATCH(a, b)	{ a, b }
+>>>>>>> 671a46baf1b... some performance improvements
 
 #define PLATFORM_NAME_SIZE	20
 #define PLATFORM_MODULE_PREFIX	"platform:"
@@ -552,11 +563,14 @@ struct amba_id {
  * See documentation of "x86_match_cpu" for details.
  */
 
+<<<<<<< HEAD
 /*
  * MODULE_DEVICE_TABLE expects this struct to be called x86cpu_device_id.
  * Although gcc seems to ignore this error, clang fails without this define.
  */
 #define x86cpu_device_id x86_cpu_id
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 struct x86_cpu_id {
 	__u16 vendor;
 	__u16 family;
@@ -584,7 +598,10 @@ struct ipack_device_id {
 #define MEI_CL_MODULE_PREFIX "mei:"
 #define MEI_CL_NAME_SIZE 32
 
+<<<<<<< HEAD
 #define mei_device_id mei_cl_device_id
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 struct mei_cl_device_id {
 	char name[MEI_CL_NAME_SIZE];
 	kernel_ulong_t driver_info;

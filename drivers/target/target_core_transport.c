@@ -488,7 +488,11 @@ static int transport_cmd_check_stop(struct se_cmd *cmd, bool remove_from_lists)
 
 		spin_unlock_irqrestore(&cmd->t_state_lock, flags);
 
+<<<<<<< HEAD
 		complete_all(&cmd->t_transport_stop_comp);
+=======
+		complete(&cmd->t_transport_stop_comp);
+>>>>>>> 671a46baf1b... some performance improvements
 		return 1;
 	}
 
@@ -617,7 +621,11 @@ void target_complete_cmd(struct se_cmd *cmd, u8 scsi_status)
 	if (cmd->transport_state & CMD_T_ABORTED &&
 	    cmd->transport_state & CMD_T_STOP) {
 		spin_unlock_irqrestore(&cmd->t_state_lock, flags);
+<<<<<<< HEAD
 		complete_all(&cmd->t_transport_stop_comp);
+=======
+		complete(&cmd->t_transport_stop_comp);
+>>>>>>> 671a46baf1b... some performance improvements
 		return;
 	} else if (cmd->transport_state & CMD_T_FAILED) {
 		INIT_WORK(&cmd->work, target_complete_failure_work);
@@ -633,6 +641,7 @@ void target_complete_cmd(struct se_cmd *cmd, u8 scsi_status)
 }
 EXPORT_SYMBOL(target_complete_cmd);
 
+<<<<<<< HEAD
 void target_complete_cmd_with_length(struct se_cmd *cmd, u8 scsi_status, int length)
 {
 	if (scsi_status == SAM_STAT_GOOD && length < cmd->data_length) {
@@ -650,6 +659,8 @@ void target_complete_cmd_with_length(struct se_cmd *cmd, u8 scsi_status, int len
 }
 EXPORT_SYMBOL(target_complete_cmd_with_length);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static void target_add_to_state_list(struct se_cmd *cmd)
 {
 	struct se_device *dev = cmd->se_dev;
@@ -1705,7 +1716,11 @@ void target_execute_cmd(struct se_cmd *cmd)
 			cmd->se_tfo->get_task_tag(cmd));
 
 		spin_unlock_irq(&cmd->t_state_lock);
+<<<<<<< HEAD
 		complete_all(&cmd->t_transport_stop_comp);
+=======
+		complete(&cmd->t_transport_stop_comp);
+>>>>>>> 671a46baf1b... some performance improvements
 		return;
 	}
 
@@ -1788,7 +1803,12 @@ static void transport_complete_qf(struct se_cmd *cmd)
 
 	if (cmd->se_cmd_flags & SCF_TRANSPORT_TASK_SENSE) {
 		ret = cmd->se_tfo->queue_status(cmd);
+<<<<<<< HEAD
 		goto out;
+=======
+		if (ret)
+			goto out;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	switch (cmd->data_direction) {
@@ -2128,7 +2148,11 @@ transport_generic_new_cmd(struct se_cmd *cmd)
 	 * and let it call back once the write buffers are ready.
 	 */
 	target_add_to_state_list(cmd);
+<<<<<<< HEAD
 	if (cmd->data_direction != DMA_TO_DEVICE || cmd->data_length == 0) {
+=======
+	if (cmd->data_direction != DMA_TO_DEVICE) {
+>>>>>>> 671a46baf1b... some performance improvements
 		target_execute_cmd(cmd);
 		return 0;
 	}
@@ -2222,10 +2246,13 @@ int target_get_sess_cmd(struct se_session *se_sess, struct se_cmd *se_cmd,
 
 out:
 	spin_unlock_irqrestore(&se_sess->sess_cmd_lock, flags);
+<<<<<<< HEAD
 
 	if (ret && ack_kref)
 		target_put_sess_cmd(se_sess, se_cmd);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return ret;
 }
 EXPORT_SYMBOL(target_get_sess_cmd);
@@ -2897,12 +2924,15 @@ static void target_tmr_work(struct work_struct *work)
 int transport_generic_handle_tmr(
 	struct se_cmd *cmd)
 {
+<<<<<<< HEAD
 	unsigned long flags;
 
 	spin_lock_irqsave(&cmd->t_state_lock, flags);
 	cmd->transport_state |= CMD_T_ACTIVE;
 	spin_unlock_irqrestore(&cmd->t_state_lock, flags);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	INIT_WORK(&cmd->work, target_tmr_work);
 	queue_work(cmd->se_dev->tmr_wq, &cmd->work);
 	return 0;

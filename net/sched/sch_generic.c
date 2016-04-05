@@ -908,7 +908,10 @@ void psched_ratecfg_precompute(struct psched_ratecfg *r,
 	memset(r, 0, sizeof(*r));
 	r->overhead = conf->overhead;
 	r->rate_bps = (u64)conf->rate << 3;
+<<<<<<< HEAD
 	r->linklayer = (conf->linklayer & TC_LINKLAYER_MASK);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	r->mult = 1;
 	/*
 	 * Calibrate mult, shift so that token counting is accurate

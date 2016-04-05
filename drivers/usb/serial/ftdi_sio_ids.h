@@ -30,6 +30,7 @@
 
 /*** third-party PIDs (using FTDI_VID) ***/
 
+<<<<<<< HEAD
 /*
  * Certain versions of the official Windows FTDI driver reprogrammed
  * counterfeit FTDI devices to PID 0. Support these devices anyway.
@@ -41,6 +42,10 @@
 /* Cyber Cortex AV by Fabulous Silicon (http://fabuloussilicon.com) */
 #define CYBER_CORTEX_AV_PID	0x8698
 
+=======
+#define FTDI_LUMEL_PD12_PID	0x6002
+
+>>>>>>> 671a46baf1b... some performance improvements
 /*
  * Marvell OpenRD Base, Client
  * http://www.open-rd.org
@@ -51,8 +56,11 @@
 /* www.candapter.com Ewert Energy Systems CANdapter device */
 #define FTDI_CANDAPTER_PID 0x9F80 /* Product Id */
 
+<<<<<<< HEAD
 #define FTDI_BM_ATOM_NANO_PID	0xa559	/* Basic Micro ATOM Nano USB2Serial */
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /*
  * Texas Instruments XDS100v2 JTAG / BeagleBone A3
  * http://processors.wiki.ti.com/index.php/XDS100
@@ -61,7 +69,10 @@
 #define TI_XDS100V2_PID		0xa6d0
 
 #define FTDI_NXTCAM_PID		0xABB8 /* NXTCam for Mindstorms NXT */
+<<<<<<< HEAD
 #define FTDI_EV3CON_PID		0xABB9 /* Mindstorms EV3 Console Adapter */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 /* US Interface Navigator (http://www.usinterface.com/) */
 #define FTDI_USINT_CAT_PID	0xb810	/* Navigator CAT and 2nd PTT lines */
@@ -151,6 +162,7 @@
 /*
  * Xsens Technologies BV products (http://www.xsens.com).
  */
+<<<<<<< HEAD
 #define XSENS_VID		0x2639
 #define XSENS_AWINDA_STATION_PID 0x0101
 #define XSENS_AWINDA_DONGLE_PID 0x0102
@@ -165,6 +177,14 @@
 #define XSENS_CONVERTER_3_PID	0xD38B	/* Xsens USB-serial converter */
 #define XSENS_CONVERTER_4_PID	0xD38C	/* Xsens Wireless Receiver */
 #define XSENS_CONVERTER_5_PID	0xD38D	/* Xsens Awinda Station */
+=======
+#define XSENS_CONVERTER_0_PID	0xD388
+#define XSENS_CONVERTER_1_PID	0xD389
+#define XSENS_CONVERTER_2_PID	0xD38A
+#define XSENS_CONVERTER_3_PID	0xD38B
+#define XSENS_CONVERTER_4_PID	0xD38C
+#define XSENS_CONVERTER_5_PID	0xD38D
+>>>>>>> 671a46baf1b... some performance improvements
 #define XSENS_CONVERTER_6_PID	0xD38E
 #define XSENS_CONVERTER_7_PID	0xD38F
 
@@ -383,12 +403,15 @@
 /* Sprog II (Andrew Crosland's SprogII DCC interface) */
 #define FTDI_SPROG_II		0xF0C8
 
+<<<<<<< HEAD
 /*
  * Two of the Tagsys RFID Readers
  */
 #define FTDI_TAGSYS_LP101_PID	0xF0E9	/* Tagsys L-P101 RFID*/
 #define FTDI_TAGSYS_P200X_PID	0xF0EE	/* Tagsys Medio P200x RFID*/
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* an infrared receiver for user access control with IR tags */
 #define FTDI_PIEGROUP_PID	0xF208	/* Product Id */
 
@@ -557,6 +580,7 @@
  */
 #define FTDI_TIAO_UMPA_PID	0x8a98	/* TIAO/DIYGADGET USB Multi-Protocol Adapter */
 
+<<<<<<< HEAD
 /*
  * NovaTech product ids (FTDI_VID)
  */
@@ -576,6 +600,8 @@
 #define FTDI_CUSTOMWARE_MINIPLEX2WI_PID	0xfd4a	/* MiniPlex-2Wi */
 #define FTDI_CUSTOMWARE_MINIPLEX3_PID	0xfd4b	/* MiniPlex-3 series */
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 /********************************/
 /** third-party VID/PID combos **/
@@ -615,6 +641,7 @@
  */
 #define RATOC_VENDOR_ID		0x0584
 #define RATOC_PRODUCT_ID_USB60F	0xb020
+<<<<<<< HEAD
 #define RATOC_PRODUCT_ID_SCU18	0xb03a
 
 /*
@@ -622,6 +649,8 @@
  */
 #define INFINEON_VID		0x058b
 #define INFINEON_TRIBOARD_PID	0x0028 /* DAS JTAG TriBoard TC1798 V1.0 */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 /*
  * Acton Research Corp.
@@ -838,8 +867,12 @@
  * Submitted by Colin Leroy
  */
 #define TESTO_VID			0x128D
+<<<<<<< HEAD
 #define TESTO_1_PID			0x0001
 #define TESTO_3_PID			0x0003
+=======
+#define TESTO_USB_INTERFACE_PID		0x0001
+>>>>>>> 671a46baf1b... some performance improvements
 
 /*
  * Mobility Electronics products.
@@ -866,12 +899,15 @@
 #define TELLDUS_TELLSTICK_PID		0x0C30	/* RF control dongle 433 MHz using FT232RL */
 
 /*
+<<<<<<< HEAD
  * NOVITUS printers
  */
 #define NOVITUS_VID			0x1a28
 #define NOVITUS_BONO_E_PID		0x6010
 
 /*
+=======
+>>>>>>> 671a46baf1b... some performance improvements
  * RT Systems programming cables for various ham radios
  */
 #define RTSYSTEMS_VID		0x2100	/* Vendor ID */
@@ -945,8 +981,13 @@
 #define BAYER_CONTOUR_CABLE_PID        0x6001
 
 /*
+<<<<<<< HEAD
  * Matrix Orbital Intelligent USB displays.
  * http://www.matrixorbital.com
+=======
+ * The following are the values for the Matrix Orbital FTDI Range
+ * Anything in this range will use an FT232RL.
+>>>>>>> 671a46baf1b... some performance improvements
  */
 #define MTXORB_VID			0x1B3D
 #define MTXORB_FTDI_RANGE_0100_PID	0x0100
@@ -1205,6 +1246,7 @@
 #define MTXORB_FTDI_RANGE_01FD_PID	0x01FD
 #define MTXORB_FTDI_RANGE_01FE_PID	0x01FE
 #define MTXORB_FTDI_RANGE_01FF_PID	0x01FF
+<<<<<<< HEAD
 #define MTXORB_FTDI_RANGE_4701_PID	0x4701
 #define MTXORB_FTDI_RANGE_9300_PID	0x9300
 #define MTXORB_FTDI_RANGE_9301_PID	0x9301
@@ -1238,6 +1280,10 @@
 #define MTXORB_FTDI_RANGE_931D_PID	0x931D
 #define MTXORB_FTDI_RANGE_931E_PID	0x931E
 #define MTXORB_FTDI_RANGE_931F_PID	0x931F
+=======
+
+
+>>>>>>> 671a46baf1b... some performance improvements
 
 /*
  * The Mobility Lab (TML)
@@ -1397,6 +1443,7 @@
  * Manufacturer: Crucible Technologies
  */
 #define FTDI_CT_COMET_PID	0x8e08
+<<<<<<< HEAD
 
 /*
  * Product: Z3X Box
@@ -1451,3 +1498,5 @@
  * ekey biometric systems GmbH (http://ekey.net/)
  */
 #define FTDI_EKEY_CONV_USB_PID		0xCB08	/* Converter USB */
+=======
+>>>>>>> 671a46baf1b... some performance improvements

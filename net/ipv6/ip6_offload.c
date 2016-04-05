@@ -174,7 +174,10 @@ static struct sk_buff **ipv6_gro_receive(struct sk_buff **head,
 	ops = rcu_dereference(inet6_offloads[proto]);
 	if (!ops || !ops->callbacks.gro_receive) {
 		__pskb_pull(skb, skb_gro_offset(skb));
+<<<<<<< HEAD
 		skb_gro_frag0_invalidate(skb);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		proto = ipv6_gso_pull_exthdrs(skb, proto);
 		skb_gro_pull(skb, -skb_transport_offset(skb));
 		skb_reset_transport_header(skb);

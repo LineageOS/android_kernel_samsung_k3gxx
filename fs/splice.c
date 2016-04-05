@@ -189,9 +189,12 @@ ssize_t splice_to_pipe(struct pipe_inode_info *pipe,
 	unsigned int spd_pages = spd->nr_pages;
 	int ret, do_wakeup, page_nr;
 
+<<<<<<< HEAD
 	if (!spd_pages)
 		return 0;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	ret = 0;
 	do_wakeup = 0;
 	page_nr = 0;
@@ -215,7 +218,10 @@ ssize_t splice_to_pipe(struct pipe_inode_info *pipe,
 			buf->len = spd->partial[page_nr].len;
 			buf->private = spd->partial[page_nr].private;
 			buf->ops = spd->ops;
+<<<<<<< HEAD
 			buf->flags = 0;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			if (spd->flags & SPLICE_F_GIFT)
 				buf->flags |= PIPE_BUF_FLAG_GIFT;
 
@@ -385,9 +391,12 @@ __generic_file_splice_read(struct file *in, loff_t *ppos,
 		index++;
 	}
 
+<<<<<<< HEAD
 	if (unlikely(!(in->f_mode & FMODE_SPLICE_READ)))
 		return -EINVAL;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	 * Now loop over the map and see if we need to start IO on any
 	 * pages, fill in the partial map, etc.
@@ -562,6 +571,7 @@ static const struct pipe_buf_operations default_pipe_buf_ops = {
 	.get = generic_pipe_buf_get,
 };
 
+<<<<<<< HEAD
 static int generic_pipe_buf_nosteal(struct pipe_inode_info *pipe,
 				    struct pipe_buffer *buf)
 {
@@ -580,6 +590,8 @@ const struct pipe_buf_operations nosteal_pipe_buf_ops = {
 };
 EXPORT_SYMBOL(nosteal_pipe_buf_ops);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static ssize_t kernel_readv(struct file *file, const struct iovec *vec,
 			    unsigned long vlen, loff_t offset)
 {
@@ -956,7 +968,10 @@ ssize_t __splice_from_pipe(struct pipe_inode_info *pipe, struct splice_desc *sd,
 
 	splice_from_pipe_begin(sd);
 	do {
+<<<<<<< HEAD
 		cond_resched();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		ret = splice_from_pipe_next(pipe, sd);
 		if (ret > 0)
 			ret = splice_from_pipe_feed(pipe, sd, actor);
@@ -1020,17 +1035,26 @@ generic_file_splice_write(struct pipe_inode_info *pipe, struct file *out,
 	struct address_space *mapping = out->f_mapping;
 	struct inode *inode = mapping->host;
 	struct splice_desc sd = {
+<<<<<<< HEAD
 		.flags = flags,
+=======
+		.total_len = len,
+		.flags = flags,
+		.pos = *ppos,
+>>>>>>> 671a46baf1b... some performance improvements
 		.u.file = out,
 	};
 	ssize_t ret;
 
+<<<<<<< HEAD
 	ret = generic_write_checks(out, ppos, &len, S_ISBLK(inode->i_mode));
 	if (ret)
 		return ret;
 	sd.total_len = len;
 	sd.pos = *ppos;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	pipe_lock(pipe);
 
 	splice_from_pipe_begin(&sd);
@@ -1092,9 +1116,12 @@ static ssize_t default_file_splice_write(struct pipe_inode_info *pipe,
 {
 	ssize_t ret;
 
+<<<<<<< HEAD
 	if (unlikely(!(out->f_mode & FMODE_SPLICE_WRITE)))
 		return -EINVAL;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	ret = splice_from_pipe(pipe, out, ppos, len, flags, write_pipe_buf);
 	if (ret > 0)
 		*ppos += ret;
@@ -1200,7 +1227,11 @@ ssize_t splice_direct_to_actor(struct file *in, struct splice_desc *sd,
 	long ret, bytes;
 	umode_t i_mode;
 	size_t len;
+<<<<<<< HEAD
 	int i, flags, more;
+=======
+	int i, flags;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/*
 	 * We require the input being a regular file, as we don't want to
@@ -1243,7 +1274,10 @@ ssize_t splice_direct_to_actor(struct file *in, struct splice_desc *sd,
 	 * Don't block on output, we have to drain the direct pipe.
 	 */
 	sd->flags &= ~SPLICE_F_NONBLOCK;
+<<<<<<< HEAD
 	more = sd->flags & SPLICE_F_MORE;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	while (len) {
 		size_t read_len;
@@ -1257,6 +1291,7 @@ ssize_t splice_direct_to_actor(struct file *in, struct splice_desc *sd,
 		sd->total_len = read_len;
 
 		/*
+<<<<<<< HEAD
 		 * If more data is pending, set SPLICE_F_MORE
 		 * If this is the last data and SPLICE_F_MORE was not set
 		 * initially, clears it.
@@ -1266,6 +1301,8 @@ ssize_t splice_direct_to_actor(struct file *in, struct splice_desc *sd,
 		else if (!more)
 			sd->flags &= ~SPLICE_F_MORE;
 		/*
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		 * NOTE: nonblocking mode only applies to the input. We
 		 * must not do the output in nonblocking mode as then we
 		 * could get stuck data in the internal pipe:

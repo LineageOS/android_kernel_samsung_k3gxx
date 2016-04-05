@@ -272,6 +272,7 @@ static irqreturn_t rtclong1_interrupt(int irq, void *dev_id)
 }
 
 static const struct rtc_class_ops vr41xx_rtc_ops = {
+<<<<<<< HEAD
 	.release		= vr41xx_rtc_release,
 	.ioctl			= vr41xx_rtc_ioctl,
 	.read_time		= vr41xx_rtc_read_time,
@@ -279,6 +280,14 @@ static const struct rtc_class_ops vr41xx_rtc_ops = {
 	.read_alarm		= vr41xx_rtc_read_alarm,
 	.set_alarm		= vr41xx_rtc_set_alarm,
 	.alarm_irq_enable	= vr41xx_rtc_alarm_irq_enable,
+=======
+	.release	= vr41xx_rtc_release,
+	.ioctl		= vr41xx_rtc_ioctl,
+	.read_time	= vr41xx_rtc_read_time,
+	.set_time	= vr41xx_rtc_set_time,
+	.read_alarm	= vr41xx_rtc_read_alarm,
+	.set_alarm	= vr41xx_rtc_set_alarm,
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 static int rtc_probe(struct platform_device *pdev)

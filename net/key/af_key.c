@@ -1135,7 +1135,10 @@ static struct xfrm_state * pfkey_msg2xfrm_state(struct net *net,
 			goto out;
 	}
 
+<<<<<<< HEAD
 	err = -ENOBUFS;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	key = ext_hdrs[SADB_EXT_KEY_AUTH - 1];
 	if (sa->sadb_sa_auth) {
 		int keysize = 0;
@@ -1147,10 +1150,15 @@ static struct xfrm_state * pfkey_msg2xfrm_state(struct net *net,
 		if (key)
 			keysize = (key->sadb_key_bits + 7) / 8;
 		x->aalg = kmalloc(sizeof(*x->aalg) + keysize, GFP_KERNEL);
+<<<<<<< HEAD
 		if (!x->aalg) {
 			err = -ENOMEM;
 			goto out;
 		}
+=======
+		if (!x->aalg)
+			goto out;
+>>>>>>> 671a46baf1b... some performance improvements
 		strcpy(x->aalg->alg_name, a->name);
 		x->aalg->alg_key_len = 0;
 		if (key) {
@@ -1169,10 +1177,15 @@ static struct xfrm_state * pfkey_msg2xfrm_state(struct net *net,
 				goto out;
 			}
 			x->calg = kmalloc(sizeof(*x->calg), GFP_KERNEL);
+<<<<<<< HEAD
 			if (!x->calg) {
 				err = -ENOMEM;
 				goto out;
 			}
+=======
+			if (!x->calg)
+				goto out;
+>>>>>>> 671a46baf1b... some performance improvements
 			strcpy(x->calg->alg_name, a->name);
 			x->props.calgo = sa->sadb_sa_encrypt;
 		} else {
@@ -1186,10 +1199,15 @@ static struct xfrm_state * pfkey_msg2xfrm_state(struct net *net,
 			if (key)
 				keysize = (key->sadb_key_bits + 7) / 8;
 			x->ealg = kmalloc(sizeof(*x->ealg) + keysize, GFP_KERNEL);
+<<<<<<< HEAD
 			if (!x->ealg) {
 				err = -ENOMEM;
 				goto out;
 			}
+=======
+			if (!x->ealg)
+				goto out;
+>>>>>>> 671a46baf1b... some performance improvements
 			strcpy(x->ealg->alg_name, a->name);
 			x->ealg->alg_key_len = 0;
 			if (key) {
@@ -1237,10 +1255,15 @@ static struct xfrm_state * pfkey_msg2xfrm_state(struct net *net,
 		struct xfrm_encap_tmpl *natt;
 
 		x->encap = kmalloc(sizeof(*x->encap), GFP_KERNEL);
+<<<<<<< HEAD
 		if (!x->encap) {
 			err = -ENOMEM;
 			goto out;
 		}
+=======
+		if (!x->encap)
+			goto out;
+>>>>>>> 671a46baf1b... some performance improvements
 
 		natt = x->encap;
 		n_type = ext_hdrs[SADB_X_EXT_NAT_T_TYPE-1];
@@ -3632,6 +3655,10 @@ static int pfkey_recvmsg(struct kiocb *kiocb,
 	if (flags & ~(MSG_PEEK|MSG_DONTWAIT|MSG_TRUNC|MSG_CMSG_COMPAT))
 		goto out;
 
+<<<<<<< HEAD
+=======
+	msg->msg_namelen = 0;
+>>>>>>> 671a46baf1b... some performance improvements
 	skb = skb_recv_datagram(sk, flags, flags & MSG_DONTWAIT, &err);
 	if (skb == NULL)
 		goto out;

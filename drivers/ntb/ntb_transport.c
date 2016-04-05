@@ -157,6 +157,10 @@ struct ntb_transport {
 	bool transport_link;
 	struct delayed_work link_work;
 	struct work_struct link_cleanup;
+<<<<<<< HEAD
+=======
+	struct dentry *debugfs_dir;
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 enum {
@@ -823,12 +827,20 @@ static void ntb_transport_init_queue(struct ntb_transport *nt,
 	qp->tx_max_frame = min(transport_mtu, tx_size / 2);
 	qp->tx_max_entry = tx_size / qp->tx_max_frame;
 
+<<<<<<< HEAD
 	if (ntb_query_debugfs(nt->ndev)) {
+=======
+	if (nt->debugfs_dir) {
+>>>>>>> 671a46baf1b... some performance improvements
 		char debugfs_name[4];
 
 		snprintf(debugfs_name, 4, "qp%d", qp_num);
 		qp->debugfs_dir = debugfs_create_dir(debugfs_name,
+<<<<<<< HEAD
 						 ntb_query_debugfs(nt->ndev));
+=======
+						     nt->debugfs_dir);
+>>>>>>> 671a46baf1b... some performance improvements
 
 		qp->debugfs_stats = debugfs_create_file("stats", S_IRUSR,
 							qp->debugfs_dir, qp,
@@ -856,6 +868,14 @@ int ntb_transport_init(struct pci_dev *pdev)
 	if (!nt)
 		return -ENOMEM;
 
+<<<<<<< HEAD
+=======
+	if (debugfs_initialized())
+		nt->debugfs_dir = debugfs_create_dir(KBUILD_MODNAME, NULL);
+	else
+		nt->debugfs_dir = NULL;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	nt->ndev = ntb_register_transport(pdev, nt);
 	if (!nt->ndev) {
 		rc = -EIO;
@@ -901,6 +921,10 @@ err2:
 err1:
 	ntb_unregister_transport(nt->ndev);
 err:
+<<<<<<< HEAD
+=======
+	debugfs_remove_recursive(nt->debugfs_dir);
+>>>>>>> 671a46baf1b... some performance improvements
 	kfree(nt);
 	return rc;
 }
@@ -914,16 +938,27 @@ void ntb_transport_free(void *transport)
 	nt->transport_link = NTB_LINK_DOWN;
 
 	/* verify that all the qp's are freed */
+<<<<<<< HEAD
 	for (i = 0; i < nt->max_qps; i++) {
 		if (!test_bit(i, &nt->qp_bitmap))
 			ntb_transport_free_queue(&nt->qps[i]);
 		debugfs_remove_recursive(nt->qps[i].debugfs_dir);
 	}
+=======
+	for (i = 0; i < nt->max_qps; i++)
+		if (!test_bit(i, &nt->qp_bitmap))
+			ntb_transport_free_queue(&nt->qps[i]);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	ntb_bus_remove(nt);
 
 	cancel_delayed_work_sync(&nt->link_work);
 
+<<<<<<< HEAD
+=======
+	debugfs_remove_recursive(nt->debugfs_dir);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	ntb_unregister_event_callback(nt->ndev);
 
 	pdev = ntb_query_pdev(nt->ndev);

@@ -121,6 +121,7 @@ int blkdev_issue_discard(struct block_device *bdev, sector_t sector,
 
 		atomic_inc(&bb.done);
 		submit_bio(type, bio);
+<<<<<<< HEAD
 
 		/*
 		 * We can loop for a long time in here, if someone does
@@ -129,6 +130,8 @@ int blkdev_issue_discard(struct block_device *bdev, sector_t sector,
 		 * is disabled.
 		 */
 		cond_resched();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	blk_finish_plug(&plug);
 

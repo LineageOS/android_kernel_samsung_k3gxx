@@ -384,7 +384,12 @@ module_exit(sha256_generic_mod_fini);
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("SHA-224 and SHA-256 Secure Hash Algorithm");
 
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("sha224");
 MODULE_ALIAS_CRYPTO("sha224-generic");
 MODULE_ALIAS_CRYPTO("sha256");
 MODULE_ALIAS_CRYPTO("sha256-generic");
+=======
+MODULE_ALIAS("sha224");
+MODULE_ALIAS("sha256");
+>>>>>>> 671a46baf1b... some performance improvements

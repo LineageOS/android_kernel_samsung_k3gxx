@@ -119,7 +119,11 @@ static int _usbctrl_vendorreq_sync_read(struct usb_device *udev, u8 request,
 
 	do {
 		status = usb_control_msg(udev, pipe, request, reqtype, value,
+<<<<<<< HEAD
 					 index, pdata, len, 1000);
+=======
+					 index, pdata, len, 0); /*max. timeout*/
+>>>>>>> 671a46baf1b... some performance improvements
 		if (status < 0) {
 			/* firmware download is checksumed, don't retry */
 			if ((value >= FW_8192C_START_ADDRESS &&
@@ -477,8 +481,11 @@ static void _rtl_usb_rx_process_agg(struct ieee80211_hw *hw,
 			if (unicast)
 				rtlpriv->link_info.num_rx_inperiod++;
 		}
+<<<<<<< HEAD
 		/* static bcn for roaming */
 		rtl_beacon_statistic(hw, skb);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 }
 
@@ -550,7 +557,11 @@ static void _rtl_rx_pre_process(struct ieee80211_hw *hw, struct sk_buff *skb)
 	}
 }
 
+<<<<<<< HEAD
 #define __RX_SKB_MAX_QUEUED	64
+=======
+#define __RX_SKB_MAX_QUEUED	32
+>>>>>>> 671a46baf1b... some performance improvements
 
 static void _rtl_rx_work(unsigned long param)
 {
@@ -823,7 +834,10 @@ static void rtl_usb_stop(struct ieee80211_hw *hw)
 	struct rtl_priv *rtlpriv = rtl_priv(hw);
 	struct rtl_hal *rtlhal = rtl_hal(rtl_priv(hw));
 	struct rtl_usb *rtlusb = rtl_usbdev(rtl_usbpriv(hw));
+<<<<<<< HEAD
 	struct urb *urb;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* should after adapter start and interrupt enable. */
 	set_hal_stop(rtlhal);
@@ -831,6 +845,7 @@ static void rtl_usb_stop(struct ieee80211_hw *hw)
 	/* Enable software */
 	SET_USB_STOP(rtlusb);
 	rtl_usb_deinit(hw);
+<<<<<<< HEAD
 
 	/* free pre-allocated URBs from rtl_usb_start() */
 	usb_kill_anchored_urbs(&rtlusb->rx_submitted);
@@ -848,6 +863,8 @@ static void rtl_usb_stop(struct ieee80211_hw *hw)
 		usb_free_urb(urb);
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	rtlpriv->cfg->ops->hw_disable(hw);
 }
 

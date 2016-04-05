@@ -54,13 +54,17 @@ static void w1_send_slave(struct w1_master *dev, u64 rn)
 	struct w1_netlink_msg *hdr = (struct w1_netlink_msg *)(msg + 1);
 	struct w1_netlink_cmd *cmd = (struct w1_netlink_cmd *)(hdr + 1);
 	int avail;
+<<<<<<< HEAD
 	u64 *data;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* update kernel slave list */
 	w1_slave_found(dev, rn);
 
 	avail = dev->priv_size - cmd->len;
 
+<<<<<<< HEAD
 	if (avail < 8) {
 		msg->ack++;
 		cn_netlink_send(msg, 0, GFP_KERNEL);
@@ -77,6 +81,24 @@ static void w1_send_slave(struct w1_master *dev, u64 rn)
 	cmd->len += 8;
 	hdr->len += 8;
 	msg->len += 8;
+=======
+	if (avail > 8) {
+		u64 *data = (void *)(cmd + 1) + cmd->len;
+
+		*data = rn;
+		cmd->len += 8;
+		hdr->len += 8;
+		msg->len += 8;
+		return;
+	}
+
+	msg->ack++;
+	cn_netlink_send(msg, 0, GFP_KERNEL);
+
+	msg->len = sizeof(struct w1_netlink_msg) + sizeof(struct w1_netlink_cmd);
+	hdr->len = sizeof(struct w1_netlink_cmd);
+	cmd->len = 0;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int w1_process_search_command(struct w1_master *dev, struct cn_msg *msg,

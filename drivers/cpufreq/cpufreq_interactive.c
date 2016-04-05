@@ -48,6 +48,11 @@
 #define CREATE_TRACE_POINTS
 #include <trace/events/cpufreq_interactive.h>
 
+<<<<<<< HEAD
+=======
+#define DOWN_LOW_LOAD_THRESHOLD 5
+
+>>>>>>> 671a46baf1b... some performance improvements
 struct cpufreq_interactive_cpuinfo {
 	struct timer_list cpu_timer;
 	struct timer_list cpu_slack_timer;
@@ -362,7 +367,11 @@ static unsigned int choose_freq(struct cpufreq_interactive_cpuinfo *pcpu,
 
 		if (cpufreq_frequency_table_target(
 			    pcpu->policy, pcpu->freq_table, loadadjfreq / tl,
+<<<<<<< HEAD
 			    CPUFREQ_RELATION_C, &index))
+=======
+			    CPUFREQ_RELATION_L, &index))
+>>>>>>> 671a46baf1b... some performance improvements
 			break;
 		freq = pcpu->freq_table[index].frequency;
 
@@ -404,7 +413,11 @@ static unsigned int choose_freq(struct cpufreq_interactive_cpuinfo *pcpu,
 				 */
 				if (cpufreq_frequency_table_target(
 					    pcpu->policy, pcpu->freq_table,
+<<<<<<< HEAD
 					    freqmin + 1, CPUFREQ_RELATION_C,
+=======
+					    freqmin + 1, CPUFREQ_RELATION_L,
+>>>>>>> 671a46baf1b... some performance improvements
 					    &index))
 					break;
 				freq = pcpu->freq_table[index].frequency;
@@ -659,6 +672,11 @@ static void cpufreq_interactive_timer(unsigned long data)
 			if (new_freq < tunables->hispeed_freq)
 				new_freq = tunables->hispeed_freq;
 		}
+<<<<<<< HEAD
+=======
+} else if (cpu_load <= DOWN_LOW_LOAD_THRESHOLD) {
+		new_freq = pcpu->policy->cpuinfo.min_freq;
+>>>>>>> 671a46baf1b... some performance improvements
 	} else {
 		new_freq = choose_freq(pcpu, loadadjfreq);
 		if (new_freq > tunables->hispeed_freq &&
@@ -1642,7 +1660,11 @@ static ssize_t show_cpu_util(struct cpufreq_interactive_tunables
 			ret += sprintf(buf + ret, "OFF ");
 	}
 
+<<<<<<< HEAD
 	sprintf(buf + ret - 1, "\n");
+=======
+	ret += sprintf(buf + --ret, "\n");
+>>>>>>> 671a46baf1b... some performance improvements
 	return ret;
 }
 #endif
@@ -2129,7 +2151,11 @@ static int cpufreq_governor_interactive(struct cpufreq_policy *policy,
 					policy->max, CPUFREQ_RELATION_H);
 		else if (policy->min > policy->cur)
 			__cpufreq_driver_target(policy,
+<<<<<<< HEAD
 					policy->min, CPUFREQ_RELATION_C);
+=======
+					policy->min, CPUFREQ_RELATION_L);
+>>>>>>> 671a46baf1b... some performance improvements
 		for_each_cpu(j, policy->cpus) {
 			pcpu = &per_cpu(cpuinfo, j);
 

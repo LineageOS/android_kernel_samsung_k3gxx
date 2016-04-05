@@ -1970,6 +1970,10 @@ static struct ubifs_info *alloc_ubifs_info(struct ubi_volume_desc *ubi)
 		mutex_init(&c->lp_mutex);
 		mutex_init(&c->tnc_mutex);
 		mutex_init(&c->log_mutex);
+<<<<<<< HEAD
+=======
+		mutex_init(&c->mst_mutex);
+>>>>>>> 671a46baf1b... some performance improvements
 		mutex_init(&c->umount_mutex);
 		mutex_init(&c->bu_mutex);
 		mutex_init(&c->write_reserve_mutex);

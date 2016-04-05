@@ -576,6 +576,10 @@ static struct console con3270 = {
 static int __init
 con3270_init(void)
 {
+<<<<<<< HEAD
+=======
+	struct ccw_device *cdev;
+>>>>>>> 671a46baf1b... some performance improvements
 	struct raw3270 *rp;
 	void *cbuf;
 	int i;
@@ -590,7 +594,14 @@ con3270_init(void)
 		cpcmd("TERM AUTOCR OFF", NULL, 0, NULL);
 	}
 
+<<<<<<< HEAD
 	rp = raw3270_setup_console();
+=======
+	cdev = ccw_device_probe_console();
+	if (IS_ERR(cdev))
+		return -ENODEV;
+	rp = raw3270_setup_console(cdev);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (IS_ERR(rp))
 		return PTR_ERR(rp);
 

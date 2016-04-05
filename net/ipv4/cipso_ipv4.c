@@ -1649,10 +1649,13 @@ int cipso_v4_validate(const struct sk_buff *skb, unsigned char **option)
 				goto validate_return_locked;
 			}
 
+<<<<<<< HEAD
 		if (opt_iter + 1 == opt_len) {
 			err_offset = opt_iter;
 			goto validate_return_locked;
 		}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		tag_len = tag[1];
 		if (tag_len > (opt_len - opt_iter)) {
 			err_offset = opt_iter + 1;

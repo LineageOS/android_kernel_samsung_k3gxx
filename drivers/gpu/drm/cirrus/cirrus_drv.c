@@ -11,7 +11,10 @@
 #include <linux/module.h>
 #include <linux/console.h>
 #include <drm/drmP.h>
+<<<<<<< HEAD
 #include <drm/drm_crtc_helper.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 #include "cirrus_drv.h"
 
@@ -76,6 +79,7 @@ static void cirrus_pci_remove(struct pci_dev *pdev)
 	drm_put_dev(dev);
 }
 
+<<<<<<< HEAD
 static int cirrus_pm_suspend(struct device *dev)
 {
 	struct pci_dev *pdev = to_pci_dev(dev);
@@ -111,6 +115,8 @@ static int cirrus_pm_resume(struct device *dev)
 	return 0;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static const struct file_operations cirrus_driver_fops = {
 	.owner = THIS_MODULE,
 	.open = drm_open,
@@ -141,17 +147,23 @@ static struct drm_driver driver = {
 	.dumb_destroy = cirrus_dumb_destroy,
 };
 
+<<<<<<< HEAD
 static const struct dev_pm_ops cirrus_pm_ops = {
 	SET_SYSTEM_SLEEP_PM_OPS(cirrus_pm_suspend,
 				cirrus_pm_resume)
 };
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static struct pci_driver cirrus_pci_driver = {
 	.name = DRIVER_NAME,
 	.id_table = pciidlist,
 	.probe = cirrus_pci_probe,
 	.remove = cirrus_pci_remove,
+<<<<<<< HEAD
 	.driver.pm = &cirrus_pm_ops,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 static int __init cirrus_init(void)

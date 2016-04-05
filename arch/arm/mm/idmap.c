@@ -24,6 +24,7 @@ static void idmap_add_pmd(pud_t *pud, unsigned long addr, unsigned long end,
 			pr_warning("Failed to allocate identity pmd.\n");
 			return;
 		}
+<<<<<<< HEAD
 		/*
 		 * Copy the original PMD to ensure that the PMD entries for
 		 * the kernel image are preserved.
@@ -31,6 +32,8 @@ static void idmap_add_pmd(pud_t *pud, unsigned long addr, unsigned long end,
 		if (!pud_none(*pud))
 			memcpy(pmd, pmd_offset(pud, 0),
 			       PTRS_PER_PMD * sizeof(pmd_t));
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		pud_populate(&init_mm, pud, pmd);
 		pmd += pmd_index(addr);
 	} else

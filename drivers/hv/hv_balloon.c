@@ -19,7 +19,10 @@
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
 #include <linux/kernel.h>
+<<<<<<< HEAD
 #include <linux/jiffies.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #include <linux/mman.h>
 #include <linux/delay.h>
 #include <linux/init.h>
@@ -460,11 +463,14 @@ static bool do_hot_add;
  */
 static uint pressure_report_delay = 45;
 
+<<<<<<< HEAD
 /*
  * The last time we posted a pressure report to host.
  */
 static unsigned long last_post_time;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 module_param(hot_add, bool, (S_IRUGO | S_IWUSR));
 MODULE_PARM_DESC(hot_add, "If set attempt memory hot_add");
 
@@ -548,7 +554,10 @@ struct hv_dynmem_device {
 
 static struct hv_dynmem_device dm_device;
 
+<<<<<<< HEAD
 static void post_status(struct hv_dynmem_device *dm);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #ifdef CONFIG_MEMORY_HOTPLUG
 
 static void hv_bring_pgs_online(unsigned long start_pfn, unsigned long size)
@@ -619,7 +628,11 @@ static void hv_mem_hot_add(unsigned long start, unsigned long size,
 		 * have not been "onlined" within the allowed time.
 		 */
 		wait_for_completion_timeout(&dm_device.ol_waitevent, 5*HZ);
+<<<<<<< HEAD
 		post_status(&dm_device);
+=======
+
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	return;
@@ -673,7 +686,11 @@ static bool pfn_covered(unsigned long start_pfn, unsigned long pfn_cnt)
 		 * If the pfn range we are dealing with is not in the current
 		 * "hot add block", move on.
 		 */
+<<<<<<< HEAD
 		if (start_pfn < has->start_pfn || start_pfn >= has->end_pfn)
+=======
+		if ((start_pfn >= has->end_pfn))
+>>>>>>> 671a46baf1b... some performance improvements
 			continue;
 		/*
 		 * If the current hot add-request extends beyond
@@ -728,7 +745,11 @@ static unsigned long handle_pg_range(unsigned long pg_start,
 		 * If the pfn range we are dealing with is not in the current
 		 * "hot add block", move on.
 		 */
+<<<<<<< HEAD
 		if (start_pfn < has->start_pfn || start_pfn >= has->end_pfn)
+=======
+		if ((start_pfn >= has->end_pfn))
+>>>>>>> 671a46baf1b... some performance improvements
 			continue;
 
 		old_covered_state = has->covered_end_pfn;
@@ -958,17 +979,23 @@ static void post_status(struct hv_dynmem_device *dm)
 {
 	struct dm_status status;
 	struct sysinfo val;
+<<<<<<< HEAD
 	unsigned long now = jiffies;
 	unsigned long last_post = last_post_time;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (pressure_report_delay > 0) {
 		--pressure_report_delay;
 		return;
 	}
+<<<<<<< HEAD
 
 	if (!time_after(now, (last_post_time + HZ)))
 		return;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	si_meminfo(&val);
 	memset(&status, 0, sizeof(struct dm_status));
 	status.hdr.type = DM_STATUS_REPORT;
@@ -996,6 +1023,7 @@ static void post_status(struct hv_dynmem_device *dm)
 	if (status.hdr.trans_id != atomic_read(&trans_id))
 		return;
 
+<<<<<<< HEAD
 	/*
 	 * If the last post time that we sampled has changed,
 	 * we have raced, don't post the status.
@@ -1004,6 +1032,8 @@ static void post_status(struct hv_dynmem_device *dm)
 		return;
 
 	last_post_time = jiffies;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	vmbus_sendpacket(dm->dev->channel, &status,
 				sizeof(struct dm_status),
 				(unsigned long)NULL,
@@ -1138,7 +1168,11 @@ static void balloon_up(struct work_struct *dummy)
 
 			if (ret == -EAGAIN)
 				msleep(20);
+<<<<<<< HEAD
 			post_status(&dm_device);
+=======
+
+>>>>>>> 671a46baf1b... some performance improvements
 		} while (ret == -EAGAIN);
 
 		if (ret) {
@@ -1165,10 +1199,15 @@ static void balloon_down(struct hv_dynmem_device *dm,
 	struct dm_unballoon_response resp;
 	int i;
 
+<<<<<<< HEAD
 	for (i = 0; i < range_count; i++) {
 		free_balloon_pages(dm, &range_array[i]);
 		post_status(&dm_device);
 	}
+=======
+	for (i = 0; i < range_count; i++)
+		free_balloon_pages(dm, &range_array[i]);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (req->more_pages == 1)
 		return;

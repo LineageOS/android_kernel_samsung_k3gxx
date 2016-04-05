@@ -30,10 +30,17 @@
 
 #include "power.h"
 
+<<<<<<< HEAD
 struct pm_sleep_state pm_states[PM_SUSPEND_MAX] = {
 	[PM_SUSPEND_FREEZE] = { .label = "freeze", .state = PM_SUSPEND_FREEZE },
 	[PM_SUSPEND_STANDBY] = { .label = "standby", },
 	[PM_SUSPEND_MEM] = { .label = "mem", },
+=======
+const char *const pm_states[PM_SUSPEND_MAX] = {
+	[PM_SUSPEND_FREEZE]	= "freeze",
+	[PM_SUSPEND_STANDBY]	= "standby",
+	[PM_SUSPEND_MEM]	= "mem",
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 static const struct platform_suspend_ops *suspend_ops;
@@ -63,6 +70,7 @@ void freeze_wake(void)
 }
 EXPORT_SYMBOL_GPL(freeze_wake);
 
+<<<<<<< HEAD
 static bool valid_state(suspend_state_t state)
 {
 	/*
@@ -73,12 +81,15 @@ static bool valid_state(suspend_state_t state)
 	return suspend_ops && suspend_ops->valid && suspend_ops->valid(state);
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /**
  * suspend_set_ops - Set the global suspend method table.
  * @ops: Suspend operations to use.
  */
 void suspend_set_ops(const struct platform_suspend_ops *ops)
 {
+<<<<<<< HEAD
 	suspend_state_t i;
 
 	lock_system_sleep();
@@ -87,10 +98,41 @@ void suspend_set_ops(const struct platform_suspend_ops *ops)
 	for (i = PM_SUSPEND_STANDBY; i <= PM_SUSPEND_MEM; i++)
 		pm_states[i].state = valid_state(i) ? i : 0;
 
+=======
+	lock_system_sleep();
+	suspend_ops = ops;
+>>>>>>> 671a46baf1b... some performance improvements
 	unlock_system_sleep();
 }
 EXPORT_SYMBOL_GPL(suspend_set_ops);
 
+<<<<<<< HEAD
+=======
+bool valid_state(suspend_state_t state)
+{
+	if (state == PM_SUSPEND_FREEZE) {
+#ifdef CONFIG_PM_DEBUG
+		if (pm_test_level != TEST_NONE &&
+		    pm_test_level != TEST_FREEZER &&
+		    pm_test_level != TEST_DEVICES &&
+		    pm_test_level != TEST_PLATFORM) {
+			printk(KERN_WARNING "Unsupported pm_test mode for "
+					"freeze state, please choose "
+					"none/freezer/devices/platform.\n");
+			return false;
+		}
+#endif
+			return true;
+	}
+	/*
+	 * PM_SUSPEND_STANDBY and PM_SUSPEND_MEMORY states need lowlevel
+	 * support and need to be valid to the lowlevel
+	 * implementation, no valid callback implies that none are valid.
+	 */
+	return suspend_ops && suspend_ops->valid && suspend_ops->valid(state);
+}
+
+>>>>>>> 671a46baf1b... some performance improvements
 /**
  * suspend_valid_only_mem - Generic memory-only valid callback.
  *
@@ -317,6 +359,7 @@ static int enter_state(suspend_state_t state)
 {
 	int error;
 
+<<<<<<< HEAD
 	if (state == PM_SUSPEND_FREEZE) {
 #ifdef CONFIG_PM_DEBUG
 		if (pm_test_level != TEST_NONE && pm_test_level <= TEST_CPUS) {
@@ -328,6 +371,11 @@ static int enter_state(suspend_state_t state)
 	} else if (!valid_state(state)) {
 		return -EINVAL;
 	}
+=======
+	if (!valid_state(state))
+		return -ENODEV;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	if (!mutex_trylock(&pm_mutex))
 		return -EBUSY;
 
@@ -338,7 +386,11 @@ static int enter_state(suspend_state_t state)
 	sys_sync();
 	printk("done.\n");
 
+<<<<<<< HEAD
 	pr_debug("PM: Preparing system for %s sleep\n", pm_states[state].label);
+=======
+	pr_debug("PM: Preparing system for %s sleep\n", pm_states[state]);
+>>>>>>> 671a46baf1b... some performance improvements
 	error = suspend_prepare(state);
 	if (error)
 		goto Unlock;
@@ -346,7 +398,11 @@ static int enter_state(suspend_state_t state)
 	if (suspend_test(TEST_FREEZER))
 		goto Finish;
 
+<<<<<<< HEAD
 	pr_debug("PM: Entering %s sleep\n", pm_states[state].label);
+=======
+	pr_debug("PM: Entering %s sleep\n", pm_states[state]);
+>>>>>>> 671a46baf1b... some performance improvements
 	pm_restrict_gfp_mask();
 	error = suspend_devices_and_enter(state);
 	pm_restore_gfp_mask();

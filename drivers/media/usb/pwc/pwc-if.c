@@ -91,7 +91,10 @@ static const struct usb_device_id pwc_device_table [] = {
 	{ USB_DEVICE(0x0471, 0x0312) },
 	{ USB_DEVICE(0x0471, 0x0313) }, /* the 'new' 720K */
 	{ USB_DEVICE(0x0471, 0x0329) }, /* Philips SPC 900NC PC Camera */
+<<<<<<< HEAD
 	{ USB_DEVICE(0x0471, 0x032C) }, /* Philips SPC 880NC PC Camera */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	{ USB_DEVICE(0x069A, 0x0001) }, /* Askey */
 	{ USB_DEVICE(0x046D, 0x08B0) }, /* Logitech QuickCam Pro 3000 */
 	{ USB_DEVICE(0x046D, 0x08B1) }, /* Logitech QuickCam Notebook Pro */
@@ -800,11 +803,14 @@ static int usb_pwc_probe(struct usb_interface *intf, const struct usb_device_id 
 			name = "Philips SPC 900NC webcam";
 			type_id = 740;
 			break;
+<<<<<<< HEAD
 		case 0x032C:
 			PWC_INFO("Philips SPC 880NC USB webcam detected.\n");
 			name = "Philips SPC 880NC webcam";
 			type_id = 740;
 			break;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		default:
 			return -ENODEV;
 			break;

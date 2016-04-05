@@ -153,9 +153,12 @@ static ssize_t oz_cdev_write(struct file *filp, const char __user *buf,
 	struct oz_app_hdr *app_hdr;
 	struct oz_serial_ctx *ctx;
 
+<<<<<<< HEAD
 	if (count > sizeof(ei->data) - sizeof(*elt) - sizeof(*app_hdr))
 		return -EINVAL;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	spin_lock_bh(&g_cdev.lock);
 	pd = g_cdev.active_pd;
 	if (pd)

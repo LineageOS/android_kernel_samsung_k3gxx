@@ -179,7 +179,10 @@ int jffs2_reserve_space(struct jffs2_sb_info *c, uint32_t minsize,
 					spin_unlock(&c->erase_completion_lock);
 
 					schedule();
+<<<<<<< HEAD
 					remove_wait_queue(&c->erase_wait, &wait);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 				} else
 					spin_unlock(&c->erase_completion_lock);
 			} else if (ret)
@@ -212,18 +215,28 @@ out:
 int jffs2_reserve_space_gc(struct jffs2_sb_info *c, uint32_t minsize,
 			   uint32_t *len, uint32_t sumsize)
 {
+<<<<<<< HEAD
 	int ret;
+=======
+	int ret = -EAGAIN;
+>>>>>>> 671a46baf1b... some performance improvements
 	minsize = PAD(minsize);
 
 	jffs2_dbg(1, "%s(): Requested 0x%x bytes\n", __func__, minsize);
 
+<<<<<<< HEAD
 	while (true) {
 		spin_lock(&c->erase_completion_lock);
+=======
+	spin_lock(&c->erase_completion_lock);
+	while(ret == -EAGAIN) {
+>>>>>>> 671a46baf1b... some performance improvements
 		ret = jffs2_do_reserve_space(c, minsize, len, sumsize);
 		if (ret) {
 			jffs2_dbg(1, "%s(): looping, ret is %d\n",
 				  __func__, ret);
 		}
+<<<<<<< HEAD
 		spin_unlock(&c->erase_completion_lock);
 
 		if (ret == -EAGAIN)
@@ -231,6 +244,10 @@ int jffs2_reserve_space_gc(struct jffs2_sb_info *c, uint32_t minsize,
 		else
 			break;
 	}
+=======
+	}
+	spin_unlock(&c->erase_completion_lock);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (!ret)
 		ret = jffs2_prealloc_raw_node_refs(c, c->nextblock, 1);
 

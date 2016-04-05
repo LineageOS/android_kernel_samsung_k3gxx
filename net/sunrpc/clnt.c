@@ -1402,6 +1402,7 @@ call_refreshresult(struct rpc_task *task)
 	task->tk_action = call_refresh;
 	switch (status) {
 	case 0:
+<<<<<<< HEAD
 		if (rpcauth_uptodatecred(task)) {
 			task->tk_action = call_allocate;
 			return;
@@ -1414,6 +1415,16 @@ call_refreshresult(struct rpc_task *task)
 	case -EAGAIN:
 		status = -EACCES;
 	case -EKEYEXPIRED:
+=======
+		if (rpcauth_uptodatecred(task))
+			task->tk_action = call_allocate;
+		return;
+	case -ETIMEDOUT:
+		rpc_delay(task, 3*HZ);
+	case -EKEYEXPIRED:
+	case -EAGAIN:
+		status = -EACCES;
+>>>>>>> 671a46baf1b... some performance improvements
 		if (!task->tk_cred_retry)
 			break;
 		task->tk_cred_retry--;

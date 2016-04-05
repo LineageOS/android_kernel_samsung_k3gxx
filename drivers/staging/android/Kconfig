@@ -8,6 +8,7 @@ config ANDROID
 
 if ANDROID
 
+<<<<<<< HEAD
 config ANDROID_BINDER_DEVICES
 	string "Android Binder devices"
 	depends on ANDROID_BINDER_IPC
@@ -32,6 +33,18 @@ config ANDROID_BINDER_IPC_32BIT
 	  earlier).
 
 	  Note that enabling this will break newer Android user-space.
+=======
+config ANDROID_BINDER_IPC
+	bool "Android Binder IPC Driver"
+	default n
+	---help---
+	  Binder is used in Android for both communication between processes,
+	  and remote method invocation.
+
+	  This means one Android process can call a method/routine in another
+	  Android process, using Binder to identify, invoke and pass arguments
+	  between said processes.
+>>>>>>> 671a46baf1b... some performance improvements
 
 config ASHMEM
 	bool "Enable the Anonymous Shared Memory Subsystem"

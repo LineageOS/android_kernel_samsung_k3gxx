@@ -280,7 +280,13 @@ static int ipath_user_sdma_pin_pages(const struct ipath_devdata *dd,
 	int j;
 	int ret;
 
+<<<<<<< HEAD
 	ret = get_user_pages_fast(addr, npages, 0, pages);
+=======
+	ret = get_user_pages(current, current->mm, addr,
+			     npages, 0, 1, pages, NULL);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	if (ret != npages) {
 		int i;
 
@@ -809,7 +815,14 @@ int ipath_user_sdma_writev(struct ipath_devdata *dd,
 	while (dim) {
 		const int mxp = 8;
 
+<<<<<<< HEAD
 		ret = ipath_user_sdma_queue_pkts(dd, pq, &list, iov, dim, mxp);
+=======
+		down_write(&current->mm->mmap_sem);
+		ret = ipath_user_sdma_queue_pkts(dd, pq, &list, iov, dim, mxp);
+		up_write(&current->mm->mmap_sem);
+
+>>>>>>> 671a46baf1b... some performance improvements
 		if (ret <= 0)
 			goto done_unlock;
 		else {

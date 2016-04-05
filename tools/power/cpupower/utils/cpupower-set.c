@@ -18,9 +18,15 @@
 #include "helpers/bitmask.h"
 
 static struct option set_opts[] = {
+<<<<<<< HEAD
 	{ .name = "perf-bias",	.has_arg = required_argument,	.flag = NULL,	.val = 'b'},
 	{ .name = "sched-mc",	.has_arg = required_argument,	.flag = NULL,	.val = 'm'},
 	{ .name = "sched-smt",	.has_arg = required_argument,	.flag = NULL,	.val = 's'},
+=======
+	{ .name = "perf-bias",	.has_arg = optional_argument,	.flag = NULL,	.val = 'b'},
+	{ .name = "sched-mc",	.has_arg = optional_argument,	.flag = NULL,	.val = 'm'},
+	{ .name = "sched-smt",	.has_arg = optional_argument,	.flag = NULL,	.val = 's'},
+>>>>>>> 671a46baf1b... some performance improvements
 	{ },
 };
 

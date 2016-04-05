@@ -87,6 +87,16 @@ static const u8 pq_idx_to_field[] = { 1, 4, 5, 0, 1, 2, 4, 5 };
 static const u8 pq16_idx_to_field[] = { 1, 4, 1, 2, 3, 4, 5, 6, 7,
 					0, 1, 2, 3, 4, 5, 6 };
 
+<<<<<<< HEAD
+=======
+/*
+ * technically sources 1 and 2 do not require SED, but the op will have
+ * at least 9 descriptors so that's irrelevant.
+ */
+static const u8 pq16_idx_to_sed[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0,
+				      1, 1, 1, 1, 1, 1, 1 };
+
+>>>>>>> 671a46baf1b... some performance improvements
 static void ioat3_eh(struct ioat2_dma_chan *ioat);
 
 static dma_addr_t xor_get_src(struct ioat_raw_descriptor *descs[2], int idx)
@@ -128,6 +138,15 @@ static void pq_set_src(struct ioat_raw_descriptor *descs[2],
 	pq->coef[idx] = coef;
 }
 
+<<<<<<< HEAD
+=======
+static int sed_get_pq16_pool_idx(int src_cnt)
+{
+
+	return pq16_idx_to_sed[src_cnt];
+}
+
+>>>>>>> 671a46baf1b... some performance improvements
 static bool is_jf_ioat(struct pci_dev *pdev)
 {
 	switch (pdev->device) {
@@ -635,11 +654,16 @@ static void ioat3_cleanup(struct ioat2_dma_chan *ioat)
 static void ioat3_cleanup_event(unsigned long data)
 {
 	struct ioat2_dma_chan *ioat = to_ioat2_chan((void *) data);
+<<<<<<< HEAD
 	struct ioat_chan_common *chan = &ioat->base;
 
 	ioat3_cleanup(ioat);
 	if (!test_bit(IOAT_RUN, &chan->state))
 		return;
+=======
+
+	ioat3_cleanup(ioat);
+>>>>>>> 671a46baf1b... some performance improvements
 	writew(IOAT_CHANCTRL_RUN, ioat->base.reg_base + IOAT_CHANCTRL_OFFSET);
 }
 
@@ -1172,6 +1196,12 @@ __ioat3_prep_pq16_lock(struct dma_chan *c, enum sum_check_flags *result,
 	u8 op;
 	int i, s, idx, num_descs;
 
+<<<<<<< HEAD
+=======
+	/* this function only handles src_cnt 9 - 16 */
+	BUG_ON(src_cnt < 9);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	/* this function is only called with 9-16 sources */
 	op = result ? IOAT_OP_PQ_VAL_16S : IOAT_OP_PQ_16S;
 
@@ -1199,7 +1229,12 @@ __ioat3_prep_pq16_lock(struct dma_chan *c, enum sum_check_flags *result,
 
 		descs[0] = (struct ioat_raw_descriptor *) pq;
 
+<<<<<<< HEAD
 		desc->sed = ioat3_alloc_sed(device, (src_cnt-2) >> 3);
+=======
+		desc->sed = ioat3_alloc_sed(device,
+					    sed_get_pq16_pool_idx(src_cnt));
+>>>>>>> 671a46baf1b... some performance improvements
 		if (!desc->sed) {
 			dev_err(to_dev(chan),
 				"%s: no free sed entries\n", __func__);
@@ -1257,6 +1292,7 @@ __ioat3_prep_pq16_lock(struct dma_chan *c, enum sum_check_flags *result,
 	return &desc->txd;
 }
 
+<<<<<<< HEAD
 static int src_cnt_flags(unsigned int src_cnt, unsigned long flags)
 {
 	if (dmaf_p_disabled_continue(flags))
@@ -1267,11 +1303,18 @@ static int src_cnt_flags(unsigned int src_cnt, unsigned long flags)
 		return src_cnt;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static struct dma_async_tx_descriptor *
 ioat3_prep_pq(struct dma_chan *chan, dma_addr_t *dst, dma_addr_t *src,
 	      unsigned int src_cnt, const unsigned char *scf, size_t len,
 	      unsigned long flags)
 {
+<<<<<<< HEAD
+=======
+	struct dma_device *dma = chan->device;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	/* specify valid address for disabled result */
 	if (flags & DMA_PREP_PQ_DISABLE_P)
 		dst[0] = dst[1];
@@ -1291,7 +1334,11 @@ ioat3_prep_pq(struct dma_chan *chan, dma_addr_t *dst, dma_addr_t *src,
 		single_source_coef[0] = scf[0];
 		single_source_coef[1] = 0;
 
+<<<<<<< HEAD
 		return src_cnt_flags(src_cnt, flags) > 8 ?
+=======
+		return (src_cnt > 8) && (dma->max_pq > 8) ?
+>>>>>>> 671a46baf1b... some performance improvements
 			__ioat3_prep_pq16_lock(chan, NULL, dst, single_source,
 					       2, single_source_coef, len,
 					       flags) :
@@ -1299,7 +1346,11 @@ ioat3_prep_pq(struct dma_chan *chan, dma_addr_t *dst, dma_addr_t *src,
 					     single_source_coef, len, flags);
 
 	} else {
+<<<<<<< HEAD
 		return src_cnt_flags(src_cnt, flags) > 8 ?
+=======
+		return (src_cnt > 8) && (dma->max_pq > 8) ?
+>>>>>>> 671a46baf1b... some performance improvements
 			__ioat3_prep_pq16_lock(chan, NULL, dst, src, src_cnt,
 					       scf, len, flags) :
 			__ioat3_prep_pq_lock(chan, NULL, dst, src, src_cnt,
@@ -1312,6 +1363,11 @@ ioat3_prep_pq_val(struct dma_chan *chan, dma_addr_t *pq, dma_addr_t *src,
 		  unsigned int src_cnt, const unsigned char *scf, size_t len,
 		  enum sum_check_flags *pqres, unsigned long flags)
 {
+<<<<<<< HEAD
+=======
+	struct dma_device *dma = chan->device;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	/* specify valid address for disabled result */
 	if (flags & DMA_PREP_PQ_DISABLE_P)
 		pq[0] = pq[1];
@@ -1323,7 +1379,11 @@ ioat3_prep_pq_val(struct dma_chan *chan, dma_addr_t *pq, dma_addr_t *src,
 	 */
 	*pqres = 0;
 
+<<<<<<< HEAD
 	return src_cnt_flags(src_cnt, flags) > 8 ?
+=======
+	return (src_cnt > 8) && (dma->max_pq > 8) ?
+>>>>>>> 671a46baf1b... some performance improvements
 		__ioat3_prep_pq16_lock(chan, pqres, pq, src, src_cnt, scf, len,
 				       flags) :
 		__ioat3_prep_pq_lock(chan, pqres, pq, src, src_cnt, scf, len,
@@ -1334,6 +1394,10 @@ static struct dma_async_tx_descriptor *
 ioat3_prep_pqxor(struct dma_chan *chan, dma_addr_t dst, dma_addr_t *src,
 		 unsigned int src_cnt, size_t len, unsigned long flags)
 {
+<<<<<<< HEAD
+=======
+	struct dma_device *dma = chan->device;
+>>>>>>> 671a46baf1b... some performance improvements
 	unsigned char scf[src_cnt];
 	dma_addr_t pq[2];
 
@@ -1342,7 +1406,11 @@ ioat3_prep_pqxor(struct dma_chan *chan, dma_addr_t dst, dma_addr_t *src,
 	flags |= DMA_PREP_PQ_DISABLE_Q;
 	pq[1] = dst; /* specify valid address for disabled result */
 
+<<<<<<< HEAD
 	return src_cnt_flags(src_cnt, flags) > 8 ?
+=======
+	return (src_cnt > 8) && (dma->max_pq > 8) ?
+>>>>>>> 671a46baf1b... some performance improvements
 		__ioat3_prep_pq16_lock(chan, NULL, pq, src, src_cnt, scf, len,
 				       flags) :
 		__ioat3_prep_pq_lock(chan, NULL, pq, src, src_cnt, scf, len,
@@ -1354,6 +1422,10 @@ ioat3_prep_pqxor_val(struct dma_chan *chan, dma_addr_t *src,
 		     unsigned int src_cnt, size_t len,
 		     enum sum_check_flags *result, unsigned long flags)
 {
+<<<<<<< HEAD
+=======
+	struct dma_device *dma = chan->device;
+>>>>>>> 671a46baf1b... some performance improvements
 	unsigned char scf[src_cnt];
 	dma_addr_t pq[2];
 
@@ -1367,7 +1439,12 @@ ioat3_prep_pqxor_val(struct dma_chan *chan, dma_addr_t *src,
 	flags |= DMA_PREP_PQ_DISABLE_Q;
 	pq[1] = pq[0]; /* specify valid address for disabled result */
 
+<<<<<<< HEAD
 	return src_cnt_flags(src_cnt, flags) > 8 ?
+=======
+
+	return (src_cnt > 8) && (dma->max_pq > 8) ?
+>>>>>>> 671a46baf1b... some performance improvements
 		__ioat3_prep_pq16_lock(chan, result, pq, &src[1], src_cnt - 1,
 				       scf, len, flags) :
 		__ioat3_prep_pq_lock(chan, result, pq, &src[1], src_cnt - 1,

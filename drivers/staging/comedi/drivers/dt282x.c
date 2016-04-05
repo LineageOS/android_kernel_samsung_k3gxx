@@ -269,9 +269,14 @@ struct dt282x_private {
 			}					\
 			udelay(5);				\
 		}						\
+<<<<<<< HEAD
 		if (_i) {					\
 			b					\
 		}						\
+=======
+		if (_i)						\
+			b					\
+>>>>>>> 671a46baf1b... some performance improvements
 	} while (0)
 
 static int prep_ai_dma(struct comedi_device *dev, int chan, int size);

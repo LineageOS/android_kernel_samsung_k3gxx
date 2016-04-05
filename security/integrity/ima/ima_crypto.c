@@ -24,6 +24,7 @@
 
 static struct crypto_shash *ima_shash_tfm;
 
+<<<<<<< HEAD
 /**
  * ima_kernel_read - read file content
  *
@@ -54,6 +55,8 @@ static int ima_kernel_read(struct file *file, loff_t offset,
 	return ret;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 int ima_init_crypto(void)
 {
 	long rc;
@@ -100,7 +103,11 @@ int ima_calc_file_hash(struct file *file, char *digest)
 	while (offset < i_size) {
 		int rbuf_len;
 
+<<<<<<< HEAD
 		rbuf_len = ima_kernel_read(file, offset, rbuf, PAGE_SIZE);
+=======
+		rbuf_len = kernel_read(file, offset, rbuf, PAGE_SIZE);
+>>>>>>> 671a46baf1b... some performance improvements
 		if (rbuf_len < 0) {
 			rc = rbuf_len;
 			break;

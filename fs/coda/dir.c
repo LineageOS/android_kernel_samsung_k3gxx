@@ -391,7 +391,12 @@ static int coda_readdir(struct file *coda_file, void *buf, filldir_t filldir)
 	if (!host_file->f_op)
 		return -ENOTDIR;
 
+<<<<<<< HEAD
 	if (host_file->f_op->readdir) {
+=======
+	if (host_file->f_op->readdir)
+	{
+>>>>>>> 671a46baf1b... some performance improvements
 		/* potemkin case: we were handed a directory inode.
 		 * We can't use vfs_readdir because we have to keep the file
 		 * position in sync between the coda_file and the host_file.
@@ -409,6 +414,7 @@ static int coda_readdir(struct file *coda_file, void *buf, filldir_t filldir)
 
 		coda_file->f_pos = host_file->f_pos;
 		mutex_unlock(&host_inode->i_mutex);
+<<<<<<< HEAD
 	} else if (host_file->f_op->iterate) {
 		struct inode *host_inode = file_inode(host_file);
 		struct dir_context *ctx = buf;
@@ -423,6 +429,10 @@ static int coda_readdir(struct file *coda_file, void *buf, filldir_t filldir)
 
 		coda_file->f_pos = ctx->pos;
 	} else /* Venus: we must read Venus dirents from a file */
+=======
+	}
+	else /* Venus: we must read Venus dirents from a file */
+>>>>>>> 671a46baf1b... some performance improvements
 		ret = coda_venus_readdir(coda_file, buf, filldir);
 
 	return ret;

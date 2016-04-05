@@ -275,8 +275,12 @@ static void smsdvb_update_per_slices(struct smsdvb_client_t *client,
 
 	/* Legacy PER/BER */
 	tmp = p->ets_packets * 65535;
+<<<<<<< HEAD
 	if (p->ts_packets + p->ets_packets)
 		do_div(tmp, p->ts_packets + p->ets_packets);
+=======
+	do_div(tmp, p->ts_packets + p->ets_packets);
+>>>>>>> 671a46baf1b... some performance improvements
 	client->legacy_per = tmp;
 }
 

@@ -57,11 +57,14 @@ acpi_ex_store_object_to_index(union acpi_operand_object *val_desc,
 			      union acpi_operand_object *dest_desc,
 			      struct acpi_walk_state *walk_state);
 
+<<<<<<< HEAD
 static acpi_status
 acpi_ex_store_direct_to_node(union acpi_operand_object *source_desc,
 			     struct acpi_namespace_node *node,
 			     struct acpi_walk_state *walk_state);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /*******************************************************************************
  *
  * FUNCTION:    acpi_ex_store
@@ -381,11 +384,15 @@ acpi_ex_store_object_to_index(union acpi_operand_object *source_desc,
  *              When storing into an object the data is converted to the
  *              target object type then stored in the object. This means
  *              that the target object type (for an initialized target) will
+<<<<<<< HEAD
  *              not be changed by a store operation. A copy_object can change
  *              the target type, however.
  *
  *              The implicit_conversion flag is set to NO/FALSE only when
  *              storing to an arg_x -- as per the rules of the ACPI spec.
+=======
+ *              not be changed by a store operation.
+>>>>>>> 671a46baf1b... some performance improvements
  *
  *              Assumes parameters are already validated.
  *
@@ -409,7 +416,11 @@ acpi_ex_store_object_to_node(union acpi_operand_object *source_desc,
 	target_type = acpi_ns_get_type(node);
 	target_desc = acpi_ns_get_attached_object(node);
 
+<<<<<<< HEAD
 	ACPI_DEBUG_PRINT((ACPI_DB_EXEC, "Storing %p (%s) to node %p (%s)\n",
+=======
+	ACPI_DEBUG_PRINT((ACPI_DB_EXEC, "Storing %p(%s) into node %p(%s)\n",
+>>>>>>> 671a46baf1b... some performance improvements
 			  source_desc,
 			  acpi_ut_get_object_type_name(source_desc), node,
 			  acpi_ut_get_type_name(target_type)));
@@ -423,14 +434,48 @@ acpi_ex_store_object_to_node(union acpi_operand_object *source_desc,
 		return_ACPI_STATUS(status);
 	}
 
+<<<<<<< HEAD
 	/* Do the actual store operation */
 
 	switch (target_type) {
+=======
+	/* If no implicit conversion, drop into the default case below */
+
+	if ((!implicit_conversion) ||
+	    ((walk_state->opcode == AML_COPY_OP) &&
+	     (target_type != ACPI_TYPE_LOCAL_REGION_FIELD) &&
+	     (target_type != ACPI_TYPE_LOCAL_BANK_FIELD) &&
+	     (target_type != ACPI_TYPE_LOCAL_INDEX_FIELD))) {
+		/*
+		 * Force execution of default (no implicit conversion). Note:
+		 * copy_object does not perform an implicit conversion, as per the ACPI
+		 * spec -- except in case of region/bank/index fields -- because these
+		 * objects must retain their original type permanently.
+		 */
+		target_type = ACPI_TYPE_ANY;
+	}
+
+	/* Do the actual store operation */
+
+	switch (target_type) {
+	case ACPI_TYPE_BUFFER_FIELD:
+	case ACPI_TYPE_LOCAL_REGION_FIELD:
+	case ACPI_TYPE_LOCAL_BANK_FIELD:
+	case ACPI_TYPE_LOCAL_INDEX_FIELD:
+
+		/* For fields, copy the source data to the target field. */
+
+		status = acpi_ex_write_data_to_field(source_desc, target_desc,
+						     &walk_state->result_obj);
+		break;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	case ACPI_TYPE_INTEGER:
 	case ACPI_TYPE_STRING:
 	case ACPI_TYPE_BUFFER:
 
 		/*
+<<<<<<< HEAD
 		 * The simple data types all support implicit source operand
 		 * conversion before the store.
 		 */
@@ -448,6 +493,13 @@ acpi_ex_store_object_to_node(union acpi_operand_object *source_desc,
 
 		/* Store with implicit source operand conversion support */
 
+=======
+		 * These target types are all of type Integer/String/Buffer, and
+		 * therefore support implicit conversion before the store.
+		 *
+		 * Copy and/or convert the source object to a new target object
+		 */
+>>>>>>> 671a46baf1b... some performance improvements
 		status =
 		    acpi_ex_store_object_to_object(source_desc, target_desc,
 						   &new_desc, walk_state);
@@ -461,12 +513,22 @@ acpi_ex_store_object_to_node(union acpi_operand_object *source_desc,
 			 * the Name's type to that of the value being stored in it.
 			 * source_desc reference count is incremented by attach_object.
 			 *
+<<<<<<< HEAD
 			 * Note: This may change the type of the node if an explicit
 			 * store has been performed such that the node/object type
 			 * has been changed.
 			 */
 			status = acpi_ns_attach_object(node, new_desc,
 						       new_desc->common.type);
+=======
+			 * Note: This may change the type of the node if an explicit store
+			 * has been performed such that the node/object type has been
+			 * changed.
+			 */
+			status =
+			    acpi_ns_attach_object(node, new_desc,
+						  new_desc->common.type);
+>>>>>>> 671a46baf1b... some performance improvements
 
 			ACPI_DEBUG_PRINT((ACPI_DB_EXEC,
 					  "Store %s into %s via Convert/Attach\n",
@@ -477,6 +539,7 @@ acpi_ex_store_object_to_node(union acpi_operand_object *source_desc,
 		}
 		break;
 
+<<<<<<< HEAD
 	case ACPI_TYPE_BUFFER_FIELD:
 	case ACPI_TYPE_LOCAL_REGION_FIELD:
 	case ACPI_TYPE_LOCAL_BANK_FIELD:
@@ -555,5 +618,40 @@ acpi_ex_store_direct_to_node(union acpi_operand_object *source_desc,
 
 	status = acpi_ns_attach_object(node, new_desc, new_desc->common.type);
 	acpi_ut_remove_reference(new_desc);
+=======
+	default:
+
+		ACPI_DEBUG_PRINT((ACPI_DB_EXEC,
+				  "Storing [%s] (%p) directly into node [%s] (%p)"
+				  " with no implicit conversion\n",
+				  acpi_ut_get_object_type_name(source_desc),
+				  source_desc,
+				  acpi_ut_get_object_type_name(target_desc),
+				  node));
+
+		/*
+		 * No conversions for all other types. Directly store a copy of
+		 * the source object. NOTE: This is a departure from the ACPI
+		 * spec, which states "If conversion is impossible, abort the
+		 * running control method".
+		 *
+		 * This code implements "If conversion is impossible, treat the
+		 * Store operation as a CopyObject".
+		 */
+		status =
+		    acpi_ut_copy_iobject_to_iobject(source_desc, &new_desc,
+						    walk_state);
+		if (ACPI_FAILURE(status)) {
+			return_ACPI_STATUS(status);
+		}
+
+		status =
+		    acpi_ns_attach_object(node, new_desc,
+					  new_desc->common.type);
+		acpi_ut_remove_reference(new_desc);
+		break;
+	}
+
+>>>>>>> 671a46baf1b... some performance improvements
 	return_ACPI_STATUS(status);
 }

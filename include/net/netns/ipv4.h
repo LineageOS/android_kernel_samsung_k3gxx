@@ -43,7 +43,10 @@ struct netns_ipv4 {
 	struct inet_peer_base	*peers;
 	struct tcpm_hash_bucket	*tcp_metrics_hash;
 	unsigned int		tcp_metrics_hash_log;
+<<<<<<< HEAD
 	struct sock  * __percpu	*tcp_sk;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	struct netns_frags	frags;
 #ifdef CONFIG_NETFILTER
 	struct xt_table		*iptable_filter;

@@ -4,7 +4,10 @@ TARGETS += efivarfs
 TARGETS += kcmp
 TARGETS += memory-hotplug
 TARGETS += mqueue
+<<<<<<< HEAD
 TARGETS += mount
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 TARGETS += net
 TARGETS += ptrace
 TARGETS += vm

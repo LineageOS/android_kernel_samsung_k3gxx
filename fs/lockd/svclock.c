@@ -767,7 +767,10 @@ nlmsvc_grant_blocked(struct nlm_block *block)
 	struct nlm_file		*file = block->b_file;
 	struct nlm_lock		*lock = &block->b_call->a_args.lock;
 	int			error;
+<<<<<<< HEAD
 	loff_t			fl_start, fl_end;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	dprintk("lockd: grant blocked lock %p\n", block);
 
@@ -785,6 +788,7 @@ nlmsvc_grant_blocked(struct nlm_block *block)
 	}
 
 	/* Try the lock operation again */
+<<<<<<< HEAD
 	/* vfs_lock_file() can mangle fl_start and fl_end, but we need
 	 * them unchanged for the GRANT_MSG
 	 */
@@ -795,6 +799,11 @@ nlmsvc_grant_blocked(struct nlm_block *block)
 	lock->fl.fl_flags &= ~FL_SLEEP;
 	lock->fl.fl_start = fl_start;
 	lock->fl.fl_end = fl_end;
+=======
+	lock->fl.fl_flags |= FL_SLEEP;
+	error = vfs_lock_file(file->f_file, F_SETLK, &lock->fl, NULL);
+	lock->fl.fl_flags &= ~FL_SLEEP;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	switch (error) {
 	case 0:

@@ -329,11 +329,19 @@ static int gpio_rcar_probe(struct platform_device *pdev)
 	if (!p->irq_domain) {
 		ret = -ENXIO;
 		dev_err(&pdev->dev, "cannot initialize irq domain\n");
+<<<<<<< HEAD
 		goto err0;
 	}
 
 	if (devm_request_irq(&pdev->dev, irq->start,
 			     gpio_rcar_irq_handler, IRQF_SHARED, name, p)) {
+=======
+		goto err1;
+	}
+
+	if (devm_request_irq(&pdev->dev, irq->start,
+			     gpio_rcar_irq_handler, 0, name, p)) {
+>>>>>>> 671a46baf1b... some performance improvements
 		dev_err(&pdev->dev, "failed to request IRQ\n");
 		ret = -ENOENT;
 		goto err1;

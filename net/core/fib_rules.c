@@ -17,11 +17,14 @@
 #include <net/sock.h>
 #include <net/fib_rules.h>
 
+<<<<<<< HEAD
 static const struct fib_kuid_range fib_kuid_range_unset = {
 	KUIDT_INIT(0),
 	KUIDT_INIT(~0),
 };
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 int fib_default_rule_add(struct fib_rules_ops *ops,
 			 u32 pref, u32 table, u32 flags)
 {
@@ -36,8 +39,14 @@ int fib_default_rule_add(struct fib_rules_ops *ops,
 	r->pref = pref;
 	r->table = table;
 	r->flags = flags;
+<<<<<<< HEAD
 	r->fr_net = hold_net(ops->fro_net);
 	r->uid_range = fib_kuid_range_unset;
+=======
+	r->uid_start = INVALID_UID;
+	r->uid_end = INVALID_UID;
+	r->fr_net = hold_net(ops->fro_net);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* The lock is not required here, the list in unreacheable
 	 * at the moment this function is called */
@@ -185,6 +194,7 @@ void fib_rules_unregister(struct fib_rules_ops *ops)
 }
 EXPORT_SYMBOL_GPL(fib_rules_unregister);
 
+<<<<<<< HEAD
 static int uid_range_set(struct fib_kuid_range *range)
 {
 	return uid_valid(range->start) && uid_valid(range->end);
@@ -211,6 +221,23 @@ static int nla_put_uid_range(struct sk_buff *skb, struct fib_kuid_range *range)
 	};
 
 	return nla_put(skb, FRA_UID_RANGE, sizeof(out), &out);
+=======
+static inline kuid_t fib_nl_uid(struct nlattr *nla)
+{
+	return make_kuid(current_user_ns(), nla_get_u32(nla));
+}
+
+static int nla_put_uid(struct sk_buff *skb, int idx, kuid_t uid)
+{
+	return nla_put_u32(skb, idx, from_kuid_munged(current_user_ns(), uid));
+}
+
+static int fib_uid_range_match(struct flowi *fl, struct fib_rule *rule)
+{
+	return (!uid_valid(rule->uid_start) && !uid_valid(rule->uid_end)) ||
+	       (uid_gte(fl->flowi_uid, rule->uid_start) &&
+		uid_lte(fl->flowi_uid, rule->uid_end));
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int fib_rule_match(struct fib_rule *rule, struct fib_rules_ops *ops,
@@ -227,8 +254,12 @@ static int fib_rule_match(struct fib_rule *rule, struct fib_rules_ops *ops,
 	if ((rule->mark ^ fl->flowi_mark) & rule->mark_mask)
 		goto out;
 
+<<<<<<< HEAD
 	if (uid_lt(fl->flowi_uid, rule->uid_range.start) ||
 	    uid_gt(fl->flowi_uid, rule->uid_range.end))
+=======
+	if (!fib_uid_range_match(fl, rule))
+>>>>>>> 671a46baf1b... some performance improvements
 		goto out;
 
 	ret = ops->match(rule, fl, flags);
@@ -401,6 +432,7 @@ static int fib_nl_newrule(struct sk_buff *skb, struct nlmsghdr* nlh)
 	} else if (rule->action == FR_ACT_GOTO)
 		goto errout_free;
 
+<<<<<<< HEAD
 	if (tb[FRA_UID_RANGE]) {
 		if (current_user_ns() != net->user_ns) {
 			err = -EPERM;
@@ -414,6 +446,19 @@ static int fib_nl_newrule(struct sk_buff *skb, struct nlmsghdr* nlh)
 			goto errout_free;
 	} else {
 		rule->uid_range = fib_kuid_range_unset;
+=======
+	/* UID start and end must either both be valid or both unspecified. */
+	rule->uid_start = rule->uid_end = INVALID_UID;
+	if (tb[FRA_UID_START] || tb[FRA_UID_END]) {
+		if (tb[FRA_UID_START] && tb[FRA_UID_END]) {
+			rule->uid_start = fib_nl_uid(tb[FRA_UID_START]);
+			rule->uid_end = fib_nl_uid(tb[FRA_UID_END]);
+		}
+		if (!uid_valid(rule->uid_start) ||
+		    !uid_valid(rule->uid_end) ||
+		    !uid_lte(rule->uid_start, rule->uid_end))
+		goto errout_free;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	err = ops->configure(rule, skb, frh, tb);
@@ -475,7 +520,10 @@ static int fib_nl_delrule(struct sk_buff *skb, struct nlmsghdr* nlh)
 	struct fib_rules_ops *ops = NULL;
 	struct fib_rule *rule, *tmp;
 	struct nlattr *tb[FRA_MAX+1];
+<<<<<<< HEAD
 	struct fib_kuid_range range;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	int err = -EINVAL;
 
 	if (nlh->nlmsg_len < nlmsg_msg_size(sizeof(*frh)))
@@ -495,6 +543,7 @@ static int fib_nl_delrule(struct sk_buff *skb, struct nlmsghdr* nlh)
 	if (err < 0)
 		goto errout;
 
+<<<<<<< HEAD
 	if (tb[FRA_UID_RANGE]) {
 		range = nla_get_kuid_range(tb);
 		if (!uid_range_set(&range))
@@ -503,12 +552,18 @@ static int fib_nl_delrule(struct sk_buff *skb, struct nlmsghdr* nlh)
 		range = fib_kuid_range_unset;
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	list_for_each_entry(rule, &ops->rules_list, list) {
 		if (frh->action && (frh->action != rule->action))
 			continue;
 
+<<<<<<< HEAD
 		if (frh_get_table(frh, tb) &&
 		    (frh_get_table(frh, tb) != rule->table))
+=======
+		if (frh->table && (frh_get_table(frh, tb) != rule->table))
+>>>>>>> 671a46baf1b... some performance improvements
 			continue;
 
 		if (tb[FRA_PRIORITY] &&
@@ -531,9 +586,18 @@ static int fib_nl_delrule(struct sk_buff *skb, struct nlmsghdr* nlh)
 		    (rule->mark_mask != nla_get_u32(tb[FRA_FWMASK])))
 			continue;
 
+<<<<<<< HEAD
 		if (uid_range_set(&range) &&
 		    (!uid_eq(rule->uid_range.start, range.start) ||
 		     !uid_eq(rule->uid_range.end, range.end)))
+=======
+		if (tb[FRA_UID_START] &&
+		    !uid_eq(rule->uid_start, fib_nl_uid(tb[FRA_UID_START])))
+			continue;
+
+		if (tb[FRA_UID_END] &&
+		    !uid_eq(rule->uid_end, fib_nl_uid(tb[FRA_UID_END])))
+>>>>>>> 671a46baf1b... some performance improvements
 			continue;
 
 		if (!ops->compare(rule, frh, tb))
@@ -593,7 +657,12 @@ static inline size_t fib_rule_nlmsg_size(struct fib_rules_ops *ops,
 			 + nla_total_size(4) /* FRA_TABLE */
 			 + nla_total_size(4) /* FRA_FWMARK */
 			 + nla_total_size(4) /* FRA_FWMASK */
+<<<<<<< HEAD
 			 + nla_total_size(sizeof(struct fib_kuid_range));
+=======
+			 + nla_total_size(4) /* FRA_UID_START */
+			 + nla_total_size(4); /* FRA_UID_END */
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (ops->nlmsg_payload)
 		payload += ops->nlmsg_payload(rule);
@@ -648,8 +717,15 @@ static int fib_nl_fill_rule(struct sk_buff *skb, struct fib_rule *rule,
 	     nla_put_u32(skb, FRA_FWMASK, rule->mark_mask)) ||
 	    (rule->target &&
 	     nla_put_u32(skb, FRA_GOTO, rule->target)) ||
+<<<<<<< HEAD
 	    (uid_range_set(&rule->uid_range) &&
 	     nla_put_uid_range(skb, &rule->uid_range)))
+=======
+	    (uid_valid(rule->uid_start) &&
+	     nla_put_uid(skb, FRA_UID_START, rule->uid_start)) ||
+	    (uid_valid(rule->uid_end) &&
+	     nla_put_uid(skb, FRA_UID_END, rule->uid_end)))
+>>>>>>> 671a46baf1b... some performance improvements
 		goto nla_put_failure;
 	if (ops->fill(rule, skb, frh) < 0)
 		goto nla_put_failure;
@@ -666,17 +742,26 @@ static int dump_rules(struct sk_buff *skb, struct netlink_callback *cb,
 {
 	int idx = 0;
 	struct fib_rule *rule;
+<<<<<<< HEAD
 	int err = 0;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	rcu_read_lock();
 	list_for_each_entry_rcu(rule, &ops->rules_list, list) {
 		if (idx < cb->args[1])
 			goto skip;
 
+<<<<<<< HEAD
 		err = fib_nl_fill_rule(skb, rule, NETLINK_CB(cb->skb).portid,
 				       cb->nlh->nlmsg_seq, RTM_NEWRULE,
 				       NLM_F_MULTI, ops);
 		if (err < 0)
+=======
+		if (fib_nl_fill_rule(skb, rule, NETLINK_CB(cb->skb).portid,
+				     cb->nlh->nlmsg_seq, RTM_NEWRULE,
+				     NLM_F_MULTI, ops) < 0)
+>>>>>>> 671a46baf1b... some performance improvements
 			break;
 skip:
 		idx++;
@@ -685,7 +770,11 @@ skip:
 	cb->args[1] = idx;
 	rules_ops_put(ops);
 
+<<<<<<< HEAD
 	return err;
+=======
+	return skb->len;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int fib_nl_dumprule(struct sk_buff *skb, struct netlink_callback *cb)
@@ -701,9 +790,13 @@ static int fib_nl_dumprule(struct sk_buff *skb, struct netlink_callback *cb)
 		if (ops == NULL)
 			return -EAFNOSUPPORT;
 
+<<<<<<< HEAD
 		dump_rules(skb, cb, ops);
 
 		return skb->len;
+=======
+		return dump_rules(skb, cb, ops);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	rcu_read_lock();
@@ -794,6 +887,7 @@ static int fib_rules_event(struct notifier_block *this, unsigned long event,
 			attach_rules(&ops->rules_list, dev);
 		break;
 
+<<<<<<< HEAD
 	case NETDEV_CHANGENAME:
 		list_for_each_entry(ops, &net->rules_ops, list) {
 			detach_rules(&ops->rules_list, dev);
@@ -801,6 +895,8 @@ static int fib_rules_event(struct notifier_block *this, unsigned long event,
 		}
 		break;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	case NETDEV_UNREGISTER:
 		list_for_each_entry(ops, &net->rules_ops, list)
 			detach_rules(&ops->rules_list, dev);

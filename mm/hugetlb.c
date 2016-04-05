@@ -21,7 +21,10 @@
 #include <linux/rmap.h>
 #include <linux/swap.h>
 #include <linux/swapops.h>
+<<<<<<< HEAD
 #include <linux/page-isolation.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 #include <asm/page.h>
 #include <asm/pgtable.h>
@@ -518,6 +521,7 @@ static struct page *dequeue_huge_page_node(struct hstate *h, int nid)
 {
 	struct page *page;
 
+<<<<<<< HEAD
 	list_for_each_entry(page, &h->hugepage_freelists[nid], lru)
 		if (!is_migrate_isolate_page(page))
 			break;
@@ -527,6 +531,11 @@ static struct page *dequeue_huge_page_node(struct hstate *h, int nid)
 	 */
 	if (&h->hugepage_freelists[nid] == &page->lru)
 		return NULL;
+=======
+	if (list_empty(&h->hugepage_freelists[nid]))
+		return NULL;
+	page = list_entry(h->hugepage_freelists[nid].next, struct page, lru);
+>>>>>>> 671a46baf1b... some performance improvements
 	list_move(&page->lru, &h->hugepage_activelist);
 	set_page_refcounted(page);
 	h->free_huge_pages--;
@@ -697,6 +706,7 @@ int PageHuge(struct page *page)
 }
 EXPORT_SYMBOL_GPL(PageHuge);
 
+<<<<<<< HEAD
 /*
  * PageHeadHuge() only returns true for hugetlbfs head page, but not for
  * normal or transparent huge pages.
@@ -714,6 +724,8 @@ int PageHeadHuge(struct page *page_head)
 }
 EXPORT_SYMBOL_GPL(PageHeadHuge);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 pgoff_t __basepage_index(struct page *page)
 {
 	struct page *page_head = compound_head(page);
@@ -1070,6 +1082,7 @@ free:
 }
 
 /*
+<<<<<<< HEAD
  * This routine has two main purposes:
  * 1) Decrement the reservation count (resv_huge_pages) by the value passed
  *    in unused_resv_pages.  This corresponds to the prior adjustments made
@@ -1082,12 +1095,19 @@ free:
  * we must make sure nobody else can claim pages we are in the process of
  * freeing.  Do this by ensuring resv_huge_page always is greater than the
  * number of huge pages we plan to free when dropping the lock.
+=======
+ * When releasing a hugetlb pool reservation, any surplus pages that were
+ * allocated to satisfy the reservation must be explicitly freed if they were
+ * never used.
+ * Called with hugetlb_lock held.
+>>>>>>> 671a46baf1b... some performance improvements
  */
 static void return_unused_surplus_pages(struct hstate *h,
 					unsigned long unused_resv_pages)
 {
 	unsigned long nr_pages;
 
+<<<<<<< HEAD
 	/* Cannot return gigantic pages currently */
 	if (h->order >= MAX_ORDER)
 		goto out;
@@ -1096,6 +1116,15 @@ static void return_unused_surplus_pages(struct hstate *h,
 	 * Part (or even all) of the reservation could have been backed
 	 * by pre-allocated pages. Only free surplus pages.
 	 */
+=======
+	/* Uncommit the reservation */
+	h->resv_huge_pages -= unused_resv_pages;
+
+	/* Cannot return gigantic pages currently */
+	if (h->order >= MAX_ORDER)
+		return;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	nr_pages = min(unused_resv_pages, h->surplus_huge_pages);
 
 	/*
@@ -1105,6 +1134,7 @@ static void return_unused_surplus_pages(struct hstate *h,
 	 * when the nodes with surplus pages have no free pages.
 	 * free_pool_huge_page() will balance the the freed pages across the
 	 * on-line nodes with memory and will handle the hstate accounting.
+<<<<<<< HEAD
 	 *
 	 * Note that we decrement resv_huge_pages as we free the pages.  If
 	 * we drop the lock, resv_huge_pages will still be sufficiently large
@@ -1121,6 +1151,13 @@ static void return_unused_surplus_pages(struct hstate *h,
 out:
 	/* Fully uncommit the reservation */
 	h->resv_huge_pages -= unused_resv_pages;
+=======
+	 */
+	while (nr_pages--) {
+		if (!free_pool_huge_page(h, &node_states[N_MEMORY], 1))
+			break;
+	}
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /*
@@ -1507,7 +1544,10 @@ static unsigned long set_max_huge_pages(struct hstate *h, unsigned long count,
 	while (min_count < persistent_huge_pages(h)) {
 		if (!free_pool_huge_page(h, nodes_allowed, 0))
 			break;
+<<<<<<< HEAD
 		cond_resched_lock(&hugetlb_lock);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	while (count < persistent_huge_pages(h)) {
 		if (!adjust_pool_surplus(h, nodes_allowed, 1))
@@ -2347,6 +2387,7 @@ static void set_huge_ptep_writable(struct vm_area_struct *vma,
 		update_mmu_cache(vma, address, ptep);
 }
 
+<<<<<<< HEAD
 static int is_hugetlb_entry_migration(pte_t pte)
 {
 	swp_entry_t swp;
@@ -2372,6 +2413,8 @@ static int is_hugetlb_entry_hwpoisoned(pte_t pte)
 	else
 		return 0;
 }
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
 			    struct vm_area_struct *vma)
@@ -2399,6 +2442,7 @@ int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
 
 		spin_lock(&dst->page_table_lock);
 		spin_lock_nested(&src->page_table_lock, SINGLE_DEPTH_NESTING);
+<<<<<<< HEAD
 		entry = huge_ptep_get(src_pte);
 		if (huge_pte_none(entry)) { /* skip none entry */
 			;
@@ -2417,6 +2461,9 @@ int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
 			}
 			set_huge_pte_at(dst, addr, dst_pte, entry);
 		} else {
+=======
+		if (!huge_pte_none(huge_ptep_get(src_pte))) {
+>>>>>>> 671a46baf1b... some performance improvements
 			if (cow)
 				huge_ptep_set_wrprotect(src, addr, src_pte);
 			entry = huge_ptep_get(src_pte);
@@ -2434,6 +2481,35 @@ nomem:
 	return -ENOMEM;
 }
 
+<<<<<<< HEAD
+=======
+static int is_hugetlb_entry_migration(pte_t pte)
+{
+	swp_entry_t swp;
+
+	if (huge_pte_none(pte) || pte_present(pte))
+		return 0;
+	swp = pte_to_swp_entry(pte);
+	if (non_swap_entry(swp) && is_migration_entry(swp))
+		return 1;
+	else
+		return 0;
+}
+
+static int is_hugetlb_entry_hwpoisoned(pte_t pte)
+{
+	swp_entry_t swp;
+
+	if (huge_pte_none(pte) || pte_present(pte))
+		return 0;
+	swp = pte_to_swp_entry(pte);
+	if (non_swap_entry(swp) && is_hwpoison_entry(swp))
+		return 1;
+	else
+		return 0;
+}
+
+>>>>>>> 671a46baf1b... some performance improvements
 void __unmap_hugepage_range(struct mmu_gather *tlb, struct vm_area_struct *vma,
 			    unsigned long start, unsigned long end,
 			    struct page *ref_page)
@@ -2470,10 +2546,16 @@ again:
 			continue;
 
 		/*
+<<<<<<< HEAD
 		 * Migrating hugepage or HWPoisoned hugepage is already
 		 * unmapped and its refcount is dropped, so just clear pte here.
 		 */
 		if (unlikely(!pte_present(pte))) {
+=======
+		 * HWPoisoned hugepage is already unmapped and dropped reference
+		 */
+		if (unlikely(is_hugetlb_entry_hwpoisoned(pte))) {
+>>>>>>> 671a46baf1b... some performance improvements
 			huge_pte_clear(mm, address, ptep);
 			continue;
 		}
@@ -2592,6 +2674,7 @@ static int unmap_ref_private(struct mm_struct *mm, struct vm_area_struct *vma,
 			continue;
 
 		/*
+<<<<<<< HEAD
 		 * Shared VMAs have their own reserves and do not affect
 		 * MAP_PRIVATE accounting but it is possible that a shared
 		 * VMA is using the same page so check and skip such VMAs.
@@ -2600,6 +2683,8 @@ static int unmap_ref_private(struct mm_struct *mm, struct vm_area_struct *vma,
 			continue;
 
 		/*
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		 * Unmap the page from other VMAs without their own reserves.
 		 * They get marked to be SIGKILLed if they fault in these
 		 * areas. This is because a future no-page fault on this VMA

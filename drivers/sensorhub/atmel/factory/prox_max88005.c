@@ -12,7 +12,11 @@
  *  GNU General Public License for more details.
  *
  */
+<<<<<<< HEAD
 #include "ssp.h"
+=======
+#include "../ssp.h"
+>>>>>>> 671a46baf1b... some performance improvements
 
 #define	VENDOR		"MAXIM"
 #define	CHIP_ID		"MAX88005"

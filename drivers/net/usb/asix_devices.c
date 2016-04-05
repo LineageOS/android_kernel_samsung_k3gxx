@@ -466,7 +466,23 @@ static int ax88772_bind(struct usbnet *dev, struct usb_interface *intf)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	ax88772_reset(dev);
+=======
+	ret = asix_sw_reset(dev, AX_SWRESET_IPPD | AX_SWRESET_PRL);
+	if (ret < 0)
+		return ret;
+
+	msleep(150);
+
+	ret = asix_sw_reset(dev, AX_SWRESET_CLEAR);
+	if (ret < 0)
+		return ret;
+
+	msleep(150);
+
+	ret = asix_sw_reset(dev, embd_phy ? AX_SWRESET_IPRL : AX_SWRESET_PRTE);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* Read PHYID register *AFTER* the PHY was reset properly */
 	phyid = asix_get_phyid(dev);
@@ -876,7 +892,11 @@ static const struct driver_info ax88772_info = {
 	.unbind = ax88772_unbind,
 	.status = asix_status,
 	.link_reset = ax88772_link_reset,
+<<<<<<< HEAD
 	.reset = ax88772_link_reset,
+=======
+	.reset = ax88772_reset,
+>>>>>>> 671a46baf1b... some performance improvements
 	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR | FLAG_MULTI_PACKET,
 	.rx_fixup = asix_rx_fixup_common,
 	.tx_fixup = asix_tx_fixup,
@@ -903,8 +923,12 @@ static const struct driver_info ax88178_info = {
 	.status = asix_status,
 	.link_reset = ax88178_link_reset,
 	.reset = ax88178_reset,
+<<<<<<< HEAD
 	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR |
 		 FLAG_MULTI_PACKET,
+=======
+	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR,
+>>>>>>> 671a46baf1b... some performance improvements
 	.rx_fixup = asix_rx_fixup_common,
 	.tx_fixup = asix_tx_fixup,
 };

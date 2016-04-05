@@ -47,6 +47,7 @@ header-y      := $(filter-out $(generic-y), $(header-y))
 all-files     := $(header-y) $(genhdr-y) $(wrapper-files)
 output-files  := $(addprefix $(installdir)/, $(all-files))
 
+<<<<<<< HEAD
 input-files1  := $(foreach hdr, $(header-y), \
 		   $(if $(wildcard $(srcdir)/$(hdr)), \
 			$(wildcard $(srcdir)/$(hdr))) \
@@ -60,11 +61,24 @@ input-files2  := $(foreach hdr, $(header-y), \
 		   ))
 input-files2-name := $(notdir $(input-files2))
 input-files3  := $(foreach hdr, $(genhdr-y), \
+=======
+input-files   := $(foreach hdr, $(header-y), \
+		   $(if $(wildcard $(srcdir)/$(hdr)), \
+			$(wildcard $(srcdir)/$(hdr)), \
+			$(if $(wildcard $(oldsrcdir)/$(hdr)), \
+				$(wildcard $(oldsrcdir)/$(hdr)), \
+				$(error Missing UAPI file $(srcdir)/$(hdr))) \
+		   )) \
+		 $(foreach hdr, $(genhdr-y), \
+>>>>>>> 671a46baf1b... some performance improvements
 		   $(if	$(wildcard $(gendir)/$(hdr)), \
 			$(wildcard $(gendir)/$(hdr)), \
 			$(error Missing generated UAPI file $(gendir)/$(hdr)) \
 		   ))
+<<<<<<< HEAD
 input-files3-name := $(notdir $(input-files3))
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 # Work out what needs to be removed
 oldheaders    := $(patsubst $(installdir)/%,%,$(wildcard $(installdir)/*.h))
@@ -78,9 +92,13 @@ printdir = $(patsubst $(INSTALL_HDR_PATH)/%/,%,$(dir $@))
 quiet_cmd_install = INSTALL $(printdir) ($(words $(all-files))\
                             file$(if $(word 2, $(all-files)),s))
       cmd_install = \
+<<<<<<< HEAD
         $(CONFIG_SHELL) $< $(installdir) $(srcdir) $(input-files1-name); \
         $(CONFIG_SHELL) $< $(installdir) $(oldsrcdir) $(input-files2-name); \
         $(CONFIG_SHELL) $< $(installdir) $(gendir) $(input-files3-name); \
+=======
+        $(CONFIG_SHELL) $< $(installdir) $(input-files); \
+>>>>>>> 671a46baf1b... some performance improvements
         for F in $(wrapper-files); do                                   \
                 echo "\#include <asm-generic/$$F>" > $(installdir)/$$F;    \
         done;                                                           \
@@ -106,7 +124,11 @@ __headersinst: $(subdirs) $(install-file)
 	@:
 
 targets += $(install-file)
+<<<<<<< HEAD
 $(install-file): scripts/headers_install.sh $(input-files1) $(input-files2) $(input-files3) FORCE
+=======
+$(install-file): scripts/headers_install.sh $(input-files) FORCE
+>>>>>>> 671a46baf1b... some performance improvements
 	$(if $(unwanted),$(call cmd,remove),)
 	$(if $(wildcard $(dir $@)),,$(shell mkdir -p $(dir $@)))
 	$(call if_changed,install)

@@ -541,7 +541,11 @@ config MTD_NAND_FSMC
 	  Flexible Static Memory Controller (FSMC)
 
 config MTD_NAND_XWAY
+<<<<<<< HEAD
 	bool "Support for NAND on Lantiq XWAY SoC"
+=======
+	tristate "Support for NAND on Lantiq XWAY SoC"
+>>>>>>> 671a46baf1b... some performance improvements
 	depends on LANTIQ && SOC_TYPE_XWAY
 	select MTD_NAND_PLATFORM
 	help

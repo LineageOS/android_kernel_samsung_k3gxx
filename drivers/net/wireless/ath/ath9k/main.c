@@ -173,7 +173,12 @@ static void ath_restart_work(struct ath_softc *sc)
 {
 	ieee80211_queue_delayed_work(sc->hw, &sc->tx_complete_work, 0);
 
+<<<<<<< HEAD
 	if (AR_SREV_9340(sc->sc_ah) || AR_SREV_9330(sc->sc_ah))
+=======
+	if (AR_SREV_9340(sc->sc_ah) || AR_SREV_9485(sc->sc_ah) ||
+	    AR_SREV_9550(sc->sc_ah))
+>>>>>>> 671a46baf1b... some performance improvements
 		ieee80211_queue_delayed_work(sc->hw, &sc->hw_pll_work,
 				     msecs_to_jiffies(ATH_PLL_WORK_INTERVAL));
 
@@ -195,6 +200,7 @@ static bool ath_prepare_reset(struct ath_softc *sc)
 	ath9k_debug_samp_bb_mac(sc);
 	ath9k_hw_disable_interrupts(ah);
 
+<<<<<<< HEAD
 	if (AR_SREV_9300_20_OR_LATER(ah)) {
 		ret &= ath_stoprecv(sc);
 		ret &= ath_drain_all_txq(sc);
@@ -202,6 +208,13 @@ static bool ath_prepare_reset(struct ath_softc *sc)
 		ret &= ath_drain_all_txq(sc);
 		ret &= ath_stoprecv(sc);
 	}
+=======
+	if (!ath_drain_all_txq(sc))
+		ret = false;
+
+	if (!ath_stoprecv(sc))
+		ret = false;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return ret;
 }
@@ -211,7 +224,10 @@ static bool ath_complete_reset(struct ath_softc *sc, bool start)
 	struct ath_hw *ah = sc->sc_ah;
 	struct ath_common *common = ath9k_hw_common(ah);
 	unsigned long flags;
+<<<<<<< HEAD
 	int i;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (ath_startrecv(sc) != 0) {
 		ath_err(common, "Unable to restart recv logic\n");
@@ -239,6 +255,7 @@ static bool ath_complete_reset(struct ath_softc *sc, bool start)
 		}
 	work:
 		ath_restart_work(sc);
+<<<<<<< HEAD
 
 		for (i = 0; i < ATH9K_NUM_TX_QUEUES; i++) {
 			if (!ATH_TXQ_SETUP(sc, i))
@@ -248,6 +265,8 @@ static bool ath_complete_reset(struct ath_softc *sc, bool start)
 			ath_txq_schedule(sc, &sc->tx.txq[i]);
 			spin_unlock_bh(&sc->tx.txq[i].axq_lock);
 		}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	if ((ah->caps.hw_caps & ATH9K_HW_CAP_ANT_DIV_COMB) && sc->ant_rx != 3)
@@ -555,10 +574,28 @@ chip_reset:
 
 static int ath_reset(struct ath_softc *sc)
 {
+<<<<<<< HEAD
 	int r;
 
 	ath9k_ps_wakeup(sc);
 	r = ath_reset_internal(sc, NULL);
+=======
+	int i, r;
+
+	ath9k_ps_wakeup(sc);
+
+	r = ath_reset_internal(sc, NULL);
+
+	for (i = 0; i < ATH9K_NUM_TX_QUEUES; i++) {
+		if (!ATH_TXQ_SETUP(sc, i))
+			continue;
+
+		spin_lock_bh(&sc->tx.txq[i].axq_lock);
+		ath_txq_schedule(sc, &sc->tx.txq[i]);
+		spin_unlock_bh(&sc->tx.txq[i].axq_lock);
+	}
+
+>>>>>>> 671a46baf1b... some performance improvements
 	ath9k_ps_restore(sc);
 
 	return r;
@@ -891,9 +928,14 @@ void ath9k_calculate_iter_data(struct ieee80211_hw *hw,
 	struct ath_common *common = ath9k_hw_common(ah);
 
 	/*
+<<<<<<< HEAD
 	 * Pick the MAC address of the first interface as the new hardware
 	 * MAC address. The hardware will use it together with the BSSID mask
 	 * when matching addresses.
+=======
+	 * Use the hardware MAC address as reference, the hardware uses it
+	 * together with the BSSID mask when matching addresses.
+>>>>>>> 671a46baf1b... some performance improvements
 	 */
 	memset(iter_data, 0, sizeof(*iter_data));
 	memset(&iter_data->mask, 0xff, ETH_ALEN);

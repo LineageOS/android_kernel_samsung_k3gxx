@@ -635,9 +635,15 @@ i915_gem_execbuffer_relocate_slow(struct drm_device *dev,
 		 * relocations were valid.
 		 */
 		for (j = 0; j < exec[i].relocation_count; j++) {
+<<<<<<< HEAD
 			if (__copy_to_user(&user_relocs[j].presumed_offset,
 					   &invalid_offset,
 					   sizeof(invalid_offset))) {
+=======
+			if (copy_to_user(&user_relocs[j].presumed_offset,
+					 &invalid_offset,
+					 sizeof(invalid_offset))) {
+>>>>>>> 671a46baf1b... some performance improvements
 				ret = -EFAULT;
 				mutex_lock(&dev->struct_mutex);
 				goto err;
@@ -1151,6 +1157,7 @@ i915_gem_execbuffer(struct drm_device *dev, void *data,
 
 	ret = i915_gem_do_execbuffer(dev, data, file, &exec2, exec2_list);
 	if (!ret) {
+<<<<<<< HEAD
 		struct drm_i915_gem_exec_object __user *user_exec_list =
 			to_user_ptr(args->buffers_ptr);
 
@@ -1166,6 +1173,20 @@ i915_gem_execbuffer(struct drm_device *dev, void *data,
 					  args->buffer_count, ret);
 				break;
 			}
+=======
+		/* Copy the new buffer offsets back to the user's exec list. */
+		for (i = 0; i < args->buffer_count; i++)
+			exec_list[i].offset = exec2_list[i].offset;
+		/* ... and back out to userspace */
+		ret = copy_to_user(to_user_ptr(args->buffers_ptr),
+				   exec_list,
+				   sizeof(*exec_list) * args->buffer_count);
+		if (ret) {
+			ret = -EFAULT;
+			DRM_DEBUG("failed to copy %d exec entries "
+				  "back to user (%d)\n",
+				  args->buffer_count, ret);
+>>>>>>> 671a46baf1b... some performance improvements
 		}
 	}
 
@@ -1211,6 +1232,7 @@ i915_gem_execbuffer2(struct drm_device *dev, void *data,
 	ret = i915_gem_do_execbuffer(dev, data, file, args, exec2_list);
 	if (!ret) {
 		/* Copy the new buffer offsets back to the user's exec list. */
+<<<<<<< HEAD
 		struct drm_i915_gem_exec_object2 *user_exec_list =
 				   to_user_ptr(args->buffers_ptr);
 		int i;
@@ -1226,6 +1248,16 @@ i915_gem_execbuffer2(struct drm_device *dev, void *data,
 					  args->buffer_count);
 				break;
 			}
+=======
+		ret = copy_to_user(to_user_ptr(args->buffers_ptr),
+				   exec2_list,
+				   sizeof(*exec2_list) * args->buffer_count);
+		if (ret) {
+			ret = -EFAULT;
+			DRM_DEBUG("failed to copy %d exec entries "
+				  "back to user (%d)\n",
+				  args->buffer_count, ret);
+>>>>>>> 671a46baf1b... some performance improvements
 		}
 	}
 

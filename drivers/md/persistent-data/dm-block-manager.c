@@ -595,6 +595,7 @@ int dm_bm_unlock(struct dm_block *b)
 }
 EXPORT_SYMBOL_GPL(dm_bm_unlock);
 
+<<<<<<< HEAD
 int dm_bm_flush(struct dm_block_manager *bm)
 {
 	if (bm->read_only)
@@ -603,6 +604,27 @@ int dm_bm_flush(struct dm_block_manager *bm)
 	return dm_bufio_write_dirty_buffers(bm->bufio);
 }
 EXPORT_SYMBOL_GPL(dm_bm_flush);
+=======
+int dm_bm_flush_and_unlock(struct dm_block_manager *bm,
+			   struct dm_block *superblock)
+{
+	int r;
+
+	if (bm->read_only)
+		return -EPERM;
+
+	r = dm_bufio_write_dirty_buffers(bm->bufio);
+	if (unlikely(r)) {
+		dm_bm_unlock(superblock);
+		return r;
+	}
+
+	dm_bm_unlock(superblock);
+
+	return dm_bufio_write_dirty_buffers(bm->bufio);
+}
+EXPORT_SYMBOL_GPL(dm_bm_flush_and_unlock);
+>>>>>>> 671a46baf1b... some performance improvements
 
 void dm_bm_set_read_only(struct dm_block_manager *bm)
 {

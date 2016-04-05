@@ -77,7 +77,10 @@ int ipv6_sock_ac_join(struct sock *sk, int ifindex, const struct in6_addr *addr)
 	pac->acl_next = NULL;
 	pac->acl_addr = *addr;
 
+<<<<<<< HEAD
 	rtnl_lock();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	rcu_read_lock();
 	if (ifindex == 0) {
 		struct rt6_info *rt;
@@ -138,7 +141,10 @@ int ipv6_sock_ac_join(struct sock *sk, int ifindex, const struct in6_addr *addr)
 
 error:
 	rcu_read_unlock();
+<<<<<<< HEAD
 	rtnl_unlock();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (pac)
 		sock_kfree_s(sk, pac, sizeof(*pac));
 	return err;
@@ -173,17 +179,25 @@ int ipv6_sock_ac_drop(struct sock *sk, int ifindex, const struct in6_addr *addr)
 
 	spin_unlock_bh(&ipv6_sk_ac_lock);
 
+<<<<<<< HEAD
 	rtnl_lock();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	rcu_read_lock();
 	dev = dev_get_by_index_rcu(net, pac->acl_ifindex);
 	if (dev)
 		ipv6_dev_ac_dec(dev, &pac->acl_addr);
 	rcu_read_unlock();
+<<<<<<< HEAD
 	rtnl_unlock();
 
 	sock_kfree_s(sk, pac, sizeof(*pac));
 	if (!dev)
 		return -ENODEV;
+=======
+
+	sock_kfree_s(sk, pac, sizeof(*pac));
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 }
 
@@ -204,7 +218,10 @@ void ipv6_sock_ac_close(struct sock *sk)
 	spin_unlock_bh(&ipv6_sk_ac_lock);
 
 	prev_index = 0;
+<<<<<<< HEAD
 	rtnl_lock();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	rcu_read_lock();
 	while (pac) {
 		struct ipv6_ac_socklist *next = pac->acl_next;
@@ -219,7 +236,10 @@ void ipv6_sock_ac_close(struct sock *sk)
 		pac = next;
 	}
 	rcu_read_unlock();
+<<<<<<< HEAD
 	rtnl_unlock();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void aca_put(struct ifacaddr6 *ac)
@@ -241,8 +261,11 @@ int ipv6_dev_ac_inc(struct net_device *dev, const struct in6_addr *addr)
 	struct rt6_info *rt;
 	int err;
 
+<<<<<<< HEAD
 	ASSERT_RTNL();
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	idev = in6_dev_get(dev);
 
 	if (idev == NULL)
@@ -312,8 +335,11 @@ int __ipv6_dev_ac_dec(struct inet6_dev *idev, const struct in6_addr *addr)
 {
 	struct ifacaddr6 *aca, *prev_aca;
 
+<<<<<<< HEAD
 	ASSERT_RTNL();
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	write_lock_bh(&idev->lock);
 	prev_aca = NULL;
 	for (aca = idev->ac_list; aca; aca = aca->aca_next) {

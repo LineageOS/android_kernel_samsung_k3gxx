@@ -414,9 +414,12 @@ static struct ceph_mds_session *register_session(struct ceph_mds_client *mdsc,
 {
 	struct ceph_mds_session *s;
 
+<<<<<<< HEAD
 	if (mds >= mdsc->mdsmap->m_max_mds)
 		return ERR_PTR(-EINVAL);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	s = kzalloc(sizeof(*s), GFP_NOFS);
 	if (!s)
 		return ERR_PTR(-ENOMEM);
@@ -642,8 +645,11 @@ static void __unregister_request(struct ceph_mds_client *mdsc,
 		req->r_unsafe_dir = NULL;
 	}
 
+<<<<<<< HEAD
 	complete_all(&req->r_safe_completion);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	ceph_mdsc_put_request(req);
 }
 
@@ -1845,11 +1851,16 @@ static int __do_request(struct ceph_mds_client *mdsc,
 	int mds = -1;
 	int err = -EAGAIN;
 
+<<<<<<< HEAD
 	if (req->r_err || req->r_got_result) {
 		if (req->r_aborted)
 			__unregister_request(mdsc, req);
 		goto out;
 	}
+=======
+	if (req->r_err || req->r_got_result)
+		goto out;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (req->r_timeout &&
 	    time_after_eq(jiffies, req->r_started + req->r_timeout)) {
@@ -2159,6 +2170,10 @@ static void handle_reply(struct ceph_mds_session *session, struct ceph_msg *msg)
 	if (head->safe) {
 		req->r_got_safe = true;
 		__unregister_request(mdsc, req);
+<<<<<<< HEAD
+=======
+		complete_all(&req->r_safe_completion);
+>>>>>>> 671a46baf1b... some performance improvements
 
 		if (req->r_got_unsafe) {
 			/*
@@ -3047,10 +3062,15 @@ int ceph_mdsc_init(struct ceph_fs_client *fsc)
 	fsc->mdsc = mdsc;
 	mutex_init(&mdsc->mutex);
 	mdsc->mdsmap = kzalloc(sizeof(*mdsc->mdsmap), GFP_NOFS);
+<<<<<<< HEAD
 	if (mdsc->mdsmap == NULL) {
 		kfree(mdsc);
 		return -ENOMEM;
 	}
+=======
+	if (mdsc->mdsmap == NULL)
+		return -ENOMEM;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	init_completion(&mdsc->safe_umount_waiters);
 	init_waitqueue_head(&mdsc->session_close_wq);

@@ -694,7 +694,11 @@ static const struct drm_encoder_funcs intel_lvds_enc_funcs = {
 	.destroy = intel_encoder_destroy,
 };
 
+<<<<<<< HEAD
 static int intel_no_lvds_dmi_callback(const struct dmi_system_id *id)
+=======
+static int __init intel_no_lvds_dmi_callback(const struct dmi_system_id *id)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	DRM_INFO("Skipping LVDS initialization for %s\n", id->ident);
 	return 1;
@@ -869,6 +873,7 @@ static const struct dmi_system_id intel_no_lvds[] = {
 			DMI_MATCH(DMI_PRODUCT_NAME, "ESPRIMO Q900"),
 		},
 	},
+<<<<<<< HEAD
 	{
 		.callback = intel_no_lvds_dmi_callback,
 		.ident = "Intel D410PT",
@@ -893,6 +898,8 @@ static const struct dmi_system_id intel_no_lvds[] = {
 			DMI_EXACT_MATCH(DMI_BOARD_NAME, "D510MO"),
 		},
 	},
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	{ }	/* terminating entry */
 };
@@ -1007,6 +1014,7 @@ static int intel_dual_link_lvds_callback(const struct dmi_system_id *id)
 static const struct dmi_system_id intel_dual_link_lvds[] = {
 	{
 		.callback = intel_dual_link_lvds_callback,
+<<<<<<< HEAD
 		.ident = "Apple MacBook Pro 15\" (2010)",
 		.matches = {
 			DMI_MATCH(DMI_SYS_VENDOR, "Apple Inc."),
@@ -1016,11 +1024,15 @@ static const struct dmi_system_id intel_dual_link_lvds[] = {
 	{
 		.callback = intel_dual_link_lvds_callback,
 		.ident = "Apple MacBook Pro 15\" (2011)",
+=======
+		.ident = "Apple MacBook Pro (Core i5/i7 Series)",
+>>>>>>> 671a46baf1b... some performance improvements
 		.matches = {
 			DMI_MATCH(DMI_SYS_VENDOR, "Apple Inc."),
 			DMI_MATCH(DMI_PRODUCT_NAME, "MacBookPro8,2"),
 		},
 	},
+<<<<<<< HEAD
 	{
 		.callback = intel_dual_link_lvds_callback,
 		.ident = "Apple MacBook Pro 15\" (2012)",
@@ -1029,6 +1041,8 @@ static const struct dmi_system_id intel_dual_link_lvds[] = {
 			DMI_MATCH(DMI_PRODUCT_NAME, "MacBookPro9,1"),
 		},
 	},
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	{ }	/* terminating entry */
 };
 
@@ -1113,6 +1127,7 @@ bool intel_lvds_init(struct drm_device *dev)
 	int pipe;
 	u8 pin;
 
+<<<<<<< HEAD
 	/*
 	 * Unlock registers and just leave them unlocked. Do this before
 	 * checking quirk lists to avoid bogus WARNINGs.
@@ -1124,6 +1139,8 @@ bool intel_lvds_init(struct drm_device *dev)
 		I915_WRITE(PP_CONTROL,
 			   I915_READ(PP_CONTROL) | PANEL_UNLOCK_REGS);
 	}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (!intel_lvds_supported(dev))
 		return false;
 
@@ -1307,6 +1324,20 @@ out:
 	DRM_DEBUG_KMS("detected %s-link lvds configuration\n",
 		      lvds_encoder->is_dual_link ? "dual" : "single");
 
+<<<<<<< HEAD
+=======
+	/*
+	 * Unlock registers and just
+	 * leave them unlocked
+	 */
+	if (HAS_PCH_SPLIT(dev)) {
+		I915_WRITE(PCH_PP_CONTROL,
+			   I915_READ(PCH_PP_CONTROL) | PANEL_UNLOCK_REGS);
+	} else {
+		I915_WRITE(PP_CONTROL,
+			   I915_READ(PP_CONTROL) | PANEL_UNLOCK_REGS);
+	}
+>>>>>>> 671a46baf1b... some performance improvements
 	lvds_connector->lid_notifier.notifier_call = intel_lid_notify;
 	if (acpi_lid_notifier_register(&lvds_connector->lid_notifier)) {
 		DRM_DEBUG_KMS("lid notifier registration failed\n");

@@ -593,6 +593,7 @@ err_nomem:
 void picolcd_exit_framebuffer(struct picolcd_data *data)
 {
 	struct fb_info *info = data->fb_info;
+<<<<<<< HEAD
 	struct picolcd_fb_data *fbdata;
 	unsigned long flags;
 
@@ -601,6 +602,12 @@ void picolcd_exit_framebuffer(struct picolcd_data *data)
 
 	device_remove_file(&data->hdev->dev, &dev_attr_fb_update_rate);
 	fbdata = info->par;
+=======
+	struct picolcd_fb_data *fbdata = info->par;
+	unsigned long flags;
+
+	device_remove_file(&data->hdev->dev, &dev_attr_fb_update_rate);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* disconnect framebuffer from HID dev */
 	spin_lock_irqsave(&fbdata->lock, flags);

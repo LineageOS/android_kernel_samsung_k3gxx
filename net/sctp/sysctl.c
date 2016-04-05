@@ -65,11 +65,16 @@ extern int sysctl_sctp_wmem[3];
 static int proc_sctp_do_hmac_alg(ctl_table *ctl,
 				int write,
 				void __user *buffer, size_t *lenp,
+<<<<<<< HEAD
 				loff_t *ppos);
 static int proc_sctp_do_auth(struct ctl_table *ctl, int write,
 			     void __user *buffer, size_t *lenp,
 			     loff_t *ppos);
 
+=======
+
+				loff_t *ppos);
+>>>>>>> 671a46baf1b... some performance improvements
 static ctl_table sctp_table[] = {
 	{
 		.procname	= "sctp_mem",
@@ -270,7 +275,11 @@ static ctl_table sctp_net_table[] = {
 		.data		= &init_net.sctp.auth_enable,
 		.maxlen		= sizeof(int),
 		.mode		= 0644,
+<<<<<<< HEAD
 		.proc_handler	= proc_sctp_do_auth,
+=======
+		.proc_handler	= proc_dointvec,
+>>>>>>> 671a46baf1b... some performance improvements
 	},
 	{
 		.procname	= "addr_scope_policy",
@@ -351,6 +360,7 @@ static int proc_sctp_do_hmac_alg(ctl_table *ctl,
 	return ret;
 }
 
+<<<<<<< HEAD
 static int proc_sctp_do_auth(struct ctl_table *ctl, int write,
 			     void __user *buffer, size_t *lenp,
 			     loff_t *ppos)
@@ -381,6 +391,8 @@ static int proc_sctp_do_auth(struct ctl_table *ctl, int write,
 	return ret;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 int sctp_sysctl_net_register(struct net *net)
 {
 	struct ctl_table *table;

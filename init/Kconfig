@@ -1371,6 +1371,7 @@ config FUTEX
 	  support for "fast userspace mutexes".  The resulting kernel may not
 	  run glibc-based applications correctly.
 
+<<<<<<< HEAD
 config HAVE_FUTEX_CMPXCHG
 	bool
 	depends on FUTEX
@@ -1379,6 +1380,8 @@ config HAVE_FUTEX_CMPXCHG
 	  is implemented and always working. This removes a couple of runtime
 	  checks.
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 config EPOLL
 	bool "Enable eventpoll support" if EXPERT
 	default y

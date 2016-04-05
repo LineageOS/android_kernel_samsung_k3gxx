@@ -317,6 +317,7 @@ static int shadow_ablock(struct dm_array_info *info, dm_block_t *root,
 	 * The shadow op will often be a noop.  Only insert if it really
 	 * copied data.
 	 */
+<<<<<<< HEAD
 	if (dm_block_location(*block) != b) {
 		/*
 		 * dm_tm_shadow_block will have already decremented the old
@@ -327,6 +328,10 @@ static int shadow_ablock(struct dm_array_info *info, dm_block_t *root,
 		dm_tm_inc(info->btree_info.tm, b);
 		r = insert_ablock(info, index, *block, root);
 	}
+=======
+	if (dm_block_location(*block) != b)
+		r = insert_ablock(info, index, *block, root);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return r;
 }
@@ -517,18 +522,27 @@ static int grow_add_tail_block(struct resize *resize)
 static int grow_needs_more_blocks(struct resize *resize)
 {
 	int r;
+<<<<<<< HEAD
 	unsigned old_nr_blocks = resize->old_nr_full_blocks;
 
 	if (resize->old_nr_entries_in_last_block > 0) {
 		old_nr_blocks++;
 
+=======
+
+	if (resize->old_nr_entries_in_last_block > 0) {
+>>>>>>> 671a46baf1b... some performance improvements
 		r = grow_extend_tail_block(resize, resize->max_entries);
 		if (r)
 			return r;
 	}
 
 	r = insert_full_ablocks(resize->info, resize->size_of_block,
+<<<<<<< HEAD
 				old_nr_blocks,
+=======
+				resize->old_nr_full_blocks,
+>>>>>>> 671a46baf1b... some performance improvements
 				resize->new_nr_full_blocks,
 				resize->max_entries, resize->value,
 				&resize->root);

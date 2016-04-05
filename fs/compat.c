@@ -832,7 +832,10 @@ struct compat_old_linux_dirent {
 };
 
 struct compat_readdir_callback {
+<<<<<<< HEAD
 	struct dir_context ctx;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	struct compat_old_linux_dirent __user *dirent;
 	int result;
 };
@@ -881,9 +884,14 @@ asmlinkage long compat_sys_old_readdir(unsigned int fd,
 
 	buf.result = 0;
 	buf.dirent = dirent;
+<<<<<<< HEAD
 	buf.ctx.actor = compat_fillonedir;
 
 	error = iterate_dir(f.file, &buf.ctx);
+=======
+
+	error = vfs_readdir(f.file, compat_fillonedir, &buf);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (buf.result)
 		error = buf.result;
 
@@ -899,7 +907,10 @@ struct compat_linux_dirent {
 };
 
 struct compat_getdents_callback {
+<<<<<<< HEAD
 	struct dir_context ctx;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	struct compat_linux_dirent __user *current_dir;
 	struct compat_linux_dirent __user *previous;
 	int count;
@@ -968,14 +979,23 @@ asmlinkage long compat_sys_getdents(unsigned int fd,
 	buf.previous = NULL;
 	buf.count = count;
 	buf.error = 0;
+<<<<<<< HEAD
 	buf.ctx.actor = compat_filldir;
 
 	error = iterate_dir(f.file, &buf.ctx);
+=======
+
+	error = vfs_readdir(f.file, compat_filldir, &buf);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (error >= 0)
 		error = buf.error;
 	lastdirent = buf.previous;
 	if (lastdirent) {
+<<<<<<< HEAD
 		if (put_user(buf.ctx.pos, &lastdirent->d_off))
+=======
+		if (put_user(f.file->f_pos, &lastdirent->d_off))
+>>>>>>> 671a46baf1b... some performance improvements
 			error = -EFAULT;
 		else
 			error = count - buf.count;
@@ -987,7 +1007,10 @@ asmlinkage long compat_sys_getdents(unsigned int fd,
 #ifndef __ARCH_OMIT_COMPAT_SYS_GETDENTS64
 
 struct compat_getdents_callback64 {
+<<<<<<< HEAD
 	struct dir_context ctx;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	struct linux_dirent64 __user *current_dir;
 	struct linux_dirent64 __user *previous;
 	int count;
@@ -1055,14 +1078,23 @@ asmlinkage long compat_sys_getdents64(unsigned int fd,
 	buf.previous = NULL;
 	buf.count = count;
 	buf.error = 0;
+<<<<<<< HEAD
 	buf.ctx.actor = compat_filldir64;
 
 	error = iterate_dir(f.file, &buf.ctx);
+=======
+
+	error = vfs_readdir(f.file, compat_filldir64, &buf);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (error >= 0)
 		error = buf.error;
 	lastdirent = buf.previous;
 	if (lastdirent) {
+<<<<<<< HEAD
 		typeof(lastdirent->d_off) d_off = buf.ctx.pos;
+=======
+		typeof(lastdirent->d_off) d_off = f.file->f_pos;
+>>>>>>> 671a46baf1b... some performance improvements
 		if (__put_user_unaligned(d_off, &lastdirent->d_off))
 			error = -EFAULT;
 		else

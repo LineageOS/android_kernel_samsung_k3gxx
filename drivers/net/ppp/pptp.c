@@ -281,7 +281,11 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
 	nf_reset(skb);
 
 	skb->ip_summed = CHECKSUM_NONE;
+<<<<<<< HEAD
 	ip_select_ident(skb, NULL);
+=======
+	ip_select_ident(iph, &rt->dst, NULL);
+>>>>>>> 671a46baf1b... some performance improvements
 	ip_send_check(iph);
 
 	ip_local_out(skb);
@@ -512,9 +516,13 @@ static int pptp_getname(struct socket *sock, struct sockaddr *uaddr,
 	int len = sizeof(struct sockaddr_pppox);
 	struct sockaddr_pppox sp;
 
+<<<<<<< HEAD
 	memset(&sp.sa_addr, 0, sizeof(sp.sa_addr));
 
 	sp.sa_family    = AF_PPPOX;
+=======
+	sp.sa_family	  = AF_PPPOX;
+>>>>>>> 671a46baf1b... some performance improvements
 	sp.sa_protocol  = PX_PROTO_PPTP;
 	sp.sa_addr.pptp = pppox_sk(sock->sk)->proto.pptp.src_addr;
 

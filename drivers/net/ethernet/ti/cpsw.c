@@ -1293,6 +1293,7 @@ static int cpsw_ndo_vlan_rx_add_vid(struct net_device *ndev,
 	if (vid == priv->data.default_vlan)
 		return 0;
 
+<<<<<<< HEAD
 	if (priv->data.dual_emac) {
 		/* In dual EMAC, reserved VLAN id should not be used for
 		 * creating VLAN interfaces as this can break the dual
@@ -1306,6 +1307,8 @@ static int cpsw_ndo_vlan_rx_add_vid(struct net_device *ndev,
 		}
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	dev_info(priv->dev, "Adding vlanid %d to vlan filter\n", vid);
 	return cpsw_add_vlan_ale_entry(priv, vid);
 }
@@ -1319,6 +1322,7 @@ static int cpsw_ndo_vlan_rx_kill_vid(struct net_device *ndev,
 	if (vid == priv->data.default_vlan)
 		return 0;
 
+<<<<<<< HEAD
 	if (priv->data.dual_emac) {
 		int i;
 
@@ -1328,6 +1332,8 @@ static int cpsw_ndo_vlan_rx_kill_vid(struct net_device *ndev,
 		}
 	}
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	dev_info(priv->dev, "removing vlanid %d from vlan filter\n", vid);
 	ret = cpsw_ale_del_vlan(priv->ale, vid, 0);
 	if (ret != 0)
@@ -1569,10 +1575,13 @@ static int cpsw_probe_dt(struct cpsw_platform_data *data,
 		mdio_node = of_find_node_by_phandle(be32_to_cpup(parp));
 		phyid = be32_to_cpup(parp+1);
 		mdio = of_find_device_by_node(mdio_node);
+<<<<<<< HEAD
 		if (!mdio) {
 			pr_err("Missing mdio platform device\n");
 			return -EINVAL;
 		}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		snprintf(slave_data->phy_id, sizeof(slave_data->phy_id),
 			 PHY_ID_FMT, mdio->name, phyid);
 

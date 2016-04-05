@@ -2793,9 +2793,13 @@ static void nand_set_defaults(struct nand_chip *chip, int busw)
 
 	if (!chip->select_chip)
 		chip->select_chip = nand_select_chip;
+<<<<<<< HEAD
 
 	/* If called twice, pointers that depend on busw may need to be reset */
 	if (!chip->read_byte || chip->read_byte == nand_read_byte)
+=======
+	if (!chip->read_byte)
+>>>>>>> 671a46baf1b... some performance improvements
 		chip->read_byte = busw ? nand_read_byte16 : nand_read_byte;
 	if (!chip->read_word)
 		chip->read_word = nand_read_word;
@@ -2803,9 +2807,15 @@ static void nand_set_defaults(struct nand_chip *chip, int busw)
 		chip->block_bad = nand_block_bad;
 	if (!chip->block_markbad)
 		chip->block_markbad = nand_default_block_markbad;
+<<<<<<< HEAD
 	if (!chip->write_buf || chip->write_buf == nand_write_buf)
 		chip->write_buf = busw ? nand_write_buf16 : nand_write_buf;
 	if (!chip->read_buf || chip->read_buf == nand_read_buf)
+=======
+	if (!chip->write_buf)
+		chip->write_buf = busw ? nand_write_buf16 : nand_write_buf;
+	if (!chip->read_buf)
+>>>>>>> 671a46baf1b... some performance improvements
 		chip->read_buf = busw ? nand_read_buf16 : nand_read_buf;
 	if (!chip->scan_bbt)
 		chip->scan_bbt = nand_default_bbt;
@@ -2904,6 +2914,7 @@ static int nand_flash_detect_onfi(struct mtd_info *mtd, struct nand_chip *chip,
 	sanitize_string(p->model, sizeof(p->model));
 	if (!mtd->name)
 		mtd->name = p->model;
+<<<<<<< HEAD
 
 	mtd->writesize = le32_to_cpu(p->byte_per_page);
 
@@ -2919,6 +2930,12 @@ static int nand_flash_detect_onfi(struct mtd_info *mtd, struct nand_chip *chip,
 
 	/* See erasesize comment */
 	chip->chipsize = 1 << (fls(le32_to_cpu(p->blocks_per_lun)) - 1);
+=======
+	mtd->writesize = le32_to_cpu(p->byte_per_page);
+	mtd->erasesize = le32_to_cpu(p->pages_per_block) * mtd->writesize;
+	mtd->oobsize = le16_to_cpu(p->spare_bytes_per_page);
+	chip->chipsize = le32_to_cpu(p->blocks_per_lun);
+>>>>>>> 671a46baf1b... some performance improvements
 	chip->chipsize *= (uint64_t)mtd->erasesize * p->lun_count;
 	*busw = 0;
 	if (le16_to_cpu(p->features) & 1)

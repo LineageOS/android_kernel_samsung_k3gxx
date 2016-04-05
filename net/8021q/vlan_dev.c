@@ -512,6 +512,7 @@ static void vlan_dev_change_rx_flags(struct net_device *dev, int change)
 	}
 }
 
+<<<<<<< HEAD
 static int vlan_calculate_locking_subclass(struct net_device *real_dev)
 {
 	int subclass = 0;
@@ -554,6 +555,12 @@ static void vlan_dev_set_rx_mode(struct net_device *vlan_dev)
 {
 	vlan_dev_mc_sync(vlan_dev_priv(vlan_dev)->real_dev, vlan_dev);
 	vlan_dev_uc_sync(vlan_dev_priv(vlan_dev)->real_dev, vlan_dev);
+=======
+static void vlan_dev_set_rx_mode(struct net_device *vlan_dev)
+{
+	dev_mc_sync(vlan_dev_priv(vlan_dev)->real_dev, vlan_dev);
+	dev_uc_sync(vlan_dev_priv(vlan_dev)->real_dev, vlan_dev);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /*
@@ -587,6 +594,7 @@ static const struct header_ops vlan_header_ops = {
 	.parse	 = eth_header_parse,
 };
 
+<<<<<<< HEAD
 static int vlan_passthru_hard_header(struct sk_buff *skb, struct net_device *dev,
 				     unsigned short type,
 				     const void *daddr, const void *saddr,
@@ -607,6 +615,8 @@ static const struct header_ops vlan_passthru_header_ops = {
 	.parse	 = eth_header_parse,
 };
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static struct device_type vlan_type = {
 	.name	= "vlan",
 };
@@ -649,9 +659,14 @@ static int vlan_dev_init(struct net_device *dev)
 #endif
 
 	dev->needed_headroom = real_dev->needed_headroom;
+<<<<<<< HEAD
 	if (vlan_hw_offload_capable(real_dev->features,
 				    vlan_dev_priv(dev)->vlan_proto)) {
 		dev->header_ops      = &vlan_passthru_header_ops;
+=======
+	if (real_dev->features & NETIF_F_HW_VLAN_CTAG_TX) {
+		dev->header_ops      = real_dev->header_ops;
+>>>>>>> 671a46baf1b... some performance improvements
 		dev->hard_header_len = real_dev->hard_header_len;
 	} else {
 		dev->header_ops      = &vlan_header_ops;
@@ -662,7 +677,13 @@ static int vlan_dev_init(struct net_device *dev)
 
 	SET_NETDEV_DEVTYPE(dev, &vlan_type);
 
+<<<<<<< HEAD
 	subclass = vlan_calculate_locking_subclass(dev);
+=======
+	if (is_vlan_dev(real_dev))
+		subclass = 1;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	vlan_dev_set_lockdep_class(dev, subclass);
 
 	vlan_dev_priv(dev)->vlan_pcpu_stats = alloc_percpu(struct vlan_pcpu_stats);

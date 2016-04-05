@@ -310,10 +310,27 @@ static int master_get(struct snd_kcontrol *kcontrol,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int sync_slaves(struct link_master *master, int old_val, int new_val)
 {
 	struct link_slave *slave;
 	struct snd_ctl_elem_value *uval;
+=======
+static int master_put(struct snd_kcontrol *kcontrol,
+		      struct snd_ctl_elem_value *ucontrol)
+{
+	struct link_master *master = snd_kcontrol_chip(kcontrol);
+	struct link_slave *slave;
+	struct snd_ctl_elem_value *uval;
+	int err, old_val;
+
+	err = master_init(master);
+	if (err < 0)
+		return err;
+	old_val = master->val;
+	if (ucontrol->value.integer.value[0] == old_val)
+		return 0;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	uval = kmalloc(sizeof(*uval), GFP_KERNEL);
 	if (!uval)
@@ -322,6 +339,7 @@ static int sync_slaves(struct link_master *master, int old_val, int new_val)
 		master->val = old_val;
 		uval->id = slave->slave.id;
 		slave_get_val(slave, uval);
+<<<<<<< HEAD
 		master->val = new_val;
 		slave_put_val(slave, uval);
 	}
@@ -349,6 +367,13 @@ static int master_put(struct snd_kcontrol *kcontrol,
 	if (err < 0)
 		return err;
 	if (master->hook && !first_init)
+=======
+		master->val = ucontrol->value.integer.value[0];
+		slave_put_val(slave, uval);
+	}
+	kfree(uval);
+	if (master->hook && !err)
+>>>>>>> 671a46baf1b... some performance improvements
 		master->hook(master->hook_private_data, master->val);
 	return 1;
 }
@@ -454,6 +479,7 @@ int snd_ctl_add_vmaster_hook(struct snd_kcontrol *kcontrol,
 EXPORT_SYMBOL_GPL(snd_ctl_add_vmaster_hook);
 
 /**
+<<<<<<< HEAD
  * snd_ctl_sync_vmaster - Sync the vmaster slaves and hook
  * @kcontrol: vmaster kctl element
  * @hook_only: sync only the hook
@@ -484,3 +510,22 @@ void snd_ctl_sync_vmaster(struct snd_kcontrol *kcontrol, bool hook_only)
 		master->hook(master->hook_private_data, master->val);
 }
 EXPORT_SYMBOL_GPL(snd_ctl_sync_vmaster);
+=======
+ * snd_ctl_sync_vmaster_hook - Sync the vmaster hook
+ * @kcontrol: vmaster kctl element
+ *
+ * Call the hook function to synchronize with the current value of the given
+ * vmaster element.  NOP when NULL is passed to @kcontrol or the hook doesn't
+ * exist.
+ */
+void snd_ctl_sync_vmaster_hook(struct snd_kcontrol *kcontrol)
+{
+	struct link_master *master;
+	if (!kcontrol)
+		return;
+	master = snd_kcontrol_chip(kcontrol);
+	if (master->hook)
+		master->hook(master->hook_private_data, master->val);
+}
+EXPORT_SYMBOL_GPL(snd_ctl_sync_vmaster_hook);
+>>>>>>> 671a46baf1b... some performance improvements

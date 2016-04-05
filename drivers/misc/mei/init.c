@@ -143,8 +143,12 @@ void mei_reset(struct mei_device *dev, int interrupts_enabled)
 
 	dev->hbm_state = MEI_HBM_IDLE;
 
+<<<<<<< HEAD
 	if (dev->dev_state != MEI_DEV_INITIALIZING &&
 	    dev->dev_state != MEI_DEV_POWER_UP) {
+=======
+	if (dev->dev_state != MEI_DEV_INITIALIZING) {
+>>>>>>> 671a46baf1b... some performance improvements
 		if (dev->dev_state != MEI_DEV_DISABLED &&
 		    dev->dev_state != MEI_DEV_POWER_DOWN)
 			dev->dev_state = MEI_DEV_RESETTING;
@@ -164,9 +168,12 @@ void mei_reset(struct mei_device *dev, int interrupts_enabled)
 		memset(&dev->wr_ext_msg, 0, sizeof(dev->wr_ext_msg));
 	}
 
+<<<<<<< HEAD
 	/* we're already in reset, cancel the init timer */
 	dev->init_clients_timer = 0;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	dev->me_clients_num = 0;
 	dev->rd_msg_hdr = 0;
 	dev->wd_pending = false;

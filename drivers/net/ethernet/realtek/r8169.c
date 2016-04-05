@@ -3456,11 +3456,14 @@ static void rtl8168g_1_hw_phy_config(struct rtl8169_private *tp)
 	rtl_writephy(tp, 0x14, 0x9065);
 	rtl_writephy(tp, 0x14, 0x1065);
 
+<<<<<<< HEAD
 	/* Check ALDPS bit, disable it if enabled */
 	rtl_writephy(tp, 0x1f, 0x0a43);
 	if (rtl_readphy(tp, 0x10) & 0x0004)
 		rtl_w1w0_phy(tp, 0x10, 0x0000, 0x0004);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	rtl_writephy(tp, 0x1f, 0x0000);
 }
 
@@ -4223,7 +4226,10 @@ static void rtl_init_rxcfg(struct rtl8169_private *tp)
 	case RTL_GIGA_MAC_VER_23:
 	case RTL_GIGA_MAC_VER_24:
 	case RTL_GIGA_MAC_VER_34:
+<<<<<<< HEAD
 	case RTL_GIGA_MAC_VER_35:
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		RTL_W32(RxConfig, RX128_INT_EN | RX_MULTI_EN | RX_DMA_BURST);
 		break;
 	case RTL_GIGA_MAC_VER_40:
@@ -5768,7 +5774,11 @@ static void rtl8169_tx_clear_range(struct rtl8169_private *tp, u32 start,
 					     tp->TxDescArray + entry);
 			if (skb) {
 				tp->dev->stats.tx_dropped++;
+<<<<<<< HEAD
 				dev_kfree_skb_any(skb);
+=======
+				dev_kfree_skb(skb);
+>>>>>>> 671a46baf1b... some performance improvements
 				tx_skb->skb = NULL;
 			}
 		}
@@ -5993,7 +6003,11 @@ static netdev_tx_t rtl8169_start_xmit(struct sk_buff *skb,
 err_dma_1:
 	rtl8169_unmap_tx_skb(d, tp->tx_skb + entry, txd);
 err_dma_0:
+<<<<<<< HEAD
 	dev_kfree_skb_any(skb);
+=======
+	dev_kfree_skb(skb);
+>>>>>>> 671a46baf1b... some performance improvements
 err_update_stats:
 	dev->stats.tx_dropped++;
 	return NETDEV_TX_OK;
@@ -6076,7 +6090,11 @@ static void rtl_tx(struct net_device *dev, struct rtl8169_private *tp)
 			tp->tx_stats.packets++;
 			tp->tx_stats.bytes += tx_skb->skb->len;
 			u64_stats_update_end(&tp->tx_stats.syncp);
+<<<<<<< HEAD
 			dev_kfree_skb_any(tx_skb->skb);
+=======
+			dev_kfree_skb(tx_skb->skb);
+>>>>>>> 671a46baf1b... some performance improvements
 			tx_skb->skb = NULL;
 		}
 		dirty_tx++;

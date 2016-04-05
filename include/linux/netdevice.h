@@ -1729,19 +1729,27 @@ static inline int skb_gro_header_hard(struct sk_buff *skb, unsigned int hlen)
 	return NAPI_GRO_CB(skb)->frag0_len < hlen;
 }
 
+<<<<<<< HEAD
 static inline void skb_gro_frag0_invalidate(struct sk_buff *skb)
 {
 	NAPI_GRO_CB(skb)->frag0 = NULL;
 	NAPI_GRO_CB(skb)->frag0_len = 0;
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static inline void *skb_gro_header_slow(struct sk_buff *skb, unsigned int hlen,
 					unsigned int offset)
 {
 	if (!pskb_may_pull(skb, hlen))
 		return NULL;
 
+<<<<<<< HEAD
 	skb_gro_frag0_invalidate(skb);
+=======
+	NAPI_GRO_CB(skb)->frag0 = NULL;
+	NAPI_GRO_CB(skb)->frag0_len = 0;
+>>>>>>> 671a46baf1b... some performance improvements
 	return skb->data + offset;
 }
 
@@ -1777,6 +1785,7 @@ static inline int dev_parse_header(const struct sk_buff *skb,
 	return dev->header_ops->parse(skb, haddr);
 }
 
+<<<<<<< HEAD
 static inline int dev_rebuild_header(struct sk_buff *skb)
 {
 	const struct net_device *dev = skb->dev;
@@ -1786,6 +1795,8 @@ static inline int dev_rebuild_header(struct sk_buff *skb)
 	return dev->header_ops->rebuild(skb);
 }
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 typedef int gifconf_func_t(struct net_device * dev, char __user * bufptr, int len);
 extern int		register_gifconf(unsigned int family, gifconf_func_t * gifconf);
 static inline int unregister_gifconf(unsigned int family)
@@ -2228,7 +2239,10 @@ static inline void napi_free_frags(struct napi_struct *napi)
 	napi->skb = NULL;
 }
 
+<<<<<<< HEAD
 bool netdev_is_rx_handler_busy(struct net_device *dev);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 extern int netdev_rx_handler_register(struct net_device *dev,
 				      rx_handler_func_t *rx_handler,
 				      void *rx_handler_data);
@@ -2767,12 +2781,16 @@ void netdev_change_features(struct net_device *dev);
 void netif_stacked_transfer_operstate(const struct net_device *rootdev,
 					struct net_device *dev);
 
+<<<<<<< HEAD
 netdev_features_t netif_skb_dev_features(struct sk_buff *skb,
 					 const struct net_device *dev);
 static inline netdev_features_t netif_skb_features(struct sk_buff *skb)
 {
 	return netif_skb_dev_features(skb, skb->dev);
 }
+=======
+netdev_features_t netif_skb_features(struct sk_buff *skb);
+>>>>>>> 671a46baf1b... some performance improvements
 
 static inline bool net_gso_ok(netdev_features_t features, int gso_type)
 {

@@ -27,8 +27,11 @@
 #include "radeon.h"
 #include "atom.h"
 
+<<<<<<< HEAD
 extern void radeon_atom_copy_swap(u8 *dst, u8 *src, u8 num_bytes, bool to_le);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #define TARGET_HW_I2C_CLOCK 50
 
 /* these are a limitation of ProcessI2cChannelTransaction not the hw */
@@ -79,7 +82,11 @@ static int radeon_process_i2c_ch(struct radeon_i2c_chan *chan,
 	}
 
 	if (!(flags & HW_I2C_WRITE))
+<<<<<<< HEAD
 		radeon_atom_copy_swap(buf, base, num, false);
+=======
+		memcpy(buf, base, num);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return 0;
 }

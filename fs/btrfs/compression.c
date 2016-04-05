@@ -1009,8 +1009,11 @@ int btrfs_decompress_buf2page(char *buf, unsigned long buf_start,
 		bytes = min(bytes, working_bytes);
 		kaddr = kmap_atomic(page_out);
 		memcpy(kaddr + *pg_offset, buf + buf_offset, bytes);
+<<<<<<< HEAD
 		if (*pg_index == (vcnt - 1) && *pg_offset == 0)
 			memset(kaddr + bytes, 0, PAGE_CACHE_SIZE - bytes);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		kunmap_atomic(kaddr);
 		flush_dcache_page(page_out);
 

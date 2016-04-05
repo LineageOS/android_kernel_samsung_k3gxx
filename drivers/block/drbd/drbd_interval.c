@@ -79,7 +79,10 @@ bool
 drbd_insert_interval(struct rb_root *root, struct drbd_interval *this)
 {
 	struct rb_node **new = &root->rb_node, *parent = NULL;
+<<<<<<< HEAD
 	sector_t this_end = this->sector + (this->size >> 9);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	BUG_ON(!IS_ALIGNED(this->size, 512));
 
@@ -88,8 +91,11 @@ drbd_insert_interval(struct rb_root *root, struct drbd_interval *this)
 			rb_entry(*new, struct drbd_interval, rb);
 
 		parent = *new;
+<<<<<<< HEAD
 		if (here->end < this_end)
 			here->end = this_end;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		if (this->sector < here->sector)
 			new = &(*new)->rb_left;
 		else if (this->sector > here->sector)
@@ -102,7 +108,10 @@ drbd_insert_interval(struct rb_root *root, struct drbd_interval *this)
 			return false;
 	}
 
+<<<<<<< HEAD
 	this->end = this_end;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	rb_link_node(&this->rb, parent, new);
 	rb_insert_augmented(&this->rb, root, &augment_callbacks);
 	return true;

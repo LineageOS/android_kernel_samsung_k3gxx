@@ -80,6 +80,18 @@ static inline u32 arch_timer_get_cntfrq(void)
 	return val;
 }
 
+<<<<<<< HEAD
+=======
+static inline u64 arch_counter_get_cntpct(void)
+{
+	u64 cval;
+
+	isb();
+	asm volatile("mrrc p15, 0, %Q0, %R0, c14" : "=r" (cval));
+	return cval;
+}
+
+>>>>>>> 671a46baf1b... some performance improvements
 static inline u64 arch_counter_get_cntvct(void)
 {
 	u64 cval;

@@ -79,11 +79,16 @@ static DEFINE_PCI_DEVICE_TABLE(mei_me_pci_tbl) = {
 	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, MEI_DEV_ID_PPT_1)},
 	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, MEI_DEV_ID_PPT_2)},
 	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, MEI_DEV_ID_PPT_3)},
+<<<<<<< HEAD
 	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, MEI_DEV_ID_LPT_H)},
 	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, MEI_DEV_ID_LPT_W)},
 	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, MEI_DEV_ID_LPT_LP)},
 	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, MEI_DEV_ID_LPT_HR)},
 	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, MEI_DEV_ID_WPT_LP)},
+=======
+	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, MEI_DEV_ID_LPT)},
+	{PCI_DEVICE(PCI_VENDOR_ID_INTEL, MEI_DEV_ID_LPT_LP)},
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* required last entry */
 	{0, }
@@ -105,6 +110,7 @@ static bool mei_me_quirk_probe(struct pci_dev *pdev,
 				const struct pci_device_id *ent)
 {
 	u32 reg;
+<<<<<<< HEAD
 	/* Cougar Point || Patsburg */
 	if (ent->device == MEI_DEV_ID_CPT_1 ||
 	    ent->device == MEI_DEV_ID_PBG_1) {
@@ -130,6 +136,17 @@ static bool mei_me_quirk_probe(struct pci_dev *pdev,
 no_mei:
 	dev_info(&pdev->dev, "Device doesn't have valid ME Interface\n");
 	return false;
+=======
+	if (ent->device == MEI_DEV_ID_PBG_1) {
+		pci_read_config_dword(pdev, 0x48, &reg);
+		/* make sure that bit 9 is up and bit 10 is down */
+		if ((reg & 0x600) == 0x200) {
+			dev_info(&pdev->dev, "Device doesn't have valid ME Interface\n");
+			return false;
+		}
+	}
+	return true;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 /**
  * mei_probe - Device Initialization Routine

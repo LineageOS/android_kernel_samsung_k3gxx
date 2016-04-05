@@ -604,7 +604,11 @@ void ata_scsi_error(struct Scsi_Host *host)
 	ata_scsi_port_error_handler(host, ap);
 
 	/* finish or retry handled scmd's and clean up */
+<<<<<<< HEAD
 	WARN_ON(!list_empty(&eh_work_q));
+=======
+	WARN_ON(host->host_failed || !list_empty(&eh_work_q));
+>>>>>>> 671a46baf1b... some performance improvements
 
 	DPRINTK("EXIT\n");
 }
@@ -1322,14 +1326,23 @@ void ata_eh_qc_complete(struct ata_queued_cmd *qc)
  *	should be retried.  To be used from EH.
  *
  *	SCSI midlayer limits the number of retries to scmd->allowed.
+<<<<<<< HEAD
  *	scmd->allowed is incremented for commands which get retried
+=======
+ *	scmd->retries is decremented for commands which get retried
+>>>>>>> 671a46baf1b... some performance improvements
  *	due to unrelated failures (qc->err_mask is zero).
  */
 void ata_eh_qc_retry(struct ata_queued_cmd *qc)
 {
 	struct scsi_cmnd *scmd = qc->scsicmd;
+<<<<<<< HEAD
 	if (!qc->err_mask)
 		scmd->allowed++;
+=======
+	if (!qc->err_mask && scmd->retries)
+		scmd->retries--;
+>>>>>>> 671a46baf1b... some performance improvements
 	__ata_eh_qc_complete(qc);
 }
 
@@ -3481,9 +3494,12 @@ static int ata_eh_set_lpm(struct ata_link *link, enum ata_lpm_policy policy,
 		}
 	}
 
+<<<<<<< HEAD
 	link->last_lpm_change = jiffies;
 	link->flags |= ATA_LFLAG_CHANGED;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 
 fail:

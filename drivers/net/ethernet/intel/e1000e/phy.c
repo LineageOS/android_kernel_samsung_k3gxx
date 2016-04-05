@@ -1757,23 +1757,35 @@ s32 e1000e_phy_has_link_generic(struct e1000_hw *hw, u32 iterations,
 		 * it across the board.
 		 */
 		ret_val = e1e_rphy(hw, MII_BMSR, &phy_status);
+<<<<<<< HEAD
 		if (ret_val) {
+=======
+		if (ret_val)
+>>>>>>> 671a46baf1b... some performance improvements
 			/* If the first read fails, another entity may have
 			 * ownership of the resources, wait and try again to
 			 * see if they have relinquished the resources yet.
 			 */
+<<<<<<< HEAD
 			if (usec_interval >= 1000)
 				msleep(usec_interval / 1000);
 			else
 				udelay(usec_interval);
 		}
+=======
+			udelay(usec_interval);
+>>>>>>> 671a46baf1b... some performance improvements
 		ret_val = e1e_rphy(hw, MII_BMSR, &phy_status);
 		if (ret_val)
 			break;
 		if (phy_status & BMSR_LSTATUS)
 			break;
 		if (usec_interval >= 1000)
+<<<<<<< HEAD
 			msleep(usec_interval / 1000);
+=======
+			mdelay(usec_interval / 1000);
+>>>>>>> 671a46baf1b... some performance improvements
 		else
 			udelay(usec_interval);
 	}

@@ -24,7 +24,7 @@
 
 #include <linux/string.h>
 #include "ring_buffer_c.h"
-#include "../bbd_internal.h"
+#include "bbd_internal.h"
 
 void RingBuffer_RingBuffer(struct sRingBuffer* p,
                         unsigned long ulSizeRingBuffer)

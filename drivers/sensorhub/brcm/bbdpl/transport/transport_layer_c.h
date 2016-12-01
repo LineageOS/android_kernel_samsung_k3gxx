@@ -33,9 +33,9 @@
  *  -  some extra function with BbdTransportLayer_ prefix.
  */
 
-#include "../utils/bbd_utils.h"
-#include "../transport/transport_layer_custom.h"
-#include "../utils/crc8bits_c.h"
+#include "utils/bbd_utils.h"
+#include "transport/transport_layer_custom.h"
+#include "utils/crc8bits_c.h"
 
 #ifndef TRANSPORT_LAYER_H
 /* prototype for callback associated with a packet for reliable transactions */

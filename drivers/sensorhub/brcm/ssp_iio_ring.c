@@ -30,10 +30,10 @@
 #include <linux/miscdevice.h>
 
 #include "ssp.h"
-#include <linux/iio/iio.h> //#include "../../staging/iio/iio.h"
-#include <linux/iio/kfifo_buf.h> //#include "../../staging/iio/kfifo_buf.h"
-#include <linux/iio/trigger_consumer.h> //#include "../../staging/iio/trigger_consumer.h"
-#include <linux/iio/sysfs.h> //#include "../../staging/iio/sysfs.h"
+#include <linux/iio/iio.h> //#include "../staging/iio/iio.h"
+#include <linux/iio/kfifo_buf.h> //#include "../staging/iio/kfifo_buf.h"
+#include <linux/iio/trigger_consumer.h> //#include "../staging/iio/trigger_consumer.h"
+#include <linux/iio/sysfs.h> //#include "../staging/iio/sysfs.h"
 
 void ssp_iio_unconfigure_ring(struct iio_dev *indio_dev)
 {

@@ -26,7 +26,7 @@
 #define BBD_PACKET_LAYER_C_H
 
 #include "transport_layer_c.h"
-#include "../bbd_ifc.h"
+#include "bbd_ifc.h"
 
 #ifdef __cplusplus
 extern "C" {

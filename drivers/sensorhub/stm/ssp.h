@@ -36,7 +36,7 @@
 #include <linux/list.h>
 #include <linux/rtc.h>
 #include <linux/time.h>
-//#include "../../staging/android/android_alarm.h"
+//#include "../staging/android/android_alarm.h"
 #include <linux/regulator/consumer.h>
 #include <linux/ssp_platformdata.h>
 #ifdef CONFIG_SENSORS_SSP_STM

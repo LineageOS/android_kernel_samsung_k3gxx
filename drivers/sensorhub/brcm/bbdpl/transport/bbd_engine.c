@@ -22,13 +22,13 @@
  * tabstop = 8
  */
 
-#include "../bbd_internal.h"
+#include "bbd_internal.h"
 #include "bbd_engine.h"
 #include "bbd_bridge_c.h"
-#include "../utils/stream_codec_c.h"
+#include "utils/stream_codec_c.h"
 #include "rpc_codec_c.h"
-#include "../utils/bbd_utils.h"
-#include "../bbd_ifc.h"
+#include "utils/bbd_utils.h"
+#include "bbd_ifc.h"
 
 #include <linux/workqueue.h>
 

@@ -4,7 +4,7 @@
 ##################################
 #mobicore_security_team_add
 ##################################
-GUD_ROOT_FOLDER := drivers/gud/gud-exynos5422
+GUD_ROOT_FOLDER := $(srctree)/drivers/gud/gud-exynos5422
 ##################################
 # add our modules to kernel.
 obj-$(CONFIG_MOBICORE_API) += mcKernelApi.o

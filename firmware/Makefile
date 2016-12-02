@@ -141,13 +141,8 @@ fw-shipped-$(CONFIG_KEYBOARD_CYPRESS_TOUCH_20075) += \
 						cypress/cypress_20075_k_m06.fw	\
 						cypress/cypress_20075_l_m06.fw
 fw-shipped-$(CONFIG_KEYBOARD_ABOV_TOUCH) += abov/abov_tk.fw
-fw-shipped-$(CONFIG_KEYBOARD_ABOV_TOUCH_A8) += abov/abov_tk_a8.fw
-fw-shipped-$(CONFIG_KEYBOARD_TC300K) += coreriver/tc300k_chagall.fw \
-										coreriver/tc350k_gts28.fw \
-										coreriver/tc350k_gts210.fw \
-										coreriver/tc350k_gts210_swap.fw
+fw-shipped-$(CONFIG_KEYBOARD_TC300K) += coreriver/tc300k_chagall.fw
 fw-shipped-$(CONFIG_KEYBOARD_CYPRESS_TOUCH_MBR31X5) += cypress/cypress_t.fw
-fw-shipped-$(CONFIG_TOUCHSCREEN_MELFAS_MMS449) += tsp_melfas/mms449_a8.fw
 fw-shipped-$(or $(CONFIG_EPEN_WACOM_G10PM), \
 				$(CONFIG_EPEN_WACOM_W9012)) += epen/W9010_T.bin
 fw-shipped-$(CONFIG_EPEN_WACOM_W9012) += epen/W9012_T.bin epen/W9012_TB.bin
@@ -157,18 +152,9 @@ fw-shipped-$(CONFIG_SENSORS_SSP_ATMEL) += ssp_at.fw ssp_crashed_at.fw
 fw-shipped-$(CONFIG_SENSORS_MPU6500_BMI058_DUAL) += ssp_at_bmi.fw
 #for ice40
 fw-shipped-$(CONFIG_ICE40LM_FPGA) += ice40lm/k640.fw
-TSPFIRMWARE_DIRECTORY = $(srctree)/firmware/tsp_synaptics
-ifeq ($(shell test -d $(TSPFIRMWARE_DIRECTORY) && echo yes),yes)
+TSPFIRMWARE_DIRECTORY = firmware/tsp_synaptics
 fw-shipped-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI) += tsp_synaptics/synaptics_b0_h.fw \
 	tsp_synaptics/synaptics_b0_fac.fw
-ifdef CONFIG_TOUCHSCREEN_CHAGALLVE
-fw-shipped-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_DSX) += \
-						tsp_synaptics/synaptics_s5710_chagallve.fw
-else
-ifdef CONFIG_TOUCHSCREEN_KLIMTVE
-fw-shipped-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_DSX) += \
-						tsp_synaptics/synaptics_s5707_klimtve.fw
-else
 fw-shipped-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_DSX) += \
 						tsp_synaptics/synaptics_s5100_a2_k.fw	\
 						tsp_synaptics/synaptics_s5100_a2_k_FHD.fw	\
@@ -177,19 +163,8 @@ fw-shipped-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_DSX) += \
 						tsp_synaptics/synaptics_s5100_a3_l_WQHD.fw	\
 						tsp_synaptics/synaptics_s5100_a3_k_FHD.fw	\
 						tsp_synaptics/synaptics_5710_chagall.fw
-endif
-endif
-else
-$(warning '$(TSPFIRMWARE_DIRECTORY)' directory dose not exist)
-endif
 
-fw-shipped-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_DSX2) +=  \
-						tsp_synaptics/synaptics_5807_gts210.fw \
-						tsp_synaptics/synaptics_5807_gts28.fw \
-						tsp_synaptics/synaptics_5806_gts28.fw
-
-TSPFIRMWARE_DIRECTORY = $(srctree)/firmware/tsp_stm
-ifeq ($(shell test -d $(TSPFIRMWARE_DIRECTORY) && echo yes),yes)
+TSPFIRMWARE_DIRECTORY = firmware/tsp_stm
 fw-shipped-$(CONFIG_TOUCHSCREEN_FTS) += \
 						tsp_stm/stm_s.fw	\
 						tsp_stm/stm_s_sync.fw	\
@@ -198,9 +173,6 @@ fw-shipped-$(CONFIG_TOUCHSCREEN_FTS) += \
 						tsp_stm/stm_tb_seper_1.fw	\
 						tsp_stm/stm_tb_seper_2.fw	\
 						tsp_stm/stm_tb_integ.fw
-else
-$(warning '$(TSPFIRMWARE_DIRECTORY)' directory dose not exist)
-endif
 
 fw-shipped-all := $(fw-shipped-y) $(fw-shipped-m) $(fw-shipped-)
 
@@ -230,7 +202,7 @@ quiet_cmd_fwbin = MK_FW   $@
 		  echo "    .section .rodata"				>>$@;\
 		  echo "    .p2align $${ASM_ALIGN}"			>>$@;\
 		  echo "_fw_$${FWSTR}_bin:"				>>$@;\
-		  echo "    .incbin \"$(srctree)/$(2)\""				>>$@;\
+		  echo "    .incbin \"$(2)\""				>>$@;\
 		  echo "_fw_end:"					>>$@;\
 		  echo "   .section .rodata.str,\"aMS\",$${PROGBITS},1"	>>$@;\
 		  echo "    .p2align $${ASM_ALIGN}"			>>$@;\

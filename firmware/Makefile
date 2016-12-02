@@ -188,7 +188,7 @@ fw-shipped-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_DSX2) +=  \
 						tsp_synaptics/synaptics_5807_gts28.fw \
 						tsp_synaptics/synaptics_5806_gts28.fw
 
-TSPFIRMWARE_DIRECTORY = $(srctree)firmware/tsp_stm
+TSPFIRMWARE_DIRECTORY = $(srctree)/firmware/tsp_stm
 ifeq ($(shell test -d $(TSPFIRMWARE_DIRECTORY) && echo yes),yes)
 fw-shipped-$(CONFIG_TOUCHSCREEN_FTS) += \
 						tsp_stm/stm_s.fw	\

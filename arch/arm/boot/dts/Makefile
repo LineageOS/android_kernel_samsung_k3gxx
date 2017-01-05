@@ -46,6 +46,8 @@ dtb-$(CONFIG_ARCH_DAVINCI) += da850-enbw-cmc.dtb \
 dtb-$(CONFIG_ARCH_DOVE) += dove-cm-a510.dtb \
 	dove-cubox.dtb \
 	dove-dove-db.dtb
+dtb-$(CONFIG_ARCH_EXYNOS5) += \
+	exynos5422-k3g_eur_open_10.dtb
 #dtb-$(CONFIG_ARCH_EXYNOS) += exynos4210-origen.dtb \
 #	exynos4210-smdkv310.dtb \
 #	exynos4210-trats.dtb \

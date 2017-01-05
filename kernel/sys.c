@@ -2442,6 +2442,7 @@ SYSCALL_DEFINE5(prctl, int, option, unsigned long, arg2, unsigned long, arg3,
 		error = current->timer_slack_ns;
 		break;
 	case PR_SET_TIMERSLACK:
+	case PR_SET_TIMERSLACK_PID:
 		if (arg2 <= 0)
 			current->timer_slack_ns =
 					current->default_timer_slack_ns;

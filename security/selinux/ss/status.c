@@ -58,7 +58,11 @@ struct page *selinux_kernel_status_page(void)
 
 			status->version = SELINUX_KERNEL_STATUS_VERSION;
 			status->sequence = 0;
-			status->enforcing = selinux_enforcing;
+#if defined(SELINUX_ALWAYS_ENFORCE)
+			status->enforcing = 1;
+#elif defined(SELINUX_ALWAYS_PERMISSIVE)
+			status->enforcing = 0;
+#else
 			/*
 			 * NOTE: the next policyload event shall set
 			 * a positive value on the status->policyload,

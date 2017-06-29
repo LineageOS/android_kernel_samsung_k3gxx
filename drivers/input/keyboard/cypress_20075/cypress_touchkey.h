@@ -257,6 +257,7 @@ struct touchkey_i2c {
 	int ic_mode;
 	int tsk_enable_glove_mode;
 	int support_multi_touch;
+    atomic_t keypad_enable;
 };
 
 extern struct class *sec_class;

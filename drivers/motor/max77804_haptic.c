@@ -402,7 +402,15 @@ static int max77804_haptic_probe(struct platform_device *pdev)
 	ret = sysfs_create_file(&hap_data->tout_dev.dev->kobj,
 				&dev_attr_pwm_min.attr);
 	if (ret < 0) {
-		pr_err("[VIB] Failed to register pwm_min sysfs : %d\n", error);
+		pr_err("[VIB] Failed to register pwm_threshold sysfs : %d\n", error);
+		goto err_timed_output_register;
+	}
+	
+	
+	ret = sysfs_create_file(&hap_data->tout_dev.dev->kobj,
+				&dev_attr_pwm_threshold.attr);
+	if (ret < 0) {
+		pr_err("[VIB] Failed to register pwm_value sysfs : %d\n", error);
 		goto err_timed_output_register;
 	}
 

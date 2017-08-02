@@ -478,6 +478,8 @@ struct s3c_fb_win_config {
 	__u32	h;
 };
 
+#define WIN_CONFIG_DMA(x) (regs->otf_state[x] != S3C_FB_WIN_STATE_OTF)
+
 struct s3c_fb_win_config_data {
 	int	fence;
 	struct s3c_fb_win_config config[S3C_FB_MAX_WIN];

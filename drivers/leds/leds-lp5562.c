@@ -693,7 +693,7 @@ static ssize_t lp5562_store_blink(struct device *dev,
 	sscanf(buf, "0x%08x %d %d", &rgb, &on, &off);
 	pr_info("%s: 0x%08x %d %d\n", __func__, rgb, on, off);
 
-	if (on == 0) {
+	if (!rgb) {
 		pr_info("%s: led engines stopped !",
 			__func__);
 	}
@@ -707,7 +707,7 @@ static ssize_t lp5562_store_blink(struct device *dev,
 	on = min_t(unsigned int, on, MAX_BLINK_TIME);
 	off = min_t(unsigned int, off, MAX_BLINK_TIME);
 
-	if (!rgb || !on)
+	if (!rgb)
 		return len;
 
 	mutex_lock(&chip->lock);

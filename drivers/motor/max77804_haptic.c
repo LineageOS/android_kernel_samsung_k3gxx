@@ -102,21 +102,21 @@ static ssize_t intensity_store(struct device *dev,
 
 	ret = kstrtoint(buf, 0, &intensity);
 
-	if (intensity < 0 || MAX_INTENSITY < intensity) {
-		pr_err("out of rage\n");
+	if (intensity < 0 || intensity > (MAX_INTENSITY / 100)) {
+		pr_err("out of range\n");
 		return -EINVAL;
 	}
 
-	if (MAX_INTENSITY == intensity)
+	if (intensity == (MAX_INTENSITY / 100))
 		duty = drvdata->pdata->duty;
-	else if (0 != intensity) {
+	else if (intensity >= 0) {
 		long tmp = drvdata->pdata->duty >> 1;
 
-		tmp *= (intensity / 100);
+		tmp *= (intensity);
 		duty += (int)(tmp / 100);
 	}
 
-	drvdata->intensity = intensity;
+	drvdata->intensity = intensity * 100;
 	drvdata->duty = duty;
 
 	pwm_config(drvdata->pwm, duty, drvdata->pdata->period);
@@ -131,8 +131,8 @@ static ssize_t intensity_show(struct device *dev,
 	struct max77804_haptic_data *drvdata
 		= container_of(tdev, struct max77804_haptic_data, tout_dev);
 
-	return sprintf(buf, "intensity: %u\n",
-			(drvdata->intensity * 100));
+	return sprintf(buf, "%u\n",
+			(drvdata->intensity / 100));
 }
 
 static ssize_t pwm_default_show(struct device *dev,

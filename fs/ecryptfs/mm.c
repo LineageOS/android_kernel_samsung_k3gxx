@@ -280,28 +280,7 @@ static int ecryptfs_mm_task(void *arg)
 }
 
 void ecryptfs_mm_drop_cache(int userid, int engineid) {
-#if 1
-	struct task_struct *task;
-	struct ecryptfs_mm_drop_cache_param *param =
-			kzalloc(sizeof(*param), GFP_KERNEL);
-
-	if (!param) {
-		printk("%s :: skip. no memory to alloc param\n", __func__);
-		return;
-	}
-    param->user_id = userid;
-    param->engine_id = engineid;
-
-	printk("running cache cleanup thread - sdp-id : %d\n", userid);
-	task = kthread_run(ecryptfs_mm_task, param, "sdp_cached");
-
-	if (IS_ERR(task)) {
-		printk(KERN_ERR "SDP : unable to create kernel thread: %ld\n",
-				PTR_ERR(task));
-	}
-#else
 	ecryptfs_mm_task(&userid);
-#endif
 }
 
 #include <linux/pagevec.h>

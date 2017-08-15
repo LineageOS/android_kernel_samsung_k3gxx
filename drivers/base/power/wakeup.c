@@ -874,8 +874,8 @@ static int wakeup_sources_stats_show(struct seq_file *m, void *unused)
 	rcu_read_unlock();
 
 	split_counters(&cnt, &inpr);
-	seq_printf(m, "\nRegistered wakeup events: %u\n"
-			"Wakeup events in progress: %u\n", cnt, inpr);
+/*	seq_printf(m, "\nRegistered wakeup events: %u\n"
+			"Wakeup events in progress: %u\n", cnt, inpr);*/
 	return 0;
 }
 

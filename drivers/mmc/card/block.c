@@ -1253,7 +1253,7 @@ static int mmc_blk_err_check(struct mmc_card *card,
 	 * stop.error indicates a problem with the stop command.  Data
 	 * may have been transferred, or may still be transferring.
 	 */
-    if (!card->ext_csd.cmdq_mode_en) {
+	if (!card->ext_csd.cmdq_mode_en) {
 		if (brq->sbc.error || brq->cmd.error || brq->stop.error ||
 		    brq->data.error) {
 		switch (mmc_blk_cmd_recovery(card, req, brq, &ecc_err, &gen_err)) {
@@ -1318,8 +1318,8 @@ static int mmc_blk_err_check(struct mmc_card *card,
 					if (err)
 						return MMC_BLK_ABORT;
 				}
-            }
-            
+			}
+
 			if (status & R1_ERROR) {
 				pr_err("%s: %s: general error sending status command, card status %#x\n",
 				       req->rq_disk->disk_name, __func__,

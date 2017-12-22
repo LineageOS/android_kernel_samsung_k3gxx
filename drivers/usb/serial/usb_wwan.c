@@ -522,6 +522,7 @@ int usb_wwan_open(struct tty_struct *tty, struct usb_serial_port *port)
 		}
 	}
 
+	set_bit(TTY_NO_WRITE_SPLIT, &tty->flags);
 	/* Start reading from the IN endpoint */
 	for (i = 0; i < N_IN_URB; i++) {
 		urb = portdata->in_urbs[i];

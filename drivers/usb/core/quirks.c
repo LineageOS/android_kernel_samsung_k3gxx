@@ -199,14 +199,6 @@ static const struct usb_device_id usb_quirk_list[] = {
 	{ USB_DEVICE(0x04cc, 0x2342),
 		.driver_info = USB_QUIRK_HSIC_TUNE},
 
-	{ }  /* terminating entry must be last */
-};
-
-static const struct usb_device_id usb_interface_quirk_list[] = {
-	/* Logitech UVC Cameras */
-	{ USB_VENDOR_AND_INTERFACE_INFO(0x046d, USB_CLASS_VIDEO, 1, 0),
-	  .driver_info = USB_QUIRK_RESET_RESUME },
-
 	/* ASUS Base Station(T100) */
 	{ USB_DEVICE(0x0b05, 0x17e0), .driver_info =
 			USB_QUIRK_IGNORE_REMOTE_WAKEUP },
@@ -216,6 +208,14 @@ static const struct usb_device_id usb_interface_quirk_list[] = {
 
 	/* Blackmagic Design UltraStudio SDI */
 	{ USB_DEVICE(0x1edb, 0xbd4f), .driver_info = USB_QUIRK_NO_LPM },
+
+	{ }  /* terminating entry must be last */
+};
+
+static const struct usb_device_id usb_interface_quirk_list[] = {
+	/* Logitech UVC Cameras */
+	{ USB_VENDOR_AND_INTERFACE_INFO(0x046d, USB_CLASS_VIDEO, 1, 0),
+	  .driver_info = USB_QUIRK_RESET_RESUME },
 
 	{ }  /* terminating entry must be last */
 };

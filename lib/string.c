@@ -598,6 +598,7 @@ EXPORT_SYMBOL(memset);
 void memzero_explicit(void *s, size_t count)
 {
 	memset(s, 0, count);
+	barrier();
 }
 EXPORT_SYMBOL(memzero_explicit);
 

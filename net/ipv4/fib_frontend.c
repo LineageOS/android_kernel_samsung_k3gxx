@@ -958,7 +958,12 @@ static void nl_fib_input(struct sk_buff *skb)
 
 	net = sock_net(skb->sk);
 	nlh = nlmsg_hdr(skb);
+<<<<<<< HEAD
+	if (skb->len < nlmsg_total_size(sizeof(*frn)) ||
+	    skb->len < nlh->nlmsg_len ||
+=======
 	if (skb->len < NLMSG_HDRLEN || skb->len < nlh->nlmsg_len ||
+>>>>>>> 671a46baf1b... some performance improvements
 	    nlmsg_len(nlh) < sizeof(*frn))
 		return;
 
@@ -1050,6 +1055,11 @@ static int fib_netdev_event(struct notifier_block *this, unsigned long event, vo
 	}
 
 	in_dev = __in_dev_get_rtnl(dev);
+<<<<<<< HEAD
+	if (!in_dev)
+		return NOTIFY_DONE;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	switch (event) {
 	case NETDEV_UP:
@@ -1168,6 +1178,18 @@ static struct pernet_operations fib_net_ops = {
 
 void __init ip_fib_init(void)
 {
+<<<<<<< HEAD
+	fib_trie_init();
+
+	register_pernet_subsys(&fib_net_ops);
+
+	register_netdevice_notifier(&fib_netdev_notifier);
+	register_inetaddr_notifier(&fib_inetaddr_notifier);
+
+	rtnl_register(PF_INET, RTM_NEWROUTE, inet_rtm_newroute, NULL, NULL);
+	rtnl_register(PF_INET, RTM_DELROUTE, inet_rtm_delroute, NULL, NULL);
+	rtnl_register(PF_INET, RTM_GETROUTE, NULL, inet_dump_fib, NULL);
+=======
 	rtnl_register(PF_INET, RTM_NEWROUTE, inet_rtm_newroute, NULL, NULL);
 	rtnl_register(PF_INET, RTM_DELROUTE, inet_rtm_delroute, NULL, NULL);
 	rtnl_register(PF_INET, RTM_GETROUTE, NULL, inet_dump_fib, NULL);
@@ -1177,4 +1199,5 @@ void __init ip_fib_init(void)
 	register_inetaddr_notifier(&fib_inetaddr_notifier);
 
 	fib_trie_init();
+>>>>>>> 671a46baf1b... some performance improvements
 }

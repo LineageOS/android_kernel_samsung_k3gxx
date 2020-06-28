@@ -90,8 +90,15 @@ int pwm_channel_alloc(int index, struct pwm_channel *ch)
 	unsigned long	flags;
 	int		status = 0;
 
+<<<<<<< HEAD
+	if (!pwm)
+		return -EPROBE_DEFER;
+
+	if (!(pwm->mask & 1 << index))
+=======
 	/* insist on PWM init, with this signal pinned out */
 	if (!pwm || !(pwm->mask & 1 << index))
+>>>>>>> 671a46baf1b... some performance improvements
 		return -ENODEV;
 
 	if (index < 0 || index >= PWM_NCHAN || !ch)

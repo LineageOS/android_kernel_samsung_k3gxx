@@ -190,7 +190,13 @@ static inline struct neighbour *__ipv6_neigh_lookup(struct net_device *dev, cons
 }
 
 extern int			ndisc_init(void);
+<<<<<<< HEAD
+extern int			ndisc_late_init(void);
 
+extern void			ndisc_late_cleanup(void);
+=======
+
+>>>>>>> 671a46baf1b... some performance improvements
 extern void			ndisc_cleanup(void);
 
 extern int			ndisc_rcv(struct sk_buff *skb);

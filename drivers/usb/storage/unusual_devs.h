@@ -101,6 +101,15 @@ UNUSUAL_DEV(  0x03f0, 0x4002, 0x0001, 0x0001,
 		"PhotoSmart R707",
 		USB_SC_DEVICE, USB_PR_DEVICE, NULL, US_FL_FIX_CAPACITY),
 
+<<<<<<< HEAD
+UNUSUAL_DEV(  0x03f3, 0x0001, 0x0000, 0x9999,
+		"Adaptec",
+		"USBConnect 2000",
+		USB_SC_DEVICE, USB_PR_DEVICE, usb_stor_euscsi_init,
+		US_FL_SCM_MULT_TARG ),
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* Reported by Sebastian Kapfer <sebastian_kapfer@gmx.net>
  * and Olaf Hering <olh@suse.de> (different bcd's, same vendor/product)
  * for USB floppies that need the SINGLE_LUN enforcement.
@@ -234,6 +243,30 @@ UNUSUAL_DEV(  0x0421, 0x0495, 0x0370, 0x0370,
 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
 		US_FL_MAX_SECTORS_64 ),
 
+<<<<<<< HEAD
+/* Reported by Daniele Forsi <dforsi@gmail.com> */
+UNUSUAL_DEV(  0x0421, 0x04b9, 0x0350, 0x0350,
+		"Nokia",
+		"5300",
+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+		US_FL_MAX_SECTORS_64 ),
+
+/* Patch submitted by Victor A. Santos <victoraur.santos@gmail.com> */
+UNUSUAL_DEV(  0x0421, 0x05af, 0x0742, 0x0742,
+		"Nokia",
+		"305",
+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+		US_FL_MAX_SECTORS_64),
+
+/* Patch submitted by Mikhail Zolotaryov <lebon@lebon.org.ua> */
+UNUSUAL_DEV(  0x0421, 0x06aa, 0x1110, 0x1110,
+		"Nokia",
+		"502",
+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+		US_FL_MAX_SECTORS_64 ),
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #ifdef NO_SDDR09
 UNUSUAL_DEV(  0x0436, 0x0005, 0x0100, 0x0100,
 		"Microtech",
@@ -720,6 +753,15 @@ UNUSUAL_DEV(  0x059b, 0x0001, 0x0100, 0x0100,
 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
 		US_FL_SINGLE_LUN ),
 
+<<<<<<< HEAD
+UNUSUAL_DEV(  0x059b, 0x0040, 0x0100, 0x0100,
+		"Iomega",
+		"Jaz USB Adapter",
+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+		US_FL_SINGLE_LUN ),
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* Reported by <Hendryk.Pfeiffer@gmx.de> */
 UNUSUAL_DEV(  0x059f, 0x0643, 0x0000, 0x0000,
 		"LaCie",
@@ -727,6 +769,16 @@ UNUSUAL_DEV(  0x059f, 0x0643, 0x0000, 0x0000,
 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
 		US_FL_GO_SLOW ),
 
+<<<<<<< HEAD
+/* Reported by Christian Schaller <cschalle@redhat.com> */
+UNUSUAL_DEV(  0x059f, 0x0651, 0x0000, 0x0000,
+		"LaCie",
+		"External HDD",
+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+		US_FL_NO_WP_DETECT ),
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* Submitted by Joel Bourquard <numlock@freesurf.ch>
  * Some versions of this device need the SubClass and Protocol overrides
  * while others don't.
@@ -1092,6 +1144,21 @@ UNUSUAL_DEV(  0x0851, 0x1543, 0x0200, 0x0200,
 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
 		US_FL_NOT_LOCKABLE),
 
+<<<<<<< HEAD
+UNUSUAL_DEV(  0x085a, 0x0026, 0x0100, 0x0133,
+		"Xircom",
+		"PortGear USB-SCSI (Mac USB Dock)",
+		USB_SC_DEVICE, USB_PR_DEVICE, usb_stor_euscsi_init,
+		US_FL_SCM_MULT_TARG ),
+
+UNUSUAL_DEV(  0x085a, 0x0028, 0x0100, 0x0133,
+		"Xircom",
+		"PortGear USB to SCSI Converter",
+		USB_SC_DEVICE, USB_PR_DEVICE, usb_stor_euscsi_init,
+		US_FL_SCM_MULT_TARG ),
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* Submitted by Jan De Luyck <lkml@kcore.org> */
 UNUSUAL_DEV(  0x08bd, 0x1100, 0x0000, 0x0000,
 		"CITIZEN",
@@ -1448,6 +1515,16 @@ UNUSUAL_DEV( 0x0f88, 0x042e, 0x0100, 0x0100,
 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
 		US_FL_FIX_CAPACITY ),
 
+<<<<<<< HEAD
+/* Reported by Moritz Moeller-Herrmann <moritz-kernel@moeller-herrmann.de> */
+UNUSUAL_DEV(  0x0fca, 0x8004, 0x0201, 0x0201,
+		"Research In Motion",
+		"BlackBerry Bold 9000",
+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+		US_FL_MAX_SECTORS_64 ),
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* Reported by Michael Stattmann <michael@stattmann.com> */
 UNUSUAL_DEV(  0x0fce, 0xd008, 0x0000, 0x0000,
 		"Sony Ericsson",
@@ -1917,6 +1994,17 @@ UNUSUAL_DEV(  0x152d, 0x2329, 0x0100, 0x0100,
 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
 		US_FL_IGNORE_RESIDUE | US_FL_SANE_SENSE ),
 
+<<<<<<< HEAD
+/* Entrega Technologies U1-SC25 (later Xircom PortGear PGSCSI)
+ * and Mac USB Dock USB-SCSI */
+UNUSUAL_DEV(  0x1645, 0x0007, 0x0100, 0x0133,
+		"Entrega Technologies",
+		"USB to SCSI Converter",
+		USB_SC_DEVICE, USB_PR_DEVICE, usb_stor_euscsi_init,
+		US_FL_SCM_MULT_TARG ),
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* Reported by Robert Schedel <r.schedel@yahoo.de>
  * Note: this is a 'super top' device like the above 14cd/6600 device */
 UNUSUAL_DEV(  0x1652, 0x6600, 0x0201, 0x0201,
@@ -1925,6 +2013,16 @@ UNUSUAL_DEV(  0x1652, 0x6600, 0x0201, 0x0201,
 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
 		US_FL_IGNORE_RESIDUE ),
 
+<<<<<<< HEAD
+/* Reported by Oliver Neukum <oneukum@suse.com> */
+UNUSUAL_DEV(  0x174c, 0x55aa, 0x0100, 0x0100,
+		"ASMedia",
+		"AS2105",
+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+		US_FL_NEEDS_CAP16),
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* Reported by Jesse Feddema <jdfeddema@gmail.com> */
 UNUSUAL_DEV(  0x177f, 0x0400, 0x0000, 0x0000,
 		"Yarvik",
@@ -1932,6 +2030,15 @@ UNUSUAL_DEV(  0x177f, 0x0400, 0x0000, 0x0000,
 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
 		US_FL_BULK_IGNORE_TAG | US_FL_MAX_SECTORS_64 ),
 
+<<<<<<< HEAD
+UNUSUAL_DEV(  0x1822, 0x0001, 0x0000, 0x9999,
+		"Ariston Technologies",
+		"iConnect USB to SCSI adapter",
+		USB_SC_DEVICE, USB_PR_DEVICE, usb_stor_euscsi_init,
+		US_FL_SCM_MULT_TARG ),
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* Reported by Hans de Goede <hdegoede@redhat.com>
  * These Appotech controllers are found in Picture Frames, they provide a
  * (buggy) emulation of a cdrom drive which contains the windows software
@@ -1952,6 +2059,21 @@ UNUSUAL_DEV( 0x1908, 0x3335, 0x0200, 0x0200,
 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
 		US_FL_NO_READ_DISC_INFO ),
 
+<<<<<<< HEAD
+/* Reported by Oliver Neukum <oneukum@suse.com>
+ * This device morphes spontaneously into another device if the access
+ * pattern of Windows isn't followed. Thus writable media would be dirty
+ * if the initial instance is used. So the device is limited to its
+ * virtual CD.
+ * And yes, the concept that BCD goes up to 9 is not heeded */
+UNUSUAL_DEV( 0x19d2, 0x1225, 0x0000, 0xffff,
+		"ZTE,Incorporated",
+		"ZTE WCDMA Technologies MSM",
+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+		US_FL_SINGLE_LUN ),
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* Reported by Sven Geggus <sven-usbst@geggus.net>
  * This encrypted pen drive returns bogus data for the initial READ(10).
  */

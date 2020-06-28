@@ -135,6 +135,11 @@ static inline int cmp_reg(const struct coproc_reg *i1,
 		return -1;
 	if (i1->CRn != i2->CRn)
 		return i1->CRn - i2->CRn;
+<<<<<<< HEAD
+	if (i1->is_64 != i2->is_64)
+		return i2->is_64 - i1->is_64;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (i1->CRm != i2->CRm)
 		return i1->CRm - i2->CRm;
 	if (i1->Op1 != i2->Op1)
@@ -145,6 +150,10 @@ static inline int cmp_reg(const struct coproc_reg *i1,
 
 #define CRn(_x)		.CRn = _x
 #define CRm(_x) 	.CRm = _x
+<<<<<<< HEAD
+#define CRm64(_x)       .CRn = _x, .CRm = 0
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #define Op1(_x) 	.Op1 = _x
 #define Op2(_x) 	.Op2 = _x
 #define is64		.is_64 = true

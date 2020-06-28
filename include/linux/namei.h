@@ -55,6 +55,12 @@ enum {LAST_NORM, LAST_ROOT, LAST_DOT, LAST_DOTDOT, LAST_BIND};
 #define LOOKUP_JUMPED		0x1000
 #define LOOKUP_ROOT		0x2000
 #define LOOKUP_EMPTY		0x4000
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SDCARD_FS_CI_SEARCH
+#define LOOKUP_CASE_INSENSITIVE 0x8000
+#endif
+>>>>>>> 671a46baf1b... some performance improvements
 
 extern int user_path_at(int, const char __user *, unsigned, struct path *);
 extern int user_path_at_empty(int, const char __user *, unsigned, struct path *, int *empty);
@@ -74,7 +80,10 @@ extern int vfs_path_lookup(struct dentry *, struct vfsmount *,
 			   const char *, unsigned int, struct path *);
 
 extern struct dentry *lookup_one_len(const char *, struct dentry *, int);
+<<<<<<< HEAD
 extern struct dentry *lookup_one_len2(const char *, struct vfsmount *mnt, struct dentry *, int);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 extern int follow_down_one(struct path *);
 extern int follow_down(struct path *);

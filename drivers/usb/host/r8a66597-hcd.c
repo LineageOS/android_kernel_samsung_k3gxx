@@ -1270,7 +1270,11 @@ static void set_td_timer(struct r8a66597 *r8a66597, struct r8a66597_td *td)
 			time = 30;
 			break;
 		default:
+<<<<<<< HEAD
+			time = 50;
+=======
 			time = 300;
+>>>>>>> 671a46baf1b... some performance improvements
 			break;
 		}
 
@@ -1786,6 +1790,10 @@ static void r8a66597_td_timer(unsigned long _r8a66597)
 		pipe = td->pipe;
 		pipe_stop(r8a66597, pipe);
 
+<<<<<<< HEAD
+		/* Select a different address or endpoint */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		new_td = td;
 		do {
 			list_move_tail(&new_td->queue,
@@ -1795,7 +1803,12 @@ static void r8a66597_td_timer(unsigned long _r8a66597)
 				new_td = td;
 				break;
 			}
+<<<<<<< HEAD
+		} while (td != new_td && td->address == new_td->address &&
+			td->pipe->info.epnum == new_td->pipe->info.epnum);
+=======
 		} while (td != new_td && td->address == new_td->address);
+>>>>>>> 671a46baf1b... some performance improvements
 
 		start_transfer(r8a66597, new_td);
 
@@ -2301,7 +2314,11 @@ static int r8a66597_bus_resume(struct usb_hcd *hcd)
 		rh->port &= ~USB_PORT_STAT_SUSPEND;
 		rh->port |= USB_PORT_STAT_C_SUSPEND << 16;
 		r8a66597_mdfy(r8a66597, RESUME, RESUME | UACT, dvstctr_reg);
+<<<<<<< HEAD
+		msleep(USB_RESUME_TIMEOUT);
+=======
 		msleep(50);
+>>>>>>> 671a46baf1b... some performance improvements
 		r8a66597_mdfy(r8a66597, UACT, RESUME | UACT, dvstctr_reg);
 	}
 

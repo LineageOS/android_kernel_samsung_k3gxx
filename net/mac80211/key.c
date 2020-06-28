@@ -607,7 +607,11 @@ void ieee80211_free_sta_keys(struct ieee80211_local *local,
 	int i;
 
 	mutex_lock(&local->key_mtx);
+<<<<<<< HEAD
+	for (i = 0; i < ARRAY_SIZE(sta->gtk); i++) {
+=======
 	for (i = 0; i < NUM_DEFAULT_KEYS; i++) {
+>>>>>>> 671a46baf1b... some performance improvements
 		key = key_mtx_dereference(local, sta->gtk[i]);
 		if (!key)
 			continue;

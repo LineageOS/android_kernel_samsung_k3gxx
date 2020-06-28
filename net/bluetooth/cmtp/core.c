@@ -334,6 +334,12 @@ int cmtp_add_connection(struct cmtp_connadd_req *req, struct socket *sock)
 
 	BT_DBG("");
 
+<<<<<<< HEAD
+	if (!l2cap_is_socket(sock))
+		return -EBADFD;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	session = kzalloc(sizeof(struct cmtp_session), GFP_KERNEL);
 	if (!session)
 		return -ENOMEM;

@@ -78,6 +78,14 @@ void radeon_connector_hotplug(struct drm_connector *connector)
 			if (!radeon_hpd_sense(rdev, radeon_connector->hpd.hpd)) {
 				drm_helper_connector_dpms(connector, DRM_MODE_DPMS_OFF);
 			} else if (radeon_dp_needs_link_train(radeon_connector)) {
+<<<<<<< HEAD
+				/* Don't try to start link training before we
+				 * have the dpcd */
+				if (!radeon_dp_getdpcd(radeon_connector))
+					return;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 				/* set it to OFF so that drm_helper_connector_dpms()
 				 * won't return immediately since the current state
 				 * is ON at this point.
@@ -1345,7 +1353,11 @@ bool radeon_connector_is_dp12_capable(struct drm_connector *connector)
 	struct radeon_device *rdev = dev->dev_private;
 
 	if (ASIC_IS_DCE5(rdev) &&
+<<<<<<< HEAD
+	    (rdev->clock.default_dispclk >= 53900) &&
+=======
 	    (rdev->clock.dp_extclk >= 53900) &&
+>>>>>>> 671a46baf1b... some performance improvements
 	    radeon_connector_encoder_is_hbr2(connector)) {
 		return true;
 	}
@@ -1489,6 +1501,27 @@ static const struct drm_connector_funcs radeon_dp_connector_funcs = {
 	.force = radeon_dvi_force,
 };
 
+<<<<<<< HEAD
+static const struct drm_connector_funcs radeon_edp_connector_funcs = {
+	.dpms = drm_helper_connector_dpms,
+	.detect = radeon_dp_detect,
+	.fill_modes = drm_helper_probe_single_connector_modes,
+	.set_property = radeon_lvds_set_property,
+	.destroy = radeon_dp_connector_destroy,
+	.force = radeon_dvi_force,
+};
+
+static const struct drm_connector_funcs radeon_lvds_bridge_connector_funcs = {
+	.dpms = drm_helper_connector_dpms,
+	.detect = radeon_dp_detect,
+	.fill_modes = drm_helper_probe_single_connector_modes,
+	.set_property = radeon_lvds_set_property,
+	.destroy = radeon_dp_connector_destroy,
+	.force = radeon_dvi_force,
+};
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 void
 radeon_add_atom_connector(struct drm_device *dev,
 			  uint32_t connector_id,
@@ -1580,8 +1613,11 @@ radeon_add_atom_connector(struct drm_device *dev,
 			goto failed;
 		radeon_dig_connector->igp_lane_info = igp_lane_info;
 		radeon_connector->con_priv = radeon_dig_connector;
+<<<<<<< HEAD
+=======
 		drm_connector_init(dev, &radeon_connector->base, &radeon_dp_connector_funcs, connector_type);
 		drm_connector_helper_add(&radeon_connector->base, &radeon_dp_connector_helper_funcs);
+>>>>>>> 671a46baf1b... some performance improvements
 		if (i2c_bus->valid) {
 			/* add DP i2c bus */
 			if (connector_type == DRM_MODE_CONNECTOR_eDP)
@@ -1598,6 +1634,13 @@ radeon_add_atom_connector(struct drm_device *dev,
 		case DRM_MODE_CONNECTOR_VGA:
 		case DRM_MODE_CONNECTOR_DVIA:
 		default:
+<<<<<<< HEAD
+			drm_connector_init(dev, &radeon_connector->base,
+					   &radeon_dp_connector_funcs, connector_type);
+			drm_connector_helper_add(&radeon_connector->base,
+						 &radeon_dp_connector_helper_funcs);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			connector->interlace_allowed = true;
 			connector->doublescan_allowed = true;
 			radeon_connector->dac_load_detect = true;
@@ -1610,6 +1653,13 @@ radeon_add_atom_connector(struct drm_device *dev,
 		case DRM_MODE_CONNECTOR_HDMIA:
 		case DRM_MODE_CONNECTOR_HDMIB:
 		case DRM_MODE_CONNECTOR_DisplayPort:
+<<<<<<< HEAD
+			drm_connector_init(dev, &radeon_connector->base,
+					   &radeon_dp_connector_funcs, connector_type);
+			drm_connector_helper_add(&radeon_connector->base,
+						 &radeon_dp_connector_helper_funcs);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			drm_object_attach_property(&radeon_connector->base.base,
 						      rdev->mode_info.underscan_property,
 						      UNDERSCAN_OFF);
@@ -1634,6 +1684,13 @@ radeon_add_atom_connector(struct drm_device *dev,
 			break;
 		case DRM_MODE_CONNECTOR_LVDS:
 		case DRM_MODE_CONNECTOR_eDP:
+<<<<<<< HEAD
+			drm_connector_init(dev, &radeon_connector->base,
+					   &radeon_lvds_bridge_connector_funcs, connector_type);
+			drm_connector_helper_add(&radeon_connector->base,
+						 &radeon_dp_connector_helper_funcs);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			drm_object_attach_property(&radeon_connector->base.base,
 						      dev->mode_config.scaling_mode_property,
 						      DRM_MODE_SCALE_FULLSCREEN);
@@ -1658,7 +1715,10 @@ radeon_add_atom_connector(struct drm_device *dev,
 						      1);
 			/* no HPD on analog connectors */
 			radeon_connector->hpd.hpd = RADEON_HPD_NONE;
+<<<<<<< HEAD
+=======
 			connector->polled = DRM_CONNECTOR_POLL_CONNECT;
+>>>>>>> 671a46baf1b... some performance improvements
 			connector->interlace_allowed = true;
 			connector->doublescan_allowed = true;
 			break;
@@ -1797,7 +1857,11 @@ radeon_add_atom_connector(struct drm_device *dev,
 				goto failed;
 			radeon_dig_connector->igp_lane_info = igp_lane_info;
 			radeon_connector->con_priv = radeon_dig_connector;
+<<<<<<< HEAD
+			drm_connector_init(dev, &radeon_connector->base, &radeon_edp_connector_funcs, connector_type);
+=======
 			drm_connector_init(dev, &radeon_connector->base, &radeon_dp_connector_funcs, connector_type);
+>>>>>>> 671a46baf1b... some performance improvements
 			drm_connector_helper_add(&radeon_connector->base, &radeon_dp_connector_helper_funcs);
 			if (i2c_bus->valid) {
 				/* add DP i2c bus */
@@ -1856,8 +1920,15 @@ radeon_add_atom_connector(struct drm_device *dev,
 	}
 
 	if (radeon_connector->hpd.hpd == RADEON_HPD_NONE) {
+<<<<<<< HEAD
+		if (i2c_bus->valid) {
+			connector->polled = DRM_CONNECTOR_POLL_CONNECT |
+			                    DRM_CONNECTOR_POLL_DISCONNECT;
+		}
+=======
 		if (i2c_bus->valid)
 			connector->polled = DRM_CONNECTOR_POLL_CONNECT;
+>>>>>>> 671a46baf1b... some performance improvements
 	} else
 		connector->polled = DRM_CONNECTOR_POLL_HPD;
 
@@ -1929,7 +2000,10 @@ radeon_add_legacy_connector(struct drm_device *dev,
 					      1);
 		/* no HPD on analog connectors */
 		radeon_connector->hpd.hpd = RADEON_HPD_NONE;
+<<<<<<< HEAD
+=======
 		connector->polled = DRM_CONNECTOR_POLL_CONNECT;
+>>>>>>> 671a46baf1b... some performance improvements
 		connector->interlace_allowed = true;
 		connector->doublescan_allowed = true;
 		break;
@@ -2014,10 +2088,20 @@ radeon_add_legacy_connector(struct drm_device *dev,
 	}
 
 	if (radeon_connector->hpd.hpd == RADEON_HPD_NONE) {
+<<<<<<< HEAD
+		if (i2c_bus->valid) {
+			connector->polled = DRM_CONNECTOR_POLL_CONNECT |
+			                    DRM_CONNECTOR_POLL_DISCONNECT;
+		}
+	} else
+		connector->polled = DRM_CONNECTOR_POLL_HPD;
+
+=======
 		if (i2c_bus->valid)
 			connector->polled = DRM_CONNECTOR_POLL_CONNECT;
 	} else
 		connector->polled = DRM_CONNECTOR_POLL_HPD;
+>>>>>>> 671a46baf1b... some performance improvements
 	connector->display_info.subpixel_order = subpixel_order;
 	drm_sysfs_connector_add(connector);
 }

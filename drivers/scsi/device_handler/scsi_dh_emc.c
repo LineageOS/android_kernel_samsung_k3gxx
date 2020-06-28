@@ -464,7 +464,11 @@ static int clariion_prep_fn(struct scsi_device *sdev, struct request *req)
 static int clariion_std_inquiry(struct scsi_device *sdev,
 				struct clariion_dh_data *csdev)
 {
+<<<<<<< HEAD
+	int err = SCSI_DH_OK;
+=======
 	int err;
+>>>>>>> 671a46baf1b... some performance improvements
 	char *sp_model;
 
 	err = send_inquiry_cmd(sdev, 0, csdev);

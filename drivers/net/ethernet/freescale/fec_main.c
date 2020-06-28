@@ -371,6 +371,11 @@ fec_enet_start_xmit(struct sk_buff *skb, struct net_device *ndev)
 	else
 		bdp = fec_enet_get_nextdesc(bdp, fep->bufdesc_ex);
 
+<<<<<<< HEAD
+	skb_tx_timestamp(skb);
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	fep->cur_tx = bdp;
 
 	if (fep->cur_tx == fep->dirty_tx)
@@ -379,8 +384,11 @@ fec_enet_start_xmit(struct sk_buff *skb, struct net_device *ndev)
 	/* Trigger transmission start */
 	writel(0, fep->hwp + FEC_X_DES_ACTIVE);
 
+<<<<<<< HEAD
+=======
 	skb_tx_timestamp(skb);
 
+>>>>>>> 671a46baf1b... some performance improvements
 	return NETDEV_TX_OK;
 }
 

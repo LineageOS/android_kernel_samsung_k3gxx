@@ -1286,8 +1286,19 @@ next_slot:
 		num_bytes = 0;
 		btrfs_item_key_to_cpu(leaf, &found_key, path->slots[0]);
 
+<<<<<<< HEAD
+		if (found_key.objectid > ino)
+			break;
+		if (WARN_ON_ONCE(found_key.objectid < ino) ||
+		    found_key.type < BTRFS_EXTENT_DATA_KEY) {
+			path->slots[0]++;
+			goto next_slot;
+		}
+		if (found_key.type > BTRFS_EXTENT_DATA_KEY ||
+=======
 		if (found_key.objectid > ino ||
 		    found_key.type > BTRFS_EXTENT_DATA_KEY ||
+>>>>>>> 671a46baf1b... some performance improvements
 		    found_key.offset > end)
 			break;
 
@@ -2419,10 +2430,30 @@ out_unlock:
 	return ret;
 }
 
+<<<<<<< HEAD
+static void free_sa_defrag_extent(struct new_sa_defrag_extent *new)
+{
+	struct old_sa_defrag_extent *old, *tmp;
+
+	if (!new)
+		return;
+
+	list_for_each_entry_safe(old, tmp, &new->head, list) {
+		list_del(&old->list);
+		kfree(old);
+	}
+	kfree(new);
+}
+
+static void relink_file_extents(struct new_sa_defrag_extent *new)
+{
+	struct btrfs_path *path;
+=======
 static void relink_file_extents(struct new_sa_defrag_extent *new)
 {
 	struct btrfs_path *path;
 	struct old_sa_defrag_extent *old, *tmp;
+>>>>>>> 671a46baf1b... some performance improvements
 	struct sa_defrag_extent_backref *backref;
 	struct sa_defrag_extent_backref *prev = NULL;
 	struct inode *inode;
@@ -2465,6 +2496,13 @@ static void relink_file_extents(struct new_sa_defrag_extent *new)
 	kfree(prev);
 
 	btrfs_free_path(path);
+<<<<<<< HEAD
+out:
+	free_sa_defrag_extent(new);
+
+	atomic_dec(&root->fs_info->defrag_running);
+	wake_up(&root->fs_info->transaction_wait);
+=======
 
 	list_for_each_entry_safe(old, tmp, &new->head, list) {
 		list_del(&old->list);
@@ -2475,6 +2513,7 @@ out:
 	wake_up(&root->fs_info->transaction_wait);
 
 	kfree(new);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static struct new_sa_defrag_extent *
@@ -2484,7 +2523,11 @@ record_old_file_extents(struct inode *inode,
 	struct btrfs_root *root = BTRFS_I(inode)->root;
 	struct btrfs_path *path;
 	struct btrfs_key key;
+<<<<<<< HEAD
+	struct old_sa_defrag_extent *old;
+=======
 	struct old_sa_defrag_extent *old, *tmp;
+>>>>>>> 671a46baf1b... some performance improvements
 	struct new_sa_defrag_extent *new;
 	int ret;
 
@@ -2532,7 +2575,11 @@ record_old_file_extents(struct inode *inode,
 		if (slot >= btrfs_header_nritems(l)) {
 			ret = btrfs_next_leaf(root, path);
 			if (ret < 0)
+<<<<<<< HEAD
+				goto out_free_path;
+=======
 				goto out_free_list;
+>>>>>>> 671a46baf1b... some performance improvements
 			else if (ret > 0)
 				break;
 			continue;
@@ -2561,7 +2608,11 @@ record_old_file_extents(struct inode *inode,
 
 		old = kmalloc(sizeof(*old), GFP_NOFS);
 		if (!old)
+<<<<<<< HEAD
+			goto out_free_path;
+=======
 			goto out_free_list;
+>>>>>>> 671a46baf1b... some performance improvements
 
 		offset = max(new->file_pos, key.offset);
 		end = min(new->file_pos + new->len, key.offset + num_bytes);
@@ -2583,6 +2634,12 @@ next:
 
 	return new;
 
+<<<<<<< HEAD
+out_free_path:
+	btrfs_free_path(path);
+out_kfree:
+	free_sa_defrag_extent(new);
+=======
 out_free_list:
 	list_for_each_entry_safe(old, tmp, &new->head, list) {
 		list_del(&old->list);
@@ -2592,6 +2649,7 @@ out_free_path:
 	btrfs_free_path(path);
 out_kfree:
 	kfree(new);
+>>>>>>> 671a46baf1b... some performance improvements
 	return NULL;
 }
 
@@ -2652,7 +2710,11 @@ static int btrfs_finish_ordered_io(struct btrfs_ordered_extent *ordered_extent)
 			EXTENT_DEFRAG, 1, cached_state);
 	if (ret) {
 		u64 last_snapshot = btrfs_root_last_snapshot(&root->root_item);
+<<<<<<< HEAD
+		if (0 && last_snapshot >= BTRFS_I(inode)->generation)
+=======
 		if (last_snapshot >= BTRFS_I(inode)->generation)
+>>>>>>> 671a46baf1b... some performance improvements
 			/* the inode is shared */
 			new = record_old_file_extents(inode, ordered_extent);
 
@@ -2743,8 +2805,19 @@ out:
 	btrfs_remove_ordered_extent(inode, ordered_extent);
 
 	/* for snapshot-aware defrag */
+<<<<<<< HEAD
+	if (new) {
+		if (ret) {
+			free_sa_defrag_extent(new);
+			atomic_dec(&root->fs_info->defrag_running);
+		} else {
+			relink_file_extents(new);
+		}
+	}
+=======
 	if (new)
 		relink_file_extents(new);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* once for us */
 	btrfs_put_ordered_extent(ordered_extent);
@@ -3536,7 +3609,12 @@ noinline int btrfs_update_inode(struct btrfs_trans_handle *trans,
 	 * without delay
 	 */
 	if (!btrfs_is_free_space_inode(inode)
+<<<<<<< HEAD
+	    && root->root_key.objectid != BTRFS_DATA_RELOC_TREE_OBJECTID
+	    && !root->fs_info->log_root_recovering) {
+=======
 	    && root->root_key.objectid != BTRFS_DATA_RELOC_TREE_OBJECTID) {
+>>>>>>> 671a46baf1b... some performance improvements
 		btrfs_update_root_times(trans, root);
 
 		ret = btrfs_delayed_update_inode(trans, root, inode);
@@ -4518,8 +4596,17 @@ static int btrfs_setsize(struct inode *inode, struct iattr *attr)
 	 * these flags set.  For all other operations the VFS set these flags
 	 * explicitly if it wants a timestamp update.
 	 */
+<<<<<<< HEAD
+	if (newsize != oldsize) {
+		inode_inc_iversion(inode);
+		if (!(mask & (ATTR_CTIME | ATTR_MTIME)))
+			inode->i_ctime = inode->i_mtime =
+				current_fs_time(inode->i_sb);
+	}
+=======
 	if (newsize != oldsize && (!(mask & (ATTR_CTIME | ATTR_MTIME))))
 		inode->i_ctime = inode->i_mtime = current_fs_time(inode->i_sb);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (newsize > oldsize) {
 		truncate_pagecache(inode, oldsize, newsize);
@@ -4636,7 +4723,12 @@ void btrfs_evict_inode(struct inode *inode)
 		goto no_delete;
 	}
 	/* do we really want it for ->i_nlink > 0 and zero btrfs_root_refs? */
+<<<<<<< HEAD
+	if (!special_file(inode->i_mode))
+		btrfs_wait_ordered_range(inode, 0, (u64)-1);
+=======
 	btrfs_wait_ordered_range(inode, 0, (u64)-1);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (root->fs_info->log_root_recovering) {
 		BUG_ON(test_bit(BTRFS_INODE_HAS_ORPHAN_ITEM,
@@ -6811,7 +6903,10 @@ static int btrfs_get_blocks_direct(struct inode *inode, sector_t iblock,
 	    ((BTRFS_I(inode)->flags & BTRFS_INODE_NODATACOW) &&
 	     em->block_start != EXTENT_MAP_HOLE)) {
 		int type;
+<<<<<<< HEAD
+=======
 		int ret;
+>>>>>>> 671a46baf1b... some performance improvements
 		u64 block_start, orig_start, orig_block_len, ram_bytes;
 
 		if (test_bit(EXTENT_FLAG_PREALLOC, &em->flags))
@@ -7457,15 +7552,37 @@ int btrfs_readpage(struct file *file, struct page *page)
 static int btrfs_writepage(struct page *page, struct writeback_control *wbc)
 {
 	struct extent_io_tree *tree;
+<<<<<<< HEAD
+	struct inode *inode = page->mapping->host;
+	int ret;
+=======
 
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (current->flags & PF_MEMALLOC) {
 		redirty_page_for_writepage(wbc, page);
 		unlock_page(page);
 		return 0;
 	}
+<<<<<<< HEAD
+
+	/*
+	 * If we are under memory pressure we will call this directly from the
+	 * VM, we need to make sure we have the inode referenced for the ordered
+	 * extent.  If not just return like we didn't do anything.
+	 */
+	if (!igrab(inode)) {
+		redirty_page_for_writepage(wbc, page);
+		return AOP_WRITEPAGE_ACTIVATE;
+	}
+	tree = &BTRFS_I(page->mapping->host)->io_tree;
+	ret = extent_write_full_page(tree, page, btrfs_get_extent, wbc);
+	btrfs_add_delayed_iput(inode);
+	return ret;
+=======
 	tree = &BTRFS_I(page->mapping->host)->io_tree;
 	return extent_write_full_page(tree, page, btrfs_get_extent, wbc);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int btrfs_writepages(struct address_space *mapping,
@@ -8146,7 +8263,11 @@ static int btrfs_rename(struct inode *old_dir, struct dentry *old_dentry,
 
 
 	/* check for collisions, even if the  name isn't there */
+<<<<<<< HEAD
+	ret = btrfs_check_dir_item_collision(dest, new_dir->i_ino,
+=======
 	ret = btrfs_check_dir_item_collision(root, new_dir->i_ino,
+>>>>>>> 671a46baf1b... some performance improvements
 			     new_dentry->d_name.name,
 			     new_dentry->d_name.len);
 
@@ -8454,9 +8575,17 @@ static int btrfs_symlink(struct inode *dir, struct dentry *dentry,
 	/*
 	 * 2 items for inode item and ref
 	 * 2 items for dir items
+<<<<<<< HEAD
+	 * 1 item for updating parent inode item
+	 * 1 item for the inline extent item
+	 * 1 item for xattr if selinux is on
+	 */
+	trans = btrfs_start_transaction(root, 7);
+=======
 	 * 1 item for xattr if selinux is on
 	 */
 	trans = btrfs_start_transaction(root, 5);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (IS_ERR(trans))
 		return PTR_ERR(trans);
 

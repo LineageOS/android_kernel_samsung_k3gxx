@@ -346,7 +346,11 @@ static int send_wqe_overhead(enum mlx4_ib_qp_type type, u32 flags)
 			sizeof (struct mlx4_wqe_raddr_seg);
 	case MLX4_IB_QPT_RC:
 		return sizeof (struct mlx4_wqe_ctrl_seg) +
+<<<<<<< HEAD
+			sizeof (struct mlx4_wqe_masked_atomic_seg) +
+=======
 			sizeof (struct mlx4_wqe_atomic_seg) +
+>>>>>>> 671a46baf1b... some performance improvements
 			sizeof (struct mlx4_wqe_raddr_seg);
 	case MLX4_IB_QPT_SMI:
 	case MLX4_IB_QPT_GSI:
@@ -2174,8 +2178,12 @@ static int build_lso_seg(struct mlx4_wqe_lso_seg *wqe, struct ib_send_wr *wr,
 
 	memcpy(wqe->header, wr->wr.ud.header, wr->wr.ud.hlen);
 
+<<<<<<< HEAD
+	*lso_hdr_sz  = cpu_to_be32(wr->wr.ud.mss << 16 | wr->wr.ud.hlen);
+=======
 	*lso_hdr_sz  = cpu_to_be32((wr->wr.ud.mss - wr->wr.ud.hlen) << 16 |
 				   wr->wr.ud.hlen);
+>>>>>>> 671a46baf1b... some performance improvements
 	*lso_seg_len = halign;
 	return 0;
 }

@@ -55,12 +55,15 @@ struct sched_param {
 
 #include <asm/processor.h>
 
+<<<<<<< HEAD
 int  su_instances(void);
 bool su_running(void);
 bool su_visible(void);
 void su_exec(void);
 void su_exit(void);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 struct exec_domain;
 struct futex_pi_state;
 struct robust_list_head;
@@ -326,7 +329,10 @@ struct nsproxy;
 struct user_namespace;
 
 #ifdef CONFIG_MMU
+<<<<<<< HEAD
+=======
 extern unsigned long mmap_legacy_base(void);
+>>>>>>> 671a46baf1b... some performance improvements
 extern void arch_pick_mmap_layout(struct mm_struct *mm);
 extern unsigned long
 arch_get_unmapped_area(struct file *, unsigned long, unsigned long,
@@ -345,6 +351,13 @@ static inline void arch_pick_mmap_layout(struct mm_struct *mm) {}
 extern void set_dumpable(struct mm_struct *mm, int value);
 extern int get_dumpable(struct mm_struct *mm);
 
+<<<<<<< HEAD
+#define SUID_DUMP_DISABLE	0	/* No setuid dumping */
+#define SUID_DUMP_USER		1	/* Dump as user of process */
+#define SUID_DUMP_ROOT		2	/* Dump as root */
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /* mm flags */
 /* dumpable bits */
 #define MMF_DUMPABLE      0  /* core dump is permitted */
@@ -1446,6 +1459,15 @@ struct task_struct {
 		unsigned long memsw_nr_pages; /* uncharged mem+swap usage */
 	} memcg_batch;
 	unsigned int memcg_kmem_skip_account;
+<<<<<<< HEAD
+	struct memcg_oom_info {
+		struct mem_cgroup *memcg;
+		gfp_t gfp_mask;
+		int order;
+		unsigned int may_oom:1;
+	} memcg_oom;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #endif
 #ifdef CONFIG_HAVE_HW_BREAKPOINT
 	atomic_t ptrace_bp_refcnt;
@@ -1457,6 +1479,12 @@ struct task_struct {
 	unsigned int	sequential_io;
 	unsigned int	sequential_io_avg;
 #endif
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SDP
+	unsigned int sensitive;
+#endif
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 /* Future-safe accessor for struct task_struct's cpus_allowed. */
@@ -1684,8 +1712,11 @@ extern int task_free_unregister(struct notifier_block *n);
 #define PF_FREEZER_SKIP	0x40000000	/* Freezer should not count it as freezable */
 #define PF_WAKE_UP_IDLE 0x80000000	/* try to wake up on an idle CPU */
 
+<<<<<<< HEAD
 #define PF_SU		0x00000002      /* task is su */
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /*
  * Only the _current_ task can read/write to tsk->flags, but other
  * tasks can access tsk->flags in readonly mode for example
@@ -1711,11 +1742,21 @@ extern int task_free_unregister(struct notifier_block *n);
 #define tsk_used_math(p) ((p)->flags & PF_USED_MATH)
 #define used_math() tsk_used_math(current)
 
+<<<<<<< HEAD
+/* __GFP_IO isn't allowed if PF_MEMALLOC_NOIO is set in current->flags
+ * __GFP_FS is also cleared as it implies __GFP_IO.
+ */
+static inline gfp_t memalloc_noio_flags(gfp_t flags)
+{
+	if (unlikely(current->flags & PF_MEMALLOC_NOIO))
+		flags &= ~(__GFP_IO | __GFP_FS);
+=======
 /* __GFP_IO isn't allowed if PF_MEMALLOC_NOIO is set in current->flags */
 static inline gfp_t memalloc_noio_flags(gfp_t flags)
 {
 	if (unlikely(current->flags & PF_MEMALLOC_NOIO))
 		flags &= ~__GFP_IO;
+>>>>>>> 671a46baf1b... some performance improvements
 	return flags;
 }
 
@@ -2257,6 +2298,17 @@ static inline bool thread_group_leader(struct task_struct *p)
  * all we care about is that we have a task with the appropriate
  * pid, we don't actually care if we have the right task.
  */
+<<<<<<< HEAD
+static inline bool has_group_leader_pid(struct task_struct *p)
+{
+	return task_pid(p) == p->signal->leader_pid;
+}
+
+static inline
+bool same_thread_group(struct task_struct *p1, struct task_struct *p2)
+{
+	return p1->signal == p2->signal;
+=======
 static inline int has_group_leader_pid(struct task_struct *p)
 {
 	return p->pid == p->tgid;
@@ -2266,6 +2318,7 @@ static inline
 int same_thread_group(struct task_struct *p1, struct task_struct *p2)
 {
 	return p1->tgid == p2->tgid;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static inline struct task_struct *next_thread(const struct task_struct *p)
@@ -2547,26 +2600,115 @@ static inline int tsk_is_polling(struct task_struct *p)
 {
 	return task_thread_info(p)->status & TS_POLLING;
 }
+<<<<<<< HEAD
+static inline void __current_set_polling(void)
+=======
 static inline void current_set_polling(void)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	current_thread_info()->status |= TS_POLLING;
 }
 
+<<<<<<< HEAD
+static inline bool __must_check current_set_polling_and_test(void)
+{
+	__current_set_polling();
+
+	/*
+	 * Polling state must be visible before we test NEED_RESCHED,
+	 * paired by resched_task()
+	 */
+	smp_mb();
+
+	return unlikely(tif_need_resched());
+}
+
+static inline void __current_clr_polling(void)
+{
+	current_thread_info()->status &= ~TS_POLLING;
+}
+
+static inline bool __must_check current_clr_polling_and_test(void)
+{
+	__current_clr_polling();
+
+	/*
+	 * Polling state must be visible before we test NEED_RESCHED,
+	 * paired by resched_task()
+	 */
+	smp_mb();
+
+	return unlikely(tif_need_resched());
+=======
 static inline void current_clr_polling(void)
 {
 	current_thread_info()->status &= ~TS_POLLING;
 	smp_mb__after_clear_bit();
+>>>>>>> 671a46baf1b... some performance improvements
 }
 #elif defined(TIF_POLLING_NRFLAG)
 static inline int tsk_is_polling(struct task_struct *p)
 {
 	return test_tsk_thread_flag(p, TIF_POLLING_NRFLAG);
 }
+<<<<<<< HEAD
+
+static inline void __current_set_polling(void)
+=======
 static inline void current_set_polling(void)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	set_thread_flag(TIF_POLLING_NRFLAG);
 }
 
+<<<<<<< HEAD
+static inline bool __must_check current_set_polling_and_test(void)
+{
+	__current_set_polling();
+
+	/*
+	 * Polling state must be visible before we test NEED_RESCHED,
+	 * paired by resched_task()
+	 *
+	 * XXX: assumes set/clear bit are identical barrier wise.
+	 */
+	smp_mb__after_clear_bit();
+
+	return unlikely(tif_need_resched());
+}
+
+static inline void __current_clr_polling(void)
+{
+	clear_thread_flag(TIF_POLLING_NRFLAG);
+}
+
+static inline bool __must_check current_clr_polling_and_test(void)
+{
+	__current_clr_polling();
+
+	/*
+	 * Polling state must be visible before we test NEED_RESCHED,
+	 * paired by resched_task()
+	 */
+	smp_mb__after_clear_bit();
+
+	return unlikely(tif_need_resched());
+}
+
+#else
+static inline int tsk_is_polling(struct task_struct *p) { return 0; }
+static inline void __current_set_polling(void) { }
+static inline void __current_clr_polling(void) { }
+
+static inline bool __must_check current_set_polling_and_test(void)
+{
+	return unlikely(tif_need_resched());
+}
+static inline bool __must_check current_clr_polling_and_test(void)
+{
+	return unlikely(tif_need_resched());
+}
+=======
 static inline void current_clr_polling(void)
 {
 	clear_thread_flag(TIF_POLLING_NRFLAG);
@@ -2575,6 +2717,7 @@ static inline void current_clr_polling(void)
 static inline int tsk_is_polling(struct task_struct *p) { return 0; }
 static inline void current_set_polling(void) { }
 static inline void current_clr_polling(void) { }
+>>>>>>> 671a46baf1b... some performance improvements
 #endif
 
 /*

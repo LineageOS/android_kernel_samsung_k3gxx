@@ -524,6 +524,10 @@ static inline int ftrace_modify_call(struct dyn_ftrace *rec, unsigned long old_a
 extern int ftrace_arch_read_dyn_info(char *buf, int size);
 
 extern int skip_trace(unsigned long ip);
+<<<<<<< HEAD
+extern void ftrace_module_init(struct module *mod);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 extern void ftrace_disable_daemon(void);
 extern void ftrace_enable_daemon(void);
@@ -533,6 +537,10 @@ static inline int ftrace_force_update(void) { return 0; }
 static inline void ftrace_disable_daemon(void) { }
 static inline void ftrace_enable_daemon(void) { }
 static inline void ftrace_release_mod(struct module *mod) {}
+<<<<<<< HEAD
+static inline void ftrace_module_init(struct module *mod) {}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static inline int register_ftrace_command(struct ftrace_func_command *cmd)
 {
 	return -EINVAL;

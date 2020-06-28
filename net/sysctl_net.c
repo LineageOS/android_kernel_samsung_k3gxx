@@ -47,12 +47,20 @@ static int net_ctl_permissions(struct ctl_table_header *head,
 
 	/* Allow network administrator to have same access as root. */
 	if (ns_capable(net->user_ns, CAP_NET_ADMIN) ||
+<<<<<<< HEAD
+	    uid_eq(root_uid, current_euid())) {
+=======
 	    uid_eq(root_uid, current_uid())) {
+>>>>>>> 671a46baf1b... some performance improvements
 		int mode = (table->mode >> 6) & 7;
 		return (mode << 6) | (mode << 3) | mode;
 	}
 	/* Allow netns root group to have the same access as the root group */
+<<<<<<< HEAD
+	if (in_egroup_p(root_gid)) {
+=======
 	if (gid_eq(root_gid, current_gid())) {
+>>>>>>> 671a46baf1b... some performance improvements
 		int mode = (table->mode >> 3) & 7;
 		return (mode << 3) | mode;
 	}

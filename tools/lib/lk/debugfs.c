@@ -5,7 +5,10 @@
 #include <stdbool.h>
 #include <sys/vfs.h>
 #include <sys/mount.h>
+<<<<<<< HEAD
+=======
 #include <linux/magic.h>
+>>>>>>> 671a46baf1b... some performance improvements
 #include <linux/kernel.h>
 
 #include "debugfs.h"

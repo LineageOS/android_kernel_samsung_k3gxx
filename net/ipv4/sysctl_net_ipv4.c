@@ -29,6 +29,10 @@
 static int zero;
 static int one = 1;
 static int four = 4;
+<<<<<<< HEAD
+static int gso_max_segs = GSO_MAX_SEGS;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static int tcp_retr1_max = 255;
 static int ip_local_port_range_min[] = { 1, 1 };
 static int ip_local_port_range_max[] = { 65535, 65535 };
@@ -779,6 +783,18 @@ static struct ctl_table ipv4_table[] = {
 		.proc_handler   = proc_tcp_default_init_rwnd
 	},
 	{
+<<<<<<< HEAD
+		.procname	= "tcp_min_tso_segs",
+		.data		= &sysctl_tcp_min_tso_segs,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= &zero,
+		.extra2		= &gso_max_segs,
+	},
+	{
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		.procname	= "udp_mem",
 		.data		= &sysctl_udp_mem,
 		.maxlen		= sizeof(sysctl_udp_mem),

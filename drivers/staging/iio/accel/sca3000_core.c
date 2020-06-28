@@ -588,7 +588,11 @@ static ssize_t sca3000_read_frequency(struct device *dev,
 		goto error_ret_mut;
 	ret = sca3000_read_ctrl_reg(st, SCA3000_REG_CTRL_SEL_OUT_CTRL);
 	mutex_unlock(&st->lock);
+<<<<<<< HEAD
+	if (ret < 0)
+=======
 	if (ret)
+>>>>>>> 671a46baf1b... some performance improvements
 		goto error_ret;
 	val = ret;
 	if (base_freq > 0)

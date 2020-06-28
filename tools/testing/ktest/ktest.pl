@@ -2375,7 +2375,11 @@ sub do_run_test {
     }
 
     waitpid $child_pid, 0;
+<<<<<<< HEAD
+    $child_exit = $? >> 8;
+=======
     $child_exit = $?;
+>>>>>>> 671a46baf1b... some performance improvements
 
     if (!$bug && $in_bisect) {
 	if (defined($bisect_ret_good)) {

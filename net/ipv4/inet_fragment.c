@@ -211,7 +211,11 @@ int inet_frag_evictor(struct netns_frags *nf, struct inet_frags *f, bool force)
 	}
 
 	work = frag_mem_limit(nf) - nf->low_thresh;
+<<<<<<< HEAD
+	while (work > 0 || force) {
+=======
 	while (work > 0) {
+>>>>>>> 671a46baf1b... some performance improvements
 		spin_lock(&nf->lru_lock);
 
 		if (list_empty(&nf->lru_list)) {

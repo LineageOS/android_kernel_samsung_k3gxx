@@ -1614,7 +1614,11 @@ static struct se_wwn *usbg_make_tport(
 		return ERR_PTR(-ENOMEM);
 	}
 	tport->tport_wwpn = wwpn;
+<<<<<<< HEAD
+	snprintf(tport->tport_name, sizeof(tport->tport_name), "%s", wnn_name);
+=======
 	snprintf(tport->tport_name, sizeof(tport->tport_name), wnn_name);
+>>>>>>> 671a46baf1b... some performance improvements
 	return &tport->tport_wwn;
 }
 

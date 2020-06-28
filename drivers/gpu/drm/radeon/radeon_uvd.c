@@ -242,6 +242,11 @@ void radeon_uvd_free_handles(struct radeon_device *rdev, struct drm_file *filp)
 		if (handle != 0 && rdev->uvd.filp[i] == filp) {
 			struct radeon_fence *fence;
 
+<<<<<<< HEAD
+			radeon_uvd_note_usage(rdev);
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			r = radeon_uvd_get_destroy_msg(rdev,
 				R600_RING_TYPE_UVD_INDEX, handle, &fence);
 			if (r) {
@@ -359,6 +364,17 @@ static int radeon_uvd_cs_msg(struct radeon_cs_parser *p, struct radeon_bo *bo,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
+	if (bo->tbo.sync_obj) {
+		r = radeon_fence_wait(bo->tbo.sync_obj, false);
+		if (r) {
+			DRM_ERROR("Failed waiting for UVD message (%d)!\n", r);
+			return r;
+		}
+	}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	r = radeon_bo_kmap(bo, &ptr);
 	if (r)
 		return r;
@@ -439,6 +455,13 @@ static int radeon_uvd_cs_reloc(struct radeon_cs_parser *p,
 	cmd = radeon_get_ib_value(p, p->idx) >> 1;
 
 	if (cmd < 0x4) {
+<<<<<<< HEAD
+		if (end <= start) {
+			DRM_ERROR("invalid reloc offset %X!\n", offset);
+			return -EINVAL;
+		}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		if ((end - start) < buf_sizes[cmd]) {
 			DRM_ERROR("buffer to small (%d / %d)!\n",
 				  (unsigned)(end - start), buf_sizes[cmd]);
@@ -450,7 +473,11 @@ static int radeon_uvd_cs_reloc(struct radeon_cs_parser *p,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
+	if ((start >> 28) != ((end - 1) >> 28)) {
+=======
 	if ((start >> 28) != (end >> 28)) {
+>>>>>>> 671a46baf1b... some performance improvements
 		DRM_ERROR("reloc %LX-%LX crossing 256MB boundary!\n",
 			  start, end);
 		return -EINVAL;

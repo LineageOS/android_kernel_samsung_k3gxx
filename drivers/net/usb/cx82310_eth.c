@@ -302,9 +302,24 @@ static const struct driver_info	cx82310_info = {
 	.tx_fixup	= cx82310_tx_fixup,
 };
 
+<<<<<<< HEAD
+#define USB_DEVICE_CLASS(vend, prod, cl, sc, pr) \
+	.match_flags = USB_DEVICE_ID_MATCH_DEVICE | \
+		       USB_DEVICE_ID_MATCH_DEV_INFO, \
+	.idVendor = (vend), \
+	.idProduct = (prod), \
+	.bDeviceClass = (cl), \
+	.bDeviceSubClass = (sc), \
+	.bDeviceProtocol = (pr)
+
+static const struct usb_device_id products[] = {
+	{
+		USB_DEVICE_CLASS(0x0572, 0xcb01, 0xff, 0, 0),
+=======
 static const struct usb_device_id products[] = {
 	{
 		USB_DEVICE_AND_INTERFACE_INFO(0x0572, 0xcb01, 0xff, 0, 0),
+>>>>>>> 671a46baf1b... some performance improvements
 		.driver_info = (unsigned long) &cx82310_info
 	},
 	{ },

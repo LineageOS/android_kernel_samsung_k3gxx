@@ -6,8 +6,11 @@
  *	Distribute under GPLv2.
  *
  *	Rewritten. Old one was good in 2.2, but in 2.3 it was immoral. --ANK (990903)
+<<<<<<< HEAD
+=======
  *
  *	Remote softirq infrastructure is by Jens Axboe.
+>>>>>>> 671a46baf1b... some performance improvements
  */
 
 #include <linux/export.h>
@@ -347,10 +350,26 @@ void irq_enter(void)
 
 static inline void invoke_softirq(void)
 {
+<<<<<<< HEAD
+	if (!force_irqthreads) {
+		/*
+		 * We can safely execute softirq on the current stack if
+		 * it is the irq stack, because it should be near empty
+		 * at this stage. But we have no way to know if the arch
+		 * calls irq_exit() on the irq stack. So call softirq
+		 * in its own stack to prevent from any overrun on top
+		 * of a potentially deep task stack.
+		 */
+		do_softirq();
+	} else {
+		wakeup_softirqd();
+	}
+=======
 	if (!force_irqthreads)
 		__do_softirq();
 	else
 		wakeup_softirqd();
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static inline void tick_irq_exit(void)
@@ -662,6 +681,8 @@ void tasklet_hrtimer_init(struct tasklet_hrtimer *ttimer,
 }
 EXPORT_SYMBOL_GPL(tasklet_hrtimer_init);
 
+<<<<<<< HEAD
+=======
 /*
  * Remote softirq bits
  */
@@ -785,23 +806,32 @@ static struct notifier_block __cpuinitdata remote_softirq_cpu_notifier = {
 	.notifier_call	= remote_softirq_cpu_notify,
 };
 
+>>>>>>> 671a46baf1b... some performance improvements
 void __init softirq_init(void)
 {
 	int cpu;
 
 	for_each_possible_cpu(cpu) {
+<<<<<<< HEAD
+=======
 		int i;
 
+>>>>>>> 671a46baf1b... some performance improvements
 		per_cpu(tasklet_vec, cpu).tail =
 			&per_cpu(tasklet_vec, cpu).head;
 		per_cpu(tasklet_hi_vec, cpu).tail =
 			&per_cpu(tasklet_hi_vec, cpu).head;
+<<<<<<< HEAD
+	}
+
+=======
 		for (i = 0; i < NR_SOFTIRQS; i++)
 			INIT_LIST_HEAD(&per_cpu(softirq_work_list[i], cpu));
 	}
 
 	register_hotcpu_notifier(&remote_softirq_cpu_notifier);
 
+>>>>>>> 671a46baf1b... some performance improvements
 	open_softirq(TASKLET_SOFTIRQ, tasklet_action);
 	open_softirq(HI_SOFTIRQ, tasklet_hi_action);
 }
@@ -816,9 +846,19 @@ static void run_ksoftirqd(unsigned int cpu)
 	local_irq_disable();
 	if (local_softirq_pending()) {
 		__do_softirq();
+<<<<<<< HEAD
+		local_irq_enable();
+		cond_resched();
+
+		preempt_disable();
+		rcu_note_context_switch(cpu);
+		preempt_enable();
+
+=======
 		rcu_note_context_switch(cpu);
 		local_irq_enable();
 		cond_resched();
+>>>>>>> 671a46baf1b... some performance improvements
 		return;
 	}
 	local_irq_enable();

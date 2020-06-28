@@ -565,9 +565,20 @@ static int cryptd_hash_export(struct ahash_request *req, void *out)
 
 static int cryptd_hash_import(struct ahash_request *req, const void *in)
 {
+<<<<<<< HEAD
+	struct crypto_ahash *tfm = crypto_ahash_reqtfm(req);
+	struct cryptd_hash_ctx *ctx = crypto_ahash_ctx(tfm);
+	struct shash_desc *desc = cryptd_shash_desc(req);
+
+	desc->tfm = ctx->child;
+	desc->flags = req->base.flags;
+
+	return crypto_shash_import(desc, in);
+=======
 	struct cryptd_hash_request_ctx *rctx = ahash_request_ctx(req);
 
 	return crypto_shash_import(&rctx->desc, in);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int cryptd_create_hash(struct crypto_template *tmpl, struct rtattr **tb,
@@ -601,6 +612,10 @@ static int cryptd_create_hash(struct crypto_template *tmpl, struct rtattr **tb,
 	inst->alg.halg.base.cra_flags = CRYPTO_ALG_ASYNC;
 
 	inst->alg.halg.digestsize = salg->digestsize;
+<<<<<<< HEAD
+	inst->alg.halg.statesize = salg->statesize;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	inst->alg.halg.base.cra_ctxsize = sizeof(struct cryptd_hash_ctx);
 
 	inst->alg.halg.base.cra_init = cryptd_hash_init_tfm;
@@ -955,3 +970,7 @@ module_exit(cryptd_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Software async crypto daemon");
+<<<<<<< HEAD
+MODULE_ALIAS_CRYPTO("cryptd");
+=======
+>>>>>>> 671a46baf1b... some performance improvements

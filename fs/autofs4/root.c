@@ -655,7 +655,11 @@ static void autofs_clear_leaf_automount_flags(struct dentry *dentry)
 	/* only consider parents below dentrys in the root */
 	if (IS_ROOT(parent->d_parent))
 		return;
+<<<<<<< HEAD
 	d_child = &dentry->d_child;
+=======
+	d_child = &dentry->d_u.d_child;
+>>>>>>> 671a46baf1b... some performance improvements
 	/* Set parent managed if it's becoming empty */
 	if (d_child->next == &parent->d_subdirs &&
 	    d_child->prev == &parent->d_subdirs)

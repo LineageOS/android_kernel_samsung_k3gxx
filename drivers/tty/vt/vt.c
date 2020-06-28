@@ -498,6 +498,10 @@ void invert_screen(struct vc_data *vc, int offset, int count, int viewed)
 #endif
 	if (DO_UPDATE(vc))
 		do_update_region(vc, (unsigned long) p, count);
+<<<<<<< HEAD
+	notify_update(vc);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /* used by selection: complement pointer position */
@@ -514,6 +518,10 @@ void complement_pos(struct vc_data *vc, int offset)
 		scr_writew(old, screenpos(vc, old_offset, 1));
 		if (DO_UPDATE(vc))
 			vc->vc_sw->con_putc(vc, old, oldy, oldx);
+<<<<<<< HEAD
+		notify_update(vc);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	old_offset = offset;
@@ -531,8 +539,13 @@ void complement_pos(struct vc_data *vc, int offset)
 			oldy = (offset >> 1) / vc->vc_cols;
 			vc->vc_sw->con_putc(vc, new, oldy, oldx);
 		}
+<<<<<<< HEAD
+		notify_update(vc);
+	}
+=======
 	}
 
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void insert_char(struct vc_data *vc, unsigned int nr)
@@ -861,10 +874,21 @@ static int vc_do_resize(struct tty_struct *tty, struct vc_data *vc,
 	if (new_cols == vc->vc_cols && new_rows == vc->vc_rows)
 		return 0;
 
+<<<<<<< HEAD
+	if (new_screen_size > (4 << 20))
+		return -EINVAL;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	newscreen = kmalloc(new_screen_size, GFP_USER);
 	if (!newscreen)
 		return -ENOMEM;
 
+<<<<<<< HEAD
+	if (vc == sel_cons)
+		clear_selection();
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	old_rows = vc->vc_rows;
 	old_row_size = vc->vc_size_row;
 
@@ -1162,8 +1186,15 @@ static void csi_J(struct vc_data *vc, int vpar)
 			break;
 		case 3: /* erase scroll-back buffer (and whole display) */
 			scr_memsetw(vc->vc_screenbuf, vc->vc_video_erase_char,
+<<<<<<< HEAD
+				    vc->vc_screenbuf_size);
+			set_origin(vc);
+			if (CON_IS_VISIBLE(vc))
+				update_screen(vc);
+=======
 				    vc->vc_screenbuf_size >> 1);
 			set_origin(vc);
+>>>>>>> 671a46baf1b... some performance improvements
 			/* fall through */
 		case 2: /* erase whole display */
 			count = vc->vc_cols * vc->vc_rows;
@@ -2592,13 +2623,21 @@ int tioclinux(struct tty_struct *tty, unsigned long arg)
 	 * related to the kernel should not use this.
 	 */
 			data = vt_get_shift_state();
+<<<<<<< HEAD
+			ret = put_user(data, p);
+=======
 			ret = __put_user(data, p);
+>>>>>>> 671a46baf1b... some performance improvements
 			break;
 		case TIOCL_GETMOUSEREPORTING:
 			console_lock();	/* May be overkill */
 			data = mouse_reporting();
 			console_unlock();
+<<<<<<< HEAD
+			ret = put_user(data, p);
+=======
 			ret = __put_user(data, p);
+>>>>>>> 671a46baf1b... some performance improvements
 			break;
 		case TIOCL_SETVESABLANK:
 			console_lock();
@@ -2607,7 +2646,11 @@ int tioclinux(struct tty_struct *tty, unsigned long arg)
 			break;
 		case TIOCL_GETKMSGREDIRECT:
 			data = vt_get_kmsg_redirect();
+<<<<<<< HEAD
+			ret = put_user(data, p);
+=======
 			ret = __put_user(data, p);
+>>>>>>> 671a46baf1b... some performance improvements
 			break;
 		case TIOCL_SETKMSGREDIRECT:
 			if (!capable(CAP_SYS_ADMIN)) {
@@ -3530,9 +3573,16 @@ static int do_register_con_driver(const struct consw *csw, int first, int last)
 		goto err;
 
 	desc = csw->con_startup();
+<<<<<<< HEAD
+	if (!desc) {
+		retval = -ENODEV;
+		goto err;
+	}
+=======
 
 	if (!desc)
 		goto err;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	retval = -EINVAL;
 

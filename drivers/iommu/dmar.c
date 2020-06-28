@@ -968,7 +968,11 @@ void dmar_disable_qi(struct intel_iommu *iommu)
 
 	raw_spin_lock_irqsave(&iommu->register_lock, flags);
 
+<<<<<<< HEAD
+	sts =  readl(iommu->reg + DMAR_GSTS_REG);
+=======
 	sts =  dmar_readq(iommu->reg + DMAR_GSTS_REG);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (!(sts & DMA_GSTS_QIES))
 		goto end;
 

@@ -133,10 +133,16 @@ static unsigned long sel_last_ino = SEL_INO_NEXT - 1;
 static ssize_t sel_read_enforce(struct file *filp, char __user *buf,
 				size_t count, loff_t *ppos)
 {
+<<<<<<< HEAD
+	int display_state = selinux_enforcing;
 	char tmpbuf[TMPBUFLEN];
 	ssize_t length;
+	
+#if defined(SELINUX_PRETEND_ENFORCE)
+	display_state = 1;
+#endif
 
-	length = scnprintf(tmpbuf, TMPBUFLEN, "%d", selinux_enforcing);
+	length = scnprintf(tmpbuf, TMPBUFLEN, "%d", display_state);
 	return simple_read_from_buffer(buf, count, ppos, tmpbuf, length);
 }
 
@@ -154,7 +160,7 @@ static ssize_t sel_write_enforce(struct file *file, const char __user *buf,
 		goto out;
 
 	/* No partial writes. */
-	length = EINVAL;
+	length = -EINVAL;
 	if (*ppos != 0)
 		goto out;
 
@@ -170,9 +176,30 @@ static ssize_t sel_write_enforce(struct file *file, const char __user *buf,
 	length = -EINVAL;
 	if (sscanf(page, "%d", &new_value) != 1)
 		goto out;
-	
-	new_value = new_value == 3 ? 1 : 0;
-
+#if defined(SELINUX_ALWAYS_ENFORCE)
+	// If build is user build and enforce option is set, selinux is always enforcing
+	length = task_has_security(current, SECURITY__SETENFORCE);
+	audit_log(current->audit_context, GFP_KERNEL, AUDIT_MAC_STATUS,
+                        "config_always_enforce - true; enforcing=%d old_enforcing=%d auid=%u ses=%u",
+                        new_value, selinux_enforcing,
+                        from_kuid(&init_user_ns, audit_get_loginuid(current)),
+                        audit_get_sessionid(current));
+	selinux_enforcing = 1;
+	avc_ss_reset(0);
+	selnl_notify_setenforce(selinux_enforcing);
+	selinux_status_update_setenforce(selinux_enforcing);
+#elif defined(SELINUX_ALWAYS_PERMISSIVE)
+	// If build is user build and enforce option is set, selinux is always enforcing
+	length = task_has_security(current, SECURITY__SETENFORCE);
+	audit_log(current->audit_context, GFP_KERNEL, AUDIT_MAC_STATUS,
+                        "config_always_permissive - true; enforcing=%d old_enforcing=%d auid=%u ses=%u",
+                        new_value, selinux_enforcing,
+                        from_kuid(&init_user_ns, audit_get_loginuid(current)),
+                        audit_get_sessionid(current));
+	selinux_enforcing = 0;
+	selnl_notify_setenforce(selinux_enforcing);
+	selinux_status_update_setenforce(selinux_enforcing);
+#else
 	if (new_value != selinux_enforcing) {
 		length = task_has_security(current, SECURITY__SETENFORCE);
 		if (length)
@@ -188,6 +215,7 @@ static ssize_t sel_write_enforce(struct file *file, const char __user *buf,
 		selnl_notify_setenforce(selinux_enforcing);
 		selinux_status_update_setenforce(selinux_enforcing);
 	}
+#endif
 	length = count;
 
 #if defined(CONFIG_TZ_ICCC)
@@ -214,6 +242,18 @@ out:
 static const struct file_operations sel_enforce_ops = {
 	.read		= sel_read_enforce,
 	.write		= sel_write_enforce,
+=======
+	char tmpbuf[TMPBUFLEN];
+	ssize_t length;
+
+	length = scnprintf(tmpbuf, TMPBUFLEN, "%d", selinux_enforcing);
+	return simple_read_from_buffer(buf, count, ppos, tmpbuf, length);
+}
+
+static const struct file_operations sel_enforce_ops = {
+	.read		= sel_read_enforce,
+	.write		= NULL,
+>>>>>>> 671a46baf1b... some performance improvements
 	.llseek		= generic_file_llseek,
 };
 
@@ -1210,7 +1250,11 @@ static void sel_remove_entries(struct dentry *de)
 	spin_lock(&de->d_lock);
 	node = de->d_subdirs.next;
 	while (node != &de->d_subdirs) {
+<<<<<<< HEAD
 		struct dentry *d = list_entry(node, struct dentry, d_child);
+=======
+		struct dentry *d = list_entry(node, struct dentry, d_u.d_child);
+>>>>>>> 671a46baf1b... some performance improvements
 
 		spin_lock_nested(&d->d_lock, DENTRY_D_LOCK_NESTED);
 		list_del_init(node);
@@ -1684,12 +1728,20 @@ static void sel_remove_classes(void)
 
 	list_for_each(class_node, &class_dir->d_subdirs) {
 		struct dentry *class_subdir = list_entry(class_node,
+<<<<<<< HEAD
 					struct dentry, d_child);
+=======
+					struct dentry, d_u.d_child);
+>>>>>>> 671a46baf1b... some performance improvements
 		struct list_head *class_subdir_node;
 
 		list_for_each(class_subdir_node, &class_subdir->d_subdirs) {
 			struct dentry *d = list_entry(class_subdir_node,
+<<<<<<< HEAD
 						struct dentry, d_child);
+=======
+						struct dentry, d_u.d_child);
+>>>>>>> 671a46baf1b... some performance improvements
 
 			if (d->d_inode)
 				if (d->d_inode->i_mode & S_IFDIR)

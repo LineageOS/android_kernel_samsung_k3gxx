@@ -12,7 +12,11 @@
  *  GNU General Public License for more details.
  *
  */
+<<<<<<< HEAD
 #include "ssp.h"
+=======
+#include "../ssp.h"
+>>>>>>> 671a46baf1b... some performance improvements
 
 #ifdef CONFIG_SENSORS_SSP_TMG399X
 #define	VENDOR		"AMS"

@@ -251,6 +251,38 @@ static struct ip6addrlbl_entry *ip6addrlbl_alloc(struct net *net,
 /* add a label */
 static int __ip6addrlbl_add(struct ip6addrlbl_entry *newp, int replace)
 {
+<<<<<<< HEAD
+	struct hlist_node *n;
+	struct ip6addrlbl_entry *last = NULL, *p = NULL;
+	int ret = 0;
+
+	ADDRLABEL(KERN_DEBUG "%s(newp=%p, replace=%d)\n", __func__, newp,
+		  replace);
+
+	hlist_for_each_entry_safe(p, n,	&ip6addrlbl_table.head, list) {
+		if (p->prefixlen == newp->prefixlen &&
+		    net_eq(ip6addrlbl_net(p), ip6addrlbl_net(newp)) &&
+		    p->ifindex == newp->ifindex &&
+		    ipv6_addr_equal(&p->prefix, &newp->prefix)) {
+			if (!replace) {
+				ret = -EEXIST;
+				goto out;
+			}
+			hlist_replace_rcu(&p->list, &newp->list);
+			ip6addrlbl_put(p);
+			goto out;
+		} else if ((p->prefixlen == newp->prefixlen && !p->ifindex) ||
+			   (p->prefixlen < newp->prefixlen)) {
+			hlist_add_before_rcu(&newp->list, &p->list);
+			goto out;
+		}
+		last = p;
+	}
+	if (last)
+		hlist_add_after_rcu(&last->list, &newp->list);
+	else
+		hlist_add_head_rcu(&newp->list, &ip6addrlbl_table.head);
+=======
 	int ret = 0;
 
 	ADDRLABEL(KERN_DEBUG "%s(newp=%p, replace=%d)\n",
@@ -283,6 +315,7 @@ static int __ip6addrlbl_add(struct ip6addrlbl_entry *newp, int replace)
 		}
 		hlist_add_after_rcu(&p->list, &newp->list);
 	}
+>>>>>>> 671a46baf1b... some performance improvements
 out:
 	if (!ret)
 		ip6addrlbl_table.seq++;
@@ -560,7 +593,11 @@ static int ip6addrlbl_get(struct sk_buff *in_skb, struct nlmsghdr* nlh)
 
 	rcu_read_lock();
 	p = __ipv6_addr_label(net, addr, ipv6_addr_type(addr), ifal->ifal_index);
+<<<<<<< HEAD
+	if (p && !ip6addrlbl_hold(p))
+=======
 	if (p && ip6addrlbl_hold(p))
+>>>>>>> 671a46baf1b... some performance improvements
 		p = NULL;
 	lseq = ip6addrlbl_table.seq;
 	rcu_read_unlock();

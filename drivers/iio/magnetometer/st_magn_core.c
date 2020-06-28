@@ -40,7 +40,12 @@
 #define ST_MAGN_FS_AVL_5600MG			5600
 #define ST_MAGN_FS_AVL_8000MG			8000
 #define ST_MAGN_FS_AVL_8100MG			8100
+<<<<<<< HEAD
+#define ST_MAGN_FS_AVL_12000MG			12000
+#define ST_MAGN_FS_AVL_16000MG			16000
+=======
 #define ST_MAGN_FS_AVL_10000MG			10000
+>>>>>>> 671a46baf1b... some performance improvements
 
 /* CUSTOM VALUES FOR SENSOR 1 */
 #define ST_MAGN_1_WAI_EXP			0x3c
@@ -67,6 +72,22 @@
 #define ST_MAGN_1_FS_AVL_4700_VAL		0x05
 #define ST_MAGN_1_FS_AVL_5600_VAL		0x06
 #define ST_MAGN_1_FS_AVL_8100_VAL		0x07
+<<<<<<< HEAD
+#define ST_MAGN_1_FS_AVL_1300_GAIN_XY		909
+#define ST_MAGN_1_FS_AVL_1900_GAIN_XY		1169
+#define ST_MAGN_1_FS_AVL_2500_GAIN_XY		1492
+#define ST_MAGN_1_FS_AVL_4000_GAIN_XY		2222
+#define ST_MAGN_1_FS_AVL_4700_GAIN_XY		2500
+#define ST_MAGN_1_FS_AVL_5600_GAIN_XY		3030
+#define ST_MAGN_1_FS_AVL_8100_GAIN_XY		4347
+#define ST_MAGN_1_FS_AVL_1300_GAIN_Z		1020
+#define ST_MAGN_1_FS_AVL_1900_GAIN_Z		1315
+#define ST_MAGN_1_FS_AVL_2500_GAIN_Z		1666
+#define ST_MAGN_1_FS_AVL_4000_GAIN_Z		2500
+#define ST_MAGN_1_FS_AVL_4700_GAIN_Z		2816
+#define ST_MAGN_1_FS_AVL_5600_GAIN_Z		3389
+#define ST_MAGN_1_FS_AVL_8100_GAIN_Z		4878
+=======
 #define ST_MAGN_1_FS_AVL_1300_GAIN_XY		1100
 #define ST_MAGN_1_FS_AVL_1900_GAIN_XY		855
 #define ST_MAGN_1_FS_AVL_2500_GAIN_XY		670
@@ -81,6 +102,7 @@
 #define ST_MAGN_1_FS_AVL_4700_GAIN_Z		355
 #define ST_MAGN_1_FS_AVL_5600_GAIN_Z		295
 #define ST_MAGN_1_FS_AVL_8100_GAIN_Z		205
+>>>>>>> 671a46baf1b... some performance improvements
 #define ST_MAGN_1_MULTIREAD_BIT			false
 
 /* CUSTOM VALUES FOR SENSOR 2 */
@@ -103,10 +125,19 @@
 #define ST_MAGN_2_FS_MASK			0x60
 #define ST_MAGN_2_FS_AVL_4000_VAL		0x00
 #define ST_MAGN_2_FS_AVL_8000_VAL		0x01
+<<<<<<< HEAD
+#define ST_MAGN_2_FS_AVL_12000_VAL		0x02
+#define ST_MAGN_2_FS_AVL_16000_VAL		0x03
+#define ST_MAGN_2_FS_AVL_4000_GAIN		146
+#define ST_MAGN_2_FS_AVL_8000_GAIN		292
+#define ST_MAGN_2_FS_AVL_12000_GAIN		438
+#define ST_MAGN_2_FS_AVL_16000_GAIN		584
+=======
 #define ST_MAGN_2_FS_AVL_10000_VAL		0x02
 #define ST_MAGN_2_FS_AVL_4000_GAIN		430
 #define ST_MAGN_2_FS_AVL_8000_GAIN		230
 #define ST_MAGN_2_FS_AVL_10000_GAIN		230
+>>>>>>> 671a46baf1b... some performance improvements
 #define ST_MAGN_2_MULTIREAD_BIT			false
 #define ST_MAGN_2_OUT_X_L_ADDR			0x28
 #define ST_MAGN_2_OUT_Y_L_ADDR			0x2a
@@ -252,9 +283,20 @@ static const struct st_sensors st_magn_sensors[] = {
 					.gain = ST_MAGN_2_FS_AVL_8000_GAIN,
 				},
 				[2] = {
+<<<<<<< HEAD
+					.num = ST_MAGN_FS_AVL_12000MG,
+					.value = ST_MAGN_2_FS_AVL_12000_VAL,
+					.gain = ST_MAGN_2_FS_AVL_12000_GAIN,
+				},
+				[3] = {
+					.num = ST_MAGN_FS_AVL_16000MG,
+					.value = ST_MAGN_2_FS_AVL_16000_VAL,
+					.gain = ST_MAGN_2_FS_AVL_16000_GAIN,
+=======
 					.num = ST_MAGN_FS_AVL_10000MG,
 					.value = ST_MAGN_2_FS_AVL_10000_VAL,
 					.gain = ST_MAGN_2_FS_AVL_10000_GAIN,
+>>>>>>> 671a46baf1b... some performance improvements
 				},
 			},
 		},

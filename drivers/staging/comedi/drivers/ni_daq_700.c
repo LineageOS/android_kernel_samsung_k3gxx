@@ -127,6 +127,11 @@ static int daq700_ai_rinsn(struct comedi_device *dev,
 	/* write channel to multiplexer */
 	/* set mask scan bit high to disable scanning */
 	outb(chan | 0x80, dev->iobase + CMD_R1);
+<<<<<<< HEAD
+	/* mux needs 2us to really settle [Fred Brooks]. */
+	udelay(2);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* convert n samples */
 	for (n = 0; n < insn->n; n++) {

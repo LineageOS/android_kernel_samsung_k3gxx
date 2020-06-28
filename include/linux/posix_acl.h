@@ -89,8 +89,13 @@ extern int posix_acl_permission(struct inode *, const struct posix_acl *, int);
 extern struct posix_acl *posix_acl_from_mode(umode_t, gfp_t);
 extern int posix_acl_equiv_mode(const struct posix_acl *, umode_t *);
 extern int posix_acl_create(struct posix_acl **, gfp_t, umode_t *);
+<<<<<<< HEAD
+extern int posix_acl_update_mode(struct inode *, umode_t *, struct posix_acl **);
 extern int posix_acl_chmod(struct posix_acl **, gfp_t, umode_t);
 extern int posix_acl_update_mode(struct inode *, umode_t *, struct posix_acl **);
+=======
+extern int posix_acl_chmod(struct posix_acl **, gfp_t, umode_t);
+>>>>>>> 671a46baf1b... some performance improvements
 
 extern struct posix_acl *get_posix_acl(struct inode *, int);
 extern int set_posix_acl(struct inode *, int, struct posix_acl *);

@@ -1179,10 +1179,16 @@ static int nr_recvmsg(struct kiocb *iocb, struct socket *sock,
 		sax->sax25_family = AF_NETROM;
 		skb_copy_from_linear_data_offset(skb, 7, sax->sax25_call.ax25_call,
 			      AX25_ADDR_LEN);
+<<<<<<< HEAD
+		msg->msg_namelen = sizeof(*sax);
+	}
+
+=======
 	}
 
 	msg->msg_namelen = sizeof(*sax);
 
+>>>>>>> 671a46baf1b... some performance improvements
 	skb_free_datagram(sk, skb);
 
 	release_sock(sk);

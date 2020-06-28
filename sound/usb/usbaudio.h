@@ -83,6 +83,10 @@ enum quirk_type {
 	QUIRK_MIDI_AKAI,
 	QUIRK_MIDI_US122L,
 	QUIRK_MIDI_FTDI,
+<<<<<<< HEAD
+	QUIRK_MIDI_CH345,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	QUIRK_AUDIO_STANDARD_INTERFACE,
 	QUIRK_AUDIO_FIXED_ENDPOINT,
 	QUIRK_AUDIO_EDIROL_UAXX,

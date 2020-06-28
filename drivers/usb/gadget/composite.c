@@ -128,11 +128,24 @@ int config_ep_by_speed(struct usb_gadget *g,
 
 ep_found:
 	/* commit results */
+<<<<<<< HEAD
+	_ep->maxpacket = usb_endpoint_maxp(chosen_desc) & 0x7ff;
+	_ep->desc = chosen_desc;
+	_ep->comp_desc = NULL;
+	_ep->maxburst = 0;
+	_ep->mult = 1;
+
+	if (g->speed == USB_SPEED_HIGH && (usb_endpoint_xfer_isoc(_ep->desc) ||
+				usb_endpoint_xfer_int(_ep->desc)))
+		_ep->mult = ((usb_endpoint_maxp(_ep->desc) & 0x1800) >> 11) + 1;
+
+=======
 	_ep->maxpacket = usb_endpoint_maxp(chosen_desc);
 	_ep->desc = chosen_desc;
 	_ep->comp_desc = NULL;
 	_ep->maxburst = 0;
 	_ep->mult = 0;
+>>>>>>> 671a46baf1b... some performance improvements
 	if (!want_comp_desc)
 		return 0;
 
@@ -149,7 +162,11 @@ ep_found:
 		switch (usb_endpoint_type(_ep->desc)) {
 		case USB_ENDPOINT_XFER_ISOC:
 			/* mult: bits 1:0 of bmAttributes */
+<<<<<<< HEAD
+			_ep->mult = (comp_desc->bmAttributes & 0x3) + 1;
+=======
 			_ep->mult = comp_desc->bmAttributes & 0x3;
+>>>>>>> 671a46baf1b... some performance improvements
 		case USB_ENDPOINT_XFER_BULK:
 		case USB_ENDPOINT_XFER_INT:
 			_ep->maxburst = comp_desc->bMaxBurst + 1;
@@ -560,7 +577,11 @@ static int bos_desc(struct usb_composite_dev *cdev)
 #ifdef CONFIG_USB_ANDROID_SAMSUNG_COMPOSITE
 	usb_ext->bmAttributes = 0;
 #else
+<<<<<<< HEAD
+	usb_ext->bmAttributes = cpu_to_le32(USB_LPM_SUPPORT | USB_BESL_SUPPORT);
+=======
 	usb_ext->bmAttributes = cpu_to_le32(USB_LPM_SUPPORT);
+>>>>>>> 671a46baf1b... some performance improvements
 #endif
 
 	/*
@@ -626,6 +647,10 @@ static void reset_config(struct usb_composite_dev *cdev)
 		bitmap_zero(f->endpoints, 32);
 	}
 	cdev->config = NULL;
+<<<<<<< HEAD
+	cdev->delayed_status = 0;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int set_config(struct usb_composite_dev *cdev,
@@ -1323,7 +1348,11 @@ composite_setup(struct usb_gadget *gadget, const struct usb_ctrlrequest *ctrl)
 					cdev->desc.bcdUSB = cpu_to_le16(0x0300);
 					cdev->desc.bMaxPacketSize0 = 9;
 				} else {
+<<<<<<< HEAD
+					cdev->desc.bcdUSB = cpu_to_le16(0x0201);
+=======
 					cdev->desc.bcdUSB = cpu_to_le16(0x0210);
+>>>>>>> 671a46baf1b... some performance improvements
 				}
 			}
 
@@ -1412,9 +1441,13 @@ composite_setup(struct usb_gadget *gadget, const struct usb_ctrlrequest *ctrl)
 		value = min(w_length, (u16) 1);
 		break;
 
+<<<<<<< HEAD
+	/* function drivers must handle get/set altsetting */
+=======
 	/* function drivers must handle get/set altsetting; if there's
 	 * no get() method, we know only altsetting zero works.
 	 */
+>>>>>>> 671a46baf1b... some performance improvements
 	case USB_REQ_SET_INTERFACE:
 		if (ctrl->bRequestType != USB_RECIP_INTERFACE)
 			goto unknown;
@@ -1423,7 +1456,17 @@ composite_setup(struct usb_gadget *gadget, const struct usb_ctrlrequest *ctrl)
 		f = cdev->config->interface[intf];
 		if (!f)
 			break;
+<<<<<<< HEAD
+
+		/*
+		 * If there's no get_alt() method, we know only altsetting zero
+		 * works. There is no need to check if set_alt() is not NULL
+		 * as we check this in usb_add_function().
+		 */
+		if (w_value && !f->get_alt)
+=======
 		if (w_value && !f->set_alt)
+>>>>>>> 671a46baf1b... some performance improvements
 			break;
 		value = f->set_alt(f, w_index, w_value);
 		if (value == USB_GADGET_DELAYED_STATUS) {
@@ -1609,6 +1652,11 @@ static DEVICE_ATTR(suspended, 0444, composite_show_suspended, NULL);
 static void __composite_unbind(struct usb_gadget *gadget, bool unbind_driver)
 {
 	struct usb_composite_dev	*cdev = get_gadget_data(gadget);
+<<<<<<< HEAD
+	struct usb_gadget_strings	*gstr = cdev->driver->strings[0];
+	struct usb_string		*dev_str = gstr->strings;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* composite_disconnect() must already have been called
 	 * by the underlying peripheral controller driver!
@@ -1629,6 +1677,12 @@ static void __composite_unbind(struct usb_gadget *gadget, bool unbind_driver)
 
 	composite_dev_cleanup(cdev);
 
+<<<<<<< HEAD
+	if (dev_str[USB_GADGET_MANUFACTURER_IDX].s == cdev->def_manufacturer)
+		dev_str[USB_GADGET_MANUFACTURER_IDX].s = "";
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	kfree(cdev->def_manufacturer);
 	kfree(cdev);
 	set_gadget_data(gadget, NULL);

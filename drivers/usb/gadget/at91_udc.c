@@ -1703,6 +1703,8 @@ static int at91udc_probe(struct platform_device *pdev)
 		return -ENODEV;
 	}
 
+<<<<<<< HEAD
+=======
 	if (pdev->num_resources != 2) {
 		DBG("invalid num_resources\n");
 		return -ENODEV;
@@ -1713,6 +1715,7 @@ static int at91udc_probe(struct platform_device *pdev)
 		return -ENODEV;
 	}
 
+>>>>>>> 671a46baf1b... some performance improvements
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	if (!res)
 		return -ENXIO;

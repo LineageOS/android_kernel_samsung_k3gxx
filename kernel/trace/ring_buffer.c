@@ -463,7 +463,11 @@ struct ring_buffer_per_cpu {
 	raw_spinlock_t			reader_lock;	/* serialize readers */
 	arch_spinlock_t			lock;
 	struct lock_class_key		lock_key;
+<<<<<<< HEAD
+	unsigned long			nr_pages;
+=======
 	unsigned int			nr_pages;
+>>>>>>> 671a46baf1b... some performance improvements
 	struct list_head		*pages;
 	struct buffer_page		*head_page;	/* read from head */
 	struct buffer_page		*tail_page;	/* write to tail */
@@ -483,7 +487,11 @@ struct ring_buffer_per_cpu {
 	u64				write_stamp;
 	u64				read_stamp;
 	/* ring buffer pages to update, > 0 to add, < 0 to remove */
+<<<<<<< HEAD
+	long				nr_pages_to_update;
+=======
 	int				nr_pages_to_update;
+>>>>>>> 671a46baf1b... some performance improvements
 	struct list_head		new_pages; /* new pages to add */
 	struct work_struct		update_pages_work;
 	struct completion		update_done;
@@ -543,7 +551,11 @@ static void rb_wake_up_waiters(struct irq_work *work)
  * as data is added to any of the @buffer's cpu buffers. Otherwise
  * it will wait for data to be added to a specific cpu buffer.
  */
+<<<<<<< HEAD
+int ring_buffer_wait(struct ring_buffer *buffer, int cpu)
+=======
 void ring_buffer_wait(struct ring_buffer *buffer, int cpu)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	struct ring_buffer_per_cpu *cpu_buffer;
 	DEFINE_WAIT(wait);
@@ -557,6 +569,11 @@ void ring_buffer_wait(struct ring_buffer *buffer, int cpu)
 	if (cpu == RING_BUFFER_ALL_CPUS)
 		work = &buffer->irq_work;
 	else {
+<<<<<<< HEAD
+		if (!cpumask_test_cpu(cpu, buffer->cpumask))
+			return -ENODEV;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		cpu_buffer = buffer->buffers[cpu];
 		work = &cpu_buffer->irq_work;
 	}
@@ -591,6 +608,10 @@ void ring_buffer_wait(struct ring_buffer *buffer, int cpu)
 		schedule();
 
 	finish_wait(&work->waiters, &wait);
+<<<<<<< HEAD
+	return 0;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /**
@@ -613,10 +634,13 @@ int ring_buffer_poll_wait(struct ring_buffer *buffer, int cpu,
 	struct ring_buffer_per_cpu *cpu_buffer;
 	struct rb_irq_work *work;
 
+<<<<<<< HEAD
+=======
 	if ((cpu == RING_BUFFER_ALL_CPUS && !ring_buffer_empty(buffer)) ||
 	    (cpu != RING_BUFFER_ALL_CPUS && !ring_buffer_empty_cpu(buffer, cpu)))
 		return POLLIN | POLLRDNORM;
 
+>>>>>>> 671a46baf1b... some performance improvements
 	if (cpu == RING_BUFFER_ALL_CPUS)
 		work = &buffer->irq_work;
 	else {
@@ -627,8 +651,27 @@ int ring_buffer_poll_wait(struct ring_buffer *buffer, int cpu,
 		work = &cpu_buffer->irq_work;
 	}
 
+<<<<<<< HEAD
+	poll_wait(filp, &work->waiters, poll_table);
+	work->waiters_pending = true;
+	/*
+	 * There's a tight race between setting the waiters_pending and
+	 * checking if the ring buffer is empty.  Once the waiters_pending bit
+	 * is set, the next event will wake the task up, but we can get stuck
+	 * if there's only a single event in.
+	 *
+	 * FIXME: Ideally, we need a memory barrier on the writer side as well,
+	 * but adding a memory barrier to all events will cause too much of a
+	 * performance hit in the fast path.  We only need a memory barrier when
+	 * the buffer goes from empty to having content.  But as this race is
+	 * extremely small, and it's not a problem if another event comes in, we
+	 * will fix it later.
+	 */
+	smp_mb();
+=======
 	work->waiters_pending = true;
 	poll_wait(filp, &work->waiters, poll_table);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if ((cpu == RING_BUFFER_ALL_CPUS && !ring_buffer_empty(buffer)) ||
 	    (cpu != RING_BUFFER_ALL_CPUS && !ring_buffer_empty_cpu(buffer, cpu)))
@@ -1107,10 +1150,17 @@ static int rb_check_pages(struct ring_buffer_per_cpu *cpu_buffer)
 	return 0;
 }
 
+<<<<<<< HEAD
+static int __rb_allocate_pages(long nr_pages, struct list_head *pages, int cpu)
+{
+	struct buffer_page *bpage, *tmp;
+	long i;
+=======
 static int __rb_allocate_pages(int nr_pages, struct list_head *pages, int cpu)
 {
 	int i;
 	struct buffer_page *bpage, *tmp;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	for (i = 0; i < nr_pages; i++) {
 		struct page *page;
@@ -1147,7 +1197,11 @@ free_pages:
 }
 
 static int rb_allocate_pages(struct ring_buffer_per_cpu *cpu_buffer,
+<<<<<<< HEAD
+			     unsigned long nr_pages)
+=======
 			     unsigned nr_pages)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	LIST_HEAD(pages);
 
@@ -1172,7 +1226,11 @@ static int rb_allocate_pages(struct ring_buffer_per_cpu *cpu_buffer,
 }
 
 static struct ring_buffer_per_cpu *
+<<<<<<< HEAD
+rb_allocate_cpu_buffer(struct ring_buffer *buffer, long nr_pages, int cpu)
+=======
 rb_allocate_cpu_buffer(struct ring_buffer *buffer, int nr_pages, int cpu)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	struct ring_buffer_per_cpu *cpu_buffer;
 	struct buffer_page *bpage;
@@ -1271,8 +1329,14 @@ struct ring_buffer *__ring_buffer_alloc(unsigned long size, unsigned flags,
 					struct lock_class_key *key)
 {
 	struct ring_buffer *buffer;
+<<<<<<< HEAD
+	long nr_pages;
+	int bsize;
+	int cpu;
+=======
 	int bsize;
 	int cpu, nr_pages;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* keep it in its own cache line */
 	buffer = kzalloc(ALIGN(sizeof(*buffer), cache_line_size()),
@@ -1395,12 +1459,20 @@ static inline unsigned long rb_page_write(struct buffer_page *bpage)
 }
 
 static int
+<<<<<<< HEAD
+rb_remove_pages(struct ring_buffer_per_cpu *cpu_buffer, unsigned long nr_pages)
+=======
 rb_remove_pages(struct ring_buffer_per_cpu *cpu_buffer, unsigned int nr_pages)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	struct list_head *tail_page, *to_remove, *next_page;
 	struct buffer_page *to_remove_page, *tmp_iter_page;
 	struct buffer_page *last_page, *first_page;
+<<<<<<< HEAD
+	unsigned long nr_removed;
+=======
 	unsigned int nr_removed;
+>>>>>>> 671a46baf1b... some performance improvements
 	unsigned long head_bit;
 	int page_entries;
 
@@ -1616,7 +1688,11 @@ int ring_buffer_resize(struct ring_buffer *buffer, unsigned long size,
 			int cpu_id)
 {
 	struct ring_buffer_per_cpu *cpu_buffer;
+<<<<<<< HEAD
+	unsigned long nr_pages;
+=======
 	unsigned nr_pages;
+>>>>>>> 671a46baf1b... some performance improvements
 	int cpu, err = 0;
 
 	/*
@@ -1934,12 +2010,15 @@ rb_set_commit_to_write(struct ring_buffer_per_cpu *cpu_buffer)
 		goto again;
 }
 
+<<<<<<< HEAD
+=======
 static void rb_reset_reader_page(struct ring_buffer_per_cpu *cpu_buffer)
 {
 	cpu_buffer->read_stamp = cpu_buffer->reader_page->page->time_stamp;
 	cpu_buffer->reader_page->read = 0;
 }
 
+>>>>>>> 671a46baf1b... some performance improvements
 static void rb_inc_iter(struct ring_buffer_iter *iter)
 {
 	struct ring_buffer_per_cpu *cpu_buffer = iter->cpu_buffer;
@@ -1980,7 +2059,11 @@ rb_add_time_stamp(struct ring_buffer_event *event, u64 delta)
 
 /**
  * rb_update_event - update event type and data
+<<<<<<< HEAD
+ * @event: the event to update
+=======
  * @event: the even to update
+>>>>>>> 671a46baf1b... some performance improvements
  * @type: the type of event
  * @length: the size of the event field in the ring buffer
  *
@@ -2395,6 +2478,16 @@ __rb_reserve_next(struct ring_buffer_per_cpu *cpu_buffer,
 	write &= RB_WRITE_MASK;
 	tail = write - length;
 
+<<<<<<< HEAD
+	/*
+	 * If this is the first commit on the page, then it has the same
+	 * timestamp as the page itself.
+	 */
+	if (!tail)
+		delta = 0;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* See if we shot pass the end of this buffer page */
 	if (unlikely(write > BUF_PAGE_SIZE))
 		return rb_move_tail(cpu_buffer, length, tail,
@@ -2629,7 +2722,11 @@ static DEFINE_PER_CPU(unsigned int, current_context);
 
 static __always_inline int trace_recursive_lock(void)
 {
+<<<<<<< HEAD
+	unsigned int val = __this_cpu_read(current_context);
+=======
 	unsigned int val = this_cpu_read(current_context);
+>>>>>>> 671a46baf1b... some performance improvements
 	int bit;
 
 	if (in_interrupt()) {
@@ -2646,18 +2743,29 @@ static __always_inline int trace_recursive_lock(void)
 		return 1;
 
 	val |= (1 << bit);
+<<<<<<< HEAD
+	__this_cpu_write(current_context, val);
+=======
 	this_cpu_write(current_context, val);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return 0;
 }
 
 static __always_inline void trace_recursive_unlock(void)
 {
+<<<<<<< HEAD
+	unsigned int val = __this_cpu_read(current_context);
+
+	val &= val & (val - 1);
+	__this_cpu_write(current_context, val);
+=======
 	unsigned int val = this_cpu_read(current_context);
 
 	val--;
 	val &= this_cpu_read(current_context);
 	this_cpu_write(current_context, val);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 #else
@@ -3346,6 +3454,14 @@ static void rb_iter_reset(struct ring_buffer_iter *iter)
 	struct ring_buffer_per_cpu *cpu_buffer = iter->cpu_buffer;
 
 	/* Iterator usage is expected to have record disabled */
+<<<<<<< HEAD
+	iter->head_page = cpu_buffer->reader_page;
+	iter->head = cpu_buffer->reader_page->read;
+
+	iter->cache_reader_page = iter->head_page;
+	iter->cache_read = cpu_buffer->read;
+
+=======
 	if (list_empty(&cpu_buffer->reader_page->list)) {
 		iter->head_page = rb_set_head_page(cpu_buffer);
 		if (unlikely(!iter->head_page))
@@ -3355,12 +3471,16 @@ static void rb_iter_reset(struct ring_buffer_iter *iter)
 		iter->head_page = cpu_buffer->reader_page;
 		iter->head = cpu_buffer->reader_page->read;
 	}
+>>>>>>> 671a46baf1b... some performance improvements
 	if (iter->head)
 		iter->read_stamp = cpu_buffer->read_stamp;
 	else
 		iter->read_stamp = iter->head_page->page->time_stamp;
+<<<<<<< HEAD
+=======
 	iter->cache_reader_page = cpu_buffer->reader_page;
 	iter->cache_read = cpu_buffer->read;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /**
@@ -3393,11 +3513,31 @@ EXPORT_SYMBOL_GPL(ring_buffer_iter_reset);
 int ring_buffer_iter_empty(struct ring_buffer_iter *iter)
 {
 	struct ring_buffer_per_cpu *cpu_buffer;
+<<<<<<< HEAD
+	struct buffer_page *reader;
+	struct buffer_page *head_page;
+	struct buffer_page *commit_page;
+	unsigned commit;
+
+	cpu_buffer = iter->cpu_buffer;
+
+	/* Remember, trace recording is off when iterator is in use */
+	reader = cpu_buffer->reader_page;
+	head_page = cpu_buffer->head_page;
+	commit_page = cpu_buffer->commit_page;
+	commit = rb_page_commit(commit_page);
+
+	return ((iter->head_page == commit_page && iter->head == commit) ||
+		(iter->head_page == reader && commit_page == head_page &&
+		 head_page->read == commit &&
+		 iter->head == rb_page_commit(cpu_buffer->reader_page)));
+=======
 
 	cpu_buffer = iter->cpu_buffer;
 
 	return iter->head_page == cpu_buffer->commit_page &&
 		iter->head == rb_commit_index(cpu_buffer);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 EXPORT_SYMBOL_GPL(ring_buffer_iter_empty);
 
@@ -3576,7 +3716,11 @@ rb_get_reader_page(struct ring_buffer_per_cpu *cpu_buffer)
 
 	/* Finally update the reader page to the new head */
 	cpu_buffer->reader_page = reader;
+<<<<<<< HEAD
+	cpu_buffer->reader_page->read = 0;
+=======
 	rb_reset_reader_page(cpu_buffer);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (overwrite != cpu_buffer->last_overrun) {
 		cpu_buffer->lost_events = overwrite - cpu_buffer->last_overrun;
@@ -3586,6 +3730,13 @@ rb_get_reader_page(struct ring_buffer_per_cpu *cpu_buffer)
 	goto again;
 
  out:
+<<<<<<< HEAD
+	/* Update the read_stamp on the first event */
+	if (reader && reader->read == 0)
+		cpu_buffer->read_stamp = reader->page->time_stamp;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	arch_spin_unlock(&cpu_buffer->lock);
 	local_irq_restore(flags);
 
@@ -3753,12 +3904,23 @@ rb_iter_peek(struct ring_buffer_iter *iter, u64 *ts)
 		return NULL;
 
 	/*
+<<<<<<< HEAD
+	 * We repeat when a time extend is encountered or we hit
+	 * the end of the page. Since the time extend is always attached
+	 * to a data event, we should never loop more than three times.
+	 * Once for going to next page, once on time extend, and
+	 * finally once to get the event.
+	 * (We never hit the following condition more than thrice).
+	 */
+	if (RB_WARN_ON(cpu_buffer, ++nr_loops > 3))
+=======
 	 * We repeat when a time extend is encountered.
 	 * Since the time extend is always attached to a data event,
 	 * we should never loop more than once.
 	 * (We never hit the following condition more than twice).
 	 */
 	if (RB_WARN_ON(cpu_buffer, ++nr_loops > 2))
+>>>>>>> 671a46baf1b... some performance improvements
 		return NULL;
 
 	if (rb_per_cpu_empty(cpu_buffer))
@@ -4592,8 +4754,14 @@ static int rb_cpu_notify(struct notifier_block *self,
 	struct ring_buffer *buffer =
 		container_of(self, struct ring_buffer, cpu_notify);
 	long cpu = (long)hcpu;
+<<<<<<< HEAD
+	long nr_pages_same;
+	int cpu_i;
+	unsigned long nr_pages;
+=======
 	int cpu_i, nr_pages_same;
 	unsigned int nr_pages;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	switch (action) {
 	case CPU_UP_PREPARE:
@@ -4821,9 +4989,15 @@ static __init int test_ringbuffer(void)
 		rb_data[cpu].cnt = cpu;
 		rb_threads[cpu] = kthread_create(rb_test, &rb_data[cpu],
 						 "rbtester/%d", cpu);
+<<<<<<< HEAD
+		if (WARN_ON(IS_ERR(rb_threads[cpu]))) {
+			pr_cont("FAILED\n");
+			ret = PTR_ERR(rb_threads[cpu]);
+=======
 		if (WARN_ON(!rb_threads[cpu])) {
 			pr_cont("FAILED\n");
 			ret = -1;
+>>>>>>> 671a46baf1b... some performance improvements
 			goto out_free;
 		}
 
@@ -4833,9 +5007,15 @@ static __init int test_ringbuffer(void)
 
 	/* Now create the rb hammer! */
 	rb_hammer = kthread_run(rb_hammer_test, NULL, "rbhammer");
+<<<<<<< HEAD
+	if (WARN_ON(IS_ERR(rb_hammer))) {
+		pr_cont("FAILED\n");
+		ret = PTR_ERR(rb_hammer);
+=======
 	if (WARN_ON(!rb_hammer)) {
 		pr_cont("FAILED\n");
 		ret = -1;
+>>>>>>> 671a46baf1b... some performance improvements
 		goto out_free;
 	}
 

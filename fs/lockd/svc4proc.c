@@ -421,7 +421,11 @@ nlm4svc_proc_sm_notify(struct svc_rqst *rqstp, struct nlm_reboot *argp,
 		return rpc_system_err;
 	}
 
+<<<<<<< HEAD
+	nlm_host_rebooted(SVC_NET(rqstp), argp);
+=======
 	nlm_host_rebooted(argp);
+>>>>>>> 671a46baf1b... some performance improvements
 	return rpc_success;
 }
 

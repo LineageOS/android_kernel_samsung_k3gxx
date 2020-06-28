@@ -647,7 +647,11 @@ static int ghes_proc(struct ghes *ghes)
 	ghes_do_proc(ghes, ghes->estatus);
 out:
 	ghes_clear_estatus(ghes);
+<<<<<<< HEAD
+	return rc;
+=======
 	return 0;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void ghes_add_timer(struct ghes *ghes)
@@ -988,6 +992,10 @@ static int ghes_remove(struct platform_device *ghes_dev)
 		if (list_empty(&ghes_sci))
 			unregister_acpi_hed_notifier(&ghes_notifier_sci);
 		mutex_unlock(&ghes_list_mutex);
+<<<<<<< HEAD
+		synchronize_rcu();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		break;
 	case ACPI_HEST_NOTIFY_NMI:
 		mutex_lock(&ghes_list_mutex);

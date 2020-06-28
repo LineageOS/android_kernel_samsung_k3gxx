@@ -1637,8 +1637,12 @@ static int dispatch_ioctl(struct client *client,
 	    _IOC_SIZE(cmd) > sizeof(buffer))
 		return -ENOTTY;
 
+<<<<<<< HEAD
+	memset(&buffer, 0, sizeof(buffer));
+=======
 	if (_IOC_DIR(cmd) == _IOC_READ)
 		memset(&buffer, 0, _IOC_SIZE(cmd));
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (_IOC_DIR(cmd) & _IOC_WRITE)
 		if (copy_from_user(&buffer, arg, _IOC_SIZE(cmd)))

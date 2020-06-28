@@ -36,11 +36,19 @@
 #include <dhd_bus.h>
 #include <dhd_linux.h>
 #include <wl_android.h>
+<<<<<<< HEAD
+#if !defined(CONFIG_WIFI_CONTROL_FUNC)
+#include <linux/wlan_plat.h>
+#endif
+
+#if defined(CONFIG_WIFI_CONTROL_FUNC)
+=======
 #if defined(CONFIG_WIFI_CONTROL_FUNC)
 #include <linux/wlan_plat.h>
 #endif
 
 #if !defined(CONFIG_WIFI_CONTROL_FUNC)
+>>>>>>> 671a46baf1b... some performance improvements
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 10, 58))
 #define WLAN_PLAT_NODFS_FLAG    0x01
 #endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3, 10, 58) */

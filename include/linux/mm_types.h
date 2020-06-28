@@ -368,6 +368,10 @@ struct mm_struct {
 	void (*unmap_area) (struct mm_struct *mm, unsigned long addr);
 #endif
 	unsigned long mmap_base;		/* base of mmap area */
+<<<<<<< HEAD
+	unsigned long mmap_legacy_base;         /* base of mmap area in bottom-up allocations */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	unsigned long task_size;		/* size of task vm space */
 	unsigned long cached_hole_size; 	/* if non-zero, the largest hole below free_area_cache */
 	unsigned long free_area_cache;		/* first hole of size cached_hole_size or larger */
@@ -471,6 +475,17 @@ struct mm_struct {
 	 */
 	int first_nid;
 #endif
+<<<<<<< HEAD
+#if defined(CONFIG_NUMA_BALANCING) || defined(CONFIG_COMPACTION)
+	/*
+	 * An operation with batched TLB flushing is going on. Anything that
+	 * can move process memory needs to flush the TLB when moving a
+	 * PROT_NONE or PROT_NUMA mapped page.
+	 */
+	bool tlb_flush_pending;
+#endif
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	struct uprobes_state uprobes_state;
 };
 
@@ -491,7 +506,10 @@ static inline cpumask_t *mm_cpumask(struct mm_struct *mm)
 	return mm->cpu_vm_mask_var;
 }
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 671a46baf1b... some performance improvements
 /* Return the name for an anonymous mapping or NULL for a file-backed mapping */
 static inline const char __user *vma_get_anon_name(struct vm_area_struct *vma)
 {
@@ -501,4 +519,48 @@ static inline const char __user *vma_get_anon_name(struct vm_area_struct *vma)
 	return vma->shared.anon_name;
 }
 
+<<<<<<< HEAD
+#if defined(CONFIG_NUMA_BALANCING) || defined(CONFIG_COMPACTION)
+/*
+ * Memory barriers to keep this state in sync are graciously provided by
+ * the page table locks, outside of which no page table modifications happen.
+ * The barriers below prevent the compiler from re-ordering the instructions
+ * around the memory barriers that are already present in the code.
+ */
+static inline bool mm_tlb_flush_pending(struct mm_struct *mm)
+{
+	barrier();
+	return mm->tlb_flush_pending;
+}
+static inline void set_tlb_flush_pending(struct mm_struct *mm)
+{
+	mm->tlb_flush_pending = true;
+
+	/*
+	 * Guarantee that the tlb_flush_pending store does not leak into the
+	 * critical section updating the page tables
+	 */
+	smp_mb__before_spinlock();
+}
+/* Clearing is done after a TLB flush, which also provides a barrier. */
+static inline void clear_tlb_flush_pending(struct mm_struct *mm)
+{
+	barrier();
+	mm->tlb_flush_pending = false;
+}
+#else
+static inline bool mm_tlb_flush_pending(struct mm_struct *mm)
+{
+	return false;
+}
+static inline void set_tlb_flush_pending(struct mm_struct *mm)
+{
+}
+static inline void clear_tlb_flush_pending(struct mm_struct *mm)
+{
+}
+#endif
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #endif /* _LINUX_MM_TYPES_H */

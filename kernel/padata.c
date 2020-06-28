@@ -190,10 +190,25 @@ static struct padata_priv *padata_get_next(struct parallel_data *pd)
 
 	reorder = &next_queue->reorder;
 
+<<<<<<< HEAD
+	spin_lock(&reorder->lock);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (!list_empty(&reorder->list)) {
 		padata = list_entry(reorder->list.next,
 				    struct padata_priv, list);
 
+<<<<<<< HEAD
+		list_del_init(&padata->list);
+		atomic_dec(&pd->reorder_objects);
+
+		pd->processed++;
+
+		spin_unlock(&reorder->lock);
+		goto out;
+	}
+	spin_unlock(&reorder->lock);
+=======
 		spin_lock(&reorder->lock);
 		list_del_init(&padata->list);
 		atomic_dec(&pd->reorder_objects);
@@ -203,6 +218,7 @@ static struct padata_priv *padata_get_next(struct parallel_data *pd)
 
 		goto out;
 	}
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (__this_cpu_read(pd->pqueue->cpu_index) == next_queue->cpu_index) {
 		padata = ERR_PTR(-ENODATA);

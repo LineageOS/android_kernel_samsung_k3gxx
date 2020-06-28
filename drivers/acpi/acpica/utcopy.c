@@ -998,5 +998,14 @@ acpi_ut_copy_iobject_to_iobject(union acpi_operand_object *source_desc,
 		status = acpi_ut_copy_simple_object(source_desc, *dest_desc);
 	}
 
+<<<<<<< HEAD
+	/* Delete the allocated object if copy failed */
+
+	if (ACPI_FAILURE(status)) {
+		acpi_ut_remove_reference(*dest_desc);
+	}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return_ACPI_STATUS(status);
 }

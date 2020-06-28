@@ -154,6 +154,23 @@ static int cn_call_callback(struct sk_buff *skb)
  *
  * It checks skb, netlink header and msg sizes, and calls callback helper.
  */
+<<<<<<< HEAD
+static void cn_rx_skb(struct sk_buff *skb)
+{
+	struct nlmsghdr *nlh;
+	int len, err;
+
+	if (skb->len >= NLMSG_HDRLEN) {
+		nlh = nlmsg_hdr(skb);
+		len = nlmsg_len(nlh);
+
+		if (len < (int)sizeof(struct cn_msg) ||
+		    skb->len < nlh->nlmsg_len ||
+		    len > CONNECTOR_MAX_MSG_SIZE)
+			return;
+
+		err = cn_call_callback(skb_get(skb));
+=======
 static void cn_rx_skb(struct sk_buff *__skb)
 {
 	struct nlmsghdr *nlh;
@@ -173,6 +190,7 @@ static void cn_rx_skb(struct sk_buff *__skb)
 		}
 
 		err = cn_call_callback(skb);
+>>>>>>> 671a46baf1b... some performance improvements
 		if (err < 0)
 			kfree_skb(skb);
 	}

@@ -678,6 +678,10 @@ struct tsi721_bdma_chan {
 	struct list_head	free_list;
 	dma_cookie_t		completed_cookie;
 	struct tasklet_struct	tasklet;
+<<<<<<< HEAD
+	bool			active;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 #endif /* CONFIG_RAPIDIO_DMA_ENGINE */

@@ -864,6 +864,16 @@ struct dvb_frontend *ds3000_attach(const struct ds3000_config *config,
 	memcpy(&state->frontend.ops, &ds3000_ops,
 			sizeof(struct dvb_frontend_ops));
 	state->frontend.demodulator_priv = state;
+<<<<<<< HEAD
+
+	/*
+	 * Some devices like T480 starts with voltage on. Be sure
+	 * to turn voltage off during init, as this can otherwise
+	 * interfere with Unicable SCR systems.
+	 */
+	ds3000_set_voltage(&state->frontend, SEC_VOLTAGE_OFF);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return &state->frontend;
 
 error3:

@@ -834,6 +834,22 @@ copy_one_pte(struct mm_struct *dst_mm, struct mm_struct *src_mm,
 		if (!pte_file(pte)) {
 			swp_entry_t entry = pte_to_swp_entry(pte);
 
+<<<<<<< HEAD
+			if (likely(!non_swap_entry(entry))) {
+				if (swap_duplicate(entry) < 0)
+					return entry.val;
+
+				/* make sure dst_mm is on swapoff's mmlist. */
+				if (unlikely(list_empty(&dst_mm->mmlist))) {
+					spin_lock(&mmlist_lock);
+					if (list_empty(&dst_mm->mmlist))
+						list_add(&dst_mm->mmlist,
+							 &src_mm->mmlist);
+					spin_unlock(&mmlist_lock);
+				}
+				rss[MM_SWAPENTS]++;
+			} else if (is_migration_entry(entry)) {
+=======
 			if (swap_duplicate(entry) < 0)
 				return entry.val;
 
@@ -848,6 +864,7 @@ copy_one_pte(struct mm_struct *dst_mm, struct mm_struct *src_mm,
 			if (likely(!non_swap_entry(entry)))
 				rss[MM_SWAPENTS]++;
 			else if (is_migration_entry(entry)) {
+>>>>>>> 671a46baf1b... some performance improvements
 				page = migration_entry_to_page(entry);
 
 				if (PageAnon(page)) {
@@ -1689,12 +1706,15 @@ no_page_table:
 	return page;
 }
 
+<<<<<<< HEAD
+=======
 static inline int stack_guard_page(struct vm_area_struct *vma, unsigned long addr)
 {
 	return stack_guard_page_start(vma, addr) ||
 	       stack_guard_page_end(vma, addr+PAGE_SIZE);
 }
 
+>>>>>>> 671a46baf1b... some performance improvements
 /**
  * __get_user_pages() - pin user pages in memory
  * @tsk:	task_struct of target task
@@ -1862,11 +1882,14 @@ long __get_user_pages(struct task_struct *tsk, struct mm_struct *mm,
 				int ret;
 				unsigned int fault_flags = 0;
 
+<<<<<<< HEAD
+=======
 				/* For mlock, just skip the stack guard page. */
 				if (foll_flags & FOLL_MLOCK) {
 					if (stack_guard_page(vma, start))
 						goto next_page;
 				}
+>>>>>>> 671a46baf1b... some performance improvements
 				if (foll_flags & FOLL_WRITE)
 					fault_flags |= FAULT_FLAG_WRITE;
 				if (nonblocking)
@@ -1889,7 +1912,12 @@ long __get_user_pages(struct task_struct *tsk, struct mm_struct *mm,
 						else
 							return -EFAULT;
 					}
+<<<<<<< HEAD
+					if (ret & (VM_FAULT_SIGBUS |
+						   VM_FAULT_SIGSEGV))
+=======
 					if (ret & VM_FAULT_SIGBUS)
+>>>>>>> 671a46baf1b... some performance improvements
 						return i ? i : -EFAULT;
 					BUG();
 				}
@@ -1982,19 +2010,34 @@ int fixup_user_fault(struct task_struct *tsk, struct mm_struct *mm,
 		     unsigned long address, unsigned int fault_flags)
 {
 	struct vm_area_struct *vma;
+<<<<<<< HEAD
+	vm_flags_t vm_flags;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	int ret;
 
 	vma = find_extend_vma(mm, address);
 	if (!vma || address < vma->vm_start)
 		return -EFAULT;
 
+<<<<<<< HEAD
+	vm_flags = (fault_flags & FAULT_FLAG_WRITE) ? VM_WRITE : VM_READ;
+	if (!(vm_flags & vma->vm_flags))
+		return -EFAULT;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	ret = handle_mm_fault(mm, vma, address, fault_flags);
 	if (ret & VM_FAULT_ERROR) {
 		if (ret & VM_FAULT_OOM)
 			return -ENOMEM;
 		if (ret & (VM_FAULT_HWPOISON | VM_FAULT_HWPOISON_LARGE))
 			return -EHWPOISON;
+<<<<<<< HEAD
+		if (ret & (VM_FAULT_SIGBUS | VM_FAULT_SIGSEGV))
+=======
 		if (ret & VM_FAULT_SIGBUS)
+>>>>>>> 671a46baf1b... some performance improvements
 			return -EFAULT;
 		BUG();
 	}
@@ -3245,6 +3288,8 @@ out_release:
 }
 
 /*
+<<<<<<< HEAD
+=======
  * This is like a special single-page "expand_{down|up}wards()",
  * except we must first make sure that 'address{-|+}PAGE_SIZE'
  * doesn't hit another vma.
@@ -3279,6 +3324,7 @@ static inline int check_stack_guard_page(struct vm_area_struct *vma, unsigned lo
 }
 
 /*
+>>>>>>> 671a46baf1b... some performance improvements
  * We enter with non-exclusive mmap_sem (to exclude vma changes,
  * but allow concurrent faults), and pte mapped but not yet locked.
  * We return with mmap_sem still held, but pte unmapped and unlocked.
@@ -3297,10 +3343,13 @@ static int do_anonymous_page(struct mm_struct *mm, struct vm_area_struct *vma,
 	if (vma->vm_flags & VM_SHARED)
 		return VM_FAULT_SIGBUS;
 
+<<<<<<< HEAD
+=======
 	/* Check if we need to add a guard page to the stack */
 	if (check_stack_guard_page(vma, address) < 0)
 		return VM_FAULT_SIGBUS;
 
+>>>>>>> 671a46baf1b... some performance improvements
 	/* Use the zero-page for reads */
 	if (!(flags & FAULT_FLAG_WRITE)) {
 		entry = pte_mkspecial(pfn_pte(my_zero_pfn(address),
@@ -3613,12 +3662,20 @@ static int do_nonlinear_fault(struct mm_struct *mm, struct vm_area_struct *vma,
 }
 
 int numa_migrate_prep(struct page *page, struct vm_area_struct *vma,
+<<<<<<< HEAD
+				unsigned long addr, int page_nid)
+=======
 				unsigned long addr, int current_nid)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	get_page(page);
 
 	count_vm_numa_event(NUMA_HINT_FAULTS);
+<<<<<<< HEAD
+	if (page_nid == numa_node_id())
+=======
 	if (current_nid == numa_node_id())
+>>>>>>> 671a46baf1b... some performance improvements
 		count_vm_numa_event(NUMA_HINT_FAULTS_LOCAL);
 
 	return mpol_misplaced(page, vma, addr);
@@ -3629,7 +3686,11 @@ int do_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 {
 	struct page *page = NULL;
 	spinlock_t *ptl;
+<<<<<<< HEAD
+	int page_nid = -1;
+=======
 	int current_nid = -1;
+>>>>>>> 671a46baf1b... some performance improvements
 	int target_nid;
 	bool migrated = false;
 
@@ -3659,6 +3720,12 @@ int do_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 		return 0;
 	}
 
+<<<<<<< HEAD
+	page_nid = page_to_nid(page);
+	target_nid = numa_migrate_prep(page, vma, addr, page_nid);
+	pte_unmap_unlock(ptep, ptl);
+	if (target_nid == -1) {
+=======
 	current_nid = page_to_nid(page);
 	target_nid = numa_migrate_prep(page, vma, addr, current_nid);
 	pte_unmap_unlock(ptep, ptl);
@@ -3668,6 +3735,7 @@ int do_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 		 * being replaced regardless of where the page is located.
 		 */
 		current_nid = numa_node_id();
+>>>>>>> 671a46baf1b... some performance improvements
 		put_page(page);
 		goto out;
 	}
@@ -3675,11 +3743,19 @@ int do_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 	/* Migrate to the requested node */
 	migrated = migrate_misplaced_page(page, target_nid);
 	if (migrated)
+<<<<<<< HEAD
+		page_nid = target_nid;
+
+out:
+	if (page_nid != -1)
+		task_numa_fault(page_nid, 1, migrated);
+=======
 		current_nid = target_nid;
 
 out:
 	if (current_nid != -1)
 		task_numa_fault(current_nid, 1, migrated);
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 }
 
@@ -3694,7 +3770,10 @@ static int do_pmd_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 	unsigned long offset;
 	spinlock_t *ptl;
 	bool numa = false;
+<<<<<<< HEAD
+=======
 	int local_nid = numa_node_id();
+>>>>>>> 671a46baf1b... some performance improvements
 
 	spin_lock(&mm->page_table_lock);
 	pmd = *pmdp;
@@ -3717,9 +3796,16 @@ static int do_pmd_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 	for (addr = _addr + offset; addr < _addr + PMD_SIZE; pte++, addr += PAGE_SIZE) {
 		pte_t pteval = *pte;
 		struct page *page;
+<<<<<<< HEAD
+		int page_nid = -1;
+		int target_nid;
+		bool migrated = false;
+
+=======
 		int curr_nid = local_nid;
 		int target_nid;
 		bool migrated;
+>>>>>>> 671a46baf1b... some performance improvements
 		if (!pte_present(pteval))
 			continue;
 		if (!pte_numa(pteval))
@@ -3741,6 +3827,21 @@ static int do_pmd_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 		if (unlikely(page_mapcount(page) != 1))
 			continue;
 
+<<<<<<< HEAD
+		page_nid = page_to_nid(page);
+		target_nid = numa_migrate_prep(page, vma, addr, page_nid);
+		pte_unmap_unlock(pte, ptl);
+		if (target_nid != -1) {
+			migrated = migrate_misplaced_page(page, target_nid);
+			if (migrated)
+				page_nid = target_nid;
+		} else {
+			put_page(page);
+		}
+
+		if (page_nid != -1)
+			task_numa_fault(page_nid, 1, migrated);
+=======
 		/*
 		 * Note that the NUMA fault is later accounted to either
 		 * the node that is currently running or where the page is
@@ -3760,6 +3861,7 @@ static int do_pmd_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 		if (migrated)
 			curr_nid = target_nid;
 		task_numa_fault(curr_nid, 1, migrated);
+>>>>>>> 671a46baf1b... some performance improvements
 
 		pte = pte_offset_map_lock(mm, pmdp, addr, &ptl);
 	}
@@ -3846,14 +3948,21 @@ unlock:
 /*
  * By the time we get here, we already hold the mm semaphore
  */
+<<<<<<< HEAD
+static int __handle_mm_fault(struct mm_struct *mm, struct vm_area_struct *vma,
+			     unsigned long address, unsigned int flags)
+=======
 int handle_mm_fault(struct mm_struct *mm, struct vm_area_struct *vma,
 		unsigned long address, unsigned int flags)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	pgd_t *pgd;
 	pud_t *pud;
 	pmd_t *pmd;
 	pte_t *pte;
 
+<<<<<<< HEAD
+=======
 	__set_current_state(TASK_RUNNING);
 
 	count_vm_event(PGFAULT);
@@ -3862,6 +3971,7 @@ int handle_mm_fault(struct mm_struct *mm, struct vm_area_struct *vma,
 	/* do counter updates before entering really critical section. */
 	check_sync_rss_stat(current);
 
+>>>>>>> 671a46baf1b... some performance improvements
 	if (unlikely(is_vm_hugetlb_page(vma)))
 		return hugetlb_fault(mm, vma, address, flags);
 
@@ -3928,8 +4038,23 @@ retry:
 	if (unlikely(pmd_none(*pmd)) &&
 	    unlikely(__pte_alloc(mm, vma, pmd, address)))
 		return VM_FAULT_OOM;
+<<<<<<< HEAD
+	/*
+	 * If a huge pmd materialized under us just retry later.  Use
+	 * pmd_trans_unstable() instead of pmd_trans_huge() to ensure the pmd
+	 * didn't become pmd_trans_huge under us and then back to pmd_none, as
+	 * a result of MADV_DONTNEED running immediately after a huge pmd fault
+	 * in a different thread of this mm, in turn leading to a misleading
+	 * pmd_trans_huge() retval.  All we have to ensure is that it is a
+	 * regular pmd that we can walk with pte_offset_map() and we can do that
+	 * through an atomic read in C, which is what pmd_trans_unstable()
+	 * provides.
+	 */
+	if (unlikely(pmd_trans_unstable(pmd)))
+=======
 	/* if an huge pmd materialized from under us just retry later */
 	if (unlikely(pmd_trans_huge(*pmd)))
+>>>>>>> 671a46baf1b... some performance improvements
 		return 0;
 	/*
 	 * A regular pmd is established and it can't morph into a huge pmd
@@ -3942,6 +4067,46 @@ retry:
 	return handle_pte_fault(mm, vma, address, pte, pmd, flags);
 }
 
+<<<<<<< HEAD
+int handle_mm_fault(struct mm_struct *mm, struct vm_area_struct *vma,
+		    unsigned long address, unsigned int flags)
+{
+	int ret;
+
+	__set_current_state(TASK_RUNNING);
+
+	count_vm_event(PGFAULT);
+	mem_cgroup_count_vm_event(mm, PGFAULT);
+
+	/* do counter updates before entering really critical section. */
+	check_sync_rss_stat(current);
+
+	/*
+	 * Enable the memcg OOM handling for faults triggered in user
+	 * space.  Kernel faults are handled more gracefully.
+	 */
+	if (flags & FAULT_FLAG_USER)
+		mem_cgroup_oom_enable();
+
+	ret = __handle_mm_fault(mm, vma, address, flags);
+
+	if (flags & FAULT_FLAG_USER) {
+		mem_cgroup_oom_disable();
+                /*
+                 * The task may have entered a memcg OOM situation but
+                 * if the allocation error was handled gracefully (no
+                 * VM_FAULT_OOM), there is no need to kill anything.
+                 * Just clean up the OOM state peacefully.
+                 */
+                if (task_in_memcg_oom(current) && !(ret & VM_FAULT_OOM))
+                        mem_cgroup_oom_synchronize(false);
+	}
+
+	return ret;
+}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #ifndef __PAGETABLE_PUD_FOLDED
 /*
  * Allocate page upper directory.
@@ -4151,7 +4316,11 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
 	if (follow_phys(vma, addr, write, &prot, &phys_addr))
 		return -EINVAL;
 
+<<<<<<< HEAD
+	maddr = ioremap_prot(phys_addr, PAGE_ALIGN(len + offset), prot);
+=======
 	maddr = ioremap_prot(phys_addr, PAGE_SIZE, prot);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (write)
 		memcpy_toio(maddr + offset, buf, len);
 	else
@@ -4160,6 +4329,10 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
 
 	return len;
 }
+<<<<<<< HEAD
+EXPORT_SYMBOL_GPL(generic_access_phys);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #endif
 
 /*

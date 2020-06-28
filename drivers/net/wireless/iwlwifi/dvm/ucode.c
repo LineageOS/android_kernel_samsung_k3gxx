@@ -425,9 +425,12 @@ int iwl_run_init_ucode(struct iwl_priv *priv)
 	if (!priv->fw->img[IWL_UCODE_INIT].sec[0].len)
 		return 0;
 
+<<<<<<< HEAD
+=======
 	if (priv->init_ucode_run)
 		return 0;
 
+>>>>>>> 671a46baf1b... some performance improvements
 	iwl_init_notification_wait(&priv->notif_wait, &calib_wait,
 				   calib_complete, ARRAY_SIZE(calib_complete),
 				   iwlagn_wait_calib, priv);
@@ -447,8 +450,11 @@ int iwl_run_init_ucode(struct iwl_priv *priv)
 	 */
 	ret = iwl_wait_notification(&priv->notif_wait, &calib_wait,
 					UCODE_CALIB_TIMEOUT);
+<<<<<<< HEAD
+=======
 	if (!ret)
 		priv->init_ucode_run = true;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	goto out;
 

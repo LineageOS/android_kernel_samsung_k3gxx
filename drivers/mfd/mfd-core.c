@@ -263,6 +263,11 @@ int mfd_clone_cell(const char *cell, const char **clones, size_t n_clones)
 					clones[i]);
 	}
 
+<<<<<<< HEAD
+	put_device(dev);
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 }
 EXPORT_SYMBOL(mfd_clone_cell);

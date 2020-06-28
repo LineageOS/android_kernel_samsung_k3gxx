@@ -501,6 +501,10 @@ static void async_completed(struct urb *urb)
 	as->status = urb->status;
 	signr = as->signr;
 	if (signr) {
+<<<<<<< HEAD
+		memset(&sinfo, 0, sizeof(sinfo));
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		sinfo.si_signo = as->signr;
 		sinfo.si_errno = as->status;
 		sinfo.si_code = SI_ASYNCIO;
@@ -512,7 +516,11 @@ static void async_completed(struct urb *urb)
 	snoop(&urb->dev->dev, "urb complete\n");
 	snoop_urb(urb->dev, as->userurb, urb->pipe, urb->actual_length,
 			as->status, COMPLETE, NULL, 0);
+<<<<<<< HEAD
+	if ((urb->transfer_flags & URB_DIR_MASK) == URB_DIR_IN)
+=======
 	if ((urb->transfer_flags & URB_DIR_MASK) == USB_DIR_IN)
+>>>>>>> 671a46baf1b... some performance improvements
 		snoop_urb_data(urb, urb->actual_length);
 
 	if (as->status < 0 && as->bulk_addr && as->status != -ECONNRESET &&
@@ -742,6 +750,25 @@ static int check_ctrlrecip(struct dev_state *ps, unsigned int requesttype,
 		if ((index & ~USB_DIR_IN) == 0)
 			return 0;
 		ret = findintfep(ps->dev, index);
+<<<<<<< HEAD
+		if (ret < 0) {
+			/*
+			 * Some not fully compliant Win apps seem to get
+			 * index wrong and have the endpoint number here
+			 * rather than the endpoint address (with the
+			 * correct direction). Win does let this through,
+			 * so we'll not reject it here but leave it to
+			 * the device to not break KVM. But we warn.
+			 */
+			ret = findintfep(ps->dev, index ^ 0x80);
+			if (ret >= 0)
+				dev_info(&ps->dev->dev,
+					"%s: process %i (%s) requesting ep %02x but needs %02x\n",
+					__func__, task_pid_nr(current),
+					current->comm, index, index ^ 0x80);
+		}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		if (ret >= 0)
 			ret = checkintf(ps, ret);
 		break;
@@ -1577,7 +1604,11 @@ static struct async *reap_as(struct dev_state *ps)
 	for (;;) {
 		__set_current_state(TASK_INTERRUPTIBLE);
 		as = async_getcompleted(ps);
+<<<<<<< HEAD
+		if (as || !connected(ps))
+=======
 		if (as)
+>>>>>>> 671a46baf1b... some performance improvements
 			break;
 		if (signal_pending(current))
 			break;
@@ -1600,7 +1631,11 @@ static int proc_reapurb(struct dev_state *ps, void __user *arg)
 	}
 	if (signal_pending(current))
 		return -EINTR;
+<<<<<<< HEAD
+	return -ENODEV;
+=======
 	return -EIO;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int proc_reapurbnonblock(struct dev_state *ps, void __user *arg)
@@ -1609,10 +1644,18 @@ static int proc_reapurbnonblock(struct dev_state *ps, void __user *arg)
 	struct async *as;
 
 	as = async_getcompleted(ps);
+<<<<<<< HEAD
+	if (as) {
+		retval = processcompl(as, (void __user * __user *)arg);
+		free_async(as);
+	} else {
+		retval = (connected(ps) ? -EAGAIN : -ENODEV);
+=======
 	retval = -EAGAIN;
 	if (as) {
 		retval = processcompl(as, (void __user * __user *)arg);
 		free_async(as);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	return retval;
 }
@@ -1742,7 +1785,11 @@ static int proc_reapurb_compat(struct dev_state *ps, void __user *arg)
 	}
 	if (signal_pending(current))
 		return -EINTR;
+<<<<<<< HEAD
+	return -ENODEV;
+=======
 	return -EIO;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int proc_reapurbnonblock_compat(struct dev_state *ps, void __user *arg)
@@ -1750,11 +1797,19 @@ static int proc_reapurbnonblock_compat(struct dev_state *ps, void __user *arg)
 	int retval;
 	struct async *as;
 
+<<<<<<< HEAD
+=======
 	retval = -EAGAIN;
+>>>>>>> 671a46baf1b... some performance improvements
 	as = async_getcompleted(ps);
 	if (as) {
 		retval = processcompl_compat(as, (void __user * __user *)arg);
 		free_async(as);
+<<<<<<< HEAD
+	} else {
+		retval = (connected(ps) ? -EAGAIN : -ENODEV);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	return retval;
 }
@@ -1925,7 +1980,12 @@ static int proc_get_capabilities(struct dev_state *ps, void __user *arg)
 {
 	__u32 caps;
 
+<<<<<<< HEAD
+	caps = USBDEVFS_CAP_ZERO_PACKET | USBDEVFS_CAP_NO_PACKET_SIZE_LIM |
+			USBDEVFS_CAP_REAP_AFTER_DISCONNECT;
+=======
 	caps = USBDEVFS_CAP_ZERO_PACKET | USBDEVFS_CAP_NO_PACKET_SIZE_LIM;
+>>>>>>> 671a46baf1b... some performance improvements
 	if (!ps->dev->bus->no_stop_on_short)
 		caps |= USBDEVFS_CAP_BULK_CONTINUATION;
 	if (ps->dev->bus->sg_tablesize)
@@ -1986,6 +2046,35 @@ static long usbdev_do_ioctl(struct file *file, unsigned int cmd,
 		return -EPERM;
 
 	usb_lock_device(dev);
+<<<<<<< HEAD
+
+	/* Reap operations are allowed even after disconnection */
+	switch (cmd) {
+	case USBDEVFS_REAPURB:
+		snoop(&dev->dev, "%s: REAPURB\n", __func__);
+		ret = proc_reapurb(ps, p);
+		goto done;
+
+	case USBDEVFS_REAPURBNDELAY:
+		snoop(&dev->dev, "%s: REAPURBNDELAY\n", __func__);
+		ret = proc_reapurbnonblock(ps, p);
+		goto done;
+
+#ifdef CONFIG_COMPAT
+	case USBDEVFS_REAPURB32:
+		snoop(&dev->dev, "%s: REAPURB32\n", __func__);
+		ret = proc_reapurb_compat(ps, p);
+		goto done;
+
+	case USBDEVFS_REAPURBNDELAY32:
+		snoop(&dev->dev, "%s: REAPURBNDELAY32\n", __func__);
+		ret = proc_reapurbnonblock_compat(ps, p);
+		goto done;
+#endif
+	}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (!connected(ps)) {
 		usb_unlock_device(dev);
 		return -ENODEV;
@@ -2079,6 +2168,8 @@ static long usbdev_do_ioctl(struct file *file, unsigned int cmd,
 			inode->i_mtime = CURRENT_TIME;
 		break;
 
+<<<<<<< HEAD
+=======
 	case USBDEVFS_REAPURB32:
 		snoop(&dev->dev, "%s: REAPURB32\n", __func__);
 		ret = proc_reapurb_compat(ps, p);
@@ -2089,6 +2180,7 @@ static long usbdev_do_ioctl(struct file *file, unsigned int cmd,
 		ret = proc_reapurbnonblock_compat(ps, p);
 		break;
 
+>>>>>>> 671a46baf1b... some performance improvements
 	case USBDEVFS_IOCTL32:
 		snoop(&dev->dev, "%s: IOCTL32\n", __func__);
 		ret = proc_ioctl_compat(ps, ptr_to_compat(p));
@@ -2100,6 +2192,8 @@ static long usbdev_do_ioctl(struct file *file, unsigned int cmd,
 		ret = proc_unlinkurb(ps, p);
 		break;
 
+<<<<<<< HEAD
+=======
 	case USBDEVFS_REAPURB:
 		snoop(&dev->dev, "%s: REAPURB\n", __func__);
 		ret = proc_reapurb(ps, p);
@@ -2110,6 +2204,7 @@ static long usbdev_do_ioctl(struct file *file, unsigned int cmd,
 		ret = proc_reapurbnonblock(ps, p);
 		break;
 
+>>>>>>> 671a46baf1b... some performance improvements
 	case USBDEVFS_DISCSIGNAL:
 		snoop(&dev->dev, "%s: DISCSIGNAL\n", __func__);
 		ret = proc_disconnectsignal(ps, p);
@@ -2146,6 +2241,11 @@ static long usbdev_do_ioctl(struct file *file, unsigned int cmd,
 		ret = proc_disconnect_claim(ps, p);
 		break;
 	}
+<<<<<<< HEAD
+
+ done:
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	usb_unlock_device(dev);
 	if (ret >= 0)
 		inode->i_atime = CURRENT_TIME;
@@ -2213,6 +2313,10 @@ static void usbdev_remove(struct usb_device *udev)
 		wake_up_all(&ps->wait);
 		list_del_init(&ps->list);
 		if (ps->discsignr) {
+<<<<<<< HEAD
+			memset(&sinfo, 0, sizeof(sinfo));
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			sinfo.si_signo = ps->discsignr;
 			sinfo.si_errno = EPIPE;
 			sinfo.si_code = SI_ASYNCIO;

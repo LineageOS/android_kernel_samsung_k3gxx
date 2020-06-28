@@ -226,8 +226,12 @@ static struct fb_videomode known_lcd_panels[] = {
 		.lower_margin   = 2,
 		.hsync_len      = 0,
 		.vsync_len      = 0,
+<<<<<<< HEAD
+		.sync           = FB_SYNC_CLK_INVERT,
+=======
 		.sync           = FB_SYNC_CLK_INVERT |
 			FB_SYNC_HOR_HIGH_ACT | FB_SYNC_VERT_HIGH_ACT,
+>>>>>>> 671a46baf1b... some performance improvements
 	},
 	/* Sharp LK043T1DG01 */
 	[1] = {
@@ -241,7 +245,11 @@ static struct fb_videomode known_lcd_panels[] = {
 		.lower_margin   = 2,
 		.hsync_len      = 41,
 		.vsync_len      = 10,
+<<<<<<< HEAD
+		.sync           = 0,
+=======
 		.sync           = FB_SYNC_HOR_HIGH_ACT | FB_SYNC_VERT_HIGH_ACT,
+>>>>>>> 671a46baf1b... some performance improvements
 		.flag           = 0,
 	},
 	[2] = {
@@ -256,7 +264,11 @@ static struct fb_videomode known_lcd_panels[] = {
 		.lower_margin   = 10,
 		.hsync_len      = 10,
 		.vsync_len      = 10,
+<<<<<<< HEAD
+		.sync           = 0,
+=======
 		.sync           = FB_SYNC_HOR_HIGH_ACT | FB_SYNC_VERT_HIGH_ACT,
+>>>>>>> 671a46baf1b... some performance improvements
 		.flag           = 0,
 	},
 };

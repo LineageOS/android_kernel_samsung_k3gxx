@@ -287,7 +287,11 @@ static struct usb_string acm_string_defs[] = {
 	[ACM_CTRL_IDX].s = "CDC Abstract Control Model (ACM)",
 	[ACM_DATA_IDX].s = "CDC ACM Data",
 	[ACM_IAD_IDX ].s = "CDC Serial",
+<<<<<<< HEAD
+	{  } /* end of list */
+=======
 	{  },			/* end of list */
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 static struct usb_gadget_strings acm_string_table = {
@@ -540,6 +544,17 @@ static int acm_notify_serial_state(struct f_acm *acm)
 {
 	struct usb_composite_dev *cdev = acm->port.func.config->cdev;
 	int			status;
+<<<<<<< HEAD
+    __le16			serial_state;
+
+	spin_lock(&acm->lock);
+	if (acm->notify_req) {
+		DBG(cdev, "acm ttyGS%d serial state %04x\n",
+				acm->port_num, acm->serial_state);
+		serial_state = cpu_to_le16(acm->serial_state);
+		status = acm_cdc_notify(acm, USB_CDC_NOTIFY_SERIAL_STATE,
+				0, &serial_state, sizeof(acm->serial_state));
+=======
 	unsigned long	flags;
 
 	spin_lock_irqsave(&acm->lock, flags);
@@ -549,11 +564,16 @@ static int acm_notify_serial_state(struct f_acm *acm)
 				acm->port_num, acm->serial_state);
 		status = acm_cdc_notify(acm, USB_CDC_NOTIFY_SERIAL_STATE,
 				0, &acm->serial_state, sizeof(acm->serial_state));
+>>>>>>> 671a46baf1b... some performance improvements
 	} else {
 		acm->pending = true;
 		status = 0;
 	}
+<<<<<<< HEAD
+	spin_unlock(&acm->lock);
+=======
 	spin_unlock_irqrestore(&acm->lock, flags);
+>>>>>>> 671a46baf1b... some performance improvements
 	return status;
 }
 

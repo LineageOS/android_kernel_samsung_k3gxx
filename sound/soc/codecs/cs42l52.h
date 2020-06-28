@@ -179,7 +179,11 @@
 #define CS42L52_MICB_CTL			0x11
 #define	CS42L52_MIC_CTL_MIC_SEL_MASK		0xBF
 #define	CS42L52_MIC_CTL_MIC_SEL_SHIFT		6
+<<<<<<< HEAD
+#define CS42L52_MIC_CTL_TYPE_MASK		0x20
+=======
 #define CS42L52_MIC_CTL_TYPE_MASK		0xDF
+>>>>>>> 671a46baf1b... some performance improvements
 #define CS42L52_MIC_CTL_TYPE_SHIFT		5
 
 

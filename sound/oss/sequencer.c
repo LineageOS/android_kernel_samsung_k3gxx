@@ -683,6 +683,10 @@ static int seq_timing_event(unsigned char *event_rec)
 			break;
 
 		case TMR_ECHO:
+<<<<<<< HEAD
+			parm = (parm << 8 | SEQ_ECHO);
+			seq_copy_to_input((unsigned char *) &parm, 4);
+=======
 			if (seq_mode == SEQ_2)
 				seq_copy_to_input(event_rec, 8);
 			else
@@ -690,6 +694,7 @@ static int seq_timing_event(unsigned char *event_rec)
 				parm = (parm << 8 | SEQ_ECHO);
 				seq_copy_to_input((unsigned char *) &parm, 4);
 			}
+>>>>>>> 671a46baf1b... some performance improvements
 			break;
 
 		default:;
@@ -1332,7 +1337,10 @@ int sequencer_ioctl(int dev, struct file *file, unsigned int cmd, void __user *a
 	int mode = translate_mode(file);
 	struct synth_info inf;
 	struct seq_event_rec event_rec;
+<<<<<<< HEAD
+=======
 	unsigned long flags;
+>>>>>>> 671a46baf1b... some performance improvements
 	int __user *p = arg;
 
 	orig_dev = dev = dev >> 4;
@@ -1487,9 +1495,13 @@ int sequencer_ioctl(int dev, struct file *file, unsigned int cmd, void __user *a
 		case SNDCTL_SEQ_OUTOFBAND:
 			if (copy_from_user(&event_rec, arg, sizeof(event_rec)))
 				return -EFAULT;
+<<<<<<< HEAD
+			play_event(event_rec.arr);
+=======
 			spin_lock_irqsave(&lock,flags);
 			play_event(event_rec.arr);
 			spin_unlock_irqrestore(&lock,flags);
+>>>>>>> 671a46baf1b... some performance improvements
 			return 0;
 
 		case SNDCTL_MIDI_INFO:

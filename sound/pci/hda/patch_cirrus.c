@@ -363,6 +363,10 @@ static const struct snd_pci_quirk cs420x_fixup_tbl[] = {
 	SND_PCI_QUIRK(0x106b, 0x1c00, "MacBookPro 8,1", CS420X_MBP81),
 	SND_PCI_QUIRK(0x106b, 0x2000, "iMac 12,2", CS420X_IMAC27_122),
 	SND_PCI_QUIRK(0x106b, 0x2800, "MacBookPro 10,1", CS420X_MBP101),
+<<<<<<< HEAD
+	SND_PCI_QUIRK(0x106b, 0x5600, "MacBookAir 5,2", CS420X_MBP81),
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	SND_PCI_QUIRK(0x106b, 0x5b00, "MacBookAir 4,2", CS420X_MBA42),
 	SND_PCI_QUIRK_VENDOR(0x106b, "Apple", CS420X_APPLE),
 	{} /* terminator */
@@ -531,6 +535,10 @@ static int patch_cs420x(struct hda_codec *codec)
 		return -ENOMEM;
 
 	spec->gen.automute_hook = cs_automute;
+<<<<<<< HEAD
+	codec->single_adc_amp = 1;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	snd_hda_pick_fixup(codec, cs420x_models, cs420x_fixup_tbl,
 			   cs420x_fixups);
@@ -785,9 +793,13 @@ static void cs4210_spdif_automute(struct hda_codec *codec,
 
 	spec->spdif_present = spdif_present;
 	/* SPDIF TX on/off */
+<<<<<<< HEAD
+	snd_hda_set_pin_ctl(codec, spdif_pin, spdif_present ? PIN_OUT : 0);
+=======
 	if (spdif_present)
 		snd_hda_set_pin_ctl(codec, spdif_pin,
 				    spdif_present ? PIN_OUT : 0);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	cs_automute(codec);
 }

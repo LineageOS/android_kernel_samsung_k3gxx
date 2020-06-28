@@ -286,15 +286,24 @@ int qib_multicast_detach(struct ib_qp *ibqp, union ib_gid *gid, u16 lid)
 	struct qib_ibdev *dev = to_idev(ibqp->device);
 	struct qib_ibport *ibp = to_iport(ibqp->device, qp->port_num);
 	struct qib_mcast *mcast = NULL;
+<<<<<<< HEAD
+	struct qib_mcast_qp *p, *tmp, *delp = NULL;
+=======
 	struct qib_mcast_qp *p, *tmp;
+>>>>>>> 671a46baf1b... some performance improvements
 	struct rb_node *n;
 	int last = 0;
 	int ret;
 
+<<<<<<< HEAD
+	if (ibqp->qp_num <= 1 || qp->state == IB_QPS_RESET)
+		return -EINVAL;
+=======
 	if (ibqp->qp_num <= 1 || qp->state == IB_QPS_RESET) {
 		ret = -EINVAL;
 		goto bail;
 	}
+>>>>>>> 671a46baf1b... some performance improvements
 
 	spin_lock_irq(&ibp->lock);
 
@@ -303,8 +312,12 @@ int qib_multicast_detach(struct ib_qp *ibqp, union ib_gid *gid, u16 lid)
 	while (1) {
 		if (n == NULL) {
 			spin_unlock_irq(&ibp->lock);
+<<<<<<< HEAD
+			return -EINVAL;
+=======
 			ret = -EINVAL;
 			goto bail;
+>>>>>>> 671a46baf1b... some performance improvements
 		}
 
 		mcast = rb_entry(n, struct qib_mcast, rb_node);
@@ -328,6 +341,10 @@ int qib_multicast_detach(struct ib_qp *ibqp, union ib_gid *gid, u16 lid)
 		 */
 		list_del_rcu(&p->list);
 		mcast->n_attached--;
+<<<<<<< HEAD
+		delp = p;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 		/* If this was the last attached QP, remove the GID too. */
 		if (list_empty(&mcast->qp_list)) {
@@ -338,6 +355,18 @@ int qib_multicast_detach(struct ib_qp *ibqp, union ib_gid *gid, u16 lid)
 	}
 
 	spin_unlock_irq(&ibp->lock);
+<<<<<<< HEAD
+	/* QP not attached */
+	if (!delp)
+		return -EINVAL;
+	/*
+	 * Wait for any list walkers to finish before freeing the
+	 * list element.
+	 */
+	wait_event(mcast->wait, atomic_read(&mcast->refcount) <= 1);
+	qib_mcast_qp_free(delp);
+
+=======
 
 	if (p) {
 		/*
@@ -347,6 +376,7 @@ int qib_multicast_detach(struct ib_qp *ibqp, union ib_gid *gid, u16 lid)
 		wait_event(mcast->wait, atomic_read(&mcast->refcount) <= 1);
 		qib_mcast_qp_free(p);
 	}
+>>>>>>> 671a46baf1b... some performance improvements
 	if (last) {
 		atomic_dec(&mcast->refcount);
 		wait_event(mcast->wait, !atomic_read(&mcast->refcount));
@@ -355,11 +385,15 @@ int qib_multicast_detach(struct ib_qp *ibqp, union ib_gid *gid, u16 lid)
 		dev->n_mcast_grps_allocated--;
 		spin_unlock_irq(&dev->n_mcast_grps_lock);
 	}
+<<<<<<< HEAD
+	return 0;
+=======
 
 	ret = 0;
 
 bail:
 	return ret;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 int qib_mcast_tree_empty(struct qib_ibport *ibp)

@@ -75,6 +75,10 @@ static inline void ip6tunnel_xmit(struct sk_buff *skb, struct net_device *dev)
 	int pkt_len, err;
 
 	nf_reset(skb);
+<<<<<<< HEAD
+	memset(skb->cb, 0, sizeof(struct inet6_skb_parm));
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	pkt_len = skb->len;
 	err = ip6_local_out(skb);
 

@@ -113,7 +113,11 @@ static u64 he_get_##_field(struct hist_entry *he)				\
 static int hpp__color_##_type(struct perf_hpp *hpp, struct hist_entry *he) 	\
 {										\
 	return __hpp__fmt(hpp, he, he_get_##_field, " %6.2f%%",			\
+<<<<<<< HEAD
+			  percent_color_snprintf, true);			\
+=======
 			  (hpp_snprint_fn)percent_color_snprintf, true);	\
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 #define __HPP_ENTRY_PERCENT_FN(_type, _field)					\

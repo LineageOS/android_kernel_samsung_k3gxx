@@ -350,9 +350,12 @@ key_ref_t keyring_search_aux(key_ref_t keyring_ref,
 	if (keyring->type != &key_type_keyring)
 		goto error;
 
+<<<<<<< HEAD
 	if (!match)
 		return ERR_PTR(-ENOKEY);
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	rcu_read_lock();
 
 	now = current_kernel_time();
@@ -516,6 +519,12 @@ key_ref_t keyring_search(key_ref_t keyring,
 			 struct key_type *type,
 			 const char *description)
 {
+<<<<<<< HEAD
+=======
+	if (!type->match)
+		return ERR_PTR(-ENOKEY);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	return keyring_search_aux(keyring, current->cred,
 				  type, description, type->match, false);
 }
@@ -583,15 +592,26 @@ found:
 /*
  * Find a keyring with the specified name.
  *
+<<<<<<< HEAD
+ * Only keyrings that have nonzero refcount, are not revoked, and are owned by a
+ * user in the current user namespace are considered.  If @uid_keyring is %true,
+ * the keyring additionally must have been allocated as a user or user session
+ * keyring; otherwise, it must grant Search permission directly to the caller.
+=======
  * All named keyrings in the current user namespace are searched, provided they
  * grant Search permission directly to the caller (unless this check is
  * skipped).  Keyrings whose usage points have reached zero or who have been
  * revoked are skipped.
+>>>>>>> 671a46baf1b... some performance improvements
  *
  * Returns a pointer to the keyring with the keyring's refcount having being
  * incremented on success.  -ENOKEY is returned if a key could not be found.
  */
+<<<<<<< HEAD
+struct key *find_keyring_by_name(const char *name, bool uid_keyring)
+=======
 struct key *find_keyring_by_name(const char *name, bool skip_perm_check)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	struct key *keyring;
 	int bucket;
@@ -619,10 +639,22 @@ struct key *find_keyring_by_name(const char *name, bool skip_perm_check)
 			if (strcmp(keyring->description, name) != 0)
 				continue;
 
+<<<<<<< HEAD
+			if (uid_keyring) {
+				if (!test_bit(KEY_FLAG_UID_KEYRING,
+					      &keyring->flags))
+					continue;
+			} else {
+				if (key_permission(make_key_ref(keyring, 0),
+						   KEY_SEARCH) < 0)
+					continue;
+			}
+=======
 			if (!skip_perm_check &&
 			    key_permission(make_key_ref(keyring, 0),
 					   KEY_SEARCH) < 0)
 				continue;
+>>>>>>> 671a46baf1b... some performance improvements
 
 			/* we've got a match but we might end up racing with
 			 * key_cleanup() if the keyring is currently 'dead'

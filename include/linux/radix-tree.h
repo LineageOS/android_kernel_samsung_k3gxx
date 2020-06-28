@@ -322,12 +322,35 @@ void **radix_tree_next_chunk(struct radix_tree_root *root,
 			     struct radix_tree_iter *iter, unsigned flags);
 
 /**
+<<<<<<< HEAD
+ * radix_tree_iter_retry - retry this chunk of the iteration
+ * @iter:	iterator state
+ *
+ * If we iterate over a tree protected only by the RCU lock, a race
+ * against deletion or creation may result in seeing a slot for which
+ * radix_tree_deref_retry() returns true.  If so, call this function
+ * and continue the iteration.
+ */
+static inline __must_check
+void **radix_tree_iter_retry(struct radix_tree_iter *iter)
+{
+	iter->next_index = iter->index;
+	return NULL;
+}
+
+/**
+=======
+>>>>>>> 671a46baf1b... some performance improvements
  * radix_tree_chunk_size - get current chunk size
  *
  * @iter:	pointer to radix tree iterator
  * Returns:	current chunk size
  */
+<<<<<<< HEAD
+static __always_inline long
+=======
 static __always_inline unsigned
+>>>>>>> 671a46baf1b... some performance improvements
 radix_tree_chunk_size(struct radix_tree_iter *iter)
 {
 	return iter->next_index - iter->index;
@@ -361,9 +384,15 @@ radix_tree_next_slot(void **slot, struct radix_tree_iter *iter, unsigned flags)
 			return slot + offset + 1;
 		}
 	} else {
+<<<<<<< HEAD
+		long size = radix_tree_chunk_size(iter);
+
+		while (--size > 0) {
+=======
 		unsigned size = radix_tree_chunk_size(iter) - 1;
 
 		while (size--) {
+>>>>>>> 671a46baf1b... some performance improvements
 			slot++;
 			iter->index++;
 			if (likely(*slot))

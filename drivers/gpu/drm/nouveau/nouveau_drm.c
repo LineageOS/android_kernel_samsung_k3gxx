@@ -339,6 +339,11 @@ nouveau_drm_load(struct drm_device *dev, unsigned long flags)
 	if (ret)
 		goto fail_device;
 
+<<<<<<< HEAD
+	dev->irq_enabled = true;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* workaround an odd issue on nvc1 by disabling the device's
 	 * nosnoop capability.  hopefully won't cause issues until a
 	 * better fix is found - assuming there is one...
@@ -426,6 +431,10 @@ nouveau_drm_remove(struct pci_dev *pdev)
 	struct nouveau_drm *drm = nouveau_drm(dev);
 	struct nouveau_object *device;
 
+<<<<<<< HEAD
+	dev->irq_enabled = false;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	device = drm->client.base.device;
 	drm_put_dev(dev);
 

@@ -57,6 +57,10 @@ struct table_set_header {
 #define YYTD_ID_ACCEPT2 6
 #define YYTD_ID_NXT	7
 #define YYTD_ID_TSIZE	8
+<<<<<<< HEAD
+#define YYTD_ID_MAX	8
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 #define YYTD_DATA8	1
 #define YYTD_DATA16	2

@@ -14,8 +14,16 @@
  * See the file COPYING for more details.
  */
 
+<<<<<<< HEAD
+#include <linux/smp.h>
 #include <linux/errno.h>
 #include <linux/types.h>
+#include <linux/percpu.h>
+#include <linux/cpumask.h>
+=======
+#include <linux/errno.h>
+#include <linux/types.h>
+>>>>>>> 671a46baf1b... some performance improvements
 #include <linux/rcupdate.h>
 #include <linux/static_key.h>
 
@@ -60,6 +68,15 @@ struct tp_module {
 	unsigned int num_tracepoints;
 	struct tracepoint * const *tracepoints_ptrs;
 };
+<<<<<<< HEAD
+bool trace_module_has_bad_taint(struct module *mod);
+#else
+static inline bool trace_module_has_bad_taint(struct module *mod)
+{
+	return false;
+}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #endif /* CONFIG_MODULES */
 
 struct tracepoint_iter {
@@ -253,6 +270,21 @@ static inline void tracepoint_synchronize_unregister(void)
  * "void *__data, proto" as the callback prototype.
  */
 #define DECLARE_TRACE_NOARGS(name)					\
+<<<<<<< HEAD
+	__DECLARE_TRACE(name, void, ,					\
+			cpu_online(raw_smp_processor_id()),		\
+			void *__data, __data)
+
+#define DECLARE_TRACE(name, proto, args)				\
+	__DECLARE_TRACE(name, PARAMS(proto), PARAMS(args),		\
+			cpu_online(raw_smp_processor_id()),		\
+			PARAMS(void *__data, proto),			\
+			PARAMS(__data, args))
+
+#define DECLARE_TRACE_CONDITION(name, proto, args, cond)		\
+	__DECLARE_TRACE(name, PARAMS(proto), PARAMS(args),		\
+			cpu_online(raw_smp_processor_id()) && (PARAMS(cond)), \
+=======
 		__DECLARE_TRACE(name, void, , 1, void *__data, __data)
 
 #define DECLARE_TRACE(name, proto, args)				\
@@ -262,6 +294,7 @@ static inline void tracepoint_synchronize_unregister(void)
 
 #define DECLARE_TRACE_CONDITION(name, proto, args, cond)		\
 	__DECLARE_TRACE(name, PARAMS(proto), PARAMS(args), PARAMS(cond), \
+>>>>>>> 671a46baf1b... some performance improvements
 			PARAMS(void *__data, proto),			\
 			PARAMS(__data, args))
 

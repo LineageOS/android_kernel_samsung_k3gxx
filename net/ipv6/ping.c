@@ -58,7 +58,11 @@ static struct inet_protosw pingv6_protosw = {
 
 
 /* Compatibility glue so we can support IPv6 when it's compiled as a module */
+<<<<<<< HEAD
+int dummy_ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len, int *addr_len)
+=======
 int dummy_ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	return -EAFNOSUPPORT;
 }

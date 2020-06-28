@@ -747,10 +747,15 @@ void mesh_plink_broken(struct sta_info *sta)
 static void mesh_path_node_reclaim(struct rcu_head *rp)
 {
 	struct mpath_node *node = container_of(rp, struct mpath_node, rcu);
+<<<<<<< HEAD
+
+	del_timer_sync(&node->mpath->timer);
+=======
 	struct ieee80211_sub_if_data *sdata = node->mpath->sdata;
 
 	del_timer_sync(&node->mpath->timer);
 	atomic_dec(&sdata->u.mesh.mpaths);
+>>>>>>> 671a46baf1b... some performance improvements
 	kfree(node->mpath);
 	kfree(node);
 }
@@ -758,8 +763,14 @@ static void mesh_path_node_reclaim(struct rcu_head *rp)
 /* needs to be called with the corresponding hashwlock taken */
 static void __mesh_path_del(struct mesh_table *tbl, struct mpath_node *node)
 {
+<<<<<<< HEAD
+	struct mesh_path *mpath = node->mpath;
+	struct ieee80211_sub_if_data *sdata = node->mpath->sdata;
+
+=======
 	struct mesh_path *mpath;
 	mpath = node->mpath;
+>>>>>>> 671a46baf1b... some performance improvements
 	spin_lock(&mpath->state_lock);
 	mpath->flags |= MESH_PATH_RESOLVING;
 	if (mpath->is_gate)
@@ -767,6 +778,10 @@ static void __mesh_path_del(struct mesh_table *tbl, struct mpath_node *node)
 	hlist_del_rcu(&node->list);
 	call_rcu(&node->rcu, mesh_path_node_reclaim);
 	spin_unlock(&mpath->state_lock);
+<<<<<<< HEAD
+	atomic_dec(&sdata->u.mesh.mpaths);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	atomic_dec(&tbl->entries);
 }
 

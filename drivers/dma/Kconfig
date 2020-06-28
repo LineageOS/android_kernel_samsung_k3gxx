@@ -338,6 +338,10 @@ config NET_DMA
 	bool "Network: TCP receive copy offload"
 	depends on DMA_ENGINE && NET
 	default (INTEL_IOATDMA || FSL_DMA)
+<<<<<<< HEAD
+	depends on BROKEN
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	help
 	  This enables the use of DMA engines in the network stack to
 	  offload receive copy-to-user operations, freeing CPU cycles.

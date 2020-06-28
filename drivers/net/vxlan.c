@@ -845,6 +845,12 @@ static int arp_reduce(struct net_device *dev, struct sk_buff *skb)
 
 		neigh_release(n);
 
+<<<<<<< HEAD
+		if (reply == NULL)
+			goto out;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		skb_reset_mac_header(reply);
 		__skb_pull(reply, skb_network_offset(reply));
 		reply->ip_summed = CHECKSUM_UNNECESSARY;
@@ -1090,7 +1096,11 @@ static netdev_tx_t vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
 	iph->daddr	= dst;
 	iph->saddr	= fl4.saddr;
 	iph->ttl	= ttl ? : ip4_dst_hoplimit(&rt->dst);
+<<<<<<< HEAD
+	__ip_select_ident(iph, skb_shinfo(skb)->gso_segs ?: 1);
+=======
 	tunnel_ip_select_ident(skb, old_iph, &rt->dst);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	nf_reset(skb);
 
@@ -1311,7 +1321,11 @@ static void vxlan_setup(struct net_device *dev)
 
 	eth_hw_addr_random(dev);
 	ether_setup(dev);
+<<<<<<< HEAD
+	dev->needed_headroom = ETH_HLEN + VXLAN_HEADROOM;
+=======
 	dev->hard_header_len = ETH_HLEN + VXLAN_HEADROOM;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	dev->netdev_ops = &vxlan_netdev_ops;
 	dev->destructor = vxlan_free;
@@ -1383,7 +1397,11 @@ static int vxlan_validate(struct nlattr *tb[], struct nlattr *data[])
 
 	if (data[IFLA_VXLAN_ID]) {
 		__u32 id = nla_get_u32(data[IFLA_VXLAN_ID]);
+<<<<<<< HEAD
+		if (id >= VXLAN_N_VID)
+=======
 		if (id >= VXLAN_VID_MASK)
+>>>>>>> 671a46baf1b... some performance improvements
 			return -ERANGE;
 	}
 
@@ -1451,7 +1469,11 @@ static int vxlan_newlink(struct net *net, struct net_device *dev,
 			dev->mtu = lowerdev->mtu - VXLAN_HEADROOM;
 
 		/* update header length based on lower device */
+<<<<<<< HEAD
+		dev->needed_headroom = lowerdev->hard_header_len +
+=======
 		dev->hard_header_len = lowerdev->hard_header_len +
+>>>>>>> 671a46baf1b... some performance improvements
 				       VXLAN_HEADROOM;
 	}
 

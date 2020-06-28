@@ -616,6 +616,10 @@ int ext4_ind_migrate(struct inode *inode)
 	struct ext4_inode_info		*ei = EXT4_I(inode);
 	struct ext4_extent		*ex;
 	unsigned int			i, len;
+<<<<<<< HEAD
+	ext4_lblk_t			start, end;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	ext4_fsblk_t			blk;
 	handle_t			*handle;
 	int				ret;
@@ -629,6 +633,17 @@ int ext4_ind_migrate(struct inode *inode)
 				       EXT4_FEATURE_RO_COMPAT_BIGALLOC))
 		return -EOPNOTSUPP;
 
+<<<<<<< HEAD
+	/*
+	 * In order to get correct extent info, force all delayed allocation
+	 * blocks to be allocated, otherwise delayed allocation blocks may not
+	 * be reflected and bypass the checks on extent header.
+	 */
+	if (test_opt(inode->i_sb, DELALLOC))
+		ext4_alloc_da_blocks(inode);
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	handle = ext4_journal_start(inode, EXT4_HT_MIGRATE, 1);
 	if (IS_ERR(handle))
 		return PTR_ERR(handle);
@@ -646,11 +661,21 @@ int ext4_ind_migrate(struct inode *inode)
 		goto errout;
 	}
 	if (eh->eh_entries == 0)
+<<<<<<< HEAD
+		blk = len = start = end = 0;
+	else {
+		len = le16_to_cpu(ex->ee_len);
+		blk = ext4_ext_pblock(ex);
+		start = le32_to_cpu(ex->ee_block);
+		end = start + len - 1;
+		if (end >= EXT4_NDIR_BLOCKS) {
+=======
 		blk = len = 0;
 	else {
 		len = le16_to_cpu(ex->ee_len);
 		blk = ext4_ext_pblock(ex);
 		if (len > EXT4_NDIR_BLOCKS) {
+>>>>>>> 671a46baf1b... some performance improvements
 			ret = -EOPNOTSUPP;
 			goto errout;
 		}
@@ -658,7 +683,11 @@ int ext4_ind_migrate(struct inode *inode)
 
 	ext4_clear_inode_flag(inode, EXT4_INODE_EXTENTS);
 	memset(ei->i_data, 0, sizeof(ei->i_data));
+<<<<<<< HEAD
+	for (i = start; i <= end; i++)
+=======
 	for (i=0; i < len; i++)
+>>>>>>> 671a46baf1b... some performance improvements
 		ei->i_data[i] = cpu_to_le32(blk++);
 	ext4_mark_inode_dirty(handle, inode);
 errout:

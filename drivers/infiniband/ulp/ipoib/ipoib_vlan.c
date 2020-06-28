@@ -165,11 +165,19 @@ int ipoib_vlan_add(struct net_device *pdev, unsigned short pkey)
 out:
 	mutex_unlock(&ppriv->vlan_mutex);
 
+<<<<<<< HEAD
+	rtnl_unlock();
+
+	if (result)
+		free_netdev(priv->dev);
+
+=======
 	if (result)
 		free_netdev(priv->dev);
 
 	rtnl_unlock();
 
+>>>>>>> 671a46baf1b... some performance improvements
 	return result;
 }
 

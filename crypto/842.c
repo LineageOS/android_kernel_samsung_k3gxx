@@ -180,3 +180,7 @@ module_exit(nx842_mod_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("842 Compression Algorithm");
+<<<<<<< HEAD
+MODULE_ALIAS_CRYPTO("842");
+=======
+>>>>>>> 671a46baf1b... some performance improvements

@@ -31,7 +31,11 @@
 #include <mach/coresight.h>
 #endif
 #include <mach/exynos-ss.h>
+<<<<<<< HEAD
+#include <linux/console.h>
+=======
 
+>>>>>>> 671a46baf1b... some performance improvements
 #define PANIC_TIMER_STEP 100
 #define PANIC_BLINK_SPD 18
 #if defined(CONFIG_SOC_EXYNOS5422) || defined(CONFIG_SOC_EXYNOS5430)
@@ -166,6 +170,11 @@ void panic(const char *fmt, ...)
 
 	bust_spinlocks(0);
 
+<<<<<<< HEAD
+	console_flush_on_panic();
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	if (!panic_blink)
 		panic_blink = no_blink;
 

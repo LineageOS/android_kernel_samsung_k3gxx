@@ -117,7 +117,10 @@ mISDN_sock_recvmsg(struct kiocb *iocb, struct socket *sock,
 {
 	struct sk_buff		*skb;
 	struct sock		*sk = sock->sk;
+<<<<<<< HEAD
+=======
 	struct sockaddr_mISDN	*maddr;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	int		copied, err;
 
@@ -135,9 +138,15 @@ mISDN_sock_recvmsg(struct kiocb *iocb, struct socket *sock,
 	if (!skb)
 		return err;
 
+<<<<<<< HEAD
+	if (msg->msg_name) {
+		struct sockaddr_mISDN *maddr = msg->msg_name;
+
+=======
 	if (msg->msg_namelen >= sizeof(struct sockaddr_mISDN)) {
 		msg->msg_namelen = sizeof(struct sockaddr_mISDN);
 		maddr = (struct sockaddr_mISDN *)msg->msg_name;
+>>>>>>> 671a46baf1b... some performance improvements
 		maddr->family = AF_ISDN;
 		maddr->dev = _pms(sk)->dev->id;
 		if ((sk->sk_protocol == ISDN_P_LAPD_TE) ||
@@ -150,11 +159,15 @@ mISDN_sock_recvmsg(struct kiocb *iocb, struct socket *sock,
 			maddr->sapi = _pms(sk)->ch.addr & 0xFF;
 			maddr->tei =  (_pms(sk)->ch.addr >> 8) & 0xFF;
 		}
+<<<<<<< HEAD
+		msg->msg_namelen = sizeof(*maddr);
+=======
 	} else {
 		if (msg->msg_namelen)
 			printk(KERN_WARNING "%s: too small namelen %d\n",
 			       __func__, msg->msg_namelen);
 		msg->msg_namelen = 0;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	copied = skb->len + MISDN_HEADER_LEN;
@@ -722,6 +735,12 @@ base_sock_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
 	if (!maddr || maddr->family != AF_ISDN)
 		return -EINVAL;
 
+<<<<<<< HEAD
+	if (addr_len < sizeof(struct sockaddr_mISDN))
+		return -EINVAL;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	lock_sock(sk);
 
 	if (_pms(sk)->dev) {

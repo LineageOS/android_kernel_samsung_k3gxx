@@ -217,9 +217,14 @@ int dwc3_gadget_resize_tx_fifos(struct dwc3 *dwc)
 	 * improve this algorithm so that we better use the internal
 	 * FIFO space
 	 */
+<<<<<<< HEAD
+	for (num = 0; num < dwc->num_in_eps; num++) {
+		struct dwc3_ep	*dep = dwc->eps[(num << 1) | 1];
+=======
 	for (num = 0; num < DWC3_ENDPOINTS_NUM; num++) {
 		struct dwc3_ep	*dep = dwc->eps[num];
 		int		fifo_number = dep->number >> 1;
+>>>>>>> 671a46baf1b... some performance improvements
 		int		mult = 1;
 		int		tmp;
 
@@ -254,8 +259,12 @@ int dwc3_gadget_resize_tx_fifos(struct dwc3 *dwc)
 		dev_vdbg(dwc->dev, "%s: Fifo Addr %04x Size %d\n",
 				dep->name, last_fifo_depth, fifo_size & 0xffff);
 
+<<<<<<< HEAD
+		dwc3_writel(dwc->regs, DWC3_GTXFIFOSIZ(num), fifo_size);
+=======
 		dwc3_writel(dwc->regs, DWC3_GTXFIFOSIZ(fifo_number),
 				fifo_size);
+>>>>>>> 671a46baf1b... some performance improvements
 
 		last_fifo_depth += (fifo_size & 0xffff);
 	}
@@ -267,6 +276,10 @@ void dwc3_gadget_giveback(struct dwc3_ep *dep, struct dwc3_request *req,
 		int status)
 {
 	struct dwc3			*dwc = dep->dwc;
+<<<<<<< HEAD
+	unsigned int			unmap_after_complete = false;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	int				i;
 
 	if (req->queued) {
@@ -291,11 +304,27 @@ void dwc3_gadget_giveback(struct dwc3_ep *dep, struct dwc3_request *req,
 	if (req->request.status == -EINPROGRESS)
 		req->request.status = status;
 
+<<<<<<< HEAD
+	/*
+	 * NOTICE we don't want to unmap before calling ->complete() if we're
+	 * dealing with a bounced ep0 request. If we unmap it here, we would end
+	 * up overwritting the contents of req->buf and this could confuse the
+	 * gadget driver.
+	 */
+	if (dwc->ep0_bounced && dep->number <= 1) {
+		dwc->ep0_bounced = false;
+		unmap_after_complete = true;
+	} else {
+		usb_gadget_unmap_request(&dwc->gadget,
+				&req->request, req->direction);
+	}
+=======
 	if (dwc->ep0_bounced && dep->number == 0)
 		dwc->ep0_bounced = false;
 	else
 		usb_gadget_unmap_request(&dwc->gadget, &req->request,
 				req->direction);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (dwc->ep0_zlp_sent && dep->number == 0)
 		dwc->ep0_zlp_sent = 0;
@@ -308,6 +337,13 @@ void dwc3_gadget_giveback(struct dwc3_ep *dep, struct dwc3_request *req,
 	if (req->request.complete)
 		req->request.complete(&dep->endpoint, &req->request);
 	spin_lock(&dwc->lock);
+<<<<<<< HEAD
+
+	if (unmap_after_complete)
+		usb_gadget_unmap_request(&dwc->gadget,
+				&req->request, req->direction);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static const char *dwc3_gadget_ep_cmd_string(u8 cmd)
@@ -349,6 +385,11 @@ int dwc3_send_gadget_generic_command(struct dwc3 *dwc, int cmd, u32 param)
 		if (!(reg & DWC3_DGCMD_CMDACT)) {
 			dev_vdbg(dwc->dev, "Command Complete --> %d\n",
 					DWC3_DGCMD_STATUS(reg));
+<<<<<<< HEAD
+			if (DWC3_DGCMD_STATUS(reg))
+				return -EINVAL;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			return 0;
 		}
 
@@ -385,6 +426,11 @@ int dwc3_send_gadget_ep_cmd(struct dwc3 *dwc, unsigned ep,
 		if (!(reg & DWC3_DEPCMD_CMDACT)) {
 			dev_vdbg(dwc->dev, "Command Complete --> %d\n",
 					DWC3_DEPCMD_STATUS(reg));
+<<<<<<< HEAD
+			if (DWC3_DEPCMD_STATUS(reg))
+				return -EINVAL;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			return 0;
 		}
 
@@ -582,12 +628,19 @@ static int __dwc3_gadget_ep_enable(struct dwc3_ep *dep,
 		if (!usb_endpoint_xfer_isoc(desc))
 			return 0;
 
+<<<<<<< HEAD
+=======
 		memset(&trb_link, 0, sizeof(trb_link));
 
+>>>>>>> 671a46baf1b... some performance improvements
 		/* Link TRB for ISOC. The HWO bit is never reset */
 		trb_st_hw = &dep->trb_pool[0];
 
 		trb_link = &dep->trb_pool[DWC3_TRB_NUM - 1];
+<<<<<<< HEAD
+		memset(trb_link, 0, sizeof(*trb_link));
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 		trb_link->bpl = lower_32_bits(dwc3_trb_dma_offset(dep, trb_st_hw));
 		trb_link->bph = upper_32_bits(dwc3_trb_dma_offset(dep, trb_st_hw));
@@ -636,6 +689,13 @@ static int __dwc3_gadget_ep_disable(struct dwc3_ep *dep)
 
 	dwc3_remove_requests(dwc, dep);
 
+<<<<<<< HEAD
+	/* make sure HW endpoint isn't stalled */
+	if (dep->flags & DWC3_EP_STALL)
+		__dwc3_gadget_ep_set_halt(dep, 0, false);
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	reg = dwc3_readl(dwc->regs, DWC3_DALEPENA);
 	reg &= ~DWC3_DALEPENA_EP(dep->number);
 	dwc3_writel(dwc->regs, DWC3_DALEPENA, reg);
@@ -934,8 +994,12 @@ static void dwc3_prepare_trbs(struct dwc3_ep *dep, bool starting)
 
 				if (i == (request->num_mapped_sgs - 1) ||
 						sg_is_last(s)) {
+<<<<<<< HEAD
+					if (list_empty(&dep->request_list))
+=======
 					if (list_is_last(&req->list,
 							&dep->request_list))
+>>>>>>> 671a46baf1b... some performance improvements
 						last_one = true;
 					chain = false;
 				}
@@ -953,6 +1017,12 @@ static void dwc3_prepare_trbs(struct dwc3_ep *dep, bool starting)
 				if (last_one)
 					break;
 			}
+<<<<<<< HEAD
+
+			if (last_one)
+				break;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		} else {
 			dma = req->request.dma;
 			length = req->request.length;
@@ -1254,7 +1324,11 @@ out0:
 	return ret;
 }
 
+<<<<<<< HEAD
+int __dwc3_gadget_ep_set_halt(struct dwc3_ep *dep, int value, int protocol)
+=======
 int __dwc3_gadget_ep_set_halt(struct dwc3_ep *dep, int value)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	struct dwc3_gadget_ep_cmd_params	params;
 	struct dwc3				*dwc = dep->dwc;
@@ -1263,6 +1337,17 @@ int __dwc3_gadget_ep_set_halt(struct dwc3_ep *dep, int value)
 	memset(&params, 0x00, sizeof(params));
 
 	if (value) {
+<<<<<<< HEAD
+		if (!protocol && ((dep->direction && dep->flags & DWC3_EP_BUSY) ||
+				(!list_empty(&dep->req_queued) ||
+				 !list_empty(&dep->request_list)))) {
+			dev_dbg(dwc->dev, "%s: pending request, cannot halt\n",
+					dep->name);
+			return -EAGAIN;
+		}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		ret = dwc3_send_gadget_ep_cmd(dwc, dep->number,
 			DWC3_DEPCMD_SETSTALL, &params);
 		if (ret)
@@ -1272,9 +1357,12 @@ int __dwc3_gadget_ep_set_halt(struct dwc3_ep *dep, int value)
 		else
 			dep->flags |= DWC3_EP_STALL;
 	} else {
+<<<<<<< HEAD
+=======
 		if (dep->flags & DWC3_EP_WEDGE)
 			return 0;
 
+>>>>>>> 671a46baf1b... some performance improvements
 		ret = dwc3_send_gadget_ep_cmd(dwc, dep->number,
 			DWC3_DEPCMD_CLEARSTALL, &params);
 		if (ret)
@@ -1282,7 +1370,11 @@ int __dwc3_gadget_ep_set_halt(struct dwc3_ep *dep, int value)
 					value ? "set" : "clear",
 					dep->name);
 		else
+<<<<<<< HEAD
+			dep->flags &= ~(DWC3_EP_STALL | DWC3_EP_WEDGE);
+=======
 			dep->flags &= ~DWC3_EP_STALL;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	return ret;
@@ -1305,7 +1397,11 @@ static int dwc3_gadget_ep_set_halt(struct usb_ep *ep, int value)
 		goto out;
 	}
 
+<<<<<<< HEAD
+	ret = __dwc3_gadget_ep_set_halt(dep, value, false);
+=======
 	ret = __dwc3_gadget_ep_set_halt(dep, value);
+>>>>>>> 671a46baf1b... some performance improvements
 out:
 	spin_unlock_irqrestore(&dwc->lock, flags);
 
@@ -1325,7 +1421,11 @@ static int dwc3_gadget_ep_set_wedge(struct usb_ep *ep)
 	if (dep->number == 0 || dep->number == 1)
 		return dwc3_gadget_ep0_set_halt(ep, 1);
 	else
+<<<<<<< HEAD
+		return __dwc3_gadget_ep_set_halt(dep, 1, false);
+=======
 		return dwc3_gadget_ep_set_halt(ep, 1);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1547,14 +1647,22 @@ static int dwc3_udc_init(struct dwc3 *dwc)
 	ret = __dwc3_gadget_ep_enable(dep, &dwc3_gadget_ep0_desc, NULL, false);
 	if (ret) {
 		dev_err(dwc->dev, "failed to enable %s\n", dep->name);
+<<<<<<< HEAD
+		goto err2;
+=======
 		goto err0;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	dep = dwc->eps[1];
 	ret = __dwc3_gadget_ep_enable(dep, &dwc3_gadget_ep0_desc, NULL, false);
 	if (ret) {
 		dev_err(dwc->dev, "failed to enable %s\n", dep->name);
+<<<<<<< HEAD
+		goto err3;
+=======
 		goto err1;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	/* begin to receive SETUP packets */
@@ -1563,10 +1671,19 @@ static int dwc3_udc_init(struct dwc3 *dwc)
 
 	return 0;
 
+<<<<<<< HEAD
+err3:
+	__dwc3_gadget_ep_disable(dwc->eps[0]);
+
+err2:
+	dwc->gadget_driver = NULL;
+
+=======
 err1:
 	__dwc3_gadget_ep_disable(dwc->eps[0]);
 
 err0:
+>>>>>>> 671a46baf1b... some performance improvements
 	return ret;
 }
 
@@ -2059,6 +2176,8 @@ static int __dwc3_cleanup_done_trbs(struct dwc3 *dwc, struct dwc3_ep *dep,
 			s_pkt = 1;
 	}
 
+<<<<<<< HEAD
+=======
 	/*
 	 * We assume here we will always receive the entire data block
 	 * which we should receive. Meaning, if we program RX to
@@ -2067,6 +2186,7 @@ static int __dwc3_cleanup_done_trbs(struct dwc3 *dwc, struct dwc3_ep *dep,
 	 * gadget driver for further processing.
 	 */
 	req->request.actual += req->request.length - count;
+>>>>>>> 671a46baf1b... some performance improvements
 	if (s_pkt)
 		return 1;
 	if ((event->status & DEPEVT_STATUS_LST) &&
@@ -2086,6 +2206,10 @@ static int dwc3_cleanup_done_reqs(struct dwc3 *dwc, struct dwc3_ep *dep,
 	struct dwc3_trb		*trb;
 	unsigned int		slot;
 	unsigned int		i;
+<<<<<<< HEAD
+	int			count = 0;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	int			ret;
 
 	do {
@@ -2102,6 +2226,11 @@ static int dwc3_cleanup_done_reqs(struct dwc3 *dwc, struct dwc3_ep *dep,
 				slot++;
 			slot %= DWC3_TRB_NUM;
 			trb = &dep->trb_pool[slot];
+<<<<<<< HEAD
+			count += trb->size & DWC3_TRB_SIZE_MASK;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 			ret = __dwc3_cleanup_done_trbs(dwc, dep, req, trb,
 					event, status);
@@ -2109,6 +2238,17 @@ static int dwc3_cleanup_done_reqs(struct dwc3 *dwc, struct dwc3_ep *dep,
 				break;
 		}while (++i < req->request.num_mapped_sgs);
 
+<<<<<<< HEAD
+		/*
+		 * We assume here we will always receive the entire data block
+		 * which we should receive. Meaning, if we program RX to
+		 * receive 4K but we receive only 2K, we assume that's all we
+		 * should receive and we simply bounce the request back to the
+		 * gadget driver for further processing.
+		 */
+		req->request.actual += req->request.length - count;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		dwc3_gadget_giveback(dep, req, status);
 
 		if (ret)
@@ -2646,6 +2786,17 @@ static void dwc3_gadget_wakeup_interrupt(struct dwc3 *dwc)
 	 */
 
 	dwc->gadget_driver->resume(&dwc->gadget);
+<<<<<<< HEAD
+	/*
+	 * gadget_driver resume function might require some dwc3-gadget
+	 * operations, such as ep_enable. Hence, dwc->lock must be released.
+	 */
+	spin_unlock(&dwc->lock);
+	dwc->gadget_driver->resume(&dwc->gadget);
+	spin_lock(&dwc->lock);
+	dwc->link_state = DWC3_LINK_STATE_U0;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void dwc3_gadget_linksts_change_interrupt(struct dwc3 *dwc,
@@ -3128,4 +3279,7 @@ int dwc3_get_ss_host_available(struct usb_gadget *gadget)
 }
 EXPORT_SYMBOL_GPL(dwc3_get_ss_host_available);
 #endif
+<<<<<<< HEAD
+=======
 
+>>>>>>> 671a46baf1b... some performance improvements

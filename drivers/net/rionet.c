@@ -269,7 +269,11 @@ static void rionet_outb_msg_event(struct rio_mport *mport, void *dev_id, int mbo
 	struct net_device *ndev = dev_id;
 	struct rionet_private *rnet = netdev_priv(ndev);
 
+<<<<<<< HEAD
+	spin_lock(&rnet->tx_lock);
+=======
 	spin_lock(&rnet->lock);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (netif_msg_intr(rnet))
 		printk(KERN_INFO
@@ -288,7 +292,11 @@ static void rionet_outb_msg_event(struct rio_mport *mport, void *dev_id, int mbo
 	if (rnet->tx_cnt < RIONET_TX_RING_SIZE)
 		netif_wake_queue(ndev);
 
+<<<<<<< HEAD
+	spin_unlock(&rnet->tx_lock);
+=======
 	spin_unlock(&rnet->lock);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int rionet_open(struct net_device *ndev)

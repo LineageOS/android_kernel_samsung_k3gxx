@@ -66,7 +66,11 @@ static inline int init_kernel_text(unsigned long addr)
 	return 0;
 }
 
+<<<<<<< HEAD
+int notrace core_kernel_text(unsigned long addr)
+=======
 int core_kernel_text(unsigned long addr)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	if (addr >= (unsigned long)_stext &&
 	    addr <= (unsigned long)_etext)

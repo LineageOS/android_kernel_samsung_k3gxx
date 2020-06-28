@@ -199,6 +199,10 @@ struct sctp_chunk *sctp_make_init(const struct sctp_association *asoc,
 			     gfp_t gfp, int vparam_len)
 {
 	struct net *net = sock_net(asoc->base.sk);
+<<<<<<< HEAD
+	struct sctp_endpoint *ep = asoc->ep;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	sctp_inithdr_t init;
 	union sctp_params addrs;
 	size_t chunksize;
@@ -258,7 +262,11 @@ struct sctp_chunk *sctp_make_init(const struct sctp_association *asoc,
 	chunksize += vparam_len;
 
 	/* Account for AUTH related parameters */
+<<<<<<< HEAD
+	if (ep->auth_enable) {
+=======
 	if (net->sctp.auth_enable) {
+>>>>>>> 671a46baf1b... some performance improvements
 		/* Add random parameter length*/
 		chunksize += sizeof(asoc->c.auth_random);
 
@@ -343,7 +351,11 @@ struct sctp_chunk *sctp_make_init(const struct sctp_association *asoc,
 	}
 
 	/* Add SCTP-AUTH chunks to the parameter list */
+<<<<<<< HEAD
+	if (ep->auth_enable) {
+=======
 	if (net->sctp.auth_enable) {
+>>>>>>> 671a46baf1b... some performance improvements
 		sctp_addto_chunk(retval, sizeof(asoc->c.auth_random),
 				 asoc->c.auth_random);
 		if (auth_hmacs)
@@ -1403,8 +1415,13 @@ static void sctp_chunk_destroy(struct sctp_chunk *chunk)
 	BUG_ON(!list_empty(&chunk->list));
 	list_del_init(&chunk->transmitted_list);
 
+<<<<<<< HEAD
+	consume_skb(chunk->skb);
+	consume_skb(chunk->auth_chunk);
+=======
 	/* Free the chunk skb data and the SCTP_chunk stub itself. */
 	dev_kfree_skb(chunk->skb);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	SCTP_DBG_OBJCNT_DEC(chunk);
 	kmem_cache_free(sctp_chunk_cachep, chunk);
@@ -1995,7 +2012,11 @@ static void sctp_process_ext_param(struct sctp_association *asoc,
 			    /* if the peer reports AUTH, assume that he
 			     * supports AUTH.
 			     */
+<<<<<<< HEAD
+			    if (asoc->ep->auth_enable)
+=======
 			    if (net->sctp.auth_enable)
+>>>>>>> 671a46baf1b... some performance improvements
 				    asoc->peer.auth_capable = 1;
 			    break;
 		    case SCTP_CID_ASCONF:
@@ -2087,6 +2108,10 @@ static sctp_ierror_t sctp_process_unk_param(const struct sctp_association *asoc,
  * 	SCTP_IERROR_NO_ERROR - continue with the chunk
  */
 static sctp_ierror_t sctp_verify_param(struct net *net,
+<<<<<<< HEAD
+					const struct sctp_endpoint *ep,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 					const struct sctp_association *asoc,
 					union sctp_params param,
 					sctp_cid_t cid,
@@ -2137,7 +2162,11 @@ static sctp_ierror_t sctp_verify_param(struct net *net,
 		goto fallthrough;
 
 	case SCTP_PARAM_RANDOM:
+<<<<<<< HEAD
+		if (!ep->auth_enable)
+=======
 		if (!net->sctp.auth_enable)
+>>>>>>> 671a46baf1b... some performance improvements
 			goto fallthrough;
 
 		/* SCTP-AUTH: Secion 6.1
@@ -2154,7 +2183,11 @@ static sctp_ierror_t sctp_verify_param(struct net *net,
 		break;
 
 	case SCTP_PARAM_CHUNKS:
+<<<<<<< HEAD
+		if (!ep->auth_enable)
+=======
 		if (!net->sctp.auth_enable)
+>>>>>>> 671a46baf1b... some performance improvements
 			goto fallthrough;
 
 		/* SCTP-AUTH: Section 3.2
@@ -2170,7 +2203,11 @@ static sctp_ierror_t sctp_verify_param(struct net *net,
 		break;
 
 	case SCTP_PARAM_HMAC_ALGO:
+<<<<<<< HEAD
+		if (!ep->auth_enable)
+=======
 		if (!net->sctp.auth_enable)
+>>>>>>> 671a46baf1b... some performance improvements
 			goto fallthrough;
 
 		hmacs = (struct sctp_hmac_algo_param *)param.p;
@@ -2204,10 +2241,16 @@ fallthrough:
 }
 
 /* Verify the INIT packet before we process it.  */
+<<<<<<< HEAD
+int sctp_verify_init(struct net *net, const struct sctp_endpoint *ep,
+		     const struct sctp_association *asoc, sctp_cid_t cid,
+		     sctp_init_chunk_t *peer_init, struct sctp_chunk *chunk,
+=======
 int sctp_verify_init(struct net *net, const struct sctp_association *asoc,
 		     sctp_cid_t cid,
 		     sctp_init_chunk_t *peer_init,
 		     struct sctp_chunk *chunk,
+>>>>>>> 671a46baf1b... some performance improvements
 		     struct sctp_chunk **errp)
 {
 	union sctp_params param;
@@ -2250,8 +2293,13 @@ int sctp_verify_init(struct net *net, const struct sctp_association *asoc,
 
 	/* Verify all the variable length parameters */
 	sctp_walk_params(param, peer_init, init_hdr.params) {
+<<<<<<< HEAD
+		result = sctp_verify_param(net, ep, asoc, param, cid,
+					   chunk, errp);
+=======
 
 		result = sctp_verify_param(net, asoc, param, cid, chunk, errp);
+>>>>>>> 671a46baf1b... some performance improvements
 		switch (result) {
 		    case SCTP_IERROR_ABORT:
 		    case SCTP_IERROR_NOMEM:
@@ -2483,6 +2531,10 @@ static int sctp_process_param(struct sctp_association *asoc,
 	struct sctp_af *af;
 	union sctp_addr_param *addr_param;
 	struct sctp_transport *t;
+<<<<<<< HEAD
+	struct sctp_endpoint *ep = asoc->ep;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* We maintain all INIT parameters in network byte order all the
 	 * time.  This allows us to not worry about whether the parameters
@@ -2593,7 +2645,11 @@ do_addr_param:
 
 		addr_param = param.v + sizeof(sctp_addip_param_t);
 
+<<<<<<< HEAD
+		af = sctp_get_af_specific(param_type2af(addr_param->p.type));
+=======
 		af = sctp_get_af_specific(param_type2af(param.p->type));
+>>>>>>> 671a46baf1b... some performance improvements
 		if (af == NULL)
 			break;
 
@@ -2626,7 +2682,11 @@ do_addr_param:
 		goto fall_through;
 
 	case SCTP_PARAM_RANDOM:
+<<<<<<< HEAD
+		if (!ep->auth_enable)
+=======
 		if (!net->sctp.auth_enable)
+>>>>>>> 671a46baf1b... some performance improvements
 			goto fall_through;
 
 		/* Save peer's random parameter */
@@ -2639,7 +2699,11 @@ do_addr_param:
 		break;
 
 	case SCTP_PARAM_HMAC_ALGO:
+<<<<<<< HEAD
+		if (!ep->auth_enable)
+=======
 		if (!net->sctp.auth_enable)
+>>>>>>> 671a46baf1b... some performance improvements
 			goto fall_through;
 
 		/* Save peer's HMAC list */
@@ -2655,7 +2719,11 @@ do_addr_param:
 		break;
 
 	case SCTP_PARAM_CHUNKS:
+<<<<<<< HEAD
+		if (!ep->auth_enable)
+=======
 		if (!net->sctp.auth_enable)
+>>>>>>> 671a46baf1b... some performance improvements
 			goto fall_through;
 
 		asoc->peer.peer_chunks = kmemdup(param.p,

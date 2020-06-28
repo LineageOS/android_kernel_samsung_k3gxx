@@ -765,12 +765,19 @@ class_dir_create_and_add(struct class *class, struct kobject *parent_kobj)
 	return &dir->kobj;
 }
 
+<<<<<<< HEAD
+static DEFINE_MUTEX(gdp_mutex);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 static struct kobject *get_device_parent(struct device *dev,
 					 struct device *parent)
 {
 	if (dev->class) {
+<<<<<<< HEAD
+=======
 		static DEFINE_MUTEX(gdp_mutex);
+>>>>>>> 671a46baf1b... some performance improvements
 		struct kobject *kobj = NULL;
 		struct kobject *parent_kobj;
 		struct kobject *k;
@@ -827,6 +834,36 @@ static struct kobject *get_device_parent(struct device *dev,
 	return NULL;
 }
 
+<<<<<<< HEAD
+static inline bool live_in_glue_dir(struct kobject *kobj,
+				    struct device *dev)
+{
+	if (!kobj || !dev->class ||
+	    kobj->kset != &dev->class->p->glue_dirs)
+		return false;
+	return true;
+}
+
+static inline struct kobject *get_glue_dir(struct device *dev)
+{
+	return dev->kobj.parent;
+}
+
+/*
+ * make sure cleaning up dir as the last step, we need to make
+ * sure .release handler of kobject is run with holding the
+ * global lock
+ */
+static void cleanup_glue_dir(struct device *dev, struct kobject *glue_dir)
+{
+	/* see if we live in a "glue" directory */
+	if (!live_in_glue_dir(glue_dir, dev))
+		return;
+
+	mutex_lock(&gdp_mutex);
+	kobject_put(glue_dir);
+	mutex_unlock(&gdp_mutex);
+=======
 static void cleanup_glue_dir(struct device *dev, struct kobject *glue_dir)
 {
 	/* see if we live in a "glue" directory */
@@ -840,6 +877,7 @@ static void cleanup_glue_dir(struct device *dev, struct kobject *glue_dir)
 static void cleanup_device_parent(struct device *dev)
 {
 	cleanup_glue_dir(dev, dev->kobj.parent);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int device_add_class_symlinks(struct device *dev)
@@ -1005,6 +1043,10 @@ int device_add(struct device *dev)
 	struct kobject *kobj;
 	struct class_interface *class_intf;
 	int error = -EINVAL;
+<<<<<<< HEAD
+	struct kobject *glue_dir = NULL;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	dev = get_device(dev);
 	if (!dev)
@@ -1049,8 +1091,15 @@ int device_add(struct device *dev)
 	/* first, register with generic layer. */
 	/* we require the name to be set before, and pass NULL */
 	error = kobject_add(&dev->kobj, dev->kobj.parent, NULL);
+<<<<<<< HEAD
+	if (error) {
+		glue_dir = get_glue_dir(dev);
+		goto Error;
+	}
+=======
 	if (error)
 		goto Error;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* notify platform of device entry */
 	if (platform_notify)
@@ -1133,11 +1182,19 @@ done:
 	device_remove_file(dev, &uevent_attr);
  attrError:
 	kobject_uevent(&dev->kobj, KOBJ_REMOVE);
+<<<<<<< HEAD
+	glue_dir = get_glue_dir(dev);
+	kobject_del(&dev->kobj);
+ Error:
+	cleanup_glue_dir(dev, glue_dir);
+	put_device(parent);
+=======
 	kobject_del(&dev->kobj);
  Error:
 	cleanup_device_parent(dev);
 	if (parent)
 		put_device(parent);
+>>>>>>> 671a46baf1b... some performance improvements
 name_error:
 	kfree(dev->p);
 	dev->p = NULL;
@@ -1208,6 +1265,10 @@ void put_device(struct device *dev)
 void device_del(struct device *dev)
 {
 	struct device *parent = dev->parent;
+<<<<<<< HEAD
+	struct kobject *glue_dir = NULL;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	struct class_interface *class_intf;
 
 	/* Notify clients of device removal.  This call must come
@@ -1249,8 +1310,14 @@ void device_del(struct device *dev)
 	if (platform_notify_remove)
 		platform_notify_remove(dev);
 	kobject_uevent(&dev->kobj, KOBJ_REMOVE);
+<<<<<<< HEAD
+	glue_dir = get_glue_dir(dev);
+	kobject_del(&dev->kobj);
+	cleanup_glue_dir(dev, glue_dir);
+=======
 	cleanup_device_parent(dev);
 	kobject_del(&dev->kobj);
+>>>>>>> 671a46baf1b... some performance improvements
 	put_device(parent);
 }
 
@@ -1839,7 +1906,11 @@ EXPORT_SYMBOL_GPL(device_move);
  */
 void device_shutdown(void)
 {
+<<<<<<< HEAD
+	struct device *dev, *parent;
+=======
 	struct device *dev;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	spin_lock(&devices_kset->list_lock);
 	/*
@@ -1856,7 +1927,11 @@ void device_shutdown(void)
 		 * prevent it from being freed because parent's
 		 * lock is to be held
 		 */
+<<<<<<< HEAD
+		parent = get_device(dev->parent);
+=======
 		get_device(dev->parent);
+>>>>>>> 671a46baf1b... some performance improvements
 		get_device(dev);
 		/*
 		 * Make sure the device is off the kset list, in the
@@ -1866,8 +1941,13 @@ void device_shutdown(void)
 		spin_unlock(&devices_kset->list_lock);
 
 		/* hold lock to avoid race with probe/release */
+<<<<<<< HEAD
+		if (parent)
+			device_lock(parent);
+=======
 		if (dev->parent)
 			device_lock(dev->parent);
+>>>>>>> 671a46baf1b... some performance improvements
 		device_lock(dev);
 
 		/* Don't allow any more runtime suspends */
@@ -1885,11 +1965,19 @@ void device_shutdown(void)
 		}
 
 		device_unlock(dev);
+<<<<<<< HEAD
+		if (parent)
+			device_unlock(parent);
+
+		put_device(dev);
+		put_device(parent);
+=======
 		if (dev->parent)
 			device_unlock(dev->parent);
 
 		put_device(dev);
 		put_device(dev->parent);
+>>>>>>> 671a46baf1b... some performance improvements
 
 		spin_lock(&devices_kset->list_lock);
 	}

@@ -267,6 +267,8 @@ void qib_get_eeprom_info(struct qib_devdata *dd)
 			"Board SN %s did not pass functional test: %s\n",
 			dd->serial, ifp->if_comment);
 
+<<<<<<< HEAD
+=======
 	memcpy(&dd->eep_st_errs, &ifp->if_errcntp, QIB_EEP_LOG_CNT);
 	/*
 	 * Power-on (actually "active") hours are kept as little-endian value
@@ -276,12 +278,15 @@ void qib_get_eeprom_info(struct qib_devdata *dd)
 	atomic_set(&dd->active_time, 0);
 	dd->eep_hrs = ifp->if_powerhour[0] | (ifp->if_powerhour[1] << 8);
 
+>>>>>>> 671a46baf1b... some performance improvements
 done:
 	vfree(buf);
 
 bail:;
 }
 
+<<<<<<< HEAD
+=======
 /**
  * qib_update_eeprom_log - copy active-time and error counters to eeprom
  * @dd: the qlogic_ib device
@@ -454,3 +459,4 @@ void qib_inc_eeprom_err(struct qib_devdata *dd, u32 eidx, u32 incr)
 	dd->eep_st_new_errs[eidx] = new_val;
 	spin_unlock_irqrestore(&dd->eep_st_lock, flags);
 }
+>>>>>>> 671a46baf1b... some performance improvements

@@ -92,13 +92,21 @@ static void __init test_wakealarm(struct rtc_device *rtc, suspend_state_t state)
 	}
 
 	if (state == PM_SUSPEND_MEM) {
+<<<<<<< HEAD
+		printk(info_test, pm_states[state].label);
+=======
 		printk(info_test, pm_states[state]);
+>>>>>>> 671a46baf1b... some performance improvements
 		status = pm_suspend(state);
 		if (status == -ENODEV)
 			state = PM_SUSPEND_STANDBY;
 	}
 	if (state == PM_SUSPEND_STANDBY) {
+<<<<<<< HEAD
+		printk(info_test, pm_states[state].label);
+=======
 		printk(info_test, pm_states[state]);
+>>>>>>> 671a46baf1b... some performance improvements
 		status = pm_suspend(state);
 	}
 	if (status < 0)
@@ -136,6 +144,18 @@ static char warn_bad_state[] __initdata =
 
 static int __init setup_test_suspend(char *value)
 {
+<<<<<<< HEAD
+	suspend_state_t i;
+
+	/* "=mem" ==> "mem" */
+	value++;
+	for (i = PM_SUSPEND_MIN; i < PM_SUSPEND_MAX; i++)
+		if (!strcmp(pm_states[i].label, value)) {
+			test_state = pm_states[i].state;
+			return 0;
+		}
+
+=======
 	unsigned i;
 
 	/* "=mem" ==> "mem" */
@@ -148,6 +168,7 @@ static int __init setup_test_suspend(char *value)
 		test_state = (__force suspend_state_t) i;
 		return 0;
 	}
+>>>>>>> 671a46baf1b... some performance improvements
 	printk(warn_bad_state, value);
 	return 0;
 }
@@ -164,15 +185,27 @@ static int __init test_suspend(void)
 	/* PM is initialized by now; is that state testable? */
 	if (test_state == PM_SUSPEND_ON)
 		goto done;
+<<<<<<< HEAD
+	if (!pm_states[test_state].state) {
+		printk(warn_bad_state, pm_states[test_state].label);
+=======
 	if (!valid_state(test_state)) {
 		printk(warn_bad_state, pm_states[test_state]);
+>>>>>>> 671a46baf1b... some performance improvements
 		goto done;
 	}
 
 	/* RTCs have initialized by now too ... can we use one? */
 	dev = class_find_device(rtc_class, NULL, NULL, has_wakealarm);
+<<<<<<< HEAD
+	if (dev) {
+		rtc = rtc_class_open(dev_name(dev));
+		put_device(dev);
+	}
+=======
 	if (dev)
 		rtc = rtc_class_open(dev_name(dev));
+>>>>>>> 671a46baf1b... some performance improvements
 	if (!rtc) {
 		printk(warn_no_rtc);
 		goto done;

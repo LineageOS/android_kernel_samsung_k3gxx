@@ -518,6 +518,21 @@ static int core_scsi3_pr_seq_non_holder(
 
 			return 0;
 		}
+<<<<<<< HEAD
+       } else if (we && registered_nexus) {
+               /*
+                * Reads are allowed for Write Exclusive locks
+                * from all registrants.
+                */
+               if (cmd->data_direction == DMA_FROM_DEVICE) {
+                       pr_debug("Allowing READ CDB: 0x%02x for %s"
+                               " reservation\n", cdb[0],
+                               core_scsi3_pr_dump_type(pr_reg_type));
+
+                       return 0;
+               }
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	pr_debug("%s Conflict for %sregistered nexus %s CDB: 0x%2x"
 		" for %s reservation\n", transport_dump_cmd_direction(cmd),
@@ -945,10 +960,17 @@ int core_scsi3_check_aptpl_registration(
 	struct se_device *dev,
 	struct se_portal_group *tpg,
 	struct se_lun *lun,
+<<<<<<< HEAD
+	struct se_node_acl *nacl,
+	u32 mapped_lun)
+{
+	struct se_dev_entry *deve = nacl->device_list[mapped_lun];
+=======
 	struct se_lun_acl *lun_acl)
 {
 	struct se_node_acl *nacl = lun_acl->se_lun_nacl;
 	struct se_dev_entry *deve = nacl->device_list[lun_acl->mapped_lun];
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (dev->dev_reservation_flags & DRF_SPC2_RESERVATIONS)
 		return 0;
@@ -1987,7 +2009,11 @@ static int __core_scsi3_write_aptpl_to_file(
 		pr_debug("Error writing APTPL metadata file: %s\n", path);
 	fput(file);
 
+<<<<<<< HEAD
+	return (ret < 0) ? -EIO : 0;
+=======
 	return ret ? -EIO : 0;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int
@@ -2397,6 +2423,10 @@ core_scsi3_pro_reserve(struct se_cmd *cmd, int type, int scope, u64 res_key)
 	spin_lock(&dev->dev_reservation_lock);
 	pr_res_holder = dev->dev_pr_res_holder;
 	if (pr_res_holder) {
+<<<<<<< HEAD
+		int pr_res_type = pr_res_holder->pr_res_type;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		/*
 		 * From spc4r17 Section 5.7.9: Reserving:
 		 *
@@ -2407,7 +2437,13 @@ core_scsi3_pro_reserve(struct se_cmd *cmd, int type, int scope, u64 res_key)
 		 * the logical unit, then the command shall be completed with
 		 * RESERVATION CONFLICT status.
 		 */
+<<<<<<< HEAD
+		if ((pr_res_holder != pr_reg) &&
+		    (pr_res_type != PR_TYPE_WRITE_EXCLUSIVE_ALLREG) &&
+		    (pr_res_type != PR_TYPE_EXCLUSIVE_ACCESS_ALLREG)) {
+=======
 		if (pr_res_holder != pr_reg) {
+>>>>>>> 671a46baf1b... some performance improvements
 			struct se_node_acl *pr_res_nacl = pr_res_holder->pr_reg_nacl;
 			pr_err("SPC-3 PR: Attempted RESERVE from"
 				" [%s]: %s while reservation already held by"
@@ -4012,7 +4048,12 @@ core_scsi3_pri_read_full_status(struct se_cmd *cmd)
 	unsigned char *buf;
 	u32 add_desc_len = 0, add_len = 0, desc_len, exp_desc_len;
 	u32 off = 8; /* off into first Full Status descriptor */
+<<<<<<< HEAD
+	int format_code = 0, pr_res_type = 0, pr_res_scope = 0;
+	bool all_reg = false;
+=======
 	int format_code = 0;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (cmd->data_length < 8) {
 		pr_err("PRIN SA READ_FULL_STATUS SCSI Data Length: %u"
@@ -4029,6 +4070,22 @@ core_scsi3_pri_read_full_status(struct se_cmd *cmd)
 	buf[2] = ((dev->t10_pr.pr_generation >> 8) & 0xff);
 	buf[3] = (dev->t10_pr.pr_generation & 0xff);
 
+<<<<<<< HEAD
+	spin_lock(&dev->dev_reservation_lock);
+	if (dev->dev_pr_res_holder) {
+		struct t10_pr_registration *pr_holder = dev->dev_pr_res_holder;
+
+		if (pr_holder->pr_res_type == PR_TYPE_WRITE_EXCLUSIVE_ALLREG ||
+		    pr_holder->pr_res_type == PR_TYPE_EXCLUSIVE_ACCESS_ALLREG) {
+			all_reg = true;
+			pr_res_type = pr_holder->pr_res_type;
+			pr_res_scope = pr_holder->pr_res_scope;
+		}
+	}
+	spin_unlock(&dev->dev_reservation_lock);
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	spin_lock(&pr_tmpl->registration_lock);
 	list_for_each_entry_safe(pr_reg, pr_reg_tmp,
 			&pr_tmpl->registration_list, pr_reg_list) {
@@ -4078,14 +4135,29 @@ core_scsi3_pri_read_full_status(struct se_cmd *cmd)
 		 * reservation holder for PR_HOLDER bit.
 		 *
 		 * Also, if this registration is the reservation
+<<<<<<< HEAD
+		 * holder or there is an All Registrants reservation
+		 * active, fill in SCOPE and TYPE in the next byte.
+=======
 		 * holder, fill in SCOPE and TYPE in the next byte.
+>>>>>>> 671a46baf1b... some performance improvements
 		 */
 		if (pr_reg->pr_res_holder) {
 			buf[off++] |= 0x01;
 			buf[off++] = (pr_reg->pr_res_scope & 0xf0) |
 				     (pr_reg->pr_res_type & 0x0f);
+<<<<<<< HEAD
+		} else if (all_reg) {
+			buf[off++] |= 0x01;
+			buf[off++] = (pr_res_scope & 0xf0) |
+				     (pr_res_type & 0x0f);
+		} else {
+			off += 2;
+		}
+=======
 		} else
 			off += 2;
+>>>>>>> 671a46baf1b... some performance improvements
 
 		off += 4; /* Skip over reserved area */
 		/*

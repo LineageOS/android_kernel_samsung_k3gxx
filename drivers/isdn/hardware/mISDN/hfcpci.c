@@ -2295,8 +2295,13 @@ _hfcpci_softirq(struct device *dev, void *arg)
 static void
 hfcpci_softirq(void *arg)
 {
+<<<<<<< HEAD
+	WARN_ON_ONCE(driver_for_each_device(&hfc_driver.driver, NULL, arg,
+				      _hfcpci_softirq) != 0);
+=======
 	(void) driver_for_each_device(&hfc_driver.driver, NULL, arg,
 				      _hfcpci_softirq);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* if next event would be in the past ... */
 	if ((s32)(hfc_jiffies + tics - jiffies) <= 0)

@@ -704,8 +704,11 @@ static void icmp_unreach(struct sk_buff *skb)
 					       &iph->daddr);
 			} else {
 				info = ntohs(icmph->un.frag.mtu);
+<<<<<<< HEAD
+=======
 				if (!info)
 					goto out;
+>>>>>>> 671a46baf1b... some performance improvements
 			}
 			break;
 		case ICMP_SR_FAILED:

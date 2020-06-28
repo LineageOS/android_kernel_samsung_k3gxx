@@ -59,6 +59,16 @@ u64 notrace trace_clock(void)
 
 /*
  * trace_jiffy_clock(): Simply use jiffies as a clock counter.
+<<<<<<< HEAD
+ * Note that this use of jiffies_64 is not completely safe on
+ * 32-bit systems. But the window is tiny, and the effect if
+ * we are affected is that we will have an obviously bogus
+ * timestamp on a trace event - i.e. not life threatening.
+ */
+u64 notrace trace_clock_jiffies(void)
+{
+	return jiffies_64_to_clock_t(jiffies_64 - INITIAL_JIFFIES);
+=======
  */
 u64 notrace trace_clock_jiffies(void)
 {
@@ -66,6 +76,7 @@ u64 notrace trace_clock_jiffies(void)
 
 	/* Return nsecs */
 	return (u64)jiffies_to_usecs(jiffy) * 1000ULL;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /*

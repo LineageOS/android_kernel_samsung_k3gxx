@@ -162,6 +162,11 @@ static inline const char *cache_name(struct kmem_cache *s)
 
 static inline struct kmem_cache *cache_from_memcg(struct kmem_cache *s, int idx)
 {
+<<<<<<< HEAD
+	if (!s->memcg_params)
+		return NULL;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return s->memcg_params->memcg_caches[idx];
 }
 

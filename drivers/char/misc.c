@@ -114,7 +114,11 @@ static int misc_open(struct inode * inode, struct file * file)
 	int minor = iminor(inode);
 	struct miscdevice *c;
 	int err = -ENODEV;
+<<<<<<< HEAD
+	const struct file_operations *new_fops = NULL;
+=======
 	const struct file_operations *old_fops, *new_fops = NULL;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	mutex_lock(&misc_mtx);
 	
@@ -141,6 +145,13 @@ static int misc_open(struct inode * inode, struct file * file)
 	}
 
 	err = 0;
+<<<<<<< HEAD
+	replace_fops(file, new_fops);
+	if (file->f_op->open) {
+		file->private_data = c;
+		err = file->f_op->open(inode,file);
+	}
+=======
 	old_fops = file->f_op;
 	file->f_op = new_fops;
 	if (file->f_op->open) {
@@ -152,6 +163,7 @@ static int misc_open(struct inode * inode, struct file * file)
 		}
 	}
 	fops_put(old_fops);
+>>>>>>> 671a46baf1b... some performance improvements
 fail:
 	mutex_unlock(&misc_mtx);
 	return err;

@@ -475,6 +475,12 @@ struct scsi_host_template {
 	 */
 	unsigned ordered_tag:1;
 
+<<<<<<< HEAD
+	/* True if the controller does not support WRITE SAME */
+	unsigned no_write_same:1;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	 * Countdown for host blocking with no commands outstanding.
 	 */
@@ -674,6 +680,12 @@ struct Scsi_Host {
 	/* Don't resume host in EH */
 	unsigned eh_noresume:1;
 
+<<<<<<< HEAD
+	/* The controller does not support WRITE SAME */
+	unsigned no_write_same:1;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	 * Optional work queue to be utilized by the transport
 	 */

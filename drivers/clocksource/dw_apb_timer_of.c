@@ -77,7 +77,11 @@ static void __iomem *sched_io_base;
 
 static u32 read_sched_clock(void)
 {
+<<<<<<< HEAD
+	return ~__raw_readl(sched_io_base);
+=======
 	return __raw_readl(sched_io_base);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static const struct of_device_id sptimer_ids[] __initconst = {

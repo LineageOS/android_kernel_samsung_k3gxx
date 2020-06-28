@@ -251,7 +251,12 @@ struct cpuidle_driver *cpuidle_driver_ref(void)
 	spin_lock(&cpuidle_driver_lock);
 
 	drv = cpuidle_get_driver();
+<<<<<<< HEAD
+	if (drv)
+		drv->refcnt++;
+=======
 	drv->refcnt++;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	spin_unlock(&cpuidle_driver_lock);
 	return drv;

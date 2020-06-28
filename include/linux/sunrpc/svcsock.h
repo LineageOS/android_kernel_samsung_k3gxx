@@ -56,6 +56,10 @@ int		svc_recv(struct svc_rqst *, long);
 int		svc_send(struct svc_rqst *);
 void		svc_drop(struct svc_rqst *);
 void		svc_sock_update_bufs(struct svc_serv *serv);
+<<<<<<< HEAD
+bool		svc_alien_sock(struct net *net, int fd);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 int		svc_addsock(struct svc_serv *serv, const int fd,
 					char *name_return, const size_t len);
 void		svc_init_xprt_sock(void);

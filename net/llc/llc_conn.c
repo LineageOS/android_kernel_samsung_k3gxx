@@ -821,10 +821,14 @@ void llc_conn_handler(struct llc_sap *sap, struct sk_buff *skb)
 		 * another trick required to cope with how the PROCOM state
 		 * machine works. -acme
 		 */
+<<<<<<< HEAD
 		skb_orphan(skb);
 		sock_hold(sk);
 		skb->sk = sk;
 		skb->destructor = sock_efree;
+=======
+		skb->sk = sk;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	if (!sock_owned_by_user(sk))
 		llc_conn_rcv(sk, skb);

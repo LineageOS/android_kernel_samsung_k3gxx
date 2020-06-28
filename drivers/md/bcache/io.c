@@ -97,6 +97,11 @@ struct bio *bch_bio_split(struct bio *bio, int sectors,
 
 	if (bio->bi_rw & REQ_DISCARD) {
 		ret = bio_alloc_bioset(gfp, 1, bs);
+<<<<<<< HEAD
+		if (!ret)
+			return NULL;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		idx = 0;
 		goto out;
 	}

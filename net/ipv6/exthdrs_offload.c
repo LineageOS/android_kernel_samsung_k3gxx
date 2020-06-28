@@ -25,17 +25,29 @@ int __init ipv6_exthdrs_offload_init(void)
 	int ret;
 
 	ret = inet6_add_offload(&rthdr_offload, IPPROTO_ROUTING);
+<<<<<<< HEAD
+	if (ret)
+		goto out;
+
+	ret = inet6_add_offload(&dstopt_offload, IPPROTO_DSTOPTS);
+	if (ret)
+=======
 	if (!ret)
 		goto out;
 
 	ret = inet6_add_offload(&dstopt_offload, IPPROTO_DSTOPTS);
 	if (!ret)
+>>>>>>> 671a46baf1b... some performance improvements
 		goto out_rt;
 
 out:
 	return ret;
 
 out_rt:
+<<<<<<< HEAD
+	inet6_del_offload(&rthdr_offload, IPPROTO_ROUTING);
+=======
 	inet_del_offload(&rthdr_offload, IPPROTO_ROUTING);
+>>>>>>> 671a46baf1b... some performance improvements
 	goto out;
 }

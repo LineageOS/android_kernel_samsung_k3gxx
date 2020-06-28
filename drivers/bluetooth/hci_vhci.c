@@ -265,6 +265,10 @@ static int vhci_release(struct inode *inode, struct file *file)
 	hci_unregister_dev(hdev);
 	hci_free_dev(hdev);
 
+<<<<<<< HEAD
+	skb_queue_purge(&data->readq);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	file->private_data = NULL;
 	kfree(data);
 

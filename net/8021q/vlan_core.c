@@ -103,8 +103,16 @@ EXPORT_SYMBOL(vlan_dev_vlan_id);
 
 static struct sk_buff *vlan_reorder_header(struct sk_buff *skb)
 {
+<<<<<<< HEAD
+	if (skb_cow(skb, skb_headroom(skb)) < 0) {
+		kfree_skb(skb);
+		return NULL;
+	}
+
+=======
 	if (skb_cow(skb, skb_headroom(skb)) < 0)
 		return NULL;
+>>>>>>> 671a46baf1b... some performance improvements
 	memmove(skb->data - ETH_HLEN, skb->data - VLAN_ETH_HLEN, 2 * ETH_ALEN);
 	skb->mac_header += VLAN_HLEN;
 	return skb;

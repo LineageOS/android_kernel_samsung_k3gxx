@@ -772,7 +772,11 @@ static struct in_ifaddr *rtm_to_ifaddr(struct net *net, struct nlmsghdr *nlh,
 		ci = nla_data(tb[IFA_CACHEINFO]);
 		if (!ci->ifa_valid || ci->ifa_prefered > ci->ifa_valid) {
 			err = -EINVAL;
+<<<<<<< HEAD
+			goto errout_free;
+=======
 			goto errout;
+>>>>>>> 671a46baf1b... some performance improvements
 		}
 		*pvalid_lft = ci->ifa_valid;
 		*pprefered_lft = ci->ifa_prefered;
@@ -780,6 +784,11 @@ static struct in_ifaddr *rtm_to_ifaddr(struct net *net, struct nlmsghdr *nlh,
 
 	return ifa;
 
+<<<<<<< HEAD
+errout_free:
+	inet_free_ifa(ifa);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 errout:
 	return ERR_PTR(err);
 }
@@ -1437,7 +1446,12 @@ static size_t inet_nlmsg_size(void)
 	       + nla_total_size(4) /* IFA_ADDRESS */
 	       + nla_total_size(4) /* IFA_LOCAL */
 	       + nla_total_size(4) /* IFA_BROADCAST */
+<<<<<<< HEAD
+	       + nla_total_size(IFNAMSIZ) /* IFA_LABEL */
+	       + nla_total_size(sizeof(struct ifa_cacheinfo)); /* IFA_CACHEINFO */
+=======
 	       + nla_total_size(IFNAMSIZ); /* IFA_LABEL */
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static inline u32 cstamp_delta(unsigned long cstamp)

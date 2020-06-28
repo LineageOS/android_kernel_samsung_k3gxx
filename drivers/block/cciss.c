@@ -1189,6 +1189,10 @@ static int cciss_ioctl32_passthru(struct block_device *bdev, fmode_t mode,
 	int err;
 	u32 cp;
 
+<<<<<<< HEAD
+	memset(&arg64, 0, sizeof(arg64));
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	err = 0;
 	err |=
 	    copy_from_user(&arg64.LUN_info, &arg32->LUN_info,

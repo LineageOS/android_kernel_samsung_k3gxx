@@ -97,6 +97,15 @@ static int linear_mergeable_bvec(struct request_queue *q,
 		return maxsectors << 9;
 }
 
+<<<<<<< HEAD
+/*
+ * In linear_congested() conf->raid_disks is used as a copy of
+ * mddev->raid_disks to iterate conf->disks[], because conf->raid_disks
+ * and conf->disks[] are created in linear_conf(), they are always
+ * consitent with each other, but mddev->raid_disks does not.
+ */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static int linear_congested(void *data, int bits)
 {
 	struct mddev *mddev = data;
@@ -109,7 +118,11 @@ static int linear_congested(void *data, int bits)
 	rcu_read_lock();
 	conf = rcu_dereference(mddev->private);
 
+<<<<<<< HEAD
+	for (i = 0; i < conf->raid_disks && !ret ; i++) {
+=======
 	for (i = 0; i < mddev->raid_disks && !ret ; i++) {
+>>>>>>> 671a46baf1b... some performance improvements
 		struct request_queue *q = bdev_get_queue(conf->disks[i].rdev->bdev);
 		ret |= bdi_congested(&q->backing_dev_info, bits);
 	}
@@ -196,6 +209,22 @@ static struct linear_conf *linear_conf(struct mddev *mddev, int raid_disks)
 			conf->disks[i-1].end_sector +
 			conf->disks[i].rdev->sectors;
 
+<<<<<<< HEAD
+	/*
+	 * conf->raid_disks is copy of mddev->raid_disks. The reason to
+	 * keep a copy of mddev->raid_disks in struct linear_conf is,
+	 * mddev->raid_disks may not be consistent with pointers number of
+	 * conf->disks[] when it is updated in linear_add() and used to
+	 * iterate old conf->disks[] earray in linear_congested().
+	 * Here conf->raid_disks is always consitent with number of
+	 * pointers in conf->disks[] array, and mddev->private is updated
+	 * with rcu_assign_pointer() in linear_addr(), such race can be
+	 * avoided.
+	 */
+	conf->raid_disks = raid_disks;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return conf;
 
 out:
@@ -252,10 +281,24 @@ static int linear_add(struct mddev *mddev, struct md_rdev *rdev)
 	if (!newconf)
 		return -ENOMEM;
 
+<<<<<<< HEAD
+	/* newconf->raid_disks already keeps a copy of * the increased
+	 * value of mddev->raid_disks, WARN_ONCE() is just used to make
+	 * sure of this. It is possible that oldconf is still referenced
+	 * in linear_congested(), therefore kfree_rcu() is used to free
+	 * oldconf until no one uses it anymore.
+	 */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	oldconf = rcu_dereference_protected(mddev->private,
 					    lockdep_is_held(
 						    &mddev->reconfig_mutex));
 	mddev->raid_disks++;
+<<<<<<< HEAD
+	WARN_ONCE(mddev->raid_disks != newconf->raid_disks,
+		"copied raid_disks doesn't match mddev->raid_disks");
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	rcu_assign_pointer(mddev->private, newconf);
 	md_set_array_sectors(mddev, linear_size(mddev, 0, 0));
 	set_capacity(mddev->gendisk, mddev->array_sectors);

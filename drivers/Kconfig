@@ -196,4 +196,8 @@ source "drivers/irled/Kconfig"
 
 source "drivers/ice40lm/Kconfig"
 
+<<<<<<< HEAD
+source "drivers/android/Kconfig"
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 endmenu

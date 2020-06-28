@@ -712,22 +712,47 @@ static int c_can_set_mode(struct net_device *dev, enum can_mode mode)
 	return 0;
 }
 
+<<<<<<< HEAD
+static int __c_can_get_berr_counter(const struct net_device *dev,
+				    struct can_berr_counter *bec)
+=======
 static int c_can_get_berr_counter(const struct net_device *dev,
 					struct can_berr_counter *bec)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	unsigned int reg_err_counter;
 	struct c_can_priv *priv = netdev_priv(dev);
 
+<<<<<<< HEAD
+=======
 	c_can_pm_runtime_get_sync(priv);
 
+>>>>>>> 671a46baf1b... some performance improvements
 	reg_err_counter = priv->read_reg(priv, C_CAN_ERR_CNT_REG);
 	bec->rxerr = (reg_err_counter & ERR_CNT_REC_MASK) >>
 				ERR_CNT_REC_SHIFT;
 	bec->txerr = reg_err_counter & ERR_CNT_TEC_MASK;
 
+<<<<<<< HEAD
+	return 0;
+}
+
+static int c_can_get_berr_counter(const struct net_device *dev,
+				  struct can_berr_counter *bec)
+{
+	struct c_can_priv *priv = netdev_priv(dev);
+	int err;
+
+	c_can_pm_runtime_get_sync(priv);
+	err = __c_can_get_berr_counter(dev, bec);
+	c_can_pm_runtime_put_sync(priv);
+
+	return err;
+=======
 	c_can_pm_runtime_put_sync(priv);
 
 	return 0;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /*
@@ -814,9 +839,12 @@ static int c_can_do_rx_poll(struct net_device *dev, int quota)
 			msg_ctrl_save = priv->read_reg(priv,
 					C_CAN_IFACE(MSGCTRL_REG, 0));
 
+<<<<<<< HEAD
+=======
 			if (msg_ctrl_save & IF_MCONT_EOB)
 				return num_rx_pkts;
 
+>>>>>>> 671a46baf1b... some performance improvements
 			if (msg_ctrl_save & IF_MCONT_MSGLST) {
 				c_can_handle_lost_msg_obj(dev, 0, msg_obj);
 				num_rx_pkts++;
@@ -824,6 +852,12 @@ static int c_can_do_rx_poll(struct net_device *dev, int quota)
 				continue;
 			}
 
+<<<<<<< HEAD
+			if (msg_ctrl_save & IF_MCONT_EOB)
+				return num_rx_pkts;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			if (!(msg_ctrl_save & IF_MCONT_NEWDAT))
 				continue;
 
@@ -872,7 +906,11 @@ static int c_can_handle_state_change(struct net_device *dev,
 	if (unlikely(!skb))
 		return 0;
 
+<<<<<<< HEAD
+	__c_can_get_berr_counter(dev, &bec);
+=======
 	c_can_get_berr_counter(dev, &bec);
+>>>>>>> 671a46baf1b... some performance improvements
 	reg_err_counter = priv->read_reg(priv, C_CAN_ERR_CNT_REG);
 	rx_err_passive = (reg_err_counter & ERR_CNT_RP_MASK) >>
 				ERR_CNT_RP_SHIFT;

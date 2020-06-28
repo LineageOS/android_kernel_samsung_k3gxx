@@ -52,12 +52,19 @@ nv50_mc_ctor(struct nouveau_object *parent, struct nouveau_object *engine,
 	struct nv50_mc_priv *priv;
 	int ret;
 
+<<<<<<< HEAD
+	ret = nouveau_mc_create(parent, engine, oclass, nv50_mc_intr, &priv);
+=======
 	ret = nouveau_mc_create(parent, engine, oclass, &priv);
+>>>>>>> 671a46baf1b... some performance improvements
 	*pobject = nv_object(priv);
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
+=======
 	priv->base.intr_map = nv50_mc_intr;
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 }
 

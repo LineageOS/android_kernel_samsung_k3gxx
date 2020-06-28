@@ -310,6 +310,10 @@ struct pci_dev {
 	unsigned int	is_added:1;
 	unsigned int	is_busmaster:1; /* device is busmaster */
 	unsigned int	no_msi:1;	/* device may not use msi */
+<<<<<<< HEAD
+	unsigned int	no_64bit_msi:1; /* device may only use 32-bit MSIs */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	unsigned int	block_cfg_access:1;	/* config space access is blocked */
 	unsigned int	broken_parity_status:1;	/* Device generates false positive parity */
 	unsigned int	irq_reroute_variant:2;	/* device needs IRQ rerouting variant */
@@ -329,6 +333,10 @@ struct pci_dev {
 	unsigned int	__aer_firmware_first:1;
 	unsigned int	broken_intx_masking:1;
 	unsigned int	io_window_1k:1;	/* Intel P2P bridge 1K I/O windows */
+<<<<<<< HEAD
+	unsigned int	non_compliant_bars:1;	/* broken BARs; ignore them */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	pci_dev_flags_t dev_flags;
 	atomic_t	enable_cnt;	/* pci_enable_device has been called */
 

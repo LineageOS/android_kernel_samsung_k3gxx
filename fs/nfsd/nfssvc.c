@@ -220,7 +220,12 @@ static int nfsd_startup_generic(int nrservs)
 	 */
 	ret = nfsd_racache_init(2*nrservs);
 	if (ret)
+<<<<<<< HEAD
+		goto dec_users;
+
+=======
 		return ret;
+>>>>>>> 671a46baf1b... some performance improvements
 	ret = nfs4_state_start();
 	if (ret)
 		goto out_racache;
@@ -228,6 +233,11 @@ static int nfsd_startup_generic(int nrservs)
 
 out_racache:
 	nfsd_racache_shutdown();
+<<<<<<< HEAD
+dec_users:
+	nfsd_users--;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return ret;
 }
 
@@ -624,6 +634,40 @@ static __be32 map_new_errors(u32 vers, __be32 nfserr)
 	return nfserr;
 }
 
+<<<<<<< HEAD
+/*
+ * A write procedure can have a large argument, and a read procedure can
+ * have a large reply, but no NFSv2 or NFSv3 procedure has argument and
+ * reply that can both be larger than a page.  The xdr code has taken
+ * advantage of this assumption to be a sloppy about bounds checking in
+ * some cases.  Pending a rewrite of the NFSv2/v3 xdr code to fix that
+ * problem, we enforce these assumptions here:
+ */
+static bool nfs_request_too_big(struct svc_rqst *rqstp,
+				struct svc_procedure *proc)
+{
+	/*
+	 * The ACL code has more careful bounds-checking and is not
+	 * susceptible to this problem:
+	 */
+	if (rqstp->rq_prog != NFS_PROGRAM)
+		return false;
+	/*
+	 * Ditto NFSv4 (which can in theory have argument and reply both
+	 * more than a page):
+	 */
+	if (rqstp->rq_vers >= 4)
+		return false;
+	/* The reply will be small, we're OK: */
+	if (proc->pc_xdrressize > 0 &&
+	    proc->pc_xdrressize < XDR_QUADLEN(PAGE_SIZE))
+		return false;
+
+	return rqstp->rq_arg.len > PAGE_SIZE;
+}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 int
 nfsd_dispatch(struct svc_rqst *rqstp, __be32 *statp)
 {
@@ -636,6 +680,14 @@ nfsd_dispatch(struct svc_rqst *rqstp, __be32 *statp)
 				rqstp->rq_vers, rqstp->rq_proc);
 	proc = rqstp->rq_procinfo;
 
+<<<<<<< HEAD
+	if (nfs_request_too_big(rqstp, proc)) {
+		dprintk("nfsd: NFSv%d argument too large\n", rqstp->rq_vers);
+		*statp = rpc_garbage_args;
+		return 1;
+	}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	 * Give the xdr decoder a chance to change this if it wants
 	 * (necessary in the NFSv4.0 compound case)

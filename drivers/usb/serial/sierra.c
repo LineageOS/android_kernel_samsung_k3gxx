@@ -58,6 +58,10 @@ struct sierra_intf_private {
 	spinlock_t susp_lock;
 	unsigned int suspended:1;
 	int in_flight;
+<<<<<<< HEAD
+	unsigned int open_ports;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 static int sierra_set_power_state(struct usb_device *udev, __u16 swiState)
@@ -281,17 +285,35 @@ static const struct usb_device_id id_table[] = {
 	/* Sierra Wireless HSPA Non-Composite Device */
 	{ USB_DEVICE_AND_INTERFACE_INFO(0x1199, 0x6892, 0xFF, 0xFF, 0xFF)},
 	{ USB_DEVICE(0x1199, 0x6893) },	/* Sierra Wireless Device */
+<<<<<<< HEAD
+	/* Sierra Wireless Direct IP modems */
+	{ USB_DEVICE_AND_INTERFACE_INFO(0x1199, 0x68A3, 0xFF, 0xFF, 0xFF),
+	  .driver_info = (kernel_ulong_t)&direct_ip_interface_blacklist
+	},
+	{ USB_DEVICE_AND_INTERFACE_INFO(0x1199, 0x68AA, 0xFF, 0xFF, 0xFF),
+	  .driver_info = (kernel_ulong_t)&direct_ip_interface_blacklist
+	},
+	{ USB_DEVICE(0x1199, 0x68AB) }, /* Sierra Wireless AR8550 */
+=======
 	{ USB_DEVICE(0x1199, 0x68A3), 	/* Sierra Wireless Direct IP modems */
 	  .driver_info = (kernel_ulong_t)&direct_ip_interface_blacklist
 	},
+>>>>>>> 671a46baf1b... some performance improvements
 	/* AT&T Direct IP LTE modems */
 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0F3D, 0x68AA, 0xFF, 0xFF, 0xFF),
 	  .driver_info = (kernel_ulong_t)&direct_ip_interface_blacklist
 	},
+<<<<<<< HEAD
+	/* Airprime/Sierra Wireless Direct IP modems */
+	{ USB_DEVICE_AND_INTERFACE_INFO(0x0F3D, 0x68A3, 0xFF, 0xFF, 0xFF),
+	  .driver_info = (kernel_ulong_t)&direct_ip_interface_blacklist
+	},
+=======
 	{ USB_DEVICE(0x0f3d, 0x68A3), 	/* Airprime/Sierra Wireless Direct IP modems */
 	  .driver_info = (kernel_ulong_t)&direct_ip_interface_blacklist
 	},
        { USB_DEVICE(0x413C, 0x08133) }, /* Dell Computer Corp. Wireless 5720 VZW Mobile Broadband (EVDO Rev-A) Minicard GPS Port */
+>>>>>>> 671a46baf1b... some performance improvements
 
 	{ }
 };
@@ -768,6 +790,10 @@ static void sierra_close(struct usb_serial_port *port)
 	struct usb_serial *serial = port->serial;
 	struct sierra_port_private *portdata;
 	struct sierra_intf_private *intfdata = port->serial->private;
+<<<<<<< HEAD
+	struct urb *urb;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	portdata = usb_get_serial_port_data(port);
 
@@ -776,7 +802,10 @@ static void sierra_close(struct usb_serial_port *port)
 
 	mutex_lock(&serial->disc_mutex);
 	if (!serial->disconnected) {
+<<<<<<< HEAD
+=======
 		serial->interface->needs_remote_wakeup = 0;
+>>>>>>> 671a46baf1b... some performance improvements
 		/* odd error handling due to pm counters */
 		if (!usb_autopm_get_interface(serial->interface))
 			sierra_send_setup(port);
@@ -787,8 +816,27 @@ static void sierra_close(struct usb_serial_port *port)
 	mutex_unlock(&serial->disc_mutex);
 	spin_lock_irq(&intfdata->susp_lock);
 	portdata->opened = 0;
+<<<<<<< HEAD
+	if (--intfdata->open_ports == 0)
+		serial->interface->needs_remote_wakeup = 0;
 	spin_unlock_irq(&intfdata->susp_lock);
 
+	for (;;) {
+		urb = usb_get_from_anchor(&portdata->delayed);
+		if (!urb)
+			break;
+		kfree(urb->transfer_buffer);
+		usb_free_urb(urb);
+		usb_autopm_put_interface_async(serial->interface);
+		spin_lock(&portdata->lock);
+		portdata->outstanding_urbs--;
+		spin_unlock(&portdata->lock);
+	}
+
+=======
+	spin_unlock_irq(&intfdata->susp_lock);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	sierra_stop_rx_urbs(port);
 	for (i = 0; i < portdata->num_in_urbs; i++) {
 		sierra_release_urb(portdata->in_urbs[i]);
@@ -825,6 +873,17 @@ static int sierra_open(struct tty_struct *tty, struct usb_serial_port *port)
 			usb_sndbulkpipe(serial->dev, endpoint) | USB_DIR_IN);
 
 	err = sierra_submit_rx_urbs(port, GFP_KERNEL);
+<<<<<<< HEAD
+	if (err)
+		goto err_submit;
+
+	sierra_send_setup(port);
+
+	spin_lock_irq(&intfdata->susp_lock);
+	portdata->opened = 1;
+	if (++intfdata->open_ports == 1)
+		serial->interface->needs_remote_wakeup = 1;
+=======
 	if (err) {
 		/* get rid of everything as in close */
 		sierra_close(port);
@@ -838,10 +897,24 @@ static int sierra_open(struct tty_struct *tty, struct usb_serial_port *port)
 	serial->interface->needs_remote_wakeup = 1;
 	spin_lock_irq(&intfdata->susp_lock);
 	portdata->opened = 1;
+>>>>>>> 671a46baf1b... some performance improvements
 	spin_unlock_irq(&intfdata->susp_lock);
 	usb_autopm_put_interface(serial->interface);
 
 	return 0;
+<<<<<<< HEAD
+
+err_submit:
+	sierra_stop_rx_urbs(port);
+
+	for (i = 0; i < portdata->num_in_urbs; i++) {
+		sierra_release_urb(portdata->in_urbs[i]);
+		portdata->in_urbs[i] = NULL;
+	}
+
+	return err;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 
@@ -937,6 +1010,10 @@ static int sierra_port_remove(struct usb_serial_port *port)
 	struct sierra_port_private *portdata;
 
 	portdata = usb_get_serial_port_data(port);
+<<<<<<< HEAD
+	usb_set_serial_port_data(port, NULL);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	kfree(portdata);
 
 	return 0;
@@ -953,6 +1030,11 @@ static void stop_read_write_urbs(struct usb_serial *serial)
 	for (i = 0; i < serial->num_ports; ++i) {
 		port = serial->port[i];
 		portdata = usb_get_serial_port_data(port);
+<<<<<<< HEAD
+		if (!portdata)
+			continue;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		sierra_stop_rx_urbs(port);
 		usb_kill_anchored_urbs(&portdata->active);
 	}
@@ -995,6 +1077,12 @@ static int sierra_resume(struct usb_serial *serial)
 		port = serial->port[i];
 		portdata = usb_get_serial_port_data(port);
 
+<<<<<<< HEAD
+		if (!portdata)
+			continue;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		while ((urb = usb_get_from_anchor(&portdata->delayed))) {
 			usb_anchor_urb(urb, &portdata->active);
 			intfdata->in_flight++;
@@ -1002,8 +1090,17 @@ static int sierra_resume(struct usb_serial *serial)
 			if (err < 0) {
 				intfdata->in_flight--;
 				usb_unanchor_urb(urb);
+<<<<<<< HEAD
+				kfree(urb->transfer_buffer);
+				usb_free_urb(urb);
+				spin_lock(&portdata->lock);
+				portdata->outstanding_urbs--;
+				spin_unlock(&portdata->lock);
+				continue;
+=======
 				usb_scuttle_anchored_urbs(&portdata->delayed);
 				break;
+>>>>>>> 671a46baf1b... some performance improvements
 			}
 		}
 

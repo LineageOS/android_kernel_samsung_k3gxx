@@ -100,10 +100,17 @@ static inline void i2s_clear_irqs(struct dw_i2s_dev *dev, u32 stream)
 
 	if (stream == SNDRV_PCM_STREAM_PLAYBACK) {
 		for (i = 0; i < 4; i++)
+<<<<<<< HEAD
+			i2s_read_reg(dev->i2s_base, TOR(i));
+	} else {
+		for (i = 0; i < 4; i++)
+			i2s_read_reg(dev->i2s_base, ROR(i));
+=======
 			i2s_write_reg(dev->i2s_base, TOR(i), 0);
 	} else {
 		for (i = 0; i < 4; i++)
 			i2s_write_reg(dev->i2s_base, ROR(i), 0);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 }
 
@@ -263,6 +270,22 @@ static void dw_i2s_shutdown(struct snd_pcm_substream *substream,
 	snd_soc_dai_set_dma_data(dai, substream, NULL);
 }
 
+<<<<<<< HEAD
+static int dw_i2s_prepare(struct snd_pcm_substream *substream,
+			  struct snd_soc_dai *dai)
+{
+	struct dw_i2s_dev *dev = snd_soc_dai_get_drvdata(dai);
+
+	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
+		i2s_write_reg(dev->i2s_base, TXFFR, 1);
+	else
+		i2s_write_reg(dev->i2s_base, RXFFR, 1);
+
+	return 0;
+}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static int dw_i2s_trigger(struct snd_pcm_substream *substream,
 		int cmd, struct snd_soc_dai *dai)
 {
@@ -294,6 +317,10 @@ static struct snd_soc_dai_ops dw_i2s_dai_ops = {
 	.startup	= dw_i2s_startup,
 	.shutdown	= dw_i2s_shutdown,
 	.hw_params	= dw_i2s_hw_params,
+<<<<<<< HEAD
+	.prepare	= dw_i2s_prepare,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	.trigger	= dw_i2s_trigger,
 };
 

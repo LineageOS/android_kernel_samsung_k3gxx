@@ -1,6 +1,9 @@
 ccflags-y += -I$(src)			# needed for trace events
 
+<<<<<<< HEAD
+=======
 obj-$(CONFIG_ANDROID_BINDER_IPC)	+= binder.o
+>>>>>>> 671a46baf1b... some performance improvements
 obj-$(CONFIG_ASHMEM)			+= ashmem.o
 obj-$(CONFIG_ANDROID_LOGGER)		+= logger.o
 obj-$(CONFIG_ANDROID_TIMED_OUTPUT)	+= timed_output.o

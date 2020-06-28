@@ -470,7 +470,12 @@ static void quirk_usb_handoff_ohci(struct pci_dev *pdev)
 {
 	void __iomem *base;
 	u32 control;
+<<<<<<< HEAD
+	u32 fminterval = 0;
+	bool no_fminterval = false;
+=======
 	u32 fminterval;
+>>>>>>> 671a46baf1b... some performance improvements
 	int cnt;
 
 	if (!mmio_resource_enabled(pdev, 0))
@@ -480,6 +485,16 @@ static void quirk_usb_handoff_ohci(struct pci_dev *pdev)
 	if (base == NULL)
 		return;
 
+<<<<<<< HEAD
+	/*
+	 * ULi M5237 OHCI controller locks the whole system when accessing
+	 * the OHCI_FMINTERVAL offset.
+	 */
+	if (pdev->vendor == PCI_VENDOR_ID_AL && pdev->device == 0x5237)
+		no_fminterval = true;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	control = readl(base + OHCI_CONTROL);
 
 /* On PA-RISC, PDC can leave IR set incorrectly; ignore it there. */
@@ -518,7 +533,13 @@ static void quirk_usb_handoff_ohci(struct pci_dev *pdev)
 	}
 
 	/* software reset of the controller, preserving HcFmInterval */
+<<<<<<< HEAD
+	if (!no_fminterval)
+		fminterval = readl(base + OHCI_FMINTERVAL);
+
+=======
 	fminterval = readl(base + OHCI_FMINTERVAL);
+>>>>>>> 671a46baf1b... some performance improvements
 	writel(OHCI_HCR, base + OHCI_CMDSTATUS);
 
 	/* reset requires max 10 us delay */
@@ -527,7 +548,13 @@ static void quirk_usb_handoff_ohci(struct pci_dev *pdev)
 			break;
 		udelay(1);
 	}
+<<<<<<< HEAD
+
+	if (!no_fminterval)
+		writel(fminterval, base + OHCI_FMINTERVAL);
+=======
 	writel(fminterval, base + OHCI_FMINTERVAL);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* Now the controller is safely in SUSPEND and nothing can wake it up */
 	iounmap(base);
@@ -555,6 +582,17 @@ static const struct dmi_system_id ehci_dmi_nohandoff_table[] = {
 			DMI_MATCH(DMI_BIOS_VERSION, "Lucid-"),
 		},
 	},
+<<<<<<< HEAD
+	{
+		/* HASEE E200 */
+		.matches = {
+			DMI_MATCH(DMI_BOARD_VENDOR, "HASEE"),
+			DMI_MATCH(DMI_BOARD_NAME, "E210"),
+			DMI_MATCH(DMI_BIOS_VERSION, "6.00"),
+		},
+	},
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	{ }
 };
 
@@ -564,9 +602,20 @@ static void ehci_bios_handoff(struct pci_dev *pdev,
 {
 	int try_handoff = 1, tried_handoff = 0;
 
+<<<<<<< HEAD
+	/*
+	 * The Pegatron Lucid tablet sporadically waits for 98 seconds trying
+	 * the handoff on its unused controller.  Skip it.
+	 *
+	 * The HASEE E200 hangs when the semaphore is set (bugzilla #77021).
+	 */
+	if (pdev->vendor == 0x8086 && (pdev->device == 0x283a ||
+			pdev->device == 0x27cc)) {
+=======
 	/* The Pegatron Lucid tablet sporadically waits for 98 seconds trying
 	 * the handoff on its unused controller.  Skip it. */
 	if (pdev->vendor == 0x8086 && pdev->device == 0x283a) {
+>>>>>>> 671a46baf1b... some performance improvements
 		if (dmi_check_system(ehci_dmi_nohandoff_table))
 			try_handoff = 0;
 	}

@@ -297,6 +297,14 @@ commit_metadata(struct svc_fh *fhp)
 }
 
 /*
+<<<<<<< HEAD
+ * Go over the attributes and take care of the small differences between
+ * NFS semantics and what Linux expects.
+ */
+static void
+nfsd_sanitize_attrs(struct inode *inode, struct iattr *iap)
+{
+=======
  * Set various file attributes.
  * N.B. After this call fhp needs an fh_put
  */
@@ -332,6 +340,7 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp, struct iattr *iap,
 	if (!iap->ia_valid)
 		goto out;
 
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	 * NFSv2 does not differentiate between "set-[ac]time-to-now"
 	 * which only requires access, and "set-[ac]time-to-X" which
@@ -341,8 +350,12 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp, struct iattr *iap,
 	 * convert to "set to now" instead of "set to explicit time"
 	 *
 	 * We only call inode_change_ok as the last test as technically
+<<<<<<< HEAD
+	 * it is not an interface that we should be using.
+=======
 	 * it is not an interface that we should be using.  It is only
 	 * valid if the filesystem does not define it's own i_op->setattr.
+>>>>>>> 671a46baf1b... some performance improvements
 	 */
 #define BOTH_TIME_SET (ATTR_ATIME_SET | ATTR_MTIME_SET)
 #define	MAX_TOUCH_TIME_ERROR (30*60)
@@ -368,6 +381,8 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp, struct iattr *iap,
 			iap->ia_valid &= ~BOTH_TIME_SET;
 		}
 	}
+<<<<<<< HEAD
+=======
 	    
 	/*
 	 * The size case is special.
@@ -392,6 +407,7 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp, struct iattr *iap,
 			goto out_nfserr;
 		}
 	}
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* sanitize the mode change */
 	if (iap->ia_valid & ATTR_MODE) {
@@ -414,6 +430,116 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp, struct iattr *iap,
 			iap->ia_valid |= (ATTR_KILL_SUID | ATTR_KILL_SGID);
 		}
 	}
+<<<<<<< HEAD
+}
+
+static __be32
+nfsd_get_write_access(struct svc_rqst *rqstp, struct svc_fh *fhp,
+		struct iattr *iap)
+{
+	struct inode *inode = fhp->fh_dentry->d_inode;
+	int host_err;
+
+	if (iap->ia_size < inode->i_size) {
+		__be32 err;
+
+		err = nfsd_permission(rqstp, fhp->fh_export, fhp->fh_dentry,
+				NFSD_MAY_TRUNC | NFSD_MAY_OWNER_OVERRIDE);
+		if (err)
+			return err;
+	}
+
+	host_err = get_write_access(inode);
+	if (host_err)
+		goto out_nfserrno;
+
+	host_err = locks_verify_truncate(inode, NULL, iap->ia_size);
+	if (host_err)
+		goto out_put_write_access;
+	return 0;
+
+out_put_write_access:
+	put_write_access(inode);
+out_nfserrno:
+	return nfserrno(host_err);
+}
+
+/*
+ * Set various file attributes.  After this call fhp needs an fh_put.
+ */
+__be32
+nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp, struct iattr *iap,
+	     int check_guard, time_t guardtime)
+{
+	struct dentry	*dentry;
+	struct inode	*inode;
+	int		accmode = NFSD_MAY_SATTR;
+	umode_t		ftype = 0;
+	__be32		err;
+	int		host_err;
+	bool		get_write_count;
+	int		size_change = 0;
+
+	if (iap->ia_valid & (ATTR_ATIME | ATTR_MTIME | ATTR_SIZE))
+		accmode |= NFSD_MAY_WRITE|NFSD_MAY_OWNER_OVERRIDE;
+	if (iap->ia_valid & ATTR_SIZE)
+		ftype = S_IFREG;
+
+	/* Callers that do fh_verify should do the fh_want_write: */
+	get_write_count = !fhp->fh_dentry;
+
+	/* Get inode */
+	err = fh_verify(rqstp, fhp, ftype, accmode);
+	if (err)
+		goto out;
+	if (get_write_count) {
+		host_err = fh_want_write(fhp);
+		if (host_err)
+			return nfserrno(host_err);
+	}
+
+	dentry = fhp->fh_dentry;
+	inode = dentry->d_inode;
+
+	/* Ignore any mode updates on symlinks */
+	if (S_ISLNK(inode->i_mode))
+		iap->ia_valid &= ~ATTR_MODE;
+
+	if (!iap->ia_valid)
+		goto out;
+
+	nfsd_sanitize_attrs(inode, iap);
+
+	/*
+	 * The size case is special, it changes the file in addition to the
+	 * attributes.
+	 */
+	if (iap->ia_valid & ATTR_SIZE) {
+		err = nfsd_get_write_access(rqstp, fhp, iap);
+		if (err)
+			goto out;
+		size_change = 1;
+	}
+
+	iap->ia_valid |= ATTR_CTIME;
+
+	if (check_guard && guardtime != inode->i_ctime.tv_sec) {
+		err = nfserr_notsync;
+		goto out_put_write_access;
+	}
+
+	host_err = nfsd_break_lease(inode);
+	if (host_err)
+		goto out_put_write_access_nfserror;
+
+	fh_lock(fhp);
+	host_err = notify_change(dentry, iap);
+	fh_unlock(fhp);
+
+out_put_write_access_nfserror:
+	err = nfserrno(host_err);
+out_put_write_access:
+=======
 
 	/* Change the attributes. */
 
@@ -430,16 +556,20 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp, struct iattr *iap,
 		err = nfserrno(host_err);
 		fh_unlock(fhp);
 	}
+>>>>>>> 671a46baf1b... some performance improvements
 	if (size_change)
 		put_write_access(inode);
 	if (!err)
 		commit_metadata(fhp);
 out:
 	return err;
+<<<<<<< HEAD
+=======
 
 out_nfserr:
 	err = nfserrno(host_err);
 	goto out;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 #if defined(CONFIG_NFSD_V2_ACL) || \
@@ -474,6 +604,12 @@ set_nfsv4_acl_one(struct dentry *dentry, struct posix_acl *pacl, char *key)
 	char *buf = NULL;
 	int error = 0;
 
+<<<<<<< HEAD
+	if (!pacl)
+		return vfs_setxattr(dentry, key, NULL, 0, 0);
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	buflen = posix_acl_xattr_size(pacl->a_count);
 	buf = kmalloc(buflen, GFP_KERNEL);
 	error = -ENOMEM;
@@ -1913,7 +2049,10 @@ struct buffered_dirent {
 };
 
 struct readdir_data {
+<<<<<<< HEAD
 	struct dir_context ctx;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	char		*dirent;
 	size_t		used;
 	int		full;
@@ -1951,7 +2090,10 @@ static __be32 nfsd_buffered_readdir(struct file *file, filldir_t func,
 	int size;
 	loff_t offset;
 
+<<<<<<< HEAD
 	buf.ctx.actor = nfsd_buffered_filldir;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	buf.dirent = (void *)__get_free_page(GFP_KERNEL);
 	if (!buf.dirent)
 		return nfserrno(-ENOMEM);
@@ -1966,7 +2108,11 @@ static __be32 nfsd_buffered_readdir(struct file *file, filldir_t func,
 		buf.used = 0;
 		buf.full = 0;
 
+<<<<<<< HEAD
 		host_err = iterate_dir(file, &buf.ctx);
+=======
+		host_err = vfs_readdir(file, nfsd_buffered_filldir, &buf);
+>>>>>>> 671a46baf1b... some performance improvements
 		if (buf.full)
 			host_err = 0;
 

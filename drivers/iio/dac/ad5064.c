@@ -602,10 +602,23 @@ static int ad5064_i2c_write(struct ad5064_state *st, unsigned int cmd,
 	unsigned int addr, unsigned int val)
 {
 	struct i2c_client *i2c = to_i2c_client(st->dev);
+<<<<<<< HEAD
+	int ret;
+
+	st->data.i2c[0] = (cmd << 4) | addr;
+	put_unaligned_be16(val, &st->data.i2c[1]);
+
+	ret = i2c_master_send(i2c, st->data.i2c, 3);
+	if (ret < 0)
+		return ret;
+
+	return 0;
+=======
 
 	st->data.i2c[0] = (cmd << 4) | addr;
 	put_unaligned_be16(val, &st->data.i2c[1]);
 	return i2c_master_send(i2c, st->data.i2c, 3);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int ad5064_i2c_probe(struct i2c_client *i2c,

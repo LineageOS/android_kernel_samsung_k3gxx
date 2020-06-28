@@ -876,8 +876,12 @@ static void emac_dev_mcast_set(struct net_device *ndev)
 		    netdev_mc_count(ndev) > EMAC_DEF_MAX_MULTICAST_ADDRESSES) {
 			mbp_enable = (mbp_enable | EMAC_MBP_RXMCAST);
 			emac_add_mcast(priv, EMAC_ALL_MULTI_SET, NULL);
+<<<<<<< HEAD
+		} else if (!netdev_mc_empty(ndev)) {
+=======
 		}
 		if (!netdev_mc_empty(ndev)) {
+>>>>>>> 671a46baf1b... some performance improvements
 			struct netdev_hw_addr *ha;
 
 			mbp_enable = (mbp_enable | EMAC_MBP_RXMCAST);

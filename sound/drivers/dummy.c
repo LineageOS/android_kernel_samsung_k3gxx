@@ -109,6 +109,12 @@ struct dummy_timer_ops {
 	snd_pcm_uframes_t (*pointer)(struct snd_pcm_substream *);
 };
 
+<<<<<<< HEAD
+#define get_dummy_ops(substream) \
+	(*(const struct dummy_timer_ops **)(substream)->runtime->private_data)
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 struct dummy_model {
 	const char *name;
 	int (*playback_constraints)(struct snd_pcm_runtime *runtime);
@@ -137,7 +143,10 @@ struct snd_dummy {
 	int iobox;
 	struct snd_kcontrol *cd_volume_ctl;
 	struct snd_kcontrol *cd_switch_ctl;
+<<<<<<< HEAD
+=======
 	const struct dummy_timer_ops *timer_ops;
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 /*
@@ -231,6 +240,11 @@ struct dummy_model *dummy_models[] = {
  */
 
 struct dummy_systimer_pcm {
+<<<<<<< HEAD
+	/* ops must be the first item */
+	const struct dummy_timer_ops *timer_ops;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	spinlock_t lock;
 	struct timer_list timer;
 	unsigned long base_time;
@@ -368,6 +382,11 @@ static struct dummy_timer_ops dummy_systimer_ops = {
  */
 
 struct dummy_hrtimer_pcm {
+<<<<<<< HEAD
+	/* ops must be the first item */
+	const struct dummy_timer_ops *timer_ops;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	ktime_t base_time;
 	ktime_t period_time;
 	atomic_t running;
@@ -416,6 +435,10 @@ static int dummy_hrtimer_stop(struct snd_pcm_substream *substream)
 
 static inline void dummy_hrtimer_sync(struct dummy_hrtimer_pcm *dpcm)
 {
+<<<<<<< HEAD
+	hrtimer_cancel(&dpcm->timer);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	tasklet_kill(&dpcm->tasklet);
 }
 
@@ -494,6 +517,15 @@ static struct dummy_timer_ops dummy_hrtimer_ops = {
 
 static int dummy_pcm_trigger(struct snd_pcm_substream *substream, int cmd)
 {
+<<<<<<< HEAD
+	switch (cmd) {
+	case SNDRV_PCM_TRIGGER_START:
+	case SNDRV_PCM_TRIGGER_RESUME:
+		return get_dummy_ops(substream)->start(substream);
+	case SNDRV_PCM_TRIGGER_STOP:
+	case SNDRV_PCM_TRIGGER_SUSPEND:
+		return get_dummy_ops(substream)->stop(substream);
+=======
 	struct snd_dummy *dummy = snd_pcm_substream_chip(substream);
 
 	switch (cmd) {
@@ -503,22 +535,31 @@ static int dummy_pcm_trigger(struct snd_pcm_substream *substream, int cmd)
 	case SNDRV_PCM_TRIGGER_STOP:
 	case SNDRV_PCM_TRIGGER_SUSPEND:
 		return dummy->timer_ops->stop(substream);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	return -EINVAL;
 }
 
 static int dummy_pcm_prepare(struct snd_pcm_substream *substream)
 {
+<<<<<<< HEAD
+	return get_dummy_ops(substream)->prepare(substream);
+=======
 	struct snd_dummy *dummy = snd_pcm_substream_chip(substream);
 
 	return dummy->timer_ops->prepare(substream);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static snd_pcm_uframes_t dummy_pcm_pointer(struct snd_pcm_substream *substream)
 {
+<<<<<<< HEAD
+	return get_dummy_ops(substream)->pointer(substream);
+=======
 	struct snd_dummy *dummy = snd_pcm_substream_chip(substream);
 
 	return dummy->timer_ops->pointer(substream);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static struct snd_pcm_hardware dummy_pcm_hardware = {
@@ -564,6 +605,21 @@ static int dummy_pcm_open(struct snd_pcm_substream *substream)
 	struct snd_dummy *dummy = snd_pcm_substream_chip(substream);
 	struct dummy_model *model = dummy->model;
 	struct snd_pcm_runtime *runtime = substream->runtime;
+<<<<<<< HEAD
+	const struct dummy_timer_ops *ops;
+	int err;
+
+	ops = &dummy_systimer_ops;
+#ifdef CONFIG_HIGH_RES_TIMERS
+	if (hrtimer)
+		ops = &dummy_hrtimer_ops;
+#endif
+
+	err = ops->create(substream);
+	if (err < 0)
+		return err;
+	get_dummy_ops(substream) = ops;
+=======
 	int err;
 
 	dummy->timer_ops = &dummy_systimer_ops;
@@ -575,6 +631,7 @@ static int dummy_pcm_open(struct snd_pcm_substream *substream)
 	err = dummy->timer_ops->create(substream);
 	if (err < 0)
 		return err;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	runtime->hw = dummy->pcm_hw;
 	if (substream->pcm->device & 1) {
@@ -596,7 +653,11 @@ static int dummy_pcm_open(struct snd_pcm_substream *substream)
 			err = model->capture_constraints(substream->runtime);
 	}
 	if (err < 0) {
+<<<<<<< HEAD
+		get_dummy_ops(substream)->free(substream);
+=======
 		dummy->timer_ops->free(substream);
+>>>>>>> 671a46baf1b... some performance improvements
 		return err;
 	}
 	return 0;
@@ -604,8 +665,12 @@ static int dummy_pcm_open(struct snd_pcm_substream *substream)
 
 static int dummy_pcm_close(struct snd_pcm_substream *substream)
 {
+<<<<<<< HEAD
+	get_dummy_ops(substream)->free(substream);
+=======
 	struct snd_dummy *dummy = snd_pcm_substream_chip(substream);
 	dummy->timer_ops->free(substream);
+>>>>>>> 671a46baf1b... some performance improvements
 	return 0;
 }
 

@@ -101,7 +101,11 @@ static int usb6fire_chip_probe(struct usb_interface *intf,
 			usb_set_intfdata(intf, chips[i]);
 			mutex_unlock(&register_mutex);
 			return 0;
+<<<<<<< HEAD
+		} else if (!devices[i] && regidx < 0)
+=======
 		} else if (regidx < 0)
+>>>>>>> 671a46baf1b... some performance improvements
 			regidx = i;
 	}
 	if (regidx < 0) {

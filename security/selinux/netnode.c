@@ -281,7 +281,11 @@ int sel_netnode_sid(void *addr, u16 family, u32 *sid)
  * Remove all entries from the network address table.
  *
  */
+<<<<<<< HEAD
 void sel_netnode_flush(void)
+=======
+static void sel_netnode_flush(void)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	unsigned int idx;
 	struct sel_netnode *node, *node_tmp;
@@ -298,11 +302,31 @@ void sel_netnode_flush(void)
 	spin_unlock_bh(&sel_netnode_lock);
 }
 
+<<<<<<< HEAD
+=======
+static int sel_netnode_avc_callback(u32 event)
+{
+	if (event == AVC_CALLBACK_RESET) {
+		sel_netnode_flush();
+		synchronize_net();
+	}
+	return 0;
+}
+
+>>>>>>> 671a46baf1b... some performance improvements
 static __init int sel_netnode_init(void)
 {
 	int iter;
 	int ret;
 
+<<<<<<< HEAD
+#if defined(SELINUX_ALWAYS_ENFORCE) || \
+	defined(SELINUX_ALWAYS_PERMISSIVE)
+=======
+#ifdef CONFIG_ALWAYS_ENFORCE
+>>>>>>> 671a46baf1b... some performance improvements
+	selinux_enabled = 1;
+#endif
 	if (!selinux_enabled)
 		return 0;
 
@@ -311,6 +335,13 @@ static __init int sel_netnode_init(void)
 		sel_netnode_hash[iter].size = 0;
 	}
 
+<<<<<<< HEAD
+=======
+	ret = avc_add_callback(sel_netnode_avc_callback, AVC_CALLBACK_RESET);
+	if (ret != 0)
+		panic("avc_add_callback() failed, error %d\n", ret);
+
+>>>>>>> 671a46baf1b... some performance improvements
 	return ret;
 }
 

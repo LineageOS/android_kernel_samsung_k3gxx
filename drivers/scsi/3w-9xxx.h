@@ -324,11 +324,14 @@ static twa_message_type twa_error_table[] = {
 #define TW_CURRENT_DRIVER_BUILD 0
 #define TW_CURRENT_DRIVER_BRANCH 0
 
+<<<<<<< HEAD
+=======
 /* Phase defines */
 #define TW_PHASE_INITIAL 0
 #define TW_PHASE_SINGLE  1
 #define TW_PHASE_SGLIST  2
 
+>>>>>>> 671a46baf1b... some performance improvements
 /* Misc defines */
 #define TW_9550SX_DRAIN_COMPLETED	      0xFFFF
 #define TW_SECTOR_SIZE                        512

@@ -29,11 +29,17 @@
 #include "cpufreq_governor.h"
 
 /* On-demand governor macros */
+<<<<<<< HEAD
+#define DEF_FREQUENCY_UP_THRESHOLD		(80)
+#define DEF_SAMPLING_DOWN_FACTOR		(1)
+#define MAX_SAMPLING_DOWN_FACTOR		(100000)
+=======
 #define DEF_FREQUENCY_DOWN_DIFFERENTIAL		(10)
 #define DEF_FREQUENCY_UP_THRESHOLD		(80)
 #define DEF_SAMPLING_DOWN_FACTOR		(1)
 #define MAX_SAMPLING_DOWN_FACTOR		(100000)
 #define MICRO_FREQUENCY_DOWN_DIFFERENTIAL	(3)
+>>>>>>> 671a46baf1b... some performance improvements
 #define MICRO_FREQUENCY_UP_THRESHOLD		(95)
 #define MICRO_FREQUENCY_MIN_SAMPLE_RATE		(10000)
 #define MIN_FREQUENCY_UP_THRESHOLD		(11)
@@ -161,6 +167,12 @@ static void dbs_freq_increase(struct cpufreq_policy *p, unsigned int freq)
 
 /*
  * Every sampling_rate, we check, if current idle time is less than 20%
+<<<<<<< HEAD
+ * (default), then we try to increase frequency. Else, we adjust the frequency
+ * proportional to load.
+ */
+static void od_check_cpu(int cpu, unsigned int load)
+=======
  * (default), then we try to increase frequency. Every sampling_rate, we look
  * for the lowest frequency which can sustain the load while keeping idle time
  * over 30%. If such a frequency exist, we try to decrease to this frequency.
@@ -169,6 +181,7 @@ static void dbs_freq_increase(struct cpufreq_policy *p, unsigned int freq)
  * happens at minimum steps of 5% (default) of current frequency
  */
 static void od_check_cpu(int cpu, unsigned int load_freq)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	struct od_cpu_dbs_info_s *dbs_info = &per_cpu(od_cpu_dbs_info, cpu);
 	struct cpufreq_policy *policy = dbs_info->cdbs.cur_policy;
@@ -178,13 +191,23 @@ static void od_check_cpu(int cpu, unsigned int load_freq)
 	dbs_info->freq_lo = 0;
 
 	/* Check for frequency increase */
+<<<<<<< HEAD
+	if (load > od_tuners->up_threshold) {
+=======
 	if (load_freq > od_tuners->up_threshold * policy->cur) {
+>>>>>>> 671a46baf1b... some performance improvements
 		/* If switching to max speed, apply sampling_down_factor */
 		if (policy->cur < policy->max)
 			dbs_info->rate_mult =
 				od_tuners->sampling_down_factor;
 		dbs_freq_increase(policy, policy->max);
 		return;
+<<<<<<< HEAD
+	} else {
+		/* Calculate the next frequency proportional to load */
+		unsigned int freq_next;
+		freq_next = load * policy->cpuinfo.max_freq / 100;
+=======
 	}
 
 	/* Check for frequency decrease */
@@ -201,6 +224,7 @@ static void od_check_cpu(int cpu, unsigned int load_freq)
 			* policy->cur) {
 		unsigned int freq_next;
 		freq_next = load_freq / od_tuners->adj_up_threshold;
+>>>>>>> 671a46baf1b... some performance improvements
 
 		/* No longer fully busy, reset rate_mult */
 		dbs_info->rate_mult = 1;
@@ -374,9 +398,12 @@ static ssize_t store_up_threshold(struct dbs_data *dbs_data, const char *buf,
 			input < MIN_FREQUENCY_UP_THRESHOLD) {
 		return -EINVAL;
 	}
+<<<<<<< HEAD
+=======
 	/* Calculate the new adj_up_threshold */
 	od_tuners->adj_up_threshold += input;
 	od_tuners->adj_up_threshold -= od_tuners->up_threshold;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	od_tuners->up_threshold = input;
 	return count;
@@ -525,8 +552,11 @@ static int od_init(struct dbs_data *dbs_data)
 	if (idle_time != -1ULL) {
 		/* Idle micro accounting is supported. Use finer thresholds */
 		tuners->up_threshold = MICRO_FREQUENCY_UP_THRESHOLD;
+<<<<<<< HEAD
+=======
 		tuners->adj_up_threshold = MICRO_FREQUENCY_UP_THRESHOLD -
 			MICRO_FREQUENCY_DOWN_DIFFERENTIAL;
+>>>>>>> 671a46baf1b... some performance improvements
 		/*
 		 * In nohz/micro accounting case we set the minimum frequency
 		 * not depending on HZ, but fixed (very low). The deferred
@@ -535,8 +565,11 @@ static int od_init(struct dbs_data *dbs_data)
 		dbs_data->min_sampling_rate = MICRO_FREQUENCY_MIN_SAMPLE_RATE;
 	} else {
 		tuners->up_threshold = DEF_FREQUENCY_UP_THRESHOLD;
+<<<<<<< HEAD
+=======
 		tuners->adj_up_threshold = DEF_FREQUENCY_UP_THRESHOLD -
 			DEF_FREQUENCY_DOWN_DIFFERENTIAL;
+>>>>>>> 671a46baf1b... some performance improvements
 
 		/* For correct statistics, we need 10 ticks for each measure */
 		dbs_data->min_sampling_rate = MIN_SAMPLING_RATE_RATIO *

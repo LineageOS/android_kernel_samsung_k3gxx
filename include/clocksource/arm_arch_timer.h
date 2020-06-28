@@ -32,7 +32,11 @@
 #ifdef CONFIG_ARM_ARCH_TIMER
 
 extern u32 arch_timer_get_rate(void);
+<<<<<<< HEAD
+extern u64 arch_timer_read_counter(void);
+=======
 extern u64 (*arch_timer_read_counter)(void);
+>>>>>>> 671a46baf1b... some performance improvements
 extern struct timecounter *arch_timer_get_timecounter(void);
 
 #else

@@ -137,6 +137,10 @@ static struct scsi_host_template arcmsr_scsi_host_template = {
 	.cmd_per_lun		= ARCMSR_MAX_CMD_PERLUN,
 	.use_clustering		= ENABLE_CLUSTERING,
 	.shost_attrs		= arcmsr_host_attrs,
+<<<<<<< HEAD
+	.no_write_same		= 1,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 static struct pci_device_id arcmsr_device_id_table[] = {
 	{PCI_DEVICE(PCI_VENDOR_ID_ARECA, PCI_DEVICE_ID_ARECA_1110)},
@@ -1802,7 +1806,12 @@ static int arcmsr_iop_message_xfer(struct AdapterControlBlock *acb,
 
 	case ARCMSR_MESSAGE_WRITE_WQBUFFER: {
 		unsigned char *ver_addr;
+<<<<<<< HEAD
+		uint32_t user_len;
+		int32_t my_empty_len, wqbuf_firstindex, wqbuf_lastindex;
+=======
 		int32_t my_empty_len, user_len, wqbuf_firstindex, wqbuf_lastindex;
+>>>>>>> 671a46baf1b... some performance improvements
 		uint8_t *pQbuffer, *ptmpuserbuffer;
 
 		ver_addr = kmalloc(1032, GFP_ATOMIC);
@@ -1819,6 +1828,14 @@ static int arcmsr_iop_message_xfer(struct AdapterControlBlock *acb,
 		}
 		ptmpuserbuffer = ver_addr;
 		user_len = pcmdmessagefld->cmdmessage.Length;
+<<<<<<< HEAD
+		if (user_len > 1032) {
+			retvalue = ARCMSR_MESSAGE_FAIL;
+			kfree(ver_addr);
+			goto message_out;
+		}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		memcpy(ptmpuserbuffer, pcmdmessagefld->messagedatabuffer, user_len);
 		wqbuf_lastindex = acb->wqbuf_lastindex;
 		wqbuf_firstindex = acb->wqbuf_firstindex;
@@ -2062,6 +2079,11 @@ static int arcmsr_queue_command_lck(struct scsi_cmnd *cmd,
 	struct AdapterControlBlock *acb = (struct AdapterControlBlock *) host->hostdata;
 	struct CommandControlBlock *ccb;
 	int target = cmd->device->id;
+<<<<<<< HEAD
+	cmd->scsi_done = done;
+	cmd->host_scribble = NULL;
+	cmd->result = 0;
+=======
 	int lun = cmd->device->lun;
 	uint8_t scsicmd = cmd->cmnd[0];
 	cmd->scsi_done = done;
@@ -2074,6 +2096,7 @@ static int arcmsr_queue_command_lck(struct scsi_cmnd *cmd,
 		cmd->scsi_done(cmd);
 		return 0;
 	}
+>>>>>>> 671a46baf1b... some performance improvements
 	if (target == 16) {
 		/* virtual device for iop message transfer */
 		arcmsr_handle_virtual_command(acb, cmd);
@@ -2500,16 +2523,25 @@ static int arcmsr_polling_ccbdone(struct AdapterControlBlock *acb,
 static int arcmsr_iop_confirm(struct AdapterControlBlock *acb)
 {
 	uint32_t cdb_phyaddr, cdb_phyaddr_hi32;
+<<<<<<< HEAD
+
+=======
 	dma_addr_t dma_coherent_handle;
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	********************************************************************
 	** here we need to tell iop 331 our freeccb.HighPart
 	** if freeccb.HighPart is not zero
 	********************************************************************
 	*/
+<<<<<<< HEAD
+	cdb_phyaddr = lower_32_bits(acb->dma_coherent_handle);
+	cdb_phyaddr_hi32 = upper_32_bits(acb->dma_coherent_handle);
+=======
 	dma_coherent_handle = acb->dma_coherent_handle;
 	cdb_phyaddr = (uint32_t)(dma_coherent_handle);
 	cdb_phyaddr_hi32 = (uint32_t)((cdb_phyaddr >> 16) >> 16);
+>>>>>>> 671a46baf1b... some performance improvements
 	acb->cdb_phyaddr_hi32 = cdb_phyaddr_hi32;
 	/*
 	***********************************************************************

@@ -550,7 +550,10 @@ static void snd_card_set_id_no_lock(struct snd_card *card, const char *src,
 				    const char *nid)
 {
 	int len, loops;
+<<<<<<< HEAD
+=======
 	bool with_suffix;
+>>>>>>> 671a46baf1b... some performance improvements
 	bool is_default = false;
 	char *id;
 	
@@ -566,6 +569,25 @@ static void snd_card_set_id_no_lock(struct snd_card *card, const char *src,
 		is_default = true;
 	}
 
+<<<<<<< HEAD
+	len = strlen(id);
+	for (loops = 0; loops < SNDRV_CARDS; loops++) {
+		char *spos;
+		char sfxstr[5]; /* "_012" */
+		int sfxlen;
+
+		if (card_id_ok(card, id))
+			return; /* OK */
+
+		/* Add _XYZ suffix */
+		sprintf(sfxstr, "_%X", loops + 1);
+		sfxlen = strlen(sfxstr);
+		if (len + sfxlen >= sizeof(card->id))
+			spos = id + sizeof(card->id) - sfxlen - 1;
+		else
+			spos = id + len;
+		strcpy(spos, sfxstr);
+=======
 	with_suffix = false;
 	for (loops = 0; loops < SNDRV_CARDS; loops++) {
 		if (card_id_ok(card, id))
@@ -586,6 +608,7 @@ static void snd_card_set_id_no_lock(struct snd_card *card, const char *src,
 			else
 				id[len - 1] = 'A';
 		}
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	/* fallback to the default id */
 	if (!is_default) {

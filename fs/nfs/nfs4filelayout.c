@@ -1300,7 +1300,11 @@ filelayout_alloc_layout_hdr(struct inode *inode, gfp_t gfp_flags)
 	struct nfs4_filelayout *flo;
 
 	flo = kzalloc(sizeof(*flo), gfp_flags);
+<<<<<<< HEAD
+	return flo != NULL ? &flo->generic_hdr : NULL;
+=======
 	return &flo->generic_hdr;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void

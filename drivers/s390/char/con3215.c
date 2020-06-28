@@ -288,12 +288,25 @@ static void raw3215_timeout(unsigned long __data)
 	unsigned long flags;
 
 	spin_lock_irqsave(get_ccwdev_lock(raw->cdev), flags);
+<<<<<<< HEAD
+	raw->flags &= ~RAW3215_TIMER_RUNS;
+	if (!(raw->port.flags & ASYNC_SUSPENDED)) {
+		raw3215_mk_write_req(raw);
+		raw3215_start_io(raw);
+		if ((raw->queued_read || raw->queued_write) &&
+		    !(raw->flags & RAW3215_WORKING) &&
+		    !(raw->flags & RAW3215_TIMER_RUNS)) {
+			raw->timer.expires = RAW3215_TIMEOUT + jiffies;
+			add_timer(&raw->timer);
+			raw->flags |= RAW3215_TIMER_RUNS;
+=======
 	if (raw->flags & RAW3215_TIMER_RUNS) {
 		del_timer(&raw->timer);
 		raw->flags &= ~RAW3215_TIMER_RUNS;
 		if (!(raw->port.flags & ASYNC_SUSPENDED)) {
 			raw3215_mk_write_req(raw);
 			raw3215_start_io(raw);
+>>>>>>> 671a46baf1b... some performance improvements
 		}
 	}
 	spin_unlock_irqrestore(get_ccwdev_lock(raw->cdev), flags);
@@ -317,6 +330,17 @@ static inline void raw3215_try_io(struct raw3215_info *raw)
 		    (raw->flags & RAW3215_FLUSHING)) {
 			/* execute write requests bigger than minimum size */
 			raw3215_start_io(raw);
+<<<<<<< HEAD
+		}
+	}
+	if ((raw->queued_read || raw->queued_write) &&
+	    !(raw->flags & RAW3215_WORKING) &&
+	    !(raw->flags & RAW3215_TIMER_RUNS)) {
+		raw->timer.expires = RAW3215_TIMEOUT + jiffies;
+		add_timer(&raw->timer);
+		raw->flags |= RAW3215_TIMER_RUNS;
+	}
+=======
 			if (raw->flags & RAW3215_TIMER_RUNS) {
 				del_timer(&raw->timer);
 				raw->flags &= ~RAW3215_TIMER_RUNS;
@@ -328,6 +352,7 @@ static inline void raw3215_try_io(struct raw3215_info *raw)
 			raw->flags |= RAW3215_TIMER_RUNS;
 		}
 	}
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /*
@@ -922,7 +947,11 @@ static int __init con3215_init(void)
 		raw3215_freelist = req;
 	}
 
+<<<<<<< HEAD
+	cdev = ccw_device_probe_console(&raw3215_ccw_driver);
+=======
 	cdev = ccw_device_probe_console();
+>>>>>>> 671a46baf1b... some performance improvements
 	if (IS_ERR(cdev))
 		return -ENODEV;
 
@@ -1027,12 +1056,34 @@ static int tty3215_write(struct tty_struct * tty,
 			 const unsigned char *buf, int count)
 {
 	struct raw3215_info *raw;
+<<<<<<< HEAD
+	int i, written;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (!tty)
 		return 0;
 	raw = (struct raw3215_info *) tty->driver_data;
+<<<<<<< HEAD
+	written = count;
+	while (count > 0) {
+		for (i = 0; i < count; i++)
+			if (buf[i] == '\t' || buf[i] == '\n')
+				break;
+		raw3215_write(raw, buf, i);
+		count -= i;
+		buf += i;
+		if (count > 0) {
+			raw3215_putchar(raw, *buf);
+			count--;
+			buf++;
+		}
+	}
+	return written;
+=======
 	raw3215_write(raw, buf, count);
 	return count;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /*
@@ -1180,7 +1231,11 @@ static int __init tty3215_init(void)
 	driver->subtype = SYSTEM_TYPE_TTY;
 	driver->init_termios = tty_std_termios;
 	driver->init_termios.c_iflag = IGNBRK | IGNPAR;
+<<<<<<< HEAD
+	driver->init_termios.c_oflag = ONLCR;
+=======
 	driver->init_termios.c_oflag = ONLCR | XTABS;
+>>>>>>> 671a46baf1b... some performance improvements
 	driver->init_termios.c_lflag = ISIG;
 	driver->flags = TTY_DRIVER_REAL_RAW;
 	tty_set_operations(driver, &tty3215_ops);

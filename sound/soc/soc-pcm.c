@@ -413,9 +413,14 @@ static int soc_pcm_close(struct snd_pcm_substream *substream)
 		} else {
 			/* start delayed pop wq here for playback streams */
 			rtd->pop_wait = 1;
+<<<<<<< HEAD
 			queue_delayed_work(system_power_efficient_wq,
 					   &rtd->delayed_work,
 					   msecs_to_jiffies(rtd->pmdown_time));
+=======
+			schedule_delayed_work(&rtd->delayed_work,
+				msecs_to_jiffies(rtd->pmdown_time));
+>>>>>>> 671a46baf1b... some performance improvements
 		}
 	} else {
 		if (codec_dai->capture_active)
@@ -1258,7 +1263,12 @@ static int dpcm_be_dai_hw_free(struct snd_soc_pcm_runtime *fe, int stream)
 		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_PREPARE) &&
 		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_HW_FREE) &&
 		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_PAUSED) &&
+<<<<<<< HEAD
+		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_STOP) &&
+		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_SUSPEND))
+=======
 		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_STOP))
+>>>>>>> 671a46baf1b... some performance improvements
 			continue;
 
 		dev_dbg(be->dev, "ASoC: hw_free BE %s\n",
@@ -1839,6 +1849,12 @@ static int dpcm_run_old_update(struct snd_soc_pcm_runtime *fe, int stream)
 /* Called by DAPM mixer/mux changes to update audio routing between PCMs and
  * any DAI links.
  */
+<<<<<<< HEAD
+int soc_dpcm_runtime_update(struct snd_soc_card *card)
+{
+	int i, old, new, paths;
+
+=======
 int soc_dpcm_runtime_update(struct snd_soc_dapm_widget *widget)
 {
 	struct snd_soc_card *card;
@@ -1851,6 +1867,7 @@ int soc_dpcm_runtime_update(struct snd_soc_dapm_widget *widget)
 	else
 		return -EINVAL;
 
+>>>>>>> 671a46baf1b... some performance improvements
 	mutex_lock_nested(&card->mutex, SND_SOC_CARD_CLASS_RUNTIME);
 	for (i = 0; i < card->num_rtd; i++) {
 		struct snd_soc_dapm_widget_list *list;
@@ -1896,6 +1913,10 @@ int soc_dpcm_runtime_update(struct snd_soc_dapm_widget *widget)
 			dpcm_be_disconnect(fe, SNDRV_PCM_STREAM_PLAYBACK);
 		}
 
+<<<<<<< HEAD
+		dpcm_path_put(&list);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 capture:
 		/* skip if FE doesn't have capture capability */
 		if (!fe->cpu_dai->driver->capture.channels_min)

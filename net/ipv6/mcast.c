@@ -157,6 +157,10 @@ int ipv6_sock_mc_join(struct sock *sk, int ifindex, const struct in6_addr *addr)
 	mc_lst->next = NULL;
 	mc_lst->addr = *addr;
 
+<<<<<<< HEAD
+	rtnl_lock();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	rcu_read_lock();
 	if (ifindex == 0) {
 		struct rt6_info *rt;
@@ -170,6 +174,10 @@ int ipv6_sock_mc_join(struct sock *sk, int ifindex, const struct in6_addr *addr)
 
 	if (dev == NULL) {
 		rcu_read_unlock();
+<<<<<<< HEAD
+		rtnl_unlock();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		sock_kfree_s(sk, mc_lst, sizeof(*mc_lst));
 		return -ENODEV;
 	}
@@ -187,6 +195,10 @@ int ipv6_sock_mc_join(struct sock *sk, int ifindex, const struct in6_addr *addr)
 
 	if (err) {
 		rcu_read_unlock();
+<<<<<<< HEAD
+		rtnl_unlock();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		sock_kfree_s(sk, mc_lst, sizeof(*mc_lst));
 		return err;
 	}
@@ -197,6 +209,10 @@ int ipv6_sock_mc_join(struct sock *sk, int ifindex, const struct in6_addr *addr)
 	spin_unlock(&ipv6_sk_mc_lock);
 
 	rcu_read_unlock();
+<<<<<<< HEAD
+	rtnl_unlock();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return 0;
 }
@@ -214,6 +230,10 @@ int ipv6_sock_mc_drop(struct sock *sk, int ifindex, const struct in6_addr *addr)
 	if (!ipv6_addr_is_multicast(addr))
 		return -EINVAL;
 
+<<<<<<< HEAD
+	rtnl_lock();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	spin_lock(&ipv6_sk_mc_lock);
 	for (lnk = &np->ipv6_mc_list;
 	     (mc_lst = rcu_dereference_protected(*lnk,
@@ -237,12 +257,21 @@ int ipv6_sock_mc_drop(struct sock *sk, int ifindex, const struct in6_addr *addr)
 			} else
 				(void) ip6_mc_leave_src(sk, mc_lst, NULL);
 			rcu_read_unlock();
+<<<<<<< HEAD
+			rtnl_unlock();
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			atomic_sub(sizeof(*mc_lst), &sk->sk_omem_alloc);
 			kfree_rcu(mc_lst, rcu);
 			return 0;
 		}
 	}
 	spin_unlock(&ipv6_sk_mc_lock);
+<<<<<<< HEAD
+	rtnl_unlock();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return -EADDRNOTAVAIL;
 }
@@ -287,6 +316,10 @@ void ipv6_sock_mc_close(struct sock *sk)
 	if (!rcu_access_pointer(np->ipv6_mc_list))
 		return;
 
+<<<<<<< HEAD
+	rtnl_lock();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	spin_lock(&ipv6_sk_mc_lock);
 	while ((mc_lst = rcu_dereference_protected(np->ipv6_mc_list,
 				lockdep_is_held(&ipv6_sk_mc_lock))) != NULL) {
@@ -313,6 +346,10 @@ void ipv6_sock_mc_close(struct sock *sk)
 		spin_lock(&ipv6_sk_mc_lock);
 	}
 	spin_unlock(&ipv6_sk_mc_lock);
+<<<<<<< HEAD
+	rtnl_unlock();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 int ip6_mc_source(int add, int omode, struct sock *sk,
@@ -830,6 +867,11 @@ int ipv6_dev_mc_inc(struct net_device *dev, const struct in6_addr *addr)
 	struct ifmcaddr6 *mc;
 	struct inet6_dev *idev;
 
+<<<<<<< HEAD
+	ASSERT_RTNL();
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* we need to take a reference on idev */
 	idev = in6_dev_get(dev);
 
@@ -901,6 +943,11 @@ int __ipv6_dev_mc_dec(struct inet6_dev *idev, const struct in6_addr *addr)
 {
 	struct ifmcaddr6 *ma, **map;
 
+<<<<<<< HEAD
+	ASSERT_RTNL();
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	write_lock_bh(&idev->lock);
 	for (map = &idev->mc_list; (ma=*map) != NULL; map = &ma->next) {
 		if (ipv6_addr_equal(&ma->mca_addr, addr)) {
@@ -1439,11 +1486,19 @@ static void mld_sendpack(struct sk_buff *skb)
 		      dst_output);
 out:
 	if (!err) {
+<<<<<<< HEAD
+		ICMP6MSGOUT_INC_STATS(net, idev, ICMPV6_MLD2_REPORT);
+		ICMP6_INC_STATS(net, idev, ICMP6_MIB_OUTMSGS);
+	} else {
+		IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
+	}
+=======
 		ICMP6MSGOUT_INC_STATS_BH(net, idev, ICMPV6_MLD2_REPORT);
 		ICMP6_INC_STATS_BH(net, idev, ICMP6_MIB_OUTMSGS);
 		IP6_UPD_PO_STATS_BH(net, idev, IPSTATS_MIB_OUTMCAST, payload_len);
 	} else
 		IP6_INC_STATS_BH(net, idev, IPSTATS_MIB_OUTDISCARDS);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	rcu_read_unlock();
 	return;
@@ -1804,7 +1859,10 @@ out:
 	if (!err) {
 		ICMP6MSGOUT_INC_STATS(net, idev, type);
 		ICMP6_INC_STATS(net, idev, ICMP6_MIB_OUTMSGS);
+<<<<<<< HEAD
+=======
 		IP6_UPD_PO_STATS(net, idev, IPSTATS_MIB_OUTMCAST, full_len);
+>>>>>>> 671a46baf1b... some performance improvements
 	} else
 		IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
 
@@ -2158,7 +2216,11 @@ static void mld_gq_timer_expire(unsigned long data)
 
 	idev->mc_gq_running = 0;
 	mld_send_report(idev, NULL);
+<<<<<<< HEAD
+	in6_dev_put(idev);
+=======
 	__in6_dev_put(idev);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void mld_ifc_timer_expire(unsigned long data)
@@ -2171,7 +2233,11 @@ static void mld_ifc_timer_expire(unsigned long data)
 		if (idev->mc_ifc_count)
 			mld_ifc_start_timer(idev, idev->mc_maxdelay);
 	}
+<<<<<<< HEAD
+	in6_dev_put(idev);
+=======
 	__in6_dev_put(idev);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void mld_ifc_event(struct inet6_dev *idev)

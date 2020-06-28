@@ -25,7 +25,10 @@
 #include <linux/slab.h>
 #include <linux/wait.h>
 #include <linux/mount.h>
+<<<<<<< HEAD
 #include <linux/file.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #include "ecryptfs_kernel.h"
 
 struct ecryptfs_open_req {
@@ -148,7 +151,11 @@ int ecryptfs_privileged_open(struct file **lower_file,
 	flags |= IS_RDONLY(lower_dentry->d_inode) ? O_RDONLY : O_RDWR;
 	(*lower_file) = dentry_open(&req.path, flags, cred);
 	if (!IS_ERR(*lower_file))
+<<<<<<< HEAD
 		goto have_file;
+=======
+		goto out;
+>>>>>>> 671a46baf1b... some performance improvements
 	if ((flags & O_ACCMODE) == O_RDONLY) {
 		rc = PTR_ERR((*lower_file));
 		goto out;
@@ -166,6 +173,7 @@ int ecryptfs_privileged_open(struct file **lower_file,
 	mutex_unlock(&ecryptfs_kthread_ctl.mux);
 	wake_up(&ecryptfs_kthread_ctl.wait);
 	wait_for_completion(&req.done);
+<<<<<<< HEAD
 	if (IS_ERR(*lower_file)) {
 		rc = PTR_ERR(*lower_file);
 		goto out;
@@ -177,6 +185,10 @@ have_file:
 		*lower_file = NULL;
 		rc = -EMEDIUMTYPE;
 	}
+=======
+	if (IS_ERR(*lower_file))
+		rc = PTR_ERR(*lower_file);
+>>>>>>> 671a46baf1b... some performance improvements
 out:
 	return rc;
 }

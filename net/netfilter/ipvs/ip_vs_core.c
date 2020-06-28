@@ -650,6 +650,26 @@ static inline int ip_vs_gather_frags(struct sk_buff *skb, u_int32_t user)
 	return err;
 }
 
+<<<<<<< HEAD
+static int ip_vs_route_me_harder(int af, struct sk_buff *skb,
+				 unsigned int hooknum)
+{
+	if (!sysctl_snat_reroute(skb))
+		return 0;
+	/* Reroute replies only to remote clients (FORWARD and LOCAL_OUT) */
+	if (NF_INET_LOCAL_IN == hooknum)
+		return 0;
+#ifdef CONFIG_IP_VS_IPV6
+	if (af == AF_INET6) {
+		struct dst_entry *dst = skb_dst(skb);
+
+		if (dst->dev && !(dst->dev->flags & IFF_LOOPBACK) &&
+		    ip6_route_me_harder(skb) != 0)
+			return 1;
+	} else
+#endif
+		if (!(skb_rtable(skb)->rt_flags & RTCF_LOCAL) &&
+=======
 static int ip_vs_route_me_harder(int af, struct sk_buff *skb)
 {
 #ifdef CONFIG_IP_VS_IPV6
@@ -660,6 +680,7 @@ static int ip_vs_route_me_harder(int af, struct sk_buff *skb)
 #endif
 		if ((sysctl_snat_reroute(skb) ||
 		     skb_rtable(skb)->rt_flags & RTCF_LOCAL) &&
+>>>>>>> 671a46baf1b... some performance improvements
 		    ip_route_me_harder(skb, RTN_LOCAL) != 0)
 			return 1;
 
@@ -782,6 +803,15 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
 				union nf_inet_addr *snet,
 				__u8 protocol, struct ip_vs_conn *cp,
 				struct ip_vs_protocol *pp,
+<<<<<<< HEAD
+				unsigned int offset, unsigned int ihl,
+				unsigned int hooknum)
+{
+	unsigned int verdict = NF_DROP;
+
+	if (IP_VS_FWD_METHOD(cp) != IP_VS_CONN_F_MASQ)
+		goto ignore_cp;
+=======
 				unsigned int offset, unsigned int ihl)
 {
 	unsigned int verdict = NF_DROP;
@@ -790,6 +820,7 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
 		pr_err("shouldn't reach here, because the box is on the "
 		       "half connection in the tun/dr module.\n");
 	}
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* Ensure the checksum is correct */
 	if (!skb_csum_unnecessary(skb) && ip_vs_checksum_complete(skb, ihl)) {
@@ -812,7 +843,11 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
 #endif
 		ip_vs_nat_icmp(skb, pp, cp, 1);
 
+<<<<<<< HEAD
+	if (ip_vs_route_me_harder(af, skb, hooknum))
+=======
 	if (ip_vs_route_me_harder(af, skb))
+>>>>>>> 671a46baf1b... some performance improvements
 		goto out;
 
 	/* do the statistics and put it back */
@@ -823,6 +858,11 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
 		ip_vs_notrack(skb);
 	else
 		ip_vs_update_conntrack(skb, cp, 0);
+<<<<<<< HEAD
+
+ignore_cp:
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	verdict = NF_ACCEPT;
 
 out:
@@ -907,7 +947,11 @@ static int ip_vs_out_icmp(struct sk_buff *skb, int *related,
 
 	snet.ip = iph->saddr;
 	return handle_response_icmp(AF_INET, skb, &snet, cih->protocol, cp,
+<<<<<<< HEAD
+				    pp, ciph.len, ihl, hooknum);
+=======
 				    pp, ciph.len, ihl);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 #ifdef CONFIG_IP_VS_IPV6
@@ -972,7 +1016,12 @@ static int ip_vs_out_icmp_v6(struct sk_buff *skb, int *related,
 	snet.in6 = ciph.saddr.in6;
 	writable = ciph.len;
 	return handle_response_icmp(AF_INET6, skb, &snet, ciph.protocol, cp,
+<<<<<<< HEAD
+				    pp, writable, sizeof(struct ipv6hdr),
+				    hooknum);
+=======
 				    pp, writable, sizeof(struct ipv6hdr));
+>>>>>>> 671a46baf1b... some performance improvements
 }
 #endif
 
@@ -1031,7 +1080,12 @@ static inline bool is_new_conn(const struct sk_buff *skb,
  */
 static unsigned int
 handle_response(int af, struct sk_buff *skb, struct ip_vs_proto_data *pd,
+<<<<<<< HEAD
+		struct ip_vs_conn *cp, struct ip_vs_iphdr *iph,
+		unsigned int hooknum)
+=======
 		struct ip_vs_conn *cp, struct ip_vs_iphdr *iph)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	struct ip_vs_protocol *pp = pd->pp;
 
@@ -1069,7 +1123,11 @@ handle_response(int af, struct sk_buff *skb, struct ip_vs_proto_data *pd,
 	 * if it came from this machine itself.  So re-compute
 	 * the routing information.
 	 */
+<<<<<<< HEAD
+	if (ip_vs_route_me_harder(af, skb, hooknum))
+=======
 	if (ip_vs_route_me_harder(af, skb))
+>>>>>>> 671a46baf1b... some performance improvements
 		goto drop;
 
 	IP_VS_DBG_PKT(10, af, pp, skb, 0, "After SNAT");
@@ -1131,12 +1189,15 @@ ip_vs_out(unsigned int hooknum, struct sk_buff *skb, int af)
 	ip_vs_fill_iph_skb(af, skb, &iph);
 #ifdef CONFIG_IP_VS_IPV6
 	if (af == AF_INET6) {
+<<<<<<< HEAD
+=======
 		if (!iph.fragoffs && skb_nfct_reasm(skb)) {
 			struct sk_buff *reasm = skb_nfct_reasm(skb);
 			/* Save fw mark for coming frags */
 			reasm->ipvs_property = 1;
 			reasm->mark = skb->mark;
 		}
+>>>>>>> 671a46baf1b... some performance improvements
 		if (unlikely(iph.protocol == IPPROTO_ICMPV6)) {
 			int related;
 			int verdict = ip_vs_out_icmp_v6(skb, &related,
@@ -1177,8 +1238,16 @@ ip_vs_out(unsigned int hooknum, struct sk_buff *skb, int af)
 	 */
 	cp = pp->conn_out_get(af, skb, &iph, 0);
 
+<<<<<<< HEAD
+	if (likely(cp)) {
+		if (IP_VS_FWD_METHOD(cp) != IP_VS_CONN_F_MASQ)
+			goto ignore_cp;
+		return handle_response(af, skb, pd, cp, &iph, hooknum);
+	}
+=======
 	if (likely(cp))
 		return handle_response(af, skb, pd, cp, &iph);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (sysctl_nat_icmp_send(net) &&
 	    (pp->protocol == IPPROTO_TCP ||
 	     pp->protocol == IPPROTO_UDP ||
@@ -1220,9 +1289,21 @@ ip_vs_out(unsigned int hooknum, struct sk_buff *skb, int af)
 			}
 		}
 	}
+<<<<<<< HEAD
+
+out:
 	IP_VS_DBG_PKT(12, af, pp, skb, 0,
 		      "ip_vs_out: packet continues traversal as normal");
 	return NF_ACCEPT;
+
+ignore_cp:
+	__ip_vs_conn_put(cp);
+	goto out;
+=======
+	IP_VS_DBG_PKT(12, af, pp, skb, 0,
+		      "ip_vs_out: packet continues traversal as normal");
+	return NF_ACCEPT;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /*
@@ -1390,15 +1471,28 @@ ip_vs_in_icmp(struct sk_buff *skb, int *related, unsigned int hooknum)
 
 	if (ipip) {
 		__be32 info = ic->un.gateway;
+<<<<<<< HEAD
+		__u8 type = ic->type;
+		__u8 code = ic->code;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 		/* Update the MTU */
 		if (ic->type == ICMP_DEST_UNREACH &&
 		    ic->code == ICMP_FRAG_NEEDED) {
 			struct ip_vs_dest *dest = cp->dest;
 			u32 mtu = ntohs(ic->un.frag.mtu);
+<<<<<<< HEAD
+			__be16 frag_off = cih->frag_off;
+
+			/* Strip outer IP and ICMP, go to IPIP header */
+			if (pskb_pull(skb, ihl + sizeof(_icmph)) == NULL)
+				goto ignore_ipip;
+=======
 
 			/* Strip outer IP and ICMP, go to IPIP header */
 			__skb_pull(skb, ihl + sizeof(_icmph));
+>>>>>>> 671a46baf1b... some performance improvements
 			offset2 -= ihl + sizeof(_icmph);
 			skb_reset_network_header(skb);
 			IP_VS_DBG(12, "ICMP for IPIP %pI4->%pI4: mtu=%u\n",
@@ -1406,7 +1500,11 @@ ip_vs_in_icmp(struct sk_buff *skb, int *related, unsigned int hooknum)
 			ipv4_update_pmtu(skb, dev_net(skb->dev),
 					 mtu, 0, 0, 0, 0);
 			/* Client uses PMTUD? */
+<<<<<<< HEAD
+			if (!(frag_off & htons(IP_DF)))
+=======
 			if (!(cih->frag_off & htons(IP_DF)))
+>>>>>>> 671a46baf1b... some performance improvements
 				goto ignore_ipip;
 			/* Prefer the resulting PMTU */
 			if (dest) {
@@ -1425,12 +1523,22 @@ ip_vs_in_icmp(struct sk_buff *skb, int *related, unsigned int hooknum)
 		/* Strip outer IP, ICMP and IPIP, go to IP header of
 		 * original request.
 		 */
+<<<<<<< HEAD
+		if (pskb_pull(skb, offset2) == NULL)
+			goto ignore_ipip;
+		skb_reset_network_header(skb);
+		IP_VS_DBG(12, "Sending ICMP for %pI4->%pI4: t=%u, c=%u, i=%u\n",
+			&ip_hdr(skb)->saddr, &ip_hdr(skb)->daddr,
+			type, code, ntohl(info));
+		icmp_send(skb, type, code, info);
+=======
 		__skb_pull(skb, offset2);
 		skb_reset_network_header(skb);
 		IP_VS_DBG(12, "Sending ICMP for %pI4->%pI4: t=%u, c=%u, i=%u\n",
 			&ip_hdr(skb)->saddr, &ip_hdr(skb)->daddr,
 			ic->type, ic->code, ntohl(info));
 		icmp_send(skb, ic->type, ic->code, info);
+>>>>>>> 671a46baf1b... some performance improvements
 		/* ICMP can be shorter but anyways, account it */
 		ip_vs_out_stats(cp, skb);
 
@@ -1606,12 +1714,15 @@ ip_vs_in(unsigned int hooknum, struct sk_buff *skb, int af)
 
 #ifdef CONFIG_IP_VS_IPV6
 	if (af == AF_INET6) {
+<<<<<<< HEAD
+=======
 		if (!iph.fragoffs && skb_nfct_reasm(skb)) {
 			struct sk_buff *reasm = skb_nfct_reasm(skb);
 			/* Save fw mark for coming frags. */
 			reasm->ipvs_property = 1;
 			reasm->mark = skb->mark;
 		}
+>>>>>>> 671a46baf1b... some performance improvements
 		if (unlikely(iph.protocol == IPPROTO_ICMPV6)) {
 			int related;
 			int verdict = ip_vs_in_icmp_v6(skb, &related, hooknum,
@@ -1663,9 +1774,14 @@ ip_vs_in(unsigned int hooknum, struct sk_buff *skb, int af)
 		/* sorry, all this trouble for a no-hit :) */
 		IP_VS_DBG_PKT(12, af, pp, skb, 0,
 			      "ip_vs_in: packet continues traversal as normal");
+<<<<<<< HEAD
+		if (iph.fragoffs) {
+			/* Fragment that couldn't be mapped to a conn entry
+=======
 		if (iph.fragoffs && !skb_nfct_reasm(skb)) {
 			/* Fragment that couldn't be mapped to a conn entry
 			 * and don't have any pointer to a reasm skb
+>>>>>>> 671a46baf1b... some performance improvements
 			 * is missing module nf_defrag_ipv6
 			 */
 			IP_VS_DBG_RL("Unhandled frag, load nf_defrag_ipv6\n");
@@ -1748,6 +1864,8 @@ ip_vs_local_request4(unsigned int hooknum, struct sk_buff *skb,
 #ifdef CONFIG_IP_VS_IPV6
 
 /*
+<<<<<<< HEAD
+=======
  * AF_INET6 fragment handling
  * Copy info from first fragment, to the rest of them.
  */
@@ -1780,6 +1898,7 @@ ip_vs_preroute_frag6(unsigned int hooknum, struct sk_buff *skb,
 }
 
 /*
+>>>>>>> 671a46baf1b... some performance improvements
  *	AF_INET6 handler in NF_INET_LOCAL_IN chain
  *	Schedule and forward packets from remote clients
  */
@@ -1916,6 +2035,8 @@ static struct nf_hook_ops ip_vs_ops[] __read_mostly = {
 		.priority	= 100,
 	},
 #ifdef CONFIG_IP_VS_IPV6
+<<<<<<< HEAD
+=======
 	/* After mangle & nat fetch 2:nd fragment and following */
 	{
 		.hook		= ip_vs_preroute_frag6,
@@ -1924,6 +2045,7 @@ static struct nf_hook_ops ip_vs_ops[] __read_mostly = {
 		.hooknum	= NF_INET_PRE_ROUTING,
 		.priority	= NF_IP6_PRI_NAT_DST + 1,
 	},
+>>>>>>> 671a46baf1b... some performance improvements
 	/* After packet filtering, change source only for VS/NAT */
 	{
 		.hook		= ip_vs_reply6,
@@ -1946,7 +2068,11 @@ static struct nf_hook_ops ip_vs_ops[] __read_mostly = {
 	{
 		.hook		= ip_vs_local_reply6,
 		.owner		= THIS_MODULE,
+<<<<<<< HEAD
+		.pf		= NFPROTO_IPV6,
+=======
 		.pf		= NFPROTO_IPV4,
+>>>>>>> 671a46baf1b... some performance improvements
 		.hooknum	= NF_INET_LOCAL_OUT,
 		.priority	= NF_IP6_PRI_NAT_DST + 1,
 	},

@@ -52,6 +52,10 @@
 
 
 /* Function prototypes */
+<<<<<<< HEAD
+static int kobil_attach(struct usb_serial *serial);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static int kobil_port_probe(struct usb_serial_port *probe);
 static int kobil_port_remove(struct usb_serial_port *probe);
 static int  kobil_open(struct tty_struct *tty, struct usb_serial_port *port);
@@ -87,6 +91,10 @@ static struct usb_serial_driver kobil_device = {
 	.description =		"KOBIL USB smart card terminal",
 	.id_table =		id_table,
 	.num_ports =		1,
+<<<<<<< HEAD
+	.attach =		kobil_attach,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	.port_probe =		kobil_port_probe,
 	.port_remove =		kobil_port_remove,
 	.ioctl =		kobil_ioctl,
@@ -114,6 +122,19 @@ struct kobil_private {
 };
 
 
+<<<<<<< HEAD
+static int kobil_attach(struct usb_serial *serial)
+{
+	if (serial->num_interrupt_out < serial->num_ports) {
+		dev_err(&serial->interface->dev, "missing interrupt-out endpoint\n");
+		return -ENODEV;
+	}
+
+	return 0;
+}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static int kobil_port_probe(struct usb_serial_port *port)
 {
 	struct usb_serial *serial = port->serial;
@@ -336,7 +357,12 @@ static int kobil_write(struct tty_struct *tty, struct usb_serial_port *port,
 			port->interrupt_out_urb->transfer_buffer_length = length;
 
 			priv->cur_pos = priv->cur_pos + length;
+<<<<<<< HEAD
+			result = usb_submit_urb(port->interrupt_out_urb,
+					GFP_ATOMIC);
+=======
 			result = usb_submit_urb(port->interrupt_out_urb, GFP_NOIO);
+>>>>>>> 671a46baf1b... some performance improvements
 			dev_dbg(&port->dev, "%s - Send write URB returns: %i\n", __func__, result);
 			todo = priv->filled - priv->cur_pos;
 
@@ -351,7 +377,11 @@ static int kobil_write(struct tty_struct *tty, struct usb_serial_port *port,
 		if (priv->device_type == KOBIL_ADAPTER_B_PRODUCT_ID ||
 			priv->device_type == KOBIL_ADAPTER_K_PRODUCT_ID) {
 			result = usb_submit_urb(port->interrupt_in_urb,
+<<<<<<< HEAD
+					GFP_ATOMIC);
+=======
 								GFP_NOIO);
+>>>>>>> 671a46baf1b... some performance improvements
 			dev_dbg(&port->dev, "%s - Send read URB returns: %i\n", __func__, result);
 		}
 	}

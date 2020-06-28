@@ -675,9 +675,12 @@ bsg_write(struct file *file, const char __user *buf, size_t count, loff_t *ppos)
 
 	dprintk("%s: write %Zd bytes\n", bd->name, count);
 
+<<<<<<< HEAD
 	if (unlikely(segment_eq(get_fs(), KERNEL_DS)))
 		return -EINVAL;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	bsg_set_block(bd, file);
 
 	bytes_written = 0;

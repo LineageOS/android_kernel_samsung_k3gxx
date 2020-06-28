@@ -1268,11 +1268,29 @@ static struct snd_soc_dai_driver da732x_dai[] = {
 	},
 };
 
+<<<<<<< HEAD
+static bool da732x_volatile(struct device *dev, unsigned int reg)
+{
+	switch (reg) {
+	case DA732X_REG_HPL_DAC_OFF_CNTL:
+	case DA732X_REG_HPR_DAC_OFF_CNTL:
+		return true;
+	default:
+		return false;
+	}
+}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static const struct regmap_config da732x_regmap = {
 	.reg_bits		= 8,
 	.val_bits		= 8,
 
 	.max_register		= DA732X_MAX_REG,
+<<<<<<< HEAD
+	.volatile_reg		= da732x_volatile,
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	.reg_defaults		= da732x_reg_cache,
 	.num_reg_defaults	= ARRAY_SIZE(da732x_reg_cache),
 	.cache_type		= REGCACHE_RBTREE,

@@ -449,6 +449,26 @@ void radeon_gtt_location(struct radeon_device *rdev, struct radeon_mc *mc)
 /*
  * GPU helpers function.
  */
+<<<<<<< HEAD
+
+/**
+ * radeon_device_is_virtual - check if we are running is a virtual environment
+ *
+ * Check if the asic has been passed through to a VM (all asics).
+ * Used at driver startup.
+ * Returns true if virtual or false if not.
+ */
+static bool radeon_device_is_virtual(void)
+{
+#ifdef CONFIG_X86
+	return boot_cpu_has(X86_FEATURE_HYPERVISOR);
+#else
+	return false;
+#endif
+}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /**
  * radeon_card_posted - check if the hw has already been initialized
  *
@@ -462,6 +482,13 @@ bool radeon_card_posted(struct radeon_device *rdev)
 {
 	uint32_t reg;
 
+<<<<<<< HEAD
+	/* for pass through, always force asic_init */
+	if (radeon_device_is_virtual())
+		return false;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* required for EFI mode on macbook2,1 which uses an r5xx asic */
 	if (efi_enabled(EFI_BOOT) &&
 	    (rdev->pdev->subsystem_vendor == PCI_VENDOR_ID_APPLE) &&
@@ -1196,6 +1223,24 @@ int radeon_device_init(struct radeon_device *rdev,
 			return r;
 	}
 	if ((radeon_testing & 1)) {
+<<<<<<< HEAD
+		if (rdev->accel_working)
+			radeon_test_moves(rdev);
+		else
+			DRM_INFO("radeon: acceleration disabled, skipping move tests\n");
+	}
+	if ((radeon_testing & 2)) {
+		if (rdev->accel_working)
+			radeon_test_syncing(rdev);
+		else
+			DRM_INFO("radeon: acceleration disabled, skipping sync tests\n");
+	}
+	if (radeon_benchmarking) {
+		if (rdev->accel_working)
+			radeon_benchmark(rdev, radeon_benchmarking);
+		else
+			DRM_INFO("radeon: acceleration disabled, skipping benchmarks\n");
+=======
 		radeon_test_moves(rdev);
 	}
 	if ((radeon_testing & 2)) {
@@ -1203,6 +1248,7 @@ int radeon_device_init(struct radeon_device *rdev,
 	}
 	if (radeon_benchmarking) {
 		radeon_benchmark(rdev, radeon_benchmarking);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	return 0;
 }

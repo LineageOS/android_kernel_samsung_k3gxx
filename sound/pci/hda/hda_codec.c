@@ -327,8 +327,15 @@ int snd_hda_get_sub_nodes(struct hda_codec *codec, hda_nid_t nid,
 	unsigned int parm;
 
 	parm = snd_hda_param_read(codec, nid, AC_PAR_NODE_COUNT);
+<<<<<<< HEAD
+	if (parm == -1) {
+		*start_id = 0;
+		return 0;
+	}
+=======
 	if (parm == -1)
 		return 0;
+>>>>>>> 671a46baf1b... some performance improvements
 	*start_id = (parm >> 16) & 0x7fff;
 	return (int)(parm & 0x7fff);
 }
@@ -2076,6 +2083,19 @@ int snd_hda_codec_amp_init_stereo(struct hda_codec *codec, hda_nid_t nid,
 }
 EXPORT_SYMBOL_HDA(snd_hda_codec_amp_init_stereo);
 
+<<<<<<< HEAD
+/* meta hook to call each driver's vmaster hook */
+static void vmaster_hook(void *private_data, int enabled)
+{
+	struct hda_vmaster_mute_hook *hook = private_data;
+
+	if (hook->mute_mode != HDA_VMUTE_FOLLOW_MASTER)
+		enabled = hook->mute_mode;
+	hook->hook(hook->codec, enabled);
+}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 /**
  * snd_hda_codec_resume_amp - Resume all AMP commands from the cache
  * @codec: HD-audio codec
@@ -2517,9 +2537,12 @@ int snd_hda_codec_reset(struct hda_codec *codec)
 	cancel_delayed_work_sync(&codec->jackpoll_work);
 #ifdef CONFIG_PM
 	cancel_delayed_work_sync(&codec->power_work);
+<<<<<<< HEAD
+=======
 	codec->power_on = 0;
 	codec->power_transition = 0;
 	codec->power_jiffies = jiffies;
+>>>>>>> 671a46baf1b... some performance improvements
 	flush_workqueue(bus->workq);
 #endif
 	snd_hda_ctls_clear(codec);
@@ -2773,9 +2796,15 @@ int snd_hda_add_vmaster_hook(struct hda_codec *codec,
 
 	if (!hook->hook || !hook->sw_kctl)
 		return 0;
+<<<<<<< HEAD
+	hook->codec = codec;
+	hook->mute_mode = HDA_VMUTE_FOLLOW_MASTER;
+	snd_ctl_add_vmaster_hook(hook->sw_kctl, vmaster_hook, hook);
+=======
 	snd_ctl_add_vmaster_hook(hook->sw_kctl, hook->hook, codec);
 	hook->codec = codec;
 	hook->mute_mode = HDA_VMUTE_FOLLOW_MASTER;
+>>>>>>> 671a46baf1b... some performance improvements
 	if (!expose_enum_ctl)
 		return 0;
 	kctl = snd_ctl_new1(&vmaster_mute_mode, hook);
@@ -2798,6 +2827,9 @@ void snd_hda_sync_vmaster_hook(struct hda_vmaster_mute_hook *hook)
 	 */
 	if (hook->codec->bus->shutdown)
 		return;
+<<<<<<< HEAD
+	snd_ctl_sync_vmaster_hook(hook->sw_kctl);
+=======
 	switch (hook->mute_mode) {
 	case HDA_VMUTE_FOLLOW_MASTER:
 		snd_ctl_sync_vmaster_hook(hook->sw_kctl);
@@ -2806,6 +2838,7 @@ void snd_hda_sync_vmaster_hook(struct hda_vmaster_mute_hook *hook)
 		hook->hook(hook->codec, hook->mute_mode);
 		break;
 	}
+>>>>>>> 671a46baf1b... some performance improvements
 }
 EXPORT_SYMBOL_HDA(snd_hda_sync_vmaster_hook);
 
@@ -3927,6 +3960,13 @@ static void hda_call_codec_resume(struct hda_codec *codec)
 	 * in the resume / power-save sequence
 	 */
 	hda_keep_power_on(codec);
+<<<<<<< HEAD
+	if (codec->pm_down_notified) {
+		codec->pm_down_notified = 0;
+		hda_call_pm_notify(codec->bus, true);
+	}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	hda_set_power_state(codec, AC_PWRST_D0);
 	restore_shutup_pins(codec);
 	hda_exec_init_verbs(codec);
@@ -4789,8 +4829,13 @@ static void hda_power_work(struct work_struct *work)
 	spin_unlock(&codec->power_lock);
 
 	state = hda_call_codec_suspend(codec, true);
+<<<<<<< HEAD
+	if (!codec->pm_down_notified &&
+	    !bus->power_keep_link_on && (state & AC_PWRST_CLK_STOP_OK)) {
+=======
 	codec->pm_down_notified = 0;
 	if (!bus->power_keep_link_on && (state & AC_PWRST_CLK_STOP_OK)) {
+>>>>>>> 671a46baf1b... some performance improvements
 		codec->pm_down_notified = 1;
 		hda_call_pm_notify(bus, false);
 	}

@@ -600,7 +600,11 @@ static int gpr_set(struct task_struct *target,
 		   const void *kbuf, const void __user *ubuf)
 {
 	int ret;
+<<<<<<< HEAD
+	struct pt_regs newregs = *task_pt_regs(target);
+=======
 	struct pt_regs newregs;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf,
 				 &newregs,
@@ -733,8 +737,13 @@ static int vfp_set(struct task_struct *target,
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
+	thread->vfpstate.hard = new_vfp;
+	vfp_flush_hwstate(thread);
+=======
 	vfp_flush_hwstate(thread);
 	thread->vfpstate.hard = new_vfp;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return 0;
 }

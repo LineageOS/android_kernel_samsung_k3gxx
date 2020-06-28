@@ -53,8 +53,12 @@ static gpu_dvfs_info gpu_dvfs_table_default[] = {
 	{420, 962500,  0,  78,  99, 1, 0, 825000, 400000, 	0, CPU_MAX},
 	{350, 912500,  0,  70,  90, 1, 0, 728000, 333000, 	0, CPU_MAX},
 	{266, 862500,  0,  60,  90, 1, 0, 413000, 222000,       0, CPU_MAX},
+<<<<<<< HEAD
 	{177, 812500,  0,  53,  90, 1, 0, 165000, 83000,        0, CPU_MAX},
 	{100, 812500,  0,   0,  90, 3, 0, 165000, 83000,        0, CPU_MAX},
+=======
+	{177, 812500,  0,   0,  90, 2, 0, 165000, 83000,        0, CPU_MAX},
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 static int mif_min_table[] = {
@@ -71,6 +75,7 @@ static gpu_attribute gpu_config_attributes[] = {
 	{GPU_MAX_CLOCK, 533},
 	{GPU_MAX_CLOCK_LIMIT, 533},
 #endif
+<<<<<<< HEAD
 	{GPU_MIN_CLOCK, 100},
 	{GPU_DVFS_START_CLOCK, 100},
 	{GPU_DVFS_BL_CONFIG_CLOCK, 100},
@@ -79,6 +84,16 @@ static gpu_attribute gpu_config_attributes[] = {
 	{GPU_GOVERNOR_START_CLOCK_INTERACTIVE, 100},
 	{GPU_GOVERNOR_START_CLOCK_STATIC, 100},
 	{GPU_GOVERNOR_START_CLOCK_BOOSTER, 100},
+=======
+	{GPU_MIN_CLOCK, 177},
+	{GPU_DVFS_START_CLOCK, 177},
+	{GPU_DVFS_BL_CONFIG_CLOCK, 177},
+	{GPU_GOVERNOR_TYPE, G3D_DVFS_GOVERNOR_INTERACTIVE},
+	{GPU_GOVERNOR_START_CLOCK_DEFAULT, 177},
+	{GPU_GOVERNOR_START_CLOCK_INTERACTIVE, 177},
+	{GPU_GOVERNOR_START_CLOCK_STATIC, 177},
+	{GPU_GOVERNOR_START_CLOCK_BOOSTER, 177},
+>>>>>>> 671a46baf1b... some performance improvements
 	{GPU_GOVERNOR_TABLE_DEFAULT, (uintptr_t)&gpu_dvfs_table_default},
 	{GPU_GOVERNOR_TABLE_INTERACTIVE, (uintptr_t)&gpu_dvfs_table_default},
 	{GPU_GOVERNOR_TABLE_STATIC, (uintptr_t)&gpu_dvfs_table_default},

@@ -119,6 +119,14 @@ enum {
 		{ .notifier_call = fn, .priority = pri };	\
 	register_cpu_notifier(&fn##_nb);			\
 }
+<<<<<<< HEAD
+extern int register_cpu_notifier(struct notifier_block *nb);
+extern void unregister_cpu_notifier(struct notifier_block *nb);
+
+#else /* #if defined(CONFIG_HOTPLUG_CPU) || !defined(MODULE) */
+#define cpu_notifier(fn, pri)	do { (void)(fn); } while (0)
+
+=======
 #else /* #if defined(CONFIG_HOTPLUG_CPU) || !defined(MODULE) */
 #define cpu_notifier(fn, pri)	do { (void)(fn); } while (0)
 #endif /* #else #if defined(CONFIG_HOTPLUG_CPU) || !defined(MODULE) */
@@ -130,11 +138,15 @@ extern void unregister_cpu_notifier(struct notifier_block *nb);
 #ifndef MODULE
 extern int register_cpu_notifier(struct notifier_block *nb);
 #else
+>>>>>>> 671a46baf1b... some performance improvements
 static inline int register_cpu_notifier(struct notifier_block *nb)
 {
 	return 0;
 }
+<<<<<<< HEAD
+=======
 #endif
+>>>>>>> 671a46baf1b... some performance improvements
 
 static inline void unregister_cpu_notifier(struct notifier_block *nb)
 {

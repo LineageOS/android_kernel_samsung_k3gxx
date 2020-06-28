@@ -1692,7 +1692,11 @@ int pm_genpd_add_subdomain_names(const char *master_name,
 int pm_genpd_remove_subdomain(struct generic_pm_domain *genpd,
 			      struct generic_pm_domain *subdomain)
 {
+<<<<<<< HEAD
+	struct gpd_link *l, *link;
+=======
 	struct gpd_link *link;
+>>>>>>> 671a46baf1b... some performance improvements
 	int ret = -EINVAL;
 
 	if (IS_ERR_OR_NULL(genpd) || IS_ERR_OR_NULL(subdomain))
@@ -1701,7 +1705,11 @@ int pm_genpd_remove_subdomain(struct generic_pm_domain *genpd,
  start:
 	genpd_acquire_lock(genpd);
 
+<<<<<<< HEAD
+	list_for_each_entry_safe(link, l, &genpd->master_links, master_node) {
+=======
 	list_for_each_entry(link, &genpd->master_links, master_node) {
+>>>>>>> 671a46baf1b... some performance improvements
 		if (link->slave != subdomain)
 			continue;
 

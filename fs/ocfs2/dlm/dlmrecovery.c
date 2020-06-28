@@ -540,7 +540,14 @@ master_here:
 		/* success!  see if any other nodes need recovery */
 		mlog(0, "DONE mastering recovery of %s:%u here(this=%u)!\n",
 		     dlm->name, dlm->reco.dead_node, dlm->node_num);
+<<<<<<< HEAD
+		spin_lock(&dlm->spinlock);
+		__dlm_reset_recovery(dlm);
+		dlm->reco.state &= ~DLM_RECO_STATE_FINALIZE;
+		spin_unlock(&dlm->spinlock);
+=======
 		dlm_reset_recovery(dlm);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	dlm_end_recovery(dlm);
 
@@ -698,6 +705,17 @@ static int dlm_remaster_locks(struct dlm_ctxt *dlm, u8 dead_node)
 		if (all_nodes_done) {
 			int ret;
 
+<<<<<<< HEAD
+			/* Set this flag on recovery master to avoid
+			 * a new recovery for another dead node start
+			 * before the recovery is not done. That may
+			 * cause recovery hung.*/
+			spin_lock(&dlm->spinlock);
+			dlm->reco.state |= DLM_RECO_STATE_FINALIZE;
+			spin_unlock(&dlm->spinlock);
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			/* all nodes are now in DLM_RECO_NODE_DATA_DONE state
 	 		 * just send a finalize message to everyone and
 	 		 * clean up */
@@ -1751,13 +1769,21 @@ static int dlm_process_recovery_data(struct dlm_ctxt *dlm,
 				     struct dlm_migratable_lockres *mres)
 {
 	struct dlm_migratable_lock *ml;
+<<<<<<< HEAD
+	struct list_head *queue, *iter;
+=======
 	struct list_head *queue;
+>>>>>>> 671a46baf1b... some performance improvements
 	struct list_head *tmpq = NULL;
 	struct dlm_lock *newlock = NULL;
 	struct dlm_lockstatus *lksb = NULL;
 	int ret = 0;
 	int i, j, bad;
+<<<<<<< HEAD
+	struct dlm_lock *lock;
+=======
 	struct dlm_lock *lock = NULL;
+>>>>>>> 671a46baf1b... some performance improvements
 	u8 from = O2NM_MAX_NODES;
 	unsigned int added = 0;
 	__be64 c;
@@ -1792,6 +1818,18 @@ static int dlm_process_recovery_data(struct dlm_ctxt *dlm,
 			/* MIGRATION ONLY! */
 			BUG_ON(!(mres->flags & DLM_MRES_MIGRATION));
 
+<<<<<<< HEAD
+			lock = NULL;
+			spin_lock(&res->spinlock);
+			for (j = DLM_GRANTED_LIST; j <= DLM_BLOCKED_LIST; j++) {
+				tmpq = dlm_list_idx_to_ptr(res, j);
+				list_for_each(iter, tmpq) {
+					lock = list_entry(iter,
+						  struct dlm_lock, list);
+					if (lock->ml.cookie == ml->cookie)
+						break;
+					lock = NULL;
+=======
 			spin_lock(&res->spinlock);
 			for (j = DLM_GRANTED_LIST; j <= DLM_BLOCKED_LIST; j++) {
 				tmpq = dlm_list_idx_to_ptr(res, j);
@@ -1800,6 +1838,7 @@ static int dlm_process_recovery_data(struct dlm_ctxt *dlm,
 						lock = NULL;
 					else
 						break;
+>>>>>>> 671a46baf1b... some performance improvements
 				}
 				if (lock)
 					break;
@@ -2021,7 +2060,10 @@ void dlm_move_lockres_to_recovery_list(struct dlm_ctxt *dlm,
 			dlm_lock_get(lock);
 			if (lock->convert_pending) {
 				/* move converting lock back to granted */
+<<<<<<< HEAD
+=======
 				BUG_ON(i != DLM_CONVERTING_LIST);
+>>>>>>> 671a46baf1b... some performance improvements
 				mlog(0, "node died with convert pending "
 				     "on %.*s. move back to granted list.\n",
 				     res->lockname.len, res->lockname.name);
@@ -2313,6 +2355,11 @@ static void dlm_do_local_recovery_cleanup(struct dlm_ctxt *dlm, u8 dead_node)
 						break;
 					}
 				}
+<<<<<<< HEAD
+				dlm_lockres_clear_refmap_bit(dlm, res,
+						dead_node);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 				spin_unlock(&res->spinlock);
 				continue;
 			}
@@ -2867,8 +2914,13 @@ int dlm_finalize_reco_handler(struct o2net_msg *msg, u32 len, void *data,
 				BUG();
 			}
 			dlm->reco.state &= ~DLM_RECO_STATE_FINALIZE;
+<<<<<<< HEAD
+			__dlm_reset_recovery(dlm);
+			spin_unlock(&dlm->spinlock);
+=======
 			spin_unlock(&dlm->spinlock);
 			dlm_reset_recovery(dlm);
+>>>>>>> 671a46baf1b... some performance improvements
 			dlm_kick_recovery_thread(dlm);
 			break;
 		default:

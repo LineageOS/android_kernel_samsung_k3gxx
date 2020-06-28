@@ -1972,7 +1972,12 @@ TRACE_EVENT(cfg80211_michael_mic_failure,
 		MAC_ASSIGN(addr, addr);
 		__entry->key_type = key_type;
 		__entry->key_id = key_id;
+<<<<<<< HEAD
+		if (tsc)
+			memcpy(__entry->tsc, tsc, 6);
+=======
 		memcpy(__entry->tsc, tsc, 6);
+>>>>>>> 671a46baf1b... some performance improvements
 	),
 	TP_printk(NETDEV_PR_FMT ", " MAC_PR_FMT ", key type: %d, key id: %d, tsc: %pm",
 		  NETDEV_PR_ARG, MAC_PR_ARG(addr), __entry->key_type,

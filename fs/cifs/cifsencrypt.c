@@ -591,7 +591,11 @@ setup_ntlmv2_rsp(struct cifs_ses *ses, const struct nls_table *nls_cp)
 
 	ses->auth_key.response = kmalloc(baselen + tilen, GFP_KERNEL);
 	if (!ses->auth_key.response) {
+<<<<<<< HEAD
+		rc = -ENOMEM;
+=======
 		rc = ENOMEM;
+>>>>>>> 671a46baf1b... some performance improvements
 		ses->auth_key.len = 0;
 		goto setup_ntlmv2_rsp_ret;
 	}

@@ -22,7 +22,11 @@ struct ipc_ids {
 	int in_use;
 	unsigned short seq;
 	unsigned short seq_max;
+<<<<<<< HEAD
+	struct rw_semaphore rwsem;
+=======
 	struct rw_semaphore rw_mutex;
+>>>>>>> 671a46baf1b... some performance improvements
 	struct idr ipcs_idr;
 	int next_id;
 };
@@ -34,9 +38,15 @@ struct ipc_namespace {
 	int		sem_ctls[4];
 	int		used_sems;
 
+<<<<<<< HEAD
+	unsigned int	msg_ctlmax;
+	unsigned int	msg_ctlmnb;
+	unsigned int	msg_ctlmni;
+=======
 	int		msg_ctlmax;
 	int		msg_ctlmnb;
 	int		msg_ctlmni;
+>>>>>>> 671a46baf1b... some performance improvements
 	atomic_t	msg_bytes;
 	atomic_t	msg_hdrs;
 	int		auto_msgmni;
@@ -119,9 +129,13 @@ extern int mq_init_ns(struct ipc_namespace *ns);
  *     the new maximum will handle anyone else.  I may have to revisit this
  *     in the future.
  */
+<<<<<<< HEAD
+#define DFLT_QUEUESMAX		      256
+=======
 #define MIN_QUEUESMAX			1
 #define DFLT_QUEUESMAX		      256
 #define HARD_QUEUESMAX		     1024
+>>>>>>> 671a46baf1b... some performance improvements
 #define MIN_MSGMAX			1
 #define DFLT_MSG		       10U
 #define DFLT_MSGMAX		       10

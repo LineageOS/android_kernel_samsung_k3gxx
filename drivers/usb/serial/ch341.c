@@ -97,6 +97,11 @@ static int ch341_control_out(struct usb_device *dev, u8 request,
 	r = usb_control_msg(dev, usb_sndctrlpipe(dev, 0), request,
 			    USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_DIR_OUT,
 			    value, index, NULL, 0, DEFAULT_TIMEOUT);
+<<<<<<< HEAD
+	if (r < 0)
+		dev_err(&dev->dev, "failed to send control message: %d\n", r);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return r;
 }
@@ -114,7 +119,24 @@ static int ch341_control_in(struct usb_device *dev,
 	r = usb_control_msg(dev, usb_rcvctrlpipe(dev, 0), request,
 			    USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_DIR_IN,
 			    value, index, buf, bufsize, DEFAULT_TIMEOUT);
+<<<<<<< HEAD
+	if (r < bufsize) {
+		if (r >= 0) {
+			dev_err(&dev->dev,
+				"short control message received (%d < %u)\n",
+				r, bufsize);
+			r = -EIO;
+		}
+
+		dev_err(&dev->dev, "failed to receive control message: %d\n",
+			r);
+		return r;
+	}
+
+	return 0;
+=======
 	return r;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int ch341_set_baudrate(struct usb_device *dev,
@@ -156,9 +178,15 @@ static int ch341_set_handshake(struct usb_device *dev, u8 control)
 
 static int ch341_get_status(struct usb_device *dev, struct ch341_private *priv)
 {
+<<<<<<< HEAD
+	const unsigned int size = 2;
+	char *buffer;
+	int r;
+=======
 	char *buffer;
 	int r;
 	const unsigned size = 8;
+>>>>>>> 671a46baf1b... some performance improvements
 	unsigned long flags;
 
 	buffer = kmalloc(size, GFP_KERNEL);
@@ -169,6 +197,12 @@ static int ch341_get_status(struct usb_device *dev, struct ch341_private *priv)
 	if (r < 0)
 		goto out;
 
+<<<<<<< HEAD
+	spin_lock_irqsave(&priv->lock, flags);
+	priv->line_status = (~(*buffer)) & CH341_BITS_MODEM_STAT;
+	priv->multi_status_change = 0;
+	spin_unlock_irqrestore(&priv->lock, flags);
+=======
 	/* setup the private status if available */
 	if (r == 2) {
 		r = 0;
@@ -178,6 +212,7 @@ static int ch341_get_status(struct usb_device *dev, struct ch341_private *priv)
 		spin_unlock_irqrestore(&priv->lock, flags);
 	} else
 		r = -EPROTO;
+>>>>>>> 671a46baf1b... some performance improvements
 
 out:	kfree(buffer);
 	return r;
@@ -187,9 +222,15 @@ out:	kfree(buffer);
 
 static int ch341_configure(struct usb_device *dev, struct ch341_private *priv)
 {
+<<<<<<< HEAD
+	const unsigned int size = 2;
+	char *buffer;
+	int r;
+=======
 	char *buffer;
 	int r;
 	const unsigned size = 8;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	buffer = kmalloc(size, GFP_KERNEL);
 	if (!buffer)
@@ -252,7 +293,10 @@ static int ch341_port_probe(struct usb_serial_port *port)
 
 	spin_lock_init(&priv->lock);
 	priv->baud_rate = DEFAULT_BAUD_RATE;
+<<<<<<< HEAD
+=======
 	priv->line_control = CH341_BIT_RTS | CH341_BIT_DTR;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	r = ch341_configure(port->serial->dev, priv);
 	if (r < 0)
@@ -316,6 +360,17 @@ static int ch341_open(struct tty_struct *tty, struct usb_serial_port *port)
 
 	r = ch341_configure(serial->dev, priv);
 	if (r)
+<<<<<<< HEAD
+		return r;
+
+	r = ch341_set_handshake(serial->dev, priv->line_control);
+	if (r)
+		return r;
+
+	r = ch341_set_baudrate(serial->dev, priv);
+	if (r)
+		return r;
+=======
 		goto out;
 
 	r = ch341_set_handshake(serial->dev, priv->line_control);
@@ -325,6 +380,7 @@ static int ch341_open(struct tty_struct *tty, struct usb_serial_port *port)
 	r = ch341_set_baudrate(serial->dev, priv);
 	if (r)
 		goto out;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	dev_dbg(&port->dev, "%s - submitting interrupt urb", __func__);
 	r = usb_submit_urb(port->interrupt_in_urb, GFP_KERNEL);
@@ -332,12 +388,28 @@ static int ch341_open(struct tty_struct *tty, struct usb_serial_port *port)
 		dev_err(&port->dev, "%s - failed submitting interrupt urb,"
 			" error %d\n", __func__, r);
 		ch341_close(port);
+<<<<<<< HEAD
+		return r;
+	}
+
+	r = usb_serial_generic_open(tty, port);
+	if (r)
+		goto err_kill_interrupt_urb;
+
+	return 0;
+
+err_kill_interrupt_urb:
+	usb_kill_urb(port->interrupt_in_urb);
+
+	return r;
+=======
 		goto out;
 	}
 
 	r = usb_serial_generic_open(tty, port);
 
 out:	return r;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /* Old_termios contains the original termios settings and
@@ -352,6 +424,13 @@ static void ch341_set_termios(struct tty_struct *tty,
 
 	baud_rate = tty_get_baud_rate(tty);
 
+<<<<<<< HEAD
+	if (baud_rate) {
+		priv->baud_rate = baud_rate;
+		ch341_set_baudrate(port->serial->dev, priv);
+	}
+
+=======
 	priv->baud_rate = baud_rate;
 
 	if (baud_rate) {
@@ -367,11 +446,24 @@ static void ch341_set_termios(struct tty_struct *tty,
 
 	ch341_set_handshake(port->serial->dev, priv->line_control);
 
+>>>>>>> 671a46baf1b... some performance improvements
 	/* Unimplemented:
 	 * (cflag & CSIZE) : data bits [5, 8]
 	 * (cflag & PARENB) : parity {NONE, EVEN, ODD}
 	 * (cflag & CSTOPB) : stop bits [1, 2]
 	 */
+<<<<<<< HEAD
+
+	spin_lock_irqsave(&priv->lock, flags);
+	if (C_BAUD(tty) == B0)
+		priv->line_control &= ~(CH341_BIT_DTR | CH341_BIT_RTS);
+	else if (old_termios && (old_termios->c_cflag & CBAUD) == B0)
+		priv->line_control |= (CH341_BIT_DTR | CH341_BIT_RTS);
+	spin_unlock_irqrestore(&priv->lock, flags);
+
+	ch341_set_handshake(port->serial->dev, priv->line_control);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void ch341_break_ctl(struct tty_struct *tty, int break_state)
@@ -570,14 +662,33 @@ static int ch341_tiocmget(struct tty_struct *tty)
 
 static int ch341_reset_resume(struct usb_serial *serial)
 {
+<<<<<<< HEAD
+	struct usb_serial_port *port = serial->port[0];
+	struct ch341_private *priv = usb_get_serial_port_data(port);
+	int ret;
+=======
 	struct ch341_private *priv;
 
 	priv = usb_get_serial_port_data(serial->port[0]);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* reconfigure ch341 serial port after bus-reset */
 	ch341_configure(serial->dev, priv);
 
+<<<<<<< HEAD
+	if (test_bit(ASYNCB_INITIALIZED, &port->port.flags)) {
+		ret = usb_submit_urb(port->interrupt_in_urb, GFP_NOIO);
+		if (ret) {
+			dev_err(&port->dev, "failed to submit interrupt urb: %d\n",
+				ret);
+			return ret;
+		}
+	}
+
+	return usb_serial_generic_resume(serial);
+=======
 	return 0;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static struct usb_serial_driver ch341_device = {

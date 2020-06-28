@@ -345,7 +345,10 @@ out:
 			free_irq(apbs[i].irq, &dummy);
 		iounmap(apbs[i].RamIO);
 	}
+<<<<<<< HEAD
+=======
 	pci_disable_device(dev);
+>>>>>>> 671a46baf1b... some performance improvements
 	return ret;
 }
 

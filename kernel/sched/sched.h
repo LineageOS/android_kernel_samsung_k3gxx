@@ -13,6 +13,8 @@
 extern __read_mostly int scheduler_running;
 
 /*
+<<<<<<< HEAD
+=======
  * Convert user-nice values [ -20 ... 0 ... 19 ]
  * to static priority [ MAX_RT_PRIO..MAX_PRIO-1 ],
  * and back.
@@ -22,6 +24,7 @@ extern __read_mostly int scheduler_running;
 #define TASK_NICE(p)		PRIO_TO_NICE((p)->static_prio)
 
 /*
+>>>>>>> 671a46baf1b... some performance improvements
  * 'User priority' is the nice value converted to something we
  * can work with better when scaling various scheduler parameters,
  * it's a [ 0 ... 39 ] range.
@@ -1327,7 +1330,12 @@ extern void print_rt_stats(struct seq_file *m, int cpu);
 extern void init_cfs_rq(struct cfs_rq *cfs_rq);
 extern void init_rt_rq(struct rt_rq *rt_rq, struct rq *rq);
 
+<<<<<<< HEAD
+extern void cfs_bandwidth_usage_inc(void);
+extern void cfs_bandwidth_usage_dec(void);
+=======
 extern void account_cfs_bandwidth_used(int enabled, int was_enabled);
+>>>>>>> 671a46baf1b... some performance improvements
 
 #ifdef CONFIG_NO_HZ_COMMON
 enum rq_nohz_flag_bits {
@@ -1386,3 +1394,19 @@ static inline u64 irq_time_read(int cpu)
 }
 #endif /* CONFIG_64BIT */
 #endif /* CONFIG_IRQ_TIME_ACCOUNTING */
+<<<<<<< HEAD
+
+static inline void account_reset_rq(struct rq *rq)
+{
+#ifdef CONFIG_IRQ_TIME_ACCOUNTING
+	rq->prev_irq_time = 0;
+#endif
+#ifdef CONFIG_PARAVIRT
+	rq->prev_steal_time = 0;
+#endif
+#ifdef CONFIG_PARAVIRT_TIME_ACCOUNTING
+	rq->prev_steal_time_rq = 0;
+#endif
+}
+=======
+>>>>>>> 671a46baf1b... some performance improvements

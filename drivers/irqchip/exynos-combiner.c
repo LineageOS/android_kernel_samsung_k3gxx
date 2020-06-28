@@ -21,7 +21,10 @@
 #include <linux/syscore_ops.h>
 
 #ifdef CONFIG_EXYNOS_ATAGS
+<<<<<<< HEAD
 #include <mach/irqs.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #include <plat/cpu.h>
 #endif
 

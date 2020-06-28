@@ -955,6 +955,13 @@ bytes respectively. Such letter suffixes can also be entirely omitted.
 			When zero, profiling data is discarded and associated
 			debugfs files are removed at module unload time.
 
+<<<<<<< HEAD
+	goldfish	[X86] Enable the goldfish android emulator platform.
+			Don't use this when you are not running on the
+			android emulator
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	gpt		[EFI] Forces disk with valid GPT signature but
 			invalid Protective MBR to be treated as GPT.
 
@@ -1061,6 +1068,10 @@ bytes respectively. Such letter suffixes can also be entirely omitted.
 	i8042.notimeout	[HW] Ignore timeout condition signalled by controller
 	i8042.reset	[HW] Reset the controller during init and cleanup
 	i8042.unlock	[HW] Unlock (ignore) the keylock
+<<<<<<< HEAD
+	i8042.kbdreset  [HW] Reset device connected to KBD port
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	i810=		[HW,DRM]
 
@@ -1465,6 +1476,13 @@ bytes respectively. Such letter suffixes can also be entirely omitted.
 
 			* dump_id: dump IDENTIFY data.
 
+<<<<<<< HEAD
+			* atapi_dmadir: Enable ATAPI DMADIR bridge support
+
+			* disable: Disable this device.
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			If there are multiple matching configurations changing
 			the same attribute, the last one is used.
 
@@ -2889,6 +2907,16 @@ bytes respectively. Such letter suffixes can also be entirely omitted.
 	spia_pedr=
 	spia_peddr=
 
+<<<<<<< HEAD
+	stack_guard_gap=	[MM]
+			override the default stack gap protection. The value
+			is in page units and it defines how many pages prior
+			to (for stacks growing down) resp. after (for stacks
+			growing up) the main stack are reserved for no other
+			mapping. Default value is 256 pages.
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	stacktrace	[FTRACE]
 			Enabled the stack tracer on boot up.
 
@@ -3350,6 +3378,7 @@ bytes respectively. Such letter suffixes can also be entirely omitted.
 			that this also can be controlled per-workqueue for
 			workqueues visible under /sys/bus/workqueue/.
 
+<<<<<<< HEAD
 	workqueue.power_efficient
 			Per-cpu workqueues are generally preferred because
 			they show better performance thanks to cache
@@ -3365,6 +3394,8 @@ bytes respectively. Such letter suffixes can also be entirely omitted.
 			The default value of this parameter is determined by
 			the config option CONFIG_WQ_POWER_EFFICIENT_DEFAULT.
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	x2apic_phys	[X86-64,APIC] Use x2apic physical mode instead of
 			default x2apic cluster mode on platforms
 			supporting x2apic.

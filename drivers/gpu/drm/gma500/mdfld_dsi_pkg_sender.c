@@ -85,7 +85,11 @@ static const char *const dsi_errors[] = {
 	"RX Prot Violation",
 	"HS Generic Write FIFO Full",
 	"LP Generic Write FIFO Full",
+<<<<<<< HEAD
+	"Generic Read Data Avail",
+=======
 	"Generic Read Data Avail"
+>>>>>>> 671a46baf1b... some performance improvements
 	"Special Packet Sent",
 	"Tearing Effect",
 };

@@ -240,7 +240,11 @@ uvc_video_alloc_requests(struct uvc_video *video)
 
 	req_size = video->ep->maxpacket
 		 * max_t(unsigned int, video->ep->maxburst, 1)
+<<<<<<< HEAD
+		 * (video->ep->mult);
+=======
 		 * (video->ep->mult + 1);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	for (i = 0; i < UVC_NUM_REQUESTS; ++i) {
 		video->req_buffer[i] = kmalloc(req_size, GFP_KERNEL);

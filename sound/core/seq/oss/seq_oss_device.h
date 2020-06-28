@@ -131,7 +131,10 @@ int snd_seq_oss_write(struct seq_oss_devinfo *dp, const char __user *buf, int co
 unsigned int snd_seq_oss_poll(struct seq_oss_devinfo *dp, struct file *file, poll_table * wait);
 
 void snd_seq_oss_reset(struct seq_oss_devinfo *dp);
+<<<<<<< HEAD
+=======
 void snd_seq_oss_drain_write(struct seq_oss_devinfo *dp);
+>>>>>>> 671a46baf1b... some performance improvements
 
 /* */
 void snd_seq_oss_process_queue(struct seq_oss_devinfo *dp, abstime_t time);

@@ -828,7 +828,12 @@ static struct p9_req_t *p9_client_zc_rpc(struct p9_client *c, int8_t type,
 	if (err < 0) {
 		if (err == -EIO)
 			c->status = Disconnected;
+<<<<<<< HEAD
+		if (err != -ERESTARTSYS)
+			goto reterr;
+=======
 		goto reterr;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	if (req->status == REQ_STATUS_ERROR) {
 		p9_debug(P9_DEBUG_ERROR, "req_status error %d\n", req->t_err);
@@ -2079,6 +2084,13 @@ int p9_client_readdir(struct p9_fid *fid, char *data, u32 count, u64 offset)
 		trace_9p_protocol_dump(clnt, req->rc);
 		goto free_and_error;
 	}
+<<<<<<< HEAD
+	if (rsize < count) {
+		pr_err("bogus RREADDIR count (%d > %d)\n", count, rsize);
+		count = rsize;
+	}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	p9_debug(P9_DEBUG_9P, "<<< RREADDIR count %d\n", count);
 

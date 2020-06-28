@@ -632,8 +632,22 @@ static int davinci_config_channel_size(struct davinci_audio_dev *dev,
 {
 	u32 fmt;
 	u32 tx_rotate = (word_length / 4) & 0x7;
+<<<<<<< HEAD
+	u32 mask = (1ULL << word_length) - 1;
+	/*
+	 * For captured data we should not rotate, inversion and masking is
+	 * enoguh to get the data to the right position:
+	 * Format	  data from bus		after reverse (XRBUF)
+	 * S16_LE:	|LSB|MSB|xxx|xxx|	|xxx|xxx|MSB|LSB|
+	 * S24_3LE:	|LSB|DAT|MSB|xxx|	|xxx|MSB|DAT|LSB|
+	 * S24_LE:	|LSB|DAT|MSB|xxx|	|xxx|MSB|DAT|LSB|
+	 * S32_LE:	|LSB|DAT|DAT|MSB|	|MSB|DAT|DAT|LSB|
+	 */
+	u32 rx_rotate = 0;
+=======
 	u32 rx_rotate = (32 - word_length) / 4;
 	u32 mask = (1ULL << word_length) - 1;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/*
 	 * if s BCLK-to-LRCLK ratio has been configured via the set_clkdiv()

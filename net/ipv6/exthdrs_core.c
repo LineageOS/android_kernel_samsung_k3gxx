@@ -212,7 +212,11 @@ int ipv6_find_hdr(const struct sk_buff *skb, unsigned int *offset,
 		found = (nexthdr == target);
 
 		if ((!ipv6_ext_hdr(nexthdr)) || nexthdr == NEXTHDR_NONE) {
+<<<<<<< HEAD
+			if (target < 0 || found)
+=======
 			if (target < 0)
+>>>>>>> 671a46baf1b... some performance improvements
 				break;
 			return -ENOENT;
 		}
@@ -260,7 +264,15 @@ int ipv6_find_hdr(const struct sk_buff *skb, unsigned int *offset,
 						return -EINVAL;
 					}
 				}
+<<<<<<< HEAD
+				if (!found)
+					return -ENOENT;
+				if (fragoff)
+					*fragoff = _frag_off;
+				break;
+=======
 				return -ENOENT;
+>>>>>>> 671a46baf1b... some performance improvements
 			}
 			hdrlen = 8;
 		} else if (nexthdr == NEXTHDR_AUTH) {

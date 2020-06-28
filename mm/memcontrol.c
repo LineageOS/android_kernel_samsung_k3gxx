@@ -302,6 +302,10 @@ struct mem_cgroup {
 
 	bool		oom_lock;
 	atomic_t	under_oom;
+<<<<<<< HEAD
+	atomic_t	oom_wakeups;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	atomic_t	refcnt;
 
@@ -379,7 +383,11 @@ struct mem_cgroup {
 static size_t memcg_size(void)
 {
 	return sizeof(struct mem_cgroup) +
+<<<<<<< HEAD
+		nr_node_ids * sizeof(struct mem_cgroup_per_node *);
+=======
 		nr_node_ids * sizeof(struct mem_cgroup_per_node);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /* internal only representation about the status of kmem accounting. */
@@ -1220,7 +1228,11 @@ struct mem_cgroup *mem_cgroup_iter(struct mem_cgroup *root,
 			if (dead_count == iter->last_dead_count) {
 				smp_rmb();
 				last_visited = iter->last_visited;
+<<<<<<< HEAD
+				if (last_visited && last_visited != root &&
+=======
 				if (last_visited &&
+>>>>>>> 671a46baf1b... some performance improvements
 				    !css_tryget(&last_visited->css))
 					last_visited = NULL;
 			}
@@ -1229,7 +1241,11 @@ struct mem_cgroup *mem_cgroup_iter(struct mem_cgroup *root,
 		memcg = __mem_cgroup_iter_next(root, last_visited);
 
 		if (reclaim) {
+<<<<<<< HEAD
+			if (last_visited && last_visited != root)
+=======
 			if (last_visited)
+>>>>>>> 671a46baf1b... some performance improvements
 				css_put(&last_visited->css);
 
 			iter->last_visited = memcg;
@@ -2075,6 +2091,20 @@ static int mem_cgroup_soft_reclaim(struct mem_cgroup *root_memcg,
 	return total;
 }
 
+<<<<<<< HEAD
+static DEFINE_SPINLOCK(memcg_oom_lock);
+
+/*
+ * Check OOM-Killer is already running under our hierarchy.
+ * If someone is running, return false.
+ */
+static bool mem_cgroup_oom_trylock(struct mem_cgroup *memcg)
+{
+	struct mem_cgroup *iter, *failed = NULL;
+
+	spin_lock(&memcg_oom_lock);
+
+=======
 /*
  * Check OOM-Killer is already running under our hierarchy.
  * If someone is running, return false.
@@ -2084,6 +2114,7 @@ static bool mem_cgroup_oom_lock(struct mem_cgroup *memcg)
 {
 	struct mem_cgroup *iter, *failed = NULL;
 
+>>>>>>> 671a46baf1b... some performance improvements
 	for_each_mem_cgroup_tree(iter, memcg) {
 		if (iter->oom_lock) {
 			/*
@@ -2097,6 +2128,35 @@ static bool mem_cgroup_oom_lock(struct mem_cgroup *memcg)
 			iter->oom_lock = true;
 	}
 
+<<<<<<< HEAD
+	if (failed) {
+		/*
+		 * OK, we failed to lock the whole subtree so we have
+		 * to clean up what we set up to the failing subtree
+		 */
+		for_each_mem_cgroup_tree(iter, memcg) {
+			if (iter == failed) {
+				mem_cgroup_iter_break(memcg, iter);
+				break;
+			}
+			iter->oom_lock = false;
+		}
+	}
+
+	spin_unlock(&memcg_oom_lock);
+
+	return !failed;
+}
+
+static void mem_cgroup_oom_unlock(struct mem_cgroup *memcg)
+{
+	struct mem_cgroup *iter;
+
+	spin_lock(&memcg_oom_lock);
+	for_each_mem_cgroup_tree(iter, memcg)
+		iter->oom_lock = false;
+	spin_unlock(&memcg_oom_lock);
+=======
 	if (!failed)
 		return true;
 
@@ -2124,6 +2184,7 @@ static int mem_cgroup_oom_unlock(struct mem_cgroup *memcg)
 	for_each_mem_cgroup_tree(iter, memcg)
 		iter->oom_lock = false;
 	return 0;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void mem_cgroup_mark_under_oom(struct mem_cgroup *memcg)
@@ -2147,7 +2208,10 @@ static void mem_cgroup_unmark_under_oom(struct mem_cgroup *memcg)
 		atomic_add_unless(&iter->under_oom, -1, 0);
 }
 
+<<<<<<< HEAD
+=======
 static DEFINE_SPINLOCK(memcg_oom_lock);
+>>>>>>> 671a46baf1b... some performance improvements
 static DECLARE_WAIT_QUEUE_HEAD(memcg_oom_waitq);
 
 struct oom_wait_info {
@@ -2177,6 +2241,10 @@ static int memcg_oom_wake_function(wait_queue_t *wait,
 
 static void memcg_wakeup_oom(struct mem_cgroup *memcg)
 {
+<<<<<<< HEAD
+	atomic_inc(&memcg->oom_wakeups);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* for filtering, pass "memcg" as argument. */
 	__wake_up(&memcg_oom_waitq, TASK_NORMAL, 0, memcg);
 }
@@ -2187,6 +2255,61 @@ static void memcg_oom_recover(struct mem_cgroup *memcg)
 		memcg_wakeup_oom(memcg);
 }
 
+<<<<<<< HEAD
+static void mem_cgroup_oom(struct mem_cgroup *memcg, gfp_t mask, int order)
+{
+	if (!current->memcg_oom.may_oom)
+		return;
+	/*
+	 * We are in the middle of the charge context here, so we
+	 * don't want to block when potentially sitting on a callstack
+	 * that holds all kinds of filesystem and mm locks.
+	 *
+	 * Also, the caller may handle a failed allocation gracefully
+	 * (like optional page cache readahead) and so an OOM killer
+	 * invocation might not even be necessary.
+	 *
+	 * That's why we don't do anything here except remember the
+	 * OOM context and then deal with it at the end of the page
+	 * fault when the stack is unwound, the locks are released,
+	 * and when we know whether the fault was overall successful.
+	 */
+	css_get(&memcg->css);
+	current->memcg_oom.memcg = memcg;
+	current->memcg_oom.gfp_mask = mask;
+	current->memcg_oom.order = order;
+}
+
+/**
+ * mem_cgroup_oom_synchronize - complete memcg OOM handling
+ * @handle: actually kill/wait or just clean up the OOM state
+ *
+ * This has to be called at the end of a page fault if the memcg OOM
+ * handler was enabled.
+ *
+ * Memcg supports userspace OOM handling where failed allocations must
+ * sleep on a waitqueue until the userspace task resolves the
+ * situation.  Sleeping directly in the charge context with all kinds
+ * of locks held is not a good idea, instead we remember an OOM state
+ * in the task and mem_cgroup_oom_synchronize() has to be called at
+ * the end of the page fault to complete the OOM handling.
+ *
+ * Returns %true if an ongoing memcg OOM situation was detected and
+ * completed, %false otherwise.
+ */
+bool mem_cgroup_oom_synchronize(bool handle)
+{
+	struct mem_cgroup *memcg = current->memcg_oom.memcg;
+	struct oom_wait_info owait;
+	bool locked;
+
+	/* OOM is global, do not handle */
+	if (!memcg)
+		return false;
+
+	if (!handle)
+		goto cleanup;
+=======
 /*
  * try to call OOM killer. returns false if we should exit memory-reclaim loop.
  */
@@ -2195,12 +2318,47 @@ static bool mem_cgroup_handle_oom(struct mem_cgroup *memcg, gfp_t mask,
 {
 	struct oom_wait_info owait;
 	bool locked, need_to_kill;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	owait.memcg = memcg;
 	owait.wait.flags = 0;
 	owait.wait.func = memcg_oom_wake_function;
 	owait.wait.private = current;
 	INIT_LIST_HEAD(&owait.wait.task_list);
+<<<<<<< HEAD
+
+	prepare_to_wait(&memcg_oom_waitq, &owait.wait, TASK_KILLABLE);
+	mem_cgroup_mark_under_oom(memcg);
+
+	locked = mem_cgroup_oom_trylock(memcg);
+
+	if (locked)
+		mem_cgroup_oom_notify(memcg);
+
+	if (locked && !memcg->oom_kill_disable) {
+		mem_cgroup_unmark_under_oom(memcg);
+		finish_wait(&memcg_oom_waitq, &owait.wait);
+		mem_cgroup_out_of_memory(memcg, current->memcg_oom.gfp_mask,
+					 current->memcg_oom.order);
+	} else {
+		schedule();
+		mem_cgroup_unmark_under_oom(memcg);
+		finish_wait(&memcg_oom_waitq, &owait.wait);
+	}
+
+	if (locked) {
+		mem_cgroup_oom_unlock(memcg);
+		/*
+		 * There is no guarantee that an OOM-lock contender
+		 * sees the wakeups triggered by the OOM kill
+		 * uncharges.  Wake any sleepers explicitely.
+		 */
+		memcg_oom_recover(memcg);
+	}
+cleanup:
+	current->memcg_oom.memcg = NULL;
+	css_put(&memcg->css);
+=======
 	need_to_kill = true;
 	mem_cgroup_mark_under_oom(memcg);
 
@@ -2238,6 +2396,7 @@ static bool mem_cgroup_handle_oom(struct mem_cgroup *memcg, gfp_t mask,
 		return false;
 	/* Give chance to dying process */
 	schedule_timeout_uninterruptible(1);
+>>>>>>> 671a46baf1b... some performance improvements
 	return true;
 }
 
@@ -2550,12 +2709,19 @@ enum {
 	CHARGE_RETRY,		/* need to retry but retry is not bad */
 	CHARGE_NOMEM,		/* we can't do more. return -ENOMEM */
 	CHARGE_WOULDBLOCK,	/* GFP_WAIT wasn't set and no enough res. */
+<<<<<<< HEAD
+=======
 	CHARGE_OOM_DIE,		/* the current is killed because of OOM */
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 static int mem_cgroup_do_charge(struct mem_cgroup *memcg, gfp_t gfp_mask,
 				unsigned int nr_pages, unsigned int min_pages,
+<<<<<<< HEAD
+				bool invoke_oom)
+=======
 				bool oom_check)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	unsigned long csize = nr_pages * PAGE_SIZE;
 	struct mem_cgroup *mem_over_limit;
@@ -2612,6 +2778,12 @@ static int mem_cgroup_do_charge(struct mem_cgroup *memcg, gfp_t gfp_mask,
 	if (mem_cgroup_wait_acct_move(mem_over_limit))
 		return CHARGE_RETRY;
 
+<<<<<<< HEAD
+	if (invoke_oom)
+		mem_cgroup_oom(mem_over_limit, gfp_mask, get_order(csize));
+
+	return CHARGE_NOMEM;
+=======
 	/* If we don't need to call oom-killer at el, return immediately */
 	if (!oom_check)
 		return CHARGE_NOMEM;
@@ -2620,6 +2792,7 @@ static int mem_cgroup_do_charge(struct mem_cgroup *memcg, gfp_t gfp_mask,
 		return CHARGE_OOM_DIE;
 
 	return CHARGE_RETRY;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /*
@@ -2663,6 +2836,12 @@ static int __mem_cgroup_try_charge(struct mm_struct *mm,
 		     || fatal_signal_pending(current)))
 		goto bypass;
 
+<<<<<<< HEAD
+	if (unlikely(task_in_memcg_oom(current)))
+		goto bypass;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/*
 	 * We always charge the cgroup the mm_struct belongs to.
 	 * The mm_struct's mem_cgroup changes on task migration if the
@@ -2722,7 +2901,11 @@ again:
 	}
 
 	do {
+<<<<<<< HEAD
+		bool invoke_oom = oom && !nr_oom_retries;
+=======
 		bool oom_check;
+>>>>>>> 671a46baf1b... some performance improvements
 
 		/* If killed, bypass charge */
 		if (fatal_signal_pending(current)) {
@@ -2730,6 +2913,10 @@ again:
 			goto bypass;
 		}
 
+<<<<<<< HEAD
+		ret = mem_cgroup_do_charge(memcg, gfp_mask, batch,
+					   nr_pages, invoke_oom);
+=======
 		oom_check = false;
 		if (oom && !nr_oom_retries) {
 			oom_check = true;
@@ -2738,6 +2925,7 @@ again:
 
 		ret = mem_cgroup_do_charge(memcg, gfp_mask, batch, nr_pages,
 		    oom_check);
+>>>>>>> 671a46baf1b... some performance improvements
 		switch (ret) {
 		case CHARGE_OK:
 			break;
@@ -2750,6 +2938,14 @@ again:
 			css_put(&memcg->css);
 			goto nomem;
 		case CHARGE_NOMEM: /* OOM routine works */
+<<<<<<< HEAD
+			if (!oom || invoke_oom) {
+				css_put(&memcg->css);
+				goto nomem;
+			}
+			nr_oom_retries--;
+			break;
+=======
 			if (!oom) {
 				css_put(&memcg->css);
 				goto nomem;
@@ -2760,6 +2956,7 @@ again:
 		case CHARGE_OOM_DIE: /* Killed by OOM Killer */
 			css_put(&memcg->css);
 			goto bypass;
+>>>>>>> 671a46baf1b... some performance improvements
 		}
 	} while (ret != CHARGE_OK);
 
@@ -5584,7 +5781,17 @@ static int compare_thresholds(const void *a, const void *b)
 	const struct mem_cgroup_threshold *_a = a;
 	const struct mem_cgroup_threshold *_b = b;
 
+<<<<<<< HEAD
+	if (_a->threshold > _b->threshold)
+		return 1;
+
+	if (_a->threshold < _b->threshold)
+		return -1;
+
+	return 0;
+=======
 	return _a->threshold - _b->threshold;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int mem_cgroup_oom_notify_cb(struct mem_cgroup *memcg)
@@ -5752,16 +5959,28 @@ static void mem_cgroup_usage_unregister_event(struct cgroup *cgrp,
 swap_buffers:
 	/* Swap primary and spare array */
 	thresholds->spare = thresholds->primary;
-	/* If all events are unregistered, free the spare array */
-	if (!new) {
-		kfree(thresholds->spare);
-		thresholds->spare = NULL;
-	}
+<<<<<<< HEAD
 
 	rcu_assign_pointer(thresholds->primary, new);
 
 	/* To be sure that nobody uses thresholds */
 	synchronize_rcu();
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
+	/* If all events are unregistered, free the spare array */
+	if (!new) {
+		kfree(thresholds->spare);
+		thresholds->spare = NULL;
+	}
+<<<<<<< HEAD
+=======
+
+	rcu_assign_pointer(thresholds->primary, new);
+
+	/* To be sure that nobody uses thresholds */
+	synchronize_rcu();
+>>>>>>> 671a46baf1b... some performance improvements
 unlock:
 	mutex_unlock(&memcg->thresholds_lock);
 }
@@ -6320,9 +6539,29 @@ static void mem_cgroup_invalidate_reclaim_iterators(struct mem_cgroup *memcg)
 static void mem_cgroup_css_offline(struct cgroup *cont)
 {
 	struct mem_cgroup *memcg = mem_cgroup_from_cont(cont);
+<<<<<<< HEAD
+	struct cgroup *iter;
+
+	mem_cgroup_invalidate_reclaim_iterators(memcg);
+
+	/*
+	 * This requires that offlining is serialized.  Right now that is
+	 * guaranteed because css_killed_work_fn() holds the cgroup_mutex.
+	 */
+	rcu_read_lock();
+	cgroup_for_each_descendant_post(iter, cont) {
+		rcu_read_unlock();
+		mem_cgroup_reparent_charges(mem_cgroup_from_cont(iter));
+		rcu_read_lock();
+	}
+	rcu_read_unlock();
+	mem_cgroup_reparent_charges(memcg);
+
+=======
 
 	mem_cgroup_invalidate_reclaim_iterators(memcg);
 	mem_cgroup_reparent_charges(memcg);
+>>>>>>> 671a46baf1b... some performance improvements
 	mem_cgroup_destroy_all_caches(memcg);
 }
 

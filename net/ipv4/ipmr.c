@@ -136,7 +136,11 @@ static int __ipmr_fill_mroute(struct mr_table *mrt, struct sk_buff *skb,
 			      struct mfc_cache *c, struct rtmsg *rtm);
 static void mroute_netlink_event(struct mr_table *mrt, struct mfc_cache *mfc,
 				 int cmd);
+<<<<<<< HEAD
+static void mroute_clean_tables(struct mr_table *mrt, bool all);
+=======
 static void mroute_clean_tables(struct mr_table *mrt);
+>>>>>>> 671a46baf1b... some performance improvements
 static void ipmr_expire_process(unsigned long arg);
 
 #ifdef CONFIG_IP_MROUTE_MULTIPLE_TABLES
@@ -157,9 +161,18 @@ static struct mr_table *ipmr_get_table(struct net *net, u32 id)
 static int ipmr_fib_lookup(struct net *net, struct flowi4 *flp4,
 			   struct mr_table **mrt)
 {
+<<<<<<< HEAD
+	int err;
+	struct ipmr_result res;
+	struct fib_lookup_arg arg = {
+		.result = &res,
+		.flags = FIB_LOOKUP_NOREF,
+	};
+=======
 	struct ipmr_result res;
 	struct fib_lookup_arg arg = { .result = &res, };
 	int err;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	err = fib_rules_lookup(net->ipv4.mr_rules_ops,
 			       flowi4_to_flowi(flp4), 0, &arg);
@@ -345,7 +358,11 @@ static struct mr_table *ipmr_new_table(struct net *net, u32 id)
 static void ipmr_free_table(struct mr_table *mrt)
 {
 	del_timer_sync(&mrt->ipmr_expire_timer);
+<<<<<<< HEAD
+	mroute_clean_tables(mrt, true);
+=======
 	mroute_clean_tables(mrt);
+>>>>>>> 671a46baf1b... some performance improvements
 	kfree(mrt);
 }
 
@@ -878,8 +895,15 @@ static struct mfc_cache *ipmr_cache_alloc(void)
 {
 	struct mfc_cache *c = kmem_cache_zalloc(mrt_cachep, GFP_KERNEL);
 
+<<<<<<< HEAD
+	if (c) {
+		c->mfc_un.res.last_assert = jiffies - MFC_ASSERT_THRESH - 1;
+		c->mfc_un.res.minvif = MAXVIFS;
+	}
+=======
 	if (c)
 		c->mfc_un.res.minvif = MAXVIFS;
+>>>>>>> 671a46baf1b... some performance improvements
 	return c;
 }
 
@@ -1196,7 +1220,11 @@ static int ipmr_mfc_add(struct net *net, struct mr_table *mrt,
  *	Close the multicast socket, and clear the vif tables etc
  */
 
+<<<<<<< HEAD
+static void mroute_clean_tables(struct mr_table *mrt, bool all)
+=======
 static void mroute_clean_tables(struct mr_table *mrt)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	int i;
 	LIST_HEAD(list);
@@ -1205,8 +1233,14 @@ static void mroute_clean_tables(struct mr_table *mrt)
 	/* Shut down all active vif entries */
 
 	for (i = 0; i < mrt->maxvif; i++) {
+<<<<<<< HEAD
+		if (!all && (mrt->vif_table[i].flags & VIFF_STATIC))
+			continue;
+		vif_delete(mrt, i, 0, &list);
+=======
 		if (!(mrt->vif_table[i].flags & VIFF_STATIC))
 			vif_delete(mrt, i, 0, &list);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	unregister_netdevice_many(&list);
 
@@ -1214,7 +1248,11 @@ static void mroute_clean_tables(struct mr_table *mrt)
 
 	for (i = 0; i < MFC_LINES; i++) {
 		list_for_each_entry_safe(c, next, &mrt->mfc_cache_array[i], list) {
+<<<<<<< HEAD
+			if (!all && (c->mfc_flags & MFC_STATIC))
+=======
 			if (c->mfc_flags & MFC_STATIC)
+>>>>>>> 671a46baf1b... some performance improvements
 				continue;
 			list_del_rcu(&c->list);
 			mroute_netlink_event(mrt, c, RTM_DELROUTE);
@@ -1249,7 +1287,11 @@ static void mrtsock_destruct(struct sock *sk)
 						    NETCONFA_IFINDEX_ALL,
 						    net->ipv4.devconf_all);
 			RCU_INIT_POINTER(mrt->mroute_sk, NULL);
+<<<<<<< HEAD
+			mroute_clean_tables(mrt, false);
+=======
 			mroute_clean_tables(mrt);
+>>>>>>> 671a46baf1b... some performance improvements
 		}
 	}
 	rtnl_unlock();
@@ -1658,7 +1700,11 @@ static void ip_encap(struct sk_buff *skb, __be32 saddr, __be32 daddr)
 	iph->protocol	=	IPPROTO_IPIP;
 	iph->ihl	=	5;
 	iph->tot_len	=	htons(skb->len);
+<<<<<<< HEAD
+	ip_select_ident(skb, NULL);
+=======
 	ip_select_ident(iph, skb_dst(skb), NULL);
+>>>>>>> 671a46baf1b... some performance improvements
 	ip_send_check(iph);
 
 	memset(&(IPCB(skb)->opt), 0, sizeof(IPCB(skb)->opt));
@@ -1669,8 +1715,13 @@ static inline int ipmr_forward_finish(struct sk_buff *skb)
 {
 	struct ip_options *opt = &(IPCB(skb)->opt);
 
+<<<<<<< HEAD
+	IP_INC_STATS(dev_net(skb_dst(skb)->dev), IPSTATS_MIB_OUTFORWDATAGRAMS);
+	IP_ADD_STATS(dev_net(skb_dst(skb)->dev), IPSTATS_MIB_OUTOCTETS, skb->len);
+=======
 	IP_INC_STATS_BH(dev_net(skb_dst(skb)->dev), IPSTATS_MIB_OUTFORWDATAGRAMS);
 	IP_ADD_STATS_BH(dev_net(skb_dst(skb)->dev), IPSTATS_MIB_OUTOCTETS, skb->len);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (unlikely(opt->optlen))
 		ip_forward_options(skb);
@@ -1732,7 +1783,11 @@ static void ipmr_queue_xmit(struct net *net, struct mr_table *mrt,
 		 * to blackhole.
 		 */
 
+<<<<<<< HEAD
+		IP_INC_STATS(dev_net(dev), IPSTATS_MIB_FRAGFAILS);
+=======
 		IP_INC_STATS_BH(dev_net(dev), IPSTATS_MIB_FRAGFAILS);
+>>>>>>> 671a46baf1b... some performance improvements
 		ip_rt_put(rt);
 		goto out_free;
 	}
@@ -2184,7 +2239,11 @@ static int __ipmr_fill_mroute(struct mr_table *mrt, struct sk_buff *skb,
 
 int ipmr_get_route(struct net *net, struct sk_buff *skb,
 		   __be32 saddr, __be32 daddr,
+<<<<<<< HEAD
+		   struct rtmsg *rtm, int nowait, u32 portid)
+=======
 		   struct rtmsg *rtm, int nowait)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	struct mfc_cache *cache;
 	struct mr_table *mrt;
@@ -2229,6 +2288,10 @@ int ipmr_get_route(struct net *net, struct sk_buff *skb,
 			return -ENOMEM;
 		}
 
+<<<<<<< HEAD
+		NETLINK_CB(skb2).portid = portid;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		skb_push(skb2, sizeof(struct iphdr));
 		skb_reset_network_header(skb2);
 		iph = ip_hdr(skb2);
@@ -2252,13 +2315,22 @@ int ipmr_get_route(struct net *net, struct sk_buff *skb,
 }
 
 static int ipmr_fill_mroute(struct mr_table *mrt, struct sk_buff *skb,
+<<<<<<< HEAD
+			    u32 portid, u32 seq, struct mfc_cache *c, int cmd,
+			    int flags)
+=======
 			    u32 portid, u32 seq, struct mfc_cache *c, int cmd)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	struct nlmsghdr *nlh;
 	struct rtmsg *rtm;
 	int err;
 
+<<<<<<< HEAD
+	nlh = nlmsg_put(skb, portid, seq, cmd, sizeof(*rtm), flags);
+=======
 	nlh = nlmsg_put(skb, portid, seq, cmd, sizeof(*rtm), NLM_F_MULTI);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (nlh == NULL)
 		return -EMSGSIZE;
 
@@ -2326,7 +2398,11 @@ static void mroute_netlink_event(struct mr_table *mrt, struct mfc_cache *mfc,
 	if (skb == NULL)
 		goto errout;
 
+<<<<<<< HEAD
+	err = ipmr_fill_mroute(mrt, skb, 0, 0, mfc, cmd, 0);
+=======
 	err = ipmr_fill_mroute(mrt, skb, 0, 0, mfc, cmd);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (err < 0)
 		goto errout;
 
@@ -2365,7 +2441,12 @@ static int ipmr_rtm_dumproute(struct sk_buff *skb, struct netlink_callback *cb)
 				if (ipmr_fill_mroute(mrt, skb,
 						     NETLINK_CB(cb->skb).portid,
 						     cb->nlh->nlmsg_seq,
+<<<<<<< HEAD
+						     mfc, RTM_NEWROUTE,
+						     NLM_F_MULTI) < 0)
+=======
 						     mfc, RTM_NEWROUTE) < 0)
+>>>>>>> 671a46baf1b... some performance improvements
 					goto done;
 next_entry:
 				e++;
@@ -2379,7 +2460,12 @@ next_entry:
 			if (ipmr_fill_mroute(mrt, skb,
 					     NETLINK_CB(cb->skb).portid,
 					     cb->nlh->nlmsg_seq,
+<<<<<<< HEAD
+					     mfc, RTM_NEWROUTE,
+					     NLM_F_MULTI) < 0) {
+=======
 					     mfc, RTM_NEWROUTE) < 0) {
+>>>>>>> 671a46baf1b... some performance improvements
 				spin_unlock_bh(&mfc_unres_lock);
 				goto done;
 			}

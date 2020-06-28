@@ -1305,6 +1305,10 @@ static int __init nf_nat_snmp_basic_init(void)
 static void __exit nf_nat_snmp_basic_fini(void)
 {
 	RCU_INIT_POINTER(nf_nat_snmp_hook, NULL);
+<<<<<<< HEAD
+	synchronize_rcu();
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	nf_conntrack_helper_unregister(&snmp_trap_helper);
 }
 

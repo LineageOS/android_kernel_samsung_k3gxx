@@ -1803,8 +1803,11 @@ functions_store(struct device *pdev, struct device_attribute *attr,
 
 	while (b) {
 		name = strsep(&b, ",");
+<<<<<<< HEAD
+=======
 		if (!name)
 			continue;
+>>>>>>> 671a46baf1b... some performance improvements
 
 		is_ffs = 0;
 		strlcpy(aliases, dev->ffs_aliases, sizeof(aliases));

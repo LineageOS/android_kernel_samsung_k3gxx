@@ -10,6 +10,10 @@
  * published by the Free Software Foundation.
  */
 
+<<<<<<< HEAD
+=======
+#include <linux/kernel.h>
+>>>>>>> 671a46baf1b... some performance improvements
 #include <linux/delay.h>
 #include <linux/firmware.h>
 #include <linux/i2c.h>
@@ -21,6 +25,10 @@
 #include <linux/platform_data/leds-lp55xx.h>
 #include <linux/slab.h>
 #include <linux/sec_sysfs.h>
+<<<<<<< HEAD
+=======
+#include <linux/sysfs_helpers.h>
+>>>>>>> 671a46baf1b... some performance improvements
 
 #include "leds-lp55xx-common.h"
 
@@ -143,6 +151,15 @@ struct lp5562_wait_param {
 	u8 cmd;
 };
 
+<<<<<<< HEAD
+=======
+enum colour_channel {
+	RED = 0,
+	GREEN = 1,
+	BLUE = 2
+};
+
+>>>>>>> 671a46baf1b... some performance improvements
 struct lp5562_pattern_data {
 	u8 r[LP5562_PROGRAM_LENGTH];
 	u8 g[LP5562_PROGRAM_LENGTH];
@@ -152,6 +169,33 @@ struct lp5562_pattern_data {
 	unsigned pc_b;
 };
 
+<<<<<<< HEAD
+=======
+static struct leds_control {
+	u8 	current_low;
+	u8 	current_high;
+	int	blink_retention;
+	int	blink_delay;
+	bool	blink_fading;
+	int	fade_in_time;
+	int	fade_out_time;
+	u8	r;
+	u8	g;
+	u8	b;
+} ledc = {
+	.current_low = 120,
+	.current_high = 120,
+	.blink_retention = 350,
+	.blink_delay = 3250,
+	.blink_fading = true,
+	.fade_in_time = 300,
+	.fade_out_time = 1300,
+	.r = 0,
+	.g = 0,
+	.b = 254,
+};
+
+>>>>>>> 671a46baf1b... some performance improvements
 static const struct lp5562_wait_param lp5562_wait_cycle[LP5562_CYCLE_MAX] = {
 	[LP5562_CYCLE_50ms] = {
 		.cycle = 50,
@@ -497,6 +541,174 @@ static void lp5562_set_wait_cmd(struct lp5562_pattern_data *ptn,
 	}
 }
 
+<<<<<<< HEAD
+=======
+static unsigned int lp5562_get_pc(struct lp5562_pattern_data *ptn,
+			 	enum colour_channel i)
+{
+	if (i == RED) {
+		return ptn->pc_r / 2;
+	} else if (i == GREEN) {
+		return ptn->pc_g / 2;
+	} else {
+		return ptn->pc_b / 2;
+	}
+}
+
+static void lp5562_set_single_cmd(struct lp5562_pattern_data *ptn,
+				  enum colour_channel i, u8 msb, u8 lsb)
+{
+	if (i == RED) {
+		ptn->r[ptn->pc_r++] = msb;
+		ptn->r[ptn->pc_r++] = lsb;
+	} else if (i == GREEN) {
+		ptn->g[ptn->pc_g++] = msb;
+		ptn->g[ptn->pc_g++] = lsb;
+	} else {
+		ptn->b[ptn->pc_b++] = msb;
+		ptn->b[ptn->pc_b++] = lsb;
+	}
+}
+
+static void lp5562_set_trigger_cmd(struct lp5562_pattern_data *ptn,
+				   enum colour_channel i,
+				   unsigned int engines, bool wait)
+{
+	unsigned int trigger;
+	u8 msb, lsb;
+
+	trigger = 0xE000 | engines << (wait ? 7 : 1);
+	msb = (trigger >> 8) & 0xFF;
+	lsb = trigger & 0xFF;
+
+	lp5562_set_single_cmd(ptn, i, msb, lsb);
+}
+
+static void lp5562_set_wait2_cmd(struct lp5562_pattern_data *ptn,
+				enum colour_channel i, bool prescale,
+				unsigned int steps)
+{
+	u8 msb = 0, lsb = 0, jump;
+	unsigned int loop = steps / 63;
+	u16 branch;
+
+	WARN_ON(loop > 64);
+
+	if (loop > 0) {
+		jump = lp5562_get_pc(ptn, i);
+
+		msb = (prescale << 6) | 63;
+		lp5562_set_single_cmd(ptn, i, msb, 0);
+
+		--loop;
+		steps -= 63;
+	}
+
+	if (loop > 0) {
+		branch = (5 << 13) | (loop << 7) | jump;
+
+		msb = (branch >> 8) & 0xFF;
+		lsb = branch & 0xFF;
+	
+		lp5562_set_single_cmd(ptn, i, msb, lsb);
+
+		steps -= loop * 63;
+	}
+	
+	if (steps) {
+		msb = (prescale << 6) | (steps & 63);
+		lp5562_set_single_cmd(ptn, i, msb, 0);
+	}
+}
+
+static void lp5562_set_wait3_cmd(struct lp5562_pattern_data *ptn,
+				unsigned int ms)
+{
+	unsigned int steps;
+	bool prescale;
+
+	ms *= 100000;
+
+	if (ms <= 3087000) {
+		prescale = false;
+		steps = ms / 49000;
+	} else {
+		prescale = true;
+		steps = ms / 1560000;
+	}
+
+	lp5562_set_trigger_cmd(ptn, RED, (1 << GREEN), true);
+	lp5562_set_trigger_cmd(ptn, BLUE, (1 << GREEN), true);
+	lp5562_set_wait2_cmd(ptn, GREEN, prescale, steps);
+	lp5562_set_trigger_cmd(ptn, GREEN, (1 << RED) | (1 << BLUE), false);
+}
+
+static void lp5562_scale_down_rgb(unsigned int color, u8 *r, u8 *g, u8 *b)
+{
+	*r = ((color >> 16) & 0xFE) / 2;
+	*g = ((color >> 8) & 0xFE) / 2;
+	*b = (color & 0xFE) / 2;
+}
+
+#define rgb_to_hex(r, g, b) ((r << 16) | (g << 8) | b)
+
+static unsigned int lp5562_scale_down_hex(unsigned int color)
+{
+	u8 r = 0, g = 0, b = 0;
+	lp5562_scale_down_rgb(color, &r, &g, &b);
+	return rgb_to_hex(r, g, b);
+}
+
+static void lp5562_set_ramp_cmd(struct lp5562_pattern_data *ptn, 
+				unsigned int color, unsigned int ms, bool rise)
+{
+	u8 msb = 0, lsb = 0, step_time, maxval, minval;
+	bool prescale;
+	u8 rgb[3];
+	unsigned int ramp_time[3];
+	int i, trailing = 0;
+
+	lp5562_scale_down_rgb(color, &rgb[RED], &rgb[GREEN], &rgb[BLUE]);
+
+	for (i = RED; i <= BLUE; i++) {
+		if (rgb[i] != 0) {
+			prescale = false;
+			step_time = ms / ((rgb[i] * 490) / 1000);
+			ramp_time[i] = step_time * (prescale ? 15600 : 490) * rgb[i];
+
+			/* Ramp command */
+			msb = (prescale << 14) | (step_time & ~0xC0);
+
+			lsb = !rise << 7;
+			lsb |= rgb[i] & ~0x80;
+		
+			lp5562_set_single_cmd(ptn, i, msb, lsb);
+		}
+	}
+
+	maxval = max(ramp_time[RED], max(ramp_time[GREEN], ramp_time[BLUE]));
+	minval = min(ramp_time[RED], min(ramp_time[GREEN], ramp_time[BLUE]));
+
+	if (maxval == minval)
+		return;
+
+	for (i = RED; i <= BLUE; i++) {
+		if (ramp_time[i] == maxval) {
+			trailing = i;
+			break;
+		}
+	}
+
+	for (i = RED; i <= BLUE; i++) {
+		if (i == trailing) {
+			lp5562_set_trigger_cmd(ptn, i, ~(1 << trailing) & 7, false);
+		} else {
+			lp5562_set_trigger_cmd(ptn, i, (1 << trailing), true);
+		}
+	}
+}
+
+>>>>>>> 671a46baf1b... some performance improvements
 static void lp5562_set_pwm_cmd(struct lp5562_pattern_data *ptn,
 			unsigned int color)
 {
@@ -601,6 +813,10 @@ static int lp5562_run_predef_led_pattern(struct lp55xx_chip *chip, int mode)
 {
 	int num_patterns = chip->pdata->num_patterns;
 	int ret = -EINVAL;
+<<<<<<< HEAD
+=======
+	unsigned int rgb;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	pr_info("%s: mode %d, lpmode %d\n", __func__, mode, LED_LOWPOWER_MODE);
 	/* invalid pattern data */
@@ -618,6 +834,7 @@ static int lp5562_run_predef_led_pattern(struct lp55xx_chip *chip, int mode)
 	} else {
 		struct lp5562_pattern_data ptn = { };
 
+<<<<<<< HEAD
 		ret = lp5562_lookup_pattern(chip, mode, &ptn);
 		if (ret)
 			return ret;
@@ -626,11 +843,55 @@ static int lp5562_run_predef_led_pattern(struct lp55xx_chip *chip, int mode)
 			LED_DYNAMIC_CURRENT = 0x5;
 		else
 			LED_DYNAMIC_CURRENT = 0x28;
+=======
+		if (mode != 3) {
+			ret = lp5562_lookup_pattern(chip, mode, &ptn);
+			if (ret)
+				return ret;
+		}
+
+		if (LED_LOWPOWER_MODE == 1)
+			LED_DYNAMIC_CURRENT = ledc.current_low;
+		else
+			LED_DYNAMIC_CURRENT = ledc.current_high;
+>>>>>>> 671a46baf1b... some performance improvements
 
 		chip->pdata->led_config[0].led_current = LED_DYNAMIC_CURRENT;
 		chip->pdata->led_config[1].led_current = LED_DYNAMIC_CURRENT;
 		chip->pdata->led_config[2].led_current = LED_DYNAMIC_CURRENT;
 
+<<<<<<< HEAD
+=======
+		if (mode == 3) {
+			rgb = ((ledc.r << 16) | (ledc.g << 8) | ledc.b);
+
+			LED_DYNAMIC_CURRENT *= 2;
+
+			lp5562_set_wait3_cmd(&ptn, 500);
+
+			if (ledc.blink_fading && ledc.fade_in_time)
+				lp5562_set_ramp_cmd(&ptn, rgb, ledc.fade_in_time, true);
+			else
+				lp5562_set_pwm_cmd(&ptn, !ledc.blink_fading ? lp5562_scale_down_hex(rgb) : rgb);
+
+			if (!ledc.blink_delay) {
+				lp5562_set_trigger_cmd(&ptn, RED, (1 << BLUE), true);
+				lp5562_set_trigger_cmd(&ptn, GREEN, (1 << RED), true);
+				lp5562_set_trigger_cmd(&ptn, BLUE, (1 << GREEN), true);
+				goto run;
+			}
+
+			lp5562_set_wait3_cmd(&ptn, ledc.blink_retention + 1);
+
+			if (ledc.blink_fading && ledc.fade_out_time)
+				lp5562_set_ramp_cmd(&ptn, rgb, ledc.fade_out_time, false);
+			else
+				lp5562_set_pwm_cmd(&ptn, 0x000000);
+
+			lp5562_set_wait3_cmd(&ptn, ledc.blink_delay);
+		}
+run:
+>>>>>>> 671a46baf1b... some performance improvements
 		lp55xx_write(chip, LP5562_REG_R_CURRENT, LED_DYNAMIC_CURRENT);
 		lp55xx_write(chip, LP5562_REG_G_CURRENT, LED_DYNAMIC_CURRENT);
 		lp55xx_write(chip, LP5562_REG_B_CURRENT, LED_DYNAMIC_CURRENT);
@@ -688,11 +949,15 @@ static ssize_t lp5562_store_blink(struct device *dev,
 	unsigned int on = 0;
 	unsigned int off = 0;
 	struct lp5562_pattern_data ptn = { };
+<<<<<<< HEAD
 	u8 jump_pc = 0;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	sscanf(buf, "0x%08x %d %d", &rgb, &on, &off);
 	pr_info("%s: 0x%08x %d %d\n", __func__, rgb, on, off);
 
+<<<<<<< HEAD
 	if (!rgb) {
 		pr_info("%s: led engines stopped !",
 			__func__);
@@ -701,6 +966,18 @@ static ssize_t lp5562_store_blink(struct device *dev,
 		pr_info("%s: off time. on: %d, off: %d\n",
 			__func__, on, off);
 	}
+=======
+	if (on == 0) {
+        pr_info("%s: wrong on/off time. on: %d, off: %d\n",
+            __func__, on, off);
+        return len;
+    }
+    if (off == 0) {
+        pr_info("%s: off time. on: %d, off: %d\n",
+            __func__, on, off);
+
+    }
+>>>>>>> 671a46baf1b... some performance improvements
 
 	lp5562_stop_engine(chip);
 
@@ -712,6 +989,7 @@ static ssize_t lp5562_store_blink(struct device *dev,
 
 	mutex_lock(&chip->lock);
 
+<<<<<<< HEAD
 	/* make on-time pattern */
 	lp5562_set_pwm_cmd(&ptn, rgb);
 	lp5562_set_wait_cmd(&ptn, on, jump_pc);
@@ -721,6 +999,44 @@ static ssize_t lp5562_store_blink(struct device *dev,
 	lp5562_set_pwm_cmd(&ptn, 0);
 	lp5562_set_wait_cmd(&ptn, off, jump_pc);
 
+=======
+	if (ledc.blink_fading) {
+		if (LED_LOWPOWER_MODE == 1)
+			LED_DYNAMIC_CURRENT = ledc.current_low * 2;
+		else
+			LED_DYNAMIC_CURRENT = ledc.current_high * 2;
+	}
+
+	lp55xx_write(chip, LP5562_REG_R_CURRENT, LED_DYNAMIC_CURRENT);
+	lp55xx_write(chip, LP5562_REG_G_CURRENT, LED_DYNAMIC_CURRENT);
+	lp55xx_write(chip, LP5562_REG_B_CURRENT, LED_DYNAMIC_CURRENT);
+
+	lp5562_set_wait3_cmd(&ptn, 500);
+
+	if (ledc.blink_fading && ledc.fade_in_time)
+		lp5562_set_ramp_cmd(&ptn, rgb, ledc.fade_in_time, true);
+	else {
+		lp5562_set_pwm_cmd(&ptn, ledc.blink_fading ? lp5562_scale_down_hex(rgb) : rgb);
+	}
+
+	if (!off) {
+		lp5562_set_trigger_cmd(&ptn, RED, (1 << BLUE), true);
+		lp5562_set_trigger_cmd(&ptn, GREEN, (1 << RED), true);
+		lp5562_set_trigger_cmd(&ptn, BLUE, (1 << GREEN), true);
+		goto run;
+	}
+
+	lp5562_set_wait3_cmd(&ptn, ledc.blink_retention + 1);
+
+	if (ledc.blink_fading && ledc.fade_out_time)
+		lp5562_set_ramp_cmd(&ptn, rgb, ledc.fade_out_time, false);
+	else
+		lp5562_set_pwm_cmd(&ptn, 0x000000);
+
+	lp5562_set_wait3_cmd(&ptn, off);
+
+run:
+>>>>>>> 671a46baf1b... some performance improvements
 	/* run the pattern */
 	lp5562_run_led_pattern(chip, &ptn);
 
@@ -943,6 +1259,125 @@ static ssize_t lp5562_store_led_br_lev(struct device *dev,
 
 #endif
 
+<<<<<<< HEAD
+=======
+static ssize_t show_leds_property(struct device *dev,
+			struct device_attribute *attr, char *buf);
+
+static ssize_t store_leds_property(struct device *dev,
+			struct device_attribute *attr,
+			const char *buf, size_t len);
+
+#define LEDS_ATTR(_name)				\
+{							\
+	.attr = {					\
+		  .name = #_name,			\
+		  .mode = S_IRUGO | S_IWUSR | S_IWGRP,	\
+		},					\
+	.show = show_leds_property,			\
+	.store = store_leds_property,			\
+}
+
+static struct device_attribute leds_control_attrs[] = {
+	LEDS_ATTR(led_lowpower_current),LEDS_ATTR(led_highpower_current),
+	LEDS_ATTR(led_blink_retention), LEDS_ATTR(led_blink_delay),
+	LEDS_ATTR(led_fade), 		LEDS_ATTR(led_fade_in_time),
+	LEDS_ATTR(led_fade_out_time),	LEDS_ATTR(led_noti_r),
+	LEDS_ATTR(led_noti_g),		LEDS_ATTR(led_noti_b),
+};
+
+enum {
+	LOWPOWER_CURRENT = 0, HIGHPOWER_CURRENT, BLINK_RETENTION, BLINK_DELAY,
+	BLINK_FADING, FADE_IN_TIME, FADE_OUT_TIME, LED_R, LED_G, LED_B
+};
+
+static ssize_t show_leds_property(struct device *dev,
+			struct device_attribute *attr, char *buf)
+{
+	const ptrdiff_t offset = attr - leds_control_attrs;
+
+	switch (offset) {
+		case LOWPOWER_CURRENT:
+			return sprintf(buf, "%d", ledc.current_low);
+		case HIGHPOWER_CURRENT:
+			return sprintf(buf, "%d", ledc.current_high);
+		case BLINK_RETENTION:
+			return sprintf(buf, "%d", ledc.blink_retention);
+		case BLINK_DELAY:
+			return sprintf(buf, "%d", ledc.blink_delay);
+		case BLINK_FADING:
+			return sprintf(buf, "%d", ledc.blink_fading);
+		case FADE_IN_TIME:
+			return sprintf(buf, "%d", ledc.fade_in_time);
+		case FADE_OUT_TIME:
+			return sprintf(buf, "%d", ledc.fade_out_time);
+		case LED_R:
+			return sprintf(buf, "%d", ledc.r);
+		case LED_G:
+			return sprintf(buf, "%d", ledc.g);
+		case LED_B:
+			return sprintf(buf, "%d", ledc.b);
+	}
+
+	return -EINVAL;
+}
+
+static ssize_t store_leds_property(struct device *dev,
+			struct device_attribute *attr,
+			const char *buf, size_t len)
+{
+	int val;
+	const ptrdiff_t offset = attr - leds_control_attrs;
+
+	if(sscanf(buf, "%d", &val) != 1)
+		return -EINVAL;
+
+	switch (offset) {
+		case LOWPOWER_CURRENT:
+			sanitize_min_max(val, 0, 120);
+			ledc.current_low = val;
+			break;
+		case HIGHPOWER_CURRENT:
+			sanitize_min_max(val, 0, 120);
+			ledc.current_high = val;
+			break;
+		case BLINK_RETENTION:
+			sanitize_min_max(val, 0, 2000);
+			ledc.blink_retention = val;
+			break;
+		case BLINK_DELAY:
+			sanitize_min_max(val, 0, 5000);
+			ledc.blink_delay = val;
+			break;
+		case BLINK_FADING:
+			ledc.blink_fading = !!val;
+			break;
+		case FADE_IN_TIME:
+			sanitize_min_max(val, 0, 1000);
+			ledc.fade_in_time = val;
+			break;
+		case FADE_OUT_TIME:
+			sanitize_min_max(val, 0, 2000);
+			ledc.fade_out_time = val;
+			break;
+		case LED_R:
+			sanitize_min_max(val, 0, 255);
+			ledc.r = val;
+			break;
+		case LED_G:
+			sanitize_min_max(val, 0, 255);
+			ledc.g = val;
+			break;
+		case LED_B:
+			sanitize_min_max(val, 0, 255);
+			ledc.b = val;
+			break;
+	}
+
+	return len;
+}
+
+>>>>>>> 671a46baf1b... some performance improvements
 #ifdef SEC_LED_SPECIFIC
 /* below nodes is SAMSUNG specific nodes */
 static DEVICE_ATTR(led_r, 0664, NULL, store_led_r);
@@ -1155,7 +1590,11 @@ static int of_lp5562_parsing_dt(struct lp55xx_platform_data *pdata)
 static int lp5562_probe(struct i2c_client *client,
 			const struct i2c_device_id *id)
 {
+<<<<<<< HEAD
 	int ret;
+=======
+	int i, ret;
+>>>>>>> 671a46baf1b... some performance improvements
 	struct lp55xx_chip *chip;
 	struct lp55xx_led *led;
 	struct lp55xx_platform_data *pdata = NULL;
@@ -1227,6 +1666,13 @@ static int lp5562_probe(struct i2c_client *client,
 	}
 #endif
 
+<<<<<<< HEAD
+=======
+	for(i = 0; i < ARRAY_SIZE(leds_control_attrs); i++) {
+		ret = sysfs_create_file(&led_dev->kobj, &leds_control_attrs[i].attr);
+	}
+
+>>>>>>> 671a46baf1b... some performance improvements
 	g_chip = chip;
 
 	pr_info("%s: done\n", __func__);

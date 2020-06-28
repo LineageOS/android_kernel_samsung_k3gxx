@@ -331,6 +331,11 @@ static void radeon_crtc_dpms(struct drm_crtc *crtc, int mode)
 			WREG32_P(RADEON_CRTC_EXT_CNTL, crtc_ext_cntl, ~(mask | crtc_ext_cntl));
 		}
 		drm_vblank_post_modeset(dev, radeon_crtc->crtc_id);
+<<<<<<< HEAD
+		/* Make sure vblank interrupt is still enabled if needed */
+		radeon_irq_set(rdev);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		radeon_crtc_load_lut(crtc);
 		break;
 	case DRM_MODE_DPMS_STANDBY:
@@ -422,6 +427,10 @@ int radeon_crtc_do_set_base(struct drm_crtc *crtc,
 	/* Pin framebuffer & get tilling informations */
 	obj = radeon_fb->obj;
 	rbo = gem_to_radeon_bo(obj);
+<<<<<<< HEAD
+retry:
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	r = radeon_bo_reserve(rbo, false);
 	if (unlikely(r != 0))
 		return r;
@@ -430,6 +439,36 @@ int radeon_crtc_do_set_base(struct drm_crtc *crtc,
 				     &base);
 	if (unlikely(r != 0)) {
 		radeon_bo_unreserve(rbo);
+<<<<<<< HEAD
+
+		/* On old GPU like RN50 with little vram pining can fails because
+		 * current fb is taking all space needed. So instead of unpining
+		 * the old buffer after pining the new one, first unpin old one
+		 * and then retry pining new one.
+		 *
+		 * As only master can set mode only master can pin and it is
+		 * unlikely the master client will race with itself especialy
+		 * on those old gpu with single crtc.
+		 *
+		 * We don't shutdown the display controller because new buffer
+		 * will end up in same spot.
+		 */
+		if (!atomic && fb && fb != crtc->fb) {
+			struct radeon_bo *old_rbo;
+			unsigned long nsize, osize;
+
+			old_rbo = gem_to_radeon_bo(to_radeon_framebuffer(fb)->obj);
+			osize = radeon_bo_size(old_rbo);
+			nsize = radeon_bo_size(rbo);
+			if (nsize <= osize && !radeon_bo_reserve(old_rbo, false)) {
+				radeon_bo_unpin(old_rbo);
+				radeon_bo_unreserve(old_rbo);
+				fb = NULL;
+				goto retry;
+			}
+		}
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		return -EINVAL;
 	}
 	radeon_bo_get_tiling_flags(rbo, &tiling_flags, NULL);

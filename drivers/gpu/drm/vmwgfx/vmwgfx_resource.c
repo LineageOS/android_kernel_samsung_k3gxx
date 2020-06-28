@@ -970,7 +970,11 @@ void vmw_resource_unreserve(struct vmw_resource *res,
 	if (new_backup)
 		res->backup_offset = new_backup_offset;
 
+<<<<<<< HEAD
+	if (!res->func->may_evict || res->id == -1)
+=======
 	if (!res->func->may_evict)
+>>>>>>> 671a46baf1b... some performance improvements
 		return;
 
 	write_lock(&dev_priv->resource_lock);

@@ -4,6 +4,10 @@
 #include <linux/tracepoint.h>
 #include <linux/unistd.h>
 #include <linux/ftrace_event.h>
+<<<<<<< HEAD
+#include <linux/thread_info.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 #include <asm/ptrace.h>
 
@@ -31,4 +35,21 @@ struct syscall_metadata {
 	struct ftrace_event_call *exit_event;
 };
 
+<<<<<<< HEAD
+#if defined(CONFIG_TRACEPOINTS) && defined(CONFIG_HAVE_SYSCALL_TRACEPOINTS)
+static inline void syscall_tracepoint_update(struct task_struct *p)
+{
+	if (test_thread_flag(TIF_SYSCALL_TRACEPOINT))
+		set_tsk_thread_flag(p, TIF_SYSCALL_TRACEPOINT);
+	else
+		clear_tsk_thread_flag(p, TIF_SYSCALL_TRACEPOINT);
+}
+#else
+static inline void syscall_tracepoint_update(struct task_struct *p)
+{
+}
+#endif
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #endif /* _TRACE_SYSCALL_H */

@@ -2,11 +2,19 @@
  * fs/sdcardfs/file.c
  *
  * Copyright (c) 2013 Samsung Electronics Co. Ltd
+<<<<<<< HEAD
  *   Authors: Daeho Jeong, Woojoong Lee, Seunghwan Hyun,
  *               Sunghwan Yun, Sungjong Seo
  *
  * This program has been developed as a stackable file system based on
  * the WrapFS which written by
+=======
+ *   Authors: Daeho Jeong, Woojoong Lee, Seunghwan Hyun, 
+ *               Sunghwan Yun, Sungjong Seo
+ *                      
+ * This program has been developed as a stackable file system based on
+ * the WrapFS which written by 
+>>>>>>> 671a46baf1b... some performance improvements
  *
  * Copyright (c) 1998-2011 Erez Zadok
  * Copyright (c) 2009     Shrikar Archak
@@ -65,7 +73,11 @@ static ssize_t sdcardfs_write(struct file *file, const char __user *buf,
 
 	/* check disk space */
 	if (!check_min_free_space(dentry, count, 0)) {
+<<<<<<< HEAD
 		pr_err("No minimum free space.\n");
+=======
+		printk(KERN_INFO "No minimum free space.\n");
+>>>>>>> 671a46baf1b... some performance improvements
 		return -ENOSPC;
 	}
 
@@ -82,7 +94,11 @@ static ssize_t sdcardfs_write(struct file *file, const char __user *buf,
 	return err;
 }
 
+<<<<<<< HEAD
 static int sdcardfs_readdir(struct file *file, struct dir_context *ctx)
+=======
+static int sdcardfs_readdir(struct file *file, void *dirent, filldir_t filldir)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	int err = 0;
 	struct file *lower_file = NULL;
@@ -91,7 +107,11 @@ static int sdcardfs_readdir(struct file *file, struct dir_context *ctx)
 	lower_file = sdcardfs_lower_file(file);
 
 	lower_file->f_pos = file->f_pos;
+<<<<<<< HEAD
 	err = iterate_dir(lower_file, ctx);
+=======
+	err = vfs_readdir(lower_file, filldir, dirent);
+>>>>>>> 671a46baf1b... some performance improvements
 	file->f_pos = lower_file->f_pos;
 	if (err >= 0)		/* copy the atime */
 		fsstack_copy_attr_atime(dentry->d_inode,
@@ -104,15 +124,19 @@ static long sdcardfs_unlocked_ioctl(struct file *file, unsigned int cmd,
 {
 	long err = -ENOTTY;
 	struct file *lower_file;
+<<<<<<< HEAD
 	const struct cred *saved_cred = NULL;
 	struct dentry *dentry = file->f_path.dentry;
 	struct sdcardfs_sb_info *sbi = SDCARDFS_SB(dentry->d_sb);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	lower_file = sdcardfs_lower_file(file);
 
 	/* XXX: use vfs_ioctl if/when VFS exports it */
 	if (!lower_file || !lower_file->f_op)
 		goto out;
+<<<<<<< HEAD
 
 	/* save current_cred and override it */
 	OVERRIDE_CRED(sbi, saved_cred, SDCARDFS_I(file_inode(file)));
@@ -125,6 +149,11 @@ static long sdcardfs_unlocked_ioctl(struct file *file, unsigned int cmd,
 		sdcardfs_copy_and_fix_attrs(file_inode(file),
 				      file_inode(lower_file));
 	REVERT_CRED(saved_cred);
+=======
+	if (lower_file->f_op->unlocked_ioctl)
+		err = lower_file->f_op->unlocked_ioctl(lower_file, cmd, arg);
+
+>>>>>>> 671a46baf1b... some performance improvements
 out:
 	return err;
 }
@@ -135,15 +164,19 @@ static long sdcardfs_compat_ioctl(struct file *file, unsigned int cmd,
 {
 	long err = -ENOTTY;
 	struct file *lower_file;
+<<<<<<< HEAD
 	const struct cred *saved_cred = NULL;
 	struct dentry *dentry = file->f_path.dentry;
 	struct sdcardfs_sb_info *sbi = SDCARDFS_SB(dentry->d_sb);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	lower_file = sdcardfs_lower_file(file);
 
 	/* XXX: use vfs_ioctl if/when VFS exports it */
 	if (!lower_file || !lower_file->f_op)
 		goto out;
+<<<<<<< HEAD
 
 	/* save current_cred and override it */
 	OVERRIDE_CRED(sbi, saved_cred, SDCARDFS_I(file_inode(file)));
@@ -152,6 +185,11 @@ static long sdcardfs_compat_ioctl(struct file *file, unsigned int cmd,
 		err = lower_file->f_op->compat_ioctl(lower_file, cmd, arg);
 
 	REVERT_CRED(saved_cred);
+=======
+	if (lower_file->f_op->compat_ioctl)
+		err = lower_file->f_op->compat_ioctl(lower_file, cmd, arg);
+
+>>>>>>> 671a46baf1b... some performance improvements
 out:
 	return err;
 }
@@ -163,7 +201,10 @@ static int sdcardfs_mmap(struct file *file, struct vm_area_struct *vma)
 	bool willwrite;
 	struct file *lower_file;
 	const struct vm_operations_struct *saved_vm_ops = NULL;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	/* this might be deferred to mmap's writepage */
 	willwrite = ((vma->vm_flags | VM_SHARED | VM_WRITE) == vma->vm_flags);
 
@@ -180,7 +221,12 @@ static int sdcardfs_mmap(struct file *file, struct vm_area_struct *vma)
 	lower_file = sdcardfs_lower_file(file);
 	if (willwrite && !lower_file->f_mapping->a_ops->writepage) {
 		err = -EINVAL;
+<<<<<<< HEAD
 		pr_err("sdcardfs: lower file system does not support writeable mmap\n");
+=======
+		printk(KERN_ERR "sdcardfs: lower file system does not "
+		       "support writeable mmap\n");
+>>>>>>> 671a46baf1b... some performance improvements
 		goto out;
 	}
 
@@ -192,10 +238,23 @@ static int sdcardfs_mmap(struct file *file, struct vm_area_struct *vma)
 	if (!SDCARDFS_F(file)->lower_vm_ops) {
 		err = lower_file->f_op->mmap(lower_file, vma);
 		if (err) {
+<<<<<<< HEAD
 			pr_err("sdcardfs: lower mmap failed %d\n", err);
 			goto out;
 		}
 		saved_vm_ops = vma->vm_ops; /* save: came from lower ->mmap */
+=======
+			printk(KERN_ERR "sdcardfs: lower mmap failed %d\n", err);
+			goto out;
+		}
+		saved_vm_ops = vma->vm_ops; /* save: came from lower ->mmap */
+		err = do_munmap(current->mm, vma->vm_start,
+				vma->vm_end - vma->vm_start);
+		if (err) {
+			printk(KERN_ERR "sdcardfs: do_munmap failed %d\n", err);
+			goto out;
+		}
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	/*
@@ -208,9 +267,12 @@ static int sdcardfs_mmap(struct file *file, struct vm_area_struct *vma)
 	file->f_mapping->a_ops = &sdcardfs_aops; /* set our aops */
 	if (!SDCARDFS_F(file)->lower_vm_ops) /* save for our ->fault */
 		SDCARDFS_F(file)->lower_vm_ops = saved_vm_ops;
+<<<<<<< HEAD
 	vma->vm_private_data = file;
 	get_file(lower_file);
 	vma->vm_file = lower_file;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 out:
 	return err;
@@ -223,7 +285,11 @@ static int sdcardfs_open(struct inode *inode, struct file *file)
 	struct path lower_path;
 	struct dentry *dentry = file->f_path.dentry;
 	struct dentry *parent = dget_parent(dentry);
+<<<<<<< HEAD
 	struct sdcardfs_sb_info *sbi = SDCARDFS_SB(dentry->d_sb);
+=======
+	struct sdcardfs_sb_info *sbi = SDCARDFS_SB(dentry->d_sb); 
+>>>>>>> 671a46baf1b... some performance improvements
 	const struct cred *saved_cred = NULL;
 
 	/* don't open unhashed/deleted files */
@@ -231,15 +297,29 @@ static int sdcardfs_open(struct inode *inode, struct file *file)
 		err = -ENOENT;
 		goto out_err;
 	}
+<<<<<<< HEAD
 
 	if (!check_caller_access_to_name(parent->d_inode, &dentry->d_name)) {
+=======
+	
+	if(!check_caller_access_to_name(parent->d_inode, dentry->d_name.name)) {
+		printk(KERN_INFO "%s: need to check the caller's gid in packages.list\n" 
+                         "	dentry: %s, task:%s\n",
+						 __func__, dentry->d_name.name, current->comm);
+>>>>>>> 671a46baf1b... some performance improvements
 		err = -EACCES;
 		goto out_err;
 	}
 
 	/* save current_cred and override it */
+<<<<<<< HEAD
 	OVERRIDE_CRED(sbi, saved_cred, SDCARDFS_I(inode));
 
+=======
+	OVERRIDE_CRED(sbi, saved_cred);
+
+	file->f_mode |= FMODE_NONMAPPABLE;
+>>>>>>> 671a46baf1b... some performance improvements
 	file->private_data =
 		kzalloc(sizeof(struct sdcardfs_file_info), GFP_KERNEL);
 	if (!SDCARDFS_F(file)) {
@@ -248,9 +328,14 @@ static int sdcardfs_open(struct inode *inode, struct file *file)
 	}
 
 	/* open lower object and link sdcardfs's file struct to lower's */
+<<<<<<< HEAD
 	sdcardfs_get_lower_path(file->f_path.dentry, &lower_path);
 	lower_file = dentry_open(&lower_path, file->f_flags, current_cred());
 	path_put(&lower_path);
+=======
+	sdcardfs_copy_lower_path(file->f_path.dentry, &lower_path);
+	lower_file = dentry_open(&lower_path, file->f_flags, current_cred());
+>>>>>>> 671a46baf1b... some performance improvements
 	if (IS_ERR(lower_file)) {
 		err = PTR_ERR(lower_file);
 		lower_file = sdcardfs_lower_file(file);
@@ -264,8 +349,17 @@ static int sdcardfs_open(struct inode *inode, struct file *file)
 
 	if (err)
 		kfree(SDCARDFS_F(file));
+<<<<<<< HEAD
 	else
 		sdcardfs_copy_and_fix_attrs(inode, sdcardfs_lower_inode(inode));
+=======
+	else {
+		mutex_lock(&inode->i_mutex);
+		sdcardfs_copy_inode_attr(inode, sdcardfs_lower_inode(inode));
+		fix_derived_permission(inode);
+		mutex_unlock(&inode->i_mutex);
+	}
+>>>>>>> 671a46baf1b... some performance improvements
 
 out_revert_cred:
 	REVERT_CRED(saved_cred);
@@ -301,23 +395,35 @@ static int sdcardfs_file_release(struct inode *inode, struct file *file)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int sdcardfs_fsync(struct file *file, loff_t start, loff_t end,
 			int datasync)
+=======
+static int
+sdcardfs_fsync(struct file *file, loff_t start, loff_t end, int datasync)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	int err;
 	struct file *lower_file;
 	struct path lower_path;
 	struct dentry *dentry = file->f_path.dentry;
 
+<<<<<<< HEAD
 	err = generic_file_fsync(file, start, end, datasync);
 	if (err)
 		goto out;
 
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	lower_file = sdcardfs_lower_file(file);
 	sdcardfs_get_lower_path(dentry, &lower_path);
 	err = vfs_fsync_range(lower_file, start, end, datasync);
 	sdcardfs_put_lower_path(dentry, &lower_path);
+<<<<<<< HEAD
 out:
+=======
+
+>>>>>>> 671a46baf1b... some performance improvements
 	return err;
 }
 
@@ -333,6 +439,7 @@ static int sdcardfs_fasync(int fd, struct file *file, int flag)
 	return err;
 }
 
+<<<<<<< HEAD
 /*
  * Sdcardfs cannot use generic_file_llseek as ->llseek, because it would
  * only set the offset of the upper file.  So we have to implement our
@@ -356,6 +463,13 @@ out:
 }
 
 
+=======
+static struct file *sdcardfs_get_lower_file(struct file *f)
+{
+	return sdcardfs_lower_file(f);
+}
+
+>>>>>>> 671a46baf1b... some performance improvements
 const struct file_operations sdcardfs_main_fops = {
 	.llseek		= generic_file_llseek,
 	.read		= sdcardfs_read,
@@ -370,13 +484,23 @@ const struct file_operations sdcardfs_main_fops = {
 	.release	= sdcardfs_file_release,
 	.fsync		= sdcardfs_fsync,
 	.fasync		= sdcardfs_fasync,
+<<<<<<< HEAD
+=======
+	.get_lower_file = sdcardfs_get_lower_file,
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 /* trimmed directory options */
 const struct file_operations sdcardfs_dir_fops = {
+<<<<<<< HEAD
 	.llseek		= sdcardfs_file_llseek,
 	.read		= generic_read_dir,
 	.iterate	= sdcardfs_readdir,
+=======
+	.llseek		= generic_file_llseek,
+	.read		= generic_read_dir,
+	.readdir	= sdcardfs_readdir,
+>>>>>>> 671a46baf1b... some performance improvements
 	.unlocked_ioctl	= sdcardfs_unlocked_ioctl,
 #ifdef CONFIG_COMPAT
 	.compat_ioctl	= sdcardfs_compat_ioctl,
@@ -386,4 +510,8 @@ const struct file_operations sdcardfs_dir_fops = {
 	.flush		= sdcardfs_flush,
 	.fsync		= sdcardfs_fsync,
 	.fasync		= sdcardfs_fasync,
+<<<<<<< HEAD
+=======
+	.get_lower_file = sdcardfs_get_lower_file,
+>>>>>>> 671a46baf1b... some performance improvements
 };

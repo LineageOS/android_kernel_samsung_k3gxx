@@ -263,6 +263,10 @@
 					regulator-name = "vdd_g3d";
 					regulator-min-microvolt = <1000000>;
 					regulator-max-microvolt = <1000000>;
+<<<<<<< HEAD
+					regulator-always-on;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 					regulator-boot-on;
 					op_mode = <1>;
 				};

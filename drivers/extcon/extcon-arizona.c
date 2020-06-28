@@ -106,7 +106,11 @@ struct arizona_extcon_info {
 	bool detecting;
 	int jack_flips;
 
+<<<<<<< HEAD
+	int hpdet_ip_version;
+=======
 	int hpdet_ip;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	struct extcon_dev edev;
 };
@@ -161,8 +165,18 @@ static void arizona_extcon_hp_clamp(struct arizona_extcon_info *info,
 {
 	struct arizona *arizona = info->arizona;
 	unsigned int mask, val = 0;
+<<<<<<< HEAD
+	unsigned int ep_sel = 0;
 	int ret;
 
+	mutex_lock_nested(&arizona->dapm->card->dapm_mutex,
+			  SND_SOC_DAPM_CLASS_RUNTIME);
+
+
+=======
+	int ret;
+
+>>>>>>> 671a46baf1b... some performance improvements
 	switch (arizona->type) {
 	case WM5102:
 	case WM8997:
@@ -179,17 +193,33 @@ static void arizona_extcon_hp_clamp(struct arizona_extcon_info *info,
 		else
 			val = ARIZONA_HP1L_FLWR | ARIZONA_HP1L_SHRTI;
 		break;
+<<<<<<< HEAD
+	case CS47L35:
+		/* check whether audio is routed to EPOUT, do not disable OUT1
+		 * in that case */
+		regmap_read(arizona->regmap, ARIZONA_OUTPUT_ENABLES_1, &ep_sel);
+		ep_sel &= ARIZONA_EP_SEL_MASK;
+		/* fall through to next step to set common variables */
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	default:
 		mask = 0;
 		break;
 	};
 
+<<<<<<< HEAD
+	arizona->hpdet_clamp = clamp;
+
+	/* Keep the HP output stages disabled while doing the clamp */
+	if (clamp && !ep_sel) {
+=======
 	mutex_lock(&arizona->dapm->card->dapm_mutex);
 
 	arizona->hpdet_clamp = clamp;
 
 	/* Keep the HP output stages disabled while doing the clamp */
 	if (clamp) {
+>>>>>>> 671a46baf1b... some performance improvements
 		ret = regmap_update_bits(arizona->regmap,
 					 ARIZONA_OUTPUT_ENABLES_1,
 					 ARIZONA_OUT1L_ENA |
@@ -215,7 +245,11 @@ static void arizona_extcon_hp_clamp(struct arizona_extcon_info *info,
 	}
 
 	/* Restore the desired state while not doing the clamp */
+<<<<<<< HEAD
+	if (!clamp && !ep_sel) {
+=======
 	if (!clamp) {
+>>>>>>> 671a46baf1b... some performance improvements
 		ret = regmap_update_bits(arizona->regmap,
 					 ARIZONA_OUTPUT_ENABLES_1,
 					 ARIZONA_OUT1L_ENA |
@@ -427,7 +461,11 @@ static int arizona_hpdet_read(struct arizona_extcon_info *info)
 		return ret;
 	}
 
+<<<<<<< HEAD
+	switch (info->hpdet_ip_version) {
+=======
 	switch (info->hpdet_ip) {
+>>>>>>> 671a46baf1b... some performance improvements
 	case 0:
 		if (!(val & ARIZONA_HP_DONE)) {
 			dev_err(arizona->dev, "HPDET did not complete: %x\n",
@@ -488,7 +526,11 @@ static int arizona_hpdet_read(struct arizona_extcon_info *info)
 
 	default:
 		dev_warn(arizona->dev, "Unknown HPDET IP revision %d\n",
+<<<<<<< HEAD
+			 info->hpdet_ip_version);
+=======
 			 info->hpdet_ip);
+>>>>>>> 671a46baf1b... some performance improvements
 	case 2:
 		if (!(val & ARIZONA_HP_DONE_B)) {
 			dev_err(arizona->dev, "HPDET did not complete: %x\n",
@@ -1440,7 +1482,11 @@ static int arizona_extcon_probe(struct platform_device *pdev)
 	struct arizona *arizona = dev_get_drvdata(pdev->dev.parent);
 	struct arizona_pdata *pdata = &arizona->pdata;
 	struct arizona_extcon_info *info;
+<<<<<<< HEAD
+	unsigned int reg, debounce_reg, debounce_val, analog_val;
+=======
 	unsigned int reg;
+>>>>>>> 671a46baf1b... some performance improvements
 	int jack_irq_fall, jack_irq_rise;
 	int ret, mode, i, j;
 
@@ -1487,7 +1533,11 @@ static int arizona_extcon_probe(struct platform_device *pdev)
 			break;
 		default:
 			info->micd_clamp = true;
+<<<<<<< HEAD
+			info->hpdet_ip_version = 1;
+=======
 			info->hpdet_ip = 1;
+>>>>>>> 671a46baf1b... some performance improvements
 			break;
 		}
 		break;
@@ -1498,13 +1548,21 @@ static int arizona_extcon_probe(struct platform_device *pdev)
 			break;
 		default:
 			info->micd_clamp = true;
+<<<<<<< HEAD
+			info->hpdet_ip_version = 2;
+=======
 			info->hpdet_ip = 2;
+>>>>>>> 671a46baf1b... some performance improvements
 			break;
 		}
 		break;
 	default:
 		info->micd_clamp = true;
+<<<<<<< HEAD
+		info->hpdet_ip_version = 2;
+=======
 		info->hpdet_ip = 2;
+>>>>>>> 671a46baf1b... some performance improvements
 		break;
 	}
 
@@ -1729,10 +1787,42 @@ static int arizona_extcon_probe(struct platform_device *pdev)
 	}
 
 	arizona_clk32k_enable(arizona);
+<<<<<<< HEAD
+
+	switch (arizona->type) {
+	case WM8997:
+	case WM5102:
+	case WM1814:
+	case WM8998:
+	case WM8280:
+	case WM5110:
+		debounce_reg = ARIZONA_JACK_DETECT_DEBOUNCE;
+		debounce_val = ARIZONA_JD1_DB;
+		analog_val = ARIZONA_JD1_ENA;
+		break;
+	default:
+		debounce_reg = CLEARWATER_INTERRUPT_DEBOUNCE_7;
+
+		if (arizona->pdata.jd_gpio5) {
+			debounce_val = CLEARWATER_JD1_DB | CLEARWATER_JD2_DB;
+			analog_val = ARIZONA_JD1_ENA | ARIZONA_JD2_ENA;
+		} else {
+			debounce_val = CLEARWATER_JD1_DB;
+			analog_val = ARIZONA_JD1_ENA;
+		}
+		break;
+	}
+
+	regmap_update_bits(arizona->regmap, debounce_reg,
+			   debounce_val, debounce_val);
+	regmap_update_bits(arizona->regmap, ARIZONA_JACK_DETECT_ANALOGUE,
+			   analog_val, analog_val);
+=======
 	regmap_update_bits(arizona->regmap, ARIZONA_JACK_DETECT_DEBOUNCE,
 			   ARIZONA_JD1_DB, ARIZONA_JD1_DB);
 	regmap_update_bits(arizona->regmap, ARIZONA_JACK_DETECT_ANALOGUE,
 			   ARIZONA_JD1_ENA, ARIZONA_JD1_ENA);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	ret = regulator_allow_bypass(info->micvdd, true);
 	if (ret != 0)

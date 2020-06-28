@@ -46,7 +46,12 @@
     defined(CONFIG_MACH_LITTLETON) ||\
     defined(CONFIG_MACH_ZYLONITE2) ||\
     defined(CONFIG_ARCH_VIPER) ||\
+<<<<<<< HEAD
+    defined(CONFIG_MACH_STARGATE2) ||\
+    defined(CONFIG_ARCH_VERSATILE)
+=======
     defined(CONFIG_MACH_STARGATE2)
+>>>>>>> 671a46baf1b... some performance improvements
 
 #include <asm/mach-types.h>
 
@@ -154,6 +159,11 @@ static inline void SMC_outw(u16 val, void __iomem *ioaddr, int reg)
 #define SMC_outl(v, a, r)	writel(v, (a) + (r))
 #define SMC_insl(a, r, p, l)	readsl((a) + (r), p, l)
 #define SMC_outsl(a, r, p, l)	writesl((a) + (r), p, l)
+<<<<<<< HEAD
+#define SMC_insw(a, r, p, l)	readsw((a) + (r), p, l)
+#define SMC_outsw(a, r, p, l)	writesw((a) + (r), p, l)
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #define SMC_IRQ_FLAGS		(-1)	/* from resource */
 
 /* We actually can't write halfwords properly if not word aligned */
@@ -206,6 +216,8 @@ SMC_outw(u16 val, void __iomem *ioaddr, int reg)
 #define RPC_LSA_DEFAULT		RPC_LED_TX_RX
 #define RPC_LSB_DEFAULT		RPC_LED_100_10
 
+<<<<<<< HEAD
+=======
 #elif	defined(CONFIG_ARCH_VERSATILE)
 
 #define SMC_CAN_USE_8BIT	1
@@ -223,6 +235,7 @@ SMC_outw(u16 val, void __iomem *ioaddr, int reg)
 #define SMC_outsl(a, r, p, l)	writesl((a) + (r), p, l)
 #define SMC_IRQ_FLAGS		(-1)	/* from resource */
 
+>>>>>>> 671a46baf1b... some performance improvements
 #elif defined(CONFIG_MN10300)
 
 /*

@@ -230,9 +230,15 @@ static int wm831x_status_probe(struct platform_device *pdev)
 	int id = pdev->id % ARRAY_SIZE(chip_pdata->status);
 	int ret;
 
+<<<<<<< HEAD
+	res = platform_get_resource(pdev, IORESOURCE_REG, 0);
+	if (res == NULL) {
+		dev_err(&pdev->dev, "No register resource\n");
+=======
 	res = platform_get_resource(pdev, IORESOURCE_IO, 0);
 	if (res == NULL) {
 		dev_err(&pdev->dev, "No I/O resource\n");
+>>>>>>> 671a46baf1b... some performance improvements
 		ret = -EINVAL;
 		goto err;
 	}

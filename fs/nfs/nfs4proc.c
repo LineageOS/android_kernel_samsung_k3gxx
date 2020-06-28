@@ -1005,6 +1005,10 @@ static void __update_open_stateid(struct nfs4_state *state, nfs4_stateid *open_s
 	 * Protect the call to nfs4_state_set_mode_locked and
 	 * serialise the stateid update
 	 */
+<<<<<<< HEAD
+	spin_lock(&state->owner->so_lock);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	write_seqlock(&state->seqlock);
 	if (deleg_stateid != NULL) {
 		nfs4_stateid_copy(&state->stateid, deleg_stateid);
@@ -1013,7 +1017,10 @@ static void __update_open_stateid(struct nfs4_state *state, nfs4_stateid *open_s
 	if (open_stateid != NULL)
 		nfs_set_open_stateid_locked(state, open_stateid, fmode);
 	write_sequnlock(&state->seqlock);
+<<<<<<< HEAD
+=======
 	spin_lock(&state->owner->so_lock);
+>>>>>>> 671a46baf1b... some performance improvements
 	update_open_stateflags(state, fmode);
 	spin_unlock(&state->owner->so_lock);
 }
@@ -1160,6 +1167,16 @@ _nfs4_opendata_reclaim_to_nfs4_state(struct nfs4_opendata *data)
 	int ret;
 
 	if (!data->rpc_done) {
+<<<<<<< HEAD
+		if (data->rpc_status) {
+			ret = data->rpc_status;
+			goto err;
+		}
+		/* cached opens have already been processed */
+		goto update;
+	}
+
+=======
 		ret = data->rpc_status;
 		goto err;
 	}
@@ -1175,14 +1192,22 @@ _nfs4_opendata_reclaim_to_nfs4_state(struct nfs4_opendata *data)
 	if (state == NULL)
 		goto err;
 
+>>>>>>> 671a46baf1b... some performance improvements
 	ret = nfs_refresh_inode(inode, &data->f_attr);
 	if (ret)
 		goto err;
 
 	if (data->o_res.delegation_type != 0)
 		nfs4_opendata_check_deleg(data, state);
+<<<<<<< HEAD
+update:
 	update_open_stateid(state, &data->o_res.stateid, NULL,
 			    data->o_arg.fmode);
+	atomic_inc(&state->count);
+=======
+	update_open_stateid(state, &data->o_res.stateid, NULL,
+			    data->o_arg.fmode);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return state;
 err:
@@ -1421,7 +1446,11 @@ static int nfs4_handle_delegation_recall_error(struct nfs_server *server, struct
 			nfs_inode_find_state_and_recover(state->inode,
 					stateid);
 			nfs4_schedule_stateid_recovery(server, state);
+<<<<<<< HEAD
+			return -EAGAIN;
+=======
 			return 0;
+>>>>>>> 671a46baf1b... some performance improvements
 		case -NFS4ERR_DELAY:
 		case -NFS4ERR_GRACE:
 			set_bit(NFS_DELEGATED_STATE, &state->flags);
@@ -1850,6 +1879,31 @@ static int nfs4_open_expired(struct nfs4_state_owner *sp, struct nfs4_state *sta
 	return ret;
 }
 
+<<<<<<< HEAD
+static void nfs_finish_clear_delegation_stateid(struct nfs4_state *state)
+{
+	nfs_remove_bad_delegation(state->inode);
+	write_seqlock(&state->seqlock);
+	nfs4_stateid_copy(&state->stateid, &state->open_stateid);
+	write_sequnlock(&state->seqlock);
+	clear_bit(NFS_DELEGATED_STATE, &state->flags);
+}
+
+static void nfs40_clear_delegation_stateid(struct nfs4_state *state)
+{
+	if (rcu_access_pointer(NFS_I(state->inode)->delegation) != NULL)
+		nfs_finish_clear_delegation_stateid(state);
+}
+
+static int nfs40_open_expired(struct nfs4_state_owner *sp, struct nfs4_state *state)
+{
+	/* NFSv4.0 doesn't allow for delegation recovery on open expire */
+	nfs40_clear_delegation_stateid(state);
+	return nfs4_open_expired(sp, state);
+}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #if defined(CONFIG_NFS_V4_1)
 static void nfs41_clear_delegation_stateid(struct nfs4_state *state)
 {
@@ -2026,7 +2080,11 @@ static int _nfs4_do_open(struct inode *dir,
 	if (status != 0)
 		goto err_opendata_put;
 
+<<<<<<< HEAD
+	if ((opendata->o_arg.open_flags & (O_CREAT|O_EXCL)) == (O_CREAT|O_EXCL) &&
+=======
 	if ((opendata->o_arg.open_flags & O_EXCL) &&
+>>>>>>> 671a46baf1b... some performance improvements
 	    (opendata->o_arg.createmode != NFS4_CREATE_GUARDED)) {
 		nfs4_exclusive_attrset(opendata, sattr);
 
@@ -2292,6 +2350,10 @@ static void nfs4_close_prepare(struct rpc_task *task, void *data)
 	struct nfs4_closedata *calldata = data;
 	struct nfs4_state *state = calldata->state;
 	struct inode *inode = calldata->inode;
+<<<<<<< HEAD
+	bool is_rdonly, is_wronly, is_rdwr;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	int call_close = 0;
 
 	dprintk("%s: begin!\n", __func__);
@@ -2299,6 +2361,28 @@ static void nfs4_close_prepare(struct rpc_task *task, void *data)
 		goto out_wait;
 
 	task->tk_msg.rpc_proc = &nfs4_procedures[NFSPROC4_CLNT_OPEN_DOWNGRADE];
+<<<<<<< HEAD
+	spin_lock(&state->owner->so_lock);
+	is_rdwr = test_bit(NFS_O_RDWR_STATE, &state->flags);
+	is_rdonly = test_bit(NFS_O_RDONLY_STATE, &state->flags);
+	is_wronly = test_bit(NFS_O_WRONLY_STATE, &state->flags);
+	/* Calculate the change in open mode */
+	calldata->arg.fmode = 0;
+	if (state->n_rdwr == 0) {
+		if (state->n_rdonly == 0)
+			call_close |= is_rdonly;
+		else if (is_rdonly)
+			calldata->arg.fmode |= FMODE_READ;
+		if (state->n_wronly == 0)
+			call_close |= is_wronly;
+		else if (is_wronly)
+			calldata->arg.fmode |= FMODE_WRITE;
+		if (calldata->arg.fmode != (FMODE_READ|FMODE_WRITE))
+			call_close |= is_rdwr;
+	} else if (is_rdwr)
+		calldata->arg.fmode |= FMODE_READ|FMODE_WRITE;
+
+=======
 	calldata->arg.fmode = FMODE_READ|FMODE_WRITE;
 	spin_lock(&state->owner->so_lock);
 	/* Calculate the change in open mode */
@@ -2314,6 +2398,7 @@ static void nfs4_close_prepare(struct rpc_task *task, void *data)
 			calldata->arg.fmode &= ~FMODE_WRITE;
 		}
 	}
+>>>>>>> 671a46baf1b... some performance improvements
 	if (!nfs4_valid_open_stateid(state))
 		call_close = 0;
 	spin_unlock(&state->owner->so_lock);
@@ -3612,8 +3697,14 @@ static bool nfs4_stateid_is_current(nfs4_stateid *stateid,
 {
 	nfs4_stateid current_stateid;
 
+<<<<<<< HEAD
+	/* If the current stateid represents a lost lock, then exit */
+	if (nfs4_set_rw_stateid(&current_stateid, ctx, l_ctx, fmode) == -EIO)
+		return true;
+=======
 	if (nfs4_set_rw_stateid(&current_stateid, ctx, l_ctx, fmode))
 		return false;
+>>>>>>> 671a46baf1b... some performance improvements
 	return nfs4_stateid_match(stateid, &current_stateid);
 }
 
@@ -4023,7 +4114,11 @@ out:
  */
 static ssize_t __nfs4_get_acl_uncached(struct inode *inode, void *buf, size_t buflen)
 {
+<<<<<<< HEAD
+	struct page *pages[NFS4ACL_MAXPAGES + 1] = {NULL, };
+=======
 	struct page *pages[NFS4ACL_MAXPAGES] = {NULL, };
+>>>>>>> 671a46baf1b... some performance improvements
 	struct nfs_getaclargs args = {
 		.fh = NFS_FH(inode),
 		.acl_pages = pages,
@@ -4037,6 +4132,11 @@ static ssize_t __nfs4_get_acl_uncached(struct inode *inode, void *buf, size_t bu
 		.rpc_argp = &args,
 		.rpc_resp = &res,
 	};
+<<<<<<< HEAD
+	unsigned int npages = DIV_ROUND_UP(buflen, PAGE_SIZE) + 1;
+	int ret = -ENOMEM, i;
+
+=======
 	unsigned int npages = DIV_ROUND_UP(buflen, PAGE_SIZE);
 	int ret = -ENOMEM, i;
 
@@ -4044,6 +4144,7 @@ static ssize_t __nfs4_get_acl_uncached(struct inode *inode, void *buf, size_t bu
 	 * let's be prepared for a page of acl data. */
 	if (npages == 0)
 		npages = 1;
+>>>>>>> 671a46baf1b... some performance improvements
 	if (npages > ARRAY_SIZE(pages))
 		return -ERANGE;
 
@@ -4227,8 +4328,12 @@ nfs4_async_handle_error(struct rpc_task *task, const struct nfs_server *server, 
 			dprintk("%s ERROR %d, Reset session\n", __func__,
 				task->tk_status);
 			nfs4_schedule_session_recovery(clp->cl_session, task->tk_status);
+<<<<<<< HEAD
+			goto wait_on_recovery;
+=======
 			task->tk_status = 0;
 			return -EAGAIN;
+>>>>>>> 671a46baf1b... some performance improvements
 #endif /* CONFIG_NFS_V4_1 */
 		case -NFS4ERR_DELAY:
 			nfs_inc_server_stats(server, NFSIOS_DELAY);
@@ -4406,10 +4511,23 @@ static void nfs4_delegreturn_done(struct rpc_task *task, void *calldata)
 		return;
 
 	switch (task->tk_status) {
+<<<<<<< HEAD
+	case 0:
+		renew_lease(data->res.server, data->timestamp);
+		break;
+	case -NFS4ERR_ADMIN_REVOKED:
+	case -NFS4ERR_DELEG_REVOKED:
+	case -NFS4ERR_BAD_STATEID:
+	case -NFS4ERR_OLD_STATEID:
+	case -NFS4ERR_STALE_STATEID:
+	case -NFS4ERR_EXPIRED:
+		task->tk_status = 0;
+=======
 	case -NFS4ERR_STALE_STATEID:
 	case -NFS4ERR_EXPIRED:
 	case 0:
 		renew_lease(data->res.server, data->timestamp);
+>>>>>>> 671a46baf1b... some performance improvements
 		break;
 	default:
 		if (nfs4_async_handle_error(task, data->res.server, NULL) ==
@@ -4572,6 +4690,10 @@ static int _nfs4_proc_getlk(struct nfs4_state *state, int cmd, struct file_lock 
 			status = 0;
 	}
 	request->fl_ops->fl_release_private(request);
+<<<<<<< HEAD
+	request->fl_ops = NULL;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 out:
 	return status;
 }
@@ -6058,7 +6180,11 @@ static int nfs41_proc_async_sequence(struct nfs_client *clp, struct rpc_cred *cr
 	int ret = 0;
 
 	if ((renew_flags & NFS4_RENEW_TIMEOUT) == 0)
+<<<<<<< HEAD
+		return -EAGAIN;
+=======
 		return 0;
+>>>>>>> 671a46baf1b... some performance improvements
 	task = _nfs41_proc_sequence(clp, cred, false);
 	if (IS_ERR(task))
 		ret = PTR_ERR(task);
@@ -6231,9 +6357,15 @@ static void nfs4_layoutget_done(struct rpc_task *task, void *calldata)
 	struct nfs_server *server = NFS_SERVER(inode);
 	struct pnfs_layout_hdr *lo;
 	struct nfs4_state *state = NULL;
+<<<<<<< HEAD
+	unsigned long timeo, now, giveup;
+
+	dprintk("--> %s tk_status => %d\n", __func__, -task->tk_status);
+=======
 	unsigned long timeo, giveup;
 
 	dprintk("--> %s\n", __func__);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (!nfs41_sequence_done(task, &lgp->res.seq_res))
 		goto out;
@@ -6241,12 +6373,47 @@ static void nfs4_layoutget_done(struct rpc_task *task, void *calldata)
 	switch (task->tk_status) {
 	case 0:
 		goto out;
+<<<<<<< HEAD
+	/*
+	 * NFS4ERR_LAYOUTTRYLATER is a conflict with another client
+	 * (or clients) writing to the same RAID stripe
+	 */
+	case -NFS4ERR_LAYOUTTRYLATER:
+	/*
+	 * NFS4ERR_RECALLCONFLICT is when conflict with self (must recall
+	 * existing layout before getting a new one).
+	 */
+	case -NFS4ERR_RECALLCONFLICT:
+		timeo = rpc_get_timeout(task->tk_client);
+		giveup = lgp->args.timestamp + timeo;
+		now = jiffies;
+		if (time_after(giveup, now)) {
+			unsigned long delay;
+
+			/* Delay for:
+			 * - Not less then NFS4_POLL_RETRY_MIN.
+			 * - One last time a jiffie before we give up
+			 * - exponential backoff (time_now minus start_attempt)
+			 */
+			delay = max_t(unsigned long, NFS4_POLL_RETRY_MIN,
+				    min((giveup - now - 1),
+					now - lgp->args.timestamp));
+
+			dprintk("%s: NFS4ERR_RECALLCONFLICT waiting %lu\n",
+				__func__, delay);
+			rpc_delay(task, delay);
+			task->tk_status = 0;
+			rpc_restart_call_prepare(task);
+			goto out; /* Do not call nfs4_async_handle_error() */
+		}
+=======
 	case -NFS4ERR_LAYOUTTRYLATER:
 	case -NFS4ERR_RECALLCONFLICT:
 		timeo = rpc_get_timeout(task->tk_client);
 		giveup = lgp->args.timestamp + timeo;
 		if (time_after(giveup, jiffies))
 			task->tk_status = -NFS4ERR_DELAY;
+>>>>>>> 671a46baf1b... some performance improvements
 		break;
 	case -NFS4ERR_EXPIRED:
 	case -NFS4ERR_BAD_STATEID:
@@ -6361,6 +6528,12 @@ nfs4_proc_layoutget(struct nfs4_layoutget *lgp, gfp_t gfp_flags)
 
 	dprintk("--> %s\n", __func__);
 
+<<<<<<< HEAD
+	/* nfs4_layoutget_release calls pnfs_put_layout_hdr */
+	pnfs_get_layout_hdr(NFS_I(inode)->layout);
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	lgp->args.layout.pages = nfs4_alloc_pages(max_pages, gfp_flags);
 	if (!lgp->args.layout.pages) {
 		nfs4_layoutget_release(lgp);
@@ -6373,9 +6546,12 @@ nfs4_proc_layoutget(struct nfs4_layoutget *lgp, gfp_t gfp_flags)
 	lgp->res.seq_res.sr_slot = NULL;
 	nfs41_init_sequence(&lgp->args.seq_args, &lgp->res.seq_res, 0);
 
+<<<<<<< HEAD
+=======
 	/* nfs4_layoutget_release calls pnfs_put_layout_hdr */
 	pnfs_get_layout_hdr(NFS_I(inode)->layout);
 
+>>>>>>> 671a46baf1b... some performance improvements
 	task = rpc_run_task(&task_setup_data);
 	if (IS_ERR(task))
 		return ERR_CAST(task);
@@ -6682,7 +6858,11 @@ nfs41_proc_secinfo_no_name(struct nfs_server *server, struct nfs_fh *fhandle,
 		switch (err) {
 		case 0:
 		case -NFS4ERR_WRONGSEC:
+<<<<<<< HEAD
+		case -ENOTSUPP:
+=======
 		case -NFS4ERR_NOTSUPP:
+>>>>>>> 671a46baf1b... some performance improvements
 			goto out;
 		default:
 			err = nfs4_handle_exception(server, err, &exception);
@@ -6714,7 +6894,11 @@ nfs41_find_root_sec(struct nfs_server *server, struct nfs_fh *fhandle,
 	 * Fall back on "guess and check" method if
 	 * the server doesn't support SECINFO_NO_NAME
 	 */
+<<<<<<< HEAD
+	if (err == -NFS4ERR_WRONGSEC || err == -ENOTSUPP) {
+=======
 	if (err == -NFS4ERR_WRONGSEC || err == -NFS4ERR_NOTSUPP) {
+>>>>>>> 671a46baf1b... some performance improvements
 		err = nfs4_find_root_sec(server, fhandle, info);
 		goto out_freepage;
 	}
@@ -6939,7 +7123,11 @@ static const struct nfs4_state_recovery_ops nfs41_reboot_recovery_ops = {
 static const struct nfs4_state_recovery_ops nfs40_nograce_recovery_ops = {
 	.owner_flag_bit = NFS_OWNER_RECLAIM_NOGRACE,
 	.state_flag_bit	= NFS_STATE_RECLAIM_NOGRACE,
+<<<<<<< HEAD
+	.recover_open	= nfs40_open_expired,
+=======
 	.recover_open	= nfs4_open_expired,
+>>>>>>> 671a46baf1b... some performance improvements
 	.recover_lock	= nfs4_lock_expired,
 	.establish_clid = nfs4_init_clientid,
 	.get_clid_cred	= nfs4_get_setclientid_cred,

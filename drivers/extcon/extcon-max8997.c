@@ -714,7 +714,11 @@ static int max8997_muic_probe(struct platform_device *pdev)
 		goto err_irq;
 	}
 
+<<<<<<< HEAD
+	if (pdata && pdata->muic_pdata) {
+=======
 	if (pdata->muic_pdata) {
+>>>>>>> 671a46baf1b... some performance improvements
 		struct max8997_muic_platform_data *muic_pdata
 			= pdata->muic_pdata;
 

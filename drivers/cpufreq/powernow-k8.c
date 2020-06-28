@@ -1100,7 +1100,11 @@ static int __cpuinit powernowk8_cpu_init(struct cpufreq_policy *pol)
 {
 	struct powernow_k8_data *data;
 	struct init_on_cpu init_on_cpu;
+<<<<<<< HEAD
+	int rc, cpu;
+=======
 	int rc;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	smp_call_function_single(pol->cpu, check_supported_cpu, &rc, 1);
 	if (rc)
@@ -1169,7 +1173,13 @@ static int __cpuinit powernowk8_cpu_init(struct cpufreq_policy *pol)
 	pr_debug("cpu_init done, current fid 0x%x, vid 0x%x\n",
 		 data->currfid, data->currvid);
 
+<<<<<<< HEAD
+	/* Point all the CPUs in this policy to the same data */
+	for_each_cpu(cpu, pol->cpus)
+		per_cpu(powernow_data, cpu) = data;
+=======
 	per_cpu(powernow_data, pol->cpu) = data;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return 0;
 
@@ -1184,6 +1194,10 @@ err_out:
 static int powernowk8_cpu_exit(struct cpufreq_policy *pol)
 {
 	struct powernow_k8_data *data = per_cpu(powernow_data, pol->cpu);
+<<<<<<< HEAD
+	int cpu;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (!data)
 		return -EINVAL;
@@ -1194,7 +1208,12 @@ static int powernowk8_cpu_exit(struct cpufreq_policy *pol)
 
 	kfree(data->powernow_table);
 	kfree(data);
+<<<<<<< HEAD
+	for_each_cpu(cpu, pol->cpus)
+		per_cpu(powernow_data, cpu) = NULL;
+=======
 	per_cpu(powernow_data, pol->cpu) = NULL;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return 0;
 }

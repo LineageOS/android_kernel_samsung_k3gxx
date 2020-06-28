@@ -655,6 +655,17 @@ int ext4_es_insert_extent(struct inode *inode, ext4_lblk_t lblk,
 
 	BUG_ON(end < lblk);
 
+<<<<<<< HEAD
+	if ((status & EXTENT_STATUS_DELAYED) &&
+	    (status & EXTENT_STATUS_WRITTEN)) {
+		ext4_warning(inode->i_sb, "Inserting extent [%u/%u] as "
+				" delayed and written which can potentially "
+				" cause data loss.\n", lblk, len);
+		WARN_ON(1);
+	}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	newes.es_lblk = lblk;
 	newes.es_len = len;
 	ext4_es_store_pblock(&newes, pblk);

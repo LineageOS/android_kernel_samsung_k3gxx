@@ -1,2 +1,34 @@
 i386
+<<<<<<< HEAD
+=======
+alpha
+arc
+arm64
+avr32
+blackfin
+c6x
+cris
+frv
+h8300
+hexagon
+ia64
+m32r
+m68k
+metag
+microblaze
+mips
+mn10300
+openrisc
+parisc
+powerpc
+s390
+score
+sh
+sparc
+tile
+um
+unicore32
+x86
+xtensa
+>>>>>>> 671a46baf1b... some performance improvements
 x86_64

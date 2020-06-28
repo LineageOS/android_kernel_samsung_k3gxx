@@ -2,6 +2,33 @@
 # Makefile for building the SELinux module as part of the kernel tree.
 #
 
+<<<<<<< HEAD
+ifeq ($(CONFIG_SECURITY_SELINUX_DEFAULT_PERMISSIVE),y)
+EXTRA_CFLAGS += -DSELINUX_DEFAULT_PERMISSIVE=true
+endif
+
+ifeq ($(CONFIG_SECURITY_SELINUX_ALWAYS_PERMISSIVE),y)
+EXTRA_CFLAGS += -DSELINUX_ALWAYS_PERMISSIVE=true
+endif
+
+ifeq ($(CONFIG_SECURITY_SELINUX_DEFAULT_ENFORCE),y)
+EXTRA_CFLAGS += -DSELINUX_DEFAULT_ENFORCE=true
+endif
+
+ifeq ($(CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE),y)
+EXTRA_CFLAGS += -DSELINUX_ALWAYS_ENFORCE=true
+endif
+
+ifeq ($(CONFIG_SECURITY_SELINUX_PRETEND_ENFORCE),y)
+EXTRA_CFLAGS += -DSELINUX_PRETEND_ENFORCE=true
+=======
+ifeq ($(TARGET_BUILD_VARIANT), user)
+ifeq ($(SEC_BUILD_OPTION_PRODUCT_SHIP),true)
+EXTRA_CFLAGS += -DCONFIG_ALWAYS_ENFORCE=true
+endif
+>>>>>>> 671a46baf1b... some performance improvements
+endif
+
 obj-$(CONFIG_SECURITY_SELINUX) := selinux.o
 
 selinux-y := avc.o hooks.o selinuxfs.o netlink.o nlmsgtab.o netif.o \

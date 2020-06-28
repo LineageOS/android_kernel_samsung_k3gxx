@@ -1,5 +1,9 @@
 #undef TRACE_SYSTEM
 #define TRACE_SYSTEM raw_syscalls
+<<<<<<< HEAD
+#undef TRACE_INCLUDE_FILE
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #define TRACE_INCLUDE_FILE syscalls
 
 #if !defined(_TRACE_EVENTS_SYSCALLS_H) || defined(TRACE_HEADER_MULTI_READ)

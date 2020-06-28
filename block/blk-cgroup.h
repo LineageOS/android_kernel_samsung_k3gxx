@@ -399,9 +399,15 @@ static inline uint64_t blkg_stat_read(struct blkg_stat *stat)
 	uint64_t v;
 
 	do {
+<<<<<<< HEAD
+		start = u64_stats_fetch_begin_bh(&stat->syncp);
+		v = stat->cnt;
+	} while (u64_stats_fetch_retry_bh(&stat->syncp, start));
+=======
 		start = u64_stats_fetch_begin(&stat->syncp);
 		v = stat->cnt;
 	} while (u64_stats_fetch_retry(&stat->syncp, start));
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return v;
 }
@@ -467,9 +473,15 @@ static inline struct blkg_rwstat blkg_rwstat_read(struct blkg_rwstat *rwstat)
 	struct blkg_rwstat tmp;
 
 	do {
+<<<<<<< HEAD
+		start = u64_stats_fetch_begin_bh(&rwstat->syncp);
+		tmp = *rwstat;
+	} while (u64_stats_fetch_retry_bh(&rwstat->syncp, start));
+=======
 		start = u64_stats_fetch_begin(&rwstat->syncp);
 		tmp = *rwstat;
 	} while (u64_stats_fetch_retry(&rwstat->syncp, start));
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return tmp;
 }

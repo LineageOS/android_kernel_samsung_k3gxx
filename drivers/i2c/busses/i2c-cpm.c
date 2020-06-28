@@ -120,8 +120,13 @@ struct cpm_i2c {
 	cbd_t __iomem *rbase;
 	u_char *txbuf[CPM_MAXBD];
 	u_char *rxbuf[CPM_MAXBD];
+<<<<<<< HEAD
+	dma_addr_t txdma[CPM_MAXBD];
+	dma_addr_t rxdma[CPM_MAXBD];
+=======
 	u32 txdma[CPM_MAXBD];
 	u32 rxdma[CPM_MAXBD];
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 static irqreturn_t cpm_i2c_interrupt(int irq, void *dev_id)

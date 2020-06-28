@@ -66,6 +66,11 @@ struct xenvif {
 	/* The shared rings and indexes. */
 	struct xen_netif_tx_back_ring tx;
 	struct xen_netif_rx_back_ring rx;
+<<<<<<< HEAD
+	atomic_t ring_refcnt;
+	wait_queue_head_t waiting_to_unmap;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* Frontend feature information. */
 	u8 can_sg:1;
@@ -88,6 +93,10 @@ struct xenvif {
 	unsigned long   credit_usec;
 	unsigned long   remaining_credit;
 	struct timer_list credit_timeout;
+<<<<<<< HEAD
+	u64 credit_window_start;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* Statistics */
 	unsigned long rx_gso_checksum_fixup;
@@ -115,9 +124,18 @@ struct xenvif *xenvif_alloc(struct device *parent,
 int xenvif_connect(struct xenvif *vif, unsigned long tx_ring_ref,
 		   unsigned long rx_ring_ref, unsigned int evtchn);
 void xenvif_disconnect(struct xenvif *vif);
+<<<<<<< HEAD
+void xenvif_free(struct xenvif *vif);
 
 void xenvif_get(struct xenvif *vif);
 void xenvif_put(struct xenvif *vif);
+void xenvif_get_rings(struct xenvif *vif);
+void xenvif_put_rings(struct xenvif *vif);
+=======
+
+void xenvif_get(struct xenvif *vif);
+void xenvif_put(struct xenvif *vif);
+>>>>>>> 671a46baf1b... some performance improvements
 
 int xenvif_xenbus_init(void);
 

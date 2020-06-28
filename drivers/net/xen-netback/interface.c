@@ -44,12 +44,29 @@ void xenvif_get(struct xenvif *vif)
 	atomic_inc(&vif->refcnt);
 }
 
+<<<<<<< HEAD
+void xenvif_get_rings(struct xenvif *vif)
+{
+	atomic_inc(&vif->ring_refcnt);
+}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 void xenvif_put(struct xenvif *vif)
 {
 	if (atomic_dec_and_test(&vif->refcnt))
 		wake_up(&vif->waiting_to_free);
 }
 
+<<<<<<< HEAD
+void xenvif_put_rings(struct xenvif *vif)
+{
+	if (atomic_dec_and_test(&vif->ring_refcnt))
+		wake_up(&vif->waiting_to_unmap);
+}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 int xenvif_schedulable(struct xenvif *vif)
 {
 	return netif_running(vif->dev) && netif_carrier_ok(vif->dev);
@@ -91,6 +108,10 @@ static int xenvif_start_xmit(struct sk_buff *skb, struct net_device *dev)
 	/* Reserve ring slots for the worst-case number of fragments. */
 	vif->rx_req_cons_peek += xen_netbk_count_skb_slots(vif, skb);
 	xenvif_get(vif);
+<<<<<<< HEAD
+	xenvif_get_rings(vif);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (vif->can_queue && xen_netbk_must_stop_queue(vif))
 		netif_stop_queue(dev);
@@ -271,12 +292,20 @@ struct xenvif *xenvif_alloc(struct device *parent, domid_t domid,
 	vif->dev = dev;
 	INIT_LIST_HEAD(&vif->schedule_list);
 	INIT_LIST_HEAD(&vif->notify_list);
+<<<<<<< HEAD
+	init_waitqueue_head(&vif->waiting_to_unmap);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	vif->credit_bytes = vif->remaining_credit = ~0UL;
 	vif->credit_usec  = 0UL;
 	init_timer(&vif->credit_timeout);
+<<<<<<< HEAD
+	vif->credit_window_start = get_jiffies_64();
+=======
 	/* Initialize 'expires' now: it's used to track the credit window. */
 	vif->credit_timeout.expires = jiffies;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	dev->netdev_ops	= &xenvif_netdev_ops;
 	dev->hw_features = NETIF_F_SG | NETIF_F_IP_CSUM | NETIF_F_TSO;
@@ -304,6 +333,12 @@ struct xenvif *xenvif_alloc(struct device *parent, domid_t domid,
 	}
 
 	netdev_dbg(dev, "Successfully created xenvif\n");
+<<<<<<< HEAD
+
+	__module_get(THIS_MODULE);
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return vif;
 }
 
@@ -363,6 +398,26 @@ void xenvif_disconnect(struct xenvif *vif)
 	if (netif_carrier_ok(vif->dev))
 		xenvif_carrier_off(vif);
 
+<<<<<<< HEAD
+	disable_irq(vif->irq);
+	xen_netbk_unmap_frontend_rings(vif);
+	if (vif->irq) {
+		unbind_from_irqhandler(vif->irq, vif);
+		vif->irq = 0;
+	}
+}
+
+void xenvif_free(struct xenvif *vif)
+{
+	atomic_dec(&vif->refcnt);
+	wait_event(vif->waiting_to_free, atomic_read(&vif->refcnt) == 0);
+
+	unregister_netdev(vif->dev);
+
+	free_netdev(vif->dev);
+
+	module_put(THIS_MODULE);
+=======
 	atomic_dec(&vif->refcnt);
 	wait_event(vif->waiting_to_free, atomic_read(&vif->refcnt) == 0);
 
@@ -374,4 +429,5 @@ void xenvif_disconnect(struct xenvif *vif)
 	xen_netbk_unmap_frontend_rings(vif);
 
 	free_netdev(vif->dev);
+>>>>>>> 671a46baf1b... some performance improvements
 }

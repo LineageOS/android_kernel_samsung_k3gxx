@@ -45,6 +45,11 @@ Optional properties:
 
   - wlf,reset : GPIO specifier for the GPIO controlling /RESET
   - wlf,ldoena : GPIO specifier for the GPIO controlling LDOENA
+<<<<<<< HEAD
+  - wlf,clk32k-src : set input source for codec 32kHz clock.
+      0 = default, 1 = MCLK1, 2 = MCLK2, 3 = None
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
   - wlf,micd-software-compare : Use a software comparison to determine mic
     presence
@@ -115,6 +120,12 @@ Optional properties:
   - wlf,inmode : Input mode for each input, must contain four cells if
     specified. 0 indicates Differential, 1 indicates Single Ended and 2
     indicates a digital microphone.
+<<<<<<< HEAD
+    For most codecs the entries map to <IN1, IN2, IN3, IN4>
+    wm8998: entries are for <IN1A, IN2A, IN1B, IN2B>
+    cs47l85, wm8285: entries are for <IN1L, IN1R, IN2L, IN2R, IN3L, IN3R>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
   - wlf,out-mono : Mono bit for each output, must contain six cells if
     specified. A non-zero value indicates the corresponding output is mono.

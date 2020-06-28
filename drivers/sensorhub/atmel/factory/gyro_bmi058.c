@@ -13,7 +13,11 @@
  *
  */
 #include <linux/kernel.h>
+<<<<<<< HEAD
 #include "ssp.h"
+=======
+#include "../ssp.h"
+>>>>>>> 671a46baf1b... some performance improvements
 
 /*************************************************************************/
 /* factory Sysfs                                                         */

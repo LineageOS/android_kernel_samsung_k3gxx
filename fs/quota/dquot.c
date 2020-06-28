@@ -581,9 +581,23 @@ int dquot_scan_active(struct super_block *sb,
 		dqstats_inc(DQST_LOOKUPS);
 		dqput(old_dquot);
 		old_dquot = dquot;
+<<<<<<< HEAD
+		/*
+		 * ->release_dquot() can be racing with us. Our reference
+		 * protects us from new calls to it so just wait for any
+		 * outstanding call and recheck the DQ_ACTIVE_B after that.
+		 */
+		wait_on_dquot(dquot);
+		if (test_bit(DQ_ACTIVE_B, &dquot->dq_flags)) {
+			ret = fn(dquot, priv);
+			if (ret < 0)
+				goto out;
+		}
+=======
 		ret = fn(dquot, priv);
 		if (ret < 0)
 			goto out;
+>>>>>>> 671a46baf1b... some performance improvements
 		spin_lock(&dq_list_lock);
 		/* We are safe to continue now because our dquot could not
 		 * be moved out of the inuse list while we hold the reference */
@@ -629,7 +643,11 @@ int dquot_writeback_dquots(struct super_block *sb, int type)
 			dqstats_inc(DQST_LOOKUPS);
 			err = sb->dq_op->write_dquot(dquot);
 			if (!ret && err)
+<<<<<<< HEAD
+				ret = err;
+=======
 				err = ret;
+>>>>>>> 671a46baf1b... some performance improvements
 			dqput(dquot);
 			spin_lock(&dq_list_lock);
 		}
@@ -1094,6 +1112,17 @@ static void dquot_claim_reserved_space(struct dquot *dquot, qsize_t number)
 	dquot->dq_dqb.dqb_rsvspace -= number;
 }
 
+<<<<<<< HEAD
+static void dquot_reclaim_reserved_space(struct dquot *dquot, qsize_t number)
+{
+	if (WARN_ON_ONCE(dquot->dq_dqb.dqb_curspace < number))
+		number = dquot->dq_dqb.dqb_curspace;
+	dquot->dq_dqb.dqb_rsvspace += number;
+	dquot->dq_dqb.dqb_curspace -= number;
+}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static inline
 void dquot_free_reserved_space(struct dquot *dquot, qsize_t number)
 {
@@ -1528,6 +1557,18 @@ void inode_claim_rsv_space(struct inode *inode, qsize_t number)
 }
 EXPORT_SYMBOL(inode_claim_rsv_space);
 
+<<<<<<< HEAD
+void inode_reclaim_rsv_space(struct inode *inode, qsize_t number)
+{
+	spin_lock(&inode->i_lock);
+	*inode_reserved_space(inode) += number;
+	__inode_sub_bytes(inode, number);
+	spin_unlock(&inode->i_lock);
+}
+EXPORT_SYMBOL(inode_reclaim_rsv_space);
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 void inode_sub_rsv_space(struct inode *inode, qsize_t number)
 {
 	spin_lock(&inode->i_lock);
@@ -1702,6 +1743,38 @@ int dquot_claim_space_nodirty(struct inode *inode, qsize_t number)
 EXPORT_SYMBOL(dquot_claim_space_nodirty);
 
 /*
+<<<<<<< HEAD
+ * Convert allocated space back to in-memory reserved quotas
+ */
+void dquot_reclaim_space_nodirty(struct inode *inode, qsize_t number)
+{
+	int cnt;
+
+	if (!dquot_active(inode)) {
+		inode_reclaim_rsv_space(inode, number);
+		return;
+	}
+
+	down_read(&sb_dqopt(inode->i_sb)->dqptr_sem);
+	spin_lock(&dq_data_lock);
+	/* Claim reserved quotas to allocated quotas */
+	for (cnt = 0; cnt < MAXQUOTAS; cnt++) {
+		if (inode->i_dquot[cnt])
+			dquot_reclaim_reserved_space(inode->i_dquot[cnt],
+						     number);
+	}
+	/* Update inode bytes */
+	inode_reclaim_rsv_space(inode, number);
+	spin_unlock(&dq_data_lock);
+	mark_all_dquot_dirty(inode->i_dquot);
+	up_read(&sb_dqopt(inode->i_sb)->dqptr_sem);
+	return;
+}
+EXPORT_SYMBOL(dquot_reclaim_space_nodirty);
+
+/*
+=======
+>>>>>>> 671a46baf1b... some performance improvements
  * This operation can block, but only after everything is updated
  */
 void __dquot_free_space(struct inode *inode, qsize_t number, int flags)

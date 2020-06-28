@@ -1,7 +1,11 @@
 
 #include <linux/i2c.h>
 #include <linux/sii8240.h>
+<<<<<<< HEAD
 #include "../../edid.h"
+=======
+#include "../../video/edid.h"
+>>>>>>> 671a46baf1b... some performance improvements
 
 struct sii8240_platform_data *platform_init_data(struct i2c_client *client);
 /*

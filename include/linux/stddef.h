@@ -3,7 +3,10 @@
 
 #include <uapi/linux/stddef.h>
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 671a46baf1b... some performance improvements
 #undef NULL
 #define NULL ((void *)0)
 
@@ -14,8 +17,25 @@ enum {
 
 #undef offsetof
 #ifdef __compiler_offsetof
+<<<<<<< HEAD
+#define offsetof(TYPE, MEMBER)	__compiler_offsetof(TYPE, MEMBER)
+#else
+#define offsetof(TYPE, MEMBER)	((size_t)&((TYPE *)0)->MEMBER)
+#endif
+
+/**
+ * offsetofend(TYPE, MEMBER)
+ *
+ * @TYPE: The type of the structure
+ * @MEMBER: The member within the structure to get the end offset of
+ */
+#define offsetofend(TYPE, MEMBER) \
+	(offsetof(TYPE, MEMBER)	+ sizeof(((TYPE *)0)->MEMBER))
+
+=======
 #define offsetof(TYPE,MEMBER) __compiler_offsetof(TYPE,MEMBER)
 #else
 #define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)
 #endif
+>>>>>>> 671a46baf1b... some performance improvements
 #endif

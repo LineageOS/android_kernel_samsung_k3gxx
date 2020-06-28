@@ -2515,6 +2515,11 @@ static int process_ipsec(struct pktgen_dev *pkt_dev,
 		if (x) {
 			int ret;
 			__u8 *eth;
+<<<<<<< HEAD
+			struct iphdr *iph;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			nhead = x->props.header_len - skb_headroom(skb);
 			if (nhead > 0) {
 				ret = pskb_expand_head(skb, nhead, 0, GFP_ATOMIC);
@@ -2536,6 +2541,14 @@ static int process_ipsec(struct pktgen_dev *pkt_dev,
 			eth = (__u8 *) skb_push(skb, ETH_HLEN);
 			memcpy(eth, pkt_dev->hh, 12);
 			*(u16 *) &eth[12] = protocol;
+<<<<<<< HEAD
+
+			/* Update IPv4 header len as well as checksum value */
+			iph = ip_hdr(skb);
+			iph->tot_len = htons(skb->len - ETH_HLEN);
+			ip_send_check(iph);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		}
 	}
 	return 1;
@@ -3370,8 +3383,15 @@ static int pktgen_thread_worker(void *arg)
 	pktgen_rem_thread(t);
 
 	/* Wait for kthread_stop */
+<<<<<<< HEAD
+	for (;;) {
+		set_current_state(TASK_INTERRUPTIBLE);
+		if (kthread_should_stop())
+			break;
+=======
 	while (!kthread_should_stop()) {
 		set_current_state(TASK_INTERRUPTIBLE);
+>>>>>>> 671a46baf1b... some performance improvements
 		schedule();
 	}
 	__set_current_state(TASK_RUNNING);

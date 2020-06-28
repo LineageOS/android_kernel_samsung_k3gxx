@@ -850,7 +850,12 @@ void disassociate_ctty(int on_exit)
 			struct pid *tty_pgrp = tty_get_pgrp(tty);
 			if (tty_pgrp) {
 				kill_pgrp(tty_pgrp, SIGHUP, on_exit);
+<<<<<<< HEAD
+				if (!on_exit)
+					kill_pgrp(tty_pgrp, SIGCONT, on_exit);
+=======
 				kill_pgrp(tty_pgrp, SIGCONT, on_exit);
+>>>>>>> 671a46baf1b... some performance improvements
 				put_pid(tty_pgrp);
 			}
 		}
@@ -991,8 +996,13 @@ EXPORT_SYMBOL(start_tty);
 /* We limit tty time update visibility to every 8 seconds or so. */
 static void tty_update_time(struct timespec *time)
 {
+<<<<<<< HEAD
+	unsigned long sec = get_seconds();
+	if (abs(sec - time->tv_sec) & ~7)
+=======
 	unsigned long sec = get_seconds() & ~7;
 	if ((long)(sec - time->tv_sec) > 0)
+>>>>>>> 671a46baf1b... some performance improvements
 		time->tv_sec = sec;
 }
 
@@ -1266,12 +1276,22 @@ static void pty_line_name(struct tty_driver *driver, int index, char *p)
  *
  *	Locking: None
  */
+<<<<<<< HEAD
+static ssize_t tty_line_name(struct tty_driver *driver, int index, char *p)
+{
+	if (driver->flags & TTY_DRIVER_UNNUMBERED_NODE)
+		return sprintf(p, "%s", driver->name);
+	else
+		return sprintf(p, "%s%d", driver->name,
+			       index + driver->name_base);
+=======
 static void tty_line_name(struct tty_driver *driver, int index, char *p)
 {
 	if (driver->flags & TTY_DRIVER_UNNUMBERED_NODE)
 		strcpy(p, driver->name);
 	else
 		sprintf(p, "%s%d", driver->name, index + driver->name_base);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /**
@@ -1696,6 +1716,10 @@ int tty_release(struct inode *inode, struct file *filp)
 	int	pty_master, tty_closing, o_tty_closing, do_sleep;
 	int	idx;
 	char	buf[64];
+<<<<<<< HEAD
+	long	timeout = 0;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	if (tty_paranoia_check(tty, inode, __func__))
 		return 0;
@@ -1780,7 +1804,15 @@ int tty_release(struct inode *inode, struct file *filp)
 				__func__, tty_name(tty, buf));
 		tty_unlock_pair(tty, o_tty);
 		mutex_unlock(&tty_mutex);
+<<<<<<< HEAD
+		schedule_timeout_killable(timeout);
+		if (timeout < 120 * HZ)
+			timeout = 2 * timeout + 1;
+		else
+			timeout = MAX_SCHEDULE_TIMEOUT;
+=======
 		schedule();
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	/*
@@ -3559,9 +3591,25 @@ static ssize_t show_cons_active(struct device *dev,
 		if (i >= ARRAY_SIZE(cs))
 			break;
 	}
+<<<<<<< HEAD
+	while (i--) {
+		int index = cs[i]->index;
+		struct tty_driver *drv = cs[i]->device(cs[i], &index);
+
+		/* don't resolve tty0 as some programs depend on it */
+		if (drv && (cs[i]->index > 0 || drv->major != TTY_MAJOR))
+			count += tty_line_name(drv, index, buf + count);
+		else
+			count += sprintf(buf + count, "%s%d",
+					 cs[i]->name, cs[i]->index);
+
+		count += sprintf(buf + count, "%c", i ? ' ':'\n');
+	}
+=======
 	while (i--)
 		count += sprintf(buf + count, "%s%d%c",
 				 cs[i]->name, cs[i]->index, i ? ' ':'\n');
+>>>>>>> 671a46baf1b... some performance improvements
 	console_unlock();
 
 	return count;

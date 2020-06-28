@@ -104,7 +104,15 @@ iommu_coalesce_chunks(struct ioc *ioc, struct device *dev,
 	struct scatterlist *contig_sg;	   /* contig chunk head */
 	unsigned long dma_offset, dma_len; /* start/len of DMA stream */
 	unsigned int n_mappings = 0;
+<<<<<<< HEAD
+	unsigned int max_seg_size = min(dma_get_max_seg_size(dev),
+					(unsigned)DMA_CHUNK_SIZE);
+	unsigned int max_seg_boundary = dma_get_seg_boundary(dev) + 1;
+	if (max_seg_boundary)	/* check if the addition above didn't overflow */
+		max_seg_size = min(max_seg_size, max_seg_boundary);
+=======
 	unsigned int max_seg_size = dma_get_max_seg_size(dev);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	while (nents > 0) {
 
@@ -139,6 +147,13 @@ iommu_coalesce_chunks(struct ioc *ioc, struct device *dev,
 
 			/*
 			** First make sure current dma stream won't
+<<<<<<< HEAD
+			** exceed max_seg_size if we coalesce the
+			** next entry.
+			*/   
+			if (unlikely(ALIGN(dma_len + dma_offset + startsg->length, IOVP_SIZE) >
+				     max_seg_size))
+=======
 			** exceed DMA_CHUNK_SIZE if we coalesce the
 			** next entry.
 			*/   
@@ -147,6 +162,7 @@ iommu_coalesce_chunks(struct ioc *ioc, struct device *dev,
 				break;
 
 			if (startsg->length + dma_len > max_seg_size)
+>>>>>>> 671a46baf1b... some performance improvements
 				break;
 
 			/*

@@ -343,6 +343,10 @@ struct gsc_dev {
 	unsigned long			state;
 	struct vb2_alloc_ctx		*alloc_ctx;
 	struct video_device		vdev;
+<<<<<<< HEAD
+	struct v4l2_device		v4l2_dev;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 };
 
 /**

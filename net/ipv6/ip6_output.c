@@ -130,7 +130,11 @@ static int ip6_finish_output2(struct sk_buff *skb)
 	}
 
 	rcu_read_lock_bh();
+<<<<<<< HEAD
+	nexthop = rt6_nexthop((struct rt6_info *)dst);
+=======
 	nexthop = rt6_nexthop((struct rt6_info *)dst, &ipv6_hdr(skb)->daddr);
+>>>>>>> 671a46baf1b... some performance improvements
 	neigh = __ipv6_neigh_lookup_noref(dst->dev, nexthop);
 	if (unlikely(!neigh))
 		neigh = __neigh_create(&nd_tbl, nexthop, dst->dev, false);
@@ -141,8 +145,13 @@ static int ip6_finish_output2(struct sk_buff *skb)
 	}
 	rcu_read_unlock_bh();
 
+<<<<<<< HEAD
+	IP6_INC_STATS(dev_net(dst->dev),
+		      ip6_dst_idev(dst), IPSTATS_MIB_OUTNOROUTES);
+=======
 	IP6_INC_STATS_BH(dev_net(dst->dev),
 			 ip6_dst_idev(dst), IPSTATS_MIB_OUTNOROUTES);
+>>>>>>> 671a46baf1b... some performance improvements
 	kfree_skb(skb);
 	return -EINVAL;
 }
@@ -150,7 +159,12 @@ static int ip6_finish_output2(struct sk_buff *skb)
 static int ip6_finish_output(struct sk_buff *skb)
 {
 	if ((skb->len > ip6_skb_dst_mtu(skb) && !skb_is_gso(skb)) ||
+<<<<<<< HEAD
+	    dst_allfrag(skb_dst(skb)) ||
+	    (IP6CB(skb)->frag_max_size && skb->len > IP6CB(skb)->frag_max_size))
+=======
 	    dst_allfrag(skb_dst(skb)))
+>>>>>>> 671a46baf1b... some performance improvements
 		return ip6_fragment(skb, ip6_finish_output2);
 	else
 		return ip6_finish_output2(skb);
@@ -344,6 +358,27 @@ static inline int ip6_forward_finish(struct sk_buff *skb)
 	return dst_output(skb);
 }
 
+<<<<<<< HEAD
+static bool ip6_pkt_too_big(const struct sk_buff *skb, unsigned int mtu)
+{
+	if (skb->len <= mtu)
+		return false;
+
+	/* ipv6 conntrack defrag sets max_frag_size + local_df */
+	if (IP6CB(skb)->frag_max_size && IP6CB(skb)->frag_max_size > mtu)
+		return true;
+
+	if (skb->local_df)
+		return false;
+
+	if (skb_is_gso(skb) && skb_gso_network_seglen(skb) <= mtu)
+		return false;
+
+	return true;
+}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 int ip6_forward(struct sk_buff *skb)
 {
 	struct dst_entry *dst = skb_dst(skb);
@@ -466,8 +501,12 @@ int ip6_forward(struct sk_buff *skb)
 	if (mtu < IPV6_MIN_MTU)
 		mtu = IPV6_MIN_MTU;
 
+<<<<<<< HEAD
+	if (ip6_pkt_too_big(skb, mtu)) {
+=======
 	if ((!skb->local_df && skb->len > mtu && !skb_is_gso(skb)) ||
 	    (IP6CB(skb)->frag_max_size && IP6CB(skb)->frag_max_size > mtu)) {
+>>>>>>> 671a46baf1b... some performance improvements
 		/* Again, force OUTPUT device used as source address */
 		skb->dev = dst->dev;
 		icmpv6_send(skb, ICMPV6_PKT_TOOBIG, 0, mtu);
@@ -522,6 +561,26 @@ static void ip6_copy_metadata(struct sk_buff *to, struct sk_buff *from)
 	skb_copy_secmark(to, from);
 }
 
+<<<<<<< HEAD
+static void ipv6_select_ident(struct frag_hdr *fhdr, struct rt6_info *rt)
+{
+	static u32 ip6_idents_hashrnd __read_mostly;
+	static bool hashrnd_initialized = false;
+	u32 hash, id;
+
+	if (unlikely(!hashrnd_initialized)) {
+		hashrnd_initialized = true;
+		get_random_bytes(&ip6_idents_hashrnd, sizeof(ip6_idents_hashrnd));
+	}
+	hash = __ipv6_addr_jhash(&rt->rt6i_dst.addr, ip6_idents_hashrnd);
+	hash = __ipv6_addr_jhash(&rt->rt6i_src.addr, hash);
+
+	id = ip_idents_reserve(hash, 1);
+	fhdr->identification = htonl(id);
+}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 int ip6_fragment(struct sk_buff *skb, int (*output)(struct sk_buff *))
 {
 	struct sk_buff *frag;
@@ -705,7 +764,10 @@ slow_path:
 	 *	Fragment the datagram.
 	 */
 
+<<<<<<< HEAD
+=======
 	*prevhdr = NEXTHDR_FRAGMENT;
+>>>>>>> 671a46baf1b... some performance improvements
 	hroom = LL_RESERVED_SPACE(rt->dst.dev);
 	troom = rt->dst.dev->needed_tailroom;
 
@@ -713,6 +775,11 @@ slow_path:
 	 *	Keep copying data until we run out.
 	 */
 	while(left > 0)	{
+<<<<<<< HEAD
+		u8 *fragnexthdr_offset;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		len = left;
 		/* IF: it doesn't fit, use 'mtu' - the data space left */
 		if (len > mtu)
@@ -759,6 +826,13 @@ slow_path:
 		 */
 		skb_copy_from_linear_data(skb, skb_network_header(frag), hlen);
 
+<<<<<<< HEAD
+		fragnexthdr_offset = skb_network_header(frag);
+		fragnexthdr_offset += prevhdr - skb_network_header(skb);
+		*fragnexthdr_offset = NEXTHDR_FRAGMENT;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		/*
 		 *	Build fragment header.
 		 */
@@ -898,7 +972,11 @@ static int ip6_dst_lookup_tail(struct sock *sk,
 	 */
 	rt = (struct rt6_info *) *dst;
 	rcu_read_lock_bh();
+<<<<<<< HEAD
+	n = __ipv6_neigh_lookup_noref(rt->dst.dev, rt6_nexthop(rt));
+=======
 	n = __ipv6_neigh_lookup_noref(rt->dst.dev, rt6_nexthop(rt, &fl6->daddr));
+>>>>>>> 671a46baf1b... some performance improvements
 	err = n && !(n->nud_state & NUD_VALID) ? -EINVAL : 0;
 	rcu_read_unlock_bh();
 
@@ -1039,6 +1117,11 @@ static inline int ip6_ufo_append_data(struct sock *sk,
 	 * udp datagram
 	 */
 	if ((skb = skb_peek_tail(&sk->sk_write_queue)) == NULL) {
+<<<<<<< HEAD
+		struct frag_hdr fhdr;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		skb = sock_alloc_send_skb(sk,
 			hh_len + fragheaderlen + transhdrlen + 20,
 			(flags & MSG_DONTWAIT), &err);
@@ -1059,12 +1142,15 @@ static inline int ip6_ufo_append_data(struct sock *sk,
 
 		skb->ip_summed = CHECKSUM_PARTIAL;
 		skb->csum = 0;
+<<<<<<< HEAD
+=======
 	}
 
 	err = skb_append_datato_frags(sk,skb, getfrag, from,
 				      (length - transhdrlen));
 	if (!err) {
 		struct frag_hdr fhdr;
+>>>>>>> 671a46baf1b... some performance improvements
 
 		/* Specify the length of each IPv6 datagram fragment.
 		 * It has to be a multiple of 8.
@@ -1075,6 +1161,12 @@ static inline int ip6_ufo_append_data(struct sock *sk,
 		ipv6_select_ident(&fhdr, rt);
 		skb_shinfo(skb)->ip6_frag_id = fhdr.identification;
 		__skb_queue_tail(&sk->sk_write_queue, skb);
+<<<<<<< HEAD
+	}
+
+	return skb_append_datato_frags(sk, skb, getfrag, from,
+				       (length - transhdrlen));
+=======
 
 		return 0;
 	}
@@ -1084,6 +1176,7 @@ static inline int ip6_ufo_append_data(struct sock *sk,
 	kfree_skb(skb);
 
 	return err;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static inline struct ipv6_opt_hdr *ip6_opt_dup(struct ipv6_opt_hdr *src,
@@ -1103,21 +1196,33 @@ static void ip6_append_data_mtu(unsigned int *mtu,
 				unsigned int fragheaderlen,
 				struct sk_buff *skb,
 				struct rt6_info *rt,
+<<<<<<< HEAD
+				unsigned int orig_mtu)
+=======
 				bool pmtuprobe)
+>>>>>>> 671a46baf1b... some performance improvements
 {
 	if (!(rt->dst.flags & DST_XFRM_TUNNEL)) {
 		if (skb == NULL) {
 			/* first fragment, reserve header_len */
+<<<<<<< HEAD
+			*mtu = orig_mtu - rt->dst.header_len;
+=======
 			*mtu = *mtu - rt->dst.header_len;
+>>>>>>> 671a46baf1b... some performance improvements
 
 		} else {
 			/*
 			 * this fragment is not first, the headers
 			 * space is regarded as data space.
 			 */
+<<<<<<< HEAD
+			*mtu = orig_mtu;
+=======
 			*mtu = min(*mtu, pmtuprobe ?
 				   rt->dst.dev->mtu :
 				   dst_mtu(rt->dst.path));
+>>>>>>> 671a46baf1b... some performance improvements
 		}
 		*maxfraglen = ((*mtu - fragheaderlen) & ~7)
 			      + fragheaderlen - sizeof(struct frag_hdr);
@@ -1134,7 +1239,11 @@ int ip6_append_data(struct sock *sk, int getfrag(void *from, char *to,
 	struct ipv6_pinfo *np = inet6_sk(sk);
 	struct inet_cork *cork;
 	struct sk_buff *skb, *skb_prev = NULL;
+<<<<<<< HEAD
+	unsigned int maxfraglen, fragheaderlen, mtu, orig_mtu;
+=======
 	unsigned int maxfraglen, fragheaderlen, mtu;
+>>>>>>> 671a46baf1b... some performance improvements
 	int exthdrlen;
 	int dst_exthdrlen;
 	int hh_len;
@@ -1216,6 +1325,10 @@ int ip6_append_data(struct sock *sk, int getfrag(void *from, char *to,
 		dst_exthdrlen = 0;
 		mtu = cork->fragsize;
 	}
+<<<<<<< HEAD
+	orig_mtu = mtu;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	hh_len = LL_RESERVED_SPACE(rt->dst.dev);
 
@@ -1250,6 +1363,31 @@ int ip6_append_data(struct sock *sk, int getfrag(void *from, char *to,
 	 * --yoshfuji
 	 */
 
+<<<<<<< HEAD
+	if ((length > mtu) && dontfrag && (sk->sk_protocol == IPPROTO_UDP ||
+					   sk->sk_protocol == IPPROTO_RAW)) {
+		ipv6_local_rxpmtu(sk, fl6, mtu-exthdrlen);
+		return -EMSGSIZE;
+	}
+
+	skb = skb_peek_tail(&sk->sk_write_queue);
+	cork->length += length;
+	if ((skb && skb_has_frags(skb)) ||
+	    (((length + fragheaderlen) > mtu) &&
+	    (skb_queue_len(&sk->sk_write_queue) <= 1) &&
+	    (sk->sk_protocol == IPPROTO_UDP) &&
+	    (rt->dst.dev->features & NETIF_F_UFO) &&
+	    (sk->sk_type == SOCK_DGRAM))) {
+		err = ip6_ufo_append_data(sk, getfrag, from, length,
+					  hh_len, fragheaderlen,
+					  transhdrlen, mtu, flags, rt);
+		if (err)
+			goto error;
+		return 0;
+	}
+
+	if (!skb)
+=======
 	cork->length += length;
 	if (length > mtu) {
 		int proto = sk->sk_protocol;
@@ -1271,6 +1409,7 @@ int ip6_append_data(struct sock *sk, int getfrag(void *from, char *to,
 	}
 
 	if ((skb = skb_peek_tail(&sk->sk_write_queue)) == NULL)
+>>>>>>> 671a46baf1b... some performance improvements
 		goto alloc_new_skb;
 
 	while (length > 0) {
@@ -1295,8 +1434,12 @@ alloc_new_skb:
 			if (skb == NULL || skb_prev == NULL)
 				ip6_append_data_mtu(&mtu, &maxfraglen,
 						    fragheaderlen, skb, rt,
+<<<<<<< HEAD
+						    orig_mtu);
+=======
 						    np->pmtudisc ==
 						    IPV6_PMTUDISC_PROBE);
+>>>>>>> 671a46baf1b... some performance improvements
 
 			skb_prev = skb;
 
@@ -1551,8 +1694,13 @@ int ip6_push_pending_frames(struct sock *sk)
 	if (proto == IPPROTO_ICMPV6) {
 		struct inet6_dev *idev = ip6_dst_idev(skb_dst(skb));
 
+<<<<<<< HEAD
+		ICMP6MSGOUT_INC_STATS(net, idev, icmp6_hdr(skb)->icmp6_type);
+		ICMP6_INC_STATS(net, idev, ICMP6_MIB_OUTMSGS);
+=======
 		ICMP6MSGOUT_INC_STATS_BH(net, idev, icmp6_hdr(skb)->icmp6_type);
 		ICMP6_INC_STATS_BH(net, idev, ICMP6_MIB_OUTMSGS);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	err = ip6_local_out(skb);

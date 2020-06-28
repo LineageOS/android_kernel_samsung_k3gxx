@@ -104,7 +104,11 @@ void putback_movable_pages(struct list_head *l)
 		list_del(&page->lru);
 		dec_zone_page_state(page, NR_ISOLATED_ANON +
 				page_is_file_cache(page));
+<<<<<<< HEAD
+		if (unlikely(isolated_balloon_page(page)))
+=======
 		if (unlikely(balloon_page_movable(page)))
+>>>>>>> 671a46baf1b... some performance improvements
 			balloon_page_putback(page);
 		else
 			putback_lru_page(page);
@@ -308,7 +312,11 @@ static inline bool buffer_migrate_lock_buffers(struct buffer_head *head,
  * 2 for pages with a mapping
  * 3 for pages with a mapping and PagePrivate/PagePrivate2 set.
  */
+<<<<<<< HEAD
+int migrate_page_move_mapping(struct address_space *mapping,
+=======
 static int migrate_page_move_mapping(struct address_space *mapping,
+>>>>>>> 671a46baf1b... some performance improvements
 		struct page *newpage, struct page *page,
 		struct buffer_head *head, enum migrate_mode mode)
 {
@@ -412,6 +420,10 @@ static int migrate_page_move_mapping(struct address_space *mapping,
 
 	return MIGRATEPAGE_SUCCESS;
 }
+<<<<<<< HEAD
+EXPORT_SYMBOL(migrate_page_move_mapping);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 /*
  * The expected number of remaining references is the same as that
@@ -503,6 +515,10 @@ void migrate_page_copy(struct page *newpage, struct page *page)
 	if (PageWriteback(newpage))
 		end_page_writeback(newpage);
 }
+<<<<<<< HEAD
+EXPORT_SYMBOL(migrate_page_copy);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 /************************************************************
  *                    Migration functions
@@ -1721,12 +1737,22 @@ int migrate_misplaced_transhuge_page(struct mm_struct *mm,
 		unlock_page(new_page);
 		put_page(new_page);		/* Free it */
 
+<<<<<<< HEAD
+		/* Retake the callers reference and putback on LRU */
+		get_page(page);
+		putback_lru_page(page);
+		mod_zone_page_state(page_zone(page),
+			 NR_ISOLATED_ANON + page_lru, -HPAGE_PMD_NR);
+
+		goto out_unlock;
+=======
 		unlock_page(page);
 		putback_lru_page(page);
 
 		count_vm_events(PGMIGRATE_FAIL, HPAGE_PMD_NR);
 		isolated = 0;
 		goto out;
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	/*
@@ -1743,9 +1769,15 @@ int migrate_misplaced_transhuge_page(struct mm_struct *mm,
 	entry = maybe_pmd_mkwrite(pmd_mkdirty(entry), vma);
 	entry = pmd_mkhuge(entry);
 
+<<<<<<< HEAD
+	pmdp_clear_flush(vma, haddr, pmd);
+	set_pmd_at(mm, haddr, pmd, entry);
+	page_add_new_anon_rmap(new_page, vma, haddr);
+=======
 	page_add_new_anon_rmap(new_page, vma, haddr);
 
 	set_pmd_at(mm, haddr, pmd, entry);
+>>>>>>> 671a46baf1b... some performance improvements
 	update_mmu_cache_pmd(vma, address, &entry);
 	page_remove_rmap(page);
 	/*
@@ -1764,7 +1796,10 @@ int migrate_misplaced_transhuge_page(struct mm_struct *mm,
 	count_vm_events(PGMIGRATE_SUCCESS, HPAGE_PMD_NR);
 	count_vm_numa_events(NUMA_PAGE_MIGRATE, HPAGE_PMD_NR);
 
+<<<<<<< HEAD
+=======
 out:
+>>>>>>> 671a46baf1b... some performance improvements
 	mod_zone_page_state(page_zone(page),
 			NR_ISOLATED_ANON + page_lru,
 			-HPAGE_PMD_NR);
@@ -1773,6 +1808,14 @@ out:
 out_fail:
 	count_vm_events(PGMIGRATE_FAIL, HPAGE_PMD_NR);
 out_dropref:
+<<<<<<< HEAD
+	entry = pmd_mknonnuma(entry);
+	set_pmd_at(mm, haddr, pmd, entry);
+	update_mmu_cache_pmd(vma, address, &entry);
+
+out_unlock:
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	unlock_page(page);
 	put_page(page);
 	return 0;

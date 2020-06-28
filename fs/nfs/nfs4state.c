@@ -1452,6 +1452,11 @@ restart:
 				}
 				spin_unlock(&state->state_lock);
 				nfs4_put_open_state(state);
+<<<<<<< HEAD
+				clear_bit(NFS_STATE_RECLAIM_NOGRACE,
+					&state->flags);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 				spin_lock(&sp->so_lock);
 				goto restart;
 			}
@@ -1462,6 +1467,12 @@ restart:
 					"Zeroing state\n", __func__, status);
 			case -ENOENT:
 			case -ENOMEM:
+<<<<<<< HEAD
+			case -EACCES:
+			case -EROFS:
+			case -EIO:
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			case -ESTALE:
 				/*
 				 * Open state on this file cannot be recovered
@@ -1699,7 +1710,12 @@ restart:
 			if (status < 0) {
 				set_bit(ops->owner_flag_bit, &sp->so_flags);
 				nfs4_put_state_owner(sp);
+<<<<<<< HEAD
+				status = nfs4_recovery_handle_error(clp, status);
+				return (status != 0) ? status : -EAGAIN;
+=======
 				return nfs4_recovery_handle_error(clp, status);
+>>>>>>> 671a46baf1b... some performance improvements
 			}
 
 			nfs4_put_state_owner(sp);
@@ -1708,7 +1724,11 @@ restart:
 		spin_unlock(&clp->cl_lock);
 	}
 	rcu_read_unlock();
+<<<<<<< HEAD
+	return 0;
+=======
 	return status;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static int nfs4_check_lease(struct nfs_client *clp)
@@ -1755,7 +1775,10 @@ static int nfs4_handle_reclaim_lease_error(struct nfs_client *clp, int status)
 		break;
 	case -NFS4ERR_STALE_CLIENTID:
 		clear_bit(NFS4CLNT_LEASE_CONFIRM, &clp->cl_state);
+<<<<<<< HEAD
+=======
 		nfs4_state_clear_reclaim_reboot(clp);
+>>>>>>> 671a46baf1b... some performance improvements
 		nfs4_state_start_reclaim_reboot(clp);
 		break;
 	case -NFS4ERR_CLID_INUSE:
@@ -2174,6 +2197,13 @@ static void nfs4_state_manager(struct nfs_client *clp)
 			section = "reclaim reboot";
 			status = nfs4_do_reclaim(clp,
 				clp->cl_mvops->reboot_recovery_ops);
+<<<<<<< HEAD
+			if (status == -EAGAIN)
+				continue;
+			if (status < 0)
+				goto out_error;
+			nfs4_state_end_reclaim_reboot(clp);
+=======
 			if (test_bit(NFS4CLNT_LEASE_EXPIRED, &clp->cl_state) ||
 			    test_bit(NFS4CLNT_SESSION_RESET, &clp->cl_state))
 				continue;
@@ -2182,6 +2212,7 @@ static void nfs4_state_manager(struct nfs_client *clp)
 				continue;
 			if (status < 0)
 				goto out_error;
+>>>>>>> 671a46baf1b... some performance improvements
 		}
 
 		/* Now recover expired state... */
@@ -2189,9 +2220,13 @@ static void nfs4_state_manager(struct nfs_client *clp)
 			section = "reclaim nograce";
 			status = nfs4_do_reclaim(clp,
 				clp->cl_mvops->nograce_recovery_ops);
+<<<<<<< HEAD
+			if (status == -EAGAIN)
+=======
 			if (test_bit(NFS4CLNT_LEASE_EXPIRED, &clp->cl_state) ||
 			    test_bit(NFS4CLNT_SESSION_RESET, &clp->cl_state) ||
 			    test_bit(NFS4CLNT_RECLAIM_REBOOT, &clp->cl_state))
+>>>>>>> 671a46baf1b... some performance improvements
 				continue;
 			if (status < 0)
 				goto out_error;

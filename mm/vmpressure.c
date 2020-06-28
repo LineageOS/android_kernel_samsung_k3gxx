@@ -116,9 +116,22 @@ static enum vmpressure_levels vmpressure_calc_level(unsigned long scanned,
 						    unsigned long reclaimed)
 {
 	unsigned long scale = scanned + reclaimed;
+<<<<<<< HEAD
+	unsigned long pressure = 0;
+
+	/*
+	 * reclaimed can be greater than scanned in cases
+	 * like THP, where the scanned is 1 and reclaimed
+	 * could be 512
+	 */
+	if (reclaimed >= scanned)
+		goto out;
+	/*
+=======
 	unsigned long pressure;
 
 	/*
+>>>>>>> 671a46baf1b... some performance improvements
 	 * We calculate the ratio (in percents) of how many pages were
 	 * scanned vs. reclaimed in a given time frame (window). Note that
 	 * time is in VM reclaimer's "ticks", i.e. number of pages
@@ -128,6 +141,10 @@ static enum vmpressure_levels vmpressure_calc_level(unsigned long scanned,
 	pressure = scale - (reclaimed * scale / scanned);
 	pressure = pressure * 100 / scale;
 
+<<<<<<< HEAD
+out:
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	pr_debug("%s: %3lu  (s: %lu  r: %lu)\n", __func__, pressure,
 		 scanned, reclaimed);
 

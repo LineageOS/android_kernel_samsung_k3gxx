@@ -90,7 +90,11 @@ static __kprobes bool trace_probe_is_on_module(struct trace_probe *tp)
 }
 
 static int register_probe_event(struct trace_probe *tp);
+<<<<<<< HEAD
+static int unregister_probe_event(struct trace_probe *tp);
+=======
 static void unregister_probe_event(struct trace_probe *tp);
+>>>>>>> 671a46baf1b... some performance improvements
 
 static DEFINE_MUTEX(probe_lock);
 static LIST_HEAD(probe_list);
@@ -281,6 +285,11 @@ trace_probe_file_index(struct trace_probe *tp, struct ftrace_event_file *file)
 static int
 disable_trace_probe(struct trace_probe *tp, struct ftrace_event_file *file)
 {
+<<<<<<< HEAD
+	struct ftrace_event_file **old = NULL;
+	int wait = 0;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	int ret = 0;
 
 	mutex_lock(&probe_enable_lock);
@@ -314,10 +323,14 @@ disable_trace_probe(struct trace_probe *tp, struct ftrace_event_file *file)
 		}
 
 		rcu_assign_pointer(tp->files, new);
+<<<<<<< HEAD
+		wait = 1;
+=======
 
 		/* Make sure the probe is done with old files */
 		synchronize_sched();
 		kfree(old);
+>>>>>>> 671a46baf1b... some performance improvements
 	} else
 		tp->flags &= ~TP_FLAG_PROFILE;
 
@@ -326,11 +339,31 @@ disable_trace_probe(struct trace_probe *tp, struct ftrace_event_file *file)
 			disable_kretprobe(&tp->rp);
 		else
 			disable_kprobe(&tp->rp.kp);
+<<<<<<< HEAD
+		wait = 1;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
  out_unlock:
 	mutex_unlock(&probe_enable_lock);
 
+<<<<<<< HEAD
+	if (wait) {
+		/*
+		 * Synchronize with kprobe_trace_func/kretprobe_trace_func
+		 * to ensure disabled (all running handlers are finished).
+		 * This is not only for kfree(), but also the caller,
+		 * trace_remove_event_call() supposes it for releasing
+		 * event_call related objects, which will be accessed in
+		 * the kprobe_trace_func/kretprobe_trace_func.
+		 */
+		synchronize_sched();
+		kfree(old);	/* Ignored if link == NULL */
+	}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return ret;
 }
 
@@ -398,9 +431,18 @@ static int unregister_trace_probe(struct trace_probe *tp)
 	if (trace_probe_is_enabled(tp))
 		return -EBUSY;
 
+<<<<<<< HEAD
+	/* Will fail if probe is being used by ftrace or perf */
+	if (unregister_probe_event(tp))
+		return -EBUSY;
+
+	__unregister_trace_probe(tp);
+	list_del(&tp->list);
+=======
 	__unregister_trace_probe(tp);
 	list_del(&tp->list);
 	unregister_probe_event(tp);
+>>>>>>> 671a46baf1b... some performance improvements
 
 	return 0;
 }
@@ -679,7 +721,13 @@ static int release_all_trace_probes(void)
 	/* TODO: Use batch unregistration */
 	while (!list_empty(&probe_list)) {
 		tp = list_entry(probe_list.next, struct trace_probe, list);
+<<<<<<< HEAD
+		ret = unregister_trace_probe(tp);
+		if (ret)
+			goto end;
+=======
 		unregister_trace_probe(tp);
+>>>>>>> 671a46baf1b... some performance improvements
 		free_trace_probe(tp);
 	}
 
@@ -1312,11 +1360,23 @@ static int register_probe_event(struct trace_probe *tp)
 	return ret;
 }
 
+<<<<<<< HEAD
+static int unregister_probe_event(struct trace_probe *tp)
+{
+	int ret;
+
+	/* tp->event is unregistered in trace_remove_event_call() */
+	ret = trace_remove_event_call(&tp->call);
+	if (!ret)
+		kfree(tp->call.print_fmt);
+	return ret;
+=======
 static void unregister_probe_event(struct trace_probe *tp)
 {
 	/* tp->event is unregistered in trace_remove_event_call() */
 	trace_remove_event_call(&tp->call);
 	kfree(tp->call.print_fmt);
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /* Make a debugfs interface for controlling probe points */

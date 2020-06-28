@@ -157,6 +157,11 @@ static u32 ieee80211_hw_conf_chan(struct ieee80211_local *local)
 	list_for_each_entry_rcu(sdata, &local->interfaces, list) {
 		if (!rcu_access_pointer(sdata->vif.chanctx_conf))
 			continue;
+<<<<<<< HEAD
+		if (sdata->vif.type == NL80211_IFTYPE_AP_VLAN)
+			continue;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		power = min(power, sdata->vif.bss_conf.txpower);
 	}
 	rcu_read_unlock();
@@ -255,6 +260,10 @@ static void ieee80211_restart_work(struct work_struct *work)
 {
 	struct ieee80211_local *local =
 		container_of(work, struct ieee80211_local, restart_work);
+<<<<<<< HEAD
+	struct ieee80211_sub_if_data *sdata;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* wait for scan work complete */
 	flush_workqueue(local->workqueue);
@@ -267,6 +276,11 @@ static void ieee80211_restart_work(struct work_struct *work)
 	mutex_unlock(&local->mtx);
 
 	rtnl_lock();
+<<<<<<< HEAD
+	list_for_each_entry(sdata, &local->interfaces, list)
+		flush_delayed_work(&sdata->dec_tailroom_needed_wk);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	ieee80211_scan_cancel(local);
 	ieee80211_reconfig(local);
 	rtnl_unlock();

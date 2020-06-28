@@ -149,6 +149,8 @@ static const struct reg_default florida_sysclk_revd_patch[] = {
 };
 
 static const struct reg_default florida_sysclk_reve_patch[] = {
+<<<<<<< HEAD
+=======
 	{ 0x325C, 0xE410 },
 	{ 0x325D, 0x3066 },
 	{ 0x325E, 0xE410 },
@@ -165,6 +167,7 @@ static const struct reg_default florida_sysclk_reve_patch[] = {
 	{ 0x326B, 0x3078 },
 	{ 0x326C, 0xE414 },
 	{ 0x326D, 0x3080 },
+>>>>>>> 671a46baf1b... some performance improvements
 	{ 0x3270, 0xE410 },
 	{ 0x3271, 0x3078 },
 	{ 0x3272, 0xE410 },
@@ -241,11 +244,286 @@ static int florida_adsp_power_ev(struct snd_soc_dapm_widget *w,
 	return arizona_adsp_power_ev(w, kcontrol, event);
 }
 
+<<<<<<< HEAD
+static const struct reg_sequence florida_no_dre_left_enable[] = {
+	{ 0x3024, 0xE410 },
+	{ 0x3025, 0x0056 },
+	{ 0x301B, 0x0224 },
+	{ 0x301F, 0x4263 },
+	{ 0x3021, 0x5291 },
+	{ 0x3030, 0xE410 },
+	{ 0x3031, 0x3066 },
+	{ 0x3032, 0xE410 },
+	{ 0x3033, 0x3070 },
+	{ 0x3034, 0xE410 },
+	{ 0x3035, 0x3078 },
+	{ 0x3036, 0xE410 },
+	{ 0x3037, 0x3080 },
+	{ 0x3038, 0xE410 },
+	{ 0x3039, 0x3080 },
+};
+
+static const struct reg_sequence florida_dre_left_enable[] = {
+	{ 0x3024, 0x0231 },
+	{ 0x3025, 0x0B00 },
+	{ 0x301B, 0x0227 },
+	{ 0x301F, 0x4266 },
+	{ 0x3021, 0x5294 },
+	{ 0x3030, 0xE231 },
+	{ 0x3031, 0x0266 },
+	{ 0x3032, 0x8231 },
+	{ 0x3033, 0x4B15 },
+	{ 0x3034, 0x8231 },
+	{ 0x3035, 0x0B15 },
+	{ 0x3036, 0xE231 },
+	{ 0x3037, 0x5294 },
+	{ 0x3038, 0x0231 },
+	{ 0x3039, 0x0B00 },
+};
+
+static const struct reg_sequence florida_no_dre_right_enable[] = {
+	{ 0x3074, 0xE414 },
+	{ 0x3075, 0x0056 },
+	{ 0x306B, 0x0224 },
+	{ 0x306F, 0x4263 },
+	{ 0x3071, 0x5291 },
+	{ 0x3080, 0xE414 },
+	{ 0x3081, 0x3066 },
+	{ 0x3082, 0xE414 },
+	{ 0x3083, 0x3070 },
+	{ 0x3084, 0xE414 },
+	{ 0x3085, 0x3078 },
+	{ 0x3086, 0xE414 },
+	{ 0x3087, 0x3080 },
+	{ 0x3088, 0xE414 },
+	{ 0x3089, 0x3080 },
+};
+
+static const struct reg_sequence florida_dre_right_enable[] = {
+	{ 0x3074, 0x0231 },
+	{ 0x3075, 0x0B00 },
+	{ 0x306B, 0x0227 },
+	{ 0x306F, 0x4266 },
+	{ 0x3071, 0x5294 },
+	{ 0x3080, 0xE231 },
+	{ 0x3081, 0x0266 },
+	{ 0x3082, 0x8231 },
+	{ 0x3083, 0x4B17 },
+	{ 0x3084, 0x8231 },
+	{ 0x3085, 0x0B17 },
+	{ 0x3086, 0xE231 },
+	{ 0x3087, 0x5294 },
+	{ 0x3088, 0x0231 },
+	{ 0x3089, 0x0B00 },
+};
+
+static int florida_hp_pre_enable(struct snd_soc_dapm_widget *w)
+{
+	struct arizona_priv *priv = snd_soc_codec_get_drvdata(w->codec);
+	struct arizona *arizona = priv->arizona;
+	unsigned int val = snd_soc_read(w->codec, ARIZONA_DRE_ENABLE);
+	const struct reg_sequence *wseq;
+	int nregs;
+	int ret;
+
+	switch (w->shift) {
+	case ARIZONA_OUT1L_ENA_SHIFT:
+		if (val & ARIZONA_DRE1L_ENA_MASK) {
+			wseq = florida_dre_left_enable;
+			nregs = ARRAY_SIZE(florida_dre_left_enable);
+		} else {
+			wseq = florida_no_dre_left_enable;
+			nregs = ARRAY_SIZE(florida_no_dre_left_enable);
+			priv->out_up_delay += 10;
+		}
+		break;
+	case ARIZONA_OUT1R_ENA_SHIFT:
+		if (val & ARIZONA_DRE1R_ENA_MASK) {
+			wseq = florida_dre_right_enable;
+			nregs = ARRAY_SIZE(florida_dre_right_enable);
+		} else {
+			wseq = florida_no_dre_right_enable;
+			nregs = ARRAY_SIZE(florida_no_dre_right_enable);
+			priv->out_up_delay += 10;
+		}
+		break;
+	default:
+		return 0;
+	}
+
+	ret = regmap_multi_reg_write(arizona->regmap, wseq, nregs);
+	udelay(1000);
+	return ret;
+}
+
+static int florida_hp_pre_disable(struct snd_soc_dapm_widget *w)
+{
+	struct arizona_priv *priv = snd_soc_codec_get_drvdata(w->codec);
+	unsigned int val = snd_soc_read(w->codec, ARIZONA_DRE_ENABLE);
+
+	switch (w->shift) {
+	case ARIZONA_OUT1L_ENA_SHIFT:
+		if (!(val & ARIZONA_DRE1L_ENA_MASK)) {
+			snd_soc_update_bits(w->codec, ARIZONA_SPARE_TRIGGERS,
+					    ARIZONA_WS_TRG1, ARIZONA_WS_TRG1);
+			snd_soc_update_bits(w->codec, ARIZONA_SPARE_TRIGGERS,
+					    ARIZONA_WS_TRG1, 0);
+			priv->out_down_delay += 27;
+		}
+		break;
+	case ARIZONA_OUT1R_ENA_SHIFT:
+		if (!(val & ARIZONA_DRE1R_ENA_MASK)) {
+			snd_soc_update_bits(w->codec, ARIZONA_SPARE_TRIGGERS,
+					    ARIZONA_WS_TRG2, ARIZONA_WS_TRG2);
+			snd_soc_update_bits(w->codec, ARIZONA_SPARE_TRIGGERS,
+					    ARIZONA_WS_TRG2, 0);
+			priv->out_down_delay += 27;
+		}
+		break;
+
+	default:
+		break;
+	}
+
+	return 0;
+}
+
+static int florida_hp_ev(struct snd_soc_dapm_widget *w,
+			 struct snd_kcontrol *kcontrol, int event)
+{
+	struct arizona_priv *priv = snd_soc_codec_get_drvdata(w->codec);
+
+	switch (priv->arizona->rev) {
+	case 0 ... 3:
+		break;
+	default:
+		switch (event) {
+		case SND_SOC_DAPM_PRE_PMU:
+			florida_hp_pre_enable(w);
+			break;
+		case SND_SOC_DAPM_PRE_PMD:
+			florida_hp_pre_disable(w);
+			break;
+		default:
+			break;
+		}
+		break;
+	}
+
+	return arizona_hp_ev(w, kcontrol, event);
+}
+
+static int florida_clear_pga_volume(struct arizona *arizona, int output)
+{
+	struct reg_sequence clear_pga = {
+		ARIZONA_OUTPUT_PATH_CONFIG_1L + output * 4, 0x80
+	};
+	int ret;
+
+	ret = regmap_multi_reg_write_bypassed(arizona->regmap, &clear_pga, 1);
+	if (ret)
+		dev_err(arizona->dev, "Failed to clear PGA (0x%x): %d\n",
+			clear_pga.reg, ret);
+
+	return ret;
+}
+
+static int florida_set_dre(struct arizona *arizona, unsigned int shift,
+			   bool enable)
+{
+	unsigned int mask = 1 << shift;
+	unsigned int val = 0;
+	const struct reg_sequence *wseq;
+	int nregs;
+	bool change;
+
+	if (enable) {
+		regmap_update_bits_check(arizona->regmap, ARIZONA_DRE_ENABLE,
+					 mask, mask, &change);
+		if (!change)
+			return 0;
+
+		switch (shift) {
+		case ARIZONA_DRE1L_ENA_SHIFT:
+			mask = ARIZONA_OUT1L_ENA;
+			wseq = florida_dre_left_enable;
+			nregs = ARRAY_SIZE(florida_dre_left_enable);
+			break;
+		case ARIZONA_DRE1R_ENA_SHIFT:
+			mask = ARIZONA_OUT1R_ENA;
+			wseq = florida_dre_right_enable;
+			nregs = ARRAY_SIZE(florida_dre_right_enable);
+			break;
+		default:
+			return 0;
+		}
+	} else {
+		regmap_update_bits_check(arizona->regmap, ARIZONA_DRE_ENABLE,
+					 mask, 0, &change);
+		if (!change)
+			return 0;
+
+		/* Force reset of PGA Vol */
+		florida_clear_pga_volume(arizona, shift);
+
+		switch (shift) {
+		case ARIZONA_DRE1L_ENA_SHIFT:
+			mask = ARIZONA_OUT1L_ENA;
+			wseq = florida_no_dre_left_enable;
+			nregs = ARRAY_SIZE(florida_no_dre_left_enable);
+			break;
+		case ARIZONA_DRE1R_ENA_SHIFT:
+			mask = ARIZONA_OUT1R_ENA;
+			wseq = florida_no_dre_right_enable;
+			nregs = ARRAY_SIZE(florida_no_dre_right_enable);
+			break;
+		default:
+			return 0;
+		}
+	}
+
+	/* If the output is on we need to update the disable sequence */
+	regmap_read(arizona->regmap, ARIZONA_OUTPUT_ENABLES_1, &val);
+
+	if (val & mask) {
+		regmap_multi_reg_write(arizona->regmap, wseq, nregs);
+		udelay(1000);
+	}
+
+	return 0;
+}
+
+static int florida_put_dre(struct snd_kcontrol *kcontrol,
+			   struct snd_ctl_elem_value *ucontrol)
+{
+	struct snd_soc_codec *codec = snd_kcontrol_chip(kcontrol);
+	struct arizona *arizona = dev_get_drvdata(codec->dev->parent);
+	struct soc_mixer_control *mc =
+		(struct soc_mixer_control *)kcontrol->private_value;
+	unsigned int lshift = mc->shift;
+	unsigned int rshift = mc->rshift;
+
+	mutex_lock_nested(&codec->card->dapm_mutex, SND_SOC_DAPM_CLASS_RUNTIME);
+
+	florida_set_dre(arizona, lshift, !!ucontrol->value.integer.value[0]);
+	florida_set_dre(arizona, rshift, !!ucontrol->value.integer.value[1]);
+
+	mutex_unlock(&codec->card->dapm_mutex);
+
+	return 0;
+}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static DECLARE_TLV_DB_SCALE(ana_tlv, 0, 100, 0);
 static DECLARE_TLV_DB_SCALE(eq_tlv, -1200, 100, 0);
 static DECLARE_TLV_DB_SCALE(digital_tlv, -6400, 50, 0);
 static DECLARE_TLV_DB_SCALE(vol_limit_tlv, -600, 50, 116);
+<<<<<<< HEAD
+static DECLARE_TLV_DB_SCALE(noise_tlv, -13200, 600, 0);
+=======
 static DECLARE_TLV_DB_SCALE(noise_tlv, 0, 600, 0);
+>>>>>>> 671a46baf1b... some performance improvements
 static DECLARE_TLV_DB_SCALE(ng_tlv, -10200, 600, 0);
 
 #define FLORIDA_NG_SRC(name, base) \
@@ -424,10 +702,17 @@ ARIZONA_MIXER_CONTROLS("LHPF2", ARIZONA_HPLP2MIX_INPUT_1_SOURCE),
 ARIZONA_MIXER_CONTROLS("LHPF3", ARIZONA_HPLP3MIX_INPUT_1_SOURCE),
 ARIZONA_MIXER_CONTROLS("LHPF4", ARIZONA_HPLP4MIX_INPUT_1_SOURCE),
 
+<<<<<<< HEAD
+ARIZONA_LHPF_CONTROL("LHPF1 Coefficients", ARIZONA_HPLPF1_2),
+ARIZONA_LHPF_CONTROL("LHPF2 Coefficients", ARIZONA_HPLPF2_2),
+ARIZONA_LHPF_CONTROL("LHPF3 Coefficients", ARIZONA_HPLPF3_2),
+ARIZONA_LHPF_CONTROL("LHPF4 Coefficients", ARIZONA_HPLPF4_2),
+=======
 SND_SOC_BYTES("LHPF1 Coefficients", ARIZONA_HPLPF1_2, 1),
 SND_SOC_BYTES("LHPF2 Coefficients", ARIZONA_HPLPF2_2, 1),
 SND_SOC_BYTES("LHPF3 Coefficients", ARIZONA_HPLPF3_2, 1),
 SND_SOC_BYTES("LHPF4 Coefficients", ARIZONA_HPLPF4_2, 1),
+>>>>>>> 671a46baf1b... some performance improvements
 
 SOC_ENUM("LHPF1 Mode", arizona_lhpf1_mode),
 SOC_ENUM("LHPF2 Mode", arizona_lhpf2_mode),
@@ -1131,15 +1416,39 @@ SND_SOC_DAPM_AIF_IN("AIF3RX2", NULL, 0,
 		    ARIZONA_AIF3_RX_ENABLES, ARIZONA_AIF3RX2_ENA_SHIFT, 0),
 
 SND_SOC_DAPM_PGA_E("OUT1L", SND_SOC_NOPM,
+<<<<<<< HEAD
+		   ARIZONA_OUT1L_ENA_SHIFT, 0, NULL, 0, florida_hp_ev,
+		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD |
+		   SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU),
+SND_SOC_DAPM_PGA_E("OUT1R", SND_SOC_NOPM,
+		   ARIZONA_OUT1R_ENA_SHIFT, 0, NULL, 0, florida_hp_ev,
+=======
 		   ARIZONA_OUT1L_ENA_SHIFT, 0, NULL, 0, arizona_hp_ev,
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD |
 		   SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU),
 SND_SOC_DAPM_PGA_E("OUT1R", SND_SOC_NOPM,
 		   ARIZONA_OUT1R_ENA_SHIFT, 0, NULL, 0, arizona_hp_ev,
+>>>>>>> 671a46baf1b... some performance improvements
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD |
 		   SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU),
 SND_SOC_DAPM_PGA_E("OUT2L", ARIZONA_OUTPUT_ENABLES_1,
 		   ARIZONA_OUT2L_ENA_SHIFT, 0, NULL, 0, arizona_out_ev,
+<<<<<<< HEAD
+		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD |
+		   SND_SOC_DAPM_POST_PMU),
+SND_SOC_DAPM_PGA_E("OUT2R", ARIZONA_OUTPUT_ENABLES_1,
+		   ARIZONA_OUT2R_ENA_SHIFT, 0, NULL, 0, arizona_out_ev,
+		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD |
+		   SND_SOC_DAPM_POST_PMU),
+SND_SOC_DAPM_PGA_E("OUT3L", ARIZONA_OUTPUT_ENABLES_1,
+		   ARIZONA_OUT3L_ENA_SHIFT, 0, NULL, 0, arizona_out_ev,
+		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD |
+		   SND_SOC_DAPM_POST_PMU),
+SND_SOC_DAPM_PGA_E("OUT3R", ARIZONA_OUTPUT_ENABLES_1,
+		   ARIZONA_OUT3R_ENA_SHIFT, 0, NULL, 0, arizona_out_ev,
+		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD |
+		   SND_SOC_DAPM_POST_PMU),
+=======
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMU),
 SND_SOC_DAPM_PGA_E("OUT2R", ARIZONA_OUTPUT_ENABLES_1,
 		   ARIZONA_OUT2R_ENA_SHIFT, 0, NULL, 0, arizona_out_ev,
@@ -1150,6 +1459,7 @@ SND_SOC_DAPM_PGA_E("OUT3L", ARIZONA_OUTPUT_ENABLES_1,
 SND_SOC_DAPM_PGA_E("OUT3R", ARIZONA_OUTPUT_ENABLES_1,
 		   ARIZONA_OUT3R_ENA_SHIFT, 0, NULL, 0, arizona_out_ev,
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMU),
+>>>>>>> 671a46baf1b... some performance improvements
 SND_SOC_DAPM_PGA_E("OUT5L", ARIZONA_OUTPUT_ENABLES_1,
 		   ARIZONA_OUT5L_ENA_SHIFT, 0, NULL, 0, arizona_out_ev,
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMU),
@@ -1862,7 +2172,11 @@ static struct snd_soc_dai_driver florida_dai[] = {
 		.capture = {
 			.stream_name = "Voice Control CPU",
 			.channels_min = 1,
+<<<<<<< HEAD
+			.channels_max = 2,
+=======
 			.channels_max = 1,
+>>>>>>> 671a46baf1b... some performance improvements
 			.rates = FLORIDA_RATES,
 			.formats = FLORIDA_FORMATS,
 		},
@@ -1873,7 +2187,11 @@ static struct snd_soc_dai_driver florida_dai[] = {
 		.capture = {
 			.stream_name = "Voice Control DSP",
 			.channels_min = 1,
+<<<<<<< HEAD
+			.channels_max = 2,
+=======
 			.channels_max = 1,
+>>>>>>> 671a46baf1b... some performance improvements
 			.rates = FLORIDA_RATES,
 			.formats = FLORIDA_FORMATS,
 		},
@@ -2136,7 +2454,14 @@ static int florida_codec_probe(struct snd_soc_codec *codec)
 {
 	struct florida_priv *priv = snd_soc_codec_get_drvdata(codec);
 	struct arizona *arizona = priv->core.arizona;
+<<<<<<< HEAD
+	int i, ret;
+
+	for (i = 0; i < FLORIDA_NUM_ADSP; i++)
+		wm_adsp_init_debugfs(&priv->core.adsp[i], codec);
+=======
 	int ret;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	codec->control_data = priv->core.arizona->regmap;
 	priv->core.arizona->dapm = &codec->dapm;
@@ -2194,6 +2519,13 @@ static int florida_codec_remove(struct snd_soc_codec *codec)
 {
 	struct florida_priv *priv = snd_soc_codec_get_drvdata(codec);
 	struct arizona *arizona = priv->core.arizona;
+<<<<<<< HEAD
+	int i;
+
+	for (i = 0; i < FLORIDA_NUM_ADSP; i++)
+		wm_adsp_cleanup_debugfs(&priv->core.adsp[i]);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 	irq_set_irq_wake(arizona->irq, 0);
 	arizona_free_irq(arizona, ARIZONA_IRQ_DSP_IRQ1, priv);

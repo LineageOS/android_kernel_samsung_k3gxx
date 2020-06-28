@@ -33,6 +33,10 @@
 #include <linux/proc_fs.h>
 #include <linux/acpi.h>
 #include <linux/slab.h>
+<<<<<<< HEAD
+#include <linux/regulator/machine.h>
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 #ifdef CONFIG_X86
 #include <asm/mpspec.h>
 #endif
@@ -56,6 +60,15 @@ EXPORT_SYMBOL(acpi_root_dir);
 
 
 #ifdef CONFIG_X86
+<<<<<<< HEAD
+#ifdef CONFIG_ACPI_CUSTOM_DSDT
+static inline int set_copy_dsdt(const struct dmi_system_id *id)
+{
+	return 0;
+}
+#else
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 static int set_copy_dsdt(const struct dmi_system_id *id)
 {
 	printk(KERN_NOTICE "%s detected - "
@@ -63,6 +76,10 @@ static int set_copy_dsdt(const struct dmi_system_id *id)
 	acpi_gbl_copy_dsdt_locally = 1;
 	return 0;
 }
+<<<<<<< HEAD
+#endif
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 static struct dmi_system_id dsdt_dmi_table[] __initdata = {
 	/*
@@ -705,6 +722,17 @@ void __init acpi_early_init(void)
 		goto error0;
 	}
 
+<<<<<<< HEAD
+	/*
+	 * If the system is using ACPI then we can be reasonably
+	 * confident that any regulators are managed by the firmware
+	 * so tell the regulator core it has everything it needs to
+	 * know.
+	 */
+	regulator_has_full_constraints();
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	return;
 
       error0:

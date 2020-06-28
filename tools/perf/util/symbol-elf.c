@@ -831,8 +831,13 @@ new_symbol:
 	 * For misannotated, zeroed, ASM function sizes.
 	 */
 	if (nr > 0) {
+<<<<<<< HEAD
+		symbols__fixup_end(&dso->symbols[map->type]);
+		symbols__fixup_duplicate(&dso->symbols[map->type]);
+=======
 		symbols__fixup_duplicate(&dso->symbols[map->type]);
 		symbols__fixup_end(&dso->symbols[map->type]);
+>>>>>>> 671a46baf1b... some performance improvements
 		if (kmap) {
 			/*
 			 * We need to fixup this here too because we create new

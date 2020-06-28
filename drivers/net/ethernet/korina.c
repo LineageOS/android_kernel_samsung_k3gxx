@@ -905,10 +905,17 @@ static void korina_restart_task(struct work_struct *work)
 				DMA_STAT_DONE | DMA_STAT_HALT | DMA_STAT_ERR,
 				&lp->rx_dma_regs->dmasm);
 
+<<<<<<< HEAD
+	napi_disable(&lp->napi);
+
+	korina_free_ring(dev);
+
+=======
 	korina_free_ring(dev);
 
 	napi_disable(&lp->napi);
 
+>>>>>>> 671a46baf1b... some performance improvements
 	if (korina_init(dev) < 0) {
 		printk(KERN_ERR "%s: cannot restart device\n", dev->name);
 		return;
@@ -1069,12 +1076,20 @@ static int korina_close(struct net_device *dev)
 	tmp = tmp | DMA_STAT_DONE | DMA_STAT_HALT | DMA_STAT_ERR;
 	writel(tmp, &lp->rx_dma_regs->dmasm);
 
+<<<<<<< HEAD
+=======
 	korina_free_ring(dev);
 
+>>>>>>> 671a46baf1b... some performance improvements
 	napi_disable(&lp->napi);
 
 	cancel_work_sync(&lp->restart_task);
 
+<<<<<<< HEAD
+	korina_free_ring(dev);
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	free_irq(lp->rx_irq, dev);
 	free_irq(lp->tx_irq, dev);
 	free_irq(lp->ovr_irq, dev);

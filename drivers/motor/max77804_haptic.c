@@ -102,6 +102,7 @@ static ssize_t intensity_store(struct device *dev,
 
 	ret = kstrtoint(buf, 0, &intensity);
 
+<<<<<<< HEAD
 	if (intensity < 0 || intensity > (MAX_INTENSITY / 100)) {
 		pr_err("out of range\n");
 		return -EINVAL;
@@ -117,6 +118,23 @@ static ssize_t intensity_store(struct device *dev,
 	}
 
 	drvdata->intensity = intensity * 100;
+=======
+	if (intensity < 0 || MAX_INTENSITY < intensity) {
+		pr_err("out of rage\n");
+		return -EINVAL;
+	}
+
+	if (MAX_INTENSITY == intensity)
+		duty = drvdata->pdata->duty;
+	else if (0 != intensity) {
+		long tmp = drvdata->pdata->duty >> 1;
+
+		tmp *= (intensity / 100);
+		duty += (int)(tmp / 100);
+	}
+
+	drvdata->intensity = intensity;
+>>>>>>> 671a46baf1b... some performance improvements
 	drvdata->duty = duty;
 
 	pwm_config(drvdata->pwm, duty, drvdata->pdata->period);
@@ -131,6 +149,7 @@ static ssize_t intensity_show(struct device *dev,
 	struct max77804_haptic_data *drvdata
 		= container_of(tdev, struct max77804_haptic_data, tout_dev);
 
+<<<<<<< HEAD
 	return sprintf(buf, "%u\n",
 			(drvdata->intensity / 100));
 }
@@ -164,6 +183,13 @@ static DEVICE_ATTR(pwm_max, 0444, pwm_max_show, NULL);
 static DEVICE_ATTR(pwm_min, 0444, pwm_min_show, NULL);
 static DEVICE_ATTR(pwm_threshold, 0444, pwm_threshold_show, NULL);
 static DEVICE_ATTR(pwm_value, 0664, intensity_show, intensity_store);
+=======
+	return sprintf(buf, "intensity: %u\n",
+			(drvdata->intensity * 100));
+}
+
+static DEVICE_ATTR(intensity, 0660, intensity_show, intensity_store);
+>>>>>>> 671a46baf1b... some performance improvements
 
 static int haptic_get_time(struct timed_output_dev *tout_dev)
 {
@@ -386,6 +412,7 @@ static int max77804_haptic_probe(struct platform_device *pdev)
 	}
 
 	ret = sysfs_create_file(&hap_data->tout_dev.dev->kobj,
+<<<<<<< HEAD
 				&dev_attr_pwm_default.attr);
 	if (ret < 0) {
 		pr_err("[VIB] Failed to register pwm_default sysfs : %d\n", error);
@@ -418,6 +445,11 @@ static int max77804_haptic_probe(struct platform_device *pdev)
 				&dev_attr_pwm_value.attr);
 	if (ret < 0) {
 		pr_err("[VIB] Failed to register pwm_value sysfs : %d\n", error);
+=======
+				&dev_attr_intensity.attr);
+	if (ret < 0) {
+		pr_err("[VIB] Failed to register sysfs : %d\n", ret);
+>>>>>>> 671a46baf1b... some performance improvements
 		goto err_timed_output_register;
 	}
 #endif

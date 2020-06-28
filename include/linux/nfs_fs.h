@@ -578,9 +578,13 @@ static inline void nfs3_forget_cached_acls(struct inode *inode)
 
 static inline loff_t nfs_size_to_loff_t(__u64 size)
 {
+<<<<<<< HEAD
+	return min_t(u64, size, OFFSET_MAX);
+=======
 	if (size > (__u64) OFFSET_MAX - 1)
 		return OFFSET_MAX - 1;
 	return (loff_t) size;
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static inline ino_t

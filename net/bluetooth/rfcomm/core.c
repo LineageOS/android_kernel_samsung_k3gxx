@@ -1856,10 +1856,20 @@ static struct rfcomm_session *rfcomm_process_rx(struct rfcomm_session *s)
 	/* Get data directly from socket receive queue without copying it. */
 	while ((skb = skb_dequeue(&sk->sk_receive_queue))) {
 		skb_orphan(skb);
+<<<<<<< HEAD
+		if (!skb_linearize(skb)) {
+			s = rfcomm_recv_frame(s, skb);
+			if (!s)
+				break;
+		} else {
+			kfree_skb(skb);
+		}
+=======
 		if (!skb_linearize(skb))
 			s = rfcomm_recv_frame(s, skb);
 		else
 			kfree_skb(skb);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 
 	if (s && (sk->sk_state == BT_CLOSED))

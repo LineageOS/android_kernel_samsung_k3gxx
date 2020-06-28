@@ -30,6 +30,10 @@ enum clock_event_nofitiers {
 #include <linux/notifier.h>
 
 struct clock_event_device;
+<<<<<<< HEAD
+struct module;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 
 /* Clock event mode commands */
 enum clock_event_mode {
@@ -83,6 +87,10 @@ enum clock_event_mode {
  * @irq:		IRQ number (only for non CPU local devices)
  * @cpumask:		cpumask to indicate for which CPUs this device works
  * @list:		list head for the management code
+<<<<<<< HEAD
+ * @owner:		module reference
+=======
+>>>>>>> 671a46baf1b... some performance improvements
  */
 struct clock_event_device {
 	void			(*event_handler)(struct clock_event_device *);
@@ -112,6 +120,10 @@ struct clock_event_device {
 	int			irq;
 	const struct cpumask	*cpumask;
 	struct list_head	list;
+<<<<<<< HEAD
+	struct module		*owner;
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 } ____cacheline_aligned;
 
 /*
@@ -150,7 +162,10 @@ extern void clockevents_exchange_device(struct clock_event_device *old,
 					struct clock_event_device *new);
 extern void clockevents_set_mode(struct clock_event_device *dev,
 				 enum clock_event_mode mode);
+<<<<<<< HEAD
+=======
 extern int clockevents_register_notifier(struct notifier_block *nb);
+>>>>>>> 671a46baf1b... some performance improvements
 extern int clockevents_program_event(struct clock_event_device *dev,
 				     ktime_t expires, bool force);
 

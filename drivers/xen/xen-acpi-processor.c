@@ -426,6 +426,9 @@ upload:
 
 	return 0;
 }
+<<<<<<< HEAD
+
+=======
 static int __init check_prereq(void)
 {
 	struct cpuinfo_x86 *c = &cpu_data(0);
@@ -456,6 +459,7 @@ static int __init check_prereq(void)
 	}
 	return -ENODEV;
 }
+>>>>>>> 671a46baf1b... some performance improvements
 /* acpi_perf_data is a pointer to percpu data. */
 static struct acpi_processor_performance __percpu *acpi_perf_data;
 
@@ -511,10 +515,17 @@ static struct syscore_ops xap_syscore_ops = {
 static int __init xen_acpi_processor_init(void)
 {
 	unsigned int i;
+<<<<<<< HEAD
+	int rc;
+
+	if (!xen_initial_domain())
+		return -ENODEV;
+=======
 	int rc = check_prereq();
 
 	if (rc)
 		return rc;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	nr_acpi_bits = get_max_acpi_id() + 1;
 	acpi_ids_done = kcalloc(BITS_TO_LONGS(nr_acpi_bits), sizeof(unsigned long), GFP_KERNEL);

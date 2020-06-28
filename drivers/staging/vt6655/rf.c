@@ -966,6 +966,10 @@ bool RFbSetPower(
 		break;
 	case RATE_6M:
 	case RATE_9M:
+<<<<<<< HEAD
+	case RATE_12M:
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	case RATE_18M:
 		byPwr = pDevice->abyOFDMPwrTbl[uCH];
 		if (pDevice->byRFType == RF_UW2452) {

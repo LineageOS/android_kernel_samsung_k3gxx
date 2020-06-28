@@ -648,7 +648,11 @@ int vmbus_request_offers(void)
 {
 	struct vmbus_channel_message_header *msg;
 	struct vmbus_channel_msginfo *msginfo;
+<<<<<<< HEAD
+	int ret;
+=======
 	int ret, t;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	msginfo = kmalloc(sizeof(*msginfo) +
 			  sizeof(struct vmbus_channel_message_header),
@@ -656,8 +660,11 @@ int vmbus_request_offers(void)
 	if (!msginfo)
 		return -ENOMEM;
 
+<<<<<<< HEAD
+=======
 	init_completion(&msginfo->waitevent);
 
+>>>>>>> 671a46baf1b... some performance improvements
 	msg = (struct vmbus_channel_message_header *)msginfo->msg;
 
 	msg->msgtype = CHANNELMSG_REQUESTOFFERS;
@@ -671,6 +678,8 @@ int vmbus_request_offers(void)
 		goto cleanup;
 	}
 
+<<<<<<< HEAD
+=======
 	t = wait_for_completion_timeout(&msginfo->waitevent, 5*HZ);
 	if (t == 0) {
 		ret = -ETIMEDOUT;
@@ -679,6 +688,7 @@ int vmbus_request_offers(void)
 
 
 
+>>>>>>> 671a46baf1b... some performance improvements
 cleanup:
 	kfree(msginfo);
 

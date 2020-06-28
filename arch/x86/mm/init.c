@@ -78,8 +78,8 @@ __ref void *alloc_low_pages(unsigned int num)
 	return __va(pfn << PAGE_SHIFT);
 }
 
-/* need 4 4k for initial PMD_SIZE, 4k for 0-ISA_END_ADDRESS */
-#define INIT_PGT_BUF_SIZE	(5 * PAGE_SIZE)
+/* need 3 4k for initial PMD_SIZE,  3 4k for 0-ISA_END_ADDRESS */
+#define INIT_PGT_BUF_SIZE	(6 * PAGE_SIZE)
 RESERVE_BRK(early_pgt_alloc, INIT_PGT_BUF_SIZE);
 void  __init early_alloc_pgt_buf(void)
 {
@@ -474,7 +474,6 @@ void __init init_mem_mapping(void)
 /*
  * devmem_is_allowed() checks to see if /dev/mem access to a certain address
  * is valid. The argument is a physical page number.
- *
  *
  * On x86, access has to be given to the first megabyte of RAM because that
  * area traditionally contains BIOS code and data regions used by X, dosemu,

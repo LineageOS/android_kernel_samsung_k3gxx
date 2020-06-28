@@ -299,6 +299,8 @@ static void usX2Y_error_urb_status(struct usX2Ydev *usX2Y,
 	usX2Y_clients_stop(usX2Y);
 }
 
+<<<<<<< HEAD
+=======
 static void usX2Y_error_sequence(struct usX2Ydev *usX2Y,
 				 struct snd_usX2Y_substream *subs, struct urb *urb)
 {
@@ -312,6 +314,7 @@ static void usX2Y_error_sequence(struct usX2Ydev *usX2Y,
 	usX2Y_clients_stop(usX2Y);
 }
 
+>>>>>>> 671a46baf1b... some performance improvements
 static void i_usX2Y_urb_complete(struct urb *urb)
 {
 	struct snd_usX2Y_substream *subs = urb->context;
@@ -328,12 +331,18 @@ static void i_usX2Y_urb_complete(struct urb *urb)
 		usX2Y_error_urb_status(usX2Y, subs, urb);
 		return;
 	}
+<<<<<<< HEAD
+
+	subs->completed_urb = urb;
+
+=======
 	if (likely((urb->start_frame & 0xFFFF) == (usX2Y->wait_iso_frame & 0xFFFF)))
 		subs->completed_urb = urb;
 	else {
 		usX2Y_error_sequence(usX2Y, subs, urb);
 		return;
 	}
+>>>>>>> 671a46baf1b... some performance improvements
 	{
 		struct snd_usX2Y_substream *capsubs = usX2Y->subs[SNDRV_PCM_STREAM_CAPTURE],
 			*playbacksubs = usX2Y->subs[SNDRV_PCM_STREAM_PLAYBACK];

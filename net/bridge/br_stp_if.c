@@ -128,7 +128,22 @@ static void br_stp_start(struct net_bridge *br)
 	char *argv[] = { BR_STP_PROG, br->dev->name, "start", NULL };
 	char *envp[] = { NULL };
 
+<<<<<<< HEAD
+	if (net_eq(dev_net(br->dev), &init_net))
+		r = call_usermodehelper(BR_STP_PROG, argv, envp, UMH_WAIT_PROC);
+	else
+		r = -ENOENT;
+
+	spin_lock_bh(&br->lock);
+
+	if (br->bridge_forward_delay < BR_MIN_FORWARD_DELAY)
+		__br_set_forward_delay(br, BR_MIN_FORWARD_DELAY);
+	else if (br->bridge_forward_delay > BR_MAX_FORWARD_DELAY)
+		__br_set_forward_delay(br, BR_MAX_FORWARD_DELAY);
+
+=======
 	r = call_usermodehelper(BR_STP_PROG, argv, envp, UMH_WAIT_PROC);
+>>>>>>> 671a46baf1b... some performance improvements
 	if (r == 0) {
 		br->stp_enabled = BR_USER_STP;
 		br_debug(br, "userspace STP started\n");
@@ -137,10 +152,17 @@ static void br_stp_start(struct net_bridge *br)
 		br_debug(br, "using kernel STP\n");
 
 		/* To start timers on any ports left in blocking */
+<<<<<<< HEAD
+		br_port_state_selection(br);
+	}
+
+	spin_unlock_bh(&br->lock);
+=======
 		spin_lock_bh(&br->lock);
 		br_port_state_selection(br);
 		spin_unlock_bh(&br->lock);
 	}
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 static void br_stp_stop(struct net_bridge *br)
@@ -233,12 +255,20 @@ bool br_stp_recalculate_bridge_id(struct net_bridge *br)
 	return true;
 }
 
+<<<<<<< HEAD
+/* Acquires and releases bridge lock */
+=======
 /* called under bridge lock */
+>>>>>>> 671a46baf1b... some performance improvements
 void br_stp_set_bridge_priority(struct net_bridge *br, u16 newprio)
 {
 	struct net_bridge_port *p;
 	int wasroot;
 
+<<<<<<< HEAD
+	spin_lock_bh(&br->lock);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	wasroot = br_is_root_bridge(br);
 
 	list_for_each_entry(p, &br->port_list, list) {
@@ -256,6 +286,10 @@ void br_stp_set_bridge_priority(struct net_bridge *br, u16 newprio)
 	br_port_state_selection(br);
 	if (br_is_root_bridge(br) && !wasroot)
 		br_become_root_bridge(br);
+<<<<<<< HEAD
+	spin_unlock_bh(&br->lock);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 }
 
 /* called under bridge lock */

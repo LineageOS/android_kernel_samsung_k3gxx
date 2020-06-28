@@ -313,7 +313,11 @@ static int ip_rcv_finish(struct sk_buff *skb)
 	const struct iphdr *iph = ip_hdr(skb);
 	struct rtable *rt;
 
+<<<<<<< HEAD
+	if (sysctl_ip_early_demux && !skb_dst(skb) && skb->sk == NULL) {
+=======
 	if (sysctl_ip_early_demux && !skb_dst(skb)) {
+>>>>>>> 671a46baf1b... some performance improvements
 		const struct net_protocol *ipprot;
 		int protocol = iph->protocol;
 

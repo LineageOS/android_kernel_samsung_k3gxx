@@ -143,7 +143,10 @@ static int msg_insert(struct msg_msg *msg, struct mqueue_inode_info *info)
 		if (!leaf)
 			return -ENOMEM;
 		INIT_LIST_HEAD(&leaf->msg_list);
+<<<<<<< HEAD
+=======
 		info->qsize += sizeof(*leaf);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	leaf->priority = msg->m_type;
 	rb_link_node(&leaf->rb_node, parent, p);
@@ -188,7 +191,10 @@ try_again:
 			     "lazy leaf delete!\n");
 		rb_erase(&leaf->rb_node, &info->msg_tree);
 		if (info->node_cache) {
+<<<<<<< HEAD
+=======
 			info->qsize -= sizeof(*leaf);
+>>>>>>> 671a46baf1b... some performance improvements
 			kfree(leaf);
 		} else {
 			info->node_cache = leaf;
@@ -201,7 +207,10 @@ try_again:
 		if (list_empty(&leaf->msg_list)) {
 			rb_erase(&leaf->rb_node, &info->msg_tree);
 			if (info->node_cache) {
+<<<<<<< HEAD
+=======
 				info->qsize -= sizeof(*leaf);
+>>>>>>> 671a46baf1b... some performance improvements
 				kfree(leaf);
 			} else {
 				info->node_cache = leaf;
@@ -433,9 +442,15 @@ static int mqueue_create(struct inode *dir, struct dentry *dentry,
 		error = -EACCES;
 		goto out_unlock;
 	}
+<<<<<<< HEAD
+
+	if (ipc_ns->mq_queues_count >= ipc_ns->mq_queues_max &&
+	    !capable(CAP_SYS_RESOURCE)) {
+=======
 	if (ipc_ns->mq_queues_count >= HARD_QUEUESMAX ||
 	    (ipc_ns->mq_queues_count >= ipc_ns->mq_queues_max &&
 	     !capable(CAP_SYS_RESOURCE))) {
+>>>>>>> 671a46baf1b... some performance improvements
 		error = -ENOSPC;
 		goto out_unlock;
 	}
@@ -754,7 +769,11 @@ static struct file *do_create(struct ipc_namespace *ipc_ns, struct inode *dir,
 	}
 
 	mode &= ~current_umask();
+<<<<<<< HEAD
 	ret = vfs_create2(path->mnt, dir, path->dentry, mode, true);
+=======
+	ret = vfs_create(dir, path->dentry, mode, true);
+>>>>>>> 671a46baf1b... some performance improvements
 	path->dentry->d_fsdata = NULL;
 	if (ret)
 		return ERR_PTR(ret);
@@ -770,7 +789,11 @@ static struct file *do_open(struct path *path, int oflag)
 	if ((oflag & O_ACCMODE) == (O_RDWR | O_WRONLY))
 		return ERR_PTR(-EINVAL);
 	acc = oflag2acc[oflag & O_ACCMODE];
+<<<<<<< HEAD
 	if (inode_permission2(path->mnt, path->dentry->d_inode, acc))
+=======
+	if (inode_permission(path->dentry->d_inode, acc))
+>>>>>>> 671a46baf1b... some performance improvements
 		return ERR_PTR(-EACCES);
 	return dentry_open(path, oflag, current_cred());
 }
@@ -803,7 +826,11 @@ SYSCALL_DEFINE4(mq_open, const char __user *, u_name, int, oflag, umode_t, mode,
 	ro = mnt_want_write(mnt);	/* we'll drop it in any case */
 	error = 0;
 	mutex_lock(&root->d_inode->i_mutex);
+<<<<<<< HEAD
 	path.dentry = lookup_one_len2(name->name, mnt, root, strlen(name->name));
+=======
+	path.dentry = lookup_one_len(name->name, root, strlen(name->name));
+>>>>>>> 671a46baf1b... some performance improvements
 	if (IS_ERR(path.dentry)) {
 		error = PTR_ERR(path.dentry);
 		goto out_putfd;
@@ -823,6 +850,10 @@ SYSCALL_DEFINE4(mq_open, const char __user *, u_name, int, oflag, umode_t, mode,
 				error = ro;
 				goto out;
 			}
+<<<<<<< HEAD
+			audit_inode_parent_hidden(name, root);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 			filp = do_create(ipc_ns, root->d_inode,
 						&path, oflag, mode,
 						u_attr ? &attr : NULL);
@@ -868,11 +899,19 @@ SYSCALL_DEFINE1(mq_unlink, const char __user *, u_name)
 	if (IS_ERR(name))
 		return PTR_ERR(name);
 
+<<<<<<< HEAD
+	audit_inode_parent_hidden(name, mnt->mnt_root);
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	err = mnt_want_write(mnt);
 	if (err)
 		goto out_name;
 	mutex_lock_nested(&mnt->mnt_root->d_inode->i_mutex, I_MUTEX_PARENT);
+<<<<<<< HEAD
 	dentry = lookup_one_len2(name->name, mnt, mnt->mnt_root,
+=======
+	dentry = lookup_one_len(name->name, mnt->mnt_root,
+>>>>>>> 671a46baf1b... some performance improvements
 				strlen(name->name));
 	if (IS_ERR(dentry)) {
 		err = PTR_ERR(dentry);
@@ -884,7 +923,11 @@ SYSCALL_DEFINE1(mq_unlink, const char __user *, u_name)
 		err = -ENOENT;
 	} else {
 		ihold(inode);
+<<<<<<< HEAD
 		err = vfs_unlink2(mnt, dentry->d_parent->d_inode, dentry);
+=======
+		err = vfs_unlink(dentry->d_parent->d_inode, dentry);
+>>>>>>> 671a46baf1b... some performance improvements
 	}
 	dput(dentry);
 
@@ -1024,7 +1067,10 @@ SYSCALL_DEFINE5(mq_timedsend, mqd_t, mqdes, const char __user *, u_msg_ptr,
 		/* Save our speculative allocation into the cache */
 		INIT_LIST_HEAD(&new_leaf->msg_list);
 		info->node_cache = new_leaf;
+<<<<<<< HEAD
+=======
 		info->qsize += sizeof(*new_leaf);
+>>>>>>> 671a46baf1b... some performance improvements
 		new_leaf = NULL;
 	} else {
 		kfree(new_leaf);
@@ -1131,7 +1177,10 @@ SYSCALL_DEFINE5(mq_timedreceive, mqd_t, mqdes, char __user *, u_msg_ptr,
 		/* Save our speculative allocation into the cache */
 		INIT_LIST_HEAD(&new_leaf->msg_list);
 		info->node_cache = new_leaf;
+<<<<<<< HEAD
+=======
 		info->qsize += sizeof(*new_leaf);
+>>>>>>> 671a46baf1b... some performance improvements
 	} else {
 		kfree(new_leaf);
 	}

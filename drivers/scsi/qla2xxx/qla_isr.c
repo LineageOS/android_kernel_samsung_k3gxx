@@ -523,8 +523,14 @@ qla2x00_async_event(scsi_qla_host_t *vha, struct rsp_que *rsp, uint16_t *mb)
 	struct device_reg_2xxx __iomem *reg = &ha->iobase->isp;
 	struct device_reg_24xx __iomem *reg24 = &ha->iobase->isp24;
 	struct device_reg_82xx __iomem *reg82 = &ha->iobase->isp82;
+<<<<<<< HEAD
+	uint32_t	rscn_entry, host_pid, tmp_pid;
+	unsigned long	flags;
+	fc_port_t	*fcport = NULL;
+=======
 	uint32_t	rscn_entry, host_pid;
 	unsigned long	flags;
+>>>>>>> 671a46baf1b... some performance improvements
 
 	/* Setup to process RIO completion. */
 	handle_cnt = 0;
@@ -918,6 +924,23 @@ skip_rio:
 		if (qla2x00_is_a_vp_did(vha, rscn_entry))
 			break;
 
+<<<<<<< HEAD
+		/*
+		 * Search for the rport related to this RSCN entry and mark it
+		 * as lost.
+		 */
+		list_for_each_entry(fcport, &vha->vp_fcports, list) {
+			if (atomic_read(&fcport->state) != FCS_ONLINE)
+				continue;
+			tmp_pid = fcport->d_id.b24;
+			if (fcport->d_id.b24 == rscn_entry) {
+				qla2x00_mark_device_lost(vha, fcport, 0, 0);
+				break;
+			}
+		}
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 		atomic_set(&vha->loop_down_timer, 0);
 		vha->flags.management_server_logged_in = 0;
 

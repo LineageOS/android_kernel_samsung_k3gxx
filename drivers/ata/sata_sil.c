@@ -157,6 +157,10 @@ static const struct sil_drivelist {
 	{ "ST380011ASL",	SIL_QUIRK_MOD15WRITE },
 	{ "ST3120022ASL",	SIL_QUIRK_MOD15WRITE },
 	{ "ST3160021ASL",	SIL_QUIRK_MOD15WRITE },
+<<<<<<< HEAD
+	{ "TOSHIBA MK2561GSYN",	SIL_QUIRK_MOD15WRITE },
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	{ "Maxtor 4D060H3",	SIL_QUIRK_UDMA5MAX },
 	{ }
 };
@@ -630,6 +634,12 @@ static void sil_dev_config(struct ata_device *dev)
 	unsigned int n, quirks = 0;
 	unsigned char model_num[ATA_ID_PROD_LEN + 1];
 
+<<<<<<< HEAD
+	/* This controller doesn't support trim */
+	dev->horkage |= ATA_HORKAGE_NOTRIM;
+
+=======
+>>>>>>> 671a46baf1b... some performance improvements
 	ata_id_c_string(dev->id, model_num, ATA_ID_PROD, sizeof(model_num));
 
 	for (n = 0; sil_blacklist[n].product; n++)

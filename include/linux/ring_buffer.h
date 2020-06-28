@@ -97,7 +97,11 @@ __ring_buffer_alloc(unsigned long size, unsigned flags, struct lock_class_key *k
 	__ring_buffer_alloc((size), (flags), &__key);	\
 })
 
+<<<<<<< HEAD
+int ring_buffer_wait(struct ring_buffer *buffer, int cpu);
+=======
 void ring_buffer_wait(struct ring_buffer *buffer, int cpu);
+>>>>>>> 671a46baf1b... some performance improvements
 int ring_buffer_poll_wait(struct ring_buffer *buffer, int cpu,
 			  struct file *filp, poll_table *poll_table);
 

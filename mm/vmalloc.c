@@ -435,12 +435,20 @@ nocache:
 		addr = ALIGN(first->va_end, align);
 		if (addr < vstart)
 			goto nocache;
+<<<<<<< HEAD
+		if (addr + size < addr)
+=======
 		if (addr + size - 1 < addr)
+>>>>>>> 671a46baf1b... some performance improvements
 			goto overflow;
 
 	} else {
 		addr = ALIGN(vstart, align);
+<<<<<<< HEAD
+		if (addr + size < addr)
+=======
 		if (addr + size - 1 < addr)
+>>>>>>> 671a46baf1b... some performance improvements
 			goto overflow;
 
 		n = vmap_area_root.rb_node;
@@ -467,7 +475,11 @@ nocache:
 		if (addr + cached_hole_size < first->va_start)
 			cached_hole_size = first->va_start - addr;
 		addr = ALIGN(first->va_end, align);
+<<<<<<< HEAD
+		if (addr + size < addr)
+=======
 		if (addr + size - 1 < addr)
+>>>>>>> 671a46baf1b... some performance improvements
 			goto overflow;
 
 		if (list_is_last(&first->list, &vmap_area_list))

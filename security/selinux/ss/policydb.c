@@ -1515,6 +1515,9 @@ static int type_read(struct policydb *p, struct hashtab *h, void *fp)
 		goto bad;
 	return 0;
 bad:
+#if !defined(SELINUX_ALWAYS_ENFORCE)
+	panic("SELinux:Failed to type read");
+#endif /*SELINUX_ALWAYS_ENFORCE*/
 	type_destroy(key, typdatum, NULL);
 	return rc;
 }
@@ -2001,7 +2004,19 @@ static int filename_trans_read(struct policydb *p, void *fp)
 		if (rc)
 			goto out;
 
-		hashtab_insert(p->filename_trans, ft, otype);
+		rc = hashtab_insert(p->filename_trans, ft, otype);
+		if (rc) {
+			/*
+			 * Do not return -EEXIST to the caller, or the system
+			 * will not boot.
+			 */
+			if (rc != -EEXIST)
+				goto out;
+			/* But free memory to avoid memory leak. */
+			kfree(ft);
+			kfree(name);
+			kfree(otype);
+		}
 	}
 	hash_eval(p->filename_trans, "filenametr");
 	return 0;
@@ -2553,6 +2568,9 @@ int policydb_read(struct policydb *p, void *fp)
 out:
 	return rc;
 bad:
+#if !defined(SELINUX_ALWAYS_ENFORCE)
+	panic("SELinux:Failed to load policy");
+#endif /*SELINUX_ALWAYS_ENFORCE*/
 	policydb_destroy(p);
 	goto out;
 }
@@ -3330,10 +3348,10 @@ static int filename_write_helper(void *key, void *data, void *ptr)
 	if (rc)
 		return rc;
 
-	buf[0] = ft->stype;
-	buf[1] = ft->ttype;
-	buf[2] = ft->tclass;
-	buf[3] = otype->otype;
+	buf[0] = cpu_to_le32(ft->stype);
+	buf[1] = cpu_to_le32(ft->ttype);
+	buf[2] = cpu_to_le32(ft->tclass);
+	buf[3] = cpu_to_le32(otype->otype);
 
 	rc = put_entry(buf, sizeof(u32), 4, fp);
 	if (rc)

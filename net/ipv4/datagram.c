@@ -20,7 +20,7 @@
 #include <net/route.h>
 #include <net/tcp_states.h>
 
-int ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+int __ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 {
 	struct inet_sock *inet = inet_sk(sk);
 	struct sockaddr_in *usin = (struct sockaddr_in *) uaddr;
@@ -39,8 +39,6 @@ int ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 
 	sk_dst_reset(sk);
 
-	lock_sock(sk);
-
 	oif = sk->sk_bound_dev_if;
 	saddr = inet->inet_saddr;
 	if (ipv4_is_multicast(usin->sin_addr.s_addr)) {
@@ -57,7 +55,7 @@ int ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 	if (IS_ERR(rt)) {
 		err = PTR_ERR(rt);
 		if (err == -ENETUNREACH)
-			IP_INC_STATS_BH(sock_net(sk), IPSTATS_MIB_OUTNOROUTES);
+			IP_INC_STATS(sock_net(sk), IPSTATS_MIB_OUTNOROUTES);
 		goto out;
 	}
 
@@ -81,8 +79,18 @@ int ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 	sk_dst_set(sk, &rt->dst);
 	err = 0;
 out:
-	release_sock(sk);
 	return err;
+}
+EXPORT_SYMBOL(__ip4_datagram_connect);
+
+int ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+{
+	int res;
+
+	lock_sock(sk);
+	res = __ip4_datagram_connect(sk, uaddr, addr_len);
+	release_sock(sk);
+	return res;
 }
 EXPORT_SYMBOL(ip4_datagram_connect);
 

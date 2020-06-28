@@ -771,6 +771,11 @@ out:
 	kfree(o);
 	kfree(n);
 	kfree(t);
+#if defined(SELINUX_ALWAYS_ENFORCE)
+	selinux_enforcing = 1;
+#elif defined(SELINUX_ALWAYS_PERMISSIVE)
+	selinux_enforcing = 0;
+#endif
 
 	if (!selinux_enforcing)
 		return 0;
@@ -1530,6 +1535,12 @@ out:
 	kfree(s);
 	kfree(t);
 	kfree(n);
+#if defined(SELINUX_ALWAYS_ENFORCE)
+	selinux_enforcing = 1;
+#elif defined(SELINUX_ALWAYS_PERMISSIVE)
+	selinux_enforcing = 0;
+#endif
+
 	if (!selinux_enforcing)
 		return 0;
 	return -EACCES;
@@ -1820,6 +1831,12 @@ static inline int convert_context_handle_invalid_context(struct context *context
 {
 	char *s;
 	u32 len;
+
+#if defined(SELINUX_ALWAYS_ENFORCE)
+	selinux_enforcing = 1;
+#elif defined(SELINUX_ALWAYS_PERMISSIVE)
+	selinux_enforcing = 0;
+#endif
 
 	if (selinux_enforcing)
 		return -EINVAL;

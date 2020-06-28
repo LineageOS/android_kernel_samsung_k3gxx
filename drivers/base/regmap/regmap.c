@@ -114,7 +114,7 @@ bool regmap_readable(struct regmap *map, unsigned int reg)
 
 bool regmap_volatile(struct regmap *map, unsigned int reg)
 {
-	if (!regmap_readable(map, reg))
+	if (!map->format.format_write && !regmap_readable(map, reg))
 		return false;
 
 	if (map->volatile_reg)
@@ -1177,7 +1177,7 @@ int _regmap_write(struct regmap *map, unsigned int reg,
 	}
 
 #ifdef LOG_DEVICE
-	if (strcmp(dev_name(map->dev), LOG_DEVICE) == 0)
+	if (map->dev && strcmp(dev_name(map->dev), LOG_DEVICE) == 0)
 		dev_info(map->dev, "%x <= %x\n", reg, val);
 #endif
 
@@ -1320,7 +1320,7 @@ out:
 EXPORT_SYMBOL_GPL(regmap_bulk_write);
 
 static int _regmap_multi_reg_write(struct regmap *map,
-				   const struct reg_default *regs,
+				   const struct reg_sequence *regs,
 				   int num_regs)
 {
 	int i, ret;
@@ -1355,7 +1355,7 @@ static int _regmap_multi_reg_write(struct regmap *map,
  * A value of zero will be returned on success, a negative errno will
  * be returned in error cases.
  */
-int regmap_multi_reg_write(struct regmap *map, const struct reg_default *regs,
+int regmap_multi_reg_write(struct regmap *map, const struct reg_sequence *regs,
 			   int num_regs)
 {
 	int ret;
@@ -1388,7 +1388,7 @@ EXPORT_SYMBOL_GPL(regmap_multi_reg_write);
  * be returned in error cases.
  */
 int regmap_multi_reg_write_bypassed(struct regmap *map,
-				    const struct reg_default *regs,
+				    const struct reg_sequence *regs,
 				    int num_regs)
 {
 	int ret;
@@ -1527,7 +1527,7 @@ static int _regmap_read(struct regmap *map, unsigned int reg,
 	ret = map->reg_read(context, reg, val);
 	if (ret == 0) {
 #ifdef LOG_DEVICE
-		if (strcmp(dev_name(map->dev), LOG_DEVICE) == 0)
+		if (map->dev && strcmp(dev_name(map->dev), LOG_DEVICE) == 0)
 			dev_info(map->dev, "%x => %x\n", reg, *val);
 #endif
 
@@ -1676,7 +1676,7 @@ int regmap_bulk_read(struct regmap *map, unsigned int reg, void *val,
 					  &ival);
 			if (ret != 0)
 				return ret;
-			memcpy(val + (i * val_bytes), &ival, val_bytes);
+			map->format.format_val(val + (i * val_bytes), ival, 0);
 		}
 	}
 

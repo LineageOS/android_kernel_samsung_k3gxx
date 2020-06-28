@@ -127,7 +127,7 @@ struct arizona_extcon_info {
 	bool detecting;
 	int jack_flips;
 
-	int hpdet_ip;
+	int hpdet_ip_version;
 	const struct arizona_hpdet_d_trims *hpdet_d_trims;
 	const struct arizona_hpdet_calibration_data *calib_data;
 	int calib_data_size;
@@ -289,7 +289,11 @@ static void arizona_extcon_hp_clamp(struct arizona_extcon_info *info,
 	unsigned int mask, val = 0;
 	unsigned int cap_sel = 0;
 	unsigned int edre_reg = 0, edre_val = 0;
+	unsigned int ep_sel = 0;
 	int ret;
+
+	mutex_lock_nested(&arizona->dapm->card->dapm_mutex,
+			  SND_SOC_DAPM_CLASS_RUNTIME);
 
 	switch (arizona->type) {
 	case WM5102:
@@ -339,12 +343,10 @@ static void arizona_extcon_hp_clamp(struct arizona_extcon_info *info,
 		break;
 	};
 
-	mutex_lock(&arizona->dapm->card->dapm_mutex);
-
 	arizona->hpdet_clamp = clamp;
 
 	/* Keep the HP output stages disabled while doing the clamp */
-	if (clamp) {
+	if (clamp && !ep_sel) {
 		ret = regmap_update_bits(arizona->regmap,
 					 ARIZONA_OUTPUT_ENABLES_1,
 					 ARIZONA_OUT1L_ENA |
@@ -355,7 +357,7 @@ static void arizona_extcon_hp_clamp(struct arizona_extcon_info *info,
 				 ret);
 	}
 
-	if (edre_reg) {
+	if (edre_reg && !ep_sel) {
 			ret = regmap_write(arizona->regmap, edre_reg, edre_val);
 			if (ret != 0)
 				dev_warn(arizona->dev,
@@ -378,7 +380,8 @@ static void arizona_extcon_hp_clamp(struct arizona_extcon_info *info,
 	}
 
 	/* Restore the desired state while not doing the clamp */
-	if (!clamp && (arizona->hp_impedance > arizona->pdata.hpdet_short_circuit_imp)) {
+	if (!clamp && (arizona->hp_impedance >
+			arizona->pdata.hpdet_short_circuit_imp) && !ep_sel) {
 		ret = regmap_update_bits(arizona->regmap,
 					 ARIZONA_OUTPUT_ENABLES_1,
 					 ARIZONA_OUT1L_ENA |
@@ -472,22 +475,6 @@ static int arizona_micd_adc_read(struct arizona_extcon_info *info)
 
 	regmap_read(arizona->regmap, ARIZONA_ACCESSORY_DETECT_MODE_1, &val);
 	val &= ARIZONA_ACCDET_MODE_MASK;
-
-	if ((info->detecting) && (val == ARIZONA_ACCDET_MODE_ADC)) {
-		bool micd_ena;
-
-		/* Must disable MICD before we read the ADCVAL */
-		ret = regmap_update_bits_check(arizona->regmap,
-					       ARIZONA_MIC_DETECT_1,
-					       ARIZONA_MICD_ENA, 0,
-					       &micd_ena);
-		if (ret != 0) {
-			dev_err(arizona->dev,
-				"Failed to disable MICD: %d\n",
-				ret);
-			return ret;
-		}
-	}
 
 	/* Must disable MICD before we read the ADCVAL */
 	ret = regmap_update_bits(arizona->regmap, ARIZONA_MIC_DETECT_1,
@@ -612,7 +599,7 @@ static int arizona_hpdet_d_calibrate(const struct arizona_extcon_info *info,
 	s64 val = dacval;
 	s64 n;
 
-	dev_warn(info->arizona->dev, "hpdet_d calib range %d dac %d\n", range, dacval);
+	dev_dbg(info->arizona->dev, "hpdet_d calib range %d dac %d\n", range, dacval);
 
 	val = (val * 1000000) + info->calib_data[range].dacval_adjust;
 	val = div64_s64(val, info->calib_data[range].C2);
@@ -656,7 +643,7 @@ static int arizona_hpdet_read(struct arizona_extcon_info *info)
 		return ret;
 	}
 
-	switch (info->hpdet_ip) {
+	switch (info->hpdet_ip_version) {
 	case 0:
 		if (!(val & ARIZONA_HP_DONE)) {
 			dev_err(arizona->dev, "HPDET did not complete: %x\n",
@@ -717,7 +704,7 @@ static int arizona_hpdet_read(struct arizona_extcon_info *info)
 
 	default:
 		dev_warn(arizona->dev, "Unknown HPDET IP revision %d\n",
-			 info->hpdet_ip);
+			 info->hpdet_ip_version);
 	case 2:
 		if (!(val & ARIZONA_HP_DONE_B)) {
 			dev_err(arizona->dev, "HPDET did not complete: %x\n",
@@ -797,7 +784,7 @@ static int arizona_hpdet_read(struct arizona_extcon_info *info)
 		}
 		val = (val >> ARIZONA_HP_DACVAL_SHIFT) & ARIZONA_HP_DACVAL_MASK;
 
-		if (info->hpdet_ip == 4) {
+		if (info->hpdet_ip_version == 4) {
 			ret = regmap_read(arizona->regmap,
 					  ARIZONA_HP_DACVAL,
 					  &val_down);
@@ -1695,9 +1682,9 @@ static int arizona_antenna_remove_reading(struct arizona_extcon_info *info,
 
 static int arizona_add_micd_levels(struct arizona_extcon_info *info);
 
-static int arizona_antenna_get_micd_level(int imp, int range)
+static unsigned int arizona_antenna_get_micd_level(int imp, int range)
 {
-	int micd_lvl;
+	unsigned int micd_lvl;
 	int impd_lvl;
 
 	impd_lvl = imp + range;
@@ -1708,9 +1695,6 @@ static int arizona_antenna_get_micd_level(int imp, int range)
 			break;
 	}
 
-	if (micd_lvl == ARIZONA_NUM_MICD_BUTTON_LEVELS)
-		return -EINVAL;
-
 	return micd_lvl;
 }
 
@@ -1719,7 +1703,9 @@ static int arizona_antenna_add_micd_level(struct arizona_extcon_info *info, int 
 	struct arizona *arizona = info->arizona;
 	struct arizona_pdata *pdata = &arizona->pdata;
 	int i, j, micd_lvl;
-	int hp_imp_range_lo = -1, hp_imp_range_hi = -1, ret = 0;
+	int ret = 0;
+	unsigned int hp_imp_range_lo = ARIZONA_NUM_MICD_BUTTON_LEVELS;
+	unsigned int hp_imp_range_hi = ARIZONA_NUM_MICD_BUTTON_LEVELS;
 
 	/* check if additional impedance levels can be added */
 	if (info->num_micd_ranges + 2 > ARIZONA_MAX_MICD_RANGE) {
@@ -1750,9 +1736,13 @@ static int arizona_antenna_add_micd_level(struct arizona_extcon_info *info, int 
 							-(pdata->antenna_hp_imp_range_lo));
 	}
 
-	if (hp_imp_range_lo < 0 || hp_imp_range_hi < 0) {
+	if (hp_imp_range_lo == ARIZONA_NUM_MICD_BUTTON_LEVELS ||
+		hp_imp_range_hi == ARIZONA_NUM_MICD_BUTTON_LEVELS) {
 		hp_imp_range_hi = arizona_antenna_get_micd_level(imp, 0);
-		hp_imp_range_lo = hp_imp_range_hi - 2;
+		if (hp_imp_range_hi - 2 > hp_imp_range_hi)
+			hp_imp_range_lo = 0;
+		else
+			hp_imp_range_lo = hp_imp_range_hi - 2;
 	}
 
 	/* find index to insert an impedance level */
@@ -1769,10 +1759,11 @@ static int arizona_antenna_add_micd_level(struct arizona_extcon_info *info, int 
 	}
 
 	if (hp_imp_range_lo == hp_imp_range_hi) {
-		if (i == 0)
+		if ((hp_imp_range_hi != 0) && (i == 0))
 			hp_imp_range_lo = hp_imp_range_hi - 1;
-		else if (info->micd_ranges[i-1].max <
-			arizona_micd_levels[hp_imp_range_hi - 1])
+		else if ((hp_imp_range_hi != 0) &&
+			(info->micd_ranges[i-1].max <
+			arizona_micd_levels[hp_imp_range_hi - 1]))
 			hp_imp_range_lo = hp_imp_range_hi - 1;
 		else {
 			dev_info(arizona->dev, "MICD level range cannot be added %d\n",
@@ -1837,8 +1828,9 @@ static int arizona_antenna_button_start(struct arizona_extcon_info *info)
 {
 	struct arizona *arizona = info->arizona;
 	struct arizona_pdata *pdata = &arizona->pdata;
-	int i, micd_lvl;
-	int hp_imp_range_hi = -1;
+	int i;
+	unsigned int micd_lvl = ARIZONA_NUM_MICD_BUTTON_LEVELS;
+	unsigned int hp_imp_range_hi = ARIZONA_NUM_MICD_BUTTON_LEVELS;
 
 	info->button_impedance = 0;
 	info->button_check = 0;
@@ -1847,14 +1839,14 @@ static int arizona_antenna_button_start(struct arizona_extcon_info *info)
 	/* check if impedance level is supported */
 	micd_lvl = arizona_antenna_get_micd_level(arizona->hp_impedance, 0);
 
-	if (micd_lvl < 0)
+	if (micd_lvl == ARIZONA_NUM_MICD_BUTTON_LEVELS)
 		goto micd_start;
 
 	if (pdata->antenna_hp_imp_range_hi)
 		hp_imp_range_hi = arizona_antenna_get_micd_level(arizona->hp_impedance,
 							pdata->antenna_hp_imp_range_hi);
 
-	if (hp_imp_range_hi < 0)
+	if (hp_imp_range_hi == ARIZONA_NUM_MICD_BUTTON_LEVELS)
 		hp_imp_range_hi = micd_lvl;
 
 	for (i = 0; i < info->num_micd_ranges; i++) {
@@ -2346,26 +2338,40 @@ static void arizona_micd_handler(struct work_struct *work)
 			     struct arizona_extcon_info,
 			     micd_detect_work.work);
 	struct arizona *arizona = info->arizona;
+	int mode;
 	int ret;
 
 	arizona_jds_cancel_timeout(info);
 
 	mutex_lock(&info->lock);
 
+	/* Must check that we are in a micd state before accessing
+	 * any codec registers
+	 */
+	mode = arizona_jds_get_mode(info);
+	switch (mode) {
+	case ARIZONA_ACCDET_MODE_MIC:
+	case ARIZONA_ACCDET_MODE_ADC:
+		break;
+	default:
+		goto spurious;
+	}
+
 	if (arizona_jack_present(info, NULL) <= 0)
 		goto spurious;
 
 	arizona_hs_mic_control(arizona, ARIZONA_MIC_MUTE);
 
-	switch (arizona_jds_get_mode(info)) {
+	switch (mode) {
 	case ARIZONA_ACCDET_MODE_MIC:
 		ret = arizona_micd_read(info);
 		break;
 	case ARIZONA_ACCDET_MODE_ADC:
 		ret = arizona_micd_adc_read(info);
 		break;
-	default:
-		goto spurious;
+	default:	/* we can't get here but compiler still warns */
+		ret = 0;
+		break;
 	}
 
 	if (ret == -EAGAIN)
@@ -2437,11 +2443,12 @@ static irqreturn_t arizona_micdet(int irq, void *data)
 
 	mutex_unlock(&info->lock);
 
-	if (debounce)
-		schedule_delayed_work(&info->micd_detect_work,
-				      msecs_to_jiffies(debounce));
-	else
-		arizona_micd_handler(&info->micd_detect_work.work);
+	/* Defer to the workqueue to ensure serialization
+	 * and prevent race conditions if an IRQ occurs while
+	 * running the delayed work
+	 */
+	schedule_delayed_work(&info->micd_detect_work,
+				msecs_to_jiffies(debounce));
 
 	return IRQ_HANDLED;
 }
@@ -2600,9 +2607,9 @@ static irqreturn_t arizona_jackdet(int irq, void *data)
 {
 	struct arizona_extcon_info *info = data;
 	struct arizona *arizona = info->arizona;
-	unsigned int reg, val, present, mask;
+	unsigned int reg, val, mask;
 	bool cancelled_hp, cancelled_state;
-	int i;
+	int i, present;
 
 	cancelled_hp = cancel_delayed_work_sync(&info->hpdet_work);
 	cancelled_state = arizona_jds_cancel_timeout(info);
@@ -2700,6 +2707,8 @@ static irqreturn_t arizona_jackdet(int irq, void *data)
 
 		arizona_hs_mic_control(arizona, ARIZONA_MIC_MUTE);
 
+		arizona_hs_mic_control(arizona, ARIZONA_MIC_MUTE);
+
 		info->num_hpdet_res = 0;
 		for (i = 0; i < ARRAY_SIZE(info->hpdet_res); i++)
 			info->hpdet_res[i] = 0;
@@ -2709,7 +2718,6 @@ static irqreturn_t arizona_jackdet(int irq, void *data)
 		info->micd_debounce = 0;
 		info->micd_count = 0;
 		info->moisture_count = 0;
-		arizona->hp_impedance = 0;
 		arizona_jds_set_state(info, NULL);
 
 		for (i = 0; i < info->num_micd_ranges; i++)
@@ -2721,21 +2729,7 @@ static irqreturn_t arizona_jackdet(int irq, void *data)
 
 		regmap_update_bits(arizona->regmap, reg, mask, mask);
 
-		switch (arizona->type) {
-		case WM5110:
-			arizona_wm5110_tune_headphone(info, ARIZONA_HP_Z_OPEN);
-			break;
-		case WM1814:
-			arizona_wm1814_tune_headphone(info, ARIZONA_HP_Z_OPEN);
-			break;
-		default:
-			break;
-		}
-
-		/* Use a sufficiently large number to indicate open circuit */
-		if (arizona->pdata.hpdet_cb) {
-			arizona->pdata.hpdet_cb(ARIZONA_HP_Z_OPEN);
-		}
+		arizona_set_headphone_imp(info, ARIZONA_HP_Z_OPEN);
 
 		if (arizona->pdata.micd_cb)
 			arizona->pdata.micd_cb(false);
@@ -3334,7 +3328,7 @@ static int arizona_extcon_probe(struct platform_device *pdev)
 			break;
 		default:
 			info->micd_clamp = true;
-			info->hpdet_ip = 1;
+			info->hpdet_ip_version = 1;
 			break;
 		}
 		break;
@@ -3345,18 +3339,18 @@ static int arizona_extcon_probe(struct platform_device *pdev)
 			break;
 		default:
 			info->micd_clamp = true;
-			info->hpdet_ip = 3;
+			info->hpdet_ip_version = 3;
 			break;
 		}
 		break;
 	case WM8285:
 	case WM1840:
 		info->micd_clamp = true;
-		info->hpdet_ip = 4;
+		info->hpdet_ip_version = 4;
 		break;
 	default:
 		info->micd_clamp = true;
-		info->hpdet_ip = 2;
+		info->hpdet_ip_version = 2;
 		break;
 	}
 
@@ -3506,16 +3500,16 @@ static int arizona_extcon_probe(struct platform_device *pdev)
 	pm_runtime_idle(&pdev->dev);
 	pm_runtime_get_sync(&pdev->dev);
 
-	switch (info->hpdet_ip) {
+	switch (info->hpdet_ip_version) {
 	case 3:
 		arizona_hpdet_d_read_calibration(info);
 		if (!info->hpdet_d_trims)
-			info->hpdet_ip = 2;
+			info->hpdet_ip_version = 2;
 		break;
 	case 4:
 		arizona_hpdet_clearwater_read_calibration(info);
 		if (!info->hpdet_d_trims)
-			info->hpdet_ip = 2;
+			info->hpdet_ip_version = 2;
 		else
 			/* as per the hardware steps - below bit needs to be set
 			 * for clearwater for accurate HP impedance detection */

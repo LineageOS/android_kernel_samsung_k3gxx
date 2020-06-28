@@ -135,15 +135,10 @@ struct jffs2_sb_info {
 
 	struct delayed_work wbuf_dwork; /* write-buffer write-out work */
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	int wbuf_queued;                /* non-zero delayed work is queued */
 	spinlock_t wbuf_dwork_lock;     /* protects wbuf_dwork and and wbuf_queued */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int wbuf_queued;                /* non-zero delayed work is queued */
-	spinlock_t wbuf_dwork_lock;     /* protects wbuf_dwork and and wbuf_queued */
->>>>>>> master
 
 	unsigned char *oobbuf;
 	int oobavail; /* How many bytes are available for JFFS2 in OOB */

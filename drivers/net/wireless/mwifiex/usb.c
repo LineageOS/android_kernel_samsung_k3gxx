@@ -447,17 +447,11 @@ static int mwifiex_usb_suspend(struct usb_interface *intf, pm_message_t message)
 	adapter->is_suspended = true;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	for (i = 0; i < adapter->priv_num; i++)
 		netif_carrier_off(adapter->priv[i]->netdev);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	for (i = 0; i < adapter->priv_num; i++)
-		netif_carrier_off(adapter->priv[i]->netdev);
-
->>>>>>> master
 	if (atomic_read(&card->rx_cmd_urb_pending) && card->rx_cmd.urb)
 		usb_kill_urb(card->rx_cmd.urb);
 
@@ -518,18 +512,12 @@ static int mwifiex_usb_resume(struct usb_interface *intf)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	for (i = 0; i < adapter->priv_num; i++)
 		if (adapter->priv[i]->media_connected)
 			netif_carrier_on(adapter->priv[i]->netdev);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* Disable Host Sleep */
 	if (adapter->hs_activated)
 		mwifiex_cancel_hs(mwifiex_get_priv(adapter,
@@ -537,10 +525,7 @@ static int mwifiex_usb_resume(struct usb_interface *intf)
 				  MWIFIEX_ASYNC_CMD);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #ifdef CONFIG_PM
 	/* Resume handler may be called due to remote wakeup,
 	 * force to exit suspend anyway
@@ -548,10 +533,7 @@ static int mwifiex_usb_resume(struct usb_interface *intf)
 	usb_disable_autosuspend(card->udev);
 #endif /* CONFIG_PM */
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 }
 
@@ -611,13 +593,9 @@ static struct usb_driver mwifiex_usb_driver = {
 	.suspend = mwifiex_usb_suspend,
 	.resume = mwifiex_usb_resume,
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	.supports_autosuspend = 1,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	.supports_autosuspend = 1,
->>>>>>> master
 };
 
 static int mwifiex_usb_tx_init(struct mwifiex_adapter *adapter)

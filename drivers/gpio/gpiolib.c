@@ -363,14 +363,10 @@ static ssize_t gpio_value_store(struct device *dev,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static DEVICE_ATTR(value, 0644,
 =======
 static const DEVICE_ATTR(value, 0644,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static const DEVICE_ATTR(value, 0644,
->>>>>>> master
 		gpio_value_show, gpio_value_store);
 
 static irqreturn_t gpio_sysfs_irq(int irq, void *priv)
@@ -589,22 +585,16 @@ static ssize_t gpio_active_low_store(struct device *dev,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static DEVICE_ATTR(active_low, 0644,
 		gpio_active_low_show, gpio_active_low_store);
 
 static struct attribute *gpio_attrs[] = {
 =======
-=======
->>>>>>> master
 static const DEVICE_ATTR(active_low, 0644,
 		gpio_active_low_show, gpio_active_low_store);
 
 static const struct attribute *gpio_attrs[] = {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	&dev_attr_value.attr,
 	&dev_attr_active_low.attr,
 	NULL,
@@ -612,14 +602,10 @@ static const struct attribute *gpio_attrs[] = {
 
 static const struct attribute_group gpio_attr_group = {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.attrs = gpio_attrs,
 =======
 	.attrs = (struct attribute **) gpio_attrs,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	.attrs = (struct attribute **) gpio_attrs,
->>>>>>> master
 };
 
 /*
@@ -657,14 +643,10 @@ static ssize_t chip_ngpio_show(struct device *dev,
 static DEVICE_ATTR(ngpio, 0444, chip_ngpio_show, NULL);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static struct attribute *gpiochip_attrs[] = {
 =======
 static const struct attribute *gpiochip_attrs[] = {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static const struct attribute *gpiochip_attrs[] = {
->>>>>>> master
 	&dev_attr_base.attr,
 	&dev_attr_label.attr,
 	&dev_attr_ngpio.attr,
@@ -673,14 +655,10 @@ static const struct attribute *gpiochip_attrs[] = {
 
 static const struct attribute_group gpiochip_attr_group = {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.attrs = gpiochip_attrs,
 =======
 	.attrs = (struct attribute **) gpiochip_attrs,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	.attrs = (struct attribute **) gpiochip_attrs,
->>>>>>> master
 };
 
 /*
@@ -798,12 +776,9 @@ static struct class gpio_class = {
 static int gpiod_export(struct gpio_desc *desc, bool direction_may_change)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct gpio_chip	*chip;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	unsigned long		flags;
 	int			status;
 	const char		*ioname = NULL;
@@ -822,7 +797,6 @@ static int gpiod_export(struct gpio_desc *desc, bool direction_may_change)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	chip = desc->chip;
 
 	mutex_lock(&sysfs_lock);
@@ -837,10 +811,6 @@ static int gpiod_export(struct gpio_desc *desc, bool direction_may_change)
 	mutex_lock(&sysfs_lock);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mutex_lock(&sysfs_lock);
-
->>>>>>> master
 	spin_lock_irqsave(&gpio_lock, flags);
 	if (!test_bit(FLAG_REQUESTED, &desc->flags) ||
 	     test_bit(FLAG_EXPORT, &desc->flags)) {
@@ -877,14 +847,10 @@ static int gpiod_export(struct gpio_desc *desc, bool direction_may_change)
 		status = device_create_file(dev, &dev_attr_direction);
 		if (status)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			goto fail_remove_attr_group;
 =======
 			goto fail_unregister_device;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			goto fail_unregister_device;
->>>>>>> master
 	}
 
 	if (gpiod_to_irq(desc) >= 0 && (direction_may_change ||
@@ -892,14 +858,10 @@ static int gpiod_export(struct gpio_desc *desc, bool direction_may_change)
 		status = device_create_file(dev, &dev_attr_edge);
 		if (status)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			goto fail_remove_attr_direction;
 =======
 			goto fail_unregister_device;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			goto fail_unregister_device;
->>>>>>> master
 	}
 
 	set_bit(FLAG_EXPORT, &desc->flags);
@@ -907,15 +869,12 @@ static int gpiod_export(struct gpio_desc *desc, bool direction_may_change)
 	return 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 fail_remove_attr_direction:
 	device_remove_file(dev, &dev_attr_direction);
 fail_remove_attr_group:
 	sysfs_remove_group(&dev->kobj, &gpio_attr_group);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 fail_unregister_device:
 	device_unregister(dev);
 fail_unlock:
@@ -967,12 +926,9 @@ static int gpiod_export_link(struct device *dev, const char *name,
 			status = sysfs_create_link(&dev->kobj, &tdev->kobj,
 						name);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			put_device(tdev);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		} else {
 			status = -ENODEV;
 		}
@@ -1027,14 +983,10 @@ static int gpiod_sysfs_set_active_low(struct gpio_desc *desc, int value)
 
 	status = sysfs_set_active_low(desc, dev, value);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	put_device(dev);
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 unlock:
 	mutex_unlock(&sysfs_lock);
 
@@ -1083,14 +1035,11 @@ static void gpiod_unexport(struct gpio_desc *desc)
 
 	if (dev) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		device_remove_file(dev, &dev_attr_edge);
 		device_remove_file(dev, &dev_attr_direction);
 		sysfs_remove_group(&dev->kobj, &gpio_attr_group);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		device_unregister(dev);
 		put_device(dev);
 	}
@@ -1153,18 +1102,14 @@ static void gpiochip_unexport(struct gpio_chip *chip)
 	int			status;
 	struct device		*dev;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct gpio_desc *desc;
 	unsigned int i;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	mutex_lock(&sysfs_lock);
 	dev = class_find_device(&gpio_class, NULL, chip, match_export);
 	if (dev) {
-<<<<<<< HEAD
 <<<<<<< HEAD
 		sysfs_remove_group(&dev->kobj, &gpiochip_attr_group);
 		put_device(dev);
@@ -1174,10 +1119,6 @@ static void gpiochip_unexport(struct gpio_chip *chip)
 		put_device(dev);
 		device_unregister(dev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		put_device(dev);
-		device_unregister(dev);
->>>>>>> master
 		chip->exported = 0;
 		status = 0;
 	} else
@@ -1188,7 +1129,6 @@ static void gpiochip_unexport(struct gpio_chip *chip)
 		pr_debug("%s: chip %s status %d\n", __func__,
 				chip->label, status);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	/* unregister gpiod class devices owned by sysfs */
 	for (i = 0; i < chip->ngpio; i++) {
@@ -1198,8 +1138,6 @@ static void gpiochip_unexport(struct gpio_chip *chip)
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static int __init gpiolib_sysfs_init(void)
@@ -1410,13 +1348,10 @@ int gpiochip_remove(struct gpio_chip *chip)
 	unsigned	id;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	gpiochip_unexport(chip);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	spin_lock_irqsave(&gpio_lock, flags);
 
 	gpiochip_remove_pin_ranges(chip);
@@ -1438,17 +1373,11 @@ int gpiochip_remove(struct gpio_chip *chip)
 	spin_unlock_irqrestore(&gpio_lock, flags);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if (status == 0)
 		gpiochip_unexport(chip);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (status == 0)
-		gpiochip_unexport(chip);
-
->>>>>>> master
 	return status;
 }
 EXPORT_SYMBOL_GPL(gpiochip_remove);

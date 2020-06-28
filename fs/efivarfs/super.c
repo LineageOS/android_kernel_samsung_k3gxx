@@ -129,7 +129,6 @@ static int efivarfs_callback(efi_char16_t *name16, efi_guid_t vendor,
 	unsigned long size = 0;
 	char *name;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int len;
 	int err = -ENOMEM;
 	bool is_removable = false;
@@ -137,10 +136,6 @@ static int efivarfs_callback(efi_char16_t *name16, efi_guid_t vendor,
 	int len, i;
 	int err = -ENOMEM;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int len, i;
-	int err = -ENOMEM;
->>>>>>> master
 
 	entry = kmalloc(sizeof(*entry), GFP_KERNEL);
 	if (!entry)
@@ -150,21 +145,16 @@ static int efivarfs_callback(efi_char16_t *name16, efi_guid_t vendor,
 	memcpy(&(entry->var.VendorGuid), &vendor, sizeof(efi_guid_t));
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	len = ucs2_utf8size(entry->var.VariableName);
 =======
 	len = ucs2_strlen(entry->var.VariableName);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	len = ucs2_strlen(entry->var.VariableName);
->>>>>>> master
 
 	/* name, plus '-', plus GUID, plus NUL*/
 	name = kmalloc(len + 1 + EFI_VARIABLE_GUID_LEN + 1, GFP_KERNEL);
 	if (!name)
 		goto fail;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	ucs2_as_utf8(name, entry->var.VariableName, len);
 
@@ -174,10 +164,6 @@ static int efivarfs_callback(efi_char16_t *name16, efi_guid_t vendor,
 	for (i = 0; i < len; i++)
 		name[i] = entry->var.VariableName[i] & 0xFF;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	for (i = 0; i < len; i++)
-		name[i] = entry->var.VariableName[i] & 0xFF;
->>>>>>> master
 
 	name[len] = '-';
 
@@ -186,15 +172,11 @@ static int efivarfs_callback(efi_char16_t *name16, efi_guid_t vendor,
 	name[len + EFI_VARIABLE_GUID_LEN+1] = '\0';
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	inode = efivarfs_get_inode(sb, root->d_inode, S_IFREG | 0644, 0,
 				   is_removable);
 =======
 	inode = efivarfs_get_inode(sb, root->d_inode, S_IFREG | 0644, 0);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	inode = efivarfs_get_inode(sb, root->d_inode, S_IFREG | 0644, 0);
->>>>>>> master
 	if (!inode)
 		goto fail_name;
 
@@ -251,14 +233,10 @@ static int efivarfs_fill_super(struct super_block *sb, void *data, int silent)
 	sb->s_time_gran         = 1;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	inode = efivarfs_get_inode(sb, NULL, S_IFDIR | 0755, 0, true);
 =======
 	inode = efivarfs_get_inode(sb, NULL, S_IFDIR | 0755, 0);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	inode = efivarfs_get_inode(sb, NULL, S_IFDIR | 0755, 0);
->>>>>>> master
 	if (!inode)
 		return -ENOMEM;
 	inode->i_op = &efivarfs_dir_inode_operations;

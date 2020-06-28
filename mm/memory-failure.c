@@ -209,7 +209,6 @@ static int kill_proc(struct task_struct *t, unsigned long addr, int trapno,
 	si.si_addr_lsb = compound_trans_order(compound_head(page)) + PAGE_SHIFT;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if ((flags & MF_ACTION_REQUIRED) && t->mm == current->mm) {
 		si.si_code = BUS_MCEERR_AR;
 		ret = force_sig_info(SIGBUS, &si, current);
@@ -218,11 +217,6 @@ static int kill_proc(struct task_struct *t, unsigned long addr, int trapno,
 		si.si_code = BUS_MCEERR_AR;
 		ret = force_sig_info(SIGBUS, &si, t);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if ((flags & MF_ACTION_REQUIRED) && t == current) {
-		si.si_code = BUS_MCEERR_AR;
-		ret = force_sig_info(SIGBUS, &si, t);
->>>>>>> master
 	} else {
 		/*
 		 * Don't use force here, it's convenient if the signal
@@ -395,7 +389,6 @@ static void kill_procs(struct list_head *to_kill, int forcekill, int trapno,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int task_early_kill(struct task_struct *tsk, int force_early)
 {
 	if (!tsk->mm)
@@ -403,16 +396,11 @@ static int task_early_kill(struct task_struct *tsk, int force_early)
 	if (force_early)
 		return 1;
 =======
-=======
->>>>>>> master
 static int task_early_kill(struct task_struct *tsk)
 {
 	if (!tsk->mm)
 		return 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (tsk->flags & PF_MCE_PROCESS)
 		return !!(tsk->flags & PF_MCE_EARLY);
 	return sysctl_memory_failure_early_kill;
@@ -423,14 +411,10 @@ static int task_early_kill(struct task_struct *tsk)
  */
 static void collect_procs_anon(struct page *page, struct list_head *to_kill,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			      struct to_kill **tkc, int force_early)
 =======
 			      struct to_kill **tkc)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			      struct to_kill **tkc)
->>>>>>> master
 {
 	struct vm_area_struct *vma;
 	struct task_struct *tsk;
@@ -447,14 +431,10 @@ static void collect_procs_anon(struct page *page, struct list_head *to_kill,
 		struct anon_vma_chain *vmac;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!task_early_kill(tsk, force_early))
 =======
 		if (!task_early_kill(tsk))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!task_early_kill(tsk))
->>>>>>> master
 			continue;
 		anon_vma_interval_tree_foreach(vmac, &av->rb_root,
 					       pgoff, pgoff) {
@@ -474,14 +454,10 @@ static void collect_procs_anon(struct page *page, struct list_head *to_kill,
  */
 static void collect_procs_file(struct page *page, struct list_head *to_kill,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			      struct to_kill **tkc, int force_early)
 =======
 			      struct to_kill **tkc)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			      struct to_kill **tkc)
->>>>>>> master
 {
 	struct vm_area_struct *vma;
 	struct task_struct *tsk;
@@ -493,14 +469,10 @@ static void collect_procs_file(struct page *page, struct list_head *to_kill,
 		pgoff_t pgoff = page->index << (PAGE_CACHE_SHIFT - PAGE_SHIFT);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!task_early_kill(tsk, force_early))
 =======
 		if (!task_early_kill(tsk))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!task_early_kill(tsk))
->>>>>>> master
 			continue;
 
 		vma_interval_tree_foreach(vma, &mapping->i_mmap, pgoff,
@@ -527,15 +499,11 @@ static void collect_procs_file(struct page *page, struct list_head *to_kill,
  * so that we can kill at least one process reasonably reliable.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void collect_procs(struct page *page, struct list_head *tokill,
 				int force_early)
 =======
 static void collect_procs(struct page *page, struct list_head *tokill)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static void collect_procs(struct page *page, struct list_head *tokill)
->>>>>>> master
 {
 	struct to_kill *tk;
 
@@ -547,7 +515,6 @@ static void collect_procs(struct page *page, struct list_head *tokill)
 		return;
 	if (PageAnon(page))
 <<<<<<< HEAD
-<<<<<<< HEAD
 		collect_procs_anon(page, tokill, &tk, force_early);
 	else
 		collect_procs_file(page, tokill, &tk, force_early);
@@ -556,11 +523,6 @@ static void collect_procs(struct page *page, struct list_head *tokill)
 	else
 		collect_procs_file(page, tokill, &tk);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		collect_procs_anon(page, tokill, &tk);
-	else
-		collect_procs_file(page, tokill, &tk);
->>>>>>> master
 	kfree(tk);
 }
 
@@ -935,14 +897,10 @@ static int page_action(struct page_state *ps, struct page *p,
  */
 static int hwpoison_user_mappings(struct page *p, unsigned long pfn,
 <<<<<<< HEAD
-<<<<<<< HEAD
 				  int trapno, int flags, struct page **hpagep)
 =======
 				  int trapno, int flags)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				  int trapno, int flags)
->>>>>>> master
 {
 	enum ttu_flags ttu = TTU_UNMAP | TTU_IGNORE_MLOCK | TTU_IGNORE_ACCESS;
 	struct address_space *mapping;
@@ -950,14 +908,10 @@ static int hwpoison_user_mappings(struct page *p, unsigned long pfn,
 	int ret;
 	int kill = 1, forcekill;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct page *hpage = *hpagep;
 =======
 	struct page *hpage = compound_head(p);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct page *hpage = compound_head(p);
->>>>>>> master
 	struct page *ppage;
 
 	if (PageReserved(p) || PageSlab(p))
@@ -1033,7 +987,6 @@ static int hwpoison_user_mappings(struct page *p, unsigned long pfn,
 				return SWAP_FAIL;
 			}
 <<<<<<< HEAD
-<<<<<<< HEAD
 			/*
 			 * We pinned the head page for hwpoison handling,
 			 * now we split the thp and we are interested in
@@ -1051,8 +1004,6 @@ static int hwpoison_user_mappings(struct page *p, unsigned long pfn,
 			}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			/* THP is split, so ppage should be the real poisoned page. */
 			ppage = p;
 		}
@@ -1068,19 +1019,13 @@ static int hwpoison_user_mappings(struct page *p, unsigned long pfn,
 	 */
 	if (kill)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		collect_procs(ppage, &tokill, flags & MF_ACTION_REQUIRED);
 =======
-=======
->>>>>>> master
 		collect_procs(ppage, &tokill);
 
 	if (hpage != ppage)
 		lock_page(ppage);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	ret = try_to_unmap(ppage, ttu);
 	if (ret != SWAP_SUCCESS)
@@ -1088,17 +1033,11 @@ static int hwpoison_user_mappings(struct page *p, unsigned long pfn,
 				pfn, page_mapcount(ppage));
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if (hpage != ppage)
 		unlock_page(ppage);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (hpage != ppage)
-		unlock_page(ppage);
-
->>>>>>> master
 	/*
 	 * Now that the dirty bit has been propagated to the
 	 * struct page and all unmaps done we can decide if
@@ -1211,7 +1150,6 @@ int memory_failure(unsigned long pfn, int trapno, int flags)
 		} else if (PageHuge(hpage)) {
 			/*
 <<<<<<< HEAD
-<<<<<<< HEAD
 			 * Check "filter hit" and "race with other subpage."
 			 */
 			lock_page(hpage);
@@ -1223,8 +1161,6 @@ int memory_failure(unsigned long pfn, int trapno, int flags)
 					return 0;
 				}
 =======
-=======
->>>>>>> master
 			 * Check "just unpoisoned", "filter hit", and
 			 * "race with other subpage."
 			 */
@@ -1234,10 +1170,7 @@ int memory_failure(unsigned long pfn, int trapno, int flags)
 			    || (p != hpage && TestSetPageHWPoison(hpage))) {
 				atomic_long_sub(nr_pages, &num_poisoned_pages);
 				return 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			}
 			set_page_hwpoison_huge_page(hpage);
 			res = dequeue_hwpoisoned_huge_page(hpage);
@@ -1260,22 +1193,16 @@ int memory_failure(unsigned long pfn, int trapno, int flags)
 	 * walked by the page reclaim code, however that's not a big loss.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!PageHuge(p)) {
 		if (!PageLRU(hpage))
 			shake_page(hpage, 0);
 		if (!PageLRU(hpage)) {
 =======
-=======
->>>>>>> master
 	if (!PageHuge(p) && !PageTransTail(p)) {
 		if (!PageLRU(p))
 			shake_page(p, 0);
 		if (!PageLRU(p)) {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			/*
 			 * shake_page could have turned it free.
 			 */
@@ -1312,13 +1239,10 @@ int memory_failure(unsigned long pfn, int trapno, int flags)
 	if (!PageHWPoison(p)) {
 		printk(KERN_ERR "MCE %#lx: just unpoisoned\n", pfn);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		atomic_long_sub(nr_pages, &num_poisoned_pages);
 		put_page(hpage);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		res = 0;
 		goto out;
 	}
@@ -1356,7 +1280,6 @@ int memory_failure(unsigned long pfn, int trapno, int flags)
 	 * Now take care of user space mappings.
 	 * Abort on fail: __delete_from_page_cache() assumes unmapped page.
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 *
 	 * When the raw error page is thp tail page, hpage points to the raw
 	 * page after thp split.
@@ -1367,10 +1290,6 @@ int memory_failure(unsigned long pfn, int trapno, int flags)
 	 */
 	if (hwpoison_user_mappings(p, pfn, trapno, flags) != SWAP_SUCCESS) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	 */
-	if (hwpoison_user_mappings(p, pfn, trapno, flags) != SWAP_SUCCESS) {
->>>>>>> master
 		printk(KERN_ERR "MCE %#lx: cannot unmap page, give up\n", pfn);
 		res = -EBUSY;
 		goto out;
@@ -1601,15 +1520,11 @@ static int __get_any_page(struct page *p, unsigned long pfn, int flags)
 	/*
 	 * Isolate the page, so that it doesn't get reallocated if it
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 * was free. This flag should be kept set until the source page
 	 * is freed and PG_hwpoison on it is set.
 =======
 	 * was free.
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	 * was free.
->>>>>>> master
 	 */
 	set_migratetype_isolate(p, true);
 	/*
@@ -1633,13 +1548,9 @@ static int __get_any_page(struct page *p, unsigned long pfn, int flags)
 		ret = 1;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	unset_migratetype_isolate(p, MIGRATE_MOVABLE);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unset_migratetype_isolate(p, MIGRATE_MOVABLE);
->>>>>>> master
 	unlock_memory_hotplug();
 	return ret;
 }
@@ -1660,16 +1571,12 @@ static int get_any_page(struct page *page, unsigned long pfn, int flags)
 		 */
 		ret = __get_any_page(page, pfn, 0);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (ret == 1 && !PageLRU(page)) {
 			/* Drop page reference which is from __get_any_page() */
 			put_page(page);
 =======
 		if (!PageLRU(page)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!PageLRU(page)) {
->>>>>>> master
 			pr_info("soft_offline: %#lx: unknown non LRU page type %lx\n",
 				pfn, page->flags);
 			return -EIO;
@@ -1706,7 +1613,6 @@ static int soft_offline_huge_page(struct page *page, int flags)
 			pfn, ret, page->flags);
 	} else {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* overcommit hugetlb page will be freed to buddy */
 		if (PageHuge(page)) {
 			set_page_hwpoison_huge_page(hpage);
@@ -1719,18 +1625,13 @@ static int soft_offline_huge_page(struct page *page, int flags)
 		}
 	}
 =======
-=======
->>>>>>> master
 		set_page_hwpoison_huge_page(hpage);
 		dequeue_hwpoisoned_huge_page(hpage);
 		atomic_long_add(1 << compound_trans_order(hpage),
 				&num_poisoned_pages);
 	}
 	/* keep elevated page count for bad page */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return ret;
 }
 
@@ -1796,14 +1697,10 @@ int soft_offline_page(struct page *page, int flags)
 		}
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unset_migratetype_isolate(page, MIGRATE_MOVABLE);
 =======
 	/* keep elevated page count for bad page */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	/* keep elevated page count for bad page */
->>>>>>> master
 	return ret;
 }
 
@@ -1870,7 +1767,6 @@ static int __soft_offline_page(struct page *page, int flags)
 				ret = -EIO;
 		} else {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			/*
 			 * After page migration succeeds, the source page can
 			 * be trapped in pagevec and actual freeing is delayed.
@@ -1890,9 +1786,6 @@ static int __soft_offline_page(struct page *page, int flags)
 =======
 			SetPageHWPoison(page);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			SetPageHWPoison(page);
->>>>>>> master
 			atomic_long_inc(&num_poisoned_pages);
 		}
 	} else {

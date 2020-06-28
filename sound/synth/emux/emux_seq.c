@@ -125,25 +125,17 @@ snd_emux_detach_seq(struct snd_emux *emu)
 		snd_emux_terminate_all(emu);
 		
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	mutex_lock(&emu->register_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mutex_lock(&emu->register_mutex);
->>>>>>> master
 	if (emu->client >= 0) {
 		snd_seq_delete_kernel_client(emu->client);
 		emu->client = -1;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	mutex_unlock(&emu->register_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mutex_unlock(&emu->register_mutex);
->>>>>>> master
 }
 
 
@@ -284,17 +276,12 @@ snd_emux_event_input(struct snd_seq_event *ev, int direct, void *private_data,
  * increment usage count
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int
 __snd_emux_inc_count(struct snd_emux *emu)
 =======
 int
 snd_emux_inc_count(struct snd_emux *emu)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-int
-snd_emux_inc_count(struct snd_emux *emu)
->>>>>>> master
 {
 	emu->used++;
 	if (!try_module_get(emu->ops.owner))
@@ -309,7 +296,6 @@ snd_emux_inc_count(struct snd_emux *emu)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 int snd_emux_inc_count(struct snd_emux *emu)
 {
 	int ret;
@@ -321,13 +307,10 @@ int snd_emux_inc_count(struct snd_emux *emu)
 }
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * decrease usage count
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 static void
 __snd_emux_dec_count(struct snd_emux *emu)
@@ -335,10 +318,6 @@ __snd_emux_dec_count(struct snd_emux *emu)
 void
 snd_emux_dec_count(struct snd_emux *emu)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-void
-snd_emux_dec_count(struct snd_emux *emu)
->>>>>>> master
 {
 	module_put(emu->card->module);
 	emu->used--;
@@ -348,7 +327,6 @@ snd_emux_dec_count(struct snd_emux *emu)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 void snd_emux_dec_count(struct snd_emux *emu)
 {
 	mutex_lock(&emu->register_mutex);
@@ -357,8 +335,6 @@ void snd_emux_dec_count(struct snd_emux *emu)
 }
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * Routine that is called upon a first use of a particular port
@@ -379,14 +355,10 @@ snd_emux_use(void *private_data, struct snd_seq_port_subscribe *info)
 	mutex_lock(&emu->register_mutex);
 	snd_emux_init_port(p);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	__snd_emux_inc_count(emu);
 =======
 	snd_emux_inc_count(emu);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	snd_emux_inc_count(emu);
->>>>>>> master
 	mutex_unlock(&emu->register_mutex);
 	return 0;
 }
@@ -410,14 +382,10 @@ snd_emux_unuse(void *private_data, struct snd_seq_port_subscribe *info)
 	mutex_lock(&emu->register_mutex);
 	snd_emux_sounds_off_all(p);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	__snd_emux_dec_count(emu);
 =======
 	snd_emux_dec_count(emu);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	snd_emux_dec_count(emu);
->>>>>>> master
 	mutex_unlock(&emu->register_mutex);
 	return 0;
 }

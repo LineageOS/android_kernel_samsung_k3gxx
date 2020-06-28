@@ -1015,14 +1015,10 @@ static inline void wl_unlock(struct wl_private *lp,
 /********************************************************************/
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static inline void wl_act_int_on(struct wl_private *lp)
 =======
 extern inline void wl_act_int_on(struct wl_private *lp)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-extern inline void wl_act_int_on(struct wl_private *lp)
->>>>>>> master
 {
 	/*
 	 * Only do something when the driver is handling
@@ -1035,14 +1031,10 @@ extern inline void wl_act_int_on(struct wl_private *lp)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static inline void wl_act_int_off(struct wl_private *lp)
 =======
 extern inline void wl_act_int_off(struct wl_private *lp)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-extern inline void wl_act_int_off(struct wl_private *lp)
->>>>>>> master
 {
 	/*
 	 * Only do something when the driver is handling

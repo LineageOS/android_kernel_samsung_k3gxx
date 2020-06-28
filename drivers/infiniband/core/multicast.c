@@ -107,13 +107,9 @@ struct mcast_group {
 	enum mcast_group_state	state;
 	struct ib_sa_query	*query;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	int			query_id;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int			query_id;
->>>>>>> master
 	u16			pkey_index;
 	u8			leave_state;
 	int			retries;
@@ -347,20 +343,14 @@ static int send_join(struct mcast_group *group, struct mcast_member *member)
 				       3000, GFP_KERNEL, join_handler, group,
 				       &group->query);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return (ret > 0) ? 0 : ret;
 =======
-=======
->>>>>>> master
 	if (ret >= 0) {
 		group->query_id = ret;
 		ret = 0;
 	}
 	return ret;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static int send_leave(struct mcast_group *group, u8 leave_state)
@@ -381,20 +371,14 @@ static int send_leave(struct mcast_group *group, u8 leave_state)
 				       3000, GFP_KERNEL, leave_handler,
 				       group, &group->query);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return (ret > 0) ? 0 : ret;
 =======
-=======
->>>>>>> master
 	if (ret >= 0) {
 		group->query_id = ret;
 		ret = 0;
 	}
 	return ret;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static void join_group(struct mcast_group *group, struct mcast_member *member,
@@ -553,7 +537,6 @@ static void join_handler(int status, struct ib_sa_mcmember_rec *rec,
 		process_join_error(group, status);
 	else {
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 		if (ib_find_pkey(group->port->dev->device,
 				 group->port->port_num, be16_to_cpu(rec->pkey),
@@ -563,10 +546,6 @@ static void join_handler(int status, struct ib_sa_mcmember_rec *rec,
 		ib_find_pkey(group->port->dev->device, group->port->port_num,
 			     be16_to_cpu(rec->pkey), &pkey_index);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		ib_find_pkey(group->port->dev->device, group->port->port_num,
-			     be16_to_cpu(rec->pkey), &pkey_index);
->>>>>>> master
 
 		spin_lock_irq(&group->port->lock);
 		group->rec = *rec;

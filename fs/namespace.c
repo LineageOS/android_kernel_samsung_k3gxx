@@ -545,12 +545,9 @@ int sb_prepare_remount_readonly(struct super_block *sb)
 static void free_vfsmnt(struct mount *mnt)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	kfree(mnt->mnt.data);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	kfree(mnt->mnt_devname);
 	mnt_free_id(mnt);
 #ifdef CONFIG_SMP
@@ -795,7 +792,6 @@ vfs_kern_mount(struct file_system_type *type, int flags, const char *name, void 
 		return ERR_PTR(-ENOMEM);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mnt->mnt.data = NULL;
 	if (type->alloc_mnt_data) {
 		mnt->mnt.data = type->alloc_mnt_data();
@@ -812,17 +808,12 @@ vfs_kern_mount(struct file_system_type *type, int flags, const char *name, void 
 	if (IS_ERR(root)) {
 		kfree(mnt->mnt.data);
 =======
-=======
->>>>>>> master
 	if (flags & MS_KERNMOUNT)
 		mnt->mnt.mnt_flags = MNT_INTERNAL;
 
 	root = mount_fs(type, flags, name, data);
 	if (IS_ERR(root)) {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		free_vfsmnt(mnt);
 		return ERR_CAST(root);
 	}
@@ -850,7 +841,6 @@ static struct mount *clone_mnt(struct mount *old, struct dentry *root,
 		return ERR_PTR(-ENOMEM);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (sb->s_op->clone_mnt_data) {
 		mnt->mnt.data = sb->s_op->clone_mnt_data(old->mnt.data);
 		if (!mnt->mnt.data) {
@@ -861,8 +851,6 @@ static struct mount *clone_mnt(struct mount *old, struct dentry *root,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (flag & (CL_SLAVE | CL_PRIVATE | CL_SHARED_TO_SLAVE))
 		mnt->mnt_group_id = 0; /* not a peer of original */
 	else
@@ -874,7 +862,6 @@ static struct mount *clone_mnt(struct mount *old, struct dentry *root,
 			goto out_free;
 	}
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	mnt->mnt.mnt_flags = old->mnt.mnt_flags & ~(MNT_WRITE_HOLD|MNT_MARKED);
 	/* Don't allow unprivileged users to change mount flags */
@@ -894,16 +881,11 @@ static struct mount *clone_mnt(struct mount *old, struct dentry *root,
 			mnt->mnt.mnt_flags |= MNT_LOCK_NOEXEC;
 	}
 =======
-=======
->>>>>>> master
 	mnt->mnt.mnt_flags = old->mnt.mnt_flags & ~MNT_WRITE_HOLD;
 	/* Don't allow unprivileged users to change mount flags */
 	if ((flag & CL_UNPRIVILEGED) && (mnt->mnt.mnt_flags & MNT_READONLY))
 		mnt->mnt.mnt_flags |= MNT_LOCK_READONLY;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	atomic_inc(&sb->s_active);
 	mnt->mnt.mnt_sb = sb;
@@ -940,12 +922,9 @@ static struct mount *clone_mnt(struct mount *old, struct dentry *root,
 
  out_free:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	kfree(mnt->mnt.data);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	free_vfsmnt(mnt);
 	return ERR_PTR(err);
 }
@@ -1343,13 +1322,10 @@ static int do_umount(struct mount *mnt, int flags)
 		 * we just try to remount it readonly.
 		 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!capable(CAP_SYS_ADMIN))
 			return -EPERM;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		down_write(&sb->s_umount);
 		if (!(sb->s_flags & MS_RDONLY))
 			retval = do_remount_sb(sb, MS_RDONLY, NULL, 0);
@@ -1417,14 +1393,11 @@ SYSCALL_DEFINE2(umount, char __user *, name, int, flags)
 	if (!check_mnt(mnt))
 		goto dput_and_out;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	retval = -EPERM;
 	if (flags & MNT_FORCE && !capable(CAP_SYS_ADMIN))
 		goto dput_and_out;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	retval = do_umount(mnt, flags);
 dput_and_out:
@@ -1662,7 +1635,6 @@ static int attach_recursive_mnt(struct mount *source_mnt,
 		if (err)
 			goto out;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		err = propagate_mnt(dest_mnt, dest_mp, source_mnt, &tree_list);
 		br_write_lock(&vfsmount_lock);
 		if (err)
@@ -1672,8 +1644,6 @@ static int attach_recursive_mnt(struct mount *source_mnt,
 	} else {
 		br_write_lock(&vfsmount_lock);
 =======
-=======
->>>>>>> master
 	}
 	err = propagate_mnt(dest_mnt, dest_mp, source_mnt, &tree_list);
 	if (err)
@@ -1684,10 +1654,7 @@ static int attach_recursive_mnt(struct mount *source_mnt,
 	if (IS_MNT_SHARED(dest_mnt)) {
 		for (p = source_mnt; p; p = next_mnt(p, source_mnt))
 			set_mnt_shared(p);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 	if (parent_path) {
 		detach_mnt(source_mnt, parent_path);
@@ -1708,7 +1675,6 @@ static int attach_recursive_mnt(struct mount *source_mnt,
 
  out_cleanup_ids:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	while (!list_empty(&tree_list)) {
 		child = list_first_entry(&tree_list, struct mount, mnt_hash);
 		umount_tree(child, 0);
@@ -1719,10 +1685,6 @@ static int attach_recursive_mnt(struct mount *source_mnt,
 	if (IS_MNT_SHARED(dest_mnt))
 		cleanup_group_ids(source_mnt, NULL);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (IS_MNT_SHARED(dest_mnt))
-		cleanup_group_ids(source_mnt, NULL);
->>>>>>> master
  out:
 	return err;
 }
@@ -1897,17 +1859,11 @@ static int change_mount_flags(struct vfsmount *mnt, int ms_flags)
 		return 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if (mnt->mnt_flags & MNT_LOCK_READONLY)
 		return -EPERM;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (mnt->mnt_flags & MNT_LOCK_READONLY)
-		return -EPERM;
-
->>>>>>> master
 	if (readonly_request)
 		error = mnt_make_readonly(real_mount(mnt));
 	else
@@ -1933,7 +1889,6 @@ static int do_remount(struct path *path, int flags, int mnt_flags,
 	if (path->dentry != path->mnt->mnt_root)
 		return -EINVAL;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Don't allow changing of locked mnt flags.
 	 *
@@ -1970,8 +1925,6 @@ static int do_remount(struct path *path, int flags, int mnt_flags,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	err = security_sb_remount(sb, data);
 	if (err)
 		return err;
@@ -1981,7 +1934,6 @@ static int do_remount(struct path *path, int flags, int mnt_flags,
 		err = change_mount_flags(path->mnt, flags);
 	else if (!capable(CAP_SYS_ADMIN))
 		err = -EPERM;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	else {
 		err = do_remount_sb2(path->mnt, sb, flags, data, 0);
@@ -1995,17 +1947,12 @@ static int do_remount(struct path *path, int flags, int mnt_flags,
 		br_write_lock(&vfsmount_lock);
 		mnt_flags |= mnt->mnt.mnt_flags & ~MNT_USER_SETTABLE_MASK;
 =======
-=======
->>>>>>> master
 	else
 		err = do_remount_sb(sb, flags, data, 0);
 	if (!err) {
 		br_write_lock(&vfsmount_lock);
 		mnt_flags |= mnt->mnt.mnt_flags & MNT_PROPAGATION_MASK;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		mnt->mnt.mnt_flags = mnt_flags;
 		br_write_unlock(&vfsmount_lock);
 	}
@@ -2128,14 +2075,10 @@ static int do_add_mount(struct mount *newmnt, struct path *path, int mnt_flags)
 	int err;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mnt_flags &= ~MNT_INTERNAL_FLAGS;
 =======
 	mnt_flags &= ~(MNT_SHARED | MNT_WRITE_HOLD | MNT_INTERNAL);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mnt_flags &= ~(MNT_SHARED | MNT_WRITE_HOLD | MNT_INTERNAL);
->>>>>>> master
 
 	mp = lock_mount(path);
 	if (IS_ERR(mp))
@@ -2200,14 +2143,10 @@ static int do_new_mount(struct path *path, const char *fstype, int flags,
 		if (!(type->fs_flags & FS_USERNS_DEV_MOUNT)) {
 			flags |= MS_NODEV;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			mnt_flags |= MNT_NODEV | MNT_LOCK_NODEV;
 =======
 			mnt_flags |= MNT_NODEV;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			mnt_flags |= MNT_NODEV;
->>>>>>> master
 		}
 	}
 
@@ -2526,7 +2465,6 @@ long do_mount(const char *dev_name, const char *dir_name,
 		mnt_flags |= MNT_READONLY;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* The default atime for remount is preservation */
 	if ((flags & MS_REMOUNT) &&
 	    ((flags & (MS_NOATIME | MS_NODIRATIME | MS_RELATIME |
@@ -2537,8 +2475,6 @@ long do_mount(const char *dev_name, const char *dir_name,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	flags &= ~(MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_ACTIVE | MS_BORN |
 		   MS_NOATIME | MS_NODIRATIME | MS_RELATIME| MS_KERNMOUNT |
 		   MS_STRICTATIME);

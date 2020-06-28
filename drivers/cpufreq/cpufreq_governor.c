@@ -91,14 +91,10 @@ void dbs_check_cpu(struct dbs_data *dbs_data, int cpu)
 	policy = cdbs->cur_policy;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Get Absolute Load */
 =======
 	/* Get Absolute Load (in terms of freq for ondemand gov) */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	/* Get Absolute Load (in terms of freq for ondemand gov) */
->>>>>>> master
 	for_each_cpu(j, policy->cpus) {
 		struct cpu_dbs_common_info *j_cdbs;
 		u64 cur_wall_time, cur_idle_time;
@@ -150,10 +146,7 @@ void dbs_check_cpu(struct dbs_data *dbs_data, int cpu)
 		load = 100 * (wall_time - idle_time) / wall_time;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 		if (dbs_data->cdata->governor == GOV_ONDEMAND) {
 			int freq_avg = __cpufreq_driver_getavg(policy, j);
 			if (freq_avg <= 0)
@@ -162,10 +155,7 @@ void dbs_check_cpu(struct dbs_data *dbs_data, int cpu)
 			load *= freq_avg;
 		}
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (load > max_load)
 			max_load = load;
 
@@ -190,14 +180,11 @@ void gov_queue_work(struct dbs_data *dbs_data, struct cpufreq_policy *policy,
 	int i;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!policy->governor_enabled)
 		return;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (!all_cpus) {
 		__gov_queue_work(smp_processor_id(), dbs_data, delay);
 	} else {

@@ -323,7 +323,6 @@ static struct usbmix_name_map hercules_usb51_map[] = {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* some (all?) SCMS USB3318 devices are affected by a firmware lock up
  * when anything attempts to access FU 10 (control)
  */
@@ -348,8 +347,6 @@ static struct usbmix_name_map dragonfly_1_2_map[] = {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  * Control map entries
  */
@@ -438,7 +435,6 @@ static struct usbmix_ctl_map usbmix_ctl_maps[] = {
 		.map = ebox44_map,
 	},
 <<<<<<< HEAD
-<<<<<<< HEAD
 	{
 		/* MAYA44 USB+ */
 		.id = USB_ID(0x2573, 0x0008),
@@ -466,8 +462,6 @@ static struct usbmix_ctl_map usbmix_ctl_maps[] = {
 	},
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	{ 0 } /* terminator */
 };
 

@@ -111,15 +111,11 @@ static struct dentry *proc_mount(struct file_system_type *fs_type,
 		options = data;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!current_user_ns()->may_mount_proc ||
 		    !ns_capable(ns->user_ns, CAP_SYS_ADMIN))
 =======
 		if (!current_user_ns()->may_mount_proc)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!current_user_ns()->may_mount_proc)
->>>>>>> master
 			return ERR_PTR(-EPERM);
 	}
 

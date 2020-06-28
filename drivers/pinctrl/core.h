@@ -184,14 +184,10 @@ static inline struct pin_desc *pin_desc_get(struct pinctrl_dev *pctldev,
 
 int pinctrl_register_map(struct pinctrl_map const *maps, unsigned num_maps,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			 bool dup);
 =======
 			 bool dup, bool locked);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			 bool dup, bool locked);
->>>>>>> master
 void pinctrl_unregister_map(struct pinctrl_map const *map);
 
 extern int pinctrl_force_sleep(struct pinctrl_dev *pctldev);

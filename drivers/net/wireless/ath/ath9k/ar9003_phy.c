@@ -1077,15 +1077,12 @@ static bool ar9003_hw_ani_control(struct ath_hw *ah,
 		 */
 		bool is_on = param ? 1 : 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 		if (ah->caps.rx_chainmask == 1)
 			break;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		REG_RMW_FIELD(ah, AR_PHY_MRC_CCK_CTRL,
 			      AR_PHY_MRC_CCK_ENABLE, is_on);
 		REG_RMW_FIELD(ah, AR_PHY_MRC_CCK_CTRL,

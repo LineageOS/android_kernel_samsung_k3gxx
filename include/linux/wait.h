@@ -806,7 +806,6 @@ do {									\
 })
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define __wait_event_interruptible_lock_irq_timeout(wq, condition,	\
 						    lock, ret)		\
 do {									\
@@ -866,8 +865,6 @@ do {									\
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * These are the old interfaces to sleep waiting for an event.

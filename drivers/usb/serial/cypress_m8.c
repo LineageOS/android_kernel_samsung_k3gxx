@@ -450,7 +450,6 @@ static int cypress_generic_port_probe(struct usb_serial_port *port)
 	struct cypress_private *priv;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!port->interrupt_out_urb || !port->interrupt_in_urb) {
 		dev_err(&port->dev, "required endpoint is missing\n");
 		return -ENODEV;
@@ -458,8 +457,6 @@ static int cypress_generic_port_probe(struct usb_serial_port *port)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	priv = kzalloc(sizeof(struct cypress_private), GFP_KERNEL);
 	if (!priv)
 		return -ENOMEM;
@@ -618,20 +615,14 @@ static int cypress_open(struct tty_struct *tty, struct usb_serial_port *port)
 
 	/* setup the port and start reading from the device */
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	if (!port->interrupt_in_urb) {
 		dev_err(&port->dev, "%s - interrupt_in_urb is empty!\n",
 			__func__);
 		return -1;
 	}
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	usb_fill_int_urb(port->interrupt_in_urb, serial->dev,
 		usb_rcvintpipe(serial->dev, port->interrupt_in_endpointAddress),
 		port->interrupt_in_urb->transfer_buffer,

@@ -657,15 +657,10 @@ static int marvell_read_status(struct phy_device *phydev)
 			return adv;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		lpa &= adv;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		lpa &= adv;
-
->>>>>>> master
 		if (status & MII_M1011_PHY_STATUS_FULLDUPLEX)
 			phydev->duplex = DUPLEX_FULL;
 		else

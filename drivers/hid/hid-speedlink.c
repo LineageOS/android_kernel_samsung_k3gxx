@@ -4,14 +4,10 @@
  *  the HID descriptor.
  *
 <<<<<<< HEAD
-<<<<<<< HEAD
  *  Copyright (c) 2011, 2013 Stefan Kriwanek <dev@stefankriwanek.de>
 =======
  *  Copyright (c) 2011 Stefan Kriwanek <mail@stefankriwanek.de>
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- *  Copyright (c) 2011 Stefan Kriwanek <mail@stefankriwanek.de>
->>>>>>> master
  */
 
 /*
@@ -55,7 +51,6 @@ static int speedlink_event(struct hid_device *hdev, struct hid_field *field,
 {
 	/* No other conditions due to usage_table. */
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	/* This fixes the "jumpy" cursor occuring due to invalid events sent
 	 * by the device. Some devices only send them with value==+256, others
@@ -67,10 +62,6 @@ static int speedlink_event(struct hid_device *hdev, struct hid_field *field,
 	/* Fix "jumpy" cursor (invalid events sent by device). */
 	if (value == 256)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	/* Fix "jumpy" cursor (invalid events sent by device). */
-	if (value == 256)
->>>>>>> master
 		return 1;
 	/* Drop useless distance 0 events (on button clicks etc.) as well */
 	if (value == 0)

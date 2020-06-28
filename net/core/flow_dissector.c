@@ -150,17 +150,12 @@ ipv6:
 		__be32 *ports, _ports;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ports = skb_header_pointer(skb, nhoff + poff,
 					   sizeof(_ports), &_ports);
 =======
 		nhoff += poff;
 		ports = skb_header_pointer(skb, nhoff, sizeof(_ports), &_ports);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		nhoff += poff;
-		ports = skb_header_pointer(skb, nhoff, sizeof(_ports), &_ports);
->>>>>>> master
 		if (ports)
 			flow->ports = *ports;
 	}
@@ -356,13 +351,10 @@ u16 __netdev_pick_tx(struct net_device *dev, struct sk_buff *skb)
 			new_index = skb_tx_hash(dev, skb);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (queue_index != new_index && sk &&
 		    rcu_access_pointer(sk->sk_dst_cache))
 			sk_tx_queue_set(sk, new_index);
 =======
-=======
->>>>>>> master
 		if (queue_index != new_index && sk) {
 			struct dst_entry *dst =
 				    rcu_dereference_check(sk->sk_dst_cache, 1);
@@ -371,10 +363,7 @@ u16 __netdev_pick_tx(struct net_device *dev, struct sk_buff *skb)
 				sk_tx_queue_set(sk, queue_index);
 
 		}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 		queue_index = new_index;
 	}

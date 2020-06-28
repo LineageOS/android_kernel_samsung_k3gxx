@@ -290,12 +290,9 @@ int ocfs2_stack_glue_register(struct ocfs2_stack_plugin *plugin);
 void ocfs2_stack_glue_unregister(struct ocfs2_stack_plugin *plugin);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* In ocfs2_downconvert_lock(), we need to know which stack we are using */
 int ocfs2_is_o2cb_active(void);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #endif  /* STACKGLUE_H */

@@ -52,14 +52,10 @@ static irqreturn_t max8907_irq_handler(int irq, void *data)
 	struct max8907_rtc *rtc = data;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	regmap_write(rtc->regmap, MAX8907_REG_ALARM0_CNTL, 0);
 =======
 	regmap_update_bits(rtc->regmap, MAX8907_REG_ALARM0_CNTL, 0x7f, 0);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	regmap_update_bits(rtc->regmap, MAX8907_REG_ALARM0_CNTL, 0x7f, 0);
->>>>>>> master
 
 	rtc_update_irq(rtc->rtc_dev, 1, RTC_IRQF | RTC_AF);
 
@@ -73,14 +69,10 @@ static void regs_to_tm(u8 *regs, struct rtc_time *tm)
 	tm->tm_mon = bcd2bin(regs[RTC_MONTH] & 0x1f) - 1;
 	tm->tm_mday = bcd2bin(regs[RTC_DATE] & 0x3f);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	tm->tm_wday = (regs[RTC_WEEKDAY] & 0x07);
 =======
 	tm->tm_wday = (regs[RTC_WEEKDAY] & 0x07) - 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	tm->tm_wday = (regs[RTC_WEEKDAY] & 0x07) - 1;
->>>>>>> master
 	if (regs[RTC_HOUR] & HOUR_12) {
 		tm->tm_hour = bcd2bin(regs[RTC_HOUR] & 0x01f);
 		if (tm->tm_hour == 12)
@@ -105,14 +97,10 @@ static void tm_to_regs(struct rtc_time *tm, u8 *regs)
 	regs[RTC_MONTH] = bin2bcd(tm->tm_mon + 1);
 	regs[RTC_DATE] = bin2bcd(tm->tm_mday);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	regs[RTC_WEEKDAY] = tm->tm_wday;
 =======
 	regs[RTC_WEEKDAY] = tm->tm_wday + 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	regs[RTC_WEEKDAY] = tm->tm_wday + 1;
->>>>>>> master
 	regs[RTC_HOUR] = bin2bcd(tm->tm_hour);
 	regs[RTC_MIN] = bin2bcd(tm->tm_min);
 	regs[RTC_SEC] = bin2bcd(tm->tm_sec);
@@ -178,14 +166,10 @@ static int max8907_rtc_set_alarm(struct device *dev, struct rtc_wkalrm *alrm)
 
 	/* Disable alarm while we update the target time */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = regmap_write(rtc->regmap, MAX8907_REG_ALARM0_CNTL, 0);
 =======
 	ret = regmap_update_bits(rtc->regmap, MAX8907_REG_ALARM0_CNTL, 0x7f, 0);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret = regmap_update_bits(rtc->regmap, MAX8907_REG_ALARM0_CNTL, 0x7f, 0);
->>>>>>> master
 	if (ret < 0)
 		return ret;
 
@@ -196,16 +180,11 @@ static int max8907_rtc_set_alarm(struct device *dev, struct rtc_wkalrm *alrm)
 
 	if (alrm->enabled)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ret = regmap_write(rtc->regmap, MAX8907_REG_ALARM0_CNTL, 0x77);
 =======
 		ret = regmap_update_bits(rtc->regmap, MAX8907_REG_ALARM0_CNTL,
 					 0x7f, 0x7f);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		ret = regmap_update_bits(rtc->regmap, MAX8907_REG_ALARM0_CNTL,
-					 0x7f, 0x7f);
->>>>>>> master
 
 	return ret;
 }

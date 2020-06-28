@@ -65,14 +65,10 @@
 #define ADAU1701_SEROCTL_WORD_LEN_24	0x0000
 #define ADAU1701_SEROCTL_WORD_LEN_20	0x0001
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define ADAU1701_SEROCTL_WORD_LEN_16	0x0002
 =======
 #define ADAU1701_SEROCTL_WORD_LEN_16	0x0010
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define ADAU1701_SEROCTL_WORD_LEN_16	0x0010
->>>>>>> master
 #define ADAU1701_SEROCTL_WORD_LEN_MASK	0x0003
 
 #define ADAU1701_AUXNPOW_VBPD		0x40

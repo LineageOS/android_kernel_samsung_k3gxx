@@ -312,7 +312,6 @@ static inline struct Scsi_Host *to_shost(struct isci_host *ihost)
 
 #define for_each_isci_host(id, ihost, pdev) \
 <<<<<<< HEAD
-<<<<<<< HEAD
 	for (id = 0; id < SCI_MAX_CONTROLLERS && \
 	     (ihost = to_pci_info(pdev)->hosts[id]); id++)
 =======
@@ -320,11 +319,6 @@ static inline struct Scsi_Host *to_shost(struct isci_host *ihost)
 	     id < ARRAY_SIZE(to_pci_info(pdev)->hosts) && ihost; \
 	     ihost = to_pci_info(pdev)->hosts[++id])
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	for (id = 0, ihost = to_pci_info(pdev)->hosts[id]; \
-	     id < ARRAY_SIZE(to_pci_info(pdev)->hosts) && ihost; \
-	     ihost = to_pci_info(pdev)->hosts[++id])
->>>>>>> master
 
 static inline void wait_for_start(struct isci_host *ihost)
 {

@@ -899,13 +899,9 @@ static int scsi_request_sense(struct scsi_cmnd *scmd)
 void scsi_eh_finish_cmd(struct scsi_cmnd *scmd, struct list_head *done_q)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	scmd->device->host->host_failed--;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	scmd->device->host->host_failed--;
->>>>>>> master
 	scmd->eh_eflags = 0;
 	list_move_tail(&scmd->eh_entry, done_q);
 }
@@ -1697,7 +1693,6 @@ static void scsi_restart_operations(struct Scsi_Host *shost)
 	 */
 	shost_for_each_device(sdev, shost) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (scsi_device_online(sdev) && sdev->was_reset && sdev->locked) {
 			scsi_eh_lock_door(sdev);
 			sdev->was_reset = 0;
@@ -1706,10 +1701,6 @@ static void scsi_restart_operations(struct Scsi_Host *shost)
 		if (scsi_device_online(sdev) && sdev->locked)
 			scsi_eh_lock_door(sdev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (scsi_device_online(sdev) && sdev->locked)
-			scsi_eh_lock_door(sdev);
->>>>>>> master
 	}
 
 	/*
@@ -1867,7 +1858,6 @@ int scsi_error_handler(void *data)
 	 * disables signal delivery for the created thread.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	while (true) {
 		/*
 		 * The sequence in kthread_stop() sets the stop flag first
@@ -1883,10 +1873,6 @@ int scsi_error_handler(void *data)
 	while (!kthread_should_stop()) {
 		set_current_state(TASK_INTERRUPTIBLE);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	while (!kthread_should_stop()) {
-		set_current_state(TASK_INTERRUPTIBLE);
->>>>>>> master
 		if ((shost->host_failed == 0 && shost->host_eh_scheduled == 0) ||
 		    shost->host_failed != shost->host_busy) {
 			SCSI_LOG_ERROR_RECOVERY(1,
@@ -1920,14 +1906,11 @@ int scsi_error_handler(void *data)
 			scsi_unjam_host(shost);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* All scmds have been handled */
 		shost->host_failed = 0;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		/*
 		 * Note - if the above fails completely, the action is to take
 		 * individual devices offline and flush the queue of any

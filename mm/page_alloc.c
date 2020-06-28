@@ -2565,7 +2565,6 @@ __alloc_pages_may_oom(gfp_t gfp_mask, unsigned int order,
 
 	/*
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 * PM-freezer should be notified that there might be an OOM killer on
 	 * its way to kill and wake somebody up. This is too early and we might
 	 * end up not killing anything but false positives are acceptable.
@@ -2576,8 +2575,6 @@ __alloc_pages_may_oom(gfp_t gfp_mask, unsigned int order,
 	/*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	 * Go through the zonelist yet one more time, keep very high watermark
 	 * here, this is only to catch a parallel oom killing, we must fail if
 	 * we're still under heavy pressure.
@@ -2798,14 +2795,10 @@ gfp_to_alloc_flags(gfp_t gfp_mask)
 {
 	int alloc_flags = ALLOC_WMARK_MIN | ALLOC_CPUSET;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	const bool atomic = !(gfp_mask & (__GFP_WAIT | __GFP_NO_KSWAPD));
 =======
 	const gfp_t wait = gfp_mask & __GFP_WAIT;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	const gfp_t wait = gfp_mask & __GFP_WAIT;
->>>>>>> master
 
 	/* __GFP_HIGH is assumed to be the same as ALLOC_HIGH to save a branch. */
 	BUILD_BUG_ON(__GFP_HIGH != (__force gfp_t) ALLOC_HIGH);
@@ -2814,7 +2807,6 @@ gfp_to_alloc_flags(gfp_t gfp_mask)
 	 * The caller may dip into page reserves a bit more if the caller
 	 * cannot run direct reclaim, or if the caller has realtime scheduling
 	 * policy or is asking for __GFP_HIGH memory.  GFP_ATOMIC requests will
-<<<<<<< HEAD
 <<<<<<< HEAD
 	 * set both ALLOC_HARDER (atomic == true) and ALLOC_HIGH (__GFP_HIGH).
 	 */
@@ -2831,8 +2823,6 @@ gfp_to_alloc_flags(gfp_t gfp_mask)
 		 * Ignore cpuset mems for GFP_ATOMIC rather than fail, see the
 		 * comment for __cpuset_node_allowed_softwall().
 =======
-=======
->>>>>>> master
 	 * set both ALLOC_HARDER (!wait) and ALLOC_HIGH (__GFP_HIGH).
 	 */
 	alloc_flags |= (__force int) (gfp_mask & __GFP_HIGH);
@@ -2847,10 +2837,7 @@ gfp_to_alloc_flags(gfp_t gfp_mask)
 		/*
 		 * Ignore cpuset if GFP_ATOMIC (!wait) rather than fail alloc.
 		 * See also cpuset_zone_allowed() comment in kernel/cpuset.c.
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		 */
 		alloc_flags &= ~ALLOC_CPUSET;
 	} else if (unlikely(rt_task(current)) && !in_interrupt())
@@ -5644,7 +5631,6 @@ void __init free_area_init_nodes(unsigned long *max_zone_pfn)
 	memset(arch_zone_highest_possible_pfn, 0,
 				sizeof(arch_zone_highest_possible_pfn));
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	start_pfn = find_min_pfn_with_active_regions();
 
@@ -5658,8 +5644,6 @@ void __init free_area_init_nodes(unsigned long *max_zone_pfn)
 
 		start_pfn = end_pfn;
 =======
-=======
->>>>>>> master
 	arch_zone_lowest_possible_pfn[0] = find_min_pfn_with_active_regions();
 	arch_zone_highest_possible_pfn[0] = max_zone_pfn[0];
 	for (i = 1; i < MAX_NR_ZONES; i++) {
@@ -5669,10 +5653,7 @@ void __init free_area_init_nodes(unsigned long *max_zone_pfn)
 			arch_zone_highest_possible_pfn[i-1];
 		arch_zone_highest_possible_pfn[i] =
 			max(max_zone_pfn[i], arch_zone_lowest_possible_pfn[i]);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 	arch_zone_lowest_possible_pfn[ZONE_MOVABLE] = 0;
 	arch_zone_highest_possible_pfn[ZONE_MOVABLE] = 0;
@@ -5779,17 +5760,12 @@ unsigned long free_reserved_area(unsigned long start, unsigned long end,
 
 	if (pages && s)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		pr_info("Freeing %s memory: %ldK\n",
 			s, pages << (PAGE_SHIFT - 10));
 =======
 		pr_info("Freeing %s memory: %ldK (%lx - %lx)\n",
 			s, pages << (PAGE_SHIFT - 10), start, end);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		pr_info("Freeing %s memory: %ldK (%lx - %lx)\n",
-			s, pages << (PAGE_SHIFT - 10), start, end);
->>>>>>> master
 
 	return pages;
 }

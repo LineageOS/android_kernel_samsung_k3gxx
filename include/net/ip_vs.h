@@ -110,13 +110,9 @@ struct ip_vs_iphdr {
 	__u32 len;	/* IPv4 simply where L4 starts
 			   IPv6 where L4 Transport Header starts */
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	__u32 thoff_reasm; /* Transport Header Offset in nfct_reasm skb */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	__u32 thoff_reasm; /* Transport Header Offset in nfct_reasm skb */
->>>>>>> master
 	__u16 fragoffs; /* IPv6 fragment offset, 0 if first frag (or not frag)*/
 	__s16 protocol;
 	__s32 flags;
@@ -125,10 +121,7 @@ struct ip_vs_iphdr {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 /* Dependency to module: nf_defrag_ipv6 */
 #if defined(CONFIG_NF_DEFRAG_IPV6) || defined(CONFIG_NF_DEFRAG_IPV6_MODULE)
 static inline struct sk_buff *skb_nfct_reasm(const struct sk_buff *skb)
@@ -150,10 +143,7 @@ static inline struct sk_buff *skb_nfct_reasm(const struct sk_buff *skb)
 {
 	return NULL;
 }
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static inline void *frag_safe_skb_hp(const struct sk_buff *skb, int offset,
 				      int len, void *buffer,
 				      const struct ip_vs_iphdr *ipvsh)
@@ -161,13 +151,9 @@ static inline void *frag_safe_skb_hp(const struct sk_buff *skb, int offset,
 	return skb_header_pointer(skb, offset, len, buffer);
 }
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 #endif
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#endif
->>>>>>> master
 
 static inline void
 ip_vs_fill_ip4hdr(const void *nh, struct ip_vs_iphdr *iphdr)
@@ -195,36 +181,25 @@ ip_vs_fill_iph_skb(int af, const struct sk_buff *skb, struct ip_vs_iphdr *iphdr)
 		iphdr->saddr.in6 = iph->saddr;
 		iphdr->daddr.in6 = iph->daddr;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* ipv6_find_hdr() updates len, flags */
 =======
 		/* ipv6_find_hdr() updates len, flags, thoff_reasm */
 		iphdr->thoff_reasm = 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		/* ipv6_find_hdr() updates len, flags, thoff_reasm */
-		iphdr->thoff_reasm = 0;
->>>>>>> master
 		iphdr->len	 = 0;
 		iphdr->flags	 = 0;
 		iphdr->protocol  = ipv6_find_hdr(skb, &iphdr->len, -1,
 						 &iphdr->fragoffs,
 						 &iphdr->flags);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 		/* get proto from re-assembled packet and it's offset */
 		if (skb_nfct_reasm(skb))
 			iphdr->protocol = ipv6_find_hdr(skb_nfct_reasm(skb),
 							&iphdr->thoff_reasm,
 							-1, NULL, NULL);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	} else
 #endif
 	{

@@ -424,14 +424,10 @@ void pcim_iounmap_regions(struct pci_dev *pdev, int mask)
 		return;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	for (i = 0; i < PCIM_IOMAP_MAX; i++) {
 =======
 	for (i = 0; i < DEVICE_COUNT_RESOURCE; i++) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	for (i = 0; i < DEVICE_COUNT_RESOURCE; i++) {
->>>>>>> master
 		if (!(mask & (1 << i)))
 			continue;
 

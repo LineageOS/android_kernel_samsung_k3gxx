@@ -155,23 +155,17 @@ extern int brcmf_bus_start(struct device *dev);
 extern void brcmf_sdio_exit(void);
 extern void brcmf_sdio_init(void);
 <<<<<<< HEAD
-<<<<<<< HEAD
 extern void brcmf_sdio_register(void);
 #endif
 #ifdef CONFIG_BRCMFMAC_USB
 extern void brcmf_usb_exit(void);
 extern void brcmf_usb_register(void);
 =======
-=======
->>>>>>> master
 #endif
 #ifdef CONFIG_BRCMFMAC_USB
 extern void brcmf_usb_exit(void);
 extern void brcmf_usb_init(void);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #endif
 
 #endif				/* _BRCMF_BUS_H_ */

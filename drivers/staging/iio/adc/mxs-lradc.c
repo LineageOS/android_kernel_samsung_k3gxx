@@ -235,13 +235,9 @@ static int mxs_lradc_read_raw(struct iio_dev *iio_dev,
 	struct mxs_lradc *lradc = iio_priv(iio_dev);
 	int ret;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	unsigned long mask;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned long mask;
->>>>>>> master
 
 	if (m != IIO_CHAN_INFO_RAW)
 		return -EINVAL;
@@ -251,20 +247,14 @@ static int mxs_lradc_read_raw(struct iio_dev *iio_dev,
 		return -EINVAL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	/* Validate the channel if it doesn't intersect with reserved chans. */
 	bitmap_set(&mask, chan->channel, 1);
 	ret = iio_validate_scan_mask_onehot(iio_dev, &mask);
 	if (ret)
 		return -EINVAL;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/*
 	 * See if there is no buffered operation in progess. If there is, simply
 	 * bail out. This can be improved to support both buffered and raw IO at
@@ -678,26 +668,19 @@ static int mxs_lradc_trigger_init(struct iio_dev *iio)
 	int ret;
 	struct iio_trigger *trig;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct mxs_lradc *lradc = iio_priv(iio);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	trig = iio_trigger_alloc("%s-dev%i", iio->name, iio->id);
 	if (trig == NULL)
 		return -ENOMEM;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	trig->dev.parent = lradc->dev;
 =======
 	trig->dev.parent = iio->dev.parent;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	trig->dev.parent = iio->dev.parent;
->>>>>>> master
 	iio_trigger_set_drvdata(trig, iio);
 	trig->ops = &mxs_lradc_trigger_ops;
 
@@ -708,21 +691,16 @@ static int mxs_lradc_trigger_init(struct iio_dev *iio)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	lradc->trig = trig;
 =======
 	iio->trig = trig;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	iio->trig = trig;
->>>>>>> master
 
 	return 0;
 }
 
 static void mxs_lradc_trigger_remove(struct iio_dev *iio)
 {
-<<<<<<< HEAD
 <<<<<<< HEAD
 	struct mxs_lradc *lradc = iio_priv(iio);
 
@@ -732,10 +710,6 @@ static void mxs_lradc_trigger_remove(struct iio_dev *iio)
 	iio_trigger_unregister(iio->trig);
 	iio_trigger_free(iio->trig);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	iio_trigger_unregister(iio->trig);
-	iio_trigger_free(iio->trig);
->>>>>>> master
 }
 
 static int mxs_lradc_buffer_preenable(struct iio_dev *iio)

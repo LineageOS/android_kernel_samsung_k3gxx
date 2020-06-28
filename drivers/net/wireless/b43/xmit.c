@@ -811,7 +811,6 @@ void b43_rx(struct b43_wldev *dev, struct sk_buff *skb, const void *_rxhdr)
 	case B43_PHYTYPE_G:
 		status.band = IEEE80211_BAND_2GHZ;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* Somewhere between 478.104 and 508.1084 firmware for G-PHY
 		 * has been modified to be compatible with N-PHY and others.
 		 */
@@ -824,11 +823,6 @@ void b43_rx(struct b43_wldev *dev, struct sk_buff *skb, const void *_rxhdr)
 		 * to tune the radio. */
 		status.freq = chanid + 2400;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		/* chanid is the radio channel cookie value as used
-		 * to tune the radio. */
-		status.freq = chanid + 2400;
->>>>>>> master
 		break;
 	case B43_PHYTYPE_N:
 	case B43_PHYTYPE_LP:
@@ -838,22 +832,16 @@ void b43_rx(struct b43_wldev *dev, struct sk_buff *skb, const void *_rxhdr)
 		if (chanstat & B43_RX_CHAN_5GHZ) {
 			status.band = IEEE80211_BAND_5GHZ;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			status.freq = b43_channel_to_freq_5ghz(chanid);
 		} else {
 			status.band = IEEE80211_BAND_2GHZ;
 			status.freq = b43_channel_to_freq_2ghz(chanid);
 =======
-=======
->>>>>>> master
 			status.freq = b43_freq_to_channel_5ghz(chanid);
 		} else {
 			status.band = IEEE80211_BAND_2GHZ;
 			status.freq = b43_freq_to_channel_2ghz(chanid);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		}
 		break;
 	default:

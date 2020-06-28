@@ -25,12 +25,9 @@
 #include <linux/gfp.h>
 #include <linux/mpage.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/pagemap.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #include <linux/writeback.h>
 #include <linux/aio.h>
 #include "nilfs.h"
@@ -56,13 +53,10 @@ struct nilfs_iget_args {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int nilfs_iget_test(struct inode *inode, void *opaque);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 void nilfs_inode_add_blocks(struct inode *inode, int n)
 {
 	struct nilfs_root *root = NILFS_I(inode)->i_root;
@@ -235,22 +229,16 @@ static int nilfs_writepage(struct page *page, struct writeback_control *wbc)
 static int nilfs_set_page_dirty(struct page *page)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct inode *inode = page->mapping->host;
 	int ret = __set_page_dirty_nobuffers(page);
 
 	if (page_has_buffers(page)) {
 =======
-=======
->>>>>>> master
 	int ret = __set_page_dirty_nobuffers(page);
 
 	if (page_has_buffers(page)) {
 		struct inode *inode = page->mapping->host;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		unsigned nr_dirty = 0;
 		struct buffer_head *bh, *head;
 
@@ -274,15 +262,12 @@ static int nilfs_set_page_dirty(struct page *page)
 		if (nr_dirty)
 			nilfs_set_file_dirty(inode, nr_dirty);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	} else if (ret) {
 		unsigned nr_dirty = 1 << (PAGE_CACHE_SHIFT - inode->i_blkbits);
 
 		nilfs_set_file_dirty(inode, nr_dirty);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 	return ret;
 }
@@ -381,7 +366,6 @@ const struct address_space_operations nilfs_aops = {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int nilfs_insert_inode_locked(struct inode *inode,
 				     struct nilfs_root *root,
 				     unsigned long ino)
@@ -395,8 +379,6 @@ static int nilfs_insert_inode_locked(struct inode *inode,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 struct inode *nilfs_new_inode(struct inode *dir, umode_t mode)
 {
 	struct super_block *sb = dir->i_sb;
@@ -433,14 +415,10 @@ struct inode *nilfs_new_inode(struct inode *dir, umode_t mode)
 		err = nilfs_bmap_read(ii->i_bmap, NULL);
 		if (err < 0)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			goto failed_after_creation;
 =======
 			goto failed_bmap;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			goto failed_bmap;
->>>>>>> master
 
 		set_bit(NILFS_I_BMAP, &ii->i_state);
 		/* No lock is needed; iget() ensures it. */
@@ -457,7 +435,6 @@ struct inode *nilfs_new_inode(struct inode *dir, umode_t mode)
 	inode->i_generation = nilfs->ns_next_generation++;
 	spin_unlock(&nilfs->ns_next_gen_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (nilfs_insert_inode_locked(inode, root, ino) < 0) {
 		err = -EIO;
 		goto failed_after_creation;
@@ -467,23 +444,17 @@ struct inode *nilfs_new_inode(struct inode *dir, umode_t mode)
 	if (unlikely(err))
 		goto failed_after_creation; /* never occur. When supporting
 =======
-=======
->>>>>>> master
 	insert_inode_hash(inode);
 
 	err = nilfs_init_acl(inode, dir);
 	if (unlikely(err))
 		goto failed_acl; /* never occur. When supporting
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 				    nilfs_init_acl(), proper cancellation of
 				    above jobs should be considered */
 
 	return inode;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
  failed_after_creation:
 	clear_nlink(inode);
@@ -491,17 +462,12 @@ struct inode *nilfs_new_inode(struct inode *dir, umode_t mode)
 	iput(inode);  /* raw_inode will be deleted through
 			 nilfs_evict_inode() */
 =======
-=======
->>>>>>> master
  failed_acl:
  failed_bmap:
 	clear_nlink(inode);
 	iput(inode);  /* raw_inode will be deleted through
 			 generic_delete_inode() */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	goto failed;
 
  failed_ifile_create_inode:
@@ -550,17 +516,12 @@ int nilfs_read_inode_common(struct inode *inode,
 	inode->i_ctime.tv_nsec = le32_to_cpu(raw_inode->i_ctime_nsec);
 	inode->i_mtime.tv_nsec = le32_to_cpu(raw_inode->i_mtime_nsec);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (inode->i_nlink == 0)
 		return -ESTALE; /* this inode is deleted */
 =======
 	if (inode->i_nlink == 0 && inode->i_mode == 0)
 		return -EINVAL; /* this inode is deleted */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (inode->i_nlink == 0 && inode->i_mode == 0)
-		return -EINVAL; /* this inode is deleted */
->>>>>>> master
 
 	inode->i_blocks = le64_to_cpu(raw_inode->i_blocks);
 	ii->i_flags = le32_to_cpu(raw_inode->i_flags);

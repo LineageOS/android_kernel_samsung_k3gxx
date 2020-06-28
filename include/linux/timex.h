@@ -142,12 +142,9 @@ extern void hardpps(const struct timespec *, const struct timespec *);
 
 int read_current_timer(unsigned long *timer_val);
 <<<<<<< HEAD
-<<<<<<< HEAD
 void ntp_notify_cmos_timer(void);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /* The clock frequency of the i8253/i8254 PIT */
 #define PIT_TICK_RATE 1193182ul

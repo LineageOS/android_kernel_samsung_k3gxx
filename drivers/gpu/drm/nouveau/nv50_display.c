@@ -1254,14 +1254,10 @@ nv50_crtc_gamma_set(struct drm_crtc *crtc, u16 *r, u16 *g, u16 *b,
 {
 	struct nouveau_crtc *nv_crtc = nouveau_crtc(crtc);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u32 end = min_t(u32, start + size, 256);
 =======
 	u32 end = max(start + size, (u32)256);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u32 end = max(start + size, (u32)256);
->>>>>>> master
 	u32 i;
 
 	for (i = start; i < end; i++) {

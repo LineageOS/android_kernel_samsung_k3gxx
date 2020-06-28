@@ -1779,12 +1779,9 @@ static int ipx_recvmsg(struct kiocb *iocb, struct socket *sock,
 	struct sk_buff *skb;
 	int copied, rc;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	bool locked = true;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	lock_sock(sk);
 	/* put the autobinding in */
@@ -1812,13 +1809,10 @@ static int ipx_recvmsg(struct kiocb *iocb, struct socket *sock,
 		goto out;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	release_sock(sk);
 	locked = false;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	skb = skb_recv_datagram(sk, flags & ~MSG_DONTWAIT,
 				flags & MSG_DONTWAIT, &rc);
 	if (!skb)
@@ -1839,15 +1833,10 @@ static int ipx_recvmsg(struct kiocb *iocb, struct socket *sock,
 		sk->sk_stamp = skb->tstamp;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	msg->msg_namelen = sizeof(*sipx);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	msg->msg_namelen = sizeof(*sipx);
-
->>>>>>> master
 	if (sipx) {
 		sipx->sipx_family	= AF_IPX;
 		sipx->sipx_port		= ipx->ipx_source.sock;
@@ -1856,12 +1845,9 @@ static int ipx_recvmsg(struct kiocb *iocb, struct socket *sock,
 		sipx->sipx_type 	= ipx->ipx_type;
 		sipx->sipx_zero		= 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		msg->msg_namelen	= sizeof(*sipx);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 	rc = copied;
 
@@ -1869,15 +1855,11 @@ out_free:
 	skb_free_datagram(sk, skb);
 out:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (locked)
 		release_sock(sk);
 =======
 	release_sock(sk);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	release_sock(sk);
->>>>>>> master
 	return rc;
 }
 

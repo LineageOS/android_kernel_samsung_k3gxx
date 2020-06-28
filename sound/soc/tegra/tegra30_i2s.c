@@ -118,14 +118,10 @@ static int tegra30_i2s_set_fmt(struct snd_soc_dai *dai,
 {
 	struct tegra30_i2s *i2s = snd_soc_dai_get_drvdata(dai);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned int mask = 0, val = 0;
 =======
 	unsigned int mask, val;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned int mask, val;
->>>>>>> master
 
 	switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
 	case SND_SOC_DAIFMT_NB_NF:
@@ -135,22 +131,16 @@ static int tegra30_i2s_set_fmt(struct snd_soc_dai *dai,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mask |= TEGRA30_I2S_CTRL_MASTER_ENABLE;
 	switch (fmt & SND_SOC_DAIFMT_MASTER_MASK) {
 	case SND_SOC_DAIFMT_CBS_CFS:
 		val |= TEGRA30_I2S_CTRL_MASTER_ENABLE;
 =======
-=======
->>>>>>> master
 	mask = TEGRA30_I2S_CTRL_MASTER_ENABLE;
 	switch (fmt & SND_SOC_DAIFMT_MASTER_MASK) {
 	case SND_SOC_DAIFMT_CBS_CFS:
 		val = TEGRA30_I2S_CTRL_MASTER_ENABLE;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		break;
 	case SND_SOC_DAIFMT_CBM_CFM:
 		break;

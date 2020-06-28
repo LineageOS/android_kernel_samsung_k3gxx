@@ -42,30 +42,21 @@ struct inet_peer {
 	};
 	/*
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 * Once inet_peer is queued for deletion (refcnt == -1), following field
 	 * is not available: rid
 =======
 	 * Once inet_peer is queued for deletion (refcnt == -1), following fields
 	 * are not available: rid, ip_id_count
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	 * Once inet_peer is queued for deletion (refcnt == -1), following fields
-	 * are not available: rid, ip_id_count
->>>>>>> master
 	 * We can share memory with rcu_head to help keep inet_peer small.
 	 */
 	union {
 		struct {
 			atomic_t			rid;		/* Frag reception counter */
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 			atomic_t			ip_id_count;	/* IP ID for the next packet */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			atomic_t			ip_id_count;	/* IP ID for the next packet */
->>>>>>> master
 		};
 		struct rcu_head         rcu;
 		struct inet_peer	*gc_next;
@@ -184,14 +175,10 @@ extern void inetpeer_invalidate_family(int family);
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * temporary check to make sure we dont access rid, tcp_ts,
 =======
  * temporary check to make sure we dont access rid, ip_id_count, tcp_ts,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * temporary check to make sure we dont access rid, ip_id_count, tcp_ts,
->>>>>>> master
  * tcp_ts_stamp if no refcount is taken on inet_peer
  */
 static inline void inet_peer_refcheck(const struct inet_peer *p)
@@ -200,10 +187,7 @@ static inline void inet_peer_refcheck(const struct inet_peer *p)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 
 /* can be called with or without local BH being disabled */
 static inline int inet_getid(struct inet_peer *p, int more)
@@ -220,8 +204,5 @@ static inline int inet_getid(struct inet_peer *p, int more)
 	return new;
 }
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #endif /* _NET_INETPEER_H */

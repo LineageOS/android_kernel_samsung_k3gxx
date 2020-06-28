@@ -88,15 +88,12 @@ s32 igb_get_phy_id(struct e1000_hw *hw)
 	u16 phy_id;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* ensure PHY page selection to fix misconfigured i210 */
 	if ((hw->mac.type == e1000_i210) || (hw->mac.type == e1000_i211))
 		phy->ops.write_reg(hw, I347AT4_PAGE_SELECT, 0);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ret_val = phy->ops.read_reg(hw, PHY_ID1, &phy_id);
 	if (ret_val)
 		goto out;
@@ -1606,7 +1603,6 @@ s32 igb_phy_has_link(struct e1000_hw *hw, u32 iterations,
 			 * see if they have relinquished the resources yet.
 			 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (usec_interval >= 1000)
 				mdelay(usec_interval/1000);
 			else
@@ -1614,9 +1610,6 @@ s32 igb_phy_has_link(struct e1000_hw *hw, u32 iterations,
 =======
 			udelay(usec_interval);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			udelay(usec_interval);
->>>>>>> master
 		}
 		ret_val = hw->phy.ops.read_reg(hw, PHY_STATUS, &phy_status);
 		if (ret_val)

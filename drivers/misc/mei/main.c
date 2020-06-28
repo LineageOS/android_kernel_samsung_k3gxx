@@ -263,21 +263,15 @@ static ssize_t mei_read(struct file *file, char __user *ubuf,
 
 		if (wait_event_interruptible(cl->rx_wait,
 <<<<<<< HEAD
-<<<<<<< HEAD
 				MEI_READ_COMPLETE == cl->reading_state ||
 				mei_cl_is_transitioning(cl))) {
 
 =======
-=======
->>>>>>> master
 			(MEI_READ_COMPLETE == cl->reading_state ||
 			 MEI_FILE_INITIALIZING == cl->state ||
 			 MEI_FILE_DISCONNECTED == cl->state ||
 			 MEI_FILE_DISCONNECTING == cl->state))) {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			if (signal_pending(current))
 				return -EINTR;
 			return -ERESTARTSYS;
@@ -285,18 +279,12 @@ static ssize_t mei_read(struct file *file, char __user *ubuf,
 
 		mutex_lock(&dev->device_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (mei_cl_is_transitioning(cl)) {
 =======
 		if (MEI_FILE_INITIALIZING == cl->state ||
 		    MEI_FILE_DISCONNECTED == cl->state ||
 		    MEI_FILE_DISCONNECTING == cl->state) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (MEI_FILE_INITIALIZING == cl->state ||
-		    MEI_FILE_DISCONNECTED == cl->state ||
-		    MEI_FILE_DISCONNECTING == cl->state) {
->>>>>>> master
 			rets = -EBUSY;
 			goto out;
 		}

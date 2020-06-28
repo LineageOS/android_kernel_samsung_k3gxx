@@ -111,15 +111,12 @@ struct adis16480_chip_info {
 	unsigned int num_channels;
 	const struct iio_chan_spec *channels;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned int gyro_max_val;
 	unsigned int gyro_max_scale;
 	unsigned int accel_max_val;
 	unsigned int accel_max_scale;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 struct adis16480 {
@@ -544,20 +541,16 @@ static int adis16480_read_raw(struct iio_dev *indio_dev,
 	const struct iio_chan_spec *chan, int *val, int *val2, long info)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct adis16480 *st = iio_priv(indio_dev);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	switch (info) {
 	case IIO_CHAN_INFO_RAW:
 		return adis_single_conversion(indio_dev, chan, 0, val);
 	case IIO_CHAN_INFO_SCALE:
 		switch (chan->type) {
 		case IIO_ANGL_VEL:
-<<<<<<< HEAD
 <<<<<<< HEAD
 			*val = st->chip_info->gyro_max_scale;
 			*val2 = st->chip_info->gyro_max_val;
@@ -567,8 +560,6 @@ static int adis16480_read_raw(struct iio_dev *indio_dev,
 			*val2 = st->chip_info->accel_max_val;
 			return IIO_VAL_FRACTIONAL;
 =======
-=======
->>>>>>> master
 			*val = 0;
 			*val2 = IIO_DEGREE_TO_RAD(20000); /* 0.02 degree/sec */
 			return IIO_VAL_INT_PLUS_MICRO;
@@ -576,10 +567,7 @@ static int adis16480_read_raw(struct iio_dev *indio_dev,
 			*val = 0;
 			*val2 = IIO_G_TO_M_S_2(800); /* 0.8 mg */
 			return IIO_VAL_INT_PLUS_MICRO;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		case IIO_MAGN:
 			*val = 0;
 			*val2 = 100; /* 0.0001 gauss */
@@ -737,7 +725,6 @@ static const struct adis16480_chip_info adis16480_chip_info[] = {
 		.channels = adis16485_channels,
 		.num_channels = ARRAY_SIZE(adis16485_channels),
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/*
 		 * storing the value in rad/degree and the scale in degree
 		 * gives us the result in rad and better precession than
@@ -749,13 +736,10 @@ static const struct adis16480_chip_info adis16480_chip_info[] = {
 		.accel_max_scale = 18,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	},
 	[ADIS16480] = {
 		.channels = adis16480_channels,
 		.num_channels = ARRAY_SIZE(adis16480_channels),
-<<<<<<< HEAD
 <<<<<<< HEAD
 		.gyro_max_val = IIO_RAD_TO_DEGREE(22500),
 		.gyro_max_scale = 450,
@@ -763,13 +747,10 @@ static const struct adis16480_chip_info adis16480_chip_info[] = {
 		.accel_max_scale = 5,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	},
 	[ADIS16485] = {
 		.channels = adis16485_channels,
 		.num_channels = ARRAY_SIZE(adis16485_channels),
-<<<<<<< HEAD
 <<<<<<< HEAD
 		.gyro_max_val = IIO_RAD_TO_DEGREE(22500),
 		.gyro_max_scale = 450,
@@ -777,13 +758,10 @@ static const struct adis16480_chip_info adis16480_chip_info[] = {
 		.accel_max_scale = 5,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	},
 	[ADIS16488] = {
 		.channels = adis16480_channels,
 		.num_channels = ARRAY_SIZE(adis16480_channels),
-<<<<<<< HEAD
 <<<<<<< HEAD
 		.gyro_max_val = IIO_RAD_TO_DEGREE(22500),
 		.gyro_max_scale = 450,
@@ -791,8 +769,6 @@ static const struct adis16480_chip_info adis16480_chip_info[] = {
 		.accel_max_scale = 18,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	},
 };
 

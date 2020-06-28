@@ -52,13 +52,9 @@ struct rfkill {
 	spinlock_t		lock;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	const char		*name;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	const char		*name;
->>>>>>> master
 	enum rfkill_type	type;
 
 	unsigned long		state;
@@ -83,12 +79,9 @@ struct rfkill {
 	struct work_struct	uevent_work;
 	struct work_struct	sync_work;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	char			name[];
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 #define to_rfkill(d)	container_of(d, struct rfkill, dev)
 
@@ -815,15 +808,11 @@ void rfkill_resume_polling(struct rfkill *rfkill)
 		return;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	queue_delayed_work(system_power_efficient_wq,
 			   &rfkill->poll_work, 0);
 =======
 	schedule_work(&rfkill->poll_work.work);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	schedule_work(&rfkill->poll_work.work);
->>>>>>> master
 }
 EXPORT_SYMBOL(rfkill_resume_polling);
 
@@ -899,14 +888,10 @@ struct rfkill * __must_check rfkill_alloc(const char *name,
 		return NULL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	rfkill = kzalloc(sizeof(*rfkill) + strlen(name) + 1, GFP_KERNEL);
 =======
 	rfkill = kzalloc(sizeof(*rfkill), GFP_KERNEL);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	rfkill = kzalloc(sizeof(*rfkill), GFP_KERNEL);
->>>>>>> master
 	if (!rfkill)
 		return NULL;
 
@@ -914,14 +899,10 @@ struct rfkill * __must_check rfkill_alloc(const char *name,
 	INIT_LIST_HEAD(&rfkill->node);
 	rfkill->type = type;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	strcpy(rfkill->name, name);
 =======
 	rfkill->name = name;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	rfkill->name = name;
->>>>>>> master
 	rfkill->ops = ops;
 	rfkill->data = ops_data;
 
@@ -948,15 +929,11 @@ static void rfkill_poll(struct work_struct *work)
 	rfkill->ops->poll(rfkill, rfkill->data);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	queue_delayed_work(system_power_efficient_wq,
 		&rfkill->poll_work,
 =======
 	schedule_delayed_work(&rfkill->poll_work,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	schedule_delayed_work(&rfkill->poll_work,
->>>>>>> master
 		round_jiffies_relative(POLL_INTERVAL));
 }
 
@@ -1021,15 +998,11 @@ int __must_check rfkill_register(struct rfkill *rfkill)
 
 	if (rfkill->ops->poll)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		queue_delayed_work(system_power_efficient_wq,
 			&rfkill->poll_work,
 =======
 		schedule_delayed_work(&rfkill->poll_work,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		schedule_delayed_work(&rfkill->poll_work,
->>>>>>> master
 			round_jiffies_relative(POLL_INTERVAL));
 
 	if (!rfkill->persistent || rfkill_epo_lock_active) {
@@ -1150,10 +1123,7 @@ static unsigned int rfkill_fop_poll(struct file *file, poll_table *wait)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 static bool rfkill_readable(struct rfkill_data *data)
 {
 	bool r;
@@ -1165,10 +1135,7 @@ static bool rfkill_readable(struct rfkill_data *data)
 	return r;
 }
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static ssize_t rfkill_fop_read(struct file *file, char __user *buf,
 			       size_t count, loff_t *pos)
 {
@@ -1186,7 +1153,6 @@ static ssize_t rfkill_fop_read(struct file *file, char __user *buf,
 		}
 		mutex_unlock(&data->mtx);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* since we re-check and it just compares pointers,
 		 * using !list_empty() without locking isn't a problem
 		 */
@@ -1196,10 +1162,6 @@ static ssize_t rfkill_fop_read(struct file *file, char __user *buf,
 		ret = wait_event_interruptible(data->read_wait,
 					       rfkill_readable(data));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		ret = wait_event_interruptible(data->read_wait,
-					       rfkill_readable(data));
->>>>>>> master
 		mutex_lock(&data->mtx);
 
 		if (ret)

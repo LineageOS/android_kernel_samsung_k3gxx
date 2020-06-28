@@ -199,7 +199,6 @@ static void enclosure_remove_links(struct enclosure_component *cdev)
 	char name[ENCLOSURE_NAME_SIZE];
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * In odd circumstances, like multipath devices, something else may
 	 * already have removed the links, so check for this condition first.
@@ -209,8 +208,6 @@ static void enclosure_remove_links(struct enclosure_component *cdev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	enclosure_link_name(cdev, name);
 	sysfs_remove_link(&cdev->dev->kobj, name);
 	sysfs_remove_link(&cdev->cdev.kobj, "device");

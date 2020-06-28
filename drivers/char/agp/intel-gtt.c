@@ -584,14 +584,10 @@ static inline int needs_ilk_vtd_wa(void)
 	 * was loaded first.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if ((gpu_devid == PCI_DEVICE_ID_INTEL_IRONLAKE_D_IG ||
 =======
 	if ((gpu_devid == PCI_DEVICE_ID_INTEL_IRONLAKE_M_HB ||
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if ((gpu_devid == PCI_DEVICE_ID_INTEL_IRONLAKE_M_HB ||
->>>>>>> master
 	     gpu_devid == PCI_DEVICE_ID_INTEL_IRONLAKE_M_IG) &&
 	     intel_iommu_gfx_mapped)
 		return 1;

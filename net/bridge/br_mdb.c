@@ -346,13 +346,9 @@ static int br_mdb_add_group(struct net_bridge *br, struct net_bridge_port *port,
 	rcu_assign_pointer(*pp, p);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	br_mdb_notify(br->dev, port, group, RTM_NEWMDB);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	br_mdb_notify(br->dev, port, group, RTM_NEWMDB);
->>>>>>> master
 	return 0;
 }
 
@@ -376,12 +372,9 @@ static int __br_mdb_add(struct net *net, struct net_bridge *br,
 		return -EINVAL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	memset(&ip, 0, sizeof(ip));
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ip.proto = entry->addr.proto;
 	if (ip.proto == htons(ETH_P_IP))
 		ip.u.ip4 = entry->addr.u.ip4;
@@ -432,12 +425,9 @@ static int __br_mdb_del(struct net_bridge *br, struct br_mdb_entry *entry)
 		return -EBUSY;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	memset(&ip, 0, sizeof(ip));
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ip.proto = entry->addr.proto;
 	if (ip.proto == htons(ETH_P_IP))
 		ip.u.ip4 = entry->addr.u.ip4;

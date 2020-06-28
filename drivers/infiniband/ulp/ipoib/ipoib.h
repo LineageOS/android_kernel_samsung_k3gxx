@@ -461,12 +461,9 @@ void ipoib_send(struct net_device *dev, struct sk_buff *skb,
 void ipoib_reap_ah(struct work_struct *work);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 struct ipoib_path *__path_find(struct net_device *dev, void *gid);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 void ipoib_mark_paths_invalid(struct net_device *dev);
 void ipoib_flush_paths(struct net_device *dev);
 struct ipoib_dev_priv *ipoib_intf_alloc(const char *format);

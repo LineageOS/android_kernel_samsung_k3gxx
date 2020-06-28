@@ -394,17 +394,12 @@ static int omap_mcpdm_probe(struct snd_soc_dai *dai)
 	omap_mcpdm_write(mcpdm, MCPDM_REG_CTRL, 0x00);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = request_irq(mcpdm->irq, omap_mcpdm_irq_handler, 0, "McPDM",
 			  (void *)mcpdm);
 =======
 	ret = devm_request_irq(mcpdm->dev, mcpdm->irq, omap_mcpdm_irq_handler,
 				0, "McPDM", (void *)mcpdm);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret = devm_request_irq(mcpdm->dev, mcpdm->irq, omap_mcpdm_irq_handler,
-				0, "McPDM", (void *)mcpdm);
->>>>>>> master
 
 	pm_runtime_put_sync(mcpdm->dev);
 
@@ -425,12 +420,9 @@ static int omap_mcpdm_remove(struct snd_soc_dai *dai)
 	struct omap_mcpdm *mcpdm = snd_soc_dai_get_drvdata(dai);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	free_irq(mcpdm->irq, (void *)mcpdm);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	pm_runtime_disable(mcpdm->dev);
 
 	return 0;

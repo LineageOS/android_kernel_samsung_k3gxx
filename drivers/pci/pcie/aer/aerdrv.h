@@ -77,13 +77,9 @@ struct aer_rpc {
 					 * root port hierarchy
 					 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	wait_queue_head_t wait_release;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	wait_queue_head_t wait_release;
->>>>>>> master
 };
 
 struct aer_broadcast_data {

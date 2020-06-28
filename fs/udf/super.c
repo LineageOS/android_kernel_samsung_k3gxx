@@ -631,7 +631,6 @@ static int udf_remount_fs(struct super_block *sb, int *flags, char *options)
 	int error = 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (sbi->s_lvid_bh) {
 		int write_rev = le16_to_cpu(udf_sb_lvidiu(sbi)->minUDFWriteRev);
 		if (write_rev > UDF_MAX_WRITE_VERSION && !(*flags & MS_RDONLY))
@@ -640,8 +639,6 @@ static int udf_remount_fs(struct super_block *sb, int *flags, char *options)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	uopt.flags = sbi->s_flags;
 	uopt.uid   = sbi->s_uid;
 	uopt.gid   = sbi->s_gid;
@@ -662,20 +659,14 @@ static int udf_remount_fs(struct super_block *sb, int *flags, char *options)
 	write_unlock(&sbi->s_cred_lock);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	if (sbi->s_lvid_bh) {
 		int write_rev = le16_to_cpu(udf_sb_lvidiu(sbi)->minUDFWriteRev);
 		if (write_rev > UDF_MAX_WRITE_VERSION)
 			*flags |= MS_RDONLY;
 	}
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if ((*flags & MS_RDONLY) == (sb->s_flags & MS_RDONLY))
 		goto out_unlock;
 
@@ -865,7 +856,6 @@ static int udf_find_fileset(struct super_block *sb,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * Load primary Volume Descriptor Sequence
  *
@@ -874,8 +864,6 @@ static int udf_find_fileset(struct super_block *sb,
  */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int udf_load_pvoldesc(struct super_block *sb, sector_t block)
 {
 	struct primaryVolDesc *pvoldesc;
@@ -883,31 +871,24 @@ static int udf_load_pvoldesc(struct super_block *sb, sector_t block)
 	struct buffer_head *bh;
 	uint16_t ident;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int ret = -ENOMEM;
 
 	instr = kmalloc(sizeof(struct ustr), GFP_NOFS);
 	if (!instr)
 		return -ENOMEM;
 =======
-=======
->>>>>>> master
 	int ret = 1;
 
 	instr = kmalloc(sizeof(struct ustr), GFP_NOFS);
 	if (!instr)
 		return 1;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	outstr = kmalloc(sizeof(struct ustr), GFP_NOFS);
 	if (!outstr)
 		goto out1;
 
 	bh = udf_read_tagged(sb, block, block, &ident);
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!bh) {
 		ret = -EAGAIN;
@@ -919,16 +900,11 @@ static int udf_load_pvoldesc(struct super_block *sb, sector_t block)
 		goto out_bh;
 	}
 =======
-=======
->>>>>>> master
 	if (!bh)
 		goto out2;
 
 	BUG_ON(ident != TAG_IDENT_PVD);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	pvoldesc = (struct primaryVolDesc *)bh->b_data;
 
@@ -955,7 +931,6 @@ static int udf_load_pvoldesc(struct super_block *sb, sector_t block)
 			udf_debug("volSetIdent[] = '%s'\n", outstr->u_name);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = 0;
 out_bh:
 	brelse(bh);
@@ -963,10 +938,6 @@ out_bh:
 	brelse(bh);
 	ret = 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	brelse(bh);
-	ret = 0;
->>>>>>> master
 out2:
 	kfree(outstr);
 out1:
@@ -1024,14 +995,10 @@ static int udf_load_metadata_files(struct super_block *sb, int partition)
 		if (mdata->s_mirror_fe == NULL) {
 			udf_err(sb, "Both metadata and mirror metadata inode efe can not found\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 			return -EIO;
 =======
 			goto error_exit;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			goto error_exit;
->>>>>>> master
 		}
 	}
 
@@ -1049,47 +1016,33 @@ static int udf_load_metadata_files(struct super_block *sb, int partition)
 
 		mdata->s_bitmap_fe = udf_iget(sb, &addr);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 		if (mdata->s_bitmap_fe == NULL) {
 			if (sb->s_flags & MS_RDONLY)
 				udf_warn(sb, "bitmap inode efe not found but it's ok since the disc is mounted read-only\n");
 			else {
 				udf_err(sb, "bitmap inode efe not found and attempted read-write mount\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 				return -EIO;
 =======
 				goto error_exit;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				goto error_exit;
->>>>>>> master
 			}
 		}
 	}
 
 	udf_debug("udf_load_metadata_files Ok\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return 0;
 =======
-=======
->>>>>>> master
 
 	return 0;
 
 error_exit:
 	return 1;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static void udf_load_fileset(struct super_block *sb, struct buffer_head *bh,
@@ -1179,14 +1132,10 @@ static int udf_fill_partdesc_info(struct super_block *sb,
 			udf_debug("cannot load unallocSpaceTable (part %d)\n",
 				  p_index);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			return -EIO;
 =======
 			return 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			return 1;
->>>>>>> master
 		}
 		map->s_partition_flags |= UDF_PART_FLAG_UNALLOC_TABLE;
 		udf_debug("unallocSpaceTable (part %d) @ %ld\n",
@@ -1197,14 +1146,10 @@ static int udf_fill_partdesc_info(struct super_block *sb,
 		struct udf_bitmap *bitmap = udf_sb_alloc_bitmap(sb, p_index);
 		if (!bitmap)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			return -ENOMEM;
 =======
 			return 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			return 1;
->>>>>>> master
 		map->s_uspace.s_bitmap = bitmap;
 		bitmap->s_extPosition = le32_to_cpu(
 				phd->unallocSpaceBitmap.extPosition);
@@ -1228,14 +1173,10 @@ static int udf_fill_partdesc_info(struct super_block *sb,
 			udf_debug("cannot load freedSpaceTable (part %d)\n",
 				  p_index);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			return -EIO;
 =======
 			return 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			return 1;
->>>>>>> master
 		}
 
 		map->s_partition_flags |= UDF_PART_FLAG_FREED_TABLE;
@@ -1247,14 +1188,10 @@ static int udf_fill_partdesc_info(struct super_block *sb,
 		struct udf_bitmap *bitmap = udf_sb_alloc_bitmap(sb, p_index);
 		if (!bitmap)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			return -ENOMEM;
 =======
 			return 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			return 1;
->>>>>>> master
 		map->s_fspace.s_bitmap = bitmap;
 		bitmap->s_extPosition = le32_to_cpu(
 				phd->freedSpaceBitmap.extPosition);
@@ -1307,14 +1244,10 @@ static int udf_load_vat(struct super_block *sb, int p_index, int type1_index)
 	}
 	if (!sbi->s_vat_inode)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		return -EIO;
 =======
 		return 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		return 1;
->>>>>>> master
 
 	if (map->s_partition_type == UDF_VIRTUAL_MAP15) {
 		map->s_type_specific.s_virtual.s_start_offset = 0;
@@ -1327,14 +1260,10 @@ static int udf_load_vat(struct super_block *sb, int p_index, int type1_index)
 			bh = sb_bread(sb, pos);
 			if (!bh)
 <<<<<<< HEAD
-<<<<<<< HEAD
 				return -EIO;
 =======
 				return 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				return 1;
->>>>>>> master
 			vat20 = (struct virtualAllocationTable20 *)bh->b_data;
 		} else {
 			vat20 = (struct virtualAllocationTable20 *)
@@ -1353,7 +1282,6 @@ static int udf_load_vat(struct super_block *sb, int p_index, int type1_index)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * Load partition descriptor block
  *
@@ -1362,8 +1290,6 @@ static int udf_load_vat(struct super_block *sb, int p_index, int type1_index)
  */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int udf_load_partdesc(struct super_block *sb, sector_t block)
 {
 	struct buffer_head *bh;
@@ -1373,7 +1299,6 @@ static int udf_load_partdesc(struct super_block *sb, sector_t block)
 	int i, type1_idx;
 	uint16_t partitionNumber;
 	uint16_t ident;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	int ret;
 
@@ -1385,8 +1310,6 @@ static int udf_load_partdesc(struct super_block *sb, sector_t block)
 		goto out_bh;
 	}
 =======
-=======
->>>>>>> master
 	int ret = 0;
 
 	bh = udf_read_tagged(sb, block, block, &ident);
@@ -1394,10 +1317,7 @@ static int udf_load_partdesc(struct super_block *sb, sector_t block)
 		return 1;
 	if (ident != TAG_IDENT_PD)
 		goto out_bh;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	p = (struct partitionDesc *)bh->b_data;
 	partitionNumber = le16_to_cpu(p->partitionNumber);
@@ -1417,24 +1337,18 @@ static int udf_load_partdesc(struct super_block *sb, sector_t block)
 		udf_debug("Partition (%d) not found in partition map\n",
 			  partitionNumber);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ret = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		goto out_bh;
 	}
 
 	ret = udf_fill_partdesc_info(sb, p, i);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ret < 0)
 		goto out_bh;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/*
 	 * Now rescan for VIRTUAL or METADATA partitions when SPARABLE and
@@ -1452,7 +1366,6 @@ static int udf_load_partdesc(struct super_block *sb, sector_t block)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (i >= sbi->s_partitions) {
 		ret = 0;
 		goto out_bh;
@@ -1461,36 +1374,26 @@ static int udf_load_partdesc(struct super_block *sb, sector_t block)
 	ret = udf_fill_partdesc_info(sb, p, i);
 	if (ret < 0)
 =======
-=======
->>>>>>> master
 	if (i >= sbi->s_partitions)
 		goto out_bh;
 
 	ret = udf_fill_partdesc_info(sb, p, i);
 	if (ret)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		goto out_bh;
 
 	if (map->s_partition_type == UDF_METADATA_MAP25) {
 		ret = udf_load_metadata_files(sb, i);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (ret < 0) {
 =======
 		if (ret) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (ret) {
->>>>>>> master
 			udf_err(sb, "error loading MetaData partition map %d\n",
 				i);
 			goto out_bh;
 		}
 	} else {
-<<<<<<< HEAD
 <<<<<<< HEAD
 		/*
 		 * If we have a partition with virtual map, we don't handle
@@ -1507,8 +1410,6 @@ static int udf_load_partdesc(struct super_block *sb, sector_t block)
 	}
 	ret = 0;
 =======
-=======
->>>>>>> master
 		ret = udf_load_vat(sb, i, type1_idx);
 		if (ret)
 			goto out_bh;
@@ -1520,10 +1421,7 @@ static int udf_load_partdesc(struct super_block *sb, sector_t block)
 		sb->s_flags |= MS_RDONLY;
 		pr_notice("Filesystem marked read-only because writing to pseudooverwrite partition is not implemented\n");
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 out_bh:
 	/* In case loading failed, we handle cleanup in udf_fill_super */
 	brelse(bh);
@@ -1590,24 +1488,18 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
 	struct buffer_head *bh;
 	unsigned int table_len;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int ret;
 
 	bh = udf_read_tagged(sb, block, block, &ident);
 	if (!bh)
 		return -EAGAIN;
 =======
-=======
->>>>>>> master
 	int ret = 0;
 
 	bh = udf_read_tagged(sb, block, block, &ident);
 	if (!bh)
 		return 1;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	BUG_ON(ident != TAG_IDENT_LVD);
 	lvd = (struct logicalVolDesc *)bh->b_data;
 	table_len = le32_to_cpu(lvd->mapTableLength);
@@ -1616,14 +1508,10 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
 			"Partition table too long (%u > %lu)\n", table_len,
 			sb->s_blocksize - sizeof(*lvd));
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ret = -EIO;
 =======
 		ret = 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		ret = 1;
->>>>>>> master
 		goto out_bh;
 	}
 
@@ -1668,23 +1556,17 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
 						UDF_ID_SPARABLE,
 						strlen(UDF_ID_SPARABLE))) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 				ret = udf_load_sparable_map(sb, map,
 					(struct sparablePartitionMap *)gpm);
 				if (ret < 0)
 					goto out_bh;
 =======
-=======
->>>>>>> master
 				if (udf_load_sparable_map(sb, map,
 				    (struct sparablePartitionMap *)gpm) < 0) {
 					ret = 1;
 					goto out_bh;
 				}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			} else if (!strncmp(upm2->partIdent.ident,
 						UDF_ID_METADATA,
 						strlen(UDF_ID_METADATA))) {
@@ -1750,14 +1632,10 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
 	if (lvd->integritySeqExt.extLength)
 		udf_load_logicalvolint(sb, leea_to_cpu(lvd->integritySeqExt));
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = 0;
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 out_bh:
 	brelse(bh);
 	return ret;
@@ -1796,7 +1674,6 @@ static void udf_load_logicalvolint(struct super_block *sb, struct kernel_extent_
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * Process a main/reserve volume descriptor sequence.
  *   @block		First block of first extent of the sequence.
  *   @lastblock		Lastblock of first extent of the sequence.
@@ -1810,8 +1687,6 @@ static noinline int udf_process_sequence(
 		sector_t block, sector_t lastblock,
 		struct kernel_lb_addr *fileset)
 =======
-=======
->>>>>>> master
  * udf_process_sequence
  *
  * PURPOSE
@@ -1828,10 +1703,7 @@ static noinline int udf_process_sequence(
  */
 static noinline int udf_process_sequence(struct super_block *sb, long block,
 				long lastblock, struct kernel_lb_addr *fileset)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 {
 	struct buffer_head *bh = NULL;
 	struct udf_vds_record vds[VDS_POS_LENGTH];
@@ -1843,12 +1715,9 @@ static noinline int udf_process_sequence(struct super_block *sb, long block,
 	uint16_t ident;
 	long next_s = 0, next_e = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int ret;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	memset(vds, 0, sizeof(struct udf_vds_record) * VDS_POS_LENGTH);
 
@@ -1864,14 +1733,10 @@ static noinline int udf_process_sequence(struct super_block *sb, long block,
 				"Block %llu of volume descriptor sequence is corrupted or we could not read it\n",
 				(unsigned long long)block);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			return -EAGAIN;
 =======
 			return 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			return 1;
->>>>>>> master
 		}
 
 		/* Process each descriptor (ISO 13346 3/8.3-8.4) */
@@ -1945,7 +1810,6 @@ static noinline int udf_process_sequence(struct super_block *sb, long block,
 	if (!vds[VDS_POS_PRIMARY_VOL_DESC].block) {
 		udf_err(sb, "Primary Volume Descriptor not found!\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 		return -EAGAIN;
 	}
 	ret = udf_load_pvoldesc(sb, vds[VDS_POS_PRIMARY_VOL_DESC].block);
@@ -1960,8 +1824,6 @@ static noinline int udf_process_sequence(struct super_block *sb, long block,
 			return ret;
 	}
 =======
-=======
->>>>>>> master
 		return 1;
 	}
 	if (udf_load_pvoldesc(sb, vds[VDS_POS_PRIMARY_VOL_DESC].block))
@@ -1970,10 +1832,7 @@ static noinline int udf_process_sequence(struct super_block *sb, long block,
 	if (vds[VDS_POS_LOGICAL_VOL_DESC].block && udf_load_logicalvol(sb,
 	    vds[VDS_POS_LOGICAL_VOL_DESC].block, fileset))
 		return 1;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (vds[VDS_POS_PARTITION_DESC].block) {
 		/*
@@ -1982,7 +1841,6 @@ static noinline int udf_process_sequence(struct super_block *sb, long block,
 		 */
 		for (block = vds[VDS_POS_PARTITION_DESC].block;
 		     block < vds[VDS_POS_TERMINATING_DESC].block;
-<<<<<<< HEAD
 <<<<<<< HEAD
 		     block++) {
 			ret = udf_load_partdesc(sb, block);
@@ -1994,17 +1852,11 @@ static noinline int udf_process_sequence(struct super_block *sb, long block,
 			if (udf_load_partdesc(sb, block))
 				return 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		     block++)
-			if (udf_load_partdesc(sb, block))
-				return 1;
->>>>>>> master
 	}
 
 	return 0;
 }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 /*
  * Load Volume Descriptor Sequence described by anchor in bh
@@ -2013,22 +1865,16 @@ static noinline int udf_process_sequence(struct super_block *sb, long block,
  */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int udf_load_sequence(struct super_block *sb, struct buffer_head *bh,
 			     struct kernel_lb_addr *fileset)
 {
 	struct anchorVolDescPtr *anchor;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	sector_t main_s, main_e, reserve_s, reserve_e;
 	int ret;
 =======
 	long main_s, main_e, reserve_s, reserve_e;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	long main_s, main_e, reserve_s, reserve_e;
->>>>>>> master
 
 	anchor = (struct anchorVolDescPtr *)bh->b_data;
 
@@ -2047,7 +1893,6 @@ static int udf_load_sequence(struct super_block *sb, struct buffer_head *bh,
 	/* Process the main & reserve sequences */
 	/* responsible for finding the PartitionDesc(s) */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = udf_process_sequence(sb, main_s, main_e, fileset);
 	if (ret != -EAGAIN)
 		return ret;
@@ -2061,8 +1906,6 @@ static int udf_load_sequence(struct super_block *sb, struct buffer_head *bh,
 	}
 	return ret;
 =======
-=======
->>>>>>> master
 	if (!udf_process_sequence(sb, main_s, main_e, fileset))
 		return 1;
 	udf_sb_free_partitions(sb);
@@ -2070,24 +1913,18 @@ static int udf_load_sequence(struct super_block *sb, struct buffer_head *bh,
 		return 1;
 	udf_sb_free_partitions(sb);
 	return 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /*
  * Check whether there is an anchor block in the given block and
  * load Volume Descriptor Sequence if so.
 <<<<<<< HEAD
-<<<<<<< HEAD
  *
  * Returns <0 on error, 0 on success, -EAGAIN is special - try next anchor
  * block
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  */
 static int udf_check_anchor_block(struct super_block *sb, sector_t block,
 				  struct kernel_lb_addr *fileset)
@@ -2100,7 +1937,6 @@ static int udf_check_anchor_block(struct super_block *sb, sector_t block,
 	    udf_fixed_to_variable(block) >=
 	    sb->s_bdev->bd_inode->i_size >> sb->s_blocksize_bits)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		return -EAGAIN;
 
 	bh = udf_read_tagged(sb, block, block, &ident);
@@ -2110,8 +1946,6 @@ static int udf_check_anchor_block(struct super_block *sb, sector_t block,
 		brelse(bh);
 		return -EAGAIN;
 =======
-=======
->>>>>>> master
 		return 0;
 
 	bh = udf_read_tagged(sb, block, block, &ident);
@@ -2120,17 +1954,13 @@ static int udf_check_anchor_block(struct super_block *sb, sector_t block,
 	if (ident != TAG_IDENT_AVDP) {
 		brelse(bh);
 		return 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 	ret = udf_load_sequence(sb, bh, fileset);
 	brelse(bh);
 	return ret;
 }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 /*
  * Search for an anchor volume descriptor pointer.
@@ -2145,17 +1975,11 @@ static int udf_scan_anchors(struct super_block *sb, sector_t *lastblock,
 static sector_t udf_scan_anchors(struct super_block *sb, sector_t lastblock,
 				 struct kernel_lb_addr *fileset)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-/* Search for an anchor volume descriptor pointer */
-static sector_t udf_scan_anchors(struct super_block *sb, sector_t lastblock,
-				 struct kernel_lb_addr *fileset)
->>>>>>> master
 {
 	sector_t last[6];
 	int i;
 	struct udf_sb_info *sbi = UDF_SB(sb);
 	int last_count = 0;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	int ret;
 
@@ -2165,17 +1989,12 @@ static sector_t udf_scan_anchors(struct super_block *sb, sector_t lastblock,
 		if (ret != -EAGAIN)
 			return ret;
 =======
-=======
->>>>>>> master
 
 	/* First try user provided anchor */
 	if (sbi->s_anchor) {
 		if (udf_check_anchor_block(sb, sbi->s_anchor, fileset))
 			return lastblock;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 	/*
 	 * according to spec, anchor is in either:
@@ -2185,7 +2004,6 @@ static sector_t udf_scan_anchors(struct super_block *sb, sector_t lastblock,
 	 *  however, if the disc isn't closed, it could be 512.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = udf_check_anchor_block(sb, sbi->s_session + 256, fileset);
 	if (ret != -EAGAIN)
 		return ret;
@@ -2193,15 +2011,10 @@ static sector_t udf_scan_anchors(struct super_block *sb, sector_t lastblock,
 	if (udf_check_anchor_block(sb, sbi->s_session + 256, fileset))
 		return lastblock;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (udf_check_anchor_block(sb, sbi->s_session + 256, fileset))
-		return lastblock;
->>>>>>> master
 	/*
 	 * The trouble is which block is the last one. Drives often misreport
 	 * this so we try various possibilities.
 	 */
-<<<<<<< HEAD
 <<<<<<< HEAD
 	last[last_count++] = *lastblock;
 	if (*lastblock >= 1)
@@ -2214,8 +2027,6 @@ static sector_t udf_scan_anchors(struct super_block *sb, sector_t lastblock,
 	if (*lastblock >= 152)
 		last[last_count++] = *lastblock - 152;
 =======
-=======
->>>>>>> master
 	last[last_count++] = lastblock;
 	if (lastblock >= 1)
 		last[last_count++] = lastblock - 1;
@@ -2226,16 +2037,12 @@ static sector_t udf_scan_anchors(struct super_block *sb, sector_t lastblock,
 		last[last_count++] = lastblock - 150;
 	if (lastblock >= 152)
 		last[last_count++] = lastblock - 152;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	for (i = 0; i < last_count; i++) {
 		if (last[i] >= sb->s_bdev->bd_inode->i_size >>
 				sb->s_blocksize_bits)
 			continue;
-<<<<<<< HEAD
 <<<<<<< HEAD
 		ret = udf_check_anchor_block(sb, last[i], fileset);
 		if (ret != -EAGAIN) {
@@ -2256,8 +2063,6 @@ static sector_t udf_scan_anchors(struct super_block *sb, sector_t lastblock,
 	/* Finally try block 512 in case media is open */
 	return udf_check_anchor_block(sb, sbi->s_session + 512, fileset);
 =======
-=======
->>>>>>> master
 		if (udf_check_anchor_block(sb, last[i], fileset))
 			return last[i];
 		if (last[i] < 256)
@@ -2270,10 +2075,7 @@ static sector_t udf_scan_anchors(struct super_block *sb, sector_t lastblock,
 	if (udf_check_anchor_block(sb, sbi->s_session + 512, fileset))
 		return last[0];
 	return 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /*
@@ -2282,22 +2084,16 @@ static sector_t udf_scan_anchors(struct super_block *sb, sector_t lastblock,
  * block on the media.
  *
 <<<<<<< HEAD
-<<<<<<< HEAD
  * Return <0 on error, 0 if anchor found. -EAGAIN is special meaning anchor
  * was not found.
 =======
  * Return 1 if ok, 0 if not found.
  *
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * Return 1 if ok, 0 if not found.
- *
->>>>>>> master
  */
 static int udf_find_anchor(struct super_block *sb,
 			   struct kernel_lb_addr *fileset)
 {
-<<<<<<< HEAD
 <<<<<<< HEAD
 	struct udf_sb_info *sbi = UDF_SB(sb);
 	sector_t lastblock = sbi->s_last_block;
@@ -2306,22 +2102,16 @@ static int udf_find_anchor(struct super_block *sb,
 	ret = udf_scan_anchors(sb, &lastblock, fileset);
 	if (ret != -EAGAIN)
 =======
-=======
->>>>>>> master
 	sector_t lastblock;
 	struct udf_sb_info *sbi = UDF_SB(sb);
 
 	lastblock = udf_scan_anchors(sb, sbi->s_last_block, fileset);
 	if (lastblock)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		goto out;
 
 	/* No anchor found? Try VARCONV conversion of block numbers */
 	UDF_SET_FLAG(sb, UDF_FLAG_VARCONV);
-<<<<<<< HEAD
 <<<<<<< HEAD
 	lastblock = udf_variable_to_fixed(sbi->s_last_block);
 	/* Firstly, we try to not convert number of the last block */
@@ -2341,8 +2131,6 @@ out:
 		sbi->s_last_block = lastblock;
 	return ret;
 =======
-=======
->>>>>>> master
 	/* Firstly, we try to not convert number of the last block */
 	lastblock = udf_scan_anchors(sb,
 				udf_variable_to_fixed(sbi->s_last_block),
@@ -2360,15 +2148,11 @@ out:
 out:
 	sbi->s_last_block = lastblock;
 	return 1;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /*
  * Check Volume Structure Descriptor, find Anchor block and load Volume
-<<<<<<< HEAD
 <<<<<<< HEAD
  * Descriptor Sequence.
  *
@@ -2377,9 +2161,6 @@ out:
 =======
  * Descriptor Sequence
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * Descriptor Sequence
->>>>>>> master
  */
 static int udf_load_vrs(struct super_block *sb, struct udf_options *uopt,
 			int silent, struct kernel_lb_addr *fileset)
@@ -2387,25 +2168,18 @@ static int udf_load_vrs(struct super_block *sb, struct udf_options *uopt,
 	struct udf_sb_info *sbi = UDF_SB(sb);
 	loff_t nsr_off;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int ret;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (!sb_set_blocksize(sb, uopt->blocksize)) {
 		if (!silent)
 			udf_warn(sb, "Bad block size\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 		return -EINVAL;
 =======
 		return 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		return 0;
->>>>>>> master
 	}
 	sbi->s_last_block = uopt->lastblock;
 	if (!uopt->novrs) {
@@ -2427,7 +2201,6 @@ static int udf_load_vrs(struct super_block *sb, struct udf_options *uopt,
 	/* Look for anchor block and load Volume Descriptor Sequence */
 	sbi->s_anchor = uopt->anchor;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = udf_find_anchor(sb, fileset);
 	if (ret < 0) {
 		if (!silent && ret == -EAGAIN)
@@ -2436,18 +2209,13 @@ static int udf_load_vrs(struct super_block *sb, struct udf_options *uopt,
 	}
 	return 0;
 =======
-=======
->>>>>>> master
 	if (!udf_find_anchor(sb, fileset)) {
 		if (!silent)
 			udf_warn(sb, "No anchor found\n");
 		return 0;
 	}
 	return 1;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static void udf_open_lvid(struct super_block *sb)
@@ -2554,14 +2322,10 @@ u64 lvid_get_unique_id(struct super_block *sb)
 static int udf_fill_super(struct super_block *sb, void *options, int silent)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int ret = -EINVAL;
 =======
 	int ret;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int ret;
->>>>>>> master
 	struct inode *inode = NULL;
 	struct udf_options uopt;
 	struct kernel_lb_addr rootdir, fileset;
@@ -2634,14 +2398,10 @@ static int udf_fill_super(struct super_block *sb, void *options, int silent)
 		uopt.blocksize = bdev_logical_block_size(sb->s_bdev);
 		ret = udf_load_vrs(sb, &uopt, silent, &fileset);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (ret == -EAGAIN && uopt.blocksize != UDF_DEFAULT_BLOCKSIZE) {
 =======
 		if (!ret && uopt.blocksize != UDF_DEFAULT_BLOCKSIZE) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!ret && uopt.blocksize != UDF_DEFAULT_BLOCKSIZE) {
->>>>>>> master
 			if (!silent)
 				pr_notice("Rescanning with blocksize %d\n",
 					  UDF_DEFAULT_BLOCKSIZE);
@@ -2652,7 +2412,6 @@ static int udf_fill_super(struct super_block *sb, void *options, int silent)
 		}
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ret < 0) {
 		if (ret == -EAGAIN) {
 			udf_warn(sb, "No partition found (1)\n");
@@ -2662,10 +2421,6 @@ static int udf_fill_super(struct super_block *sb, void *options, int silent)
 	if (!ret) {
 		udf_warn(sb, "No partition found (1)\n");
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!ret) {
-		udf_warn(sb, "No partition found (1)\n");
->>>>>>> master
 		goto error_out;
 	}
 
@@ -2684,7 +2439,6 @@ static int udf_fill_super(struct super_block *sb, void *options, int silent)
 				le16_to_cpu(lvidiu->minUDFReadRev),
 				UDF_MAX_READ_VERSION);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			ret = -EINVAL;
 			goto error_out;
 		} else if (minUDFWriteRev > UDF_MAX_WRITE_VERSION &&
@@ -2697,11 +2451,6 @@ static int udf_fill_super(struct super_block *sb, void *options, int silent)
 		} else if (minUDFWriteRev > UDF_MAX_WRITE_VERSION)
 			sb->s_flags |= MS_RDONLY;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			goto error_out;
-		} else if (minUDFWriteRev > UDF_MAX_WRITE_VERSION)
-			sb->s_flags |= MS_RDONLY;
->>>>>>> master
 
 		sbi->s_udfrev = minUDFWriteRev;
 
@@ -2714,17 +2463,13 @@ static int udf_fill_super(struct super_block *sb, void *options, int silent)
 	if (!sbi->s_partitions) {
 		udf_warn(sb, "No partition found (2)\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ret = -EINVAL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		goto error_out;
 	}
 
 	if (sbi->s_partmaps[sbi->s_partition].s_partition_flags &
-<<<<<<< HEAD
 <<<<<<< HEAD
 			UDF_PART_FLAG_READ_ONLY &&
 	    !(sb->s_flags & MS_RDONLY)) {
@@ -2735,22 +2480,14 @@ static int udf_fill_super(struct super_block *sb, void *options, int silent)
 		pr_notice("Partition marked readonly; forcing readonly mount\n");
 		sb->s_flags |= MS_RDONLY;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			UDF_PART_FLAG_READ_ONLY) {
-		pr_notice("Partition marked readonly; forcing readonly mount\n");
-		sb->s_flags |= MS_RDONLY;
->>>>>>> master
 	}
 
 	if (udf_find_fileset(sb, &fileset, &rootdir)) {
 		udf_warn(sb, "No fileset found\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ret = -EINVAL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		goto error_out;
 	}
 
@@ -2773,12 +2510,9 @@ static int udf_fill_super(struct super_block *sb, void *options, int silent)
 		udf_err(sb, "Error in udf_iget, block=%d, partition=%d\n",
 		       rootdir.logicalBlockNum, rootdir.partitionReferenceNum);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ret = -EIO;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		goto error_out;
 	}
 
@@ -2787,12 +2521,9 @@ static int udf_fill_super(struct super_block *sb, void *options, int silent)
 	if (!sb->s_root) {
 		udf_err(sb, "Couldn't allocate root dentry\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ret = -ENOMEM;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		goto error_out;
 	}
 	sb->s_maxbytes = MAX_LFS_FILESIZE;
@@ -2814,14 +2545,10 @@ error_out:
 	sb->s_fs_info = NULL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return ret;
 =======
 	return -EINVAL;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return -EINVAL;
->>>>>>> master
 }
 
 void _udf_err(struct super_block *sb, const char *function,

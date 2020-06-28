@@ -770,14 +770,10 @@ static void print_constraints(struct regulator_dev *rdev)
 {
 	struct regulation_constraints *constraints = rdev->constraints;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	char buf[160] = "";
 =======
 	char buf[80] = "";
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	char buf[80] = "";
->>>>>>> master
 	int count = 0;
 	int ret;
 
@@ -928,13 +924,10 @@ static int machine_constraints_voltage(struct regulator_dev *rdev,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int _regulator_do_enable(struct regulator_dev *rdev);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /**
  * set_machine_constraints - sets regulator constraints
  * @rdev: regulator source
@@ -992,21 +985,15 @@ static int set_machine_constraints(struct regulator_dev *rdev,
 	 * and we have control then make sure it is enabled.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (rdev->constraints->always_on || rdev->constraints->boot_on) {
 		ret = _regulator_do_enable(rdev);
 		if (ret < 0 && ret != -EINVAL) {
 =======
-=======
->>>>>>> master
 	if ((rdev->constraints->always_on || rdev->constraints->boot_on) &&
 	    ops->enable) {
 		ret = ops->enable(rdev);
 		if (ret < 0) {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			rdev_err(rdev, "failed to enable\n");
 			goto out;
 		}
@@ -1438,14 +1425,10 @@ struct regulator *regulator_get_exclusive(struct device *dev, const char *id)
 EXPORT_SYMBOL_GPL(regulator_get_exclusive);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* regulator_list_mutex lock held by regulator_put() */
 =======
 /* Locks held by regulator_put() */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-/* Locks held by regulator_put() */
->>>>>>> master
 static void _regulator_put(struct regulator *regulator)
 {
 	struct regulator_dev *rdev;
@@ -1461,12 +1444,9 @@ static void _regulator_put(struct regulator *regulator)
 	if (regulator->dev)
 		sysfs_remove_link(&rdev->dev.kobj, regulator->supply_name);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mutex_lock(&rdev->mutex);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	kfree(regulator->supply_name);
 	list_del(&regulator->list);
 	kfree(regulator);
@@ -1474,12 +1454,9 @@ static void _regulator_put(struct regulator *regulator)
 	rdev->open_count--;
 	rdev->exclusive = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mutex_unlock(&rdev->mutex);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	module_put(rdev->owner);
 }
@@ -1582,13 +1559,10 @@ static void regulator_ena_gpio_free(struct regulator_dev *rdev)
 				list_del(&pin->list);
 				kfree(pin);
 <<<<<<< HEAD
-<<<<<<< HEAD
 				rdev->ena_pin = NULL;
 				return;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			} else {
 				pin->request_count--;
 			}
@@ -1652,7 +1626,6 @@ static int _regulator_do_enable(struct regulator_dev *rdev)
 
 	if (rdev->ena_pin) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!rdev->ena_gpio_state) {
 			ret = regulator_ena_gpio_ctrl(rdev, true);
 			if (ret < 0)
@@ -1660,16 +1633,11 @@ static int _regulator_do_enable(struct regulator_dev *rdev)
 			rdev->ena_gpio_state = 1;
 		}
 =======
-=======
->>>>>>> master
 		ret = regulator_ena_gpio_ctrl(rdev, true);
 		if (ret < 0)
 			return ret;
 		rdev->ena_gpio_state = 1;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	} else if (rdev->desc->ops->enable) {
 		ret = rdev->desc->ops->enable(rdev);
 		if (ret < 0)
@@ -1772,7 +1740,6 @@ static int _regulator_do_disable(struct regulator_dev *rdev)
 
 	if (rdev->ena_pin) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (rdev->ena_gpio_state) {
 			ret = regulator_ena_gpio_ctrl(rdev, false);
 			if (ret < 0)
@@ -1780,16 +1747,11 @@ static int _regulator_do_disable(struct regulator_dev *rdev)
 			rdev->ena_gpio_state = 0;
 		}
 =======
-=======
->>>>>>> master
 		ret = regulator_ena_gpio_ctrl(rdev, false);
 		if (ret < 0)
 			return ret;
 		rdev->ena_gpio_state = 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	} else if (rdev->desc->ops->disable) {
 		ret = rdev->desc->ops->disable(rdev);
@@ -1800,15 +1762,10 @@ static int _regulator_do_disable(struct regulator_dev *rdev)
 	trace_regulator_disable_complete(rdev_get_name(rdev));
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	_notifier_call_chain(rdev, REGULATOR_EVENT_DISABLE,
 			     NULL);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	_notifier_call_chain(rdev, REGULATOR_EVENT_DISABLE,
-			     NULL);
->>>>>>> master
 	return 0;
 }
 
@@ -1833,13 +1790,10 @@ static int _regulator_disable(struct regulator_dev *rdev)
 				return ret;
 			}
 <<<<<<< HEAD
-<<<<<<< HEAD
 			_notifier_call_chain(rdev, REGULATOR_EVENT_DISABLE,
 					NULL);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		}
 
 		rdev->use_count = 0;
@@ -1893,7 +1847,6 @@ static int _regulator_force_disable(struct regulator_dev *rdev)
 	int ret = 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = _regulator_do_disable(rdev);
 	if (ret < 0) {
 		rdev_err(rdev, "failed to force disable\n");
@@ -1905,8 +1858,6 @@ static int _regulator_force_disable(struct regulator_dev *rdev)
 
 	return 0;
 =======
-=======
->>>>>>> master
 	/* force disable */
 	if (rdev->desc->ops->disable) {
 		/* ah well, who wants to live forever... */
@@ -1921,10 +1872,7 @@ static int _regulator_force_disable(struct regulator_dev *rdev)
 	}
 
 	return ret;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /**
@@ -3739,20 +3687,14 @@ regulator_register(const struct regulator_desc *regulator_desc,
 			goto wash;
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 
 		if (config->ena_gpio_flags & GPIOF_OUT_INIT_HIGH)
 			rdev->ena_gpio_state = 1;
 
 		if (config->ena_gpio_invert)
 			rdev->ena_gpio_state = !rdev->ena_gpio_state;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	/* set regulator constraints */
@@ -3920,7 +3862,6 @@ int regulator_suspend_finish(void)
 	mutex_lock(&regulator_list_mutex);
 	list_for_each_entry(rdev, &regulator_list, list) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		mutex_lock(&rdev->mutex);
 		if (rdev->use_count > 0  || rdev->constraints->always_on) {
 			if (!_regulator_is_enabled(rdev)) {
@@ -3936,8 +3877,6 @@ int regulator_suspend_finish(void)
 
 			error = _regulator_do_disable(rdev);
 =======
-=======
->>>>>>> master
 		struct regulator_ops *ops = rdev->desc->ops;
 
 		mutex_lock(&rdev->mutex);
@@ -3955,10 +3894,7 @@ int regulator_suspend_finish(void)
 				goto unlock;
 
 			error = ops->disable(rdev);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			if (error)
 				ret = error;
 		}
@@ -4149,14 +4085,10 @@ static int __init regulator_init_complete(void)
 		c = rdev->constraints;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (c && c->always_on)
 =======
 		if (!ops->disable || (c && c->always_on))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!ops->disable || (c && c->always_on))
->>>>>>> master
 			continue;
 
 		mutex_lock(&rdev->mutex);
@@ -4178,14 +4110,10 @@ static int __init regulator_init_complete(void)
 			 * goes wrong. */
 			rdev_info(rdev, "disabling\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 			ret = _regulator_do_disable(rdev);
 =======
 			ret = ops->disable(rdev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			ret = ops->disable(rdev);
->>>>>>> master
 			if (ret != 0) {
 				rdev_err(rdev, "couldn't disable: %d\n", ret);
 			}

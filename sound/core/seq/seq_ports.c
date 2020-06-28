@@ -123,16 +123,12 @@ static void port_subs_info_init(struct snd_seq_port_subs_info *grp)
 
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* create a port, port number is returned (-1 on failure);
  * the caller needs to unref the port via snd_seq_port_unlock() appropriately
  */
 =======
 /* create a port, port number is returned (-1 on failure) */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-/* create a port, port number is returned (-1 on failure) */
->>>>>>> master
 struct snd_seq_client_port *snd_seq_create_port(struct snd_seq_client *client,
 						int port)
 {
@@ -164,12 +160,9 @@ struct snd_seq_client_port *snd_seq_create_port(struct snd_seq_client *client,
 	port_subs_info_init(&new_port->c_src);
 	port_subs_info_init(&new_port->c_dest);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	snd_use_lock_use(&new_port->use_lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	num = port >= 0 ? port : 0;
 	mutex_lock(&client->ports_mutex);
@@ -185,7 +178,6 @@ struct snd_seq_client_port *snd_seq_create_port(struct snd_seq_client *client,
 	client->num_ports++;
 	new_port->addr.port = num;	/* store the port number in the port */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	sprintf(new_port->name, "port-%d", num);
 	write_unlock_irqrestore(&client->ports_lock, flags);
 	mutex_unlock(&client->ports_mutex);
@@ -194,29 +186,18 @@ struct snd_seq_client_port *snd_seq_create_port(struct snd_seq_client *client,
 	mutex_unlock(&client->ports_mutex);
 	sprintf(new_port->name, "port-%d", num);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	write_unlock_irqrestore(&client->ports_lock, flags);
-	mutex_unlock(&client->ports_mutex);
-	sprintf(new_port->name, "port-%d", num);
->>>>>>> master
 
 	return new_port;
 }
 
 /* */
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 enum group_type {
 	SRC_LIST, DEST_LIST
 };
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int subscribe_port(struct snd_seq_client *client,
 			  struct snd_seq_client_port *port,
 			  struct snd_seq_port_subs_info *grp,
@@ -244,7 +225,6 @@ static struct snd_seq_client_port *get_client_port(struct snd_seq_addr *addr,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void delete_and_unsubscribe_port(struct snd_seq_client *client,
 					struct snd_seq_client_port *port,
 					struct snd_seq_subscribers *subs,
@@ -261,8 +241,6 @@ get_subscriber(struct list_head *p, bool is_src)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  * remove all subscribers on the list
  * this is called from port_delete, for each src and dest list.
@@ -271,14 +249,10 @@ static void clear_subscriber_list(struct snd_seq_client *client,
 				  struct snd_seq_client_port *port,
 				  struct snd_seq_port_subs_info *grp,
 <<<<<<< HEAD
-<<<<<<< HEAD
 				  int is_src)
 =======
 				  int grptype)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				  int grptype)
->>>>>>> master
 {
 	struct list_head *p, *n;
 
@@ -288,7 +262,6 @@ static void clear_subscriber_list(struct snd_seq_client *client,
 		struct snd_seq_client_port *aport;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		subs = get_subscriber(p, is_src);
 		if (is_src)
 			aport = get_client_port(&subs->info.dest, &c);
@@ -297,8 +270,6 @@ static void clear_subscriber_list(struct snd_seq_client *client,
 		delete_and_unsubscribe_port(client, port, subs, is_src, false);
 
 =======
-=======
->>>>>>> master
 		if (grptype == SRC_LIST) {
 			subs = list_entry(p, struct snd_seq_subscribers, src_list);
 			aport = get_client_port(&subs->info.dest, &c);
@@ -308,10 +279,7 @@ static void clear_subscriber_list(struct snd_seq_client *client,
 		}
 		list_del(p);
 		unsubscribe_port(client, port, grp, &subs->info, 0);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (!aport) {
 			/* looks like the connected port is being deleted.
 			 * we decrease the counter, and when both ports are deleted
@@ -319,7 +287,6 @@ static void clear_subscriber_list(struct snd_seq_client *client,
 			 */
 			if (atomic_dec_and_test(&subs->ref_count))
 				kfree(subs);
-<<<<<<< HEAD
 <<<<<<< HEAD
 			continue;
 		}
@@ -330,8 +297,6 @@ static void clear_subscriber_list(struct snd_seq_client *client,
 		snd_seq_port_unlock(aport);
 		snd_seq_client_unlock(c);
 =======
-=======
->>>>>>> master
 		} else {
 			/* ok we got the connected port */
 			struct snd_seq_port_subs_info *agrp;
@@ -347,10 +312,7 @@ static void clear_subscriber_list(struct snd_seq_client *client,
 			snd_seq_port_unlock(aport);
 			snd_seq_client_unlock(c);
 		}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 }
 
@@ -364,17 +326,12 @@ static int port_delete(struct snd_seq_client *client,
 
 	/* clear subscribers info */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	clear_subscriber_list(client, port, &port->c_src, true);
 	clear_subscriber_list(client, port, &port->c_dest, false);
 =======
 	clear_subscriber_list(client, port, &port->c_src, SRC_LIST);
 	clear_subscriber_list(client, port, &port->c_dest, DEST_LIST);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	clear_subscriber_list(client, port, &port->c_src, SRC_LIST);
-	clear_subscriber_list(client, port, &port->c_dest, DEST_LIST);
->>>>>>> master
 
 	if (port->private_free)
 		port->private_free(port->private_data);
@@ -594,7 +551,6 @@ static int match_subs_info(struct snd_seq_port_subscribe *r,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int check_and_subscribe_port(struct snd_seq_client *client,
 				    struct snd_seq_client_port *port,
 				    struct snd_seq_subscribers *subs,
@@ -619,8 +575,6 @@ static int check_and_subscribe_port(struct snd_seq_client *client,
 			s = get_subscriber(p, is_src);
 			if (match_subs_info(&subs->info, &s->info))
 =======
-=======
->>>>>>> master
 
 /* connect two ports */
 int snd_seq_port_connect(struct snd_seq_client *connector,
@@ -662,15 +616,11 @@ int snd_seq_port_connect(struct snd_seq_client *connector,
 		}
 		list_for_each_entry(s, &dest->list_head, dest_list) {
 			if (match_subs_info(info, &s->info))
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 				goto __error;
 		}
 	}
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	err = subscribe_port(client, port, grp, &subs->info, ack);
 	if (err < 0) {
@@ -763,8 +713,6 @@ int snd_seq_port_connect(struct snd_seq_client *connector,
 }
 
 =======
-=======
->>>>>>> master
 	if ((err = subscribe_port(src_client, src_port, src, info,
 				  connector->number != src_client->number)) < 0)
 		goto __error;
@@ -799,10 +747,7 @@ int snd_seq_port_connect(struct snd_seq_client *connector,
 }
 
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /* remove the connection */
 int snd_seq_port_disconnect(struct snd_seq_client *connector,
 			    struct snd_seq_client *src_client,
@@ -813,7 +758,6 @@ int snd_seq_port_disconnect(struct snd_seq_client *connector,
 {
 	struct snd_seq_port_subs_info *src = &src_port->c_src;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct snd_seq_subscribers *subs;
 	int err = -ENOENT;
 
@@ -823,8 +767,6 @@ int snd_seq_port_disconnect(struct snd_seq_client *connector,
 		if (match_subs_info(info, &subs->info)) {
 			atomic_dec(&subs->ref_count); /* mark as not ready */
 =======
-=======
->>>>>>> master
 	struct snd_seq_port_subs_info *dest = &dest_port->c_dest;
 	struct snd_seq_subscribers *subs;
 	int err = -ENOENT;
@@ -848,15 +790,11 @@ int snd_seq_port_disconnect(struct snd_seq_client *connector,
 			unsubscribe_port(dest_client, dest_port, dest, info,
 					 connector->number != dest_client->number);
 			kfree(subs);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			err = 0;
 			break;
 		}
 	}
-<<<<<<< HEAD
 <<<<<<< HEAD
 	up_write(&src->list_mutex);
 	if (err < 0)
@@ -869,16 +807,11 @@ int snd_seq_port_disconnect(struct snd_seq_client *connector,
 	kfree(subs);
 	return 0;
 =======
-=======
->>>>>>> master
 
 	up_write(&dest->list_mutex);
 	up_write(&src->list_mutex);
 	return err;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 

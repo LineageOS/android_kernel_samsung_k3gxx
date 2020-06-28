@@ -167,7 +167,6 @@ static int dummy_dec_opt_array(struct xdr_stream *xdr,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int get_host_u32(struct xdr_stream *xdr, u32 *res)
 {
 	__be32 *p;
@@ -178,8 +177,6 @@ static int get_host_u32(struct xdr_stream *xdr, u32 *res)
 	/* Contents of linux creds are all host-endian: */
 	memcpy(res, p, sizeof(u32));
 =======
-=======
->>>>>>> master
 static int get_s32(void **p, void *max, s32 *res)
 {
 	void *base = *p;
@@ -188,10 +185,7 @@ static int get_s32(void **p, void *max, s32 *res)
 		return -EINVAL;
 	memcpy(res, base, sizeof(s32));
 	*p = next;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 }
 
@@ -201,7 +195,6 @@ static int gssx_dec_linux_creds(struct xdr_stream *xdr,
 	u32 length;
 	__be32 *p;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u32 tmp;
 	u32 N;
 	int i, err;
@@ -210,11 +203,6 @@ static int gssx_dec_linux_creds(struct xdr_stream *xdr,
 	s32 tmp;
 	int N, i, err;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	void *q, *end;
-	s32 tmp;
-	int N, i, err;
->>>>>>> master
 
 	p = xdr_inline_decode(xdr, 4);
 	if (unlikely(p == NULL))
@@ -223,15 +211,12 @@ static int gssx_dec_linux_creds(struct xdr_stream *xdr,
 	length = be32_to_cpup(p);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (length > (3 + NGROUPS_MAX) * sizeof(u32))
 		return -ENOSPC;
 
 	/* uid */
 	err = get_host_u32(xdr, &tmp);
 =======
-=======
->>>>>>> master
 	/* FIXME: we do not want to use the scratch buffer for this one
 	 * may need to use functions that allows us to access an io vector
 	 * directly */
@@ -244,30 +229,22 @@ static int gssx_dec_linux_creds(struct xdr_stream *xdr,
 
 	/* uid */
 	err = get_s32(&q, end, &tmp);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (err)
 		return err;
 	creds->cr_uid = make_kuid(&init_user_ns, tmp);
 
 	/* gid */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	err = get_host_u32(xdr, &tmp);
 =======
 	err = get_s32(&q, end, &tmp);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	err = get_s32(&q, end, &tmp);
->>>>>>> master
 	if (err)
 		return err;
 	creds->cr_gid = make_kgid(&init_user_ns, tmp);
 
 	/* number of additional gid's */
-<<<<<<< HEAD
 <<<<<<< HEAD
 	err = get_host_u32(xdr, &tmp);
 	if (err)
@@ -276,16 +253,11 @@ static int gssx_dec_linux_creds(struct xdr_stream *xdr,
 	if ((3 + N) * sizeof(u32) != length)
 		return -EINVAL;
 =======
-=======
->>>>>>> master
 	err = get_s32(&q, end, &tmp);
 	if (err)
 		return err;
 	N = tmp;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	creds->cr_group_info = groups_alloc(N);
 	if (creds->cr_group_info == NULL)
 		return -ENOMEM;
@@ -294,14 +266,10 @@ static int gssx_dec_linux_creds(struct xdr_stream *xdr,
 	for (i = 0; i < N; i++) {
 		kgid_t kgid;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		err = get_host_u32(xdr, &tmp);
 =======
 		err = get_s32(&q, end, &tmp);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		err = get_s32(&q, end, &tmp);
->>>>>>> master
 		if (err)
 			goto out_free_groups;
 		err = -EINVAL;
@@ -340,14 +308,10 @@ static int gssx_dec_option_array(struct xdr_stream *xdr,
 		return -ENOMEM;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	creds = kzalloc(sizeof(struct svc_cred), GFP_KERNEL);
 =======
 	creds = kmalloc(sizeof(struct svc_cred), GFP_KERNEL);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	creds = kmalloc(sizeof(struct svc_cred), GFP_KERNEL);
->>>>>>> master
 	if (!creds) {
 		kfree(oa->data);
 		return -ENOMEM;
@@ -868,14 +832,11 @@ void gssx_enc_accept_sec_context(struct rpc_rqst *req,
 	err = dummy_enc_opt_array(xdr, &arg->options);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	xdr_inline_pages(&req->rq_rcv_buf,
 		PAGE_SIZE/2 /* pretty arbitrary */,
 		arg->pages, 0 /* page base */, arg->npages * PAGE_SIZE);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 done:
 	if (err)
 		dprintk("RPC:       gssx_enc_accept_sec_context: %d\n", err);
@@ -888,7 +849,6 @@ int gssx_dec_accept_sec_context(struct rpc_rqst *rqstp,
 	u32 value_follows;
 	int err;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct page *scratch;
 
 	scratch = alloc_page(GFP_KERNEL);
@@ -897,26 +857,19 @@ int gssx_dec_accept_sec_context(struct rpc_rqst *rqstp,
 	xdr_set_scratch_buffer(xdr, page_address(scratch), PAGE_SIZE);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* res->status */
 	err = gssx_dec_status(xdr, &res->status);
 	if (err)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto out_free;
 =======
 		return err;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		return err;
->>>>>>> master
 
 	/* res->context_handle */
 	err = gssx_dec_bool(xdr, &value_follows);
 	if (err)
-<<<<<<< HEAD
 <<<<<<< HEAD
 		goto out_free;
 	if (value_follows) {
@@ -924,17 +877,12 @@ int gssx_dec_accept_sec_context(struct rpc_rqst *rqstp,
 		if (err)
 			goto out_free;
 =======
-=======
->>>>>>> master
 		return err;
 	if (value_follows) {
 		err = gssx_dec_ctx(xdr, res->context_handle);
 		if (err)
 			return err;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	} else {
 		res->context_handle = NULL;
 	}
@@ -943,24 +891,18 @@ int gssx_dec_accept_sec_context(struct rpc_rqst *rqstp,
 	err = gssx_dec_bool(xdr, &value_follows);
 	if (err)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto out_free;
 	if (value_follows) {
 		err = gssx_dec_buffer(xdr, res->output_token);
 		if (err)
 			goto out_free;
 =======
-=======
->>>>>>> master
 		return err;
 	if (value_follows) {
 		err = gssx_dec_buffer(xdr, res->output_token);
 		if (err)
 			return err;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	} else {
 		res->output_token = NULL;
 	}
@@ -969,35 +911,26 @@ int gssx_dec_accept_sec_context(struct rpc_rqst *rqstp,
 	err = gssx_dec_bool(xdr, &value_follows);
 	if (err)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto out_free;
 	if (value_follows) {
 		/* we do not support upcall servers sending this data. */
 		err = -EINVAL;
 		goto out_free;
 =======
-=======
->>>>>>> master
 		return err;
 	if (value_follows) {
 		/* we do not support upcall servers sending this data. */
 		return -EINVAL;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	/* res->options */
 	err = gssx_dec_option_array(xdr, &res->options);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 out_free:
 	__free_page(scratch);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return err;
 }

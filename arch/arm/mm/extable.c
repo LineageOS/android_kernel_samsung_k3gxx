@@ -10,7 +10,6 @@ int fixup_exception(struct pt_regs *regs)
 
 	fixup = search_exception_tables(instruction_pointer(regs));
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (fixup) {
 		regs->ARM_pc = fixup->fixup;
 #ifdef CONFIG_THUMB2_KERNEL
@@ -22,10 +21,6 @@ int fixup_exception(struct pt_regs *regs)
 	if (fixup)
 		regs->ARM_pc = fixup->fixup;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (fixup)
-		regs->ARM_pc = fixup->fixup;
->>>>>>> master
 
 	return fixup != NULL;
 }

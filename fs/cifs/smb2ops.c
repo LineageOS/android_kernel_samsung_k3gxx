@@ -49,7 +49,6 @@ change_conf(struct TCP_Server_Info *server)
 	default:
 		server->echoes = true;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (enable_oplocks) {
 			server->oplocks = true;
 			server->oplock_credits = 1;
@@ -62,11 +61,6 @@ change_conf(struct TCP_Server_Info *server)
 		server->echo_credits = 1;
 		server->oplock_credits = 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		server->oplocks = true;
-		server->echo_credits = 1;
-		server->oplock_credits = 1;
->>>>>>> master
 	}
 	server->credits -= server->echo_credits + server->oplock_credits;
 	return 0;
@@ -198,21 +192,15 @@ smb2_negotiate_wsize(struct cifs_tcon *tcon, struct smb_vol *volume_info)
 	wsize = volume_info->wsize ? volume_info->wsize : CIFS_DEFAULT_IOSIZE;
 	wsize = min_t(unsigned int, wsize, server->max_write);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* set it to the maximum buffer size value we can send with 1 credit */
 	wsize = min_t(unsigned int, wsize, SMB2_MAX_BUFFER_SIZE);
 =======
-=======
->>>>>>> master
 	/*
 	 * limit write size to 2 ** 16, because we don't support multicredit
 	 * requests now.
 	 */
 	wsize = min_t(unsigned int, wsize, 2 << 15);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	return wsize;
 }
@@ -227,21 +215,15 @@ smb2_negotiate_rsize(struct cifs_tcon *tcon, struct smb_vol *volume_info)
 	rsize = volume_info->rsize ? volume_info->rsize : CIFS_DEFAULT_IOSIZE;
 	rsize = min_t(unsigned int, rsize, server->max_read);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* set it to the maximum buffer size value we can send with 1 credit */
 	rsize = min_t(unsigned int, rsize, SMB2_MAX_BUFFER_SIZE);
 =======
-=======
->>>>>>> master
 	/*
 	 * limit write size to 2 ** 16, because we don't support multicredit
 	 * requests now.
 	 */
 	rsize = min_t(unsigned int, rsize, 2 << 15);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	return rsize;
 }
@@ -288,14 +270,10 @@ smb2_query_file_info(const unsigned int xid, struct cifs_tcon *tcon,
 	struct smb2_file_all_info *smb2_data;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	smb2_data = kzalloc(sizeof(struct smb2_file_all_info) + PATH_MAX * 2,
 =======
 	smb2_data = kzalloc(sizeof(struct smb2_file_all_info) + MAX_NAME * 2,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	smb2_data = kzalloc(sizeof(struct smb2_file_all_info) + MAX_NAME * 2,
->>>>>>> master
 			    GFP_KERNEL);
 	if (smb2_data == NULL)
 		return -ENOMEM;
@@ -607,7 +585,6 @@ smb2_new_lease_key(struct cifs_fid *fid)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static bool
 smb2_dir_needs_close(struct cifsFileInfo *cfile)
 {
@@ -616,8 +593,6 @@ smb2_dir_needs_close(struct cifsFileInfo *cfile)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 struct smb_version_operations smb21_operations = {
 	.compare_fids = smb2_compare_fids,
 	.setup_request = smb2_setup_request,
@@ -683,12 +658,9 @@ struct smb_version_operations smb21_operations = {
 	.new_lease_key = smb2_new_lease_key,
 	.calc_signature = smb2_calc_signature,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.dir_needs_close = smb2_dir_needs_close,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 
@@ -757,12 +729,9 @@ struct smb_version_operations smb30_operations = {
 	.new_lease_key = smb2_new_lease_key,
 	.calc_signature = smb3_calc_signature,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.dir_needs_close = smb2_dir_needs_close,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 struct smb_version_values smb20_values = {

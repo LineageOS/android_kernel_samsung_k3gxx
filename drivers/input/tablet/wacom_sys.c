@@ -340,14 +340,10 @@ static int wacom_parse_hid(struct usb_interface *intf,
 	char limit = 0;
 	/* result has to be defined as int for some devices */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int result = 0, touch_max = 0;
 =======
 	int result = 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int result = 0;
->>>>>>> master
 	int i = 0, usage = WCM_UNDEFINED, finger = 0, pen = 0;
 	unsigned char *report;
 
@@ -395,15 +391,11 @@ static int wacom_parse_hid(struct usb_interface *intf,
 					if (finger) {
 						features->device_type = BTN_TOOL_FINGER;
 <<<<<<< HEAD
-<<<<<<< HEAD
 						/* touch device at least supports one touch point */
 						touch_max = 1;
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 						switch (features->type) {
 						case TABLETPC2FG:
 							features->pktlen = WACOM_PKGLEN_TPC2FG;
@@ -557,13 +549,10 @@ static int wacom_parse_hid(struct usb_interface *intf,
 
  out:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!features->touch_max && touch_max)
 		features->touch_max = touch_max;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	result = 0;
 	kfree(report);
 	return result;

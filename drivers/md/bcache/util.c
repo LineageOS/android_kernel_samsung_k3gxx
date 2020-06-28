@@ -191,7 +191,6 @@ void bch_time_stats_update(struct time_stats *stats, uint64_t start_time)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /**
  * bch_next_delay() - increment @d by the amount of work done, and return how
  * long to delay until the next time to do some work.
@@ -205,9 +204,6 @@ uint64_t bch_next_delay(struct bch_ratelimit *d, uint64_t done)
 =======
 unsigned bch_next_delay(struct ratelimit *d, uint64_t done)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-unsigned bch_next_delay(struct ratelimit *d, uint64_t done)
->>>>>>> master
 {
 	uint64_t now = local_clock();
 

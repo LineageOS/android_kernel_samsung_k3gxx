@@ -265,12 +265,9 @@ void free_pid(struct pid *pid)
 		hlist_del_rcu(&upid->pid_chain);
 		switch(--ns->nr_hashed) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		case 2:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		case 1:
 			/* When all that is left in the pid namespace
 			 * is the reaper wake up the reaper.  The reaper
@@ -342,13 +339,10 @@ out:
 out_unlock:
 	spin_unlock_irq(&pidmap_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	put_pid_ns(ns);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 out_free:
 	while (++i <= ns->level)
 		free_pidmap(pid->numbers + i);

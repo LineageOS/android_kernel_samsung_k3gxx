@@ -291,7 +291,6 @@ enum dlm_status dlmconvert_remote(struct dlm_ctxt *dlm,
 		goto bail;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	if (lock->ml.type == type && lock->ml.convert_type == LKM_IVMODE) {
 		mlog(0, "last convert request returned DLM_RECOVERING, but "
@@ -307,8 +306,6 @@ enum dlm_status dlmconvert_remote(struct dlm_ctxt *dlm,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	res->state |= DLM_LOCK_RES_IN_PROGRESS;
 	/* move lock to local convert queue */
 	/* do not alter lock refcount.  switching lists. */
@@ -338,7 +335,6 @@ enum dlm_status dlmconvert_remote(struct dlm_ctxt *dlm,
 	spin_lock(&res->spinlock);
 	res->state &= ~DLM_LOCK_RES_IN_PROGRESS;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* if it failed, move it back to granted queue.
 	 * if master returns DLM_NORMAL and then down before sending ast,
 	 * it may have already been moved to granted queue, reset to
@@ -347,15 +343,10 @@ enum dlm_status dlmconvert_remote(struct dlm_ctxt *dlm,
 	lock->convert_pending = 0;
 	/* if it failed, move it back to granted queue */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	lock->convert_pending = 0;
-	/* if it failed, move it back to granted queue */
->>>>>>> master
 	if (status != DLM_NORMAL) {
 		if (status != DLM_NOTQUEUED)
 			dlm_error(status);
 		dlm_revert_pending_convert(res, lock);
-<<<<<<< HEAD
 <<<<<<< HEAD
 	} else if (!lock->convert_pending) {
 		mlog(0, "%s: res %.*s, owner died and lock has been moved back "
@@ -368,9 +359,6 @@ enum dlm_status dlmconvert_remote(struct dlm_ctxt *dlm,
 =======
 	}
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	}
->>>>>>> master
 bail:
 	spin_unlock(&res->spinlock);
 

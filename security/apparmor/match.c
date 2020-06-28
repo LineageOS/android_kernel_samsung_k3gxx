@@ -46,13 +46,10 @@ static struct table_header *unpack_table(char *blob, size_t bsize)
 	 */
 	th.td_id = be16_to_cpu(*(u16 *) (blob)) - 1;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (th.td_id > YYTD_ID_MAX)
 		goto out;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	th.td_flags = be16_to_cpu(*(u16 *) (blob + 2));
 	th.td_lolen = be32_to_cpu(*(u32 *) (blob + 8));
 	blob += sizeof(struct table_header);
@@ -68,16 +65,12 @@ static struct table_header *unpack_table(char *blob, size_t bsize)
 	table = kvmalloc(tsize);
 	if (table) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		table->td_id = th.td_id;
 		table->td_flags = th.td_flags;
 		table->td_lolen = th.td_lolen;
 =======
 		*table = th;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		*table = th;
->>>>>>> master
 		if (th.td_flags == YYTD_DATA8)
 			UNPACK_ARRAY(table->td_data, blob, th.td_lolen,
 				     u8, byte_to_byte);
@@ -90,7 +83,6 @@ static struct table_header *unpack_table(char *blob, size_t bsize)
 		else
 			goto fail;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* if table was vmalloced make sure the page tables are synced
 		 * before it is used, as it goes live to all cpus.
 		 */
@@ -100,8 +92,6 @@ static struct table_header *unpack_table(char *blob, size_t bsize)
 
 out:
 =======
-=======
->>>>>>> master
 	}
 
 out:
@@ -110,10 +100,7 @@ out:
 	 */
 	if (is_vmalloc_addr(table))
 		vm_unmap_aliases();
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return table;
 fail:
 	kvfree(table);

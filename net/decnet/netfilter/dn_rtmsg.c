@@ -108,14 +108,10 @@ static inline void dnrmg_receive_user_skb(struct sk_buff *skb)
 		return;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!netlink_capable(skb, CAP_NET_ADMIN))
 =======
 	if (!capable(CAP_NET_ADMIN))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!capable(CAP_NET_ADMIN))
->>>>>>> master
 		RCV_SKB_FAIL(-EPERM);
 
 	/* Eventually we might send routing messages too */

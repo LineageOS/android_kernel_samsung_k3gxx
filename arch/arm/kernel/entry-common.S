@@ -33,16 +33,12 @@ ret_fast_syscall:
  UNWIND(.cantunwind	)
 	disable_irq				@ disable interrupts
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ldr	r1, [tsk, #TI_FLAGS]		@ re-check for syscall tracing
 	tst	r1, #_TIF_SYSCALL_WORK
 	bne	__sys_trace_return
 =======
 	ldr	r1, [tsk, #TI_FLAGS]
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ldr	r1, [tsk, #TI_FLAGS]
->>>>>>> master
 	tst	r1, #_TIF_WORK_MASK
 	bne	fast_work_pending
 	asm_trace_hardirqs_on
@@ -373,7 +369,6 @@ ENTRY(vector_swi)
 	zero_fp
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #ifdef CONFIG_ALIGNMENT_TRAP
 	ldr	ip, __cr_alignment
 	ldr	ip, [ip]
@@ -386,8 +381,6 @@ ENTRY(vector_swi)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/*
 	 * Get the system call number.
 	 */
@@ -402,7 +395,6 @@ ENTRY(vector_swi)
 	tst	r8, #PSR_T_BIT
 	movne	r10, #0				@ no thumb OABI emulation
 <<<<<<< HEAD
-<<<<<<< HEAD
  USER(	ldreq	r10, [lr, #-4]		)	@ get SWI instruction
 #else
  USER(	ldr	r10, [lr, #-4]		)	@ get SWI instruction
@@ -411,11 +403,6 @@ ENTRY(vector_swi)
 #else
 	ldr	r10, [lr, #-4]			@ get SWI instruction
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ldreq	r10, [lr, #-4]			@ get SWI instruction
-#else
-	ldr	r10, [lr, #-4]			@ get SWI instruction
->>>>>>> master
 #endif
 #ifdef CONFIG_CPU_ENDIAN_BE8
 	rev	r10, r10			@ little endian instruction
@@ -431,7 +418,6 @@ ENTRY(vector_swi)
 	tst	r8, #PSR_T_BIT			@ this is SPSR from save_user_regs
 	addne	scno, r7, #__NR_SYSCALL_BASE	@ put OS number in
 <<<<<<< HEAD
-<<<<<<< HEAD
  USER(	ldreq	scno, [lr, #-4]		)
 
 #else
@@ -440,8 +426,6 @@ ENTRY(vector_swi)
 #endif
 
 =======
-=======
->>>>>>> master
 	ldreq	scno, [lr, #-4]
 
 #else
@@ -458,10 +442,7 @@ ENTRY(vector_swi)
 	ct_user_exit
 
 	get_thread_info tsk
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	adr	tbl, sys_call_table		@ load syscall table pointer
 
 #if defined(CONFIG_OABI_COMPAT)
@@ -497,7 +478,6 @@ local_restart:
 	bcs	arm_syscall	
 	b	sys_ni_syscall			@ not private func
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 #if defined(CONFIG_OABI_COMPAT) || !defined(CONFIG_AEABI)
 	/*
@@ -515,8 +495,6 @@ local_restart:
 #endif
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 ENDPROC(vector_swi)
 
 	/*

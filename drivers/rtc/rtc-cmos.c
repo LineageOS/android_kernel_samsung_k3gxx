@@ -35,24 +35,17 @@
 #include <linux/spinlock.h>
 #include <linux/platform_device.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 #include <linux/mod_devicetable.h>
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#include <linux/mod_devicetable.h>
->>>>>>> master
 #include <linux/log2.h>
 #include <linux/pm.h>
 #include <linux/of.h>
 #include <linux/of_platform.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/dmi.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /* this is for "generic access to PC-style RTC" using CMOS_READ/CMOS_WRITE */
 #include <asm-generic/rtc.h>
@@ -392,7 +385,6 @@ static int cmos_set_alarm(struct device *dev, struct rtc_wkalrm *t)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * Do not disable RTC alarm on shutdown - workaround for b0rked BIOSes.
  */
@@ -440,8 +432,6 @@ static const struct dmi_system_id rtc_quirks[] __initconst = {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int cmos_alarm_irq_enable(struct device *dev, unsigned int enabled)
 {
 	struct cmos_rtc	*cmos = dev_get_drvdata(dev);
@@ -451,14 +441,11 @@ static int cmos_alarm_irq_enable(struct device *dev, unsigned int enabled)
 		return -EINVAL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (alarm_disable_quirk)
 		return 0;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	spin_lock_irqsave(&rtc_lock, flags);
 
 	if (enabled)
@@ -1238,13 +1225,10 @@ static int __init cmos_init(void)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dmi_check_system(rtc_quirks);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (retval == 0)
 		return 0;
 

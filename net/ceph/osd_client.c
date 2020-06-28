@@ -734,7 +734,6 @@ struct ceph_osd_request *ceph_osdc_new_request(struct ceph_osd_client *osdc,
 	object_size = le32_to_cpu(layout->fl_object_size);
 	object_base = off - objoff;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!(truncate_seq == 1 && truncate_size == -1ULL)) {
 		if (truncate_size <= object_base) {
 			truncate_size = 0;
@@ -744,18 +743,13 @@ struct ceph_osd_request *ceph_osdc_new_request(struct ceph_osd_client *osdc,
 				truncate_size = object_size;
 		}
 =======
-=======
->>>>>>> master
 	if (truncate_size <= object_base) {
 		truncate_size = 0;
 	} else {
 		truncate_size -= object_base;
 		if (truncate_size > object_size)
 			truncate_size = object_size;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	osd_req_op_extent_init(req, 0, opcode, objoff, objlen,
@@ -983,7 +977,6 @@ static void put_osd(struct ceph_osd *osd)
 static void __remove_osd(struct ceph_osd_client *osdc, struct ceph_osd *osd)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dout("%s %p osd%d\n", __func__, osd, osd->o_osd);
 	WARN_ON(!list_empty(&osd->o_requests));
 	WARN_ON(!list_empty(&osd->o_linger_requests));
@@ -1003,18 +996,13 @@ static void remove_osd(struct ceph_osd_client *osdc, struct ceph_osd *osd)
 		put_osd(osd);
 	}
 =======
-=======
->>>>>>> master
 	dout("__remove_osd %p\n", osd);
 	BUG_ON(!list_empty(&osd->o_requests));
 	rb_erase(&osd->o_node, &osdc->osds);
 	list_del_init(&osd->o_osd_lru);
 	ceph_con_close(&osd->o_con);
 	put_osd(osd);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static void remove_all_osds(struct ceph_osd_client *osdc)
@@ -1025,14 +1013,10 @@ static void remove_all_osds(struct ceph_osd_client *osdc)
 		struct ceph_osd *osd = rb_entry(rb_first(&osdc->osds),
 						struct ceph_osd, o_node);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		remove_osd(osdc, osd);
 =======
 		__remove_osd(osdc, osd);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		__remove_osd(osdc, osd);
->>>>>>> master
 	}
 	mutex_unlock(&osdc->request_mutex);
 }
@@ -1063,14 +1047,10 @@ static void remove_old_osds(struct ceph_osd_client *osdc)
 		if (time_before(jiffies, osd->lru_ttl))
 			break;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		remove_osd(osdc, osd);
 =======
 		__remove_osd(osdc, osd);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		__remove_osd(osdc, osd);
->>>>>>> master
 	}
 	mutex_unlock(&osdc->request_mutex);
 }
@@ -1086,16 +1066,11 @@ static int __reset_osd(struct ceph_osd_client *osdc, struct ceph_osd *osd)
 	if (list_empty(&osd->o_requests) &&
 	    list_empty(&osd->o_linger_requests)) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		remove_osd(osdc, osd);
 =======
 		__remove_osd(osdc, osd);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		__remove_osd(osdc, osd);
-
->>>>>>> master
 		return -ENODEV;
 	}
 
@@ -1244,12 +1219,9 @@ static void __register_linger_request(struct ceph_osd_client *osdc,
 {
 	dout("__register_linger_request %p\n", req);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ceph_osdc_get_request(req);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	list_add_tail(&req->r_linger_item, &osdc->req_linger);
 	if (req->r_osd)
 		list_add_tail(&req->r_linger_osd,
@@ -1273,12 +1245,9 @@ static void __unregister_linger_request(struct ceph_osd_client *osdc,
 			req->r_osd = NULL;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ceph_osdc_put_request(req);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 void ceph_osdc_unregister_linger_request(struct ceph_osd_client *osdc,
@@ -1287,7 +1256,6 @@ void ceph_osdc_unregister_linger_request(struct ceph_osd_client *osdc,
 	mutex_lock(&osdc->request_mutex);
 	if (req->r_linger) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		req->r_linger = 0;
 		__unregister_linger_request(osdc, req);
 =======
@@ -1295,11 +1263,6 @@ void ceph_osdc_unregister_linger_request(struct ceph_osd_client *osdc,
 		req->r_linger = 0;
 		ceph_osdc_put_request(req);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		__unregister_linger_request(osdc, req);
-		req->r_linger = 0;
-		ceph_osdc_put_request(req);
->>>>>>> master
 	}
 	mutex_unlock(&osdc->request_mutex);
 }
@@ -1312,25 +1275,18 @@ void ceph_osdc_set_request_linger(struct ceph_osd_client *osdc,
 		dout("set_request_linger %p\n", req);
 		req->r_linger = 1;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 		/*
 		 * caller is now responsible for calling
 		 * unregister_linger_request
 		 */
 		ceph_osdc_get_request(req);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 }
 EXPORT_SYMBOL(ceph_osdc_set_request_linger);
 
 /*
-<<<<<<< HEAD
 <<<<<<< HEAD
  * Returns whether a request should be blocked from being sent
  * based on the current osdmap and osd_client settings.
@@ -1350,8 +1306,6 @@ static bool __req_should_be_paused(struct ceph_osd_client *osdc,
 /*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  * Pick an osd (the first 'up' osd in the pg), allocate the osd struct
  * (as needed), and set the request r_osd appropriately.  If there is
  * no up osd, set r_osd to NULL.  Move the request to the appropriate list
@@ -1369,12 +1323,9 @@ static int __map_request(struct ceph_osd_client *osdc,
 	int o = -1, num = 0;
 	int err;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	bool was_paused;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	dout("map_request %p tid %lld\n", req, req->r_tid);
 	err = ceph_calc_ceph_pg(&pgid, req->r_oid, osdc->osdmap,
@@ -1392,7 +1343,6 @@ static int __map_request(struct ceph_osd_client *osdc,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	was_paused = req->r_paused;
 	req->r_paused = __req_should_be_paused(osdc, req);
 	if (was_paused && !req->r_paused)
@@ -1400,23 +1350,17 @@ static int __map_request(struct ceph_osd_client *osdc,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if ((!force_resend &&
 	     req->r_osd && req->r_osd->o_osd == o &&
 	     req->r_sent >= req->r_osd->o_incarnation &&
 	     req->r_num_pg_osds == num &&
 	     memcmp(req->r_pg_osds, acting, sizeof(acting[0])*num) == 0) ||
 <<<<<<< HEAD
-<<<<<<< HEAD
 	    (req->r_osd == NULL && o == -1) ||
 	    req->r_paused)
 =======
 	    (req->r_osd == NULL && o == -1))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	    (req->r_osd == NULL && o == -1))
->>>>>>> master
 		return 0;  /* no change */
 
 	dout("map_request tid %llu pgid %lld.%x osd%d (was osd%d)\n",
@@ -1492,18 +1436,12 @@ static void __send_request(struct ceph_osd_client *osdc,
 	ceph_msg_get(req->r_request); /* send consumes a ref */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	/* Mark the request unsafe if this is the first timet's being sent. */
 
 	if (!req->r_sent && req->r_unsafe_callback)
 		req->r_unsafe_callback(req, true);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	req->r_sent = req->r_osd->o_incarnation;
 
 	ceph_con_send(&req->r_osd->o_con, req->r_request);
@@ -1595,15 +1533,10 @@ static void handle_osds_timeout(struct work_struct *work)
 static void complete_request(struct ceph_osd_request *req)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if (req->r_unsafe_callback)
 		req->r_unsafe_callback(req, false);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (req->r_unsafe_callback)
-		req->r_unsafe_callback(req, false);
->>>>>>> master
 	complete_all(&req->r_safe_completion);  /* fsync waiter */
 }
 
@@ -1666,14 +1599,10 @@ static void handle_reply(struct ceph_osd_client *osdc, struct ceph_msg *msg,
 	     req, result);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ceph_decode_need(&p, end, 4, bad_put);
 =======
 	ceph_decode_need(&p, end, 4, bad);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ceph_decode_need(&p, end, 4, bad);
->>>>>>> master
 	numops = ceph_decode_32(&p);
 	if (numops > CEPH_OSD_MAX_OP)
 		goto bad_put;
@@ -1681,14 +1610,10 @@ static void handle_reply(struct ceph_osd_client *osdc, struct ceph_msg *msg,
 		goto bad_put;
 	payload_len = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ceph_decode_need(&p, end, numops * sizeof(struct ceph_osd_op), bad_put);
 =======
 	ceph_decode_need(&p, end, numops * sizeof(struct ceph_osd_op), bad);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ceph_decode_need(&p, end, numops * sizeof(struct ceph_osd_op), bad);
->>>>>>> master
 	for (i = 0; i < numops; i++) {
 		struct ceph_osd_op *op = p;
 		int len;
@@ -1707,26 +1632,19 @@ static void handle_reply(struct ceph_osd_client *osdc, struct ceph_msg *msg,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ceph_decode_need(&p, end, 4 + numops * 4, bad_put);
 =======
 	ceph_decode_need(&p, end, 4 + numops * 4, bad);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ceph_decode_need(&p, end, 4 + numops * 4, bad);
->>>>>>> master
 	retry_attempt = ceph_decode_32(&p);
 	for (i = 0; i < numops; i++)
 		req->r_reply_op_result[i] = ceph_decode_32(&p);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	already_completed = req->r_got_reply;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (!req->r_got_reply) {
 
 		req->r_result = result;
@@ -1758,7 +1676,6 @@ static void handle_reply(struct ceph_osd_client *osdc, struct ceph_msg *msg,
 		__unregister_request(osdc, req);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mutex_unlock(&osdc->request_mutex);
 
 	if (!already_completed) {
@@ -1777,8 +1694,6 @@ static void handle_reply(struct ceph_osd_client *osdc, struct ceph_msg *msg,
 		complete_request(req);
 	}
 =======
-=======
->>>>>>> master
 	already_completed = req->r_completed;
 	req->r_completed = 1;
 	mutex_unlock(&osdc->request_mutex);
@@ -1792,10 +1707,7 @@ static void handle_reply(struct ceph_osd_client *osdc, struct ceph_msg *msg,
 
 	if (flags & CEPH_OSD_FLAG_ONDISK)
 		complete_request(req);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 done:
 	dout("req=%p req->r_linger=%d\n", req, req->r_linger);
@@ -1817,12 +1729,9 @@ static void reset_changed_osds(struct ceph_osd_client *osdc)
 	struct rb_node *p, *n;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dout("%s %p\n", __func__, osdc);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	for (p = rb_first(&osdc->osds); p; p = n) {
 		struct ceph_osd *osd = rb_entry(p, struct ceph_osd, o_node);
 
@@ -1843,21 +1752,16 @@ static void reset_changed_osds(struct ceph_osd_client *osdc)
  * Caller should hold map_sem for read.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void kick_requests(struct ceph_osd_client *osdc, bool force_resend,
 			  bool force_resend_writes)
 =======
 static void kick_requests(struct ceph_osd_client *osdc, int force_resend)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static void kick_requests(struct ceph_osd_client *osdc, int force_resend)
->>>>>>> master
 {
 	struct ceph_osd_request *req, *nreq;
 	struct rb_node *p;
 	int needmap = 0;
 	int err;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	bool force_resend_req;
 
@@ -1867,10 +1771,6 @@ static void kick_requests(struct ceph_osd_client *osdc, int force_resend)
 
 	dout("kick_requests %s\n", force_resend ? " (force resend)" : "");
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-	dout("kick_requests %s\n", force_resend ? " (force resend)" : "");
->>>>>>> master
 	mutex_lock(&osdc->request_mutex);
 	for (p = rb_first(&osdc->requests); p; ) {
 		req = rb_entry(p, struct ceph_osd_request, r_node);
@@ -1889,7 +1789,6 @@ static void kick_requests(struct ceph_osd_client *osdc, int force_resend)
 			     req, req->r_tid,
 			     req->r_osd ? req->r_osd->o_osd : -1);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			ceph_osdc_get_request(req);
 			__unregister_request(osdc, req);
 			__register_linger_request(osdc, req);
@@ -1902,18 +1801,13 @@ static void kick_requests(struct ceph_osd_client *osdc, int force_resend)
 				req->r_flags & CEPH_OSD_FLAG_WRITE);
 		err = __map_request(osdc, req, force_resend_req);
 =======
-=======
->>>>>>> master
 			__unregister_request(osdc, req);
 			__register_linger_request(osdc, req);
 			continue;
 		}
 
 		err = __map_request(osdc, req, force_resend);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (err < 0)
 			continue;  /* error */
 		if (req->r_osd == NULL) {
@@ -1933,7 +1827,6 @@ static void kick_requests(struct ceph_osd_client *osdc, int force_resend)
 				 r_linger_item) {
 		dout("linger req=%p req->r_osd=%p\n", req, req->r_osd);
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 		err = __map_request(osdc, req,
 				    force_resend || force_resend_writes);
@@ -1962,8 +1855,6 @@ static void kick_requests(struct ceph_osd_client *osdc, int force_resend)
 			__unregister_linger_request(osdc, req);
 		}
 =======
-=======
->>>>>>> master
 		err = __map_request(osdc, req, force_resend);
 		dout("__map_request returned %d\n", err);
 		if (err == 0)
@@ -1980,10 +1871,7 @@ static void kick_requests(struct ceph_osd_client *osdc, int force_resend)
 		     req->r_osd ? req->r_osd->o_osd : -1);
 		__register_request(osdc, req);
 		__unregister_linger_request(osdc, req);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 	reset_changed_osds(osdc);
 	mutex_unlock(&osdc->request_mutex);
@@ -2011,12 +1899,9 @@ void ceph_osdc_handle_map(struct ceph_osd_client *osdc, struct ceph_msg *msg)
 	int err;
 	struct ceph_fsid fsid;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	bool was_full;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	dout("handle_map have %u\n", osdc->osdmap ? osdc->osdmap->epoch : 0);
 	p = msg->front.iov_base;
@@ -2031,13 +1916,10 @@ void ceph_osdc_handle_map(struct ceph_osd_client *osdc, struct ceph_msg *msg)
 	down_write(&osdc->map_sem);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	was_full = ceph_osdmap_flag(osdc->osdmap, CEPH_OSDMAP_FULL);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* incremental maps */
 	ceph_decode_32_safe(&p, end, nr_maps, bad);
 	dout(" %d inc maps\n", nr_maps);
@@ -2063,7 +1945,6 @@ void ceph_osdc_handle_map(struct ceph_osd_client *osdc, struct ceph_msg *msg)
 				osdc->osdmap = newmap;
 			}
 <<<<<<< HEAD
-<<<<<<< HEAD
 			was_full = was_full ||
 				ceph_osdmap_flag(osdc->osdmap,
 						 CEPH_OSDMAP_FULL);
@@ -2071,9 +1952,6 @@ void ceph_osdc_handle_map(struct ceph_osd_client *osdc, struct ceph_msg *msg)
 =======
 			kick_requests(osdc, 0);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			kick_requests(osdc, 0);
->>>>>>> master
 		} else {
 			dout("ignoring incremental map %u len %d\n",
 			     epoch, maplen);
@@ -2117,7 +1995,6 @@ void ceph_osdc_handle_map(struct ceph_osd_client *osdc, struct ceph_msg *msg)
 				ceph_osdmap_destroy(oldmap);
 			}
 <<<<<<< HEAD
-<<<<<<< HEAD
 			was_full = was_full ||
 				ceph_osdmap_flag(osdc->osdmap,
 						 CEPH_OSDMAP_FULL);
@@ -2125,22 +2002,16 @@ void ceph_osdc_handle_map(struct ceph_osd_client *osdc, struct ceph_msg *msg)
 =======
 			kick_requests(osdc, skipped_map);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			kick_requests(osdc, skipped_map);
->>>>>>> master
 		}
 		p += maplen;
 		nr_maps--;
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!osdc->osdmap)
 		goto bad;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 done:
 	downgrade_write(&osdc->map_sem);
 	ceph_monc_got_osdmap(&osdc->client->monc, osdc->osdmap->epoch);
@@ -2151,16 +2022,12 @@ done:
 	 * ENOSPC.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ceph_osdmap_flag(osdc->osdmap, CEPH_OSDMAP_FULL) ||
 		ceph_osdmap_flag(osdc->osdmap, CEPH_OSDMAP_PAUSERD) ||
 		ceph_osdmap_flag(osdc->osdmap, CEPH_OSDMAP_PAUSEWR))
 =======
 	if (ceph_osdmap_flag(osdc->osdmap, CEPH_OSDMAP_FULL))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (ceph_osdmap_flag(osdc->osdmap, CEPH_OSDMAP_FULL))
->>>>>>> master
 		ceph_monc_request_next_osdmap(&osdc->client->monc);
 
 	mutex_lock(&osdc->request_mutex);
@@ -2489,13 +2356,9 @@ int ceph_osdc_start_request(struct ceph_osd_client *osdc,
 	req->r_sent = 0;
 	req->r_got_reply = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	req->r_completed = 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	req->r_completed = 0;
->>>>>>> master
 	rc = __map_request(osdc, req, 0);
 	if (rc < 0) {
 		if (nofail) {
@@ -2503,13 +2366,10 @@ int ceph_osdc_start_request(struct ceph_osd_client *osdc,
 				" will retry %lld\n", req->r_tid);
 			rc = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		} else {
 			__unregister_request(osdc, req);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		}
 		goto out_unlock;
 	}
@@ -2587,7 +2447,6 @@ EXPORT_SYMBOL(ceph_osdc_sync);
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * Call all pending notify callbacks - for use after a watch is
  * unregistered, to make sure no more callbacks for it will be invoked
  */
@@ -2601,8 +2460,6 @@ EXPORT_SYMBOL(ceph_osdc_flush_notifies);
 /*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  * init, shutdown
  */
 int ceph_osdc_init(struct ceph_osd_client *osdc, struct ceph_client *client)
@@ -2652,24 +2509,18 @@ int ceph_osdc_init(struct ceph_osd_client *osdc, struct ceph_client *client)
 		goto out_msgpool;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	err = -ENOMEM;
 	osdc->notify_wq = create_singlethread_workqueue("ceph-watch-notify");
 	if (!osdc->notify_wq)
 		goto out_msgpool;
 =======
-=======
->>>>>>> master
 	osdc->notify_wq = create_singlethread_workqueue("ceph-watch-notify");
 	if (IS_ERR(osdc->notify_wq)) {
 		err = PTR_ERR(osdc->notify_wq);
 		osdc->notify_wq = NULL;
 		goto out_msgpool;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 
 out_msgpool:

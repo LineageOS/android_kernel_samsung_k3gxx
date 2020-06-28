@@ -436,7 +436,6 @@ int xt_check_match(struct xt_mtchk_param *par,
 EXPORT_SYMBOL_GPL(xt_check_match);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /** xt_check_entry_match - check that matches end before start of target
  *
  * @match: beginning of xt_entry_match
@@ -480,8 +479,6 @@ static int xt_check_entry_match(const char *match, const char *target,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #ifdef CONFIG_COMPAT
 int xt_compat_add_offset(u_int8_t af, unsigned int offset, int delta)
 {
@@ -552,29 +549,21 @@ int xt_compat_match_offset(const struct xt_match *match)
 EXPORT_SYMBOL_GPL(xt_compat_match_offset);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 void xt_compat_match_from_user(struct xt_entry_match *m, void **dstptr,
 			       unsigned int *size)
 =======
 int xt_compat_match_from_user(struct xt_entry_match *m, void **dstptr,
 			      unsigned int *size)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-int xt_compat_match_from_user(struct xt_entry_match *m, void **dstptr,
-			      unsigned int *size)
->>>>>>> master
 {
 	const struct xt_match *match = m->u.kernel.match;
 	struct compat_xt_entry_match *cm = (struct compat_xt_entry_match *)m;
 	int pad, off = xt_compat_match_offset(match);
 	u_int16_t msize = cm->u.user.match_size;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	char name[sizeof(m->u.user.name)];
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	m = *dstptr;
 	memcpy(m, cm, sizeof(*cm));
@@ -589,7 +578,6 @@ int xt_compat_match_from_user(struct xt_entry_match *m, void **dstptr,
 	msize += off;
 	m->u.user.match_size = msize;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	strlcpy(name, match->name, sizeof(name));
 	module_put(match->me);
 	strncpy(m->u.user.name, name, sizeof(m->u.user.name));
@@ -597,16 +585,11 @@ int xt_compat_match_from_user(struct xt_entry_match *m, void **dstptr,
 	*size += off;
 	*dstptr += msize;
 =======
-=======
->>>>>>> master
 
 	*size += off;
 	*dstptr += msize;
 	return 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 EXPORT_SYMBOL_GPL(xt_compat_match_from_user);
 
@@ -637,7 +620,6 @@ int xt_compat_match_to_user(const struct xt_entry_match *m,
 	return 0;
 }
 EXPORT_SYMBOL_GPL(xt_compat_match_to_user);
-<<<<<<< HEAD
 <<<<<<< HEAD
 
 /* non-compat version may have padding after verdict */
@@ -762,10 +744,6 @@ EXPORT_SYMBOL(xt_check_entry_offsets);
 #endif /* CONFIG_COMPAT */
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#endif /* CONFIG_COMPAT */
-
->>>>>>> master
 int xt_check_target(struct xt_tgchk_param *par,
 		    unsigned int size, u_int8_t proto, bool inv_proto)
 {
@@ -816,7 +794,6 @@ int xt_check_target(struct xt_tgchk_param *par,
 }
 EXPORT_SYMBOL_GPL(xt_check_target);
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 /**
  * xt_copy_counters_from_user - copy counters and metadata from userspace
@@ -894,8 +871,6 @@ EXPORT_SYMBOL_GPL(xt_copy_counters_from_user);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #ifdef CONFIG_COMPAT
 int xt_compat_target_offset(const struct xt_target *target)
 {
@@ -912,12 +887,9 @@ void xt_compat_target_from_user(struct xt_entry_target *t, void **dstptr,
 	int pad, off = xt_compat_target_offset(target);
 	u_int16_t tsize = ct->u.user.target_size;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	char name[sizeof(t->u.user.name)];
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	t = *dstptr;
 	memcpy(t, ct, sizeof(*ct));
@@ -932,14 +904,11 @@ void xt_compat_target_from_user(struct xt_entry_target *t, void **dstptr,
 	tsize += off;
 	t->u.user.target_size = tsize;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	strlcpy(name, target->name, sizeof(name));
 	module_put(target->me);
 	strncpy(t->u.user.name, name, sizeof(t->u.user.name));
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	*size += off;
 	*dstptr += tsize;

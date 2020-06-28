@@ -620,7 +620,6 @@ int cond_write_list(struct policydb *p, struct cond_node *list, void *fp)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 void cond_compute_xperms(struct avtab *ctab, struct avtab_key *key,
 		struct extended_perms_decision *xpermd)
 {
@@ -628,32 +627,23 @@ void cond_compute_xperms(struct avtab *ctab, struct avtab_key *key,
 
 	if (!ctab || !key || !xpermd)
 =======
-=======
->>>>>>> master
 void cond_compute_operation(struct avtab *ctab, struct avtab_key *key,
 		struct operation_decision *od)
 {
 	struct avtab_node *node;
 
 	if (!ctab || !key || !od)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		return;
 
 	for (node = avtab_search_node(ctab, key); node;
 			node = avtab_search_node_next(node, key->specified)) {
 		if (node->key.specified & AVTAB_ENABLED)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			services_compute_xperms_decision(xpermd, node);
 =======
 			services_compute_operation_num(od, node);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			services_compute_operation_num(od, node);
->>>>>>> master
 	}
 	return;
 
@@ -663,24 +653,18 @@ void cond_compute_operation(struct avtab *ctab, struct avtab_key *key,
  */
 void cond_compute_av(struct avtab *ctab, struct avtab_key *key,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		struct av_decision *avd, struct extended_perms *xperms)
 {
 	struct avtab_node *node;
 
 	if (!ctab || !key || !avd)
 =======
-=======
->>>>>>> master
 		struct av_decision *avd, struct operation *ops)
 {
 	struct avtab_node *node;
 
 	if (!ctab || !key || !avd || !ops)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		return;
 
 	for (node = avtab_search_node(ctab, key); node;
@@ -700,7 +684,6 @@ void cond_compute_av(struct avtab *ctab, struct avtab_key *key,
 		    (node->key.specified & (AVTAB_AUDITALLOW|AVTAB_ENABLED)))
 			avd->auditallow |= node->datum.u.data;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (xperms && (node->key.specified & AVTAB_ENABLED) &&
 				(node->key.specified & AVTAB_XPERMS))
 			services_compute_xperms_drivers(xperms, node);
@@ -709,11 +692,6 @@ void cond_compute_av(struct avtab *ctab, struct avtab_key *key,
 				(node->key.specified & AVTAB_OP))
 			services_compute_operation_type(ops, node);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if ((node->key.specified & AVTAB_ENABLED) &&
-				(node->key.specified & AVTAB_OP))
-			services_compute_operation_type(ops, node);
->>>>>>> master
 	}
 	return;
 }

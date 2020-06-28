@@ -280,12 +280,9 @@ int smpboot_register_percpu_thread(struct smp_hotplug_thread *plug_thread)
 	int ret = 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	get_online_cpus();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	mutex_lock(&smpboot_threads_lock);
 	for_each_online_cpu(cpu) {
 		ret = __smpboot_create_thread(plug_thread, cpu);
@@ -299,12 +296,9 @@ int smpboot_register_percpu_thread(struct smp_hotplug_thread *plug_thread)
 out:
 	mutex_unlock(&smpboot_threads_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	put_online_cpus();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return ret;
 }
 EXPORT_SYMBOL_GPL(smpboot_register_percpu_thread);

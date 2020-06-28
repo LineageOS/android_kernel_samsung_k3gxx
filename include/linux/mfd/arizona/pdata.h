@@ -254,14 +254,11 @@ struct arizona_pdata {
 	 * Mode of input structures
 	 * One of the ARIZONA_INMODE_xxx values
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 * For most codecs the entries are [0]=IN1 [1]=IN2 [2]=IN3 [3]=IN4
 	 * wm8998: [0]=IN1A [1]=IN2A [2]=IN1B [3]=IN2B
 	 * cs47l85, wm8285: [0]=IN1L [1]=IN1R [2]=IN2L [3]=IN2R [4]=IN3L [5]=IN3R
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	 */
 	int inmode[ARIZONA_MAX_INPUT];
 

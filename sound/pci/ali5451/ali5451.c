@@ -1423,12 +1423,9 @@ snd_ali_playback_pointer(struct snd_pcm_substream *substream)
 	snd_ali_printk("playback pointer returned cso=%xh.\n", cso);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	cso %= runtime->buffer_size;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return cso;
 }
 
@@ -1450,12 +1447,9 @@ static snd_pcm_uframes_t snd_ali_pointer(struct snd_pcm_substream *substream)
 	spin_unlock(&codec->reg_lock);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	cso %= runtime->buffer_size;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return cso;
 }
 

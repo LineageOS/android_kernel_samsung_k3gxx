@@ -43,7 +43,6 @@
 #include <linux/workqueue.h>
 #include <linux/sysfs.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/rtc.h>
 #include <linux/time.h>
 #include <linux/math64.h>
@@ -54,9 +53,6 @@
 =======
 #include <net/net_namespace.h>
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#include <net/net_namespace.h>
->>>>>>> master
 
 struct idletimer_tg_attr {
 	struct attribute attr;
@@ -72,7 +68,6 @@ struct idletimer_tg {
 	struct kobject *kobj;
 	struct idletimer_tg_attr attr;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	struct timespec delayed_timer_trigger;
 	struct timespec last_modified_timer;
@@ -90,16 +85,10 @@ struct idletimer_tg {
 	bool send_nl_msg;
 	bool active;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned int refcnt;
-	bool send_nl_msg;
-	bool active;
->>>>>>> master
 };
 
 static LIST_HEAD(idletimer_tg_list);
 static DEFINE_MUTEX(list_mutex);
-<<<<<<< HEAD
 <<<<<<< HEAD
 static DEFINE_SPINLOCK(timestamp_lock);
 
@@ -151,8 +140,6 @@ static void notify_netlink_uevent(const char *iface, struct idletimer_tg *timer)
 	res = snprintf(iface_msg, NLMSG_MAX_SIZE, "INTERFACE=%s",
 		       iface);
 =======
-=======
->>>>>>> master
 
 static struct kobject *idletimer_tg_kobj;
 
@@ -165,15 +152,11 @@ static void notify_netlink_uevent(const char *label, struct idletimer_tg *timer)
 
 	res = snprintf(label_msg, NLMSG_MAX_SIZE, "LABEL=%s",
 		       label);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (NLMSG_MAX_SIZE <= res) {
 		pr_err("message too long (%d)", res);
 		return;
 	}
-<<<<<<< HEAD
 <<<<<<< HEAD
 
 	get_monotonic_boottime(&ts);
@@ -185,15 +168,10 @@ static void notify_netlink_uevent(const char *label, struct idletimer_tg *timer)
 	res = snprintf(state_msg, NLMSG_MAX_SIZE, "STATE=%s",
 		       timer->active ? "active" : "inactive");
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	res = snprintf(state_msg, NLMSG_MAX_SIZE, "STATE=%s",
-		       timer->active ? "active" : "inactive");
->>>>>>> master
 	if (NLMSG_MAX_SIZE <= res) {
 		pr_err("message too long (%d)", res);
 		return;
 	}
-<<<<<<< HEAD
 <<<<<<< HEAD
 
 	if (state) {
@@ -218,9 +196,6 @@ static void notify_netlink_uevent(const char *label, struct idletimer_tg *timer)
 =======
 	pr_debug("putting nlmsg: <%s> <%s>\n", label_msg, state_msg);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	pr_debug("putting nlmsg: <%s> <%s>\n", label_msg, state_msg);
->>>>>>> master
 	kobject_uevent_env(idletimer_tg_kobj, KOBJ_CHANGE, envp);
 	return;
 
@@ -285,7 +260,6 @@ static void idletimer_tg_expired(unsigned long data)
 
 	pr_debug("timer %s expired\n", timer->attr.attr.name);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_lock_bh(&timestamp_lock);
 	timer->active = false;
 	timer->work_pending = true;
@@ -340,11 +314,6 @@ static int idletimer_resume(struct notifier_block *notifier,
 	timer->active = false;
 	schedule_work(&timer->work);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-	timer->active = false;
-	schedule_work(&timer->work);
->>>>>>> master
 }
 
 static int idletimer_tg_create(struct idletimer_tg_info *info)
@@ -379,7 +348,6 @@ static int idletimer_tg_create(struct idletimer_tg_info *info)
 	info->timer->send_nl_msg = (info->send_nl_msg == 0) ? false : true;
 	info->timer->active = true;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	info->timer->timeout = info->timeout;
 
 	info->timer->delayed_timer_trigger.tv_sec = 0;
@@ -395,8 +363,6 @@ static int idletimer_tg_create(struct idletimer_tg_info *info)
 				__func__, ret);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	mod_timer(&info->timer->timer,
 		  msecs_to_jiffies(info->timeout * 1000) + jiffies);
@@ -413,7 +379,6 @@ out:
 	return ret;
 }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 static void reset_timer(const struct idletimer_tg_info *info,
 			struct sk_buff *skb)
@@ -457,8 +422,6 @@ static void reset_timer(const struct idletimer_tg_info *info,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  * The actual xt_tables plugin.
  */
@@ -483,18 +446,12 @@ static unsigned int idletimer_tg_target(struct sk_buff *skb,
 
 	/* TODO: Avoid modifying timers on each packet */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	reset_timer(info, skb);
 =======
 	mod_timer(&info->timer->timer,
 		  msecs_to_jiffies(info->timeout * 1000) + now);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mod_timer(&info->timer->timer,
-		  msecs_to_jiffies(info->timeout * 1000) + now);
-
->>>>>>> master
 	return XT_CONTINUE;
 }
 
@@ -503,13 +460,9 @@ static int idletimer_tg_checkentry(const struct xt_tgchk_param *par)
 	struct idletimer_tg_info *info = par->targinfo;
 	int ret;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	unsigned long now = jiffies;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned long now = jiffies;
->>>>>>> master
 
 	pr_debug("checkentry targinfo %s\n", info->label);
 
@@ -531,11 +484,8 @@ static int idletimer_tg_checkentry(const struct xt_tgchk_param *par)
 	if (info->timer) {
 		info->timer->refcnt++;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		reset_timer(info, NULL);
 =======
-=======
->>>>>>> master
 		info->timer->active = true;
 
 		if (time_before(info->timer->timer.expires, now)) {
@@ -547,10 +497,7 @@ static int idletimer_tg_checkentry(const struct xt_tgchk_param *par)
 		mod_timer(&info->timer->timer,
 			  msecs_to_jiffies(info->timeout * 1000) + now);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		pr_debug("increased refcnt of timer %s to %u\n",
 			 info->label, info->timer->refcnt);
 	} else {
@@ -583,12 +530,9 @@ static void idletimer_tg_destroy(const struct xt_tgdtor_param *par)
 		cancel_work_sync(&info->timer->work);
 		sysfs_remove_file(idletimer_tg_kobj, &info->timer->attr.attr);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		unregister_pm_notifier(&info->timer->pm_nb);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		kfree(info->timer->attr.attr.name);
 		kfree(info->timer);
 	} else {

@@ -150,7 +150,6 @@ static struct crypto_alg null_algs[3] = { {
 } };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("compress_null");
 MODULE_ALIAS_CRYPTO("digest_null");
 MODULE_ALIAS_CRYPTO("cipher_null");
@@ -159,11 +158,6 @@ MODULE_ALIAS("compress_null");
 MODULE_ALIAS("digest_null");
 MODULE_ALIAS("cipher_null");
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-MODULE_ALIAS("compress_null");
-MODULE_ALIAS("digest_null");
-MODULE_ALIAS("cipher_null");
->>>>>>> master
 
 static int __init crypto_null_mod_init(void)
 {

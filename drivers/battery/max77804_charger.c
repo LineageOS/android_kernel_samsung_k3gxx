@@ -18,18 +18,12 @@
 #include <linux/of_gpio.h>
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #ifdef CONFIG_CHARGE_CONTROL
 #include <linux/charge_control.h>
 #endif
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define ENABLE 1
 #define DISABLE 0
 
@@ -43,10 +37,7 @@
 #define SLOW_CHARGING_CURRENT_STANDARD 400
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #ifdef CONFIG_CHARGE_CONTROL
 int ac_chgcurr = ac_CHGCURR_DEFAULT;
 int usb_chgcurr = usb_CHGCURR_DEFAULT;
@@ -58,10 +49,7 @@ int chgcurr_cur = 0;
 int chgcurr_default_logic = 1;
 #endif
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 struct max77804_charger_data {
 	struct max77804_dev	*max77804;
 
@@ -868,7 +856,6 @@ static int sec_chg_get_property(struct power_supply *psy,
 	case POWER_SUPPLY_PROP_CURRENT_MAX:
 		val->intval = charger->charging_current_max;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		// AOSP expects microamperes
 		val->intval *= 1000;
 		break;
@@ -877,18 +864,13 @@ static int sec_chg_get_property(struct power_supply *psy,
 		// AOSP expects microamperes
 		val->intval *= 1000;
 =======
-=======
->>>>>>> master
 		break;
 	case POWER_SUPPLY_PROP_CURRENT_AVG:
 		val->intval = charger->charging_current;
 #ifdef CONFIG_CHARGE_CONTROL
 		chgcurr_cur = val->intval;
 #endif
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		break;
 	case POWER_SUPPLY_PROP_CURRENT_NOW:
 		val->intval = max77804_get_input_current(charger);
@@ -1036,10 +1018,7 @@ static int sec_chg_set_property(struct power_supply *psy,
 		}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #ifdef CONFIG_CHARGE_CONTROL
 			chgcurr_default_logic = 1;
 			chgcurr_nom = 9999; /* we do not know the rate -> so use virtual rate */
@@ -1097,10 +1076,7 @@ static int sec_chg_set_property(struct power_supply *psy,
 			printk(KERN_INFO "duki994: charge type: %s, default charging logic: %d, nominal mA: %d\n", chginfo, chgcurr_default_logic, chgcurr_nom);
 #endif
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (charger->pdata->full_check_type_2nd == SEC_BATTERY_FULLCHARGED_CHGPSY) {
 			union power_supply_propval chg_mode;
 			psy_do_property("battery", get, POWER_SUPPLY_PROP_CHARGE_NOW, chg_mode);
@@ -1167,18 +1143,12 @@ static int sec_chg_set_property(struct power_supply *psy,
 #endif
 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #ifdef CONFIG_CHARGE_CONTROL
 		if (chgcurr_default_logic == 0)
 			break;
 #endif
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		charger->siop_level = val->intval;
 		if (charger->is_charging) {
 			/* decrease the charging current according to siop level */

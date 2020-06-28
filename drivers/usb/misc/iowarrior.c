@@ -793,7 +793,6 @@ static int iowarrior_probe(struct usb_interface *interface,
 	dev->product_id = le16_to_cpu(udev->descriptor.idProduct);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (iface_desc->desc.bNumEndpoints < 1) {
 		dev_err(&interface->dev, "Invalid number of endpoints\n");
 		retval = -EINVAL;
@@ -802,8 +801,6 @@ static int iowarrior_probe(struct usb_interface *interface,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* set up the endpoint information */
 	for (i = 0; i < iface_desc->desc.bNumEndpoints; ++i) {
 		endpoint = &iface_desc->endpoint[i].desc;
@@ -814,7 +811,6 @@ static int iowarrior_probe(struct usb_interface *interface,
 			/* this one will match for the IOWarrior56 only */
 			dev->int_out_endpoint = endpoint;
 	}
-<<<<<<< HEAD
 <<<<<<< HEAD
 
 	if (!dev->int_in_endpoint) {
@@ -833,8 +829,6 @@ static int iowarrior_probe(struct usb_interface *interface,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* we have to check the report_size often, so remember it in the endianness suitable for our machine */
 	dev->report_size = usb_endpoint_maxp(dev->int_in_endpoint);
 	if ((dev->interface->cur_altsetting->desc.bInterfaceNumber == 0) &&

@@ -195,12 +195,9 @@ struct jffs2_inode_cache {
 
 #define INO_FLAGS_XATTR_CHECKED	0x01	/* has no duplicate xattr_ref */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define INO_FLAGS_IS_DIR	0x02	/* is a directory */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 #define RAWNODE_CLASS_INODE_CACHE	0
 #define RAWNODE_CLASS_XATTR_DATUM	1
@@ -239,14 +236,10 @@ struct jffs2_tmp_dnode_info
 	uint32_t data_crc;
 	uint32_t partial_crc;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	uint32_t csize;
 =======
 	uint16_t csize;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	uint16_t csize;
->>>>>>> master
 	uint16_t overlapped;
 };
 
@@ -265,7 +258,6 @@ struct jffs2_readinode_info
 struct jffs2_full_dirent
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	union {
 		struct jffs2_raw_node_ref *raw;
 		struct jffs2_inode_cache *ic; /* Just during part of build */
@@ -273,9 +265,6 @@ struct jffs2_full_dirent
 =======
 	struct jffs2_raw_node_ref *raw;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct jffs2_raw_node_ref *raw;
->>>>>>> master
 	struct jffs2_full_dirent *next;
 	uint32_t version;
 	uint32_t ino; /* == zero for unlink */

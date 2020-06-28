@@ -1489,13 +1489,10 @@ static void s3c24xx_serial_set_termios(struct uart_port *port,
 
 	if (ourport->baudclk != clk) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		clk_prepare_enable(clk);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		s3c24xx_serial_setsource(port, clk_sel);
 
 		if (!IS_ERR(ourport->baudclk)) {
@@ -1504,15 +1501,10 @@ static void s3c24xx_serial_set_termios(struct uart_port *port,
 		}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		clk_prepare_enable(clk);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		clk_prepare_enable(clk);
-
->>>>>>> master
 		ourport->baudclk = clk;
 		ourport->baudclk_rate = clk ? clk_get_rate(clk) : 0;
 	}

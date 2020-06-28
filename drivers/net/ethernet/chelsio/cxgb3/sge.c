@@ -1601,15 +1601,11 @@ static void write_ofld_wr(struct adapter *adap, struct sk_buff *skb,
 	sgp = ndesc == 1 ? (struct sg_ent *)&d->flit[flits] : sgl;
 	sgl_flits = make_sgl(skb, sgp, skb_transport_header(skb),
 <<<<<<< HEAD
-<<<<<<< HEAD
 			     skb_tail_pointer(skb) -
 			     skb_transport_header(skb),
 =======
 			     skb->tail - skb->transport_header,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			     skb->tail - skb->transport_header,
->>>>>>> master
 			     adap->pdev);
 	if (need_skb_unmap()) {
 		setup_deferred_unmapping(skb, adap->pdev, sgp, sgl_flits);

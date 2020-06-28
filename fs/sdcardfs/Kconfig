@@ -1,15 +1,11 @@
 config SDCARD_FS
 	tristate "sdcard file system"
 <<<<<<< HEAD
-<<<<<<< HEAD
 	depends on CONFIGFS_FS
 	default n
 =======
 	default y
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	default y
->>>>>>> master
 	help
 	  Sdcardfs is based on Wrapfs file system.
 
@@ -20,10 +16,7 @@ config SDCARD_FS_FADV_NOACTIVE
 	help
 	  Sdcardfs supports fadvise noactive mode.
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 
 config SDCARD_FS_CI_SEARCH
 	tristate "sdcardfs case-insensitive search support"
@@ -36,7 +29,4 @@ config SDCARD_FS_XATTR
 	depends on SDCARD_FS
 	help
 	  Modification of sdcard file system for xattr
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master

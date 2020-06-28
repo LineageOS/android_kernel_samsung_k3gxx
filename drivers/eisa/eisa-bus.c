@@ -276,24 +276,18 @@ static int __init eisa_request_resources(struct eisa_root_device *root,
 		
 		if (slot) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			edev->res[i].name  = NULL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			edev->res[i].start = SLOT_ADDRESS(root, slot)
 					     + (i * 0x400);
 			edev->res[i].end   = edev->res[i].start + 0xff;
 			edev->res[i].flags = IORESOURCE_IO;
 		} else {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			edev->res[i].name  = NULL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			edev->res[i].start = SLOT_ADDRESS(root, slot)
 					     + EISA_VENDOR_ID_OFFSET;
 			edev->res[i].end   = edev->res[i].start + 3;
@@ -341,7 +335,6 @@ static int __init eisa_probe(struct eisa_root_device *root)
 	}
 		
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (eisa_request_resources(root, edev, 0)) {
 		dev_warn(root->dev,
 		         "EISA: Cannot allocate resource for mainboard\n");
@@ -357,8 +350,6 @@ static int __init eisa_probe(struct eisa_root_device *root)
 		if (!root->force_probe)
 			return -ENODEV;
 =======
-=======
->>>>>>> master
 	if (eisa_init_device(root, edev, 0)) {
 		kfree(edev);
 		if (!root->force_probe)
@@ -372,10 +363,7 @@ static int __init eisa_probe(struct eisa_root_device *root)
 		kfree(edev);
 		if (!root->force_probe)
 			return -EBUSY;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		goto force_probe;
 	}
 
@@ -399,7 +387,6 @@ static int __init eisa_probe(struct eisa_root_device *root)
 		}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (eisa_request_resources(root, edev, i)) {
 			dev_warn(root->dev,
 			         "Cannot allocate resource for EISA slot %d\n",
@@ -407,28 +394,19 @@ static int __init eisa_probe(struct eisa_root_device *root)
 =======
 		if (eisa_init_device(root, edev, i)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (eisa_init_device(root, edev, i)) {
->>>>>>> master
 			kfree(edev);
 			continue;
 		}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (eisa_init_device(root, edev, i)) {
 			eisa_release_resources(edev);
 =======
-=======
->>>>>>> master
 		if (eisa_request_resources(root, edev, i)) {
 			dev_warn(root->dev,
 			         "Cannot allocate resource for EISA slot %d\n",
 			         i);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			kfree(edev);
 			continue;
 		}

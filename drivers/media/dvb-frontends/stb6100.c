@@ -32,13 +32,10 @@ static unsigned int verbose;
 module_param(verbose, int, 0644);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* Max transfer size done by I2C transfer functions */
 #define MAX_XFER_SIZE  64
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 #define FE_ERROR		0
 #define FE_NOTICE		1
@@ -192,14 +189,10 @@ static int stb6100_write_reg_range(struct stb6100_state *state, u8 buf[], int st
 {
 	int rc;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u8 cmdbuf[MAX_XFER_SIZE];
 =======
 	u8 cmdbuf[len + 1];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u8 cmdbuf[len + 1];
->>>>>>> master
 	struct i2c_msg msg = {
 		.addr	= state->config->tuner_address,
 		.flags	= 0,
@@ -207,7 +200,6 @@ static int stb6100_write_reg_range(struct stb6100_state *state, u8 buf[], int st
 		.len	= len + 1
 	};
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (1 + len > sizeof(cmdbuf)) {
 		printk(KERN_WARNING
@@ -218,8 +210,6 @@ static int stb6100_write_reg_range(struct stb6100_state *state, u8 buf[], int st
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (unlikely(start < 1 || start + len > STB6100_NUMREGS)) {
 		dprintk(verbose, FE_ERROR, 1, "Invalid register range %d:%d",
 			start, len);

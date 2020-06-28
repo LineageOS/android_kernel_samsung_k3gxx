@@ -115,7 +115,6 @@ static bool access_l2ectlr(struct kvm_vcpu *vcpu,
 /*
  * A15-specific CP15 registers.
 <<<<<<< HEAD
-<<<<<<< HEAD
  * CRn denotes the primary register number, but is copied to the CRm in the
  * user space API for 64-bit register access in line with the terminology used
  * in the ARM ARM.
@@ -124,9 +123,6 @@ static bool access_l2ectlr(struct kvm_vcpu *vcpu,
 =======
  * Important: Must be sorted ascending by CRn, CRM, Op1, Op2
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * Important: Must be sorted ascending by CRn, CRM, Op1, Op2
->>>>>>> master
  */
 static const struct coproc_reg a15_regs[] = {
 	/* MPIDR: we use VMPIDR for guest access. */

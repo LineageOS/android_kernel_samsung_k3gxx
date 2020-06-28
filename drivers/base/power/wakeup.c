@@ -875,17 +875,12 @@ static int wakeup_sources_stats_show(struct seq_file *m, void *unused)
 
 	split_counters(&cnt, &inpr);
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*	seq_printf(m, "\nRegistered wakeup events: %u\n"
 			"Wakeup events in progress: %u\n", cnt, inpr);*/
 =======
 	seq_printf(m, "\nRegistered wakeup events: %u\n"
 			"Wakeup events in progress: %u\n", cnt, inpr);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	seq_printf(m, "\nRegistered wakeup events: %u\n"
-			"Wakeup events in progress: %u\n", cnt, inpr);
->>>>>>> master
 	return 0;
 }
 

@@ -51,14 +51,10 @@ config IIO_ST_GYRO_3AXIS
 	help
 	  Say yes here to build support for STMicroelectronics gyroscopes:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	  L3G4200D, LSM330DL, L3GD20, LSM330DLC, L3G4IS, LSM330.
 =======
 	  L3G4200D, LSM330DL, L3GD20, L3GD20H, LSM330DLC, L3G4IS, LSM330.
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	  L3G4200D, LSM330DL, L3GD20, L3GD20H, LSM330DLC, L3G4IS, LSM330.
->>>>>>> master
 
 	  This driver can also be built as a module. If so, will be created
 	  these modules:

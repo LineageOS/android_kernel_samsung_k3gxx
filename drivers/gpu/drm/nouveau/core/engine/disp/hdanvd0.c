@@ -42,13 +42,10 @@ nvd0_hda_eld(struct nv50_disp_priv *priv, int or, u8 *data, u32 size)
 		for (i = 0; i < size; i++)
 			nv_wr32(priv, 0x10ec00 + soff, (i << 8) | data[i]);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		for (; i < 0x60; i++)
 			nv_wr32(priv, 0x10ec00 + soff, (i << 8));
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		nv_mask(priv, 0x10ec10 + soff, 0x80000003, 0x80000003);
 	} else
 	if (data) {

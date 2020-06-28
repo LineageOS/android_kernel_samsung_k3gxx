@@ -218,7 +218,6 @@ void tty_wait_until_sent(struct tty_struct *tty, long timeout)
 	if (!timeout)
 		timeout = MAX_SCHEDULE_TIMEOUT;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	if (wait_event_interruptible_timeout(tty->write_wait,
 			!tty_chars_in_buffer(tty), timeout) < 0) {
@@ -231,17 +230,12 @@ void tty_wait_until_sent(struct tty_struct *tty, long timeout)
 	if (tty->ops->wait_until_sent)
 		tty->ops->wait_until_sent(tty, timeout);
 =======
-=======
->>>>>>> master
 	if (wait_event_interruptible_timeout(tty->write_wait,
 			!tty_chars_in_buffer(tty), timeout) >= 0) {
 		if (tty->ops->wait_until_sent)
 			tty->ops->wait_until_sent(tty, timeout);
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 EXPORT_SYMBOL(tty_wait_until_sent);
 
@@ -1222,14 +1216,11 @@ int n_tty_ioctl_helper(struct tty_struct *tty, struct file *file,
 		return 0;
 	case TCFLSH:
 <<<<<<< HEAD
-<<<<<<< HEAD
 		retval = tty_check_change(tty);
 		if (retval)
 			return retval;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		return __tty_perform_flush(tty, arg);
 	default:
 		/* Try the mode commands */

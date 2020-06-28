@@ -40,12 +40,9 @@ enum vm_event_item { PGPGIN, PGPGOUT, PSWPIN, PSWPOUT,
 #ifdef CONFIG_NUMA_BALANCING
 		NUMA_PTE_UPDATES,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		NUMA_HUGE_PTE_UPDATES,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		NUMA_HINT_FAULTS,
 		NUMA_HINT_FAULTS_LOCAL,
 		NUMA_PAGE_MIGRATE,

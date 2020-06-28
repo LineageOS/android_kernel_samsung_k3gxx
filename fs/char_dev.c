@@ -369,12 +369,9 @@ void cdev_put(struct cdev *p)
 static int chrdev_open(struct inode *inode, struct file *filp)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	const struct file_operations *fops;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	struct cdev *p;
 	struct cdev *new = NULL;
 	int ret = 0;
@@ -408,23 +405,17 @@ static int chrdev_open(struct inode *inode, struct file *filp)
 
 	ret = -ENXIO;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	fops = fops_get(p->ops);
 	if (!fops)
 		goto out_cdev_put;
 
 	replace_fops(filp, fops);
 =======
-=======
->>>>>>> master
 	filp->f_op = fops_get(p->ops);
 	if (!filp->f_op)
 		goto out_cdev_put;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (filp->f_op->open) {
 		ret = filp->f_op->open(inode, filp);
 		if (ret)

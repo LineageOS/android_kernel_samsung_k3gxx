@@ -465,14 +465,10 @@ nlmsvc_proc_sm_notify(struct svc_rqst *rqstp, struct nlm_reboot *argp,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	nlm_host_rebooted(SVC_NET(rqstp), argp);
 =======
 	nlm_host_rebooted(argp);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	nlm_host_rebooted(argp);
->>>>>>> master
 	return rpc_success;
 }
 

@@ -116,7 +116,6 @@ static void l2tp_session_set_header_len(struct l2tp_session *session, int versio
 static void l2tp_tunnel_free(struct l2tp_tunnel *tunnel);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static inline struct l2tp_tunnel *l2tp_tunnel(struct sock *sk)
 {
 	return sk->sk_user_data;
@@ -124,8 +123,6 @@ static inline struct l2tp_tunnel *l2tp_tunnel(struct sock *sk)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static inline struct l2tp_net *l2tp_pernet(struct net *net)
 {
 	BUG_ON(!net);
@@ -287,15 +284,11 @@ struct l2tp_session *l2tp_session_find(struct net *net, struct l2tp_tunnel *tunn
 EXPORT_SYMBOL_GPL(l2tp_session_find);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 struct l2tp_session *l2tp_session_get_nth(struct l2tp_tunnel *tunnel, int nth,
 					  bool do_ref)
 =======
 struct l2tp_session *l2tp_session_find_nth(struct l2tp_tunnel *tunnel, int nth)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-struct l2tp_session *l2tp_session_find_nth(struct l2tp_tunnel *tunnel, int nth)
->>>>>>> master
 {
 	int hash;
 	struct l2tp_session *session;
@@ -306,14 +299,11 @@ struct l2tp_session *l2tp_session_find_nth(struct l2tp_tunnel *tunnel, int nth)
 		hlist_for_each_entry(session, &tunnel->session_hlist[hash], hlist) {
 			if (++count > nth) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 				l2tp_session_inc_refcount(session);
 				if (do_ref && session->ref)
 					session->ref(session);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 				read_unlock_bh(&tunnel->hlist_lock);
 				return session;
 			}
@@ -325,14 +315,10 @@ struct l2tp_session *l2tp_session_find_nth(struct l2tp_tunnel *tunnel, int nth)
 	return NULL;
 }
 <<<<<<< HEAD
-<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(l2tp_session_get_nth);
 =======
 EXPORT_SYMBOL_GPL(l2tp_session_find_nth);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-EXPORT_SYMBOL_GPL(l2tp_session_find_nth);
->>>>>>> master
 
 /* Lookup a session by interface name.
  * This is very inefficient but is only used by management interfaces.
@@ -545,14 +531,10 @@ static inline int l2tp_verify_udp_checksum(struct sock *sk,
 
 #if IS_ENABLED(CONFIG_IPV6)
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (sk->sk_family == PF_INET6 && !l2tp_tunnel(sk)->v4mapped) {
 =======
 	if (sk->sk_family == PF_INET6) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (sk->sk_family == PF_INET6) {
->>>>>>> master
 		if (!uh->check) {
 			LIMIT_NETDEBUG(KERN_INFO "L2TP: IPv6: checksum is 0\n");
 			return 1;
@@ -1117,14 +1099,10 @@ static int l2tp_xmit_core(struct l2tp_session *session, struct sk_buff *skb,
 	skb->local_df = 1;
 #if IS_ENABLED(CONFIG_IPV6)
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (skb->sk->sk_family == PF_INET6 && !tunnel->v4mapped)
 =======
 	if (skb->sk->sk_family == PF_INET6)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (skb->sk->sk_family == PF_INET6)
->>>>>>> master
 		error = inet6_csk_xmit(skb, NULL);
 	else
 #endif
@@ -1252,14 +1230,10 @@ int l2tp_xmit_skb(struct l2tp_session *session, struct sk_buff *skb, int hdr_len
 		/* Calculate UDP checksum if configured to do so */
 #if IS_ENABLED(CONFIG_IPV6)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (sk->sk_family == PF_INET6 && !tunnel->v4mapped)
 =======
 		if (sk->sk_family == PF_INET6)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (sk->sk_family == PF_INET6)
->>>>>>> master
 			l2tp_xmit_ipv6_csum(sk, skb, udp_len);
 		else
 #endif
@@ -1309,21 +1283,15 @@ EXPORT_SYMBOL_GPL(l2tp_xmit_skb);
 static void l2tp_tunnel_destruct(struct sock *sk)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct l2tp_tunnel *tunnel = l2tp_tunnel(sk);
 	struct l2tp_net *pn;
 
 =======
-=======
->>>>>>> master
 	struct l2tp_tunnel *tunnel;
 	struct l2tp_net *pn;
 
 	tunnel = sk->sk_user_data;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (tunnel == NULL)
 		goto end;
 
@@ -1451,14 +1419,10 @@ static void l2tp_tunnel_del_work(struct work_struct *work)
 	sk = l2tp_tunnel_sock_lookup(tunnel);
 	if (!sk)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto out;
 =======
 		return;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		return;
->>>>>>> master
 
 	sock = sk->sk_socket;
 
@@ -1480,13 +1444,10 @@ static void l2tp_tunnel_del_work(struct work_struct *work)
 
 	l2tp_tunnel_sock_put(sk);
 <<<<<<< HEAD
-<<<<<<< HEAD
 out:
 	l2tp_tunnel_dec_refcount(tunnel);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /* Create a socket for the tunnel, if one isn't set up by
@@ -1708,14 +1669,10 @@ int l2tp_tunnel_create(struct net *net, int fd, int version, u32 tunnel_id, u32 
 
 	/* Check if this socket has already been prepped */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	tunnel = l2tp_tunnel(sk);
 =======
 	tunnel = (struct l2tp_tunnel *)sk->sk_user_data;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	tunnel = (struct l2tp_tunnel *)sk->sk_user_data;
->>>>>>> master
 	if (tunnel != NULL) {
 		/* This socket has already been prepped */
 		err = -EBUSY;
@@ -1745,7 +1702,6 @@ int l2tp_tunnel_create(struct net *net, int fd, int version, u32 tunnel_id, u32 
 		tunnel->debug = cfg->debug;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_IPV6)
 	if (sk->sk_family == PF_INET6) {
 		struct ipv6_pinfo *np = inet6_sk(sk);
@@ -1766,8 +1722,6 @@ int l2tp_tunnel_create(struct net *net, int fd, int version, u32 tunnel_id, u32 
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* Mark socket as an encapsulation socket. See net/ipv4/udp.c */
 	tunnel->encap = encap;
 	if (encap == L2TP_ENCAPTYPE_UDP) {
@@ -1777,14 +1731,10 @@ int l2tp_tunnel_create(struct net *net, int fd, int version, u32 tunnel_id, u32 
 		udp_sk(sk)->encap_destroy = l2tp_udp_encap_destroy;
 #if IS_ENABLED(CONFIG_IPV6)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (sk->sk_family == PF_INET6 && !tunnel->v4mapped)
 =======
 		if (sk->sk_family == PF_INET6)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (sk->sk_family == PF_INET6)
->>>>>>> master
 			udpv6_encap_enable();
 		else
 #endif
@@ -1839,7 +1789,6 @@ EXPORT_SYMBOL_GPL(l2tp_tunnel_create);
 int l2tp_tunnel_delete(struct l2tp_tunnel *tunnel)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	l2tp_tunnel_inc_refcount(tunnel);
 	l2tp_tunnel_closeall(tunnel);
 	if (false == queue_work(l2tp_wq, &tunnel->del_work)) {
@@ -1851,10 +1800,6 @@ int l2tp_tunnel_delete(struct l2tp_tunnel *tunnel)
 	l2tp_tunnel_closeall(tunnel);
 	return (false == queue_work(l2tp_wq, &tunnel->del_work));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	l2tp_tunnel_closeall(tunnel);
-	return (false == queue_work(l2tp_wq, &tunnel->del_work));
->>>>>>> master
 }
 EXPORT_SYMBOL_GPL(l2tp_tunnel_delete);
 

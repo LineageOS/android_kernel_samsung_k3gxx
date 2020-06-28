@@ -349,15 +349,11 @@ static unsigned int vfs_dent_type(uint8_t type)
 static int ubifs_readdir(struct file *file, void *dirent, filldir_t filldir)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int err = 0;
 	int over = 0;
 =======
 	int err, over = 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int err, over = 0;
->>>>>>> master
 	loff_t pos = file->f_pos;
 	struct qstr nm;
 	union ubifs_key key;
@@ -477,7 +473,6 @@ static int ubifs_readdir(struct file *file, void *dirent, filldir_t filldir)
 
 out:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	kfree(file->private_data);
 	file->private_data = NULL;
 
@@ -496,8 +491,6 @@ out:
 	file->f_pos = 2;
 	return err;
 =======
-=======
->>>>>>> master
 	if (err != -ENOENT) {
 		ubifs_err("cannot find next direntry, error %d", err);
 		return err;
@@ -508,10 +501,7 @@ out:
 	/* 2 is a special value indicating that there are no more direntries */
 	file->f_pos = 2;
 	return 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static loff_t ubifs_dir_llseek(struct file *file, loff_t offset, int whence)

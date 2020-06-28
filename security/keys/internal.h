@@ -127,14 +127,10 @@ extern key_ref_t search_process_keyrings(struct key_type *type,
 					 const struct cred *cred);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 extern struct key *find_keyring_by_name(const char *name, bool uid_keyring);
 =======
 extern struct key *find_keyring_by_name(const char *name, bool skip_perm_check);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-extern struct key *find_keyring_by_name(const char *name, bool skip_perm_check);
->>>>>>> master
 
 extern int install_user_keyrings(void);
 extern int install_thread_keyring_to_cred(struct cred *);

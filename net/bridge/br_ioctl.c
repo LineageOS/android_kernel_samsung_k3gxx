@@ -22,40 +22,29 @@
 #include "br_private.h"
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 /* called with RTNL */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-/* called with RTNL */
->>>>>>> master
 static int get_bridge_ifindices(struct net *net, int *indices, int num)
 {
 	struct net_device *dev;
 	int i = 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	rcu_read_lock();
 	for_each_netdev_rcu(net, dev) {
 =======
 	for_each_netdev(net, dev) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	for_each_netdev(net, dev) {
->>>>>>> master
 		if (i >= num)
 			break;
 		if (dev->priv_flags & IFF_EBRIDGE)
 			indices[i++] = dev->ifindex;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	rcu_read_unlock();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	return i;
 }
@@ -271,18 +260,12 @@ static int old_dev_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 			return -EPERM;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		br_stp_set_bridge_priority(br, args[1]);
 =======
 		spin_lock_bh(&br->lock);
 		br_stp_set_bridge_priority(br, args[1]);
 		spin_unlock_bh(&br->lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		spin_lock_bh(&br->lock);
-		br_stp_set_bridge_priority(br, args[1]);
-		spin_unlock_bh(&br->lock);
->>>>>>> master
 		return 0;
 
 	case BRCTL_SET_PORT_PRIORITY:

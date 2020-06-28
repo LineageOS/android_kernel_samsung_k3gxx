@@ -5198,7 +5198,6 @@ static SIMPLE_DEV_PM_OPS(sky2_pm_ops, sky2_suspend, sky2_resume);
 static void sky2_shutdown(struct pci_dev *pdev)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct sky2_hw *hw = pci_get_drvdata(pdev);
 	int port;
 
@@ -5214,8 +5213,6 @@ static void sky2_shutdown(struct pci_dev *pdev)
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	sky2_suspend(&pdev->dev);
 	pci_wake_from_d3(pdev, device_may_wakeup(&pdev->dev));
 	pci_set_power_state(pdev, PCI_D3hot);

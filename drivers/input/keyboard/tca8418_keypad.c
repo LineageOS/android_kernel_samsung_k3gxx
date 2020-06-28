@@ -275,12 +275,9 @@ static int tca8418_keypad_probe(struct i2c_client *client,
 	int irq;
 	int error, row_shift, max_keys;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned long trigger = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* Copy the platform data */
 	if (pdata) {
@@ -294,12 +291,9 @@ static int tca8418_keypad_probe(struct i2c_client *client,
 		rep  = pdata->rep;
 		irq_is_gpio = pdata->irq_is_gpio;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		trigger = IRQF_TRIGGER_FALLING;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	} else {
 		struct device_node *np = dev->of_node;
 		int err;
@@ -375,18 +369,12 @@ static int tca8418_keypad_probe(struct i2c_client *client,
 
 	error = devm_request_threaded_irq(dev, irq, NULL, tca8418_irq_handler,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					  trigger | IRQF_SHARED | IRQF_ONESHOT,
 =======
 					  IRQF_TRIGGER_FALLING |
 						IRQF_SHARED |
 						IRQF_ONESHOT,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					  IRQF_TRIGGER_FALLING |
-						IRQF_SHARED |
-						IRQF_ONESHOT,
->>>>>>> master
 					  client->name, keypad_data);
 	if (error) {
 		dev_err(dev, "Unable to claim irq %d; error %d\n",

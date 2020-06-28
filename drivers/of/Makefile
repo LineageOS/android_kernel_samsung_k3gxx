@@ -4,12 +4,9 @@ obj-$(CONFIG_OF_PROMTREE) += pdt.o
 obj-$(CONFIG_OF_ADDRESS)  += address.o
 obj-$(CONFIG_OF_IRQ)    += irq.o
 <<<<<<< HEAD
-<<<<<<< HEAD
 obj-y += cmdline_helper.o
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 obj-$(CONFIG_OF_DEVICE) += device.o platform.o
 obj-$(CONFIG_OF_I2C)	+= of_i2c.o
 obj-$(CONFIG_OF_NET)	+= of_net.o

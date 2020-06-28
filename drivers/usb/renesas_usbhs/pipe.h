@@ -37,12 +37,9 @@ struct usbhs_pipe {
 #define USBHS_PIPE_FLAGS_IS_DIR_IN		(1 << 1)
 #define USBHS_PIPE_FLAGS_IS_DIR_HOST		(1 << 2)
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define USBHS_PIPE_FLAGS_IS_RUNNING		(1 << 3)
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	struct usbhs_pkt_handle *handler;
 
@@ -87,14 +84,11 @@ void usbhs_pipe_remove(struct usbhs_priv *priv);
 int usbhs_pipe_is_dir_in(struct usbhs_pipe *pipe);
 int usbhs_pipe_is_dir_host(struct usbhs_pipe *pipe);
 <<<<<<< HEAD
-<<<<<<< HEAD
 int usbhs_pipe_is_running(struct usbhs_pipe *pipe);
 void usbhs_pipe_running(struct usbhs_pipe *pipe, int running);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 void usbhs_pipe_init(struct usbhs_priv *priv,
 		     int (*dma_map_ctrl)(struct usbhs_pkt *pkt, int map));
 int usbhs_pipe_get_maxpacket(struct usbhs_pipe *pipe);

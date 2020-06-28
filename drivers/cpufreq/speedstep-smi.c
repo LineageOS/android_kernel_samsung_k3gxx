@@ -189,12 +189,9 @@ static void speedstep_set_state(unsigned int state)
 
 	/* Disable IRQs */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	preempt_disable();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	local_irq_save(flags);
 
 	command = (smi_sig & 0xffffff00) | (smi_cmd & 0xff);
@@ -205,7 +202,6 @@ static void speedstep_set_state(unsigned int state)
 
 	do {
 		if (retry) {
-<<<<<<< HEAD
 <<<<<<< HEAD
 			/*
 			 * We need to enable interrupts, otherwise the blockage
@@ -225,11 +221,6 @@ static void speedstep_set_state(unsigned int state)
 					retry, result);
 			mdelay(retry * 50);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			pr_debug("retry %u, previous result %u, waiting...\n",
-					retry, result);
-			mdelay(retry * 50);
->>>>>>> master
 		}
 		retry++;
 		__asm__ __volatile__(
@@ -247,12 +238,9 @@ static void speedstep_set_state(unsigned int state)
 	/* enable IRQs */
 	local_irq_restore(flags);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	preempt_enable();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (new_state == state)
 		pr_debug("change to %u MHz succeeded after %u tries "

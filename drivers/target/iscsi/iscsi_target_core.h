@@ -587,7 +587,6 @@ struct iscsi_conn {
 	/* Pointer to thread_set in use for this conn's threads */
 	struct iscsi_thread_set	*thread_set;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int			bitmap_id;
 	int			rx_thread_active;
 	struct task_struct	*rx_thread;
@@ -596,8 +595,6 @@ struct iscsi_conn {
 	struct task_struct	*tx_thread;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* list_head for session connection list */
 	struct list_head	conn_list;
 } ____cacheline_aligned;
@@ -773,12 +770,9 @@ struct iscsi_np {
 	int			np_sock_type;
 	enum np_thread_state_table np_thread_state;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	bool                    enabled;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	enum iscsi_timer_flags_table np_login_timer_flags;
 	u32			np_exports;
 	enum np_flags_table	np_flags;
@@ -881,23 +875,17 @@ struct iscsit_global {
 	u32			auth_id;
 	u32			inactive_ts;
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define ISCSIT_BITMAP_BITS	262144
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* Thread Set bitmap count */
 	int			ts_bitmap_count;
 	/* Thread Set bitmap pointer */
 	unsigned long		*ts_bitmap;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spinlock_t		ts_bitmap_lock;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* Used for iSCSI discovery session authentication */
 	struct iscsi_node_acl	discovery_acl;
 	struct iscsi_portal_group	*discovery_tpg;

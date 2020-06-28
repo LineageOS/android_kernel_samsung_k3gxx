@@ -64,14 +64,10 @@
 #define FLEXCAN_MCR_LPRIO_EN		BIT(13)
 #define FLEXCAN_MCR_AEN			BIT(12)
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define FLEXCAN_MCR_MAXMB(x)		((x) & 0x1f)
 =======
 #define FLEXCAN_MCR_MAXMB(x)		((x) & 0xf)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define FLEXCAN_MCR_MAXMB(x)		((x) & 0xf)
->>>>>>> master
 #define FLEXCAN_MCR_IDAM_A		(0 << 8)
 #define FLEXCAN_MCR_IDAM_B		(1 << 8)
 #define FLEXCAN_MCR_IDAM_C		(2 << 8)
@@ -720,13 +716,9 @@ static int flexcan_chip_start(struct net_device *dev)
 	struct flexcan_priv *priv = netdev_priv(dev);
 	struct flexcan_regs __iomem *regs = priv->base;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	unsigned int i;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned int i;
->>>>>>> master
 	int err;
 	u32 reg_mcr, reg_ctrl;
 
@@ -761,7 +753,6 @@ static int flexcan_chip_start(struct net_device *dev)
 	 */
 	reg_mcr = flexcan_read(&regs->mcr);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	reg_mcr &= ~FLEXCAN_MCR_MAXMB(0xff);
 	reg_mcr |= FLEXCAN_MCR_FRZ | FLEXCAN_MCR_FEN | FLEXCAN_MCR_HALT |
 		FLEXCAN_MCR_SUPV | FLEXCAN_MCR_WRN_EN |
@@ -772,11 +763,6 @@ static int flexcan_chip_start(struct net_device *dev)
 		FLEXCAN_MCR_SUPV | FLEXCAN_MCR_WRN_EN |
 		FLEXCAN_MCR_IDAM_C | FLEXCAN_MCR_SRX_DIS;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	reg_mcr |= FLEXCAN_MCR_FRZ | FLEXCAN_MCR_FEN | FLEXCAN_MCR_HALT |
-		FLEXCAN_MCR_SUPV | FLEXCAN_MCR_WRN_EN |
-		FLEXCAN_MCR_IDAM_C | FLEXCAN_MCR_SRX_DIS;
->>>>>>> master
 	netdev_dbg(dev, "%s: writing mcr=0x%08x", __func__, reg_mcr);
 	flexcan_write(reg_mcr, &regs->mcr);
 
@@ -811,13 +797,10 @@ static int flexcan_chip_start(struct net_device *dev)
 	flexcan_write(reg_ctrl, &regs->ctrl);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Abort any pending TX, mark Mailbox as INACTIVE */
 	flexcan_write(FLEXCAN_MB_CNT_CODE(0x4),
 		      &regs->cantxfg[FLEXCAN_TX_BUF_ID].can_ctrl);
 =======
-=======
->>>>>>> master
 	for (i = 0; i < ARRAY_SIZE(regs->cantxfg); i++) {
 		flexcan_write(0, &regs->cantxfg[i].can_ctrl);
 		flexcan_write(0, &regs->cantxfg[i].can_id);
@@ -828,10 +811,7 @@ static int flexcan_chip_start(struct net_device *dev)
 		flexcan_write(FLEXCAN_MB_CNT_CODE(0x4),
 			&regs->cantxfg[i].can_ctrl);
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* acceptance mask/acceptance code (accept everything) */
 	flexcan_write(0x0, &regs->rxgmask);
@@ -910,14 +890,10 @@ static int flexcan_open(struct net_device *dev)
 	err = flexcan_chip_start(dev);
 	if (err)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto out_free_irq;
 =======
 		goto out_close;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto out_close;
->>>>>>> master
 
 	can_led_event(dev, CAN_LED_EVENT_OPEN);
 
@@ -927,13 +903,10 @@ static int flexcan_open(struct net_device *dev)
 	return 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
  out_free_irq:
 	free_irq(dev->irq, dev);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  out_close:
 	close_candev(dev);
  out:
@@ -1041,7 +1014,6 @@ static void unregister_flexcandev(struct net_device *dev)
 
 static const struct of_device_id flexcan_of_match[] = {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	{ .compatible = "fsl,imx6q-flexcan", .data = &fsl_imx6q_devtype_data, },
 	{ .compatible = "fsl,imx28-flexcan", .data = &fsl_imx28_devtype_data, },
 	{ .compatible = "fsl,p1010-flexcan", .data = &fsl_p1010_devtype_data, },
@@ -1050,11 +1022,6 @@ static const struct of_device_id flexcan_of_match[] = {
 	{ .compatible = "fsl,imx28-flexcan", .data = &fsl_imx28_devtype_data, },
 	{ .compatible = "fsl,imx6q-flexcan", .data = &fsl_imx6q_devtype_data, },
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	{ .compatible = "fsl,p1010-flexcan", .data = &fsl_p1010_devtype_data, },
-	{ .compatible = "fsl,imx28-flexcan", .data = &fsl_imx28_devtype_data, },
-	{ .compatible = "fsl,imx6q-flexcan", .data = &fsl_imx6q_devtype_data, },
->>>>>>> master
 	{ /* sentinel */ },
 };
 MODULE_DEVICE_TABLE(of, flexcan_of_match);

@@ -1196,7 +1196,6 @@ static int mwifiex_pcie_process_recv_data(struct mwifiex_adapter *adapter)
 		skb_data = card->rx_buf_list[rd_index];
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* If skb allocation was failed earlier for Rx packet,
 		 * rx_buf_list[rd_index] would have been left with a NULL.
 		 */
@@ -1205,8 +1204,6 @@ static int mwifiex_pcie_process_recv_data(struct mwifiex_adapter *adapter)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		MWIFIEX_SKB_PACB(skb_data, &buf_pa);
 		pci_unmap_single(card->dev, buf_pa, MWIFIEX_RX_DATA_BUF_SIZE,
 				 PCI_DMA_FROMDEVICE);
@@ -1522,7 +1519,6 @@ static int mwifiex_pcie_process_cmd_complete(struct mwifiex_adapter *adapter)
 			mwifiex_process_sleep_confirm_resp(adapter, skb->data,
 							   skb->len);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			mwifiex_pcie_enable_host_int(adapter);
 			if (mwifiex_write_reg(adapter,
 					      PCIE_CPU_INT_EVENT,
@@ -1533,8 +1529,6 @@ static int mwifiex_pcie_process_cmd_complete(struct mwifiex_adapter *adapter)
 			}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			while (reg->sleep_cookie && (count++ < 10) &&
 			       mwifiex_pcie_ok_to_access_hw(adapter))
 				usleep_range(50, 60);
@@ -2006,13 +2000,10 @@ static void mwifiex_interrupt_status(struct mwifiex_adapter *adapter)
 		spin_unlock_irqrestore(&adapter->int_lock, flags);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!adapter->pps_uapsd_mode &&
 		    adapter->ps_state == PS_STATE_SLEEP &&
 		    mwifiex_pcie_ok_to_access_hw(adapter)) {
 =======
-=======
->>>>>>> master
 		if (pcie_ireg & HOST_INTR_CMD_DONE) {
 			if ((adapter->ps_state == PS_STATE_SLEEP_CFM) ||
 			    (adapter->ps_state == PS_STATE_SLEEP)) {
@@ -2030,10 +2021,7 @@ static void mwifiex_interrupt_status(struct mwifiex_adapter *adapter)
 		} else if (!adapter->pps_uapsd_mode &&
 			   adapter->ps_state == PS_STATE_SLEEP &&
 			   mwifiex_pcie_ok_to_access_hw(adapter)) {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 				/* Potentially for PCIe we could get other
 				 * interrupts like shared. Don't change power
 				 * state until cookie is set */

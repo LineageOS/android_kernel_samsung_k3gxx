@@ -941,17 +941,12 @@ static void extract_buf(struct entropy_store *r, __u8 *out)
 	 */
 	sha_transform(hash.w, extract, workspace);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	memzero_explicit(extract, sizeof(extract));
 	memzero_explicit(workspace, sizeof(workspace));
 =======
 	memset(extract, 0, sizeof(extract));
 	memset(workspace, 0, sizeof(workspace));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	memset(extract, 0, sizeof(extract));
-	memset(workspace, 0, sizeof(workspace));
->>>>>>> master
 
 	/*
 	 * In case the hash function has some recognizable output
@@ -975,14 +970,10 @@ static void extract_buf(struct entropy_store *r, __u8 *out)
 
 	memcpy(out, &hash, EXTRACT_SIZE);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	memzero_explicit(&hash, sizeof(hash));
 =======
 	memset(&hash, 0, sizeof(hash));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	memset(&hash, 0, sizeof(hash));
->>>>>>> master
 }
 
 static ssize_t extract_entropy(struct entropy_store *r, void *buf,
@@ -1031,14 +1022,10 @@ static ssize_t extract_entropy(struct entropy_store *r, void *buf,
 
 	/* Wipe data just returned from memory */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	memzero_explicit(tmp, sizeof(tmp));
 =======
 	memset(tmp, 0, sizeof(tmp));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	memset(tmp, 0, sizeof(tmp));
->>>>>>> master
 
 	return ret;
 }
@@ -1077,14 +1064,10 @@ static ssize_t extract_entropy_user(struct entropy_store *r, void __user *buf,
 
 	/* Wipe data just returned from memory */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	memzero_explicit(tmp, sizeof(tmp));
 =======
 	memset(tmp, 0, sizeof(tmp));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	memset(tmp, 0, sizeof(tmp));
->>>>>>> master
 
 	return ret;
 }
@@ -1504,26 +1487,18 @@ ctl_table random_table[] = {
 static u32 random_int_secret[MD5_MESSAGE_BYTES / 4] ____cacheline_aligned;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 int random_int_secret_init(void)
 =======
 static int __init random_int_secret_init(void)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static int __init random_int_secret_init(void)
->>>>>>> master
 {
 	get_random_bytes(random_int_secret, sizeof(random_int_secret));
 	return 0;
 }
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 late_initcall(random_int_secret_init);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-late_initcall(random_int_secret_init);
->>>>>>> master
 
 /*
  * Get a random word for internal kernel use only. Similar to urandom but

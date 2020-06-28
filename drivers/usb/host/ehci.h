@@ -204,12 +204,9 @@ struct ehci_hcd {			/* one per controller */
 	unsigned		frame_index_bug:1; /* MosChip (AKA NetMos) */
 	unsigned		need_oc_pp_cycle:1; /* MPC834X port power */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned		imx28_write_fix:1; /* For Freescale i.MX28 */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* required for usb32 quirk */
 	#define OHCI_CTRL_HCFS          (3 << 6)
@@ -691,7 +688,6 @@ static inline unsigned int ehci_readl(const struct ehci_hcd *ehci,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #ifdef CONFIG_SOC_IMX28
 static inline void imx28_ehci_writel(const unsigned int val,
 		volatile __u32 __iomem *addr)
@@ -706,8 +702,6 @@ static inline void imx28_ehci_writel(const unsigned int val,
 #endif
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static inline void ehci_writel(const struct ehci_hcd *ehci,
 		const unsigned int val, __u32 __iomem *regs)
 {
@@ -717,7 +711,6 @@ static inline void ehci_writel(const struct ehci_hcd *ehci,
 		writel(val, regs);
 #else
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ehci->imx28_write_fix)
 		imx28_ehci_writel(val, regs);
 	else
@@ -725,9 +718,6 @@ static inline void ehci_writel(const struct ehci_hcd *ehci,
 =======
 	writel(val, regs);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	writel(val, regs);
->>>>>>> master
 #endif
 }
 

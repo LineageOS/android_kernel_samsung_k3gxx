@@ -463,12 +463,9 @@ static void __relink_lru(struct dm_buffer *b, int dirty)
 	b->list_mode = dirty;
 	list_move(&b->lru_list, &c->lru[dirty]);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	b->last_accessed = jiffies;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /*----------------------------------------------------------------
@@ -536,7 +533,6 @@ static void use_dmio(struct dm_buffer *b, int rw, sector_t block,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void inline_endio(struct bio *bio, int error)
 {
 	bio_end_io_t *end_fn = bio->bi_private;
@@ -552,8 +548,6 @@ static void inline_endio(struct bio *bio, int error)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static void use_inline_bio(struct dm_buffer *b, int rw, sector_t block,
 			   bio_end_io_t *end_io)
 {
@@ -566,7 +560,6 @@ static void use_inline_bio(struct dm_buffer *b, int rw, sector_t block,
 	b->bio.bi_sector = block << b->c->sectors_per_block_bits;
 	b->bio.bi_bdev = b->c->bdev;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	b->bio.bi_end_io = inline_endio;
 	/*
 	 * Use of .bi_private isn't a problem here because
@@ -576,9 +569,6 @@ static void use_inline_bio(struct dm_buffer *b, int rw, sector_t block,
 =======
 	b->bio.bi_end_io = end_io;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	b->bio.bi_end_io = end_io;
->>>>>>> master
 
 	/*
 	 * We assume that if len >= PAGE_SIZE ptr is page-aligned.
@@ -1700,7 +1690,6 @@ static int __init dm_bufio_init(void)
 	__u64 mem;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dm_bufio_allocated_kmem_cache = 0;
 	dm_bufio_allocated_get_free_pages = 0;
 	dm_bufio_allocated_vmalloc = 0;
@@ -1708,8 +1697,6 @@ static int __init dm_bufio_init(void)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	memset(&dm_bufio_caches, 0, sizeof dm_bufio_caches);
 	memset(&dm_bufio_cache_names, 0, sizeof dm_bufio_cache_names);
 

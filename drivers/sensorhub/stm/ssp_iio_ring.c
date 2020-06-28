@@ -31,22 +31,16 @@
 
 #include "ssp.h"
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/iio/iio.h> //#include "../staging/iio/iio.h"
 #include <linux/iio/kfifo_buf.h> //#include "../staging/iio/kfifo_buf.h"
 #include <linux/iio/trigger_consumer.h> //#include "../staging/iio/trigger_consumer.h"
 #include <linux/iio/sysfs.h> //#include "../staging/iio/sysfs.h"
 =======
-=======
->>>>>>> master
 #include <linux/iio/iio.h> //#include "../../staging/iio/iio.h"
 #include <linux/iio/kfifo_buf.h> //#include "../../staging/iio/kfifo_buf.h"
 #include <linux/iio/trigger_consumer.h> //#include "../../staging/iio/trigger_consumer.h"
 #include <linux/iio/sysfs.h> //#include "../../staging/iio/sysfs.h"
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 void ssp_iio_unconfigure_ring(struct iio_dev *indio_dev)
 {

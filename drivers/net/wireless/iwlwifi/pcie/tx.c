@@ -721,7 +721,6 @@ void iwl_trans_pcie_tx_reset(struct iwl_trans *trans)
 			   trans_pcie->kw.dma >> 4);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * Send 0 as the scd_base_addr since the device may have be reset
 	 * while we were in WoWLAN in which case SCD_SRAM_BASE_ADDR will
@@ -731,9 +730,6 @@ void iwl_trans_pcie_tx_reset(struct iwl_trans *trans)
 =======
 	iwl_pcie_tx_start(trans, trans_pcie->scd_base_addr);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	iwl_pcie_tx_start(trans, trans_pcie->scd_base_addr);
->>>>>>> master
 }
 
 /*
@@ -1320,7 +1316,6 @@ static int iwl_pcie_enqueue_hcmd(struct iwl_trans *trans,
 	/* start the TFD with the scratchbuf */
 	scratch_size = min_t(int, copy_size, IWL_HCMD_SCRATCHBUF_SIZE);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	memcpy(&txq->scratchbufs[idx], &out_cmd->hdr, scratch_size);
 	iwl_pcie_txq_build_tfd(trans, txq,
 			       iwl_pcie_get_scratchbuf_dma(txq, idx),
@@ -1329,11 +1324,6 @@ static int iwl_pcie_enqueue_hcmd(struct iwl_trans *trans,
 	iwl_pcie_txq_build_tfd(trans, txq,
 			       iwl_pcie_get_scratchbuf_dma(txq, q->write_ptr),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	memcpy(&txq->scratchbufs[q->write_ptr], &out_cmd->hdr, scratch_size);
-	iwl_pcie_txq_build_tfd(trans, txq,
-			       iwl_pcie_get_scratchbuf_dma(txq, q->write_ptr),
->>>>>>> master
 			       scratch_size, 1);
 
 	/* map first command fragment, if any remains */

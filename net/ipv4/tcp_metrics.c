@@ -23,14 +23,11 @@
 int sysctl_tcp_nometrics_save __read_mostly;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static struct tcp_metrics_block *__tcp_get_metrics(const struct inetpeer_addr *addr,
 						   struct net *net, unsigned int hash);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 struct tcp_fastopen_metrics {
 	u16	mss;
 	u16	syn_loss:10;		/* Recurring Fast Open SYN losses */
@@ -140,7 +137,6 @@ static void tcpm_suck_dst(struct tcp_metrics_block *tm, struct dst_entry *dst,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define TCP_METRICS_TIMEOUT		(60 * 60 * HZ)
 
 static void tcpm_check_stamp(struct tcp_metrics_block *tm, struct dst_entry *dst)
@@ -177,8 +173,6 @@ static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
 	}
 
 =======
-=======
->>>>>>> master
 static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
 					  struct inetpeer_addr *addr,
 					  unsigned int hash,
@@ -189,10 +183,7 @@ static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
 
 	spin_lock_bh(&tcp_metrics_lock);
 	net = dev_net(dst->dev);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (unlikely(reclaim)) {
 		struct tcp_metrics_block *oldest;
 
@@ -223,10 +214,7 @@ out_unlock:
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #define TCP_METRICS_TIMEOUT		(60 * 60 * HZ)
 
 static void tcpm_check_stamp(struct tcp_metrics_block *tm, struct dst_entry *dst)
@@ -238,10 +226,7 @@ static void tcpm_check_stamp(struct tcp_metrics_block *tm, struct dst_entry *dst
 #define TCP_METRICS_RECLAIM_DEPTH	5
 #define TCP_METRICS_RECLAIM_PTR		(struct tcp_metrics_block *) 0x1UL
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static struct tcp_metrics_block *tcp_get_encode(struct tcp_metrics_block *tm, int depth)
 {
 	if (tm)
@@ -343,13 +328,9 @@ static struct tcp_metrics_block *tcp_get_metrics(struct sock *sk,
 	unsigned int hash;
 	struct net *net;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	bool reclaim;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	bool reclaim;
->>>>>>> master
 
 	addr.family = sk->sk_family;
 	switch (addr.family) {
@@ -370,14 +351,11 @@ static struct tcp_metrics_block *tcp_get_metrics(struct sock *sk,
 
 	tm = __tcp_get_metrics(&addr, net, hash);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (tm == TCP_METRICS_RECLAIM_PTR)
 		tm = NULL;
 	if (!tm && create)
 		tm = tcpm_new(dst, &addr, hash);
 =======
-=======
->>>>>>> master
 	reclaim = false;
 	if (tm == TCP_METRICS_RECLAIM_PTR) {
 		reclaim = true;
@@ -385,10 +363,7 @@ static struct tcp_metrics_block *tcp_get_metrics(struct sock *sk,
 	}
 	if (!tm && create)
 		tm = tcpm_new(dst, &addr, hash, reclaim);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	else
 		tcpm_check_stamp(tm, dst);
 
@@ -748,7 +723,6 @@ void tcp_fastopen_cache_set(struct sock *sk, u16 mss,
 			    struct tcp_fastopen_cookie *cookie, bool syn_lost)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct dst_entry *dst = __sk_dst_get(sk);
 	struct tcp_metrics_block *tm;
 
@@ -757,16 +731,11 @@ void tcp_fastopen_cache_set(struct sock *sk, u16 mss,
 	rcu_read_lock();
 	tm = tcp_get_metrics(sk, dst, true);
 =======
-=======
->>>>>>> master
 	struct tcp_metrics_block *tm;
 
 	rcu_read_lock();
 	tm = tcp_get_metrics(sk, __sk_dst_get(sk), true);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (tm) {
 		struct tcp_fastopen_metrics *tfom = &tm->tcpm_fastopen;
 

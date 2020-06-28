@@ -187,7 +187,6 @@ u32 arch_timer_get_rate(void)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 u64 arch_timer_read_counter(void)
 {
 	return arch_counter_get_cntvct();
@@ -197,8 +196,6 @@ static cycle_t arch_counter_read(struct clocksource *cs)
 {
 	return arch_counter_get_cntvct();
 =======
-=======
->>>>>>> master
 /*
  * Some external users of arch_timer_read_counter (e.g. sched_clock) may try to
  * call it before it has been initialised. Rather than incur a performance
@@ -215,23 +212,16 @@ u64 (*arch_timer_read_counter)(void) = arch_timer_read_zero;
 static cycle_t arch_counter_read(struct clocksource *cs)
 {
 	return arch_timer_read_counter();
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static cycle_t arch_counter_read_cc(const struct cyclecounter *cc)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return arch_counter_get_cntvct();
 =======
 	return arch_timer_read_counter();
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return arch_timer_read_counter();
->>>>>>> master
 }
 
 static struct clocksource clocksource_counter = {
@@ -313,14 +303,10 @@ static int __init arch_timer_register(void)
 	cyclecounter.shift = clocksource_counter.shift;
 	timecounter_init(&timecounter, &cyclecounter,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			 arch_counter_get_cntvct());
 =======
 			 arch_counter_get_cntpct());
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			 arch_counter_get_cntpct());
->>>>>>> master
 
 	if (arch_timer_use_virtual) {
 		ppi = arch_timer_ppi[VIRT_PPI];
@@ -410,19 +396,13 @@ static void __init arch_timer_init(struct device_node *np)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	if (arch_timer_use_virtual)
 		arch_timer_read_counter = arch_counter_get_cntvct;
 	else
 		arch_timer_read_counter = arch_counter_get_cntpct;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	arch_timer_register();
 	arch_timer_arch_init();
 }

@@ -40,12 +40,9 @@
 #include <linux/mm_types.h>
 #include <linux/cgroup.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/compat.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 #include "internal.h"
 
@@ -173,7 +170,6 @@ int sysctl_perf_event_mlock __read_mostly = 512 + (PAGE_SIZE / 1024); /* 'free' 
  * max perf event sample rate
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define DEFAULT_MAX_SAMPLE_RATE		100000
 #define DEFAULT_SAMPLE_PERIOD_NS	(NSEC_PER_SEC / DEFAULT_MAX_SAMPLE_RATE)
 #define DEFAULT_CPU_TIME_MAX_PERCENT	25
@@ -195,22 +191,16 @@ void update_perf_cpu_limits(void)
 	atomic_set(&perf_sample_allowed_ns, tmp);
 }
 =======
-=======
->>>>>>> master
 #define DEFAULT_MAX_SAMPLE_RATE 100000
 int sysctl_perf_event_sample_rate __read_mostly = DEFAULT_MAX_SAMPLE_RATE;
 static int max_samples_per_tick __read_mostly =
 	DIV_ROUND_UP(DEFAULT_MAX_SAMPLE_RATE, HZ);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 int perf_proc_update_handler(struct ctl_table *table, int write,
 		void __user *buffer, size_t *lenp,
 		loff_t *ppos)
 {
-<<<<<<< HEAD
 <<<<<<< HEAD
 	int ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
 
@@ -232,27 +222,20 @@ int perf_cpu_time_max_percent_handler(struct ctl_table *table, int write,
 {
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	int ret = proc_dointvec(table, write, buffer, lenp, ppos);
 
 	if (ret || !write)
 		return ret;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	update_perf_cpu_limits();
 =======
 	max_samples_per_tick = DIV_ROUND_UP(sysctl_perf_event_sample_rate, HZ);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	max_samples_per_tick = DIV_ROUND_UP(sysctl_perf_event_sample_rate, HZ);
->>>>>>> master
 
 	return 0;
 }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 /*
  * perf samples are done in some very critical code paths (NMIs).
@@ -306,8 +289,6 @@ void perf_sample_event_took(u64 sample_len_ns)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static atomic64_t perf_event_id;
 
 static void cpu_ctx_sched_out(struct perf_cpu_context *cpuctx,
@@ -1369,7 +1350,6 @@ group_sched_out(struct perf_event *group_event,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 struct remove_event {
 	struct perf_event *event;
 	bool detach_group;
@@ -1377,8 +1357,6 @@ struct remove_event {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  * Cross CPU call to remove a performance event
  *
@@ -1388,28 +1366,21 @@ struct remove_event {
 static int __perf_remove_from_context(void *info)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct remove_event *re = info;
 	struct perf_event *event = re->event;
 =======
 	struct perf_event *event = info;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct perf_event *event = info;
->>>>>>> master
 	struct perf_event_context *ctx = event->ctx;
 	struct perf_cpu_context *cpuctx = __get_cpu_context(ctx);
 
 	raw_spin_lock(&ctx->lock);
 	event_sched_out(event, cpuctx, ctx);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (re->detach_group)
 		perf_group_detach(event);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	list_del_event(event, ctx);
 	if (!ctx->nr_events && cpuctx->task_ctx == ctx) {
 		ctx->is_active = 0;
@@ -1435,7 +1406,6 @@ static int __perf_remove_from_context(void *info)
  * context has been detached from its task.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void perf_remove_from_context(struct perf_event *event, bool detach_group)
 {
 	struct perf_event_context *ctx = event->ctx;
@@ -1445,16 +1415,11 @@ static void perf_remove_from_context(struct perf_event *event, bool detach_group
 		.detach_group = detach_group,
 	};
 =======
-=======
->>>>>>> master
 static void perf_remove_from_context(struct perf_event *event)
 {
 	struct perf_event_context *ctx = event->ctx;
 	struct task_struct *task = ctx->task;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	lockdep_assert_held(&ctx->mutex);
 
@@ -1464,27 +1429,19 @@ static void perf_remove_from_context(struct perf_event *event)
 		 * the removal is always successful.
 		 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		cpu_function_call(event->cpu, __perf_remove_from_context, &re);
 =======
 		cpu_function_call(event->cpu, __perf_remove_from_context, event);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		cpu_function_call(event->cpu, __perf_remove_from_context, event);
->>>>>>> master
 		return;
 	}
 
 retry:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!task_function_call(task, __perf_remove_from_context, &re))
 =======
 	if (!task_function_call(task, __perf_remove_from_context, event))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!task_function_call(task, __perf_remove_from_context, event))
->>>>>>> master
 		return;
 
 	raw_spin_lock_irq(&ctx->lock);
@@ -1495,7 +1452,6 @@ retry:
 	if (ctx->is_active) {
 		raw_spin_unlock_irq(&ctx->lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/*
 		 * Reload the task pointer, it might have been changed by
 		 * a concurrent perf_event_context_sched_out().
@@ -1503,8 +1459,6 @@ retry:
 		task = ctx->task;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		goto retry;
 	}
 
@@ -1513,13 +1467,10 @@ retry:
 	 * holding the ctx->lock ensures the task won't get scheduled in.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (detach_group)
 		perf_group_detach(event);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	list_del_event(event, ctx);
 	raw_spin_unlock_irq(&ctx->lock);
 }
@@ -1943,7 +1894,6 @@ retry:
 	if (ctx->is_active) {
 		raw_spin_unlock_irq(&ctx->lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/*
 		 * Reload the task pointer, it might have been changed by
 		 * a concurrent perf_event_context_sched_out().
@@ -1951,8 +1901,6 @@ retry:
 		task = ctx->task;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		goto retry;
 	}
 
@@ -2239,17 +2187,11 @@ static void __perf_event_sync_stat(struct perf_event *event,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 #define list_next_entry(pos, member) \
 	list_entry(pos->member.next, typeof(*pos), member)
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define list_next_entry(pos, member) \
-	list_entry(pos->member.next, typeof(*pos), member)
-
->>>>>>> master
 static void perf_event_sync_stat(struct perf_event_context *ctx,
 				   struct perf_event_context *next_ctx)
 {
@@ -3064,14 +3006,10 @@ find_lively_task_by_vpid(pid_t vpid)
 	/* Reuse ptrace permission checks for now. */
 	err = -EACCES;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!ptrace_may_access(task, PTRACE_MODE_READ_REALCREDS))
 =======
 	if (!ptrace_may_access(task, PTRACE_MODE_READ))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!ptrace_may_access(task, PTRACE_MODE_READ))
->>>>>>> master
 		goto errout;
 
 	return task;
@@ -3258,19 +3196,13 @@ int perf_event_release_kernel(struct perf_event *event)
 	 */
 	mutex_lock_nested(&ctx->mutex, SINGLE_DEPTH_NESTING);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	perf_remove_from_context(event, true);
 =======
-=======
->>>>>>> master
 	raw_spin_lock_irq(&ctx->lock);
 	perf_group_detach(event);
 	raw_spin_unlock_irq(&ctx->lock);
 	perf_remove_from_context(event);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	mutex_unlock(&ctx->mutex);
 
 	free_event(event);
@@ -3638,7 +3570,6 @@ static long perf_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #ifdef CONFIG_COMPAT
 static long perf_compat_ioctl(struct file *file, unsigned int cmd,
 				unsigned long arg)
@@ -3660,8 +3591,6 @@ static long perf_compat_ioctl(struct file *file, unsigned int cmd,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 int perf_event_task_enable(void)
 {
 	struct perf_event *event;
@@ -4134,14 +4063,10 @@ static const struct file_operations perf_fops = {
 	.poll			= perf_poll,
 	.unlocked_ioctl		= perf_ioctl,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.compat_ioctl		= perf_compat_ioctl,
 =======
 	.compat_ioctl		= perf_ioctl,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	.compat_ioctl		= perf_ioctl,
->>>>>>> master
 	.mmap			= perf_mmap,
 	.fasync			= perf_fasync,
 };
@@ -4154,7 +4079,6 @@ static const struct file_operations perf_fops = {
  */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static inline struct fasync_struct **perf_event_fasync(struct perf_event *event)
 {
 	/* only the parent has fasync state */
@@ -4165,22 +4089,16 @@ static inline struct fasync_struct **perf_event_fasync(struct perf_event *event)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 void perf_event_wakeup(struct perf_event *event)
 {
 	ring_buffer_wakeup(event);
 
 	if (event->pending_kill) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		kill_fasync(perf_event_fasync(event), SIGIO, event->pending_kill);
 =======
 		kill_fasync(&event->fasync, SIGIO, event->pending_kill);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		kill_fasync(&event->fasync, SIGIO, event->pending_kill);
->>>>>>> master
 		event->pending_kill = 0;
 	}
 }
@@ -4189,7 +4107,6 @@ static void perf_pending_event(struct irq_work *entry)
 {
 	struct perf_event *event = container_of(entry,
 			struct perf_event, pending);
-<<<<<<< HEAD
 <<<<<<< HEAD
 	int rctx;
 
@@ -4200,8 +4117,6 @@ static void perf_pending_event(struct irq_work *entry)
 	 */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (event->pending_disable) {
 		event->pending_disable = 0;
@@ -4213,14 +4128,11 @@ static void perf_pending_event(struct irq_work *entry)
 		perf_event_wakeup(event);
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	if (rctx >= 0)
 		perf_swevent_put_recursion_context(rctx);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /*
@@ -5348,14 +5260,10 @@ static int __perf_event_overflow(struct perf_event *event,
 		perf_event_output(event, data, regs);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (*perf_event_fasync(event) && event->pending_kill) {
 =======
 	if (event->fasync && event->pending_kill) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (event->fasync && event->pending_kill) {
->>>>>>> master
 		event->pending_wakeup = 1;
 		irq_work_queue(&event->pending);
 	}
@@ -5382,14 +5290,11 @@ struct swevent_htable {
 	/* Recursion avoidance in each contexts */
 	int				recursion[PERF_NR_CONTEXTS];
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	/* Keeps track of cpu being initialized/exited */
 	bool				online;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 static DEFINE_PER_CPU(struct swevent_htable, swevent_htable);
@@ -5637,7 +5542,6 @@ static int perf_swevent_add(struct perf_event *event, int flags)
 
 	head = find_swevent_head(swhash, event);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!head) {
 		/*
 		 * We can race with cpu hotplug code. Do not
@@ -5650,10 +5554,6 @@ static int perf_swevent_add(struct perf_event *event, int flags)
 	if (WARN_ON_ONCE(!head))
 		return -EINVAL;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (WARN_ON_ONCE(!head))
-		return -EINVAL;
->>>>>>> master
 
 	hlist_add_head_rcu(&event->hlist_entry, head);
 
@@ -5850,15 +5750,12 @@ static int perf_tp_filter_match(struct perf_event *event,
 	void *record = data->raw->data;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* only top level events have filters set */
 	if (event->parent)
 		event = event->parent;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (likely(!event->filter) || filter_match_preds(event->filter, record))
 		return 1;
 	return 0;
@@ -6466,13 +6363,9 @@ skip_type:
 		lockdep_set_class(&cpuctx->ctx.mutex, &cpuctx_mutex);
 		lockdep_set_class(&cpuctx->ctx.lock, &cpuctx_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		cpuctx->ctx.type = cpu_context;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		cpuctx->ctx.type = cpu_context;
->>>>>>> master
 		cpuctx->ctx.pmu = pmu;
 		cpuctx->jiffies_interval = 1;
 		INIT_LIST_HEAD(&cpuctx->rotation_list);
@@ -6616,12 +6509,9 @@ perf_event_alloc(struct perf_event_attr *attr, int cpu,
 		group_leader = event;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mutex_init(&event->group_leader_mutex);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	mutex_init(&event->child_mutex);
 	INIT_LIST_HEAD(&event->child_list);
 
@@ -6968,14 +6858,11 @@ SYSCALL_DEFINE5(perf_event_open,
 		if (attr.sample_freq > sysctl_perf_event_sample_rate)
 			return -EINVAL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	} else {
 		if (attr.sample_period & (1ULL << 63))
 			return -EINVAL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	/*
@@ -7003,7 +6890,6 @@ SYSCALL_DEFINE5(perf_event_open,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * Take the group_leader's group_leader_mutex before observing
 	 * anything in the group leader that leads to changes in ctx,
@@ -7016,8 +6902,6 @@ SYSCALL_DEFINE5(perf_event_open,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (pid != -1 && !(flags & PERF_FLAG_PID_CGROUP)) {
 		task = find_lively_task_by_vpid(pid);
 		if (IS_ERR(task)) {
@@ -7109,7 +6993,6 @@ SYSCALL_DEFINE5(perf_event_open,
 		 */
 		if (move_group) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			/*
 			 * Make sure we're both on the same task, or both
 			 * per-cpu events.
@@ -7126,9 +7009,6 @@ SYSCALL_DEFINE5(perf_event_open,
 =======
 			if (group_leader->ctx->type != ctx->type)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			if (group_leader->ctx->type != ctx->type)
->>>>>>> master
 				goto err_context;
 		} else {
 			if (group_leader->ctx != ctx)
@@ -7159,14 +7039,10 @@ SYSCALL_DEFINE5(perf_event_open,
 
 		mutex_lock(&gctx->mutex);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		perf_remove_from_context(group_leader, false);
 =======
 		perf_remove_from_context(group_leader);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		perf_remove_from_context(group_leader);
->>>>>>> master
 
 		/*
 		 * Removing from the context ends up with disabled
@@ -7177,14 +7053,10 @@ SYSCALL_DEFINE5(perf_event_open,
 		list_for_each_entry(sibling, &group_leader->sibling_list,
 				    group_entry) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			perf_remove_from_context(sibling, false);
 =======
 			perf_remove_from_context(sibling);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			perf_remove_from_context(sibling);
->>>>>>> master
 			perf_event__state_init(sibling);
 			put_ctx(gctx);
 		}
@@ -7198,24 +7070,18 @@ SYSCALL_DEFINE5(perf_event_open,
 	if (move_group) {
 		synchronize_rcu();
 <<<<<<< HEAD
-<<<<<<< HEAD
 		perf_install_in_context(ctx, group_leader, group_leader->cpu);
 		get_ctx(ctx);
 		list_for_each_entry(sibling, &group_leader->sibling_list,
 				    group_entry) {
 			perf_install_in_context(ctx, sibling, sibling->cpu);
 =======
-=======
->>>>>>> master
 		perf_install_in_context(ctx, group_leader, event->cpu);
 		get_ctx(ctx);
 		list_for_each_entry(sibling, &group_leader->sibling_list,
 				    group_entry) {
 			perf_install_in_context(ctx, sibling, event->cpu);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			get_ctx(ctx);
 		}
 	}
@@ -7225,13 +7091,10 @@ SYSCALL_DEFINE5(perf_event_open,
 	perf_unpin_context(ctx);
 	mutex_unlock(&ctx->mutex);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (group_leader)
 		mutex_unlock(&group_leader->group_leader_mutex);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	put_online_cpus();
 
@@ -7268,13 +7131,10 @@ err_task:
 		put_task_struct(task);
 err_group_fd:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (group_leader)
 		mutex_unlock(&group_leader->group_leader_mutex);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	fdput(group);
 err_fd:
 	put_unused_fd(event_fd);
@@ -7345,14 +7205,10 @@ void perf_pmu_migrate_context(struct pmu *pmu, int src_cpu, int dst_cpu)
 	list_for_each_entry_safe(event, tmp, &src_ctx->event_list,
 				 event_entry) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		perf_remove_from_context(event, false);
 =======
 		perf_remove_from_context(event);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		perf_remove_from_context(event);
->>>>>>> master
 		put_ctx(src_ctx);
 		list_add(&event->event_entry, &events);
 	}
@@ -7413,11 +7269,8 @@ __perf_event_exit_task(struct perf_event *child_event,
 			 struct task_struct *child)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	perf_remove_from_context(child_event, !!child_event->parent);
 =======
-=======
->>>>>>> master
 	if (child_event->parent) {
 		raw_spin_lock_irq(&child_ctx->lock);
 		perf_group_detach(child_event);
@@ -7425,10 +7278,7 @@ __perf_event_exit_task(struct perf_event *child_event,
 	}
 
 	perf_remove_from_context(child_event);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/*
 	 * It can happen that the parent exits first, and has events
@@ -7802,14 +7652,10 @@ int perf_event_init_context(struct task_struct *child, int ctxn)
 					 child, ctxn, &inherited_all);
 		if (ret)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			goto out_unlock;
 =======
 			break;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			break;
->>>>>>> master
 	}
 
 	/*
@@ -7826,14 +7672,10 @@ int perf_event_init_context(struct task_struct *child, int ctxn)
 					 child, ctxn, &inherited_all);
 		if (ret)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			goto out_unlock;
 =======
 			break;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			break;
->>>>>>> master
 	}
 
 	raw_spin_lock_irqsave(&parent_ctx->lock, flags);
@@ -7862,12 +7704,9 @@ int perf_event_init_context(struct task_struct *child, int ctxn)
 
 	raw_spin_unlock_irqrestore(&parent_ctx->lock, flags);
 <<<<<<< HEAD
-<<<<<<< HEAD
 out_unlock:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	mutex_unlock(&parent_ctx->mutex);
 
 	perf_unpin_context(parent_ctx);
@@ -7890,7 +7729,6 @@ int perf_event_init_task(struct task_struct *child)
 	for_each_task_context_nr(ctxn) {
 		ret = perf_event_init_context(child, ctxn);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (ret) {
 			perf_event_free_task(child);
 			return ret;
@@ -7899,10 +7737,6 @@ int perf_event_init_task(struct task_struct *child)
 		if (ret)
 			return ret;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (ret)
-			return ret;
->>>>>>> master
 	}
 
 	return 0;
@@ -7926,12 +7760,9 @@ static void __cpuinit perf_event_init_cpu(int cpu)
 
 	mutex_lock(&swhash->hlist_mutex);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	swhash->online = true;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (swhash->hlist_refcount > 0) {
 		struct swevent_hlist *hlist;
 
@@ -7955,7 +7786,6 @@ static void perf_pmu_rotate_stop(struct pmu *pmu)
 static void __perf_event_exit_context(void *__info)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct remove_event re = { .detach_group = false };
 	struct perf_event_context *ctx = __info;
 
@@ -7966,8 +7796,6 @@ static void __perf_event_exit_context(void *__info)
 		__perf_remove_from_context(&re);
 	rcu_read_unlock();
 =======
-=======
->>>>>>> master
 	struct perf_event_context *ctx = __info;
 	struct perf_event *event, *tmp;
 
@@ -7977,10 +7805,7 @@ static void __perf_event_exit_context(void *__info)
 		__perf_remove_from_context(event);
 	list_for_each_entry_safe(event, tmp, &ctx->flexible_groups, group_entry)
 		__perf_remove_from_context(event);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static void perf_event_exit_cpu_context(int cpu)
@@ -8005,7 +7830,6 @@ static void perf_event_exit_cpu(int cpu)
 	struct swevent_htable *swhash = &per_cpu(swevent_htable, cpu);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	perf_event_exit_cpu_context(cpu);
 
 	mutex_lock(&swhash->hlist_mutex);
@@ -8013,17 +7837,12 @@ static void perf_event_exit_cpu(int cpu)
 	swevent_hlist_release(swhash);
 	mutex_unlock(&swhash->hlist_mutex);
 =======
-=======
->>>>>>> master
 	mutex_lock(&swhash->hlist_mutex);
 	swevent_hlist_release(swhash);
 	mutex_unlock(&swhash->hlist_mutex);
 
 	perf_event_exit_cpu_context(cpu);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 #else
 static inline void perf_event_exit_cpu(int cpu) { }

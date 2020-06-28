@@ -499,7 +499,6 @@ static int ttm_bo_handle_move_mem(struct ttm_buffer_object *bo,
 moved:
 	if (bo->evicted) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (bdev->driver->invalidate_caches) {
 			ret = bdev->driver->invalidate_caches(bdev, bo->mem.placement);
 			if (ret)
@@ -510,11 +509,6 @@ moved:
 		if (ret)
 			pr_err("Can not flush read caches\n");
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		ret = bdev->driver->invalidate_caches(bdev, bo->mem.placement);
-		if (ret)
-			pr_err("Can not flush read caches\n");
->>>>>>> master
 		bo->evicted = false;
 	}
 
@@ -1168,7 +1162,6 @@ out_unlock:
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static bool ttm_bo_mem_compat(struct ttm_placement *placement,
 			      struct ttm_mem_reg *mem,
 			      uint32_t *new_flags)
@@ -1176,17 +1169,12 @@ static bool ttm_bo_mem_compat(struct ttm_placement *placement,
 static int ttm_bo_mem_compat(struct ttm_placement *placement,
 			     struct ttm_mem_reg *mem)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static int ttm_bo_mem_compat(struct ttm_placement *placement,
-			     struct ttm_mem_reg *mem)
->>>>>>> master
 {
 	int i;
 
 	if (mem->mm_node && placement->lpfn != 0 &&
 	    (mem->start < placement->fpfn ||
 	     mem->start + mem->num_pages > placement->lpfn))
-<<<<<<< HEAD
 <<<<<<< HEAD
 		return false;
 
@@ -1206,8 +1194,6 @@ static int ttm_bo_mem_compat(struct ttm_placement *placement,
 
 	return false;
 =======
-=======
->>>>>>> master
 		return -1;
 
 	for (i = 0; i < placement->num_placement; i++) {
@@ -1218,10 +1204,7 @@ static int ttm_bo_mem_compat(struct ttm_placement *placement,
 			return i;
 	}
 	return -1;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 int ttm_bo_validate(struct ttm_buffer_object *bo,
@@ -1231,12 +1214,9 @@ int ttm_bo_validate(struct ttm_buffer_object *bo,
 {
 	int ret;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	uint32_t new_flags;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	BUG_ON(!ttm_bo_is_reserved(bo));
 	/* Check that range is valid */
@@ -1248,16 +1228,11 @@ int ttm_bo_validate(struct ttm_buffer_object *bo,
 	 * Check whether we need to move buffer.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!ttm_bo_mem_compat(placement, &bo->mem, &new_flags)) {
 =======
 	ret = ttm_bo_mem_compat(placement, &bo->mem);
 	if (ret < 0) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret = ttm_bo_mem_compat(placement, &bo->mem);
-	if (ret < 0) {
->>>>>>> master
 		ret = ttm_bo_move_buffer(bo, placement, interruptible,
 					 no_wait_gpu);
 		if (ret)
@@ -1268,14 +1243,10 @@ int ttm_bo_validate(struct ttm_buffer_object *bo,
 		 * the compatible memory placement flags to the active flags
 		 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ttm_flag_masked(&bo->mem.placement, new_flags,
 =======
 		ttm_flag_masked(&bo->mem.placement, placement->placement[ret],
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		ttm_flag_masked(&bo->mem.placement, placement->placement[ret],
->>>>>>> master
 				~TTM_PL_MASK_MEMTYPE);
 	}
 	/*
@@ -1932,13 +1903,9 @@ static int ttm_bo_swapout(struct ttm_mem_shrink *shrink)
 	int ret = -EBUSY;
 	int put_count;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	uint32_t swap_placement = (TTM_PL_FLAG_CACHED | TTM_PL_FLAG_SYSTEM);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	uint32_t swap_placement = (TTM_PL_FLAG_CACHED | TTM_PL_FLAG_SYSTEM);
->>>>>>> master
 
 	spin_lock(&glob->lru_lock);
 	list_for_each_entry(bo, &glob->swap_lru, swap) {
@@ -1977,15 +1944,11 @@ static int ttm_bo_swapout(struct ttm_mem_shrink *shrink)
 		goto out;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (bo->mem.mem_type != TTM_PL_SYSTEM ||
 	    bo->ttm->caching_state != tt_cached) {
 =======
 	if ((bo->mem.placement & swap_placement) != swap_placement) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if ((bo->mem.placement & swap_placement) != swap_placement) {
->>>>>>> master
 		struct ttm_mem_reg evict_mem;
 
 		evict_mem = bo->mem;

@@ -72,14 +72,10 @@
 			#crtc-cells = <1>;
 			compatible = "fsl,imx53-ipu";
 <<<<<<< HEAD
-<<<<<<< HEAD
 			reg = <0x18000000 0x08000000>;
 =======
 			reg = <0x18000000 0x080000000>;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			reg = <0x18000000 0x080000000>;
->>>>>>> master
 			interrupts = <11 10>;
 			clocks = <&clks 59>, <&clks 110>, <&clks 61>;
 			clock-names = "bus", "di0", "di1";

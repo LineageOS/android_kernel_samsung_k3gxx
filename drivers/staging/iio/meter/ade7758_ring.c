@@ -90,23 +90,17 @@ static irqreturn_t ade7758_trigger_handler(int irq, void *p)
 static int ade7758_ring_preenable(struct iio_dev *indio_dev)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned channel;
 	int ret;
 
 	if (bitmap_empty(indio_dev->active_scan_mask, indio_dev->masklength))
 =======
-=======
->>>>>>> master
 	struct ade7758_state *st = iio_priv(indio_dev);
 	unsigned channel;
 	int ret;
 
 	if (!bitmap_empty(indio_dev->active_scan_mask, indio_dev->masklength))
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		return -EINVAL;
 
 	ret = iio_sw_buffer_preenable(indio_dev);
@@ -118,14 +112,10 @@ static int ade7758_ring_preenable(struct iio_dev *indio_dev)
 
 	ade7758_write_waveform_type(&indio_dev->dev,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		indio_dev->channels[channel].address);
 =======
 		st->ade7758_ring_channels[channel].address);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		st->ade7758_ring_channels[channel].address);
->>>>>>> master
 
 	return 0;
 }

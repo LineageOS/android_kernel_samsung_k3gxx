@@ -780,7 +780,6 @@ find_root:
 		return ERR_PTR(-ENOENT);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!(sb->s_flags & MS_RDONLY)) {
 		int ret;
 		down_read(&fs_info->cleanup_work_sem);
@@ -792,8 +791,6 @@ find_root:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	dir_id = btrfs_root_dirid(&new_root->root_item);
 setup_root:
 	location.objectid = dir_id;

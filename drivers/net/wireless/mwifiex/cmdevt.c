@@ -1155,14 +1155,10 @@ int mwifiex_ret_802_11_hs_cfg(struct mwifiex_private *priv,
 
 	if (phs_cfg->action == cpu_to_le16(HS_ACTIVATE) &&
 <<<<<<< HEAD
-<<<<<<< HEAD
 	    adapter->iface_type != MWIFIEX_USB) {
 =======
 	    adapter->iface_type == MWIFIEX_SDIO) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	    adapter->iface_type == MWIFIEX_SDIO) {
->>>>>>> master
 		mwifiex_hs_activated_event(priv, true);
 		return 0;
 	} else {
@@ -1175,16 +1171,11 @@ int mwifiex_ret_802_11_hs_cfg(struct mwifiex_private *priv,
 	if (conditions != HS_CFG_CANCEL) {
 		adapter->is_hs_configured = true;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (adapter->iface_type == MWIFIEX_USB)
 =======
 		if (adapter->iface_type == MWIFIEX_USB ||
 		    adapter->iface_type == MWIFIEX_PCIE)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (adapter->iface_type == MWIFIEX_USB ||
-		    adapter->iface_type == MWIFIEX_PCIE)
->>>>>>> master
 			mwifiex_hs_activated_event(priv, true);
 	} else {
 		adapter->is_hs_configured = false;

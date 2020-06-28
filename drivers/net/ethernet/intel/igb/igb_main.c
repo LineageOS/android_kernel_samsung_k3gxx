@@ -1585,13 +1585,10 @@ void igb_power_up_link(struct igb_adapter *adapter)
 	else
 		igb_power_up_serdes_link_82575(&adapter->hw);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	igb_setup_link(&adapter->hw);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /**
@@ -7238,13 +7235,10 @@ static int igb_sriov_reinit(struct pci_dev *dev)
 	if (netif_running(netdev))
 		igb_close(netdev);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	else
 		igb_reset(adapter);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	igb_clear_interrupt_scheme(adapter);
 

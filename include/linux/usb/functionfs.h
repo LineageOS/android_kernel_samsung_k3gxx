@@ -4,13 +4,9 @@
 #include <uapi/linux/usb/functionfs.h>
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 struct ffs_data;
 struct usb_composite_dev;
 struct usb_configuration;

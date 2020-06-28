@@ -496,14 +496,10 @@ static void iommu_disable_irq_remapping(struct intel_iommu *iommu)
 	raw_spin_lock_irqsave(&iommu->register_lock, flags);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	sts = readl(iommu->reg + DMAR_GSTS_REG);
 =======
 	sts = dmar_readq(iommu->reg + DMAR_GSTS_REG);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	sts = dmar_readq(iommu->reg + DMAR_GSTS_REG);
->>>>>>> master
 	if (!(sts & DMA_GSTS_IRES))
 		goto end;
 
@@ -534,7 +530,6 @@ static int __init intel_irq_remapping_supported(void)
 		return 0;
 	if (irq_remap_broken) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		printk(KERN_WARNING
 			"This system BIOS has enabled interrupt remapping\n"
 			"on a chipset that contains an erratum making that\n"
@@ -543,18 +538,13 @@ static int __init intel_irq_remapping_supported(void)
 			"contact your BIOS vendor for an update\n");
 		add_taint(TAINT_FIRMWARE_WORKAROUND, LOCKDEP_STILL_OK);
 =======
-=======
->>>>>>> master
 		WARN_TAINT(1, TAINT_FIRMWARE_WORKAROUND,
 			   "This system BIOS has enabled interrupt remapping\n"
 			   "on a chipset that contains an erratum making that\n"
 			   "feature unstable.  To maintain system stability\n"
 			   "interrupt remapping is being disabled.  Please\n"
 			   "contact your BIOS vendor for an update\n");
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		disable_irq_remap = 1;
 		return 0;
 	}

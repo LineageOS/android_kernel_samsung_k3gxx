@@ -130,12 +130,9 @@ struct elantech_data {
 	bool jumpy_cursor;
 	bool reports_pressure;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	bool set_hw_resolution;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	unsigned char hw_version;
 	unsigned int fw_version;
 	unsigned int single_finger_reports;
@@ -145,12 +142,9 @@ struct elantech_data {
 	unsigned char parity[256];
 	int (*send_cmd)(struct psmouse *psmouse, unsigned char c, unsigned char *param);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	void (*original_set_rate)(struct psmouse *psmouse, unsigned int rate);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 #ifdef CONFIG_MOUSE_PS2_ELANTECH

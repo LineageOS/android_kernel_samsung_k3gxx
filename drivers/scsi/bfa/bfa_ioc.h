@@ -73,14 +73,10 @@ struct bfa_sge_s {
 
 #define bfa_swap_words(_x)  (	\
 <<<<<<< HEAD
-<<<<<<< HEAD
 	((u64)(_x) << 32) | ((u64)(_x) >> 32))
 =======
 	((_x) << 32) | ((_x) >> 32))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	((_x) << 32) | ((_x) >> 32))
->>>>>>> master
 
 #ifdef __BIG_ENDIAN
 #define bfa_sge_to_be(_x)

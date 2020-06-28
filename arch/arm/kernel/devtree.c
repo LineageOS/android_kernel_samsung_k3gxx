@@ -91,13 +91,10 @@ void __init arm_dt_init_cpu_maps(void)
 
 	for_each_child_of_node(cpus, cpu) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		const __be32 *cell;
 		int prop_bytes;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		u32 hwid;
 
 		if (of_node_cmp(cpu->type, "cpu"))
@@ -110,22 +107,17 @@ void __init arm_dt_init_cpu_maps(void)
 		 * cpu_logical_map.
 		 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		cell = of_get_property(cpu, "reg", &prop_bytes);
 		if (!cell || prop_bytes < sizeof(*cell)) {
 =======
 		if (of_property_read_u32(cpu, "reg", &hwid)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (of_property_read_u32(cpu, "reg", &hwid)) {
->>>>>>> master
 			pr_debug(" * %s missing reg property\n",
 				     cpu->full_name);
 			return;
 		}
 
 		/*
-<<<<<<< HEAD
 <<<<<<< HEAD
 		 * Bits n:24 must be set to 0 in the DT since the reg property
 		 * defines the MPIDR[23:0].
@@ -137,16 +129,11 @@ void __init arm_dt_init_cpu_maps(void)
 
 		if (prop_bytes || (hwid & ~MPIDR_HWID_BITMASK))
 =======
-=======
->>>>>>> master
 		 * 8 MSBs must be set to 0 in the DT since the reg property
 		 * defines the MPIDR[23:0].
 		 */
 		if (hwid & ~MPIDR_HWID_BITMASK)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			return;
 
 		/*

@@ -132,14 +132,10 @@ void ftrace_likely_update(struct ftrace_branch_data *f, int val, int expect);
 #define if(cond, ...) __trace_if( (cond , ## __VA_ARGS__) )
 #define __trace_if(cond) \
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (__builtin_constant_p(!!(cond)) ? !!(cond) :			\
 =======
 	if (__builtin_constant_p((cond)) ? !!(cond) :			\
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (__builtin_constant_p((cond)) ? !!(cond) :			\
->>>>>>> master
 	({								\
 		int ______r;						\
 		static struct ftrace_branch_data			\
@@ -368,13 +364,10 @@ void ftrace_likely_update(struct ftrace_branch_data *f, int val, int expect);
  */
 #define ACCESS_ONCE(x) (*(volatile typeof(x) *)&(x))
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define READ_ONCE(x) ACCESS_ONCE(x)
 #define WRITE_ONCE(x, val) ACCESS_ONCE(x) = val
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /* Ignore/forbid kprobes attach on very low level functions marked by this attribute: */
 #ifdef CONFIG_KPROBES

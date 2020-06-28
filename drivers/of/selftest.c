@@ -127,7 +127,6 @@ static void __init of_selftest_parse_phandle_with_args(void)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void __init of_selftest_property_string(void)
 {
 	const char *strings[4];
@@ -135,10 +134,6 @@ static void __init of_selftest_property_string(void)
 static void __init of_selftest_property_match_string(void)
 {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static void __init of_selftest_property_match_string(void)
-{
->>>>>>> master
 	struct device_node *np;
 	int rc;
 
@@ -156,7 +151,6 @@ static void __init of_selftest_property_match_string(void)
 	rc = of_property_match_string(np, "phandle-list-names", "third");
 	selftest(rc == 2, "third expected:0 got:%i\n", rc);
 	rc = of_property_match_string(np, "phandle-list-names", "fourth");
-<<<<<<< HEAD
 <<<<<<< HEAD
 	selftest(rc == -ENODATA, "unmatched string; rc=%i\n", rc);
 	rc = of_property_match_string(np, "missing-property", "blah");
@@ -219,8 +213,6 @@ static void __init of_selftest_property_match_string(void)
 	rc = of_property_read_string_array(np, "phandle-list-names", strings, 1);
 	selftest(rc == 1 && strings[1] == NULL, "Overwrote end of string array; rc=%i, str='%s'\n", rc, strings[1]);
 =======
-=======
->>>>>>> master
 	selftest(rc == -ENODATA, "unmatched string; rc=%i", rc);
 	rc = of_property_match_string(np, "missing-property", "blah");
 	selftest(rc == -EINVAL, "missing property; rc=%i", rc);
@@ -228,10 +220,7 @@ static void __init of_selftest_property_match_string(void)
 	selftest(rc == -ENODATA, "empty property; rc=%i", rc);
 	rc = of_property_match_string(np, "unterminated-string", "blah");
 	selftest(rc == -EILSEQ, "unterminated string; rc=%i", rc);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static int __init of_selftest(void)
@@ -248,14 +237,10 @@ static int __init of_selftest(void)
 	pr_info("start of selftest - you will see error messages\n");
 	of_selftest_parse_phandle_with_args();
 <<<<<<< HEAD
-<<<<<<< HEAD
 	of_selftest_property_string();
 =======
 	of_selftest_property_match_string();
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	of_selftest_property_match_string();
->>>>>>> master
 	pr_info("end of selftest - %s\n", selftest_passed ? "PASS" : "FAIL");
 	return 0;
 }

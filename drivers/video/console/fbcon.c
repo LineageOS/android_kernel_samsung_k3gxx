@@ -405,14 +405,10 @@ static void cursor_timer_handler(unsigned long dev_addr)
 	struct fbcon_ops *ops = info->fbcon_par;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	queue_work(system_power_efficient_wq, &info->queue);
 =======
 	schedule_work(&info->queue);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	schedule_work(&info->queue);
->>>>>>> master
 	mod_timer(&ops->cursor_timer, jiffies + HZ/5);
 }
 
@@ -1205,13 +1201,10 @@ static void fbcon_free_font(struct display *p, bool freefont)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void set_vc_hi_font(struct vc_data *vc, bool set);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static void fbcon_deinit(struct vc_data *vc)
 {
 	struct display *p = &fb_display[vc->vc_num];
@@ -1248,14 +1241,11 @@ finished:
 		vc->vc_font.data = NULL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (vc->vc_hi_font_mask)
 		set_vc_hi_font(vc, false);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (!con_is_bound(&fb_con))
 		fbcon_exit();
 
@@ -2492,14 +2482,11 @@ static int fbcon_get_font(struct vc_data *vc, struct console_font *font)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* set/clear vc_hi_font_mask and update vc attrs accordingly */
 static void set_vc_hi_font(struct vc_data *vc, bool set)
 {
 	if (!set) {
 =======
-=======
->>>>>>> master
 static int fbcon_do_set_font(struct vc_data *vc, int w, int h,
 			     const u8 * data, int userfont)
 {
@@ -2526,10 +2513,7 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h,
 	vc->vc_font.width = w;
 	vc->vc_font.height = h;
 	if (vc->vc_hi_font_mask && cnt == 256) {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		vc->vc_hi_font_mask = 0;
 		if (vc->vc_can_do_color) {
 			vc->vc_complement_mask >>= 1;
@@ -2553,14 +2537,10 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h,
 			vc->vc_attr >>= 1;
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	} else {
 =======
 	} else if (!vc->vc_hi_font_mask && cnt == 512) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	} else if (!vc->vc_hi_font_mask && cnt == 512) {
->>>>>>> master
 		vc->vc_hi_font_mask = 0x100;
 		if (vc->vc_can_do_color) {
 			vc->vc_complement_mask <<= 1;
@@ -2592,7 +2572,6 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h,
 			} else
 				vc->vc_video_erase_char = c & ~0x100;
 		}
-<<<<<<< HEAD
 <<<<<<< HEAD
 	}
 }
@@ -2630,10 +2609,6 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h,
 
 	}
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-	}
->>>>>>> master
 
 	if (resize) {
 		int cols, rows;

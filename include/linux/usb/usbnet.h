@@ -31,14 +31,10 @@ struct usbnet {
 	const char		*driver_name;
 	void			*driver_priv;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	wait_queue_head_t	wait;
 =======
 	wait_queue_head_t	*wait;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	wait_queue_head_t	*wait;
->>>>>>> master
 	struct mutex		phy_mutex;
 	unsigned char		suspend_count;
 	unsigned char		pkt_cnt, pkt_err;

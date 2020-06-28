@@ -196,19 +196,13 @@ static unsigned char tw_sense_table[][4] =
 #define TW_AEN_SBUF_FAIL         0x0024
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 /* Phase defines */
 #define TW_PHASE_INITIAL 0
 #define TW_PHASE_SINGLE 1
 #define TW_PHASE_SGLIST 2
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /* Misc defines */
 #define TW_ALIGNMENT_6000		      64 /* 64 bytes */
 #define TW_ALIGNMENT_7000                     4  /* 4 bytes */

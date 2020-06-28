@@ -148,14 +148,10 @@ static int nfnetlink_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
 	int type, err;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!netlink_net_capable(skb, CAP_NET_ADMIN))
 =======
 	if (!ns_capable(net->user_ns, CAP_NET_ADMIN))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!ns_capable(net->user_ns, CAP_NET_ADMIN))
->>>>>>> master
 		return -EPERM;
 
 	/* All the messages must at least contain nfgenmsg */

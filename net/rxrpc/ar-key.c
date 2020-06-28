@@ -214,14 +214,10 @@ static int rxrpc_krb5_decode_principal(struct krb5_principal *princ,
 {
 	const __be32 *xdr = *_xdr;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned int toklen = *_toklen, n_parts, loop, tmp, paddedlen;
 =======
 	unsigned int toklen = *_toklen, n_parts, loop, tmp;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned int toklen = *_toklen, n_parts, loop, tmp;
->>>>>>> master
 
 	/* there must be at least one name, and at least #names+1 length
 	 * words */
@@ -252,22 +248,17 @@ static int rxrpc_krb5_decode_principal(struct krb5_principal *princ,
 		if (tmp <= 0 || tmp > AFSTOKEN_STRING_MAX)
 			return -EINVAL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		paddedlen = (tmp + 3) & ~3;
 		if (paddedlen > toklen)
 =======
 		if (tmp > toklen)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (tmp > toklen)
->>>>>>> master
 			return -EINVAL;
 		princ->name_parts[loop] = kmalloc(tmp + 1, GFP_KERNEL);
 		if (!princ->name_parts[loop])
 			return -ENOMEM;
 		memcpy(princ->name_parts[loop], xdr, tmp);
 		princ->name_parts[loop][tmp] = 0;
-<<<<<<< HEAD
 <<<<<<< HEAD
 		toklen -= paddedlen;
 		xdr += paddedlen >> 2;
@@ -276,11 +267,6 @@ static int rxrpc_krb5_decode_principal(struct krb5_principal *princ,
 		toklen -= tmp;
 		xdr += tmp >> 2;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		tmp = (tmp + 3) & ~3;
-		toklen -= tmp;
-		xdr += tmp >> 2;
->>>>>>> master
 	}
 
 	if (toklen < 4)
@@ -290,22 +276,17 @@ static int rxrpc_krb5_decode_principal(struct krb5_principal *princ,
 	if (tmp <= 0 || tmp > AFSTOKEN_K5_REALM_MAX)
 		return -EINVAL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	paddedlen = (tmp + 3) & ~3;
 	if (paddedlen > toklen)
 =======
 	if (tmp > toklen)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (tmp > toklen)
->>>>>>> master
 		return -EINVAL;
 	princ->realm = kmalloc(tmp + 1, GFP_KERNEL);
 	if (!princ->realm)
 		return -ENOMEM;
 	memcpy(princ->realm, xdr, tmp);
 	princ->realm[tmp] = 0;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	toklen -= paddedlen;
 	xdr += paddedlen >> 2;
@@ -314,11 +295,6 @@ static int rxrpc_krb5_decode_principal(struct krb5_principal *princ,
 	toklen -= tmp;
 	xdr += tmp >> 2;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	tmp = (tmp + 3) & ~3;
-	toklen -= tmp;
-	xdr += tmp >> 2;
->>>>>>> master
 
 	_debug("%s/...@%s", princ->name_parts[0], princ->realm);
 
@@ -338,14 +314,10 @@ static int rxrpc_krb5_decode_tagged_data(struct krb5_tagged_data *td,
 {
 	const __be32 *xdr = *_xdr;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned int toklen = *_toklen, len, paddedlen;
 =======
 	unsigned int toklen = *_toklen, len;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned int toklen = *_toklen, len;
->>>>>>> master
 
 	/* there must be at least one tag and one length word */
 	if (toklen <= 8)
@@ -360,21 +332,17 @@ static int rxrpc_krb5_decode_tagged_data(struct krb5_tagged_data *td,
 	if (len > max_data_size)
 		return -EINVAL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	paddedlen = (len + 3) & ~3;
 	if (paddedlen > toklen)
 		return -EINVAL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	td->data_len = len;
 
 	if (len > 0) {
 		td->data = kmemdup(xdr, len, GFP_KERNEL);
 		if (!td->data)
 			return -ENOMEM;
-<<<<<<< HEAD
 <<<<<<< HEAD
 		toklen -= paddedlen;
 		xdr += paddedlen >> 2;
@@ -383,11 +351,6 @@ static int rxrpc_krb5_decode_tagged_data(struct krb5_tagged_data *td,
 		toklen -= len;
 		xdr += len >> 2;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		len = (len + 3) & ~3;
-		toklen -= len;
-		xdr += len >> 2;
->>>>>>> master
 	}
 
 	_debug("tag %x len %x", td->tag, td->data_len);
@@ -460,14 +423,10 @@ static int rxrpc_krb5_decode_ticket(u8 **_ticket, u16 *_tktlen,
 {
 	const __be32 *xdr = *_xdr;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned int toklen = *_toklen, len, paddedlen;
 =======
 	unsigned int toklen = *_toklen, len;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned int toklen = *_toklen, len;
->>>>>>> master
 
 	/* there must be at least one length word */
 	if (toklen <= 4)
@@ -480,14 +439,11 @@ static int rxrpc_krb5_decode_ticket(u8 **_ticket, u16 *_tktlen,
 	if (len > AFSTOKEN_K5_TIX_MAX)
 		return -EINVAL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	paddedlen = (len + 3) & ~3;
 	if (paddedlen > toklen)
 		return -EINVAL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	*_tktlen = len;
 
 	_debug("ticket len %u", len);
@@ -497,7 +453,6 @@ static int rxrpc_krb5_decode_ticket(u8 **_ticket, u16 *_tktlen,
 		if (!*_ticket)
 			return -ENOMEM;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		toklen -= paddedlen;
 		xdr += paddedlen >> 2;
 =======
@@ -505,11 +460,6 @@ static int rxrpc_krb5_decode_ticket(u8 **_ticket, u16 *_tktlen,
 		toklen -= len;
 		xdr += len >> 2;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		len = (len + 3) & ~3;
-		toklen -= len;
-		xdr += len >> 2;
->>>>>>> master
 	}
 
 	*_xdr = xdr;
@@ -654,14 +604,10 @@ static int rxrpc_instantiate_xdr(struct key *key, const void *data, size_t datal
 	const __be32 *xdr = data, *token;
 	const char *cp;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned int len, paddedlen, loop, ntoken, toklen, sec_ix;
 =======
 	unsigned int len, tmp, loop, ntoken, toklen, sec_ix;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned int len, tmp, loop, ntoken, toklen, sec_ix;
->>>>>>> master
 	int ret;
 
 	_enter(",{%x,%x,%x,%x},%zu",
@@ -687,24 +633,18 @@ static int rxrpc_instantiate_xdr(struct key *key, const void *data, size_t datal
 		goto not_xdr;
 	datalen -= 4;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	paddedlen = (len + 3) & ~3;
 	if (paddedlen > datalen)
 =======
 	tmp = (len + 3) & ~3;
 	if (tmp > datalen)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	tmp = (len + 3) & ~3;
-	if (tmp > datalen)
->>>>>>> master
 		goto not_xdr;
 
 	cp = (const char *) xdr;
 	for (loop = 0; loop < len; loop++)
 		if (!isprint(cp[loop]))
 			goto not_xdr;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	for (; loop < paddedlen; loop++)
 		if (cp[loop])
@@ -714,8 +654,6 @@ static int rxrpc_instantiate_xdr(struct key *key, const void *data, size_t datal
 	datalen -= paddedlen;
 	xdr += paddedlen >> 2;
 =======
-=======
->>>>>>> master
 	if (len < tmp)
 		for (; loop < tmp; loop++)
 			if (cp[loop])
@@ -724,10 +662,7 @@ static int rxrpc_instantiate_xdr(struct key *key, const void *data, size_t datal
 	       len, tmp, len, len, (const char *) xdr);
 	datalen -= tmp;
 	xdr += tmp >> 2;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* get the token count */
 	if (datalen < 12)
@@ -749,23 +684,17 @@ static int rxrpc_instantiate_xdr(struct key *key, const void *data, size_t datal
 		datalen -= 4;
 		_debug("token: [%x/%zx] %x", toklen, datalen, sec_ix);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		paddedlen = (toklen + 3) & ~3;
 		if (toklen < 20 || toklen > datalen || paddedlen > datalen)
 			goto not_xdr;
 		datalen -= paddedlen;
 		xdr += paddedlen >> 2;
 =======
-=======
->>>>>>> master
 		if (toklen < 20 || toklen > datalen)
 			goto not_xdr;
 		datalen -= (toklen + 3) & ~3;
 		xdr += (toklen + 3) >> 2;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	} while (--loop > 0);
 

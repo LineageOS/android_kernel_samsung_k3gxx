@@ -951,7 +951,6 @@ void task_numa_work(struct callback_head *work)
 			continue;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/*
 		 * Skip inaccessible VMAs to avoid any confusion between
 		 * PROT_NONE and NUMA hinting ptes
@@ -961,8 +960,6 @@ void task_numa_work(struct callback_head *work)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		do {
 			start = max(start, vma->vm_start);
 			end = ALIGN(start + (pages << PAGE_SHIFT), HPAGE_SIZE);
@@ -2269,7 +2266,6 @@ static inline bool cfs_bandwidth_used(void)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 void cfs_bandwidth_usage_inc(void)
 {
 	static_key_slow_inc(&__cfs_bandwidth_used);
@@ -2279,8 +2275,6 @@ void cfs_bandwidth_usage_dec(void)
 {
 	static_key_slow_dec(&__cfs_bandwidth_used);
 =======
-=======
->>>>>>> master
 void account_cfs_bandwidth_used(int enabled, int was_enabled)
 {
 	/* only need to count groups transitioning between enabled/!enabled */
@@ -2288,10 +2282,7 @@ void account_cfs_bandwidth_used(int enabled, int was_enabled)
 		static_key_slow_inc(&__cfs_bandwidth_used);
 	else if (!enabled && was_enabled)
 		static_key_slow_dec(&__cfs_bandwidth_used);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 #else /* HAVE_JUMP_LABEL */
 static bool cfs_bandwidth_used(void)
@@ -2300,15 +2291,11 @@ static bool cfs_bandwidth_used(void)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 void cfs_bandwidth_usage_inc(void) {}
 void cfs_bandwidth_usage_dec(void) {}
 =======
 void account_cfs_bandwidth_used(int enabled, int was_enabled) {}
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-void account_cfs_bandwidth_used(int enabled, int was_enabled) {}
->>>>>>> master
 #endif /* HAVE_JUMP_LABEL */
 
 /*
@@ -2561,13 +2548,10 @@ static void throttle_cfs_rq(struct cfs_rq *cfs_rq)
 	raw_spin_lock(&cfs_b->lock);
 	list_add_tail_rcu(&cfs_rq->throttled_list, &cfs_b->throttled_cfs_rq);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!cfs_b->timer_active)
 		__start_cfs_bandwidth(cfs_b);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	raw_spin_unlock(&cfs_b->lock);
 }
 
@@ -2680,7 +2664,6 @@ static int do_sched_cfs_period_timer(struct cfs_bandwidth *cfs_b, int overrun)
 		goto out_unlock;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * if we have relooped after returning idle once, we need to update our
 	 * status as actually running, so that other cpus doing
@@ -2690,8 +2673,6 @@ static int do_sched_cfs_period_timer(struct cfs_bandwidth *cfs_b, int overrun)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	__refill_cfs_bandwidth_runtime(cfs_b);
 
 	if (!throttled) {
@@ -2753,7 +2734,6 @@ static const u64 min_bandwidth_expiration = 2 * NSEC_PER_MSEC;
 static const u64 cfs_bandwidth_slack_period = 5 * NSEC_PER_MSEC;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * Are we near the end of the current quota period?
  *
@@ -2764,9 +2744,6 @@ static const u64 cfs_bandwidth_slack_period = 5 * NSEC_PER_MSEC;
 =======
 /* are we near the end of the current quota period? */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-/* are we near the end of the current quota period? */
->>>>>>> master
 static int runtime_refresh_within(struct cfs_bandwidth *cfs_b, u64 min_expire)
 {
 	struct hrtimer *refresh_timer = &cfs_b->period_timer;
@@ -2843,7 +2820,6 @@ static void do_sched_cfs_slack_timer(struct cfs_bandwidth *cfs_b)
 
 	/* confirm we're still not at a refresh boundary */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	raw_spin_lock(&cfs_b->lock);
 	if (runtime_refresh_within(cfs_b, min_bandwidth_expiration)) {
 		raw_spin_unlock(&cfs_b->lock);
@@ -2851,16 +2827,11 @@ static void do_sched_cfs_slack_timer(struct cfs_bandwidth *cfs_b)
 	}
 
 =======
-=======
->>>>>>> master
 	if (runtime_refresh_within(cfs_b, min_bandwidth_expiration))
 		return;
 
 	raw_spin_lock(&cfs_b->lock);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (cfs_b->quota != RUNTIME_INF && cfs_b->runtime > slice) {
 		runtime = cfs_b->runtime;
 		cfs_b->runtime = 0;
@@ -2986,24 +2957,18 @@ void __start_cfs_bandwidth(struct cfs_bandwidth *cfs_b)
 	 * terminates).  In either case we ensure that it's re-programmed
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	while (unlikely(hrtimer_active(&cfs_b->period_timer)) &&
 	       hrtimer_try_to_cancel(&cfs_b->period_timer) < 0) {
 		/* bounce the lock to allow do_sched_cfs_period_timer to run */
 		raw_spin_unlock(&cfs_b->lock);
 		cpu_relax();
 =======
-=======
->>>>>>> master
 	while (unlikely(hrtimer_active(&cfs_b->period_timer))) {
 		raw_spin_unlock(&cfs_b->lock);
 		/* ensure cfs_b->lock is available while we wait */
 		hrtimer_cancel(&cfs_b->period_timer);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		raw_spin_lock(&cfs_b->lock);
 		/* if someone else restarted the timer then we're done */
 		if (cfs_b->timer_active)
@@ -7727,7 +7692,6 @@ static void task_fork_fair(struct task_struct *p)
 	curr = cfs_rq->curr;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * Not only the cpu but also the task_group of the parent might have
 	 * been changed after parent->se.parent,cfs_rq were copied to
@@ -7738,17 +7702,12 @@ static void task_fork_fair(struct task_struct *p)
 	__set_task_cpu(p, this_cpu);
 	rcu_read_unlock();
 =======
-=======
->>>>>>> master
 	if (unlikely(task_cpu(p) != this_cpu)) {
 		rcu_read_lock();
 		__set_task_cpu(p, this_cpu);
 		rcu_read_unlock();
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	update_curr(cfs_rq);
 
@@ -7799,7 +7758,6 @@ static void switched_from_fair(struct rq *rq, struct task_struct *p)
 
 	/*
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 * Ensure the task's vruntime is normalized, so that when it's
 	 * switched back to the fair class the enqueue_entity(.flags=0) will
 	 * do the right thing.
@@ -7810,8 +7768,6 @@ static void switched_from_fair(struct rq *rq, struct task_struct *p)
 	 */
 	if (!p->on_rq && p->state != TASK_RUNNING) {
 =======
-=======
->>>>>>> master
 	 * Ensure the task's vruntime is normalized, so that when its
 	 * switched back to the fair class the enqueue_entity(.flags=0) will
 	 * do the right thing.
@@ -7821,10 +7777,7 @@ static void switched_from_fair(struct rq *rq, struct task_struct *p)
 	 * the task is sleeping will it still have non-normalized vruntime.
 	 */
 	if (!se->on_rq && p->state != TASK_RUNNING) {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		/*
 		 * Fix up our vruntime so that the current sleep doesn't
 		 * cause 'unlimited' sleep bonus.
@@ -8046,15 +7999,11 @@ void init_tg_cfs_entry(struct task_group *tg, struct cfs_rq *cfs_rq,
 
 	se->my_q = cfs_rq;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* guarantee group entities always have weight */
 	update_load_set(&se->load, NICE_0_LOAD);
 =======
 	update_load_set(&se->load, 0);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	update_load_set(&se->load, 0);
->>>>>>> master
 	se->parent = parent;
 }
 

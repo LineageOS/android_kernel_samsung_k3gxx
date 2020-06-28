@@ -435,13 +435,9 @@ static int __init s3c2416_cpufreq_driver_init(struct cpufreq_policy *policy)
 	if (rate < 133 * 1000 * 1000) {
 		pr_err("cpufreq: HCLK not at 133MHz\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		clk_put(s3c_freq->hclk);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		clk_put(s3c_freq->hclk);
->>>>>>> master
 		ret = -EINVAL;
 		goto err_armclk;
 	}

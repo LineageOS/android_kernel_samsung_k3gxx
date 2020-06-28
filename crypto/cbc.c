@@ -290,9 +290,6 @@ module_exit(crypto_cbc_module_exit);
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("CBC block cipher algorithm");
 <<<<<<< HEAD
-<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("cbc");
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master

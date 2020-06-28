@@ -5176,20 +5176,15 @@ static void b43_nphy_channel_setup(struct b43_wldev *dev,
 
 	u16 old_band_5ghz;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u16 tmp16;
 =======
 	u32 tmp32;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u32 tmp32;
->>>>>>> master
 
 	old_band_5ghz =
 		b43_phy_read(dev, B43_NPHY_BANDCTL) & B43_NPHY_BANDCTL_5GHZ;
 	if (new_channel->band == IEEE80211_BAND_5GHZ && !old_band_5ghz) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		tmp16 = b43_read16(dev, B43_MMIO_PSM_PHY_HDR);
 		b43_write16(dev, B43_MMIO_PSM_PHY_HDR, tmp16 | 4);
 		b43_phy_set(dev, B43_PHY_B_BBCFG, 0xC000);
@@ -5202,8 +5197,6 @@ static void b43_nphy_channel_setup(struct b43_wldev *dev,
 		b43_phy_mask(dev, B43_PHY_B_BBCFG, 0x3FFF);
 		b43_write16(dev, B43_MMIO_PSM_PHY_HDR, tmp16);
 =======
-=======
->>>>>>> master
 		tmp32 = b43_read32(dev, B43_MMIO_PSM_PHY_HDR);
 		b43_write32(dev, B43_MMIO_PSM_PHY_HDR, tmp32 | 4);
 		b43_phy_set(dev, B43_PHY_B_BBCFG, 0xC000);
@@ -5215,10 +5208,7 @@ static void b43_nphy_channel_setup(struct b43_wldev *dev,
 		b43_write32(dev, B43_MMIO_PSM_PHY_HDR, tmp32 | 4);
 		b43_phy_mask(dev, B43_PHY_B_BBCFG, 0x3FFF);
 		b43_write32(dev, B43_MMIO_PSM_PHY_HDR, tmp32);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	b43_chantab_phy_upload(dev, e);

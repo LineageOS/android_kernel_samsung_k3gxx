@@ -163,7 +163,6 @@ static void rs690_mc_init(struct radeon_device *rdev)
 	base = G_000100_MC_FB_START(base) << 16;
 	rdev->mc.igp_sideport_enabled = radeon_atombios_sideport_present(rdev);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Some boards seem to be configured for 128MB of sideport memory,
 	 * but really only have 64MB.  Just skip the sideport and use
 	 * UMA memory.
@@ -176,8 +175,6 @@ static void rs690_mc_init(struct radeon_device *rdev)
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* Use K8 direct mapping for fast fb access. */ 
 	rdev->fastfb_working = false;

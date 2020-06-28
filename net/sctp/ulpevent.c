@@ -374,7 +374,6 @@ fail:
  * error formats.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 struct sctp_ulpevent *
 sctp_ulpevent_make_remote_error(const struct sctp_association *asoc,
 				struct sctp_chunk *chunk, __u16 flags,
@@ -384,11 +383,6 @@ struct sctp_ulpevent *sctp_ulpevent_make_remote_error(
 	const struct sctp_association *asoc, struct sctp_chunk *chunk,
 	__u16 flags, gfp_t gfp)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-struct sctp_ulpevent *sctp_ulpevent_make_remote_error(
-	const struct sctp_association *asoc, struct sctp_chunk *chunk,
-	__u16 flags, gfp_t gfp)
->>>>>>> master
 {
 	struct sctp_ulpevent *event;
 	struct sctp_remote_error *sre;
@@ -408,16 +402,11 @@ struct sctp_ulpevent *sctp_ulpevent_make_remote_error(
 	 * notification with.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	skb = skb_copy_expand(chunk->skb, sizeof(*sre), 0, gfp);
 =======
 	skb = skb_copy_expand(chunk->skb, sizeof(struct sctp_remote_error),
 			      0, gfp);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	skb = skb_copy_expand(chunk->skb, sizeof(struct sctp_remote_error),
-			      0, gfp);
->>>>>>> master
 
 	/* Pull off the rest of the cause TLV from the chunk.  */
 	skb_pull(chunk->skb, elen);
@@ -428,7 +417,6 @@ struct sctp_ulpevent *sctp_ulpevent_make_remote_error(
 	event = sctp_skb2event(skb);
 	sctp_ulpevent_init(event, MSG_NOTIFICATION, skb->truesize);
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	sre = (struct sctp_remote_error *) skb_push(skb, sizeof(*sre));
 
@@ -442,8 +430,6 @@ struct sctp_ulpevent *sctp_ulpevent_make_remote_error(
 	sre->sre_length = skb->len;
 	sre->sre_error = cause;
 =======
-=======
->>>>>>> master
 	sre = (struct sctp_remote_error *)
 		skb_push(skb, sizeof(struct sctp_remote_error));
 
@@ -495,22 +481,15 @@ struct sctp_ulpevent *sctp_ulpevent_make_remote_error(
 	 * All notifications for a given association have the same association
 	 * identifier.  For TCP style socket, this field is ignored.
 	 */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	sctp_ulpevent_set_owner(event, asoc);
 	sre->sre_assoc_id = sctp_assoc2id(asoc);
 
 	return event;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 fail:
 	return NULL;
 }
@@ -956,16 +935,12 @@ __u16 sctp_ulpevent_get_notification_type(const struct sctp_ulpevent *event)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* RFC6458, Section 5.3.2. SCTP Header Information Structure
  * (SCTP_SNDRCV, DEPRECATED)
  */
 =======
 /* Copy out the sndrcvinfo into a msghdr.  */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-/* Copy out the sndrcvinfo into a msghdr.  */
->>>>>>> master
 void sctp_ulpevent_read_sndrcvinfo(const struct sctp_ulpevent *event,
 				   struct msghdr *msghdr)
 {
@@ -974,7 +949,6 @@ void sctp_ulpevent_read_sndrcvinfo(const struct sctp_ulpevent *event,
 	if (sctp_ulpevent_is_notification(event))
 		return;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	memset(&sinfo, 0, sizeof(sinfo));
 	sinfo.sinfo_stream = event->stream;
@@ -987,8 +961,6 @@ void sctp_ulpevent_read_sndrcvinfo(const struct sctp_ulpevent *event,
 	/* Context value that is set via SCTP_CONTEXT socket option. */
 	sinfo.sinfo_context = event->asoc->default_rcv_context;
 =======
-=======
->>>>>>> master
 	/* Sockets API Extensions for SCTP
 	 * Section 5.2.2 SCTP Header Information Structure (SCTP_SNDRCV)
 	 *
@@ -1052,23 +1024,16 @@ void sctp_ulpevent_read_sndrcvinfo(const struct sctp_ulpevent *event,
 	/* context value that is set via SCTP_CONTEXT socket option. */
 	sinfo.sinfo_context = event->asoc->default_rcv_context;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* These fields are not used while receiving. */
 	sinfo.sinfo_timetolive = 0;
 
 	put_cmsg(msghdr, IPPROTO_SCTP, SCTP_SNDRCV,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		 sizeof(sinfo), &sinfo);
 =======
 		 sizeof(struct sctp_sndrcvinfo), (void *)&sinfo);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		 sizeof(struct sctp_sndrcvinfo), (void *)&sinfo);
->>>>>>> master
 }
 
 /* Do accounting for bytes received and hold a reference to the association

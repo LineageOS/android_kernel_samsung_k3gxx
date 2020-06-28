@@ -21,14 +21,10 @@
 
 #define _GNU_SOURCE
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include MSRHEADER
 =======
 #include <asm/msr.h>
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#include <asm/msr.h>
->>>>>>> master
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -44,12 +40,9 @@
 #include <ctype.h>
 #include <sched.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <cpuid.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 char *proc_stat = "/proc/stat";
 unsigned int interval_sec = 5;	/* set with -i interval_sec */
@@ -1910,14 +1903,10 @@ void check_cpuid()
 	eax = ebx = ecx = edx = 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	__get_cpuid(0, &max_level, &ebx, &ecx, &edx);
 =======
 	asm("cpuid" : "=a" (max_level), "=b" (ebx), "=c" (ecx), "=d" (edx) : "a" (0));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	asm("cpuid" : "=a" (max_level), "=b" (ebx), "=c" (ecx), "=d" (edx) : "a" (0));
->>>>>>> master
 
 	if (ebx == 0x756e6547 && edx == 0x49656e69 && ecx == 0x6c65746e)
 		genuine_intel = 1;
@@ -1927,14 +1916,10 @@ void check_cpuid()
 			(char *)&ebx, (char *)&edx, (char *)&ecx);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	__get_cpuid(1, &fms, &ebx, &ecx, &edx);
 =======
 	asm("cpuid" : "=a" (fms), "=c" (ecx), "=d" (edx) : "a" (1) : "ebx");
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	asm("cpuid" : "=a" (fms), "=c" (ecx), "=d" (edx) : "a" (1) : "ebx");
->>>>>>> master
 	family = (fms >> 8) & 0xf;
 	model = (fms >> 4) & 0xf;
 	stepping = fms & 0xf;
@@ -1957,14 +1942,10 @@ void check_cpuid()
 	 */
 	ebx = ecx = edx = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	__get_cpuid(0x80000000, &max_level, &ebx, &ecx, &edx);
 =======
 	asm("cpuid" : "=a" (max_level), "=b" (ebx), "=c" (ecx), "=d" (edx) : "a" (0x80000000));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	asm("cpuid" : "=a" (max_level), "=b" (ebx), "=c" (ecx), "=d" (edx) : "a" (0x80000000));
->>>>>>> master
 
 	if (max_level < 0x80000007) {
 		fprintf(stderr, "CPUID: no invariant TSC (max_level 0x%x)\n", max_level);
@@ -1976,14 +1957,10 @@ void check_cpuid()
 	 * this check is valid for both Intel and AMD
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	__get_cpuid(0x80000007, &eax, &ebx, &ecx, &edx);
 =======
 	asm("cpuid" : "=a" (eax), "=b" (ebx), "=c" (ecx), "=d" (edx) : "a" (0x80000007));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	asm("cpuid" : "=a" (eax), "=b" (ebx), "=c" (ecx), "=d" (edx) : "a" (0x80000007));
->>>>>>> master
 	has_invariant_tsc = edx & (1 << 8);
 
 	if (!has_invariant_tsc) {
@@ -1997,14 +1974,10 @@ void check_cpuid()
 	 */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	__get_cpuid(0x6, &eax, &ebx, &ecx, &edx);
 =======
 	asm("cpuid" : "=a" (eax), "=b" (ebx), "=c" (ecx), "=d" (edx) : "a" (0x6));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	asm("cpuid" : "=a" (eax), "=b" (ebx), "=c" (ecx), "=d" (edx) : "a" (0x6));
->>>>>>> master
 	has_aperf = ecx & (1 << 0);
 	do_dts = eax & (1 << 0);
 	do_ptm = eax & (1 << 6);

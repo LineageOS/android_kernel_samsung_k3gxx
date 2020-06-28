@@ -69,14 +69,10 @@ struct dvb_frontend *mxl111sf_tuner_attach(struct dvb_frontend *fe,
 static inline
 struct dvb_frontend *mxl111sf_tuner_attach(struct dvb_frontend *fe,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					   struct mxl111sf_state *mxl_state,
 =======
 					   struct mxl111sf_state *mxl_state
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					   struct mxl111sf_state *mxl_state
->>>>>>> master
 					   struct mxl111sf_tuner_config *cfg)
 {
 	printk(KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);

@@ -89,12 +89,9 @@ enum iwl_mvm_tx_fifo {
 	IWL_MVM_TX_FIFO_VI,
 	IWL_MVM_TX_FIFO_VO,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	IWL_MVM_TX_FIFO_MCAST = 5,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 extern struct ieee80211_ops iwl_mvm_hw_ops;

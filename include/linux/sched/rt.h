@@ -21,7 +21,6 @@
 #define DEFAULT_PRIO		(MAX_RT_PRIO + 20)
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define MAX_NICE	19
 #define MIN_NICE	-20
 
@@ -36,8 +35,6 @@
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static inline int rt_prio(int prio)
 {
 	if (unlikely(prio < MAX_RT_PRIO))
@@ -80,7 +77,6 @@ extern void normalize_rt_tasks(void);
 #define RR_TIMESLICE		(100 * HZ / 1000)
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * Convert nice value [19,-20] to rlimit style value [1,40].
  */
@@ -93,6 +89,4 @@ extern void normalize_rt_tasks(void);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #endif /* _SCHED_RT_H */

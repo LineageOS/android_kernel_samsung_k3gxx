@@ -1474,7 +1474,6 @@ static void audit_log_exit(struct audit_context *context, struct task_struct *ts
 
 	i = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	list_for_each_entry(n, &context->names_list, list) {
 		if (n->hidden)
 			continue;
@@ -1484,10 +1483,6 @@ static void audit_log_exit(struct audit_context *context, struct task_struct *ts
 	list_for_each_entry(n, &context->names_list, list)
 		audit_log_name(context, n, NULL, i++, &call_panic);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	list_for_each_entry(n, &context->names_list, list)
-		audit_log_name(context, n, NULL, i++, &call_panic);
->>>>>>> master
 
 	if (context->major != __NR_setsockopt) {
 	audit_log_proctitle(tsk, context);
@@ -1860,33 +1855,24 @@ void audit_putname(struct filename *name)
  * @name: name being audited
  * @dentry: dentry being audited
 <<<<<<< HEAD
-<<<<<<< HEAD
  * @flags: attributes for this particular entry
  */
 void __audit_inode(struct filename *name, const struct dentry *dentry,
 		   unsigned int flags)
 =======
-=======
->>>>>>> master
  * @parent: does this dentry represent the parent?
  */
 void __audit_inode(struct filename *name, const struct dentry *dentry,
 		   unsigned int parent)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 {
 	struct audit_context *context = current->audit_context;
 	const struct inode *inode = dentry->d_inode;
 	struct audit_names *n;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	bool parent = flags & AUDIT_INODE_PARENT;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (!context->in_syscall)
 		return;
@@ -1942,13 +1928,10 @@ out:
 		n->name_len = n->name ? parent_len(n->name->name) : AUDIT_NAME_FULL;
 		n->type = AUDIT_TYPE_PARENT;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (flags & AUDIT_INODE_HIDDEN)
 			n->hidden = true;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	} else {
 		n->name_len = AUDIT_NAME_FULL;
 		n->type = AUDIT_TYPE_NORMAL;

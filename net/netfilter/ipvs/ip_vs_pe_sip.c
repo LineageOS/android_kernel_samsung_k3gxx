@@ -66,13 +66,9 @@ static int
 ip_vs_sip_fill_param(struct ip_vs_conn_param *p, struct sk_buff *skb)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	struct sk_buff *reasm = skb_nfct_reasm(skb);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct sk_buff *reasm = skb_nfct_reasm(skb);
->>>>>>> master
 	struct ip_vs_iphdr iph;
 	unsigned int dataoff, datalen, matchoff, matchlen;
 	const char *dptr;
@@ -87,14 +83,11 @@ ip_vs_sip_fill_param(struct ip_vs_conn_param *p, struct sk_buff *skb)
 	 *       I think this only should be done for the first fragment. /HS
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dataoff = iph.len + sizeof(struct udphdr);
 
 	if (dataoff >= skb->len)
 		return -EINVAL;
 =======
-=======
->>>>>>> master
 	if (reasm) {
 		skb = reasm;
 		dataoff = iph.thoff_reasm + sizeof(struct udphdr);
@@ -104,10 +97,7 @@ ip_vs_sip_fill_param(struct ip_vs_conn_param *p, struct sk_buff *skb)
 	if (dataoff >= skb->len)
 		return -EINVAL;
 	/* todo: Check if this will mess-up the reasm skb !!! /HS */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	retc = skb_linearize(skb);
 	if (retc < 0)
 		return retc;
@@ -115,14 +105,10 @@ ip_vs_sip_fill_param(struct ip_vs_conn_param *p, struct sk_buff *skb)
 	datalen = skb->len - dataoff;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (get_callid(dptr, 0, datalen, &matchoff, &matchlen))
 =======
 	if (get_callid(dptr, dataoff, datalen, &matchoff, &matchlen))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (get_callid(dptr, dataoff, datalen, &matchoff, &matchlen))
->>>>>>> master
 		return -EINVAL;
 
 	/* N.B: pe_data is only set on success,

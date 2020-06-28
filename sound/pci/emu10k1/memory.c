@@ -35,23 +35,17 @@
  */
 #define __set_ptb_entry(emu,page,addr) \
 <<<<<<< HEAD
-<<<<<<< HEAD
 	(((u32 *)(emu)->ptb_pages.area)[page] = cpu_to_le32(((addr) << (emu->address_mode)) | (page)))
 
 #define UNIT_PAGES		(PAGE_SIZE / EMUPAGESIZE)
 #define MAX_ALIGN_PAGES0		(MAXPAGES0 / UNIT_PAGES)
 #define MAX_ALIGN_PAGES1		(MAXPAGES1 / UNIT_PAGES)
 =======
-=======
->>>>>>> master
 	(((u32 *)(emu)->ptb_pages.area)[page] = cpu_to_le32(((addr) << 1) | (page)))
 
 #define UNIT_PAGES		(PAGE_SIZE / EMUPAGESIZE)
 #define MAX_ALIGN_PAGES		(MAXPAGES / UNIT_PAGES)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /* get aligned page from offset address */
 #define get_aligned_page(offset)	((offset) >> PAGE_SHIFT)
 /* get offset address from aligned page */
@@ -139,14 +133,10 @@ static int search_empty_map_area(struct snd_emu10k1 *emu, int npages, struct lis
 		page = blk->mapped_page + blk->pages;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	size = (emu->address_mode ? MAX_ALIGN_PAGES1 : MAX_ALIGN_PAGES0) - page;
 =======
 	size = MAX_ALIGN_PAGES - page;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	size = MAX_ALIGN_PAGES - page;
->>>>>>> master
 	if (size >= max_size) {
 		*nextp = pos;
 		return page;
@@ -204,14 +194,10 @@ static int unmap_memblk(struct snd_emu10k1 *emu, struct snd_emu10k1_memblk *blk)
 		end_page = q->mapped_page;
 	} else
 <<<<<<< HEAD
-<<<<<<< HEAD
 		end_page = (emu->address_mode ? MAX_ALIGN_PAGES1 : MAX_ALIGN_PAGES0);
 =======
 		end_page = MAX_ALIGN_PAGES;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		end_page = MAX_ALIGN_PAGES;
->>>>>>> master
 
 	/* remove links */
 	list_del(&blk->mapped_link);
@@ -336,14 +322,10 @@ snd_emu10k1_alloc_pages(struct snd_emu10k1 *emu, struct snd_pcm_substream *subst
 		return NULL;
 	if (snd_BUG_ON(runtime->dma_bytes <= 0 ||
 <<<<<<< HEAD
-<<<<<<< HEAD
 		       runtime->dma_bytes >= (emu->address_mode ? MAXPAGES1 : MAXPAGES0) * EMUPAGESIZE))
 =======
 		       runtime->dma_bytes >= MAXPAGES * EMUPAGESIZE))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		       runtime->dma_bytes >= MAXPAGES * EMUPAGESIZE))
->>>>>>> master
 		return NULL;
 	hdr = emu->memhdr;
 	if (snd_BUG_ON(!hdr))

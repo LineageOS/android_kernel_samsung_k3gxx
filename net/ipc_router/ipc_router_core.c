@@ -2276,14 +2276,11 @@ int msm_ipc_router_register_server(struct msm_ipc_port *port_ptr,
 		return -EINVAL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (port_ptr->type != CLIENT_PORT)
 		return -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (name->addrtype != MSM_IPC_ADDR_NAME)
 		return -EINVAL;
 

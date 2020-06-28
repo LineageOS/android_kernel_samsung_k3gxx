@@ -173,10 +173,7 @@ out:
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 static unsigned int __ipv6_conntrack_in(struct net *net,
 					unsigned int hooknum,
 					struct sk_buff *skb,
@@ -227,10 +224,7 @@ static unsigned int __ipv6_conntrack_in(struct net *net,
 	return nf_conntrack_in(net, PF_INET6, hooknum, skb);
 }
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static unsigned int ipv6_conntrack_in(unsigned int hooknum,
 				      struct sk_buff *skb,
 				      const struct net_device *in,
@@ -238,14 +232,10 @@ static unsigned int ipv6_conntrack_in(unsigned int hooknum,
 				      int (*okfn)(struct sk_buff *))
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return nf_conntrack_in(dev_net(in), PF_INET6, hooknum, skb);
 =======
 	return __ipv6_conntrack_in(dev_net(in), hooknum, skb, in, out, okfn);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return __ipv6_conntrack_in(dev_net(in), hooknum, skb, in, out, okfn);
->>>>>>> master
 }
 
 static unsigned int ipv6_conntrack_local(unsigned int hooknum,
@@ -260,14 +250,10 @@ static unsigned int ipv6_conntrack_local(unsigned int hooknum,
 		return NF_ACCEPT;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return nf_conntrack_in(dev_net(out), PF_INET6, hooknum, skb);
 =======
 	return __ipv6_conntrack_in(dev_net(out), hooknum, skb, in, out, okfn);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return __ipv6_conntrack_in(dev_net(out), hooknum, skb, in, out, okfn);
->>>>>>> master
 }
 
 static struct nf_hook_ops ipv6_conntrack_ops[] __read_mostly = {

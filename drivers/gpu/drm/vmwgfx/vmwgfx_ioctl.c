@@ -70,15 +70,10 @@ int vmw_getparam_ioctl(struct drm_device *dev, void *data,
 	}
 	default:
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		DRM_ERROR("Illegal vmwgfx get param request: %d\n",
 			  param->param);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		DRM_ERROR("Illegal vmwgfx get param request: %d\n",
-			  param->param);
->>>>>>> master
 		return -EINVAL;
 	}
 
@@ -99,14 +94,10 @@ int vmw_get_cap_3d_ioctl(struct drm_device *dev, void *data,
 	int ret;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (unlikely(arg->pad64 != 0 || arg->max_size == 0)) {
 =======
 	if (unlikely(arg->pad64 != 0)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (unlikely(arg->pad64 != 0)) {
->>>>>>> master
 		DRM_ERROR("Illegal GET_3D_CAP argument.\n");
 		return -EINVAL;
 	}

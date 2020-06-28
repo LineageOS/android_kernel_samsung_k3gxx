@@ -1278,20 +1278,14 @@ static void
 cfq_update_group_weight(struct cfq_group *cfqg)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	BUG_ON(!RB_EMPTY_NODE(&cfqg->rb_node));
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	BUG_ON(!RB_EMPTY_NODE(&cfqg->rb_node));
-
->>>>>>> master
 	if (cfqg->new_weight) {
 		cfqg->weight = cfqg->new_weight;
 		cfqg->new_weight = 0;
 	}
-<<<<<<< HEAD
 <<<<<<< HEAD
 }
 
@@ -1301,8 +1295,6 @@ cfq_update_group_leaf_weight(struct cfq_group *cfqg)
 	BUG_ON(!RB_EMPTY_NODE(&cfqg->rb_node));
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (cfqg->new_leaf_weight) {
 		cfqg->leaf_weight = cfqg->new_leaf_weight;
@@ -1322,14 +1314,10 @@ cfq_group_service_tree_add(struct cfq_rb_root *st, struct cfq_group *cfqg)
 	BUG_ON(!RB_EMPTY_NODE(&cfqg->rb_node));
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	cfq_update_group_leaf_weight(cfqg);
 =======
 	cfq_update_group_weight(cfqg);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	cfq_update_group_weight(cfqg);
->>>>>>> master
 	__cfq_group_service_tree_add(st, cfqg);
 
 	/*
@@ -1354,12 +1342,9 @@ cfq_group_service_tree_add(struct cfq_rb_root *st, struct cfq_group *cfqg)
 	while ((parent = cfqg_parent(pos))) {
 		if (propagate) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			cfq_update_group_weight(pos);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			propagate = !parent->nr_active++;
 			parent->children_weight += pos->weight;
 		}
@@ -1841,14 +1826,10 @@ static u64 cfqg_prfill_avg_queue_size(struct seq_file *sf,
 	if (samples) {
 		v = blkg_stat_read(&cfqg->stats.avg_queue_size_sum);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		v = div64_u64(v, samples);
 =======
 		do_div(v, samples);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		do_div(v, samples);
->>>>>>> master
 	}
 	__blkg_prfill_u64(sf, pd, v);
 	return 0;
@@ -2853,13 +2834,9 @@ static struct request *cfq_check_fifo(struct cfq_queue *cfqq)
 		rq = NULL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	cfq_log_cfqq(cfqq->cfqd, cfqq, "fifo=%p", rq);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	cfq_log_cfqq(cfqq->cfqd, cfqq, "fifo=%p", rq);
->>>>>>> master
 	return rq;
 }
 
@@ -3234,14 +3211,11 @@ static bool cfq_may_dispatch(struct cfq_data *cfqd, struct cfq_queue *cfqq)
 	unsigned int max_dispatch;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (cfq_cfqq_must_dispatch(cfqq))
 		return true;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/*
 	 * Drain async requests before we start sync IO
 	 */
@@ -3334,22 +3308,18 @@ static bool cfq_dispatch_request(struct cfq_data *cfqd, struct cfq_queue *cfqq)
 	BUG_ON(RB_EMPTY_ROOT(&cfqq->sort_list));
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	rq = cfq_check_fifo(cfqq);
 	if (rq)
 		cfq_mark_cfqq_must_dispatch(cfqq);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (!cfq_may_dispatch(cfqd, cfqq))
 		return false;
 
 	/*
 	 * follow expired path, else get first next available
 	 */
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!rq)
 		rq = cfqq->next_rq;
@@ -3360,11 +3330,6 @@ static bool cfq_dispatch_request(struct cfq_data *cfqd, struct cfq_queue *cfqq)
 	if (!rq)
 		rq = cfqq->next_rq;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	rq = cfq_check_fifo(cfqq);
-	if (!rq)
-		rq = cfqq->next_rq;
->>>>>>> master
 
 	/*
 	 * insert request into driver dispatch list
@@ -3655,7 +3620,6 @@ retry:
 	blkcg = bio_blkcg(bio);
 	cfqg = cfq_lookup_create_cfqg(cfqd, blkcg);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!cfqg) {
 		cfqq = &cfqd->oom_cfqq;
 		goto out;
@@ -3663,8 +3627,6 @@ retry:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	cfqq = cic_to_cfqq(cic, is_sync);
 
 	/*
@@ -3702,14 +3664,10 @@ retry:
 			cfqq = &cfqd->oom_cfqq;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 out:
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 	if (new_cfqq)
 		kmem_cache_free(cfq_pool, new_cfqq);
 
@@ -3740,22 +3698,16 @@ cfq_get_queue(struct cfq_data *cfqd, bool is_sync, struct cfq_io_cq *cic,
 	      struct bio *bio, gfp_t gfp_mask)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int ioprio_class = IOPRIO_PRIO_CLASS(cic->ioprio);
 	int ioprio = IOPRIO_PRIO_DATA(cic->ioprio);
 =======
 	const int ioprio_class = IOPRIO_PRIO_CLASS(cic->ioprio);
 	const int ioprio = IOPRIO_PRIO_DATA(cic->ioprio);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	const int ioprio_class = IOPRIO_PRIO_CLASS(cic->ioprio);
-	const int ioprio = IOPRIO_PRIO_DATA(cic->ioprio);
->>>>>>> master
 	struct cfq_queue **async_cfqq = NULL;
 	struct cfq_queue *cfqq = NULL;
 
 	if (!is_sync) {
-<<<<<<< HEAD
 <<<<<<< HEAD
 		if (!ioprio_valid(cic->ioprio)) {
 			struct task_struct *tsk = current;
@@ -3764,8 +3716,6 @@ cfq_get_queue(struct cfq_data *cfqd, bool is_sync, struct cfq_io_cq *cic,
 		}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		async_cfqq = cfq_async_queue_prio(cfqd, ioprio_class, ioprio);
 		cfqq = *async_cfqq;
 	}
@@ -3904,14 +3854,10 @@ cfq_should_preempt(struct cfq_data *cfqd, struct cfq_queue *new_cfqq,
 	 * not, let the sync request have priority.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (rq_is_sync(rq) && !cfq_cfqq_sync(cfqq) && !cfq_cfqq_must_dispatch(cfqq))
 =======
 	if (rq_is_sync(rq) && !cfq_cfqq_sync(cfqq))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (rq_is_sync(rq) && !cfq_cfqq_sync(cfqq))
->>>>>>> master
 		return true;
 
 	if (new_cfqq->cfqg != cfqq->cfqg)

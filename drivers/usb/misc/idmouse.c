@@ -348,14 +348,11 @@ static int idmouse_probe(struct usb_interface *interface,
 		return -ENODEV;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (iface_desc->desc.bNumEndpoints < 1)
 		return -ENODEV;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* allocate memory for our device state and initialize it */
 	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
 	if (dev == NULL)

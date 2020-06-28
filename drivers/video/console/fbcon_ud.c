@@ -228,7 +228,6 @@ static void ud_clear_margins(struct vc_data *vc, struct fb_info *info,
 	unsigned int bh = info->var.yres - (vc->vc_rows*ch);
 	struct fb_fillrect region;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	region.color = 0;
 =======
@@ -236,11 +235,6 @@ static void ud_clear_margins(struct vc_data *vc, struct fb_info *info,
 
 	region.color = attr_bgcol_ec(bgshift,vc,info);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int bgshift = (vc->vc_hi_font_mask) ? 13 : 12;
-
-	region.color = attr_bgcol_ec(bgshift,vc,info);
->>>>>>> master
 	region.rop = ROP_COPY;
 
 	if (rw && !bottom_only) {

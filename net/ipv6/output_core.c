@@ -7,10 +7,7 @@
 #include <net/ip6_fib.h>
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 void ipv6_select_ident(struct frag_hdr *fhdr, struct rt6_info *rt)
 {
 	static atomic_t ipv6_fragmentation_id;
@@ -39,10 +36,7 @@ void ipv6_select_ident(struct frag_hdr *fhdr, struct rt6_info *rt)
 	fhdr->identification = htonl(new);
 }
 EXPORT_SYMBOL(ipv6_select_ident);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 int ip6_find_1stfragopt(struct sk_buff *skb, u8 **nexthdr)
 {

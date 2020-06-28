@@ -82,13 +82,10 @@ static int  whiteheat_firmware_attach(struct usb_serial *serial);
 
 /* function prototypes for the Connect Tech WhiteHEAT serial converter */
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int whiteheat_probe(struct usb_serial *serial,
 				const struct usb_device_id *id);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int  whiteheat_attach(struct usb_serial *serial);
 static void whiteheat_release(struct usb_serial *serial);
 static int  whiteheat_port_probe(struct usb_serial_port *port);
@@ -126,12 +123,9 @@ static struct usb_serial_driver whiteheat_device = {
 	.id_table =		id_table_std,
 	.num_ports =		4,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.probe =		whiteheat_probe,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	.attach =		whiteheat_attach,
 	.release =		whiteheat_release,
 	.port_probe =		whiteheat_port_probe,
@@ -234,7 +228,6 @@ static int whiteheat_firmware_attach(struct usb_serial *serial)
  * Connect Tech's White Heat serial driver functions
  *****************************************************************************/
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 static int whiteheat_probe(struct usb_serial *serial,
 				const struct usb_device_id *id)
@@ -265,8 +258,6 @@ static int whiteheat_probe(struct usb_serial *serial,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int whiteheat_attach(struct usb_serial *serial)
 {
 	struct usb_serial_port *command_port;
@@ -571,15 +562,12 @@ static void command_port_read_callback(struct urb *urb)
 		return;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!urb->actual_length) {
 		dev_dbg(&urb->dev->dev, "%s - empty response, exiting.\n", __func__);
 		return;
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (status) {
 		dev_dbg(&urb->dev->dev, "%s - nonzero urb status: %d\n", __func__, status);
 		if (status != -ENOENT)
@@ -601,15 +589,11 @@ static void command_port_read_callback(struct urb *urb)
 		   waiting command to wakeup */
 		dev_dbg(&urb->dev->dev, "%s - event received\n", __func__);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	} else if ((data[0] == WHITEHEAT_GET_DTR_RTS) &&
 		(urb->actual_length - 1 <= sizeof(command_info->result_buffer))) {
 =======
 	} else if (data[0] == WHITEHEAT_GET_DTR_RTS) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	} else if (data[0] == WHITEHEAT_GET_DTR_RTS) {
->>>>>>> master
 		memcpy(command_info->result_buffer, &data[1],
 						urb->actual_length - 1);
 		command_info->command_finished = WHITEHEAT_CMD_COMPLETE;

@@ -204,15 +204,11 @@ static int ci_role_show(struct seq_file *s, void *data)
 	struct ci13xxx *ci = s->private;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ci->role != CI_ROLE_END)
 		seq_printf(s, "%s\n", ci_role(ci)->name);
 =======
 	seq_printf(s, "%s\n", ci_role(ci)->name);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	seq_printf(s, "%s\n", ci_role(ci)->name);
->>>>>>> master
 
 	return 0;
 }

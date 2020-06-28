@@ -107,7 +107,6 @@ static inline long long empty_log_bytes(const struct ubifs_info *c)
 	t = (long long)c->ltail_lnum * c->leb_size;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (h > t)
 		return c->log_bytes - h + t;
 	else if (h != t)
@@ -117,16 +116,11 @@ static inline long long empty_log_bytes(const struct ubifs_info *c)
 	else
 		return c->log_bytes;
 =======
-=======
->>>>>>> master
 	if (h >= t)
 		return c->log_bytes - h + t;
 	else
 		return t - h;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /**
@@ -465,7 +459,6 @@ out:
  *
  * This function is called on when the commit operation was finished. It
 <<<<<<< HEAD
-<<<<<<< HEAD
  * moves log tail to new position and updates the master node so that it stores
  * the new log tail LEB number. Returns zero in case of success and a negative
  * error code in case of failure.
@@ -474,11 +467,6 @@ out:
  * Returns zero in case of success and a negative error code in case of
  * failure.
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * moves log tail to new position and unmaps LEBs which contain obsolete data.
- * Returns zero in case of success and a negative error code in case of
- * failure.
->>>>>>> master
  */
 int ubifs_log_end_commit(struct ubifs_info *c, int ltail_lnum)
 {
@@ -507,7 +495,6 @@ int ubifs_log_end_commit(struct ubifs_info *c, int ltail_lnum)
 
 	err = dbg_check_bud_bytes(c);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (err)
 		goto out;
 
@@ -517,9 +504,6 @@ out:
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 	mutex_unlock(&c->log_mutex);
 	return err;
 }

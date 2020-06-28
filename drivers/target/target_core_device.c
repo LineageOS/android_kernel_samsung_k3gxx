@@ -615,12 +615,9 @@ void core_dev_unexport(
 	spin_unlock(&hba->device_lock);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	lun->lun_sep = NULL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	lun->lun_se_dev = NULL;
 }
 
@@ -804,22 +801,16 @@ int se_dev_set_emulate_write_cache(struct se_device *dev, int flag)
 		return -EINVAL;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (flag &&
 	    dev->transport->get_write_cache) {
 		pr_err("emulate_write_cache not supported for this device\n");
 		return -EINVAL;
 =======
-=======
->>>>>>> master
 	if (dev->transport->get_write_cache) {
 		pr_warn("emulate_write_cache cannot be changed when underlying"
 			" HW reports WriteCacheEnabled, ignoring request\n");
 		return 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	dev->dev_attrib.emulate_write_cache = flag;
@@ -1057,22 +1048,16 @@ int se_dev_set_optimal_sectors(struct se_device *dev, u32 optimal_sectors)
 		return -EINVAL;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (optimal_sectors > dev->dev_attrib.hw_max_sectors) {
 		pr_err("dev[%p]: Passed optimal_sectors %u cannot be"
 			" greater than hw_max_sectors: %u\n", dev,
 			optimal_sectors, dev->dev_attrib.hw_max_sectors);
 =======
-=======
->>>>>>> master
 	if (optimal_sectors > dev->dev_attrib.fabric_max_sectors) {
 		pr_err("dev[%p]: Passed optimal_sectors %u cannot be"
 			" greater than fabric_max_sectors: %u\n", dev,
 			optimal_sectors, dev->dev_attrib.fabric_max_sectors);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		return -EINVAL;
 	}
 
@@ -1112,7 +1097,6 @@ int se_dev_set_block_size(struct se_device *dev, u32 block_size)
 	pr_debug("dev[%p]: SE Device block_size changed to %u\n",
 			dev, block_size);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	if (dev->dev_attrib.max_bytes_per_io)
 		dev->dev_attrib.hw_max_sectors =
@@ -1120,8 +1104,6 @@ int se_dev_set_block_size(struct se_device *dev, u32 block_size)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 }
 
@@ -1332,15 +1314,11 @@ int core_dev_add_initiator_node_lun_acl(
 	 * pre-registrations that need to be enabled for this LUN ACL..
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	core_scsi3_check_aptpl_registration(lun->lun_se_dev, tpg, lun, nacl,
 					    lacl->mapped_lun);
 =======
 	core_scsi3_check_aptpl_registration(lun->lun_se_dev, tpg, lun, lacl);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	core_scsi3_check_aptpl_registration(lun->lun_se_dev, tpg, lun, lacl);
->>>>>>> master
 	return 0;
 }
 
@@ -1489,13 +1467,9 @@ struct se_device *target_alloc_device(struct se_hba *hba, const char *name)
 	dev->dev_attrib.max_write_same_len = DA_MAX_WRITE_SAME_LEN;
 	dev->dev_attrib.fabric_max_sectors = DA_FABRIC_MAX_SECTORS;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	dev->dev_attrib.optimal_sectors = DA_FABRIC_MAX_SECTORS;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	dev->dev_attrib.optimal_sectors = DA_FABRIC_MAX_SECTORS;
->>>>>>> master
 
 	return dev;
 }
@@ -1529,12 +1503,9 @@ int target_configure_device(struct se_device *dev)
 		se_dev_align_max_sectors(dev->dev_attrib.hw_max_sectors,
 					 dev->dev_attrib.hw_block_size);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dev->dev_attrib.optimal_sectors = dev->dev_attrib.hw_max_sectors;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	dev->dev_index = scsi_get_new_index(SCSI_DEVICE_INDEX);
 	dev->creation_time = get_jiffies_64();

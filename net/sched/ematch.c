@@ -228,12 +228,9 @@ static int tcf_em_validate(struct tcf_proto *tp,
 				 */
 				module_put(em->ops->owner);
 <<<<<<< HEAD
-<<<<<<< HEAD
 				em->ops = NULL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 				err = -EAGAIN;
 			}
 #endif

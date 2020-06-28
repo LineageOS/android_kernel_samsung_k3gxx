@@ -574,12 +574,9 @@
 #              define PACKET3_SH_ACTION_ENA        (1 << 27)
 #              define PACKET3_SX_ACTION_ENA        (1 << 28)
 <<<<<<< HEAD
-<<<<<<< HEAD
 #              define PACKET3_ENGINE_ME            (1 << 31)
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define	PACKET3_ME_INITIALIZE				0x44
 #define		PACKET3_ME_INITIALIZE_DEVICE_ID(x) ((x) << 16)
 #define	PACKET3_COND_WRITE				0x45

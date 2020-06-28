@@ -1354,13 +1354,10 @@ static void render_out_of_line_list(FILE *out)
 			render_opcode(out, "_jump_target(%u),\n", entry);
 			break;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		default:
 			break;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		}
 		if (e->action)
 			render_opcode(out, "_action(ACT_%s),\n",

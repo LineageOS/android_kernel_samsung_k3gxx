@@ -45,7 +45,6 @@ static long kptr_obfuscate(long v, int type)
 static int kcmp_ptr(void *v1, void *v2, enum kcmp_type type)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	long t1, t2;
 
 	t1 = kptr_obfuscate((long)v1, type);
@@ -53,17 +52,12 @@ static int kcmp_ptr(void *v1, void *v2, enum kcmp_type type)
 
 	return (t1 < t2) | ((t1 > t2) << 1);
 =======
-=======
->>>>>>> master
 	long ret;
 
 	ret = kptr_obfuscate((long)v1, type) - kptr_obfuscate((long)v2, type);
 
 	return (ret < 0) | ((ret > 0) << 1);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /* The caller must have pinned the task */
@@ -137,17 +131,12 @@ SYSCALL_DEFINE5(kcmp, pid_t, pid1, pid_t, pid2, int, type,
 	if (ret)
 		goto err;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!ptrace_may_access(task1, PTRACE_MODE_READ_REALCREDS) ||
 	    !ptrace_may_access(task2, PTRACE_MODE_READ_REALCREDS)) {
 =======
 	if (!ptrace_may_access(task1, PTRACE_MODE_READ) ||
 	    !ptrace_may_access(task2, PTRACE_MODE_READ)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!ptrace_may_access(task1, PTRACE_MODE_READ) ||
-	    !ptrace_may_access(task2, PTRACE_MODE_READ)) {
->>>>>>> master
 		ret = -EPERM;
 		goto err_unlock;
 	}

@@ -1081,7 +1081,6 @@ static int tps65910_probe(struct platform_device *pdev)
 		pmic->ext_sleep_control = tps65910_ext_sleep_control;
 		info = tps65910_regs;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* Work around silicon erratum SWCZ010: output programmed
 		 * voltage level can go higher than expected or crash
 		 * Workaround: use no synchronization of DCDC clocks
@@ -1090,8 +1089,6 @@ static int tps65910_probe(struct platform_device *pdev)
 					DCDCCTRL_DCDCCKSYNC_MASK);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		break;
 	case TPS65911:
 		pmic->get_ctrl_reg = &tps65911_get_ctrl_register;

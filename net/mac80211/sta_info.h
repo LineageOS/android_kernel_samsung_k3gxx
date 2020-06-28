@@ -245,12 +245,9 @@ struct sta_ampdu_mlme {
  * @listen_interval: listen interval of this station, when we're acting as AP
  * @_flags: STA flags, see &enum ieee80211_sta_info_flags, do not use directly
 <<<<<<< HEAD
-<<<<<<< HEAD
  * @ps_lock: used for powersave (when mac80211 is the AP) related locking
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  * @ps_tx_buf: buffers (per AC) of frames to transmit to this station
  *	when it leaves power saving state or polls
  * @tx_filtered: buffers (per AC) of frames we already tried to
@@ -332,20 +329,14 @@ struct sta_info {
 	unsigned long _flags;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* STA powersave lock and frame queues */
 	spinlock_t ps_lock;
 =======
-=======
->>>>>>> master
 	/*
 	 * STA powersave frame queues, no more than the internal
 	 * locking required.
 	 */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	struct sk_buff_head ps_tx_buf[IEEE80211_NUM_ACS];
 	struct sk_buff_head tx_filtered[IEEE80211_NUM_ACS];
 	unsigned long driver_buffered_tids;

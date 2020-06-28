@@ -5,12 +5,9 @@ config ARM
 	select ARCH_HAS_ATOMIC64_DEC_IF_POSITIVE
 	select ARCH_HAVE_CUSTOM_GPIO_H
 <<<<<<< HEAD
-<<<<<<< HEAD
 	select ARCH_SUPPORTS_ATOMIC_RMW
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	select ARCH_HAS_TICK_BROADCAST if GENERIC_CLOCKEVENTS_BROADCAST
 	select ARCH_WANT_IPC_PARSE_VERSION
 	select BUILDTIME_EXTABLE_SORT if MMU
@@ -29,12 +26,9 @@ config ARM
 	select HAVE_ARCH_JUMP_LABEL if !XIP_KERNEL
 	select HAVE_ARCH_KGDB
 <<<<<<< HEAD
-<<<<<<< HEAD
 	select HAVE_ARCH_MMAP_RND_BITS if MMU
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	select HAVE_ARCH_SECCOMP_FILTER
 	select HAVE_ARCH_TRACEHOOK
 	select HAVE_BPF_JIT
@@ -307,7 +301,6 @@ config MMU
 	  support by paged memory management. If unsure, say 'Y'.
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 config ARCH_MMAP_RND_BITS_MIN
 	default 8
 
@@ -318,8 +311,6 @@ config ARCH_MMAP_RND_BITS_MAX
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #
 # The "ARM system type" choice list is ordered alphabetically by option
 # text.  Please add new entries in the option alphabetic order.

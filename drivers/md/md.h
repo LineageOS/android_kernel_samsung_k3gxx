@@ -130,14 +130,11 @@ enum flag_bits {
 	Faulty,			/* device is known to have a fault */
 	In_sync,		/* device is in_sync with rest of array */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	Bitmap_sync,		/* ..actually, not quite In_sync.  Need a
 				 * bitmap-based recovery to get fully in sync
 				 */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	Unmerged,		/* device is being added to array and should
 				 * be considerred for bvec_merge_fn but not
 				 * yet for actual IO

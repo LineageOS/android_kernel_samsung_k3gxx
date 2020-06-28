@@ -100,26 +100,19 @@ static void udp_dump(struct udp_table *table, struct sk_buff *skb, struct netlin
 	num = s_num = cb->args[1];
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	for (slot = s_slot; slot <= table->mask; s_num = 0, slot++) {
 =======
 	for (slot = s_slot; slot <= table->mask; num = s_num = 0, slot++) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	for (slot = s_slot; slot <= table->mask; num = s_num = 0, slot++) {
->>>>>>> master
 		struct sock *sk;
 		struct hlist_nulls_node *node;
 		struct udp_hslot *hslot = &table->hash[slot];
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		num = 0;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (hlist_nulls_empty(&hslot->head))
 			continue;
 

@@ -146,14 +146,10 @@ static long swap_inode_boot_loader(struct super_block *sb,
 	if (IS_ERR(handle)) {
 		err = -EINVAL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto journal_err_out;
 =======
 		goto swap_boot_out;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto swap_boot_out;
->>>>>>> master
 	}
 
 	/* Protect extent tree against block allocations via delalloc */
@@ -212,12 +208,9 @@ static long swap_inode_boot_loader(struct super_block *sb,
 	ext4_double_up_write_data_sem(inode, inode_bl);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 journal_err_out:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ext4_inode_resume_unlocked_dio(inode);
 	ext4_inode_resume_unlocked_dio(inode_bl);
 
@@ -564,7 +557,6 @@ group_add_out:
 
 	case EXT4_IOC_SWAP_BOOT:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	{
 		int err;
 		if (!(filp->f_mode & FMODE_WRITE))
@@ -581,11 +573,6 @@ group_add_out:
 			return -EBADF;
 		return swap_inode_boot_loader(sb, inode);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!(filp->f_mode & FMODE_WRITE))
-			return -EBADF;
-		return swap_inode_boot_loader(sb, inode);
->>>>>>> master
 
 	case EXT4_IOC_RESIZE_FS: {
 		ext4_fsblk_t n_blocks_count;

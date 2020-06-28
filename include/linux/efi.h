@@ -770,7 +770,6 @@ struct efivars {
  */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define EFI_VAR_NAME_LEN	1024
 
 struct efi_variable {
@@ -779,10 +778,6 @@ struct efi_variable {
 struct efi_variable {
 	efi_char16_t  VariableName[1024/sizeof(efi_char16_t)];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-struct efi_variable {
-	efi_char16_t  VariableName[1024/sizeof(efi_char16_t)];
->>>>>>> master
 	efi_guid_t    VendorGuid;
 	unsigned long DataSize;
 	__u8          Data[1024];
@@ -845,7 +840,6 @@ struct efivar_entry *efivar_entry_find(efi_char16_t *name, efi_guid_t guid,
 				       struct list_head *head, bool remove);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 bool efivar_validate(efi_guid_t vendor, efi_char16_t *var_name, u8 *data,
 		     unsigned long data_size);
 bool efivar_variable_is_removable(efi_guid_t vendor, const char *name,
@@ -853,9 +847,6 @@ bool efivar_variable_is_removable(efi_guid_t vendor, const char *name,
 =======
 bool efivar_validate(struct efi_variable *var, u8 *data, unsigned long len);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-bool efivar_validate(struct efi_variable *var, u8 *data, unsigned long len);
->>>>>>> master
 
 extern struct work_struct efivar_work;
 void efivar_run_worker(void);

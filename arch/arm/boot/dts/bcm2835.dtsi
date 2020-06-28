@@ -86,13 +86,10 @@
 			interrupts = <2 21>;
 			clocks = <&clk_i2c>;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			#address-cells = <1>;
 			#size-cells = <0>;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			status = "disabled";
 		};
 
@@ -102,13 +99,10 @@
 			interrupts = <2 21>;
 			clocks = <&clk_i2c>;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			#address-cells = <1>;
 			#size-cells = <0>;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			status = "disabled";
 		};
 

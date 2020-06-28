@@ -519,7 +519,6 @@ static int core_scsi3_pr_seq_non_holder(
 			return 0;
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
        } else if (we && registered_nexus) {
                /*
                 * Reads are allowed for Write Exclusive locks
@@ -534,8 +533,6 @@ static int core_scsi3_pr_seq_non_holder(
                }
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 	pr_debug("%s Conflict for %sregistered nexus %s CDB: 0x%2x"
 		" for %s reservation\n", transport_dump_cmd_direction(cmd),
@@ -964,22 +961,16 @@ int core_scsi3_check_aptpl_registration(
 	struct se_portal_group *tpg,
 	struct se_lun *lun,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct se_node_acl *nacl,
 	u32 mapped_lun)
 {
 	struct se_dev_entry *deve = nacl->device_list[mapped_lun];
 =======
-=======
->>>>>>> master
 	struct se_lun_acl *lun_acl)
 {
 	struct se_node_acl *nacl = lun_acl->se_lun_nacl;
 	struct se_dev_entry *deve = nacl->device_list[lun_acl->mapped_lun];
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (dev->dev_reservation_flags & DRF_SPC2_RESERVATIONS)
 		return 0;
@@ -2019,14 +2010,10 @@ static int __core_scsi3_write_aptpl_to_file(
 	fput(file);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return (ret < 0) ? -EIO : 0;
 =======
 	return ret ? -EIO : 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return ret ? -EIO : 0;
->>>>>>> master
 }
 
 static int
@@ -2437,12 +2424,9 @@ core_scsi3_pro_reserve(struct se_cmd *cmd, int type, int scope, u64 res_key)
 	pr_res_holder = dev->dev_pr_res_holder;
 	if (pr_res_holder) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		int pr_res_type = pr_res_holder->pr_res_type;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		/*
 		 * From spc4r17 Section 5.7.9: Reserving:
 		 *
@@ -2454,16 +2438,12 @@ core_scsi3_pro_reserve(struct se_cmd *cmd, int type, int scope, u64 res_key)
 		 * RESERVATION CONFLICT status.
 		 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if ((pr_res_holder != pr_reg) &&
 		    (pr_res_type != PR_TYPE_WRITE_EXCLUSIVE_ALLREG) &&
 		    (pr_res_type != PR_TYPE_EXCLUSIVE_ACCESS_ALLREG)) {
 =======
 		if (pr_res_holder != pr_reg) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (pr_res_holder != pr_reg) {
->>>>>>> master
 			struct se_node_acl *pr_res_nacl = pr_res_holder->pr_reg_nacl;
 			pr_err("SPC-3 PR: Attempted RESERVE from"
 				" [%s]: %s while reservation already held by"
@@ -4069,15 +4049,11 @@ core_scsi3_pri_read_full_status(struct se_cmd *cmd)
 	u32 add_desc_len = 0, add_len = 0, desc_len, exp_desc_len;
 	u32 off = 8; /* off into first Full Status descriptor */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int format_code = 0, pr_res_type = 0, pr_res_scope = 0;
 	bool all_reg = false;
 =======
 	int format_code = 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int format_code = 0;
->>>>>>> master
 
 	if (cmd->data_length < 8) {
 		pr_err("PRIN SA READ_FULL_STATUS SCSI Data Length: %u"
@@ -4095,7 +4071,6 @@ core_scsi3_pri_read_full_status(struct se_cmd *cmd)
 	buf[3] = (dev->t10_pr.pr_generation & 0xff);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_lock(&dev->dev_reservation_lock);
 	if (dev->dev_pr_res_holder) {
 		struct t10_pr_registration *pr_holder = dev->dev_pr_res_holder;
@@ -4111,8 +4086,6 @@ core_scsi3_pri_read_full_status(struct se_cmd *cmd)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	spin_lock(&pr_tmpl->registration_lock);
 	list_for_each_entry_safe(pr_reg, pr_reg_tmp,
 			&pr_tmpl->registration_list, pr_reg_list) {
@@ -4163,21 +4136,16 @@ core_scsi3_pri_read_full_status(struct se_cmd *cmd)
 		 *
 		 * Also, if this registration is the reservation
 <<<<<<< HEAD
-<<<<<<< HEAD
 		 * holder or there is an All Registrants reservation
 		 * active, fill in SCOPE and TYPE in the next byte.
 =======
 		 * holder, fill in SCOPE and TYPE in the next byte.
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		 * holder, fill in SCOPE and TYPE in the next byte.
->>>>>>> master
 		 */
 		if (pr_reg->pr_res_holder) {
 			buf[off++] |= 0x01;
 			buf[off++] = (pr_reg->pr_res_scope & 0xf0) |
 				     (pr_reg->pr_res_type & 0x0f);
-<<<<<<< HEAD
 <<<<<<< HEAD
 		} else if (all_reg) {
 			buf[off++] |= 0x01;
@@ -4190,10 +4158,6 @@ core_scsi3_pri_read_full_status(struct se_cmd *cmd)
 		} else
 			off += 2;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		} else
-			off += 2;
->>>>>>> master
 
 		off += 4; /* Skip over reserved area */
 		/*

@@ -844,7 +844,6 @@ static long uinput_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 
 #ifdef CONFIG_COMPAT
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 #define UI_SET_PHYS_COMPAT	_IOW(UINPUT_IOCTL_BASE, 108, compat_uptr_t)
 
@@ -859,11 +858,6 @@ static long uinput_compat_ioctl(struct file *file,
 				unsigned int cmd, unsigned long arg)
 {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static long uinput_compat_ioctl(struct file *file,
-				unsigned int cmd, unsigned long arg)
-{
->>>>>>> master
 	return uinput_ioctl_handler(file, cmd, arg, compat_ptr(arg));
 }
 #endif

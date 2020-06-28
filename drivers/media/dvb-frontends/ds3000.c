@@ -865,7 +865,6 @@ struct dvb_frontend *ds3000_attach(const struct ds3000_config *config,
 			sizeof(struct dvb_frontend_ops));
 	state->frontend.demodulator_priv = state;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	/*
 	 * Some devices like T480 starts with voltage on. Be sure
@@ -875,8 +874,6 @@ struct dvb_frontend *ds3000_attach(const struct ds3000_config *config,
 	ds3000_set_voltage(&state->frontend, SEC_VOLTAGE_OFF);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return &state->frontend;
 
 error3:

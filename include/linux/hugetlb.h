@@ -32,12 +32,9 @@ void hugepage_put_subpool(struct hugepage_subpool *spool);
 
 int PageHuge(struct page *page);
 <<<<<<< HEAD
-<<<<<<< HEAD
 int PageHeadHuge(struct page *page_head);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 void reset_vma_resv_huge_pages(struct vm_area_struct *vma);
 int hugetlb_sysctl_handler(struct ctl_table *, int, void __user *, size_t *, loff_t *);
@@ -106,7 +103,6 @@ static inline int PageHuge(struct page *page)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static inline int PageHeadHuge(struct page *page_head)
 {
 	return 0;
@@ -114,8 +110,6 @@ static inline int PageHeadHuge(struct page *page_head)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static inline void reset_vma_resv_huge_pages(struct vm_area_struct *vma)
 {
 }

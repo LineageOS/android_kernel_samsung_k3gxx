@@ -11,12 +11,9 @@
 
 #include <linux/bio.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/completion.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #include <linux/mempool.h>
 #include <linux/module.h>
 #include <linux/sched.h>
@@ -42,14 +39,10 @@ struct io {
 	unsigned long error_bits;
 	atomic_t count;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct completion *wait;
 =======
 	struct task_struct *sleeper;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct task_struct *sleeper;
->>>>>>> master
 	struct dm_io_client *client;
 	io_notify_fn callback;
 	void *context;
@@ -138,17 +131,12 @@ static void dec_count(struct io *io, unsigned int region, int error)
 						     io->vma_invalidate_size);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (io->wait)
 			complete(io->wait);
 =======
 		if (io->sleeper)
 			wake_up_process(io->sleeper);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (io->sleeper)
-			wake_up_process(io->sleeper);
->>>>>>> master
 
 		else {
 			unsigned long r = io->error_bits;
@@ -316,7 +304,6 @@ static void do_region(int rw, unsigned region, struct dm_io_region *where,
 	sector_t num_sectors;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Reject unsupported discard requests */
 	if ((rw & REQ_DISCARD) && !blk_queue_discard(q)) {
 		dec_count(io, region, -EOPNOTSUPP);
@@ -325,8 +312,6 @@ static void do_region(int rw, unsigned region, struct dm_io_region *where,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/*
 	 * where->count may be zero if rw holds a flush and we need to
 	 * send a zero-sized flush.
@@ -424,12 +409,9 @@ static int sync_io(struct dm_io_client *client, unsigned int num_regions,
 	volatile char io_[sizeof(struct io) + __alignof__(struct io) - 1];
 	struct io *io = (struct io *)PTR_ALIGN(&io_, __alignof__(struct io));
 <<<<<<< HEAD
-<<<<<<< HEAD
 	DECLARE_COMPLETION_ONSTACK(wait);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (num_regions > 1 && (rw & RW_MASK) != WRITE) {
 		WARN_ON(1);
@@ -439,14 +421,10 @@ static int sync_io(struct dm_io_client *client, unsigned int num_regions,
 	io->error_bits = 0;
 	atomic_set(&io->count, 1); /* see dispatch_io() */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	io->wait = &wait;
 =======
 	io->sleeper = current;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	io->sleeper = current;
->>>>>>> master
 	io->client = client;
 
 	io->vma_invalidate_address = dp->vma_invalidate_address;
@@ -455,11 +433,8 @@ static int sync_io(struct dm_io_client *client, unsigned int num_regions,
 	dispatch_io(rw, num_regions, where, dp, io, 1);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	wait_for_completion_io(&wait);
 =======
-=======
->>>>>>> master
 	while (1) {
 		set_current_state(TASK_UNINTERRUPTIBLE);
 
@@ -469,10 +444,7 @@ static int sync_io(struct dm_io_client *client, unsigned int num_regions,
 		io_schedule();
 	}
 	set_current_state(TASK_RUNNING);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (error_bits)
 		*error_bits = io->error_bits;
@@ -496,14 +468,10 @@ static int async_io(struct dm_io_client *client, unsigned int num_regions,
 	io->error_bits = 0;
 	atomic_set(&io->count, 1); /* see dispatch_io() */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	io->wait = NULL;
 =======
 	io->sleeper = NULL;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	io->sleeper = NULL;
->>>>>>> master
 	io->client = client;
 	io->callback = fn;
 	io->context = context;

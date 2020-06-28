@@ -122,14 +122,11 @@ static struct dmi_system_id __cpuinitdata processor_power_dmi_table[] = {
 static void acpi_safe_halt(void)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!tif_need_resched()) {
 		safe_halt();
 		local_irq_disable();
 	}
 =======
-=======
->>>>>>> master
 	current_thread_info()->status &= ~TS_POLLING;
 	/*
 	 * TS_POLLING-cleared state must be visible before we
@@ -141,10 +138,7 @@ static void acpi_safe_halt(void)
 		local_irq_disable();
 	}
 	current_thread_info()->status |= TS_POLLING;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 #ifdef ARCH_APICTIMER_STOPS_ON_C3
@@ -753,7 +747,6 @@ static int acpi_idle_enter_c1(struct cpuidle_device *dev,
 		return -EINVAL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (cx->entry_method == ACPI_CSTATE_FFH) {
 		if (current_set_polling_and_test())
 			return -EINVAL;
@@ -761,8 +754,6 @@ static int acpi_idle_enter_c1(struct cpuidle_device *dev,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	lapic_timer_state_broadcast(pr, cx, 1);
 	acpi_idle_do_entry(cx);
 
@@ -817,13 +808,10 @@ static int acpi_idle_enter_simple(struct cpuidle_device *dev,
 		return -EINVAL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (cx->entry_method == ACPI_CSTATE_FFH) {
 		if (current_set_polling_and_test())
 			return -EINVAL;
 =======
-=======
->>>>>>> master
 	if (cx->entry_method != ACPI_CSTATE_FFH) {
 		current_thread_info()->status &= ~TS_POLLING;
 		/*
@@ -836,10 +824,7 @@ static int acpi_idle_enter_simple(struct cpuidle_device *dev,
 			current_thread_info()->status |= TS_POLLING;
 			return -EINVAL;
 		}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	/*
@@ -858,17 +843,11 @@ static int acpi_idle_enter_simple(struct cpuidle_device *dev,
 	sched_clock_idle_wakeup_event(0);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if (cx->entry_method != ACPI_CSTATE_FFH)
 		current_thread_info()->status |= TS_POLLING;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (cx->entry_method != ACPI_CSTATE_FFH)
-		current_thread_info()->status |= TS_POLLING;
-
->>>>>>> master
 	lapic_timer_state_broadcast(pr, cx, 0);
 	return index;
 }
@@ -906,13 +885,10 @@ static int acpi_idle_enter_bm(struct cpuidle_device *dev,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (cx->entry_method == ACPI_CSTATE_FFH) {
 		if (current_set_polling_and_test())
 			return -EINVAL;
 =======
-=======
->>>>>>> master
 	if (cx->entry_method != ACPI_CSTATE_FFH) {
 		current_thread_info()->status &= ~TS_POLLING;
 		/*
@@ -925,10 +901,7 @@ static int acpi_idle_enter_bm(struct cpuidle_device *dev,
 			current_thread_info()->status |= TS_POLLING;
 			return -EINVAL;
 		}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	acpi_unlazy_tlb(smp_processor_id());
@@ -975,17 +948,11 @@ static int acpi_idle_enter_bm(struct cpuidle_device *dev,
 	sched_clock_idle_wakeup_event(0);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if (cx->entry_method != ACPI_CSTATE_FFH)
 		current_thread_info()->status |= TS_POLLING;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (cx->entry_method != ACPI_CSTATE_FFH)
-		current_thread_info()->status |= TS_POLLING;
-
->>>>>>> master
 	lapic_timer_state_broadcast(pr, cx, 0);
 	return index;
 }
@@ -1071,14 +1038,10 @@ static int acpi_processor_setup_cpuidle_states(struct acpi_processor *pr)
 
 	drv->safe_state_index = -1;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	for (i = CPUIDLE_DRIVER_STATE_START; i < CPUIDLE_STATE_MAX; i++) {
 =======
 	for (i = 0; i < CPUIDLE_STATE_MAX; i++) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	for (i = 0; i < CPUIDLE_STATE_MAX; i++) {
->>>>>>> master
 		drv->states[i].name[0] = '\0';
 		drv->states[i].desc[0] = '\0';
 	}
@@ -1202,7 +1165,6 @@ int acpi_processor_cst_has_changed(struct acpi_processor *pr)
 	if (pr->id == 0 && cpuidle_get_driver() == &acpi_idle_driver) {
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* Protect against cpu-hotplug */
 		get_online_cpus();
 		cpuidle_pause_and_lock();
@@ -1211,11 +1173,6 @@ int acpi_processor_cst_has_changed(struct acpi_processor *pr)
 		/* Protect against cpu-hotplug */
 		get_online_cpus();
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		cpuidle_pause_and_lock();
-		/* Protect against cpu-hotplug */
-		get_online_cpus();
->>>>>>> master
 
 		/* Disable all cpuidle devices */
 		for_each_online_cpu(cpu) {
@@ -1243,17 +1200,12 @@ int acpi_processor_cst_has_changed(struct acpi_processor *pr)
 			}
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 		cpuidle_resume_and_unlock();
 		put_online_cpus();
 =======
 		put_online_cpus();
 		cpuidle_resume_and_unlock();
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		put_online_cpus();
-		cpuidle_resume_and_unlock();
->>>>>>> master
 	}
 
 	return 0;

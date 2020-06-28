@@ -1623,14 +1623,10 @@ int mwifiex_ret_802_11_scan(struct mwifiex_private *priv,
 		size_t ie_len;
 		u16 channel = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		__le64 fw_tsf = 0;
 =======
 		u64 fw_tsf = 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		u64 fw_tsf = 0;
->>>>>>> master
 		u16 beacon_size = 0;
 		u32 curr_bcn_bytes;
 		u32 freq;
@@ -1758,14 +1754,10 @@ int mwifiex_ret_802_11_scan(struct mwifiex_private *priv,
 				bss_priv = (struct mwifiex_bss_priv *)bss->priv;
 				bss_priv->band = band;
 <<<<<<< HEAD
-<<<<<<< HEAD
 				bss_priv->fw_tsf = le64_to_cpu(fw_tsf);
 =======
 				bss_priv->fw_tsf = fw_tsf;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				bss_priv->fw_tsf = fw_tsf;
->>>>>>> master
 				if (priv->media_connected &&
 				    !memcmp(bssid,
 					    priv->curr_bss_params.bss_descriptor
@@ -2057,7 +2049,6 @@ mwifiex_save_curr_bcn(struct mwifiex_private *priv)
 
 	if (curr_bss->bcn_vht_cap)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		curr_bss->bcn_vht_cap = (void *)(curr_bss->beacon_buf +
 						 curr_bss->vht_cap_offset);
 
@@ -2065,18 +2056,13 @@ mwifiex_save_curr_bcn(struct mwifiex_private *priv)
 		curr_bss->bcn_vht_oper = (void *)(curr_bss->beacon_buf +
 						  curr_bss->vht_info_offset);
 =======
-=======
->>>>>>> master
 		curr_bss->bcn_ht_cap = (void *)(curr_bss->beacon_buf +
 						curr_bss->vht_cap_offset);
 
 	if (curr_bss->bcn_vht_oper)
 		curr_bss->bcn_ht_oper = (void *)(curr_bss->beacon_buf +
 						 curr_bss->vht_info_offset);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (curr_bss->bcn_bss_co_2040)
 		curr_bss->bcn_bss_co_2040 =

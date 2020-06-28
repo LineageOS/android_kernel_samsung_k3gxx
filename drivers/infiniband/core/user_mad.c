@@ -99,14 +99,10 @@ struct ib_umad_port {
 struct ib_umad_device {
 	int                  start_port, end_port;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct kobject       kobj;
 =======
 	struct kref          ref;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct kref          ref;
->>>>>>> master
 	struct ib_umad_port  port[0];
 };
 
@@ -143,27 +139,20 @@ static void ib_umad_add_one(struct ib_device *device);
 static void ib_umad_remove_one(struct ib_device *device);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void ib_umad_release_dev(struct kobject *kobj)
 {
 	struct ib_umad_device *dev =
 		container_of(kobj, struct ib_umad_device, kobj);
 =======
-=======
->>>>>>> master
 static void ib_umad_release_dev(struct kref *ref)
 {
 	struct ib_umad_device *dev =
 		container_of(ref, struct ib_umad_device, ref);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	kfree(dev);
 }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 static struct kobj_type ib_umad_dev_ktype = {
 	.release = ib_umad_release_dev,
@@ -171,8 +160,6 @@ static struct kobj_type ib_umad_dev_ktype = {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int hdr_size(struct ib_umad_file *file)
 {
 	return file->use_pkey_index ? sizeof (struct ib_user_mad_hdr) :
@@ -812,7 +799,6 @@ static int ib_umad_open(struct inode *inode, struct file *filp)
 	struct ib_umad_port *port;
 	struct ib_umad_file *file;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int ret = -ENXIO;
 
 	port = container_of(inode->i_cdev, struct ib_umad_port, cdev);
@@ -827,8 +813,6 @@ static int ib_umad_open(struct inode *inode, struct file *filp)
 	if (!file)
 		goto out;
 =======
-=======
->>>>>>> master
 	int ret;
 
 	port = container_of(inode->i_cdev, struct ib_umad_port, cdev);
@@ -850,10 +834,7 @@ static int ib_umad_open(struct inode *inode, struct file *filp)
 		ret = -ENOMEM;
 		goto out;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	mutex_init(&file->mutex);
 	spin_lock_init(&file->send_lock);
@@ -868,7 +849,6 @@ static int ib_umad_open(struct inode *inode, struct file *filp)
 
 	ret = nonseekable_open(inode, filp);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ret) {
 		list_del(&file->port_list);
 		kfree(file);
@@ -878,8 +858,6 @@ static int ib_umad_open(struct inode *inode, struct file *filp)
 	kobject_get(&port->umad_dev->kobj);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 out:
 	mutex_unlock(&port->file_mutex);
@@ -919,14 +897,10 @@ static int ib_umad_close(struct inode *inode, struct file *filp)
 
 	kfree(file);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	kobject_put(&dev->kobj);
 =======
 	kref_put(&dev->ref, ib_umad_release_dev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	kref_put(&dev->ref, ib_umad_release_dev);
->>>>>>> master
 
 	return 0;
 }
@@ -955,18 +929,12 @@ static int ib_umad_sm_open(struct inode *inode, struct file *filp)
 
 	port = container_of(inode->i_cdev, struct ib_umad_port, sm_cdev);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	if (port)
 		kref_get(&port->umad_dev->ref);
 	else
 		return -ENXIO;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (filp->f_flags & O_NONBLOCK) {
 		if (down_trylock(&port->sm_sem)) {
@@ -981,7 +949,6 @@ static int ib_umad_sm_open(struct inode *inode, struct file *filp)
 	}
 
 	ret = ib_modify_port(port->ib_dev, port->port_num, 0, &props);
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (ret)
 		goto err_up_sem;
@@ -1005,8 +972,6 @@ err_up_sem:
 
 fail:
 =======
-=======
->>>>>>> master
 	if (ret) {
 		up(&port->sm_sem);
 		goto fail;
@@ -1018,10 +983,7 @@ fail:
 
 fail:
 	kref_put(&port->umad_dev->ref, ib_umad_release_dev);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return ret;
 }
 
@@ -1041,14 +1003,10 @@ static int ib_umad_sm_close(struct inode *inode, struct file *filp)
 	up(&port->sm_sem);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	kobject_put(&port->umad_dev->kobj);
 =======
 	kref_put(&port->umad_dev->ref, ib_umad_release_dev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	kref_put(&port->umad_dev->ref, ib_umad_release_dev);
->>>>>>> master
 
 	return ret;
 }
@@ -1117,12 +1075,9 @@ static int find_overflow_devnum(void)
 
 static int ib_umad_init_port(struct ib_device *device, int port_num,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			     struct ib_umad_device *umad_dev,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			     struct ib_umad_port *port)
 {
 	int devnum;
@@ -1156,12 +1111,9 @@ static int ib_umad_init_port(struct ib_device *device, int port_num,
 	cdev_init(&port->cdev, &umad_fops);
 	port->cdev.owner = THIS_MODULE;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	port->cdev.kobj.parent = &umad_dev->kobj;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	kobject_set_name(&port->cdev.kobj, "umad%d", port->dev_num);
 	if (cdev_add(&port->cdev, base, 1))
 		goto err_cdev;
@@ -1181,12 +1133,9 @@ static int ib_umad_init_port(struct ib_device *device, int port_num,
 	cdev_init(&port->sm_cdev, &umad_sm_fops);
 	port->sm_cdev.owner = THIS_MODULE;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	port->sm_cdev.kobj.parent = &umad_dev->kobj;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	kobject_set_name(&port->sm_cdev.kobj, "issm%d", port->dev_num);
 	if (cdev_add(&port->sm_cdev, base, 1))
 		goto err_sm_cdev;
@@ -1281,14 +1230,10 @@ static void ib_umad_add_one(struct ib_device *device)
 		return;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	kobject_init(&umad_dev->kobj, &ib_umad_dev_ktype);
 =======
 	kref_init(&umad_dev->ref);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	kref_init(&umad_dev->ref);
->>>>>>> master
 
 	umad_dev->start_port = s;
 	umad_dev->end_port   = e;
@@ -1297,15 +1242,11 @@ static void ib_umad_add_one(struct ib_device *device)
 		umad_dev->port[i - s].umad_dev = umad_dev;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (ib_umad_init_port(device, i, umad_dev,
 				      &umad_dev->port[i - s]))
 =======
 		if (ib_umad_init_port(device, i, &umad_dev->port[i - s]))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (ib_umad_init_port(device, i, &umad_dev->port[i - s]))
->>>>>>> master
 			goto err;
 	}
 
@@ -1318,14 +1259,10 @@ err:
 		ib_umad_kill_port(&umad_dev->port[i - s]);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	kobject_put(&umad_dev->kobj);
 =======
 	kref_put(&umad_dev->ref, ib_umad_release_dev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	kref_put(&umad_dev->ref, ib_umad_release_dev);
->>>>>>> master
 }
 
 static void ib_umad_remove_one(struct ib_device *device)
@@ -1340,14 +1277,10 @@ static void ib_umad_remove_one(struct ib_device *device)
 		ib_umad_kill_port(&umad_dev->port[i]);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	kobject_put(&umad_dev->kobj);
 =======
 	kref_put(&umad_dev->ref, ib_umad_release_dev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	kref_put(&umad_dev->ref, ib_umad_release_dev);
->>>>>>> master
 }
 
 static char *umad_devnode(struct device *dev, umode_t *mode)

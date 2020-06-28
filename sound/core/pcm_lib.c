@@ -185,14 +185,10 @@ static void xrun(struct snd_pcm_substream *substream)
 		if (xrun_debug(substream, XRUN_DEBUG_BASIC)) {		\
 			xrun_log_show(substream);			\
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (snd_printd_ratelimit()) {			\
 =======
 			if (printk_ratelimit()) {			\
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			if (printk_ratelimit()) {			\
->>>>>>> master
 				snd_printd("PCM: " fmt, ##args);	\
 			}						\
 			dump_stack_on_xrun(substream);			\
@@ -351,14 +347,10 @@ static int snd_pcm_update_hw_ptr0(struct snd_pcm_substream *substream,
 	}
 	if (pos >= runtime->buffer_size) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (snd_printd_ratelimit()) {
 =======
 		if (printk_ratelimit()) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (printk_ratelimit()) {
->>>>>>> master
 			char name[16];
 			snd_pcm_debug_name(substream, name, sizeof(name));
 			xrun_log_show(substream);
@@ -585,15 +577,11 @@ int snd_pcm_update_hw_ptr(struct snd_pcm_substream *substream)
  * Sets the given PCM operators to the pcm instance.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 void snd_pcm_set_ops(struct snd_pcm *pcm, int direction,
 		     const struct snd_pcm_ops *ops)
 =======
 void snd_pcm_set_ops(struct snd_pcm *pcm, int direction, struct snd_pcm_ops *ops)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-void snd_pcm_set_ops(struct snd_pcm *pcm, int direction, struct snd_pcm_ops *ops)
->>>>>>> master
 {
 	struct snd_pcm_str *stream = &pcm->streams[direction];
 	struct snd_pcm_substream *substream;
@@ -1808,21 +1796,16 @@ static int snd_pcm_lib_ioctl_fifo_size(struct snd_pcm_substream *substream,
 	struct snd_pcm_hw_params *params = arg;
 	snd_pcm_format_t format;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int channels;
 	ssize_t frame_size;
 =======
 	int channels, width;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int channels, width;
->>>>>>> master
 
 	params->fifo_size = substream->runtime->hw.fifo_size;
 	if (!(substream->runtime->hw.info & SNDRV_PCM_INFO_FIFO_IN_FRAMES)) {
 		format = params_format(params);
 		channels = params_channels(params);
-<<<<<<< HEAD
 <<<<<<< HEAD
 		frame_size = snd_pcm_format_size(format, channels);
 		if (frame_size > 0)
@@ -1831,10 +1814,6 @@ static int snd_pcm_lib_ioctl_fifo_size(struct snd_pcm_substream *substream,
 		width = snd_pcm_format_physical_width(format);
 		params->fifo_size /= width * channels;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		width = snd_pcm_format_physical_width(format);
-		params->fifo_size /= width * channels;
->>>>>>> master
 	}
 	return 0;
 }
@@ -1900,22 +1879,16 @@ void snd_pcm_period_elapsed(struct snd_pcm_substream *substream)
 		snd_timer_interrupt(substream->timer, 1);
  _end:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	kill_fasync(&runtime->fasync, SIGIO, POLL_IN);
 	snd_pcm_stream_unlock_irqrestore(substream, flags);
 	if (runtime->transfer_ack_end)
 		runtime->transfer_ack_end(substream);
 =======
-=======
->>>>>>> master
 	snd_pcm_stream_unlock_irqrestore(substream, flags);
 	if (runtime->transfer_ack_end)
 		runtime->transfer_ack_end(substream);
 	kill_fasync(&runtime->fasync, SIGIO, POLL_IN);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 EXPORT_SYMBOL(snd_pcm_period_elapsed);
@@ -1995,13 +1968,10 @@ static int wait_for_avail(struct snd_pcm_substream *substream,
 			err = -EBADFD;
 			goto _endloop;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		case SNDRV_PCM_STATE_PAUSED:
 			continue;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		}
 		if (!tout) {
 			snd_printd("%s write error (DMA or IRQ trouble?)\n",

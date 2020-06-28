@@ -931,12 +931,9 @@ static struct of_device_id msm_match_table[] = {
 	{}
 };
 <<<<<<< HEAD
-<<<<<<< HEAD
 MODULE_DEVICE_TABLE(of, msm_match_table);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 static struct platform_driver msm_platform_driver = {
 	.remove = msm_serial_remove,

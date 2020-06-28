@@ -297,17 +297,12 @@ config SENSORS_K10TEMP
 	  sensor(s) inside your CPU. Supported are later revisions of
 	  the AMD Family 10h and all revisions of the AMD Family 11h,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	  12h (Llano), 14h (Brazos), 15h (Bulldozer/Trinity) and
 	  16h (Kabini) microarchitectures.
 =======
 	  12h (Llano), 14h (Brazos) and 15h (Bulldozer/Trinity)
 	  microarchitectures.
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	  12h (Llano), 14h (Brazos) and 15h (Bulldozer/Trinity)
-	  microarchitectures.
->>>>>>> master
 
 	  This driver can also be built as a module.  If so, the module
 	  will be called k10temp.
@@ -955,14 +950,10 @@ config SENSORS_NCT6775
 config SENSORS_NTC_THERMISTOR
 	tristate "NTC thermistor support"
 <<<<<<< HEAD
-<<<<<<< HEAD
 	depends on !OF || IIO=n || IIO
 =======
 	depends on (!OF && !IIO) || (OF && IIO)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	depends on (!OF && !IIO) || (OF && IIO)
->>>>>>> master
 	help
 	  This driver supports NTC thermistors sensor reading and its
 	  interpretation. The driver can also monitor the temperature and

@@ -373,15 +373,12 @@ static struct sk_buff *ndisc_alloc_skb(struct net_device *dev,
 	struct sock *sk = dev_net(dev)->ipv6.ndisc_sk;
 	struct sk_buff *skb;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	skb = alloc_skb(hlen + sizeof(struct ipv6hdr) + len + tlen, GFP_ATOMIC);
 	if (!skb) {
 		ND_PRINTK(0, err, "ndisc: %s failed to allocate an skb\n",
 			  __func__);
 =======
-=======
->>>>>>> master
 	int err;
 
 	skb = sock_alloc_send_skb(sk,
@@ -390,10 +387,7 @@ static struct sk_buff *ndisc_alloc_skb(struct net_device *dev,
 	if (!skb) {
 		ND_PRINTK(0, err, "ndisc: %s failed to allocate an skb, err=%d\n",
 			  __func__, err);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		return NULL;
 	}
 
@@ -404,7 +398,6 @@ static struct sk_buff *ndisc_alloc_skb(struct net_device *dev,
 	skb_reset_transport_header(skb);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Manually assign socket ownership as we avoid calling
 	 * sock_alloc_send_pskb() to bypass wmem buffer limits
 	 */
@@ -412,8 +405,6 @@ static struct sk_buff *ndisc_alloc_skb(struct net_device *dev,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return skb;
 }
 
@@ -1608,14 +1599,10 @@ static int ndisc_netdev_event(struct notifier_block *this, unsigned long event, 
 	case NETDEV_CHANGEADDR:
 		neigh_changeaddr(&nd_tbl, dev);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		fib6_run_gc(0, net, false);
 =======
 		fib6_run_gc(~0UL, net);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		fib6_run_gc(~0UL, net);
->>>>>>> master
 		idev = in6_dev_get(dev);
 		if (!idev)
 			break;
@@ -1626,14 +1613,10 @@ static int ndisc_netdev_event(struct notifier_block *this, unsigned long event, 
 	case NETDEV_DOWN:
 		neigh_ifdown(&nd_tbl, dev);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		fib6_run_gc(0, net, false);
 =======
 		fib6_run_gc(~0UL, net);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		fib6_run_gc(~0UL, net);
->>>>>>> master
 		break;
 	case NETDEV_NOTIFY_PEERS:
 		ndisc_send_unsol_na(dev);
@@ -1756,7 +1739,6 @@ int __init ndisc_init(void)
 		goto out_unregister_pernet;
 #endif
 <<<<<<< HEAD
-<<<<<<< HEAD
 out:
 	return err;
 
@@ -1776,8 +1758,6 @@ void ndisc_late_cleanup(void)
 {
 	unregister_netdevice_notifier(&ndisc_netdev_notifier);
 =======
-=======
->>>>>>> master
 	err = register_netdevice_notifier(&ndisc_netdev_notifier);
 	if (err)
 		goto out_unregister_sysctl;
@@ -1791,22 +1771,15 @@ out_unregister_pernet:
 #endif
 	unregister_pernet_subsys(&ndisc_net_ops);
 	goto out;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 void ndisc_cleanup(void)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	unregister_netdevice_notifier(&ndisc_netdev_notifier);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unregister_netdevice_notifier(&ndisc_netdev_notifier);
->>>>>>> master
 #ifdef CONFIG_SYSCTL
 	neigh_sysctl_unregister(&nd_tbl.parms);
 #endif

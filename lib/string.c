@@ -587,7 +587,6 @@ EXPORT_SYMBOL(memset);
 #endif
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /**
  * memzero_explicit - Fill a region of memory (e.g. sensitive
  *		      keying data) with 0s.
@@ -606,8 +605,6 @@ EXPORT_SYMBOL(memzero_explicit);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #ifndef __HAVE_ARCH_MEMCPY
 /**
  * memcpy - Copy one area of memory to another

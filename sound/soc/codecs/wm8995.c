@@ -550,23 +550,17 @@ static int wm8995_put_class_w(struct snd_kcontrol *kcontrol,
 			      struct snd_ctl_elem_value *ucontrol)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct snd_soc_codec *codec = snd_soc_dapm_kcontrol_codec(kcontrol);
 	int ret;
 
 =======
-=======
->>>>>>> master
 	struct snd_soc_dapm_widget_list *wlist = snd_kcontrol_chip(kcontrol);
 	struct snd_soc_dapm_widget *w = wlist->widgets[0];
 	struct snd_soc_codec *codec;
 	int ret;
 
 	codec = w->codec;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ret = snd_soc_dapm_put_volsw(kcontrol, ucontrol);
 	wm8995_update_class_w(codec);
 	return ret;

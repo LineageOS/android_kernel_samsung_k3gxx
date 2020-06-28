@@ -3004,7 +3004,6 @@ static bool tg3_phy_power_bug(struct tg3 *tp)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static bool tg3_phy_led_bug(struct tg3 *tp)
 {
 	switch (tg3_asic_rev(tp)) {
@@ -3020,8 +3019,6 @@ static bool tg3_phy_led_bug(struct tg3 *tp)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static void tg3_power_down_phy(struct tg3 *tp, bool do_low_power)
 {
 	u32 val;
@@ -3070,7 +3067,6 @@ static void tg3_power_down_phy(struct tg3 *tp, bool do_low_power)
 		return;
 	} else if (do_low_power) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!tg3_phy_led_bug(tp))
 			tg3_writephy(tp, MII_TG3_EXT_CTRL,
 				     MII_TG3_EXT_CTRL_FORCE_LED_OFF);
@@ -3078,10 +3074,6 @@ static void tg3_power_down_phy(struct tg3 *tp, bool do_low_power)
 		tg3_writephy(tp, MII_TG3_EXT_CTRL,
 			     MII_TG3_EXT_CTRL_FORCE_LED_OFF);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		tg3_writephy(tp, MII_TG3_EXT_CTRL,
-			     MII_TG3_EXT_CTRL_FORCE_LED_OFF);
->>>>>>> master
 
 		val = MII_TG3_AUXCTL_PCTL_100TX_LPWR |
 		      MII_TG3_AUXCTL_PCTL_SPR_ISOLATE |
@@ -6454,14 +6446,10 @@ static void tg3_tx(struct tg3_napi *tnapi)
 		bytes_compl += skb->len;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		dev_kfree_skb_any(skb);
 =======
 		dev_kfree_skb(skb);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		dev_kfree_skb(skb);
->>>>>>> master
 
 		if (unlikely(tx_bug)) {
 			tg3_tx_recover(tp);
@@ -6712,16 +6700,11 @@ static int tg3_rx(struct tg3_napi *tnapi, int budget)
 		work_mask |= opaque_key;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (desc->err_vlan & RXD_ERR_MASK) {
 =======
 		if ((desc->err_vlan & RXD_ERR_MASK) != 0 &&
 		    (desc->err_vlan != RXD_ERR_ODD_NIBBLE_RCVD_MII)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if ((desc->err_vlan & RXD_ERR_MASK) != 0 &&
-		    (desc->err_vlan != RXD_ERR_ODD_NIBBLE_RCVD_MII)) {
->>>>>>> master
 		drop_it:
 			tg3_recycle_rx(tnapi, tpr, opaque_key,
 				       desc_idx, *post_ptr);
@@ -6756,20 +6739,14 @@ static int tg3_rx(struct tg3_napi *tnapi, int budget)
 					 PCI_DMA_FROMDEVICE);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 			skb = build_skb(data, frag_size);
 			if (!skb) {
 				tg3_frag_free(frag_size != 0, data);
 				goto drop_it_no_recycle;
 			}
 			skb_reserve(skb, TG3_RX_OFFSET(tp));
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			/* Ensure that the update to the data happens
 			 * after the usage of the old DMA mapping.
 			 */
@@ -6778,7 +6755,6 @@ static int tg3_rx(struct tg3_napi *tnapi, int budget)
 			ri->data = NULL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 			skb = build_skb(data, frag_size);
 			if (!skb) {
 				tg3_frag_free(frag_size != 0, data);
@@ -6787,8 +6763,6 @@ static int tg3_rx(struct tg3_napi *tnapi, int budget)
 			skb_reserve(skb, TG3_RX_OFFSET(tp));
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		} else {
 			tg3_recycle_rx(tnapi, tpr, opaque_key,
 				       desc_idx, *post_ptr);
@@ -6823,7 +6797,6 @@ static int tg3_rx(struct tg3_napi *tnapi, int budget)
 
 		if (len > (tp->dev->mtu + ETH_HLEN) &&
 <<<<<<< HEAD
-<<<<<<< HEAD
 		    skb->protocol != htons(ETH_P_8021Q) &&
 		    skb->protocol != htons(ETH_P_8021AD)) {
 			dev_kfree_skb_any(skb);
@@ -6831,10 +6804,6 @@ static int tg3_rx(struct tg3_napi *tnapi, int budget)
 		    skb->protocol != htons(ETH_P_8021Q)) {
 			dev_kfree_skb(skb);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		    skb->protocol != htons(ETH_P_8021Q)) {
-			dev_kfree_skb(skb);
->>>>>>> master
 			goto drop_it_no_recycle;
 		}
 
@@ -7548,14 +7517,10 @@ static inline int tg3_4g_overflow_test(dma_addr_t mapping, int len)
 	u32 base = (u32) mapping & 0xffffffff;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return base + len + 8 < base;
 =======
 	return (base > 0xffffdcc0) && (base + len + 8 < base);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return (base > 0xffffdcc0) && (base + len + 8 < base);
->>>>>>> master
 }
 
 /* Test for TSO DMA buffers that cross into regions which are within MSS bytes
@@ -7726,14 +7691,10 @@ static int tigon3_dma_hwbug_workaround(struct tg3_napi *tnapi,
 		/* Make sure the mapping succeeded */
 		if (pci_dma_mapping_error(tp->pdev, new_addr)) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			dev_kfree_skb_any(new_skb);
 =======
 			dev_kfree_skb(new_skb);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			dev_kfree_skb(new_skb);
->>>>>>> master
 			ret = -1;
 		} else {
 			u32 save_entry = *entry;
@@ -7749,28 +7710,20 @@ static int tigon3_dma_hwbug_workaround(struct tg3_napi *tnapi,
 					    mss, vlan)) {
 				tg3_tx_skb_unmap(tnapi, save_entry, -1);
 <<<<<<< HEAD
-<<<<<<< HEAD
 				dev_kfree_skb_any(new_skb);
 =======
 				dev_kfree_skb(new_skb);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				dev_kfree_skb(new_skb);
->>>>>>> master
 				ret = -1;
 			}
 		}
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dev_kfree_skb_any(skb);
 =======
 	dev_kfree_skb(skb);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	dev_kfree_skb(skb);
->>>>>>> master
 	*pskb = new_skb;
 	return ret;
 }
@@ -7814,14 +7767,10 @@ static int tg3_tso_bug(struct tg3 *tp, struct sk_buff *skb)
 
 tg3_tso_bug_end:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dev_kfree_skb_any(skb);
 =======
 	dev_kfree_skb(skb);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	dev_kfree_skb(skb);
->>>>>>> master
 
 	return NETDEV_TX_OK;
 }
@@ -7866,15 +7815,10 @@ static netdev_tx_t tg3_start_xmit(struct sk_buff *skb, struct net_device *dev)
 	entry = tnapi->tx_prod;
 	base_flags = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if (skb->ip_summed == CHECKSUM_PARTIAL)
 		base_flags |= TXD_FLAG_TCPUDP_CSUM;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (skb->ip_summed == CHECKSUM_PARTIAL)
-		base_flags |= TXD_FLAG_TCPUDP_CSUM;
->>>>>>> master
 
 	mss = skb_shinfo(skb)->gso_size;
 	if (mss) {
@@ -7891,7 +7835,6 @@ static netdev_tx_t tg3_start_xmit(struct sk_buff *skb, struct net_device *dev)
 		hdr_len = skb_transport_offset(skb) + tcp_hdrlen(skb) - ETH_HLEN;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* HW/FW can not correctly segment packets that have been
 		 * vlan encapsulated.
 		 */
@@ -7901,8 +7844,6 @@ static netdev_tx_t tg3_start_xmit(struct sk_buff *skb, struct net_device *dev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (!skb_is_gso_v6(skb)) {
 			iph->check = 0;
 			iph->tot_len = htons(mss + hdr_len);
@@ -7950,7 +7891,6 @@ static netdev_tx_t tg3_start_xmit(struct sk_buff *skb, struct net_device *dev)
 			}
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	} else if (skb->ip_summed == CHECKSUM_PARTIAL) {
 		/* HW/FW can not correctly checksum packets that have been
 		 * vlan encapsulated.
@@ -7964,8 +7904,6 @@ static netdev_tx_t tg3_start_xmit(struct sk_buff *skb, struct net_device *dev)
 		}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	if (tg3_flag(tp, USE_JUMBO_BDFLAG) &&
@@ -8082,14 +8020,10 @@ dma_error:
 	tnapi->tx_buffers[tnapi->tx_prod].skb = NULL;
 drop:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dev_kfree_skb_any(skb);
 =======
 	dev_kfree_skb(skb);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	dev_kfree_skb(skb);
->>>>>>> master
 drop_nofree:
 	tp->tx_dropped++;
 	return NETDEV_TX_OK;
@@ -8528,15 +8462,11 @@ static int tg3_init_rings(struct tg3 *tp)
 			memset(tnapi->rx_rcb, 0, TG3_RX_RCB_RING_BYTES(tp));
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (tnapi->prodring.rx_std &&
 		    tg3_rx_prodring_alloc(tp, &tnapi->prodring)) {
 =======
 		if (tg3_rx_prodring_alloc(tp, &tnapi->prodring)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (tg3_rx_prodring_alloc(tp, &tnapi->prodring)) {
->>>>>>> master
 			tg3_free_rings(tp);
 			return -ENOMEM;
 		}
@@ -10662,14 +10592,10 @@ static ssize_t tg3_show_temp(struct device *dev,
 				sizeof(temperature));
 	spin_unlock_bh(&tp->lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return sprintf(buf, "%u\n", temperature * 1000);
 =======
 	return sprintf(buf, "%u\n", temperature);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return sprintf(buf, "%u\n", temperature);
->>>>>>> master
 }
 
 
@@ -12243,16 +12169,12 @@ static int tg3_set_ringparam(struct net_device *dev, struct ethtool_ringparam *e
 	    tp->rx_pending > 63)
 		tp->rx_pending = 63;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	if (tg3_flag(tp, JUMBO_RING_ENABLE))
 		tp->rx_jumbo_pending = ering->rx_jumbo_pending;
 =======
 	tp->rx_jumbo_pending = ering->rx_jumbo_pending;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	tp->rx_jumbo_pending = ering->rx_jumbo_pending;
->>>>>>> master
 
 	for (i = 0; i < tp->irq_max; i++)
 		tp->napi[i].tx_pending = ering->tx_pending;
@@ -13956,27 +13878,19 @@ static int tg3_change_mtu(struct net_device *dev, int new_mtu)
 	tg3_netif_stop(tp);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	tg3_set_mtu(dev, tp, new_mtu);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	tg3_full_lock(tp, 1);
 
 	tg3_halt(tp, RESET_KIND_SHUTDOWN, 1);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	tg3_set_mtu(dev, tp, new_mtu);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	tg3_set_mtu(dev, tp, new_mtu);
-
->>>>>>> master
 	/* Reset PHY, otherwise the read DMA engine will be in a mode that
 	 * breaks all requests to 256 bytes.
 	 */
@@ -16492,14 +16406,11 @@ static int tg3_get_invariants(struct tg3 *tp, const struct pci_device_id *ent)
 	tw32(TG3PCI_MEM_WIN_BASE_ADDR, 0);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Clear TG3PCI_REG_BASE_ADDR to prevent hangs. */
 	tw32(TG3PCI_REG_BASE_ADDR, 0);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	pci_read_config_dword(tp->pdev, TG3PCI_PCISTATE,
 			      &pci_state_reg);
 	if ((pci_state_reg & PCISTATE_CONV_PCI_MODE) == 0 &&
@@ -17510,15 +17421,10 @@ static int tg3_init_one(struct pci_dev *pdev,
 	tg3_init_bufmgr_config(tp);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	features |= NETIF_F_HW_VLAN_CTAG_TX | NETIF_F_HW_VLAN_CTAG_RX;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	features |= NETIF_F_HW_VLAN_CTAG_TX | NETIF_F_HW_VLAN_CTAG_RX;
-
->>>>>>> master
 	/* 5700 B0 chips do not support checksumming correctly due
 	 * to hardware bugs.
 	 */
@@ -17551,15 +17457,11 @@ static int tg3_init_one(struct pci_dev *pdev,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dev->features |= features | NETIF_F_HW_VLAN_CTAG_TX |
 			 NETIF_F_HW_VLAN_CTAG_RX;
 =======
 	dev->features |= features;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	dev->features |= features;
->>>>>>> master
 	dev->vlan_features |= features;
 
 	/*
@@ -17589,10 +17491,7 @@ static int tg3_init_one(struct pci_dev *pdev,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	/*
 	 * Reset chip in case UNDI or EFI driver did not shutdown
 	 * DMA self test will enable WDMAC and we'll see (spurious)
@@ -17610,10 +17509,7 @@ static int tg3_init_one(struct pci_dev *pdev,
 		goto err_out_apeunmap;
 	}
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	intmbx = MAILBOX_INTERRUPT_0 + TG3_64BIT_REG_LOW;
 	rcvmbx = MAILBOX_RCVRET_CON_IDX_0 + TG3_64BIT_REG_LOW;
 	sndmbx = MAILBOX_SNDHOST_PROD_IDX_0 + TG3_64BIT_REG_LOW;
@@ -17659,7 +17555,6 @@ static int tg3_init_one(struct pci_dev *pdev,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * Reset chip in case UNDI or EFI driver did not shutdown
 	 * DMA self test will enable WDMAC and we'll see (spurious)
@@ -17679,8 +17574,6 @@ static int tg3_init_one(struct pci_dev *pdev,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	tg3_init_coal(tp);
 
 	pci_set_drvdata(pdev, dev);

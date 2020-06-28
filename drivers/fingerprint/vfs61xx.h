@@ -73,18 +73,12 @@
 #define DRDY_TIMEOUT_MS      40
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #ifdef ENABLE_SENSORS_FPRINT_SECURE
 #define FEATURE_SPI_WAKELOCK
 #endif /* CONFIG_SEC_FACTORY */
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  * Definitions of structures which are used by IOCTL commands
  */

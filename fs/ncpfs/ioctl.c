@@ -449,13 +449,9 @@ static long __ncp_ioctl(struct inode *inode, unsigned int cmd, unsigned long arg
 					}
 				}
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 				result = 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				result = 0;
->>>>>>> master
 			}
 			mutex_unlock(&server->root_setup_lock);
 

@@ -1269,7 +1269,6 @@ static struct snd_soc_dai_driver da732x_dai[] = {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static bool da732x_volatile(struct device *dev, unsigned int reg)
 {
 	switch (reg) {
@@ -1283,20 +1282,15 @@ static bool da732x_volatile(struct device *dev, unsigned int reg)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static const struct regmap_config da732x_regmap = {
 	.reg_bits		= 8,
 	.val_bits		= 8,
 
 	.max_register		= DA732X_MAX_REG,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.volatile_reg		= da732x_volatile,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	.reg_defaults		= da732x_reg_cache,
 	.num_reg_defaults	= ARRAY_SIZE(da732x_reg_cache),
 	.cache_type		= REGCACHE_RBTREE,

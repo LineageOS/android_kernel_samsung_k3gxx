@@ -3,14 +3,10 @@
 if [ $# -lt 1 ]
 then
 <<<<<<< HEAD
-<<<<<<< HEAD
 	echo "Usage: headers_install.sh OUTDIR SRCDIR [FILES...]
 =======
 	echo "Usage: headers_install.sh OUTDIR [FILES...]
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	echo "Usage: headers_install.sh OUTDIR [FILES...]
->>>>>>> master
 	echo
 	echo "Prepares kernel header files for use by user space, by removing"
 	echo "all compiler.h definitions and #includes, removing any"
@@ -19,12 +15,9 @@ then
 	echo
 	echo "OUTDIR: directory to write each userspace header FILE to."
 <<<<<<< HEAD
-<<<<<<< HEAD
 	echo "SRCDIR: source directory where files are picked."
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	echo "FILES:  list of header files to operate on."
 
 	exit 1
@@ -35,13 +28,10 @@ fi
 OUTDIR="$1"
 shift
 <<<<<<< HEAD
-<<<<<<< HEAD
 SRCDIR="$1"
 shift
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 # Iterate through files listed on command line
 
@@ -58,14 +48,10 @@ do
 		-e 's/(^|[ \t(])(inline|asm|volatile)([ \t(]|$)/\1__\2__\3/g' \
 		-e 's@#(ifndef|define|endif[ \t]*/[*])[ \t]*_UAPI@#\1 @' \
 <<<<<<< HEAD
-<<<<<<< HEAD
 		"$SRCDIR/$i" > "$OUTDIR/$FILE.sed" || exit 1
 =======
 		"$i" > "$OUTDIR/$FILE.sed" || exit 1
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		"$i" > "$OUTDIR/$FILE.sed" || exit 1
->>>>>>> master
 	scripts/unifdef -U__KERNEL__ -D__EXPORTED_HEADERS__ "$OUTDIR/$FILE.sed" \
 		> "$OUTDIR/$FILE"
 	[ $? -gt 1 ] && exit 1

@@ -134,15 +134,11 @@ static int hostap_disable_hostapd(struct vnt_private *pDevice, int rtnl_locked)
 		       pDevice->dev->name, pDevice->apdev->name);
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (pDevice->apdev)
 		free_netdev(pDevice->apdev);
 =======
 	free_netdev(pDevice->apdev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	free_netdev(pDevice->apdev);
->>>>>>> master
 	pDevice->apdev = NULL;
     pDevice->bEnable8021x = false;
     pDevice->bEnableHostWEP = false;

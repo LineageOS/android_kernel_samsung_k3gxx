@@ -21,24 +21,18 @@
 	};
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	avic: interrupt-controller@68000000 {
 		compatible = "fsl,imx31-avic", "fsl,avic";
 		interrupt-controller;
 		#interrupt-cells = <1>;
 		reg = <0x68000000 0x100000>;
 =======
-=======
->>>>>>> master
 	avic: avic-interrupt-controller@60000000 {
 		compatible = "fsl,imx31-avic", "fsl,avic";
 		interrupt-controller;
 		#interrupt-cells = <1>;
 		reg = <0x60000000 0x100000>;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	};
 
 	soc {
@@ -108,10 +102,7 @@
 				status = "disabled";
 			};
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 
 			clks: ccm@53f80000{
 				compatible = "fsl,imx31-ccm";
@@ -119,10 +110,7 @@
 				interrupts = <0 31 0x04 0 53 0x04>;
 				#clock-cells = <1>;
 			};
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		};
 
 		aips@53f00000 { /* AIPS2 */
@@ -133,7 +121,6 @@
 			ranges;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 			clks: ccm@53f80000{
 				compatible = "fsl,imx31-ccm";
 				reg = <0x53f80000 0x4000>;
@@ -143,8 +130,6 @@
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			gpt: timer@53f90000 {
 				compatible = "fsl,imx31-gpt";
 				reg = <0x53f90000 0x4000>;

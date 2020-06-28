@@ -27,12 +27,9 @@
 #include <linux/mutex.h>
 #include <linux/timer.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/version.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #include <linux/wait.h>
 #include <linux/blockgroup_lock.h>
 #include <linux/percpu_counter.h>
@@ -253,12 +250,9 @@ struct ext4_io_submit {
 #define EXT4_MIN_BLOCK_LOG_SIZE		10
 #define EXT4_MAX_BLOCK_LOG_SIZE		16
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define EXT4_MAX_CLUSTER_LOG_SIZE	30
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #ifdef __KERNEL__
 # define EXT4_BLOCK_SIZE(s)		((s)->s_blocksize)
 #else
@@ -295,7 +289,6 @@ struct ext4_io_submit {
 #define EXT4_NUM_B2C(sbi, blks)	(((blks) + (sbi)->s_cluster_ratio - 1) >> \
 				 (sbi)->s_cluster_bits)
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* Mask out the low bits to get the starting block of the cluster */
 #define EXT4_PBLK_CMASK(s, pblk) ((pblk) &				\
 				  ~((ext4_fsblk_t) (s)->s_cluster_ratio - 1))
@@ -308,8 +301,6 @@ struct ext4_io_submit {
 				 ((ext4_lblk_t) (s)->s_cluster_ratio - 1))
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * Structure of a blocks group descriptor
@@ -610,12 +601,9 @@ enum {
 #define EXT4_FREE_BLOCKS_NOFREE_FIRST_CLUSTER	0x0010
 #define EXT4_FREE_BLOCKS_NOFREE_LAST_CLUSTER	0x0020
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define EXT4_FREE_BLOCKS_RESERVE		0x0040
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * Flags used by ext4_discard_partial_page_buffers
@@ -755,7 +743,6 @@ struct move_extent {
 	    (einode)->i_extra_isize))			\
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * We use an encoding that preserves the times for extra epoch "00":
  *
@@ -783,22 +770,16 @@ static inline __le32 ext4_encode_extra_time(struct timespec *time)
 		((time->tv_sec - (s32)time->tv_sec) >> 32) & EXT4_EPOCH_MASK : 0;
 	return cpu_to_le32(extra | (time->tv_nsec << EXT4_EPOCH_BITS));
 =======
-=======
->>>>>>> master
 static inline __le32 ext4_encode_extra_time(struct timespec *time)
 {
        return cpu_to_le32((sizeof(time->tv_sec) > 4 ?
 			   (time->tv_sec >> 32) & EXT4_EPOCH_MASK : 0) |
                           ((time->tv_nsec << EXT4_EPOCH_BITS) & EXT4_NSEC_MASK));
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static inline void ext4_decode_extra_time(struct timespec *time, __le32 extra)
 {
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (unlikely(sizeof(time->tv_sec) > 4 &&
 			(extra & cpu_to_le32(EXT4_EPOCH_MASK)))) {
@@ -820,16 +801,11 @@ static inline void ext4_decode_extra_time(struct timespec *time, __le32 extra)
 	}
 	time->tv_nsec = (le32_to_cpu(extra) & EXT4_NSEC_MASK) >> EXT4_EPOCH_BITS;
 =======
-=======
->>>>>>> master
        if (sizeof(time->tv_sec) > 4)
 	       time->tv_sec |= (__u64)(le32_to_cpu(extra) & EXT4_EPOCH_MASK)
 			       << 32;
        time->tv_nsec = (le32_to_cpu(extra) & EXT4_NSEC_MASK) >> EXT4_EPOCH_BITS;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 #define EXT4_INODE_SET_XTIME(xtime, inode, raw_inode)			       \
@@ -865,13 +841,10 @@ do {									       \
 		(einode)->xtime.tv_sec = 				       \
 			(signed)le32_to_cpu((raw_inode)->xtime);	       \
 <<<<<<< HEAD
-<<<<<<< HEAD
 	else								       \
 		(einode)->xtime.tv_sec = 0;				       \
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (EXT4_FITS_IN_INODE(raw_inode, einode, xtime ## _extra))	       \
 		ext4_decode_extra_time(&(einode)->xtime,		       \
 				       raw_inode->xtime ## _extra);	       \
@@ -910,7 +883,6 @@ do {									       \
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * Lock subclasses for i_data_sem in the ext4_inode_info structure.
  *
  * These are needed to avoid lockdep false positives when we need to
@@ -936,8 +908,6 @@ enum {
 /*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  * fourth extended file system inode data in memory
  */
 struct ext4_inode_info {
@@ -2215,12 +2185,9 @@ int do_journal_get_write_access(handle_t *handle,
 
 extern struct inode *ext4_iget(struct super_block *, unsigned long);
 <<<<<<< HEAD
-<<<<<<< HEAD
 extern struct inode *ext4_iget_normal(struct super_block *, unsigned long);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 extern int  ext4_write_inode(struct inode *, struct writeback_control *);
 extern int  ext4_setattr(struct dentry *, struct iattr *);
 extern int  ext4_getattr(struct vfsmount *mnt, struct dentry *dentry,
@@ -2283,22 +2250,16 @@ extern int search_dir(struct buffer_head *bh,
 		      const struct qstr *d_name,
 		      unsigned int offset,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		      struct ext4_dir_entry_2 **res_dir);
 
 =======
-=======
->>>>>>> master
 #ifdef CONFIG_SDCARD_FS_CI_SEARCH
 		      struct ext4_dir_entry_2 **res_dir,
 		      char *ci_name_buf);
 #else
 		      struct ext4_dir_entry_2 **res_dir);
 #endif
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 extern int ext4_generic_delete_entry(handle_t *handle,
 				     struct inode *dir,
 				     struct ext4_dir_entry_2 *de_del,
@@ -2418,17 +2379,12 @@ static inline int ext4_has_group_desc_csum(struct super_block *sb)
 {
 	return EXT4_HAS_RO_COMPAT_FEATURE(sb,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					  EXT4_FEATURE_RO_COMPAT_GDT_CSUM) ||
 	       (EXT4_SB(sb)->s_chksum_driver != NULL);
 =======
 					  EXT4_FEATURE_RO_COMPAT_GDT_CSUM |
 					  EXT4_FEATURE_RO_COMPAT_METADATA_CSUM);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					  EXT4_FEATURE_RO_COMPAT_GDT_CSUM |
-					  EXT4_FEATURE_RO_COMPAT_METADATA_CSUM);
->>>>>>> master
 }
 
 static inline ext4_fsblk_t ext4_blocks_count(struct ext4_super_block *es)

@@ -3224,7 +3224,6 @@ static int kbase_device_debugfs_init(struct kbase_device *kbdev)
 			kbdev->mali_debugfs_directory);
 #else
 <<<<<<< HEAD
-<<<<<<< HEAD
 #ifdef CONFIG_MALI_EXYNOS_TRACE
 	kbdev->trace_dentry = debugfs_create_file("mali_trace", S_IRUGO,
 			kbdev->mali_debugfs_directory, kbdev,
@@ -3235,11 +3234,6 @@ static int kbase_device_debugfs_init(struct kbase_device *kbdev)
 			kbdev->mali_debugfs_directory, kbdev,
 			&kbasep_trace_debugfs_fops);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	kbdev->trace_dentry = debugfs_create_file("mali_trace", S_IRUGO,
-			kbdev->mali_debugfs_directory, kbdev,
-			&kbasep_trace_debugfs_fops);
->>>>>>> master
 
 	kbdev->debugfs_ctx_directory = debugfs_create_dir("mem",
 			kbdev->mali_debugfs_directory);

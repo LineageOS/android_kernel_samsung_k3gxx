@@ -146,7 +146,6 @@ static void ath9k_htc_bssid_iter(void *data, u8 *mac, struct ieee80211_vif *vif)
 	int i;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (iter_data->hw_macaddr != NULL) {
 		for (i = 0; i < ETH_ALEN; i++)
 			iter_data->mask[i] &= ~(iter_data->hw_macaddr[i] ^ mac[i]);
@@ -157,17 +156,12 @@ static void ath9k_htc_bssid_iter(void *data, u8 *mac, struct ieee80211_vif *vif)
 
 static void ath9k_htc_set_mac_bssid_mask(struct ath9k_htc_priv *priv,
 =======
-=======
->>>>>>> master
 	for (i = 0; i < ETH_ALEN; i++)
 		iter_data->mask[i] &= ~(iter_data->hw_macaddr[i] ^ mac[i]);
 }
 
 static void ath9k_htc_set_bssid_mask(struct ath9k_htc_priv *priv,
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 				     struct ieee80211_vif *vif)
 {
 	struct ath_common *common = ath9k_hw_common(priv->ah);
@@ -175,23 +169,17 @@ static void ath9k_htc_set_bssid_mask(struct ath9k_htc_priv *priv,
 
 	/*
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 * Pick the MAC address of the first interface as the new hardware
 	 * MAC address. The hardware will use it together with the BSSID mask
 	 * when matching addresses.
 	 */
 	iter_data.hw_macaddr = NULL;
 =======
-=======
->>>>>>> master
 	 * Use the hardware MAC address as reference, the hardware uses it
 	 * together with the BSSID mask when matching addresses.
 	 */
 	iter_data.hw_macaddr = common->macaddr;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	memset(&iter_data.mask, 0xff, ETH_ALEN);
 
 	if (vif)
@@ -204,15 +192,12 @@ static void ath9k_htc_set_bssid_mask(struct ath9k_htc_priv *priv,
 
 	memcpy(common->bssidmask, iter_data.mask, ETH_ALEN);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	if (iter_data.hw_macaddr)
 		memcpy(common->macaddr, iter_data.hw_macaddr, ETH_ALEN);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ath_hw_setbssidmask(common);
 }
 
@@ -1119,14 +1104,10 @@ static int ath9k_htc_add_interface(struct ieee80211_hw *hw,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ath9k_htc_set_mac_bssid_mask(priv, vif);
 =======
 	ath9k_htc_set_bssid_mask(priv, vif);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ath9k_htc_set_bssid_mask(priv, vif);
->>>>>>> master
 
 	priv->vif_slot |= (1 << avp->index);
 	priv->nvifs++;
@@ -1190,14 +1171,10 @@ static void ath9k_htc_remove_interface(struct ieee80211_hw *hw,
 	ath9k_htc_set_opmode(priv);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ath9k_htc_set_mac_bssid_mask(priv, vif);
 =======
 	ath9k_htc_set_bssid_mask(priv, vif);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ath9k_htc_set_bssid_mask(priv, vif);
->>>>>>> master
 
 	/*
 	 * Stop ANI only if there are no associated station interfaces.
@@ -1381,7 +1358,6 @@ static void ath9k_htc_sta_rc_update(struct ieee80211_hw *hw,
 	struct ath9k_htc_target_rate trate;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!(changed & IEEE80211_RC_SUPP_RATES_CHANGED))
 		return;
 
@@ -1399,8 +1375,6 @@ static void ath9k_htc_sta_rc_update(struct ieee80211_hw *hw,
 			"Unable to update supported rates for sta: %pM\n",
 			sta->addr);
 =======
-=======
->>>>>>> master
 	mutex_lock(&priv->mutex);
 	ath9k_htc_ps_wakeup(priv);
 
@@ -1416,10 +1390,7 @@ static void ath9k_htc_sta_rc_update(struct ieee80211_hw *hw,
 				"Unable to update supported rates for sta: %pM\n",
 				sta->addr);
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	ath9k_htc_ps_restore(priv);
 	mutex_unlock(&priv->mutex);

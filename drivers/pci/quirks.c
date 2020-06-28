@@ -29,12 +29,9 @@
 #include <linux/sched.h>
 #include <linux/ktime.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/mm.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #include <asm/dma.h>	/* isa_dma_bridge_buggy */
 #include "pci.h"
 
@@ -300,7 +297,6 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_IBM,	PCI_DEVICE_ID_IBM_CITRINE,	quirk_cit
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * This chip can cause bus lockups if config addresses above 0x600
  * are read or written.
  */
@@ -334,8 +330,6 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_IBM, 0x034a, quirk_extend_bar_to_page);
 /*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  *  S3 868 and 968 chips report region size equal to 32M, but they decode 64M.
  *  If it's needed, re-allocate the region.
  */
@@ -351,7 +345,6 @@ static void quirk_s3_64M(struct pci_dev *dev)
 DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_S3,	PCI_DEVICE_ID_S3_868,		quirk_s3_64M);
 DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_S3,	PCI_DEVICE_ID_S3_968,		quirk_s3_64M);
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 static void quirk_io(struct pci_dev *dev, int pos, unsigned size,
 		     const char *name)
@@ -382,14 +375,11 @@ static void quirk_io(struct pci_dev *dev, int pos, unsigned size,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  * Some CS5536 BIOSes (for example, the Soekris NET5501 board w/ comBIOS
  * ver. 1.33  20070103) don't set the correct ISA PCI region header info.
  * BAR0 should be 8 bytes; instead, it may be set to something like 8k
  * (which conflicts w/ BAR1's memory range).
-<<<<<<< HEAD
 <<<<<<< HEAD
  *
  * CS553x's ISA PCI BARs may also be read-only (ref:
@@ -406,8 +396,6 @@ static void quirk_cs5536_vsa(struct pci_dev *dev)
 		dev_info(&dev->dev, "%s bug detected (incorrect header); workaround applied\n",
 			 name);
 =======
-=======
->>>>>>> master
  */
 static void quirk_cs5536_vsa(struct pci_dev *dev)
 {
@@ -416,10 +404,7 @@ static void quirk_cs5536_vsa(struct pci_dev *dev)
 		res->end = res->start + 8 - 1;
 		dev_info(&dev->dev, "CS5536 ISA bridge bug detected "
 				"(incorrect header); workaround applied.\n");
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 }
 DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_CS5536_ISA, quirk_cs5536_vsa);
@@ -2877,7 +2862,6 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x3c28, vtd_mask_spec_errors);
 static void fixup_ti816x_class(struct pci_dev *dev)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u32 class = dev->class;
 
 	/* TI 816x devices do not have class code set when in PCIe boot mode */
@@ -2888,18 +2872,13 @@ static void fixup_ti816x_class(struct pci_dev *dev)
 DECLARE_PCI_FIXUP_CLASS_EARLY(PCI_VENDOR_ID_TI, 0xb800,
 			      PCI_CLASS_NOT_DEFINED, 0, fixup_ti816x_class);
 =======
-=======
->>>>>>> master
 	/* TI 816x devices do not have class code set when in PCIe boot mode */
 	dev_info(&dev->dev, "Setting PCI class for 816x PCIe device\n");
 	dev->class = PCI_CLASS_MULTIMEDIA_VIDEO;
 }
 DECLARE_PCI_FIXUP_CLASS_EARLY(PCI_VENDOR_ID_TI, 0xb800,
 				 PCI_CLASS_NOT_DEFINED, 0, fixup_ti816x_class);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /* Some PCIe devices do not work reliably with the claimed maximum
  * payload size supported.
@@ -3049,12 +3028,9 @@ static void disable_igfx_irq(struct pci_dev *dev)
 DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x0102, disable_igfx_irq);
 DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x010a, disable_igfx_irq);
 <<<<<<< HEAD
-<<<<<<< HEAD
 DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x0152, disable_igfx_irq);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * Some devices may pass our check in pci_intx_mask_supported if

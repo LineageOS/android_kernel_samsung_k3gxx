@@ -143,14 +143,11 @@ static int sr_runtime_suspend(struct device *dev)
 	struct scsi_cd *cd = dev_get_drvdata(dev);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!cd)	/* E.g.: runtime suspend following sr_remove() */
 		return 0;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (cd->media_present)
 		return -EBUSY;
 	else
@@ -862,12 +859,9 @@ static void get_capabilities(struct scsi_cd *cd)
 	struct scsi_mode_data data;
 	struct scsi_sense_hdr sshdr;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned int ms_len = 128;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	int rc, n;
 
 	static const char *loadmech[] =
@@ -895,23 +889,17 @@ static void get_capabilities(struct scsi_cd *cd)
 
 	/* ask for mode page 0x2a */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	rc = scsi_mode_sense(cd->device, 0, 0x2a, buffer, ms_len,
 			     SR_TIMEOUT, 3, &data, NULL);
 
 	if (!scsi_status_is_good(rc) || data.length > ms_len ||
 	    data.header_length + data.block_descriptor_length > data.length) {
 =======
-=======
->>>>>>> master
 	rc = scsi_mode_sense(cd->device, 0, 0x2a, buffer, 128,
 			     SR_TIMEOUT, 3, &data, NULL);
 
 	if (!scsi_status_is_good(rc)) {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		/* failed, drive doesn't have capabilities mode page */
 		cd->cdi.speed = 1;
 		cd->cdi.mask |= (CDC_CD_R | CDC_CD_RW | CDC_DVD_R |
@@ -1037,12 +1025,9 @@ static int sr_remove(struct device *dev)
 	blk_queue_prep_rq(cd->device->request_queue, scsi_prep_fn);
 	del_gendisk(cd->disk);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dev_set_drvdata(dev, NULL);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	mutex_lock(&sr_ref_mutex);
 	kref_put(&cd->kref, sr_kref_release);

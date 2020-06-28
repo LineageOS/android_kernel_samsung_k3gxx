@@ -155,22 +155,16 @@ ext4_double_down_write_data_sem(struct inode *first, struct inode *second)
 	if (first < second) {
 		down_write(&EXT4_I(first)->i_data_sem);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		down_write_nested(&EXT4_I(second)->i_data_sem, I_DATA_SEM_OTHER);
 	} else {
 		down_write(&EXT4_I(second)->i_data_sem);
 		down_write_nested(&EXT4_I(first)->i_data_sem, I_DATA_SEM_OTHER);
 =======
-=======
->>>>>>> master
 		down_write_nested(&EXT4_I(second)->i_data_sem, SINGLE_DEPTH_NESTING);
 	} else {
 		down_write(&EXT4_I(second)->i_data_sem);
 		down_write_nested(&EXT4_I(first)->i_data_sem, SINGLE_DEPTH_NESTING);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	}
 }
@@ -1131,7 +1125,6 @@ mext_check_arguments(struct inode *orig_inode,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (IS_NOQUOTA(orig_inode) || IS_NOQUOTA(donor_inode)) {
 		ext4_debug("ext4 move extent: The argument files should "
 			"not be quota files [ino:orig %lu, donor %lu]\n",
@@ -1141,8 +1134,6 @@ mext_check_arguments(struct inode *orig_inode,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* Ext4 move extent supports only extent based file */
 	if (!(ext4_test_inode_flag(orig_inode, EXT4_INODE_EXTENTS))) {
 		ext4_debug("ext4 move extent: orig file is not extents "

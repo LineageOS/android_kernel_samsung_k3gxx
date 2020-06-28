@@ -185,7 +185,6 @@ static void sja1000_start(struct net_device *dev)
 	priv->read_reg(priv, SJA1000_ECC);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* clear interrupt flags */
 	priv->read_reg(priv, SJA1000_IR);
 
@@ -194,8 +193,6 @@ static void sja1000_start(struct net_device *dev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* leave reset mode */
 	set_normal_mode(dev);
 }
@@ -507,7 +504,6 @@ irqreturn_t sja1000_interrupt(int irq, void *dev_id)
 	int n = 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (priv->pre_irq)
 		priv->pre_irq(priv);
 
@@ -523,8 +519,6 @@ irqreturn_t sja1000_interrupt(int irq, void *dev_id)
 		if (status == 0xFF && sja1000_is_absent(priv))
 			goto out;
 =======
-=======
->>>>>>> master
 	/* Shared interrupts and IRQ off? */
 	if (priv->read_reg(priv, SJA1000_IER) == IRQ_OFF)
 		return IRQ_NONE;
@@ -539,10 +533,7 @@ irqreturn_t sja1000_interrupt(int irq, void *dev_id)
 		/* check for absent controller due to hw unplug */
 		if (status == 0xFF && sja1000_is_absent(priv))
 			return IRQ_NONE;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 		if (isrc & IRQ_WUI)
 			netdev_warn(dev, "wakeup interrupt\n");
@@ -571,14 +562,10 @@ irqreturn_t sja1000_interrupt(int irq, void *dev_id)
 				/* check for absent controller */
 				if (status == 0xFF && sja1000_is_absent(priv))
 <<<<<<< HEAD
-<<<<<<< HEAD
 					goto out;
 =======
 					return IRQ_NONE;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					return IRQ_NONE;
->>>>>>> master
 			}
 		}
 		if (isrc & (IRQ_DOI | IRQ_EI | IRQ_BEI | IRQ_EPI | IRQ_ALI)) {
@@ -587,7 +574,6 @@ irqreturn_t sja1000_interrupt(int irq, void *dev_id)
 				break;
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 		n++;
 	}
 out:
@@ -595,10 +581,6 @@ out:
 	}
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	}
-
->>>>>>> master
 	if (priv->post_irq)
 		priv->post_irq(priv);
 

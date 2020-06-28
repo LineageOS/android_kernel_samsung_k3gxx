@@ -723,12 +723,9 @@ void iscsit_free_cmd(struct iscsi_cmd *cmd, bool shutdown)
 	struct se_cmd *se_cmd = NULL;
 	int rc;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	bool op_scsi = false;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/*
 	 * Determine if a struct se_cmd is associated with
 	 * this struct iscsi_cmd.
@@ -736,21 +733,15 @@ void iscsit_free_cmd(struct iscsi_cmd *cmd, bool shutdown)
 	switch (cmd->iscsi_opcode) {
 	case ISCSI_OP_SCSI_CMD:
 <<<<<<< HEAD
-<<<<<<< HEAD
 		op_scsi = true;
 =======
 		se_cmd = &cmd->se_cmd;
 		__iscsit_free_cmd(cmd, true, shutdown);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		se_cmd = &cmd->se_cmd;
-		__iscsit_free_cmd(cmd, true, shutdown);
->>>>>>> master
 		/*
 		 * Fallthrough
 		 */
 	case ISCSI_OP_SCSI_TMFUNC:
-<<<<<<< HEAD
 <<<<<<< HEAD
 		se_cmd = &cmd->se_cmd;
 		__iscsit_free_cmd(cmd, op_scsi, shutdown);
@@ -762,11 +753,6 @@ void iscsit_free_cmd(struct iscsi_cmd *cmd, bool shutdown)
 		if (!rc && shutdown && se_cmd && se_cmd->se_sess) {
 			__iscsit_free_cmd(cmd, true, shutdown);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		rc = transport_generic_free_cmd(&cmd->se_cmd, 1);
-		if (!rc && shutdown && se_cmd && se_cmd->se_sess) {
-			__iscsit_free_cmd(cmd, true, shutdown);
->>>>>>> master
 			target_put_sess_cmd(se_cmd->se_sess, se_cmd);
 		}
 		break;
@@ -781,14 +767,10 @@ void iscsit_free_cmd(struct iscsi_cmd *cmd, bool shutdown)
 			__iscsit_free_cmd(cmd, true, shutdown);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 			rc = transport_generic_free_cmd(&cmd->se_cmd, shutdown);
 =======
 			rc = transport_generic_free_cmd(&cmd->se_cmd, 1);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			rc = transport_generic_free_cmd(&cmd->se_cmd, 1);
->>>>>>> master
 			if (!rc && shutdown && se_cmd->se_sess) {
 				__iscsit_free_cmd(cmd, true, shutdown);
 				target_put_sess_cmd(se_cmd->se_sess, se_cmd);
@@ -1327,13 +1309,10 @@ int iscsit_tx_login_rsp(struct iscsi_conn *conn, u8 status_class, u8 status_deta
 	iscsit_collect_login_stats(conn, status_class, status_detail);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	memset(&login->rsp[0], 0, ISCSI_HDR_LEN);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	hdr	= (struct iscsi_login_rsp *)&login->rsp[0];
 	hdr->opcode		= ISCSI_OP_LOGIN_RSP;
 	hdr->status_class	= status_class;
@@ -1394,14 +1373,10 @@ static int iscsit_do_tx_data(
 	struct iscsi_data_count *count)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int ret, iov_len;
 =======
 	int data = count->data_length, total_tx = 0, tx_loop = 0, iov_len;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int data = count->data_length, total_tx = 0, tx_loop = 0, iov_len;
->>>>>>> master
 	struct kvec *iov_p;
 	struct msghdr msg;
 
@@ -1409,17 +1384,12 @@ static int iscsit_do_tx_data(
 		return -1;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (count->data_length <= 0) {
 		pr_err("Data length is: %d\n", count->data_length);
 =======
 	if (data <= 0) {
 		pr_err("Data length is: %d\n", data);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (data <= 0) {
-		pr_err("Data length is: %d\n", data);
->>>>>>> master
 		return -1;
 	}
 
@@ -1428,7 +1398,6 @@ static int iscsit_do_tx_data(
 	iov_p = count->iov;
 	iov_len = count->iov_count;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	ret = kernel_sendmsg(conn->sock, &msg, iov_p, iov_len,
 			     count->data_length);
@@ -1441,8 +1410,6 @@ static int iscsit_do_tx_data(
 
 	return ret;
 =======
-=======
->>>>>>> master
 	while (total_tx < data) {
 		tx_loop = kernel_sendmsg(conn->sock, &msg, iov_p, iov_len,
 					(data - total_tx));
@@ -1457,10 +1424,7 @@ static int iscsit_do_tx_data(
 	}
 
 	return total_tx;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 int rx_data(

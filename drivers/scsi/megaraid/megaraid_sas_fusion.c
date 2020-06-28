@@ -2021,14 +2021,10 @@ megasas_release_fusion(struct megasas_instance *instance)
 	iounmap(instance->reg_set);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	pci_release_selected_regions(instance->pdev, 1<<instance->bar);
 =======
 	pci_release_selected_regions(instance->pdev, instance->bar);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	pci_release_selected_regions(instance->pdev, instance->bar);
->>>>>>> master
 }
 
 /**

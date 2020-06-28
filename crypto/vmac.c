@@ -714,9 +714,6 @@ module_exit(vmac_module_exit);
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("VMAC hash algorithm");
 <<<<<<< HEAD
-<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("vmac");
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master

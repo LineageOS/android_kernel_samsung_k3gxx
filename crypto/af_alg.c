@@ -77,13 +77,10 @@ int af_alg_register_type(const struct af_alg_type *type)
 
 	type->ops->owner = THIS_MODULE;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (type->ops_nokey)
 		type->ops_nokey->owner = THIS_MODULE;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	node->type = type;
 	list_add(&node->list, &alg_types);
 	err = 0;
@@ -134,7 +131,6 @@ int af_alg_release(struct socket *sock)
 EXPORT_SYMBOL_GPL(af_alg_release);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 void af_alg_release_parent(struct sock *sk)
 {
 	struct alg_sock *ask = alg_sk(sk);
@@ -157,8 +153,6 @@ EXPORT_SYMBOL_GPL(af_alg_release_parent);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int alg_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
 {
 	struct sock *sk = sock->sk;
@@ -167,12 +161,9 @@ static int alg_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
 	const struct af_alg_type *type;
 	void *private;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int err;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (sock->state == SS_CONNECTED)
 		return -EINVAL;
@@ -199,7 +190,6 @@ static int alg_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	err = -EBUSY;
 	lock_sock(sk);
 	if (ask->refcnt | ask->nokey_refcnt)
@@ -207,35 +197,25 @@ static int alg_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
 =======
 	lock_sock(sk);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	lock_sock(sk);
->>>>>>> master
 
 	swap(ask->type, type);
 	swap(ask->private, private);
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	err = 0;
 
 unlock:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	release_sock(sk);
 
 	alg_do_release(type, private);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return err;
 =======
 	return 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return 0;
->>>>>>> master
 }
 
 static int alg_setkey(struct sock *sk, char __user *ukey,
@@ -269,7 +249,6 @@ static int alg_setsockopt(struct socket *sock, int level, int optname,
 	struct alg_sock *ask = alg_sk(sk);
 	const struct af_alg_type *type;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int err = -EBUSY;
 
 	lock_sock(sk);
@@ -280,17 +259,12 @@ static int alg_setsockopt(struct socket *sock, int level, int optname,
 
 	err = -ENOPROTOOPT;
 =======
-=======
->>>>>>> master
 	int err = -ENOPROTOOPT;
 
 	lock_sock(sk);
 	type = ask->type;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (level != SOL_ALG || !type)
 		goto unlock;
 
@@ -316,12 +290,9 @@ int af_alg_accept(struct sock *sk, struct socket *newsock)
 	const struct af_alg_type *type;
 	struct sock *sk2;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned int nokey;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	int err;
 
 	lock_sock(sk);
@@ -342,7 +313,6 @@ int af_alg_accept(struct sock *sk, struct socket *newsock)
 
 	err = type->accept(ask->private, sk2);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	nokey = err == -ENOKEY;
 	if (nokey && type->accept_nokey)
@@ -360,8 +330,6 @@ int af_alg_accept(struct sock *sk, struct socket *newsock)
 	alg_sk(sk2)->type = type;
 	alg_sk(sk2)->nokey_refcnt = nokey;
 =======
-=======
->>>>>>> master
 	if (err) {
 		sk_free(sk2);
 		goto unlock;
@@ -372,23 +340,17 @@ int af_alg_accept(struct sock *sk, struct socket *newsock)
 	sock_hold(sk);
 	alg_sk(sk2)->parent = sk;
 	alg_sk(sk2)->type = type;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	newsock->ops = type->ops;
 	newsock->state = SS_CONNECTED;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (nokey)
 		newsock->ops = type->ops_nokey;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	err = 0;
 
 unlock:
@@ -578,14 +540,11 @@ void af_alg_complete(struct crypto_async_request *req, int err)
 	struct af_alg_completion *completion = req->data;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (err == -EINPROGRESS)
 		return;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	completion->err = err;
 	complete(&completion->completion);
 }

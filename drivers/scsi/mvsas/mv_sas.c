@@ -442,28 +442,19 @@ static int mvs_task_prep_ata(struct mvs_info *mvi,
 			     struct mvs_task_exec_info *tei)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	struct sas_ha_struct *sha = mvi->sas;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct sas_ha_struct *sha = mvi->sas;
->>>>>>> master
 	struct sas_task *task = tei->task;
 	struct domain_device *dev = task->dev;
 	struct mvs_device *mvi_dev = dev->lldd_dev;
 	struct mvs_cmd_hdr *hdr = tei->hdr;
 	struct asd_sas_port *sas_port = dev->port;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	struct sas_phy *sphy = dev->phy;
 	struct asd_sas_phy *sas_phy = sha->sas_phy[sphy->number];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct sas_phy *sphy = dev->phy;
-	struct asd_sas_phy *sas_phy = sha->sas_phy[sphy->number];
->>>>>>> master
 	struct mvs_slot_info *slot;
 	void *buf_prd;
 	u32 tag = tei->tag, hdr_tag;
@@ -484,14 +475,10 @@ static int mvs_task_prep_ata(struct mvs_info *mvi,
 	del_q = TXQ_MODE_I | tag |
 		(TXQ_CMD_STP << TXQ_CMD_SHIFT) |
 <<<<<<< HEAD
-<<<<<<< HEAD
 		((sas_port->phy_mask & TXQ_PHY_MASK) << TXQ_PHY_SHIFT) |
 =======
 		(MVS_PHY_ID << TXQ_PHY_SHIFT) |
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		(MVS_PHY_ID << TXQ_PHY_SHIFT) |
->>>>>>> master
 		(mvi_dev->taskfileset << TXQ_SRS_SHIFT);
 	mvi->tx[mvi->tx_prod] = cpu_to_le32(del_q);
 
@@ -763,17 +750,12 @@ static int mvs_task_prep(struct sas_task *task, struct mvs_info *mvi, int is_tmf
 				SAS_ADDR(dev->sas_addr));
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		rc = SAS_PHY_DOWN;
 		return rc;
 =======
 			rc = SAS_PHY_DOWN;
 			return rc;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			rc = SAS_PHY_DOWN;
-			return rc;
->>>>>>> master
 	}
 	tei.port = dev->port->lldd_port;
 	if (tei.port && !tei.port->port_attached && !tmf) {
@@ -1024,13 +1006,10 @@ static void mvs_slot_task_free(struct mvs_info *mvi, struct sas_task *task,
 			  struct mvs_slot_info *slot, u32 slot_idx)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!slot)
 		return;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (!slot->task)
 		return;
 	if (!sas_protocol_ata(task->task_proto))

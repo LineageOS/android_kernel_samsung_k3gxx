@@ -298,7 +298,6 @@ enum rtattr_type_t {
 	RTA_MARK,
 	RTA_MFC_STATS,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	RTA_VIA,
 	RTA_NEWDST,
 	RTA_PREF,
@@ -308,8 +307,6 @@ enum rtattr_type_t {
 	RTA_PAD,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	RTA_UID,
 	__RTA_MAX
 };

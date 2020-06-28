@@ -180,14 +180,10 @@ static void tcm_loop_submission_work(struct work_struct *work)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	tl_nexus = tl_tpg->tl_nexus;
 =======
 	tl_nexus = tl_hba->tl_nexus;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	tl_nexus = tl_hba->tl_nexus;
->>>>>>> master
 	if (!tl_nexus) {
 		scmd_printk(KERN_ERR, sc, "TCM_Loop I_T Nexus"
 				" does not exist\n");
@@ -267,7 +263,6 @@ static int tcm_loop_device_reset(struct scsi_cmnd *sc)
 	tl_hba = *(struct tcm_loop_hba **)shost_priv(sc->device->host);
 	/*
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 * Locate the tl_tpg and se_tpg pointers from TargetID in sc->device->id
 	 */
 	tl_tpg = &tl_hba->tl_hba_tpgs[sc->device->id];
@@ -281,11 +276,6 @@ static int tcm_loop_device_reset(struct scsi_cmnd *sc)
 	 */
 	tl_nexus = tl_hba->tl_nexus;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	 * Locate the tl_nexus and se_sess pointers
-	 */
-	tl_nexus = tl_hba->tl_nexus;
->>>>>>> master
 	if (!tl_nexus) {
 		pr_err("Unable to perform device reset without"
 				" active I_T Nexus\n");
@@ -293,19 +283,13 @@ static int tcm_loop_device_reset(struct scsi_cmnd *sc)
 	}
 	se_sess = tl_nexus->se_sess;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	/*
 	 * Locate the tl_tpg and se_tpg pointers from TargetID in sc->device->id
 	 */
 	tl_tpg = &tl_hba->tl_hba_tpgs[sc->device->id];
 	se_tpg = &tl_tpg->tl_se_tpg;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	tl_cmd = kmem_cache_zalloc(tcm_loop_cmd_cache, GFP_KERNEL);
 	if (!tl_cmd) {
@@ -914,17 +898,12 @@ static int tcm_loop_make_nexus(
 	int ret = -ENOMEM;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (tl_tpg->tl_nexus) {
 		pr_debug("tl_tpg->tl_nexus already exists\n");
 =======
 	if (tl_tpg->tl_hba->tl_nexus) {
 		pr_debug("tl_tpg->tl_hba->tl_nexus already exists\n");
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (tl_tpg->tl_hba->tl_nexus) {
-		pr_debug("tl_tpg->tl_hba->tl_nexus already exists\n");
->>>>>>> master
 		return -EEXIST;
 	}
 	se_tpg = &tl_tpg->tl_se_tpg;
@@ -960,14 +939,10 @@ static int tcm_loop_make_nexus(
 	__transport_register_session(se_tpg, tl_nexus->se_sess->se_node_acl,
 			tl_nexus->se_sess, tl_nexus);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	tl_tpg->tl_nexus = tl_nexus;
 =======
 	tl_tpg->tl_hba->tl_nexus = tl_nexus;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	tl_tpg->tl_hba->tl_nexus = tl_nexus;
->>>>>>> master
 	pr_debug("TCM_Loop_ConfigFS: Established I_T Nexus to emulated"
 		" %s Initiator Port: %s\n", tcm_loop_dump_proto_id(tl_hba),
 		name);
@@ -984,7 +959,6 @@ static int tcm_loop_drop_nexus(
 	struct se_session *se_sess;
 	struct tcm_loop_nexus *tl_nexus;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	tl_nexus = tpg->tl_nexus;
 =======
@@ -992,11 +966,6 @@ static int tcm_loop_drop_nexus(
 
 	tl_nexus = tpg->tl_hba->tl_nexus;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct tcm_loop_hba *tl_hba = tpg->tl_hba;
-
-	tl_nexus = tpg->tl_hba->tl_nexus;
->>>>>>> master
 	if (!tl_nexus)
 		return -ENODEV;
 
@@ -1013,28 +982,20 @@ static int tcm_loop_drop_nexus(
 
 	pr_debug("TCM_Loop_ConfigFS: Removing I_T Nexus to emulated"
 <<<<<<< HEAD
-<<<<<<< HEAD
 		" %s Initiator Port: %s\n", tcm_loop_dump_proto_id(tpg->tl_hba),
 =======
 		" %s Initiator Port: %s\n", tcm_loop_dump_proto_id(tl_hba),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		" %s Initiator Port: %s\n", tcm_loop_dump_proto_id(tl_hba),
->>>>>>> master
 		tl_nexus->se_sess->se_node_acl->initiatorname);
 	/*
 	 * Release the SCSI I_T Nexus to the emulated SAS Target Port
 	 */
 	transport_deregister_session(tl_nexus->se_sess);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	tpg->tl_nexus = NULL;
 =======
 	tpg->tl_hba->tl_nexus = NULL;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	tpg->tl_hba->tl_nexus = NULL;
->>>>>>> master
 	kfree(tl_nexus);
 	return 0;
 }
@@ -1051,14 +1012,10 @@ static ssize_t tcm_loop_tpg_show_nexus(
 	ssize_t ret;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	tl_nexus = tl_tpg->tl_nexus;
 =======
 	tl_nexus = tl_tpg->tl_hba->tl_nexus;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	tl_nexus = tl_tpg->tl_hba->tl_nexus;
->>>>>>> master
 	if (!tl_nexus)
 		return -ENODEV;
 

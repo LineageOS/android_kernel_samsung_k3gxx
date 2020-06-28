@@ -481,7 +481,6 @@ static void __init build_mem_type_table(void)
 
 	/*
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 * We don't use domains on ARMv6 (since this causes problems with
 	 * v6/v7 kernels), so we must use a separate memory type for user
 	 * r/o, kernel r/w to map the vectors page.
@@ -494,8 +493,6 @@ static void __init build_mem_type_table(void)
 	/*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	 * ARMv6 and above have extended page tables.
 	 */
 	if (cpu_arch >= CPU_ARCH_ARMv6 && (cr & CR_XP)) {
@@ -752,14 +749,10 @@ static void __init alloc_init_pmd(pud_t *pud, unsigned long addr,
 
 static void __init alloc_init_pud(pgd_t *pgd, unsigned long addr,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned long end, phys_addr_t phys, const struct mem_type *type,
 =======
 	unsigned long end, unsigned long phys, const struct mem_type *type,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned long end, unsigned long phys, const struct mem_type *type,
->>>>>>> master
 	bool force_pages)
 {
 	pud_t *pud = pud_offset(pgd, addr);

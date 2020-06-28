@@ -102,42 +102,30 @@ static struct ip_tunnel *ipip6_tunnel_lookup(struct net *net,
 		if (local == t->parms.iph.saddr &&
 		    remote == t->parms.iph.daddr &&
 <<<<<<< HEAD
-<<<<<<< HEAD
 		    (!dev || !t->parms.link || dev->ifindex == t->parms.link) &&
 =======
 		    (!dev || !t->parms.link || dev->iflink == t->parms.link) &&
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		    (!dev || !t->parms.link || dev->iflink == t->parms.link) &&
->>>>>>> master
 		    (t->dev->flags & IFF_UP))
 			return t;
 	}
 	for_each_ip_tunnel_rcu(t, sitn->tunnels_r[h0]) {
 		if (remote == t->parms.iph.daddr &&
 <<<<<<< HEAD
-<<<<<<< HEAD
 		    (!dev || !t->parms.link || dev->ifindex == t->parms.link) &&
 =======
 		    (!dev || !t->parms.link || dev->iflink == t->parms.link) &&
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		    (!dev || !t->parms.link || dev->iflink == t->parms.link) &&
->>>>>>> master
 		    (t->dev->flags & IFF_UP))
 			return t;
 	}
 	for_each_ip_tunnel_rcu(t, sitn->tunnels_l[h1]) {
 		if (local == t->parms.iph.saddr &&
 <<<<<<< HEAD
-<<<<<<< HEAD
 		    (!dev || !t->parms.link || dev->ifindex == t->parms.link) &&
 =======
 		    (!dev || !t->parms.link || dev->iflink == t->parms.link) &&
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		    (!dev || !t->parms.link || dev->iflink == t->parms.link) &&
->>>>>>> master
 		    (t->dev->flags & IFF_UP))
 			return t;
 	}
@@ -555,19 +543,14 @@ static int ipip6_err(struct sk_buff *skb, u32 info)
 	if (type == ICMP_DEST_UNREACH && code == ICMP_FRAG_NEEDED) {
 		ipv4_update_pmtu(skb, dev_net(skb->dev), info,
 <<<<<<< HEAD
-<<<<<<< HEAD
 				 t->parms.link, 0, iph->protocol, 0);
 =======
 				 t->dev->ifindex, 0, IPPROTO_IPV6, 0);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				 t->dev->ifindex, 0, IPPROTO_IPV6, 0);
->>>>>>> master
 		err = 0;
 		goto out;
 	}
 	if (type == ICMP_REDIRECT) {
-<<<<<<< HEAD
 <<<<<<< HEAD
 		ipv4_redirect(skb, dev_net(skb->dev), t->parms.link, 0,
 			      iph->protocol, 0);
@@ -575,10 +558,6 @@ static int ipip6_err(struct sk_buff *skb, u32 info)
 		ipv4_redirect(skb, dev_net(skb->dev), t->dev->ifindex, 0,
 			      IPPROTO_IPV6, 0);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		ipv4_redirect(skb, dev_net(skb->dev), t->dev->ifindex, 0,
-			      IPPROTO_IPV6, 0);
->>>>>>> master
 		err = 0;
 		goto out;
 	}
@@ -608,7 +587,6 @@ static inline bool is_spoofed_6rd(struct ip_tunnel *tunnel, const __be32 v4addr,
 	return false;
 }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 /* Checks if an address matches an address on the tunnel interface.
  * Used to detect the NAT of proto 41 packets and let them pass spoofing test.
@@ -676,8 +654,6 @@ static bool packet_is_spoofed(struct sk_buff *skb,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int ipip6_rcv(struct sk_buff *skb)
 {
 	const struct iphdr *iph = ip_hdr(skb);
@@ -697,13 +673,10 @@ static int ipip6_rcv(struct sk_buff *skb)
 		skb->pkt_type = PACKET_HOST;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (packet_is_spoofed(skb, iph, tunnel)) {
 			tunnel->dev->stats.rx_errors++;
 			goto out;
 =======
-=======
->>>>>>> master
 		if (tunnel->dev->priv_flags & IFF_ISATAP) {
 			if (!isatap_chksrc(skb, iph, tunnel)) {
 				tunnel->dev->stats.rx_errors++;
@@ -717,10 +690,7 @@ static int ipip6_rcv(struct sk_buff *skb)
 				tunnel->dev->stats.rx_errors++;
 				goto out;
 			}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		}
 
 		__skb_tunnel_rx(skb, tunnel->dev);
@@ -838,14 +808,10 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
 
 		if (neigh == NULL) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			net_dbg_ratelimited("nexthop == NULL\n");
 =======
 			net_dbg_ratelimited("sit: nexthop == NULL\n");
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			net_dbg_ratelimited("sit: nexthop == NULL\n");
->>>>>>> master
 			goto tx_error;
 		}
 
@@ -875,14 +841,10 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
 
 		if (neigh == NULL) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			net_dbg_ratelimited("nexthop == NULL\n");
 =======
 			net_dbg_ratelimited("sit: nexthop == NULL\n");
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			net_dbg_ratelimited("sit: nexthop == NULL\n");
->>>>>>> master
 			goto tx_error;
 		}
 
@@ -1006,14 +968,10 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
 
 	skb->ip_summed = CHECKSUM_NONE;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ip_select_ident(skb, NULL);
 =======
 	ip_select_ident(iph, skb_dst(skb), NULL);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ip_select_ident(iph, skb_dst(skb), NULL);
->>>>>>> master
 	iptunnel_xmit(skb, dev);
 	return NETDEV_TX_OK;
 
@@ -1602,7 +1560,6 @@ static const struct nla_policy ipip6_policy[IFLA_IPTUN_MAX + 1] = {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void ipip6_dellink(struct net_device *dev, struct list_head *head)
 {
 	struct net *net = dev_net(dev);
@@ -1614,8 +1571,6 @@ static void ipip6_dellink(struct net_device *dev, struct list_head *head)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static struct rtnl_link_ops sit_link_ops __read_mostly = {
 	.kind		= "sit",
 	.maxtype	= IFLA_IPTUN_MAX,
@@ -1627,12 +1582,9 @@ static struct rtnl_link_ops sit_link_ops __read_mostly = {
 	.get_size	= ipip6_get_size,
 	.fill_info	= ipip6_fill_info,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.dellink	= ipip6_dellink,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 static struct xfrm_tunnel sit_handler __read_mostly = {
@@ -1678,12 +1630,9 @@ static int __net_init sit_init_net(struct net *net)
 	}
 	dev_net_set(sitn->fb_tunnel_dev, net);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	sitn->fb_tunnel_dev->rtnl_link_ops = &sit_link_ops;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	err = ipip6_fb_tunnel_init(sitn->fb_tunnel_dev);
 	if (err)
@@ -1767,10 +1716,7 @@ module_init(sit_init);
 module_exit(sit_cleanup);
 MODULE_LICENSE("GPL");
 <<<<<<< HEAD
-<<<<<<< HEAD
 MODULE_ALIAS_RTNL_LINK("sit");
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 MODULE_ALIAS_NETDEV("sit0");

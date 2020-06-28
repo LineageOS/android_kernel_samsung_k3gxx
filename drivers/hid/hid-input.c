@@ -318,14 +318,11 @@ static const struct hid_device_id hid_battery_quirks[] = {
 	  HID_BATTERY_QUIRK_PERCENT | HID_BATTERY_QUIRK_FEATURE },
 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			       USB_DEVICE_ID_APPLE_ALU_WIRELESS_2011_ISO),
 	  HID_BATTERY_QUIRK_PERCENT | HID_BATTERY_QUIRK_FEATURE },
 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		USB_DEVICE_ID_APPLE_ALU_WIRELESS_ANSI),
 	  HID_BATTERY_QUIRK_PERCENT | HID_BATTERY_QUIRK_FEATURE },
 	{}
@@ -350,14 +347,10 @@ static int hidinput_get_battery_property(struct power_supply *psy,
 	struct hid_device *dev = container_of(psy, struct hid_device, battery);
 	int ret = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	__u8 *buf;
 =======
 	__u8 buf[2] = {};
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	__u8 buf[2] = {};
->>>>>>> master
 
 	switch (prop) {
 	case POWER_SUPPLY_PROP_PRESENT:
@@ -366,7 +359,6 @@ static int hidinput_get_battery_property(struct power_supply *psy,
 		break;
 
 	case POWER_SUPPLY_PROP_CAPACITY:
-<<<<<<< HEAD
 <<<<<<< HEAD
 
 		buf = kmalloc(2 * sizeof(__u8), GFP_KERNEL);
@@ -380,22 +372,15 @@ static int hidinput_get_battery_property(struct power_supply *psy,
 		ret = dev->hid_get_raw_report(dev, dev->battery_report_id,
 					      buf, sizeof(buf),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		ret = dev->hid_get_raw_report(dev, dev->battery_report_id,
-					      buf, sizeof(buf),
->>>>>>> master
 					      dev->battery_report_type);
 
 		if (ret != 2) {
 			if (ret >= 0)
 				ret = -EINVAL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			kfree(buf);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			break;
 		}
 
@@ -405,12 +390,9 @@ static int hidinput_get_battery_property(struct power_supply *psy,
 			val->intval = (100 * (buf[1] - dev->battery_min)) /
 				(dev->battery_max - dev->battery_min);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		kfree(buf);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		break;
 
 	case POWER_SUPPLY_PROP_MODEL_NAME:
@@ -525,15 +507,12 @@ static void hidinput_configure_usage(struct hid_input *hidinput, struct hid_fiel
 		goto ignore;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Ignore if report count is out of bounds. */
 	if (field->report_count < 1)
 		goto ignore;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* only LED usages are supported in output fields */
 	if (field->report_type == HID_OUTPUT_REPORT &&
 			(usage->hid & HID_USAGE_PAGE) != HID_UP_LED) {
@@ -1109,7 +1088,6 @@ void hidinput_hid_event(struct hid_device *hid, struct hid_field *field, struct 
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * Ignore reports for absolute data if the data didn't change. This is
 	 * not only an optimization but also fixes 'dead' key reports. Some
@@ -1133,10 +1111,6 @@ void hidinput_hid_event(struct hid_device *hid, struct hid_field *field, struct 
 	/* report the usage code as scancode if the key status has changed */
 	if (usage->type == EV_KEY && !!test_bit(usage->code, input->key) != value)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	/* report the usage code as scancode if the key status has changed */
-	if (usage->type == EV_KEY && !!test_bit(usage->code, input->key) != value)
->>>>>>> master
 		input_event(input, EV_MSC, MSC_SCAN, usage->hid);
 
 	input_event(input, usage->type, usage->code, value);
@@ -1240,7 +1214,6 @@ static void report_features(struct hid_device *hid)
 	rep_enum = &hid->report_enum[HID_FEATURE_REPORT];
 	list_for_each_entry(rep, &rep_enum->report_list, list)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		for (i = 0; i < rep->maxfield; i++) {
 			/* Ignore if report count is out of bounds. */
 			if (rep->field[i]->report_count < 1)
@@ -1249,9 +1222,6 @@ static void report_features(struct hid_device *hid)
 =======
 		for (i = 0; i < rep->maxfield; i++)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		for (i = 0; i < rep->maxfield; i++)
->>>>>>> master
 			for (j = 0; j < rep->field[i]->maxusage; j++) {
 				/* Verify if Battery Strength feature is available */
 				hidinput_setup_battery(hid, HID_FEATURE_REPORT, rep->field[i]);
@@ -1261,12 +1231,9 @@ static void report_features(struct hid_device *hid)
 							     rep->field[i]->usage + j);
 			}
 <<<<<<< HEAD
-<<<<<<< HEAD
 		}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static struct hid_input *hidinput_allocate(struct hid_device *hid)

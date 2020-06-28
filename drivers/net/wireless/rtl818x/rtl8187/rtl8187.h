@@ -16,13 +16,10 @@
 #define RTL8187_H
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/cache.h>
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #include "rtl818x.h"
 #include "leds.h"
 
@@ -148,7 +145,6 @@ struct rtl8187_priv {
 	u8 rfkill_mask;
 	struct {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		union {
 			__le64 buf;
 			u8 dummy1[L1_CACHE_BYTES];
@@ -156,9 +152,6 @@ struct rtl8187_priv {
 =======
 		__le64 buf;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		__le64 buf;
->>>>>>> master
 		struct sk_buff_head queue;
 	} b_tx_status; /* This queue is used by both -b and non-b devices */
 	struct mutex io_mutex;
@@ -167,15 +160,11 @@ struct rtl8187_priv {
 		__le16 bits16;
 		__le32 bits32;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		u8 dummy2[L1_CACHE_BYTES];
 	} *io_dmabuf ____cacheline_aligned;
 =======
 	} *io_dmabuf;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	} *io_dmabuf;
->>>>>>> master
 	bool rfkill_off;
 	u16 seqno;
 };

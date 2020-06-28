@@ -554,7 +554,6 @@ nfsd4_decode_create(struct nfsd4_compoundargs *argp, struct nfsd4_create *create
 		READ32(create->cr_linklen);
 		READ_BUF(create->cr_linklen);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/*
 		 * The VFS will want a null-terminated string, and
 		 * null-terminating in place isn't safe since this might
@@ -570,9 +569,6 @@ nfsd4_decode_create(struct nfsd4_compoundargs *argp, struct nfsd4_create *create
 =======
 		SAVEMEM(create->cr_linkname, create->cr_linklen);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		SAVEMEM(create->cr_linkname, create->cr_linklen);
->>>>>>> master
 		break;
 	case NF4BLK:
 	case NF4CHR:
@@ -1752,14 +1748,11 @@ static __be32 nfsd4_encode_components_esc(char sep, char *components,
 		else
 			end++;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (found_esc)
 			end = next;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		str = end;
 	}
 	*pp = p;
@@ -2064,17 +2057,12 @@ nfsd4_encode_fattr(struct svc_fh *fhp, struct svc_export *exp,
 	if (err)
 		goto out_nfserr;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if ((bmval0 & (FATTR4_WORD0_FILES_AVAIL | FATTR4_WORD0_FILES_FREE |
 			FATTR4_WORD0_FILES_TOTAL | FATTR4_WORD0_MAXNAME)) ||
 =======
 	if ((bmval0 & (FATTR4_WORD0_FILES_FREE | FATTR4_WORD0_FILES_TOTAL |
 			FATTR4_WORD0_MAXNAME)) ||
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if ((bmval0 & (FATTR4_WORD0_FILES_FREE | FATTR4_WORD0_FILES_TOTAL |
-			FATTR4_WORD0_MAXNAME)) ||
->>>>>>> master
 	    (bmval1 & (FATTR4_WORD1_SPACE_AVAIL | FATTR4_WORD1_SPACE_FREE |
 		       FATTR4_WORD1_SPACE_TOTAL))) {
 		err = vfs_statfs(&path, &statfs);
@@ -2440,13 +2428,10 @@ out_acl:
 	}
 	if (bmval2 & FATTR4_WORD2_SUPPATTR_EXCLCREAT) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if ((buflen -= 16) < 0)
 			goto out_resource;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		WRITE32(3);
 		WRITE32(NFSD_SUPPATTR_EXCLCREAT_WORD0);
 		WRITE32(NFSD_SUPPATTR_EXCLCREAT_WORD1);
@@ -3429,14 +3414,11 @@ nfsd4_encode_test_stateid(struct nfsd4_compoundres *resp, __be32 nfserr,
 	__be32 *p;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (nfserr)
 		return nfserr;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	RESERVE_SPACE(4 + (4 * test_stateid->ts_num_ids));
 	*p++ = htonl(test_stateid->ts_num_ids);
 

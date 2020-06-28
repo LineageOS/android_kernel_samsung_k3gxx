@@ -204,35 +204,26 @@ static inline int __must_check wlcore_write_reg(struct wl1271 *wl, int reg,
 static inline void wl1271_power_off(struct wl1271 *wl)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int ret = 0;
 =======
 	int ret;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int ret;
->>>>>>> master
 
 	if (!test_bit(WL1271_FLAG_GPIO_POWER, &wl->flags))
 		return;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (wl->if_ops->power)
 		ret = wl->if_ops->power(wl->dev, false);
 =======
 	ret = wl->if_ops->power(wl->dev, false);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret = wl->if_ops->power(wl->dev, false);
->>>>>>> master
 	if (!ret)
 		clear_bit(WL1271_FLAG_GPIO_POWER, &wl->flags);
 }
 
 static inline int wl1271_power_on(struct wl1271 *wl)
 {
-<<<<<<< HEAD
 <<<<<<< HEAD
 	int ret = 0;
 
@@ -241,9 +232,6 @@ static inline int wl1271_power_on(struct wl1271 *wl)
 =======
 	int ret = wl->if_ops->power(wl->dev, true);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int ret = wl->if_ops->power(wl->dev, true);
->>>>>>> master
 	if (ret == 0)
 		set_bit(WL1271_FLAG_GPIO_POWER, &wl->flags);
 

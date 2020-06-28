@@ -3033,17 +3033,12 @@ F:	arch/ia64/kernel/efi.c
 F:	arch/x86/boot/compressed/eboot.[ch]
 F:	arch/x86/include/asm/efi.h
 <<<<<<< HEAD
-<<<<<<< HEAD
 F:	arch/x86/platform/efi/
 F:	drivers/firmware/efi/
 =======
 F:	arch/x86/platform/efi/*
 F:	drivers/firmware/efi/*
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-F:	arch/x86/platform/efi/*
-F:	drivers/firmware/efi/*
->>>>>>> master
 F:	include/linux/efi*.h
 
 EFI VARIABLE FILESYSTEM

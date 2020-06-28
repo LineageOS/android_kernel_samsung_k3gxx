@@ -290,7 +290,6 @@ kptr_restrict:
 
 This toggle indicates whether restrictions are placed on
 <<<<<<< HEAD
-<<<<<<< HEAD
 exposing kernel addresses via /proc and other interfaces.
 
 When kptr_restrict is set to (0), the default, there are no restrictions.
@@ -310,8 +309,6 @@ values to unprivileged users is a concern.
 When kptr_restrict is set to (2), kernel pointers printed using
 %pK will be replaced with 0's regardless of privileges.
 =======
-=======
->>>>>>> master
 exposing kernel addresses via /proc and other interfaces.  When
 kptr_restrict is set to (0), there are no restrictions.  When
 kptr_restrict is set to (1), the default, kernel pointers
@@ -319,10 +316,7 @@ printed using the %pK format specifier will be replaced with 0's
 unless the user has CAP_SYSLOG.  When kptr_restrict is set to
 (2), kernel pointers printed using %pK will be replaced with 0's
 regardless of privileges.
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 ==============================================================
 
@@ -455,7 +449,6 @@ This file shows up if CONFIG_DEBUG_STACKOVERFLOW is enabled.
 ==============================================================
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 perf_cpu_time_max_percent:
 
 Hints to the kernel how much CPU time it should be allowed to
@@ -484,8 +477,6 @@ allowed to execute.
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 pid_max:
 

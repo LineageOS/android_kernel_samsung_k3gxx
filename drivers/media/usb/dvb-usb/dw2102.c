@@ -31,14 +31,11 @@
 #include "m88rs2000.h"
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* Max transfer size done by I2C transfer functions */
 #define MAX_XFER_SIZE  64
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #ifndef USB_PID_DW2102
 #define USB_PID_DW2102 0x2102
 #endif
@@ -308,12 +305,9 @@ static int dw2102_earda_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg ms
 {
 	struct dvb_usb_device *d = i2c_get_adapdata(adap);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int ret;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (!d)
 		return -ENODEV;
@@ -324,7 +318,6 @@ static int dw2102_earda_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg ms
 	case 2: {
 		/* read */
 		/* first write first register number */
-<<<<<<< HEAD
 <<<<<<< HEAD
 		u8 ibuf[MAX_XFER_SIZE], obuf[3];
 
@@ -338,9 +331,6 @@ static int dw2102_earda_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg ms
 =======
 		u8 ibuf[msg[1].len + 2], obuf[3];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		u8 ibuf[msg[1].len + 2], obuf[3];
->>>>>>> master
 		obuf[0] = msg[0].addr << 1;
 		obuf[1] = msg[0].len;
 		obuf[2] = msg[0].buf[0];
@@ -358,7 +348,6 @@ static int dw2102_earda_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg ms
 		case 0x68: {
 			/* write to register */
 <<<<<<< HEAD
-<<<<<<< HEAD
 			u8 obuf[MAX_XFER_SIZE];
 
 			if (2 + msg[0].len > sizeof(obuf)) {
@@ -371,9 +360,6 @@ static int dw2102_earda_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg ms
 =======
 			u8 obuf[msg[0].len + 2];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			u8 obuf[msg[0].len + 2];
->>>>>>> master
 			obuf[0] = msg[0].addr << 1;
 			obuf[1] = msg[0].len;
 			memcpy(obuf + 2, msg[0].buf, msg[0].len);
@@ -384,7 +370,6 @@ static int dw2102_earda_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg ms
 		case 0x61: {
 			/* write to tuner */
 <<<<<<< HEAD
-<<<<<<< HEAD
 			u8 obuf[MAX_XFER_SIZE];
 
 			if (2 + msg[0].len > sizeof(obuf)) {
@@ -397,9 +382,6 @@ static int dw2102_earda_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg ms
 =======
 			u8 obuf[msg[0].len + 2];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			u8 obuf[msg[0].len + 2];
->>>>>>> master
 			obuf[0] = msg[0].addr << 1;
 			obuf[1] = msg[0].len;
 			memcpy(obuf + 2, msg[0].buf, msg[0].len);
@@ -427,7 +409,6 @@ static int dw2102_earda_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg ms
 		break;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = num;
 
 unlock:
@@ -438,25 +419,16 @@ unlock:
 	mutex_unlock(&d->i2c_mutex);
 	return num;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-	mutex_unlock(&d->i2c_mutex);
-	return num;
->>>>>>> master
 }
 
 static int dw2104_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[], int num)
 {
 	struct dvb_usb_device *d = i2c_get_adapdata(adap);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int len, i, j, ret;
 =======
 	int len, i, j;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int len, i, j;
->>>>>>> master
 
 	if (!d)
 		return -ENODEV;
@@ -488,7 +460,6 @@ static int dw2104_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[], i
 			if (msg[j].flags == I2C_M_RD) {
 				/* read registers */
 <<<<<<< HEAD
-<<<<<<< HEAD
 				u8  ibuf[MAX_XFER_SIZE];
 
 				if (2 + msg[j].len > sizeof(ibuf)) {
@@ -501,9 +472,6 @@ static int dw2104_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[], i
 =======
 				u8  ibuf[msg[j].len + 2];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				u8  ibuf[msg[j].len + 2];
->>>>>>> master
 				dw210x_op_rw(d->udev, 0xc3,
 						(msg[j].addr << 1) + 1, 0,
 						ibuf, msg[j].len + 2,
@@ -533,7 +501,6 @@ static int dw2104_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[], i
 			} else {
 				/* write registers */
 <<<<<<< HEAD
-<<<<<<< HEAD
 				u8 obuf[MAX_XFER_SIZE];
 
 				if (2 + msg[j].len > sizeof(obuf)) {
@@ -546,9 +513,6 @@ static int dw2104_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[], i
 =======
 				u8 obuf[msg[j].len + 2];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				u8 obuf[msg[j].len + 2];
->>>>>>> master
 				obuf[0] = msg[j].addr << 1;
 				obuf[1] = msg[j].len;
 				memcpy(obuf + 2, msg[j].buf, msg[j].len);
@@ -562,7 +526,6 @@ static int dw2104_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[], i
 
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = num;
 
 unlock:
@@ -573,11 +536,6 @@ unlock:
 	mutex_unlock(&d->i2c_mutex);
 	return num;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-	mutex_unlock(&d->i2c_mutex);
-	return num;
->>>>>>> master
 }
 
 static int dw3101_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
@@ -585,12 +543,9 @@ static int dw3101_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 {
 	struct dvb_usb_device *d = i2c_get_adapdata(adap);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int ret;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	int i;
 
 	if (!d)
@@ -603,7 +558,6 @@ static int dw3101_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 		/* read */
 		/* first write first register number */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		u8 ibuf[MAX_XFER_SIZE], obuf[3];
 
 		if (2 + msg[1].len > sizeof(ibuf)) {
@@ -615,9 +569,6 @@ static int dw3101_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 =======
 		u8 ibuf[msg[1].len + 2], obuf[3];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		u8 ibuf[msg[1].len + 2], obuf[3];
->>>>>>> master
 		obuf[0] = msg[0].addr << 1;
 		obuf[1] = msg[0].len;
 		obuf[2] = msg[0].buf[0];
@@ -636,7 +587,6 @@ static int dw3101_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 		case 0x0c: {
 			/* write to register */
 <<<<<<< HEAD
-<<<<<<< HEAD
 			u8 obuf[MAX_XFER_SIZE];
 
 			if (2 + msg[0].len > sizeof(obuf)) {
@@ -648,9 +598,6 @@ static int dw3101_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 =======
 			u8 obuf[msg[0].len + 2];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			u8 obuf[msg[0].len + 2];
->>>>>>> master
 			obuf[0] = msg[0].addr << 1;
 			obuf[1] = msg[0].len;
 			memcpy(obuf + 2, msg[0].buf, msg[0].len);
@@ -676,7 +623,6 @@ static int dw3101_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 		debug_dump(msg[i].buf, msg[i].len, deb_xfer);
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = num;
 
 unlock:
@@ -687,11 +633,6 @@ unlock:
 	mutex_unlock(&d->i2c_mutex);
 	return num;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-	mutex_unlock(&d->i2c_mutex);
-	return num;
->>>>>>> master
 }
 
 static int s6x0_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
@@ -700,14 +641,10 @@ static int s6x0_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 	struct dvb_usb_device *d = i2c_get_adapdata(adap);
 	struct usb_device *udev;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int len, i, j, ret;
 =======
 	int len, i, j;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int len, i, j;
->>>>>>> master
 
 	if (!d)
 		return -ENODEV;
@@ -755,7 +692,6 @@ static int s6x0_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 			if (msg[j].flags == I2C_M_RD) {
 				/* read registers */
 <<<<<<< HEAD
-<<<<<<< HEAD
 				u8 ibuf[MAX_XFER_SIZE];
 
 				if (msg[j].len > sizeof(ibuf)) {
@@ -768,9 +704,6 @@ static int s6x0_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 =======
 				u8 ibuf[msg[j].len];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				u8 ibuf[msg[j].len];
->>>>>>> master
 				dw210x_op_rw(d->udev, 0x91, 0, 0,
 						ibuf, msg[j].len,
 						DW210X_READ_MSG);
@@ -798,7 +731,6 @@ static int s6x0_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 			} else if (j < (num - 1)) {
 				/* write register addr before read */
 <<<<<<< HEAD
-<<<<<<< HEAD
 				u8 obuf[MAX_XFER_SIZE];
 
 				if (2 + msg[j].len > sizeof(obuf)) {
@@ -811,9 +743,6 @@ static int s6x0_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 =======
 				u8 obuf[msg[j].len + 2];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				u8 obuf[msg[j].len + 2];
->>>>>>> master
 				obuf[0] = msg[j + 1].len;
 				obuf[1] = (msg[j].addr << 1);
 				memcpy(obuf + 2, msg[j].buf, msg[j].len);
@@ -826,7 +755,6 @@ static int s6x0_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 			} else {
 				/* write registers */
 <<<<<<< HEAD
-<<<<<<< HEAD
 				u8 obuf[MAX_XFER_SIZE];
 
 				if (2 + msg[j].len > sizeof(obuf)) {
@@ -838,9 +766,6 @@ static int s6x0_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 =======
 				u8 obuf[msg[j].len + 2];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				u8 obuf[msg[j].len + 2];
->>>>>>> master
 				obuf[0] = msg[j].len + 1;
 				obuf[1] = (msg[j].addr << 1);
 				memcpy(obuf + 2, msg[j].buf, msg[j].len);
@@ -854,7 +779,6 @@ static int s6x0_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 		}
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = num;
 
 unlock:
@@ -865,11 +789,6 @@ unlock:
 	mutex_unlock(&d->i2c_mutex);
 	return num;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-	mutex_unlock(&d->i2c_mutex);
-	return num;
->>>>>>> master
 }
 
 static int su3000_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],

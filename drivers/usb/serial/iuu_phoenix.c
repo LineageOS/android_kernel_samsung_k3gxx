@@ -70,7 +70,6 @@ struct iuu_private {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int iuu_attach(struct usb_serial *serial)
 {
 	unsigned char num_ports = serial->num_ports;
@@ -83,8 +82,6 @@ static int iuu_attach(struct usb_serial *serial)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int iuu_port_probe(struct usb_serial_port *port)
 {
 	struct iuu_private *priv;
@@ -1216,12 +1213,9 @@ static struct usb_serial_driver iuu_device = {
 	.set_termios = iuu_set_termios,
 	.init_termios = iuu_init_termios,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.attach = iuu_attach,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	.port_probe = iuu_port_probe,
 	.port_remove = iuu_port_remove,
 };

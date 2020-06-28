@@ -238,14 +238,10 @@ static void h5_pkt_cull(struct h5 *h5)
 
 		to_remove--;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		seq = (seq - 1) & 0x07;
 =======
 		seq = (seq - 1) % 8;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		seq = (seq - 1) % 8;
->>>>>>> master
 	}
 
 	if (seq != h5->rx_ack)
@@ -415,12 +411,9 @@ static int h5_rx_3wire_hdr(struct hci_uart *hu, unsigned char c)
 		BT_ERR("Non-link packet received in non-active state");
 		h5_reset_rx(h5);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		return 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	h5->rx_func = h5_rx_payload;

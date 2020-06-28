@@ -70,7 +70,6 @@ static int mpc8572_gpio_get(struct gpio_chip *gc, unsigned int gpio)
 	struct of_mm_gpio_chip *mm = to_of_mm_gpio_chip(gc);
 	struct mpc8xxx_gpio_chip *mpc8xxx_gc = to_mpc8xxx_gpio_chip(mm);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u32 out_mask, out_shadow;
 
 	out_mask = in_be32(mm->regs + GPIO_DIR);
@@ -80,16 +79,11 @@ static int mpc8572_gpio_get(struct gpio_chip *gc, unsigned int gpio)
 
 	return (val | out_shadow) & mpc8xxx_gpio2mask(gpio);
 =======
-=======
->>>>>>> master
 
 	val = in_be32(mm->regs + GPIO_DAT) & ~in_be32(mm->regs + GPIO_DIR);
 
 	return (val | mpc8xxx_gc->data) & mpc8xxx_gpio2mask(gpio);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static int mpc8xxx_gpio_get(struct gpio_chip *gc, unsigned int gpio)
@@ -309,14 +303,10 @@ static int mpc8xxx_gpio_irq_map(struct irq_domain *h, unsigned int virq,
 
 	irq_set_chip_data(virq, h->host_data);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	irq_set_chip_and_handler(virq, &mpc8xxx_irq_chip, handle_edge_irq);
 =======
 	irq_set_chip_and_handler(virq, &mpc8xxx_irq_chip, handle_level_irq);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	irq_set_chip_and_handler(virq, &mpc8xxx_irq_chip, handle_level_irq);
->>>>>>> master
 
 	return 0;
 }

@@ -299,14 +299,10 @@ static ssize_t process_vm_rw_core(pid_t pid, const struct iovec *lvec,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mm = mm_access(task, PTRACE_MODE_ATTACH_REALCREDS);
 =======
 	mm = mm_access(task, PTRACE_MODE_ATTACH);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mm = mm_access(task, PTRACE_MODE_ATTACH);
->>>>>>> master
 	if (!mm || IS_ERR(mm)) {
 		rc = IS_ERR(mm) ? PTR_ERR(mm) : -ESRCH;
 		/*

@@ -3133,12 +3133,9 @@ static void __exit ctnetlink_exit(void)
 	RCU_INIT_POINTER(nfq_ct_hook, NULL);
 #endif
 <<<<<<< HEAD
-<<<<<<< HEAD
 	synchronize_rcu();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 module_init(ctnetlink_init);

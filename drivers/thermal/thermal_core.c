@@ -948,14 +948,10 @@ temp_crit_show(struct device *dev, struct device_attribute *attr,
 	int ret;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = tz->ops->get_crit_temp(tz, &temperature);
 =======
 	ret = tz->ops->get_trip_temp(tz, 0, &temperature);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret = tz->ops->get_trip_temp(tz, 0, &temperature);
->>>>>>> master
 	if (ret)
 		return ret;
 

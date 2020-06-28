@@ -286,14 +286,10 @@ extern void clocksource_change_rating(struct clocksource *cs, int rating);
 extern void clocksource_suspend(void);
 extern void clocksource_resume(void);
 <<<<<<< HEAD
-<<<<<<< HEAD
 extern struct clocksource * __init clocksource_default_clock(void);
 =======
 extern struct clocksource * __init __weak clocksource_default_clock(void);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-extern struct clocksource * __init __weak clocksource_default_clock(void);
->>>>>>> master
 extern void clocksource_mark_unstable(struct clocksource *cs);
 
 extern void

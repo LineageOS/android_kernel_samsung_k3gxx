@@ -531,14 +531,10 @@ static int esp_alloc_lun_tag(struct esp_cmd_entry *ent,
 			     struct esp_lun_data *lp)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!ent->orig_tag[0]) {
 =======
 	if (!ent->tag[0]) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!ent->tag[0]) {
->>>>>>> master
 		/* Non-tagged, slot already taken?  */
 		if (lp->non_tagged_cmd)
 			return -EBUSY;
@@ -573,7 +569,6 @@ static int esp_alloc_lun_tag(struct esp_cmd_entry *ent,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	BUG_ON(lp->tagged_cmds[ent->orig_tag[1]]);
 
 	lp->tagged_cmds[ent->orig_tag[1]] = ent;
@@ -582,11 +577,6 @@ static int esp_alloc_lun_tag(struct esp_cmd_entry *ent,
 
 	lp->tagged_cmds[ent->tag[1]] = ent;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	BUG_ON(lp->tagged_cmds[ent->tag[1]]);
-
-	lp->tagged_cmds[ent->tag[1]] = ent;
->>>>>>> master
 	lp->num_tagged++;
 
 	return 0;
@@ -596,7 +586,6 @@ static void esp_free_lun_tag(struct esp_cmd_entry *ent,
 			     struct esp_lun_data *lp)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ent->orig_tag[0]) {
 		BUG_ON(lp->tagged_cmds[ent->orig_tag[1]] != ent);
 		lp->tagged_cmds[ent->orig_tag[1]] = NULL;
@@ -605,11 +594,6 @@ static void esp_free_lun_tag(struct esp_cmd_entry *ent,
 		BUG_ON(lp->tagged_cmds[ent->tag[1]] != ent);
 		lp->tagged_cmds[ent->tag[1]] = NULL;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (ent->tag[0]) {
-		BUG_ON(lp->tagged_cmds[ent->tag[1]] != ent);
-		lp->tagged_cmds[ent->tag[1]] = NULL;
->>>>>>> master
 		lp->num_tagged--;
 	} else {
 		BUG_ON(lp->non_tagged_cmd != ent);
@@ -700,13 +684,10 @@ static struct esp_cmd_entry *find_and_prep_issuable_command(struct esp *esp)
 			ent->tag[1] = 0;
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ent->orig_tag[0] = ent->tag[0];
 		ent->orig_tag[1] = ent->tag[1];
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 		if (esp_alloc_lun_tag(ent, lp) < 0)
 			continue;

@@ -519,13 +519,10 @@
 #define PCI_DEVICE_ID_AMD_11H_NB_LINK	0x1304
 #define PCI_DEVICE_ID_AMD_15H_M10H_F3	0x1403
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define PCI_DEVICE_ID_AMD_15H_M30H_NB_F3 0x141d
 #define PCI_DEVICE_ID_AMD_15H_M30H_NB_F4 0x141e
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define PCI_DEVICE_ID_AMD_15H_NB_F0	0x1600
 #define PCI_DEVICE_ID_AMD_15H_NB_F1	0x1601
 #define PCI_DEVICE_ID_AMD_15H_NB_F2	0x1602
@@ -2479,7 +2476,6 @@
 #define PCI_DEVICE_ID_KORENIX_JETCARDF3	0x17ff
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define PCI_VENDOR_ID_NETRONOME		0x19ee
 #define PCI_DEVICE_ID_NETRONOME_NFP3200	0x3200
 #define PCI_DEVICE_ID_NETRONOME_NFP3240	0x3240
@@ -2489,8 +2485,6 @@
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define PCI_VENDOR_ID_QMI		0x1a32
 
 #define PCI_VENDOR_ID_AZWAVE		0x1a3b

@@ -3947,15 +3947,10 @@ static void intel_connector_check_state(struct intel_connector *connector)
 void intel_connector_dpms(struct drm_connector *connector, int mode)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	struct intel_encoder *encoder = intel_attached_encoder(connector);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct intel_encoder *encoder = intel_attached_encoder(connector);
-
->>>>>>> master
 	/* All the simple cases only support two dpms states. */
 	if (mode != DRM_MODE_DPMS_ON)
 		mode = DRM_MODE_DPMS_OFF;
@@ -3967,20 +3962,14 @@ void intel_connector_dpms(struct drm_connector *connector, int mode)
 
 	/* Only need to change hw state when actually enabled */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (connector->encoder)
 		intel_encoder_dpms(to_intel_encoder(connector->encoder), mode);
 =======
-=======
->>>>>>> master
 	if (encoder->base.crtc)
 		intel_encoder_dpms(encoder, mode);
 	else
 		WARN_ON(encoder->connectors_active != false);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	intel_modeset_check_state(connector->dev);
 }
@@ -4584,15 +4573,12 @@ static void i9xx_set_pipeconf(struct intel_crtc *intel_crtc)
 	pipeconf = I915_READ(PIPECONF(intel_crtc->pipe));
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (dev_priv->quirks & QUIRK_PIPEA_FORCE &&
 	    I915_READ(PIPECONF(intel_crtc->pipe)) & PIPECONF_ENABLE)
 		pipeconf |= PIPECONF_ENABLE;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (intel_crtc->pipe == 0 && INTEL_INFO(dev)->gen < 4) {
 		/* Enable pixel doubling when the dot clock is > 90% of the (display)
 		 * core speed.
@@ -5255,14 +5241,10 @@ static void intel_set_pipe_csc(struct drm_crtc *crtc)
 
 		if (intel_crtc->config.limited_color_range)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			postoff = (16 * (1 << 12) / 255) & 0x1fff;
 =======
 			postoff = (16 * (1 << 13) / 255) & 0x1fff;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			postoff = (16 * (1 << 13) / 255) & 0x1fff;
->>>>>>> master
 
 		I915_WRITE(PIPE_CSC_POSTOFF_HI(pipe), postoff);
 		I915_WRITE(PIPE_CSC_POSTOFF_ME(pipe), postoff);
@@ -6300,16 +6282,12 @@ static void i9xx_update_cursor(struct drm_crtc *crtc, u32 base)
 	}
 	/* and commit changes on next vblank */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	POSTING_READ(CURCNTR(pipe));
 	I915_WRITE(CURBASE(pipe), base);
 	POSTING_READ(CURBASE(pipe));
 =======
 	I915_WRITE(CURBASE(pipe), base);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	I915_WRITE(CURBASE(pipe), base);
->>>>>>> master
 }
 
 static void ivb_update_cursor(struct drm_crtc *crtc, u32 base)
@@ -6337,16 +6315,12 @@ static void ivb_update_cursor(struct drm_crtc *crtc, u32 base)
 	}
 	/* and commit changes on next vblank */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	POSTING_READ(CURCNTR_IVB(pipe));
 	I915_WRITE(CURBASE_IVB(pipe), base);
 	POSTING_READ(CURBASE_IVB(pipe));
 =======
 	I915_WRITE(CURBASE_IVB(pipe), base);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	I915_WRITE(CURBASE_IVB(pipe), base);
->>>>>>> master
 }
 
 /* If no-part of the cursor is visible on the framebuffer, then the GPU may hang... */
@@ -7106,7 +7080,6 @@ static void do_intel_finish_page_flip(struct drm_device *dev,
 	wake_up_all(&dev_priv->pending_flip_queue);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	trace_i915_flip_complete(intel_crtc->plane, work->pending_flip_obj);
 
 	queue_work(dev_priv->wq, &work->work);
@@ -7115,11 +7088,6 @@ static void do_intel_finish_page_flip(struct drm_device *dev,
 
 	trace_i915_flip_complete(intel_crtc->plane, work->pending_flip_obj);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	queue_work(dev_priv->wq, &work->work);
-
-	trace_i915_flip_complete(intel_crtc->plane, work->pending_flip_obj);
->>>>>>> master
 }
 
 void intel_finish_page_flip(struct drm_device *dev, int pipe)
@@ -9189,10 +9157,7 @@ void intel_modeset_init(struct drm_device *dev)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 static void
 intel_connector_break_all_links(struct intel_connector *connector)
 {
@@ -9202,10 +9167,7 @@ intel_connector_break_all_links(struct intel_connector *connector)
 	connector->encoder->base.crtc = NULL;
 }
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static void intel_enable_pipe_a(struct drm_device *dev)
 {
 	struct intel_connector *connector;
@@ -9288,7 +9250,6 @@ static void intel_sanitize_crtc(struct intel_crtc *crtc)
 				continue;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 			connector->base.dpms = DRM_MODE_DPMS_OFF;
 			connector->base.encoder = NULL;
 		}
@@ -9304,10 +9265,6 @@ static void intel_sanitize_crtc(struct intel_crtc *crtc)
 			intel_connector_break_all_links(connector);
 		}
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			intel_connector_break_all_links(connector);
-		}
->>>>>>> master
 
 		WARN_ON(crtc->active);
 		crtc->base.enabled = false;
@@ -9379,13 +9336,10 @@ static void intel_sanitize_encoder(struct intel_encoder *encoder)
 			encoder->disable(encoder);
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 		encoder->base.crtc = NULL;
 		encoder->connectors_active = false;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 		/* Inconsistent output/port/pipe state happens presumably due to
 		 * a bug in one of the get_hw_state functions. Or someplace else
@@ -9397,17 +9351,12 @@ static void intel_sanitize_encoder(struct intel_encoder *encoder)
 			if (connector->encoder != encoder)
 				continue;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			connector->base.dpms = DRM_MODE_DPMS_OFF;
 			connector->base.encoder = NULL;
 =======
 
 			intel_connector_break_all_links(connector);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-			intel_connector_break_all_links(connector);
->>>>>>> master
 		}
 	}
 	/* Enabled encoders without active connectors will be fixed in
@@ -9568,16 +9517,12 @@ void intel_modeset_gem_init(struct drm_device *dev)
 	intel_setup_overlay(dev);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mutex_lock(&dev->mode_config.mutex);
 	intel_modeset_setup_hw_state(dev, false);
 	mutex_unlock(&dev->mode_config.mutex);
 =======
 	intel_modeset_setup_hw_state(dev, false);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	intel_modeset_setup_hw_state(dev, false);
->>>>>>> master
 }
 
 void intel_modeset_cleanup(struct drm_device *dev)
@@ -9652,7 +9597,6 @@ int intel_modeset_vga_set_state(struct drm_device *dev, bool state)
 {
 	struct drm_i915_private *dev_priv = dev->dev_private;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned reg = INTEL_INFO(dev)->gen >= 6 ? SNB_GMCH_CTRL : INTEL_GMCH_CTRL;
 	u16 gmch_ctrl;
 
@@ -9662,24 +9606,15 @@ int intel_modeset_vga_set_state(struct drm_device *dev, bool state)
 
 	pci_read_config_word(dev_priv->bridge_dev, INTEL_GMCH_CTRL, &gmch_ctrl);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u16 gmch_ctrl;
-
-	pci_read_config_word(dev_priv->bridge_dev, INTEL_GMCH_CTRL, &gmch_ctrl);
->>>>>>> master
 	if (state)
 		gmch_ctrl &= ~INTEL_GMCH_VGA_DISABLE;
 	else
 		gmch_ctrl |= INTEL_GMCH_VGA_DISABLE;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	pci_write_config_word(dev_priv->bridge_dev, reg, gmch_ctrl);
 =======
 	pci_write_config_word(dev_priv->bridge_dev, INTEL_GMCH_CTRL, gmch_ctrl);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	pci_write_config_word(dev_priv->bridge_dev, INTEL_GMCH_CTRL, gmch_ctrl);
->>>>>>> master
 	return 0;
 }
 

@@ -170,13 +170,9 @@ struct od_dbs_tuners {
 	unsigned int sampling_down_factor;
 	unsigned int up_threshold;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	unsigned int adj_up_threshold;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned int adj_up_threshold;
->>>>>>> master
 	unsigned int powersave_bias;
 	unsigned int io_is_busy;
 };

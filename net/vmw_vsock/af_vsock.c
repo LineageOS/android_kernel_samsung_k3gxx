@@ -1671,15 +1671,10 @@ vsock_stream_recvmsg(struct kiocb *kiocb,
 	err = 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	msg->msg_namelen = 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	msg->msg_namelen = 0;
-
->>>>>>> master
 	lock_sock(sk);
 
 	if (sk->sk_state != SS_CONNECTED) {
@@ -1815,12 +1810,9 @@ vsock_stream_recvmsg(struct kiocb *kiocb,
 		err = 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (copied > 0)
 		err = copied;
 =======
-=======
->>>>>>> master
 	if (copied > 0) {
 		/* We only do these additional bookkeeping/notification steps
 		 * if we actually copied something out of the queue pair
@@ -1842,10 +1834,7 @@ vsock_stream_recvmsg(struct kiocb *kiocb,
 		}
 		err = copied;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 out_wait:
 	finish_wait(sk_sleep(sk), &wait);

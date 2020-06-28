@@ -406,13 +406,10 @@ union map_info *dm_get_mapinfo(struct bio *bio);
 union map_info *dm_get_rq_mapinfo(struct request *rq);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 struct queue_limits *dm_get_queue_limits(struct mapped_device *md);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  * Geometry functions.
  */
@@ -420,13 +417,9 @@ int dm_get_geometry(struct mapped_device *md, struct hd_geometry *geo);
 int dm_set_geometry(struct mapped_device *md, struct hd_geometry *geo);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 /*-----------------------------------------------------------------
  * Functions for manipulating device-mapper tables.
  *---------------------------------------------------------------*/

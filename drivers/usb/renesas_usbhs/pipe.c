@@ -579,7 +579,6 @@ int usbhs_pipe_is_dir_host(struct usbhs_pipe *pipe)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 int usbhs_pipe_is_running(struct usbhs_pipe *pipe)
 {
 	return usbhsp_flags_has(pipe, IS_RUNNING);
@@ -595,8 +594,6 @@ void usbhs_pipe_running(struct usbhs_pipe *pipe, int running)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 void usbhs_pipe_data_sequence(struct usbhs_pipe *pipe, int sequence)
 {
 	u16 mask = (SQCLR | SQSET);

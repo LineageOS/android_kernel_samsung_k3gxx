@@ -638,14 +638,10 @@ mwifiex_rdeeprom_read(struct file *file, char __user *ubuf,
 	unsigned long addr = get_zeroed_page(GFP_KERNEL);
 	char *buf = (char *) addr;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int pos, ret, i;
 =======
 	int pos = 0, ret = 0, i;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int pos = 0, ret = 0, i;
->>>>>>> master
 	u8 value[MAX_EEPROM_DATA];
 
 	if (!buf)
@@ -654,14 +650,10 @@ mwifiex_rdeeprom_read(struct file *file, char __user *ubuf,
 	if (saved_offset == -1) {
 		/* No command has been given */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		pos = snprintf(buf, PAGE_SIZE, "0");
 =======
 		pos += snprintf(buf, PAGE_SIZE, "0");
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		pos += snprintf(buf, PAGE_SIZE, "0");
->>>>>>> master
 		goto done;
 	}
 
@@ -670,7 +662,6 @@ mwifiex_rdeeprom_read(struct file *file, char __user *ubuf,
 				  (u16) saved_bytes, value);
 	if (ret) {
 		ret = -EINVAL;
-<<<<<<< HEAD
 <<<<<<< HEAD
 		goto out_free;
 	}
@@ -684,8 +675,6 @@ done:
 	ret = simple_read_from_buffer(ubuf, count, ppos, buf, pos);
 out_free:
 =======
-=======
->>>>>>> master
 		goto done;
 	}
 
@@ -697,10 +686,7 @@ out_free:
 	ret = simple_read_from_buffer(ubuf, count, ppos, buf, pos);
 
 done:
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	free_page(addr);
 	return ret;
 }

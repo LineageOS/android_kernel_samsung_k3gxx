@@ -215,7 +215,6 @@ err1:
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 static void
 __netlink_set_ring(struct sock *sk, struct nl_mmap_req *req, bool tx_ring, void **pg_vec,
@@ -263,8 +262,6 @@ static int netlink_set_ring(struct sock *sk, struct nl_mmap_req *req,
 	if (atomic_read(&ring->pending))
 		return -EBUSY;
 =======
-=======
->>>>>>> master
 static int netlink_set_ring(struct sock *sk, struct nl_mmap_req *req,
 			    bool closing, bool tx_ring)
 {
@@ -284,10 +281,7 @@ static int netlink_set_ring(struct sock *sk, struct nl_mmap_req *req,
 		if (atomic_read(&ring->pending))
 			return -EBUSY;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (req->nm_block_nr) {
 		if (ring->pg_vec != NULL)
@@ -320,7 +314,6 @@ static int netlink_set_ring(struct sock *sk, struct nl_mmap_req *req,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mutex_lock(&nlk->pg_vec_lock);
 	if (atomic_read(&nlk->mapped) == 0) {
 		__netlink_set_ring(sk, req, tx_ring, pg_vec, order);
@@ -329,8 +322,6 @@ static int netlink_set_ring(struct sock *sk, struct nl_mmap_req *req,
 	}
 
 =======
-=======
->>>>>>> master
 	err = -EBUSY;
 	mutex_lock(&nlk->pg_vec_lock);
 	if (closing || atomic_read(&nlk->mapped) == 0) {
@@ -351,24 +342,17 @@ static int netlink_set_ring(struct sock *sk, struct nl_mmap_req *req,
 
 		WARN_ON(atomic_read(&nlk->mapped));
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	mutex_unlock(&nlk->pg_vec_lock);
 
 	if (pg_vec)
 		free_pg_vec(pg_vec, order, req->nm_block_nr);
-<<<<<<< HEAD
 <<<<<<< HEAD
 
 	return -EBUSY;
 =======
 	return err;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return err;
->>>>>>> master
 }
 
 static void netlink_mm_open(struct vm_area_struct *vma)
@@ -455,14 +439,10 @@ out:
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void netlink_frame_flush_dcache(const struct nl_mmap_hdr *hdr, unsigned int nm_len)
 =======
 static void netlink_frame_flush_dcache(const struct nl_mmap_hdr *hdr)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static void netlink_frame_flush_dcache(const struct nl_mmap_hdr *hdr)
->>>>>>> master
 {
 #if ARCH_IMPLEMENTS_FLUSH_DCACHE_PAGE == 1
 	struct page *p_start, *p_end;
@@ -470,14 +450,10 @@ static void netlink_frame_flush_dcache(const struct nl_mmap_hdr *hdr)
 	/* First page is flushed through netlink_{get,set}_status */
 	p_start = pgvec_to_page(hdr + PAGE_SIZE);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	p_end   = pgvec_to_page((void *)hdr + NL_MMAP_HDRLEN + nm_len - 1);
 =======
 	p_end   = pgvec_to_page((void *)hdr + NL_MMAP_HDRLEN + hdr->nm_len - 1);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	p_end   = pgvec_to_page((void *)hdr + NL_MMAP_HDRLEN + hdr->nm_len - 1);
->>>>>>> master
 	while (p_start <= p_end) {
 		flush_dcache_page(p_start);
 		p_start++;
@@ -496,7 +472,6 @@ static void netlink_set_status(struct nl_mmap_hdr *hdr,
 			       enum nl_mmap_status status)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	smp_mb();
 	hdr->nm_status = status;
 	flush_dcache_page(pgvec_to_page(hdr));
@@ -505,11 +480,6 @@ static void netlink_set_status(struct nl_mmap_hdr *hdr,
 	flush_dcache_page(pgvec_to_page(hdr));
 	smp_wmb();
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	hdr->nm_status = status;
-	flush_dcache_page(pgvec_to_page(hdr));
-	smp_wmb();
->>>>>>> master
 }
 
 static struct nl_mmap_hdr *
@@ -609,14 +579,10 @@ static unsigned int netlink_poll(struct file *file, struct socket *sock,
 			err = netlink_dump(sk);
 			if (err < 0) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 				sk->sk_err = -err;
 =======
 				sk->sk_err = err;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				sk->sk_err = err;
->>>>>>> master
 				sk->sk_error_report(sk);
 				break;
 			}
@@ -680,12 +646,9 @@ static int netlink_mmap_sendmsg(struct sock *sk, struct msghdr *msg,
 	struct sk_buff *skb;
 	unsigned int maxlen;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int err = 0, len = 0;
 
 =======
-=======
->>>>>>> master
 	bool excl = true;
 	int err = 0, len = 0;
 
@@ -698,10 +661,7 @@ static int netlink_mmap_sendmsg(struct sock *sk, struct msghdr *msg,
 	    atomic_read(&nlk->mapped) > 1)
 		excl = false;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	mutex_lock(&nlk->pg_vec_lock);
 
 	ring   = &nlk->tx_ring;
@@ -709,13 +669,10 @@ static int netlink_mmap_sendmsg(struct sock *sk, struct msghdr *msg,
 
 	do {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		unsigned int nm_len;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		hdr = netlink_current_frame(ring, NL_MMAP_STATUS_VALID);
 		if (hdr == NULL) {
 			if (!(msg->msg_flags & MSG_DONTWAIT) &&
@@ -724,21 +681,16 @@ static int netlink_mmap_sendmsg(struct sock *sk, struct msghdr *msg,
 			continue;
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 		nm_len = ACCESS_ONCE(hdr->nm_len);
 		if (nm_len > maxlen) {
 =======
 		if (hdr->nm_len > maxlen) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (hdr->nm_len > maxlen) {
->>>>>>> master
 			err = -EINVAL;
 			goto out;
 		}
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 		netlink_frame_flush_dcache(hdr, nm_len);
 
@@ -751,8 +703,6 @@ static int netlink_mmap_sendmsg(struct sock *sk, struct msghdr *msg,
 		memcpy(skb->data, (void *)hdr + NL_MMAP_HDRLEN, nm_len);
 		netlink_set_status(hdr, NL_MMAP_STATUS_UNUSED);
 =======
-=======
->>>>>>> master
 		netlink_frame_flush_dcache(hdr);
 
 		if (likely(dst_portid == 0 && dst_group == 0 && excl)) {
@@ -777,10 +727,7 @@ static int netlink_mmap_sendmsg(struct sock *sk, struct msghdr *msg,
 			memcpy(skb->data, (void *)hdr + NL_MMAP_HDRLEN, hdr->nm_len);
 			netlink_set_status(hdr, NL_MMAP_STATUS_UNUSED);
 		}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 		netlink_increment_head(ring);
 
@@ -827,14 +774,10 @@ static void netlink_queue_mmaped_skb(struct sock *sk, struct sk_buff *skb)
 	hdr->nm_uid	= from_kuid(sk_user_ns(sk), NETLINK_CB(skb).creds.uid);
 	hdr->nm_gid	= from_kgid(sk_user_ns(sk), NETLINK_CB(skb).creds.gid);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	netlink_frame_flush_dcache(hdr, hdr->nm_len);
 =======
 	netlink_frame_flush_dcache(hdr);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	netlink_frame_flush_dcache(hdr);
->>>>>>> master
 	netlink_set_status(hdr, NL_MMAP_STATUS_VALID);
 
 	NETLINK_CB(skb).flags |= NETLINK_SKB_DELIVERED;
@@ -955,22 +898,16 @@ static void netlink_sock_destruct(struct sock *sk)
 		memset(&req, 0, sizeof(req));
 		if (nlk->rx_ring.pg_vec)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			__netlink_set_ring(sk, &req, false, NULL, 0);
 		memset(&req, 0, sizeof(req));
 		if (nlk->tx_ring.pg_vec)
 			__netlink_set_ring(sk, &req, true, NULL, 0);
 =======
-=======
->>>>>>> master
 			netlink_set_ring(sk, &req, true, false);
 		memset(&req, 0, sizeof(req));
 		if (nlk->tx_ring.pg_vec)
 			netlink_set_ring(sk, &req, true, true);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 #endif /* CONFIG_NETLINK_MMAP */
 
@@ -1405,7 +1342,6 @@ retry:
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /**
  * __netlink_ns_capable - General netlink message capability test
  * @nsp: NETLINK_CB of the socket buffer holding a netlink command from userspace.
@@ -1477,9 +1413,6 @@ static inline int netlink_allowed(const struct socket *sock, unsigned int flag)
 =======
 static inline int netlink_capable(const struct socket *sock, unsigned int flag)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static inline int netlink_capable(const struct socket *sock, unsigned int flag)
->>>>>>> master
 {
 	return (nl_table[sock->sk->sk_protocol].flags & flag) ||
 		ns_capable(sock_net(sock->sk)->user_ns, CAP_NET_ADMIN);
@@ -1548,14 +1481,10 @@ static int netlink_bind(struct socket *sock, struct sockaddr *addr,
 	/* Only superuser is allowed to listen multicasts */
 	if (nladdr->nl_groups) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!netlink_allowed(sock, NL_CFG_F_NONROOT_RECV))
 =======
 		if (!netlink_capable(sock, NL_CFG_F_NONROOT_RECV))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!netlink_capable(sock, NL_CFG_F_NONROOT_RECV))
->>>>>>> master
 			return -EPERM;
 		err = netlink_realloc_groups(sk);
 		if (err)
@@ -1618,14 +1547,10 @@ static int netlink_connect(struct socket *sock, struct sockaddr *addr,
 
 	/* Only superuser is allowed to send multicasts */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (nladdr->nl_groups && !netlink_allowed(sock, NL_CFG_F_NONROOT_SEND))
 =======
 	if (nladdr->nl_groups && !netlink_capable(sock, NL_CFG_F_NONROOT_SEND))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (nladdr->nl_groups && !netlink_capable(sock, NL_CFG_F_NONROOT_SEND))
->>>>>>> master
 		return -EPERM;
 
 	if (!nlk->portid)
@@ -2198,14 +2123,10 @@ static int netlink_setsockopt(struct socket *sock, int level, int optname,
 	case NETLINK_ADD_MEMBERSHIP:
 	case NETLINK_DROP_MEMBERSHIP: {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!netlink_allowed(sock, NL_CFG_F_NONROOT_RECV))
 =======
 		if (!netlink_capable(sock, NL_CFG_F_NONROOT_RECV))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!netlink_capable(sock, NL_CFG_F_NONROOT_RECV))
->>>>>>> master
 			return -EPERM;
 		err = netlink_realloc_groups(sk);
 		if (err)
@@ -2255,14 +2176,10 @@ static int netlink_setsockopt(struct socket *sock, int level, int optname,
 		if (copy_from_user(&req, optval, sizeof(req)))
 			return -EFAULT;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		err = netlink_set_ring(sk, &req,
 =======
 		err = netlink_set_ring(sk, &req, false,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		err = netlink_set_ring(sk, &req, false,
->>>>>>> master
 				       optname == NETLINK_TX_RING);
 		break;
 	}
@@ -2346,12 +2263,9 @@ static int netlink_sendmsg(struct kiocb *kiocb, struct socket *sock,
 	int err;
 	struct scm_cookie scm;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u32 netlink_skb_flags = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (msg->msg_flags&MSG_OOB)
 		return -EOPNOTSUPP;
@@ -2372,7 +2286,6 @@ static int netlink_sendmsg(struct kiocb *kiocb, struct socket *sock,
 		err =  -EPERM;
 		if ((dst_group || dst_portid) &&
 <<<<<<< HEAD
-<<<<<<< HEAD
 		    !netlink_allowed(sock, NL_CFG_F_NONROOT_SEND))
 			goto out;
 		netlink_skb_flags |= NETLINK_SKB_DST;
@@ -2380,10 +2293,6 @@ static int netlink_sendmsg(struct kiocb *kiocb, struct socket *sock,
 		    !netlink_capable(sock, NL_CFG_F_NONROOT_SEND))
 			goto out;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		    !netlink_capable(sock, NL_CFG_F_NONROOT_SEND))
-			goto out;
->>>>>>> master
 	} else {
 		dst_portid = nlk->dst_portid;
 		dst_group = nlk->dst_group;
@@ -2414,12 +2323,9 @@ static int netlink_sendmsg(struct kiocb *kiocb, struct socket *sock,
 	NETLINK_CB(skb).dst_group = dst_group;
 	NETLINK_CB(skb).creds	= siocb->scm->creds;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	NETLINK_CB(skb).flags	= netlink_skb_flags;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	err = -EFAULT;
 	if (memcpy_fromiovec(skb_put(skb, len), msg->msg_iov, len)) {
@@ -2486,15 +2392,10 @@ static int netlink_recvmsg(struct kiocb *kiocb, struct socket *sock,
 #endif
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	msg->msg_namelen = 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	msg->msg_namelen = 0;
-
->>>>>>> master
 	copied = data_skb->len;
 	if (len < copied) {
 		msg->msg_flags |= MSG_TRUNC;
@@ -2530,14 +2431,10 @@ static int netlink_recvmsg(struct kiocb *kiocb, struct socket *sock,
 		ret = netlink_dump(sk);
 		if (ret) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			sk->sk_err = -ret;
 =======
 			sk->sk_err = ret;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			sk->sk_err = ret;
->>>>>>> master
 			sk->sk_error_report(sk);
 		}
 	}

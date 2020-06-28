@@ -822,7 +822,6 @@ void llc_conn_handler(struct llc_sap *sap, struct sk_buff *skb)
 		 * machine works. -acme
 		 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		skb_orphan(skb);
 		sock_hold(sk);
 		skb->sk = sk;
@@ -830,9 +829,6 @@ void llc_conn_handler(struct llc_sap *sap, struct sk_buff *skb)
 =======
 		skb->sk = sk;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		skb->sk = sk;
->>>>>>> master
 	}
 	if (!sock_owned_by_user(sk))
 		llc_conn_rcv(sk, skb);

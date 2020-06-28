@@ -81,12 +81,9 @@ isac_ph_state_bh(struct dchannel *dch)
 		break;
 	case ISAC_IND_DR:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	case ISAC_IND_DR6:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		dch->state = 3;
 		l1_event(dch->l1, HW_DEACT_IND);
 		break;
@@ -668,12 +665,9 @@ isac_l1cmd(struct dchannel *dch, u32 cmd)
 		if ((isac->state == ISAC_IND_EI) ||
 		    (isac->state == ISAC_IND_DR) ||
 <<<<<<< HEAD
-<<<<<<< HEAD
 		    (isac->state == ISAC_IND_DR6) ||
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		    (isac->state == ISAC_IND_RS))
 			ph_command(isac, ISAC_CMD_TIM);
 		else

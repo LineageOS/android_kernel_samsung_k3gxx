@@ -31,14 +31,10 @@
 
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define SNDRV_COMPRESS_VERSION SNDRV_PROTOCOL_VERSION(0, 1, 2)
 =======
 #define SNDRV_COMPRESS_VERSION SNDRV_PROTOCOL_VERSION(0, 1, 1)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define SNDRV_COMPRESS_VERSION SNDRV_PROTOCOL_VERSION(0, 1, 1)
->>>>>>> master
 /**
  * struct snd_compressed_buffer: compressed buffer
  * @fragment_size: size of buffer fragment in bytes
@@ -76,17 +72,12 @@ struct snd_compr_tstamp {
 	__u32 byte_offset;
 	__u32 copied_total;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	__u32 pcm_frames;
 	__u32 pcm_io_frames;
 =======
 	snd_pcm_uframes_t pcm_frames;
 	snd_pcm_uframes_t pcm_io_frames;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	snd_pcm_uframes_t pcm_frames;
-	snd_pcm_uframes_t pcm_io_frames;
->>>>>>> master
 	__u32 sampling_rate;
 } __attribute__((packed, aligned(4)));
 
@@ -198,13 +189,10 @@ struct snd_compr_metadata {
 #define SNDRV_COMPRESS_NEXT_TRACK	_IO('C', 0x35)
 #define SNDRV_COMPRESS_PARTIAL_DRAIN	_IO('C', 0x36)
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define SNDRV_COMPRESS_SET_NEXT_TRACK_PARAM\
 										_IOW('C', 0x37, union snd_codec_options)
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  * TODO
  * 1. add mmap support

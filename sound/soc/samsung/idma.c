@@ -365,13 +365,9 @@ static int idma_mmap(struct snd_pcm_substream *substream,
 	/* From snd_pcm_lib_mmap_iomem */
 	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	vma->vm_flags |= VM_IO;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	vma->vm_flags |= VM_IO;
->>>>>>> master
 	size = vma->vm_end - vma->vm_start;
 	offset = vma->vm_pgoff << PAGE_SHIFT;
 	ret = io_remap_pfn_range(vma, vma->vm_start,

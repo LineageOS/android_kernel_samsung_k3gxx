@@ -454,7 +454,6 @@ static int mem_check(struct sock *sk)
 		return 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	rcu_read_lock_bh();
 	for_each_sk_fl_rcu(np, sfl)
 		count++;
@@ -463,10 +462,6 @@ static int mem_check(struct sock *sk)
 	for_each_sk_fl_rcu(np, sfl)
 		count++;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	for_each_sk_fl_rcu(np, sfl)
-		count++;
->>>>>>> master
 
 	if (room <= 0 ||
 	    ((count >= FL_MAX_PER_SOCK ||

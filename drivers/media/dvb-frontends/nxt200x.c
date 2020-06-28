@@ -40,14 +40,11 @@
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* Max transfer size done by I2C transfer functions */
 #define MAX_XFER_SIZE  256
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define NXT2002_DEFAULT_FIRMWARE "dvb-fe-nxt2002.fw"
 #define NXT2004_DEFAULT_FIRMWARE "dvb-fe-nxt2004.fw"
 #define CRC_CCIT_MASK 0x1021
@@ -105,7 +102,6 @@ static int nxt200x_writebytes (struct nxt200x_state* state, u8 reg,
 			       const u8 *buf, u8 len)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u8 buf2[MAX_XFER_SIZE];
 	int err;
 	struct i2c_msg msg = { .addr = state->config->demod_address, .flags = 0, .buf = buf2, .len = len + 1 };
@@ -117,16 +113,11 @@ static int nxt200x_writebytes (struct nxt200x_state* state, u8 reg,
 	}
 
 =======
-=======
->>>>>>> master
 	u8 buf2 [len+1];
 	int err;
 	struct i2c_msg msg = { .addr = state->config->demod_address, .flags = 0, .buf = buf2, .len = len + 1 };
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	buf2[0] = reg;
 	memcpy(&buf2[1], buf, len);
 

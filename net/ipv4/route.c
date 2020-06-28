@@ -90,12 +90,9 @@
 #include <linux/times.h>
 #include <linux/slab.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/jhash.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #include <net/dst.h>
 #include <net/net_namespace.h>
 #include <net/protocol.h>
@@ -472,7 +469,6 @@ static struct neighbour *ipv4_neigh_lookup(const struct dst_entry *dst,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define IP_IDENTS_SZ 2048u
 struct ip_ident_bucket {
 	atomic_t	id;
@@ -525,8 +521,6 @@ EXPORT_SYMBOL(__ip_select_ident);
 
 static void __build_flow_key(struct flowi4 *fl4, const struct sock *sk,
 =======
-=======
->>>>>>> master
 /*
  * Peer allocation may fail only in serious out-of-memory conditions.  However
  * we still can generate some output.
@@ -564,10 +558,7 @@ void __ip_select_ident(struct iphdr *iph, struct dst_entry *dst, int more)
 EXPORT_SYMBOL(__ip_select_ident);
 
 static void __build_flow_key(struct flowi4 *fl4, struct sock *sk,
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			     const struct iphdr *iph,
 			     int oif, u8 tos,
 			     u8 prot, u32 mark, int flow_flags)
@@ -584,25 +575,19 @@ static void __build_flow_key(struct flowi4 *fl4, struct sock *sk,
 			   RT_SCOPE_UNIVERSE, prot,
 			   flow_flags,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			   iph->daddr, iph->saddr, 0, 0);
 }
 
 static void build_skb_flow_key(struct flowi4 *fl4, const struct sk_buff *skb,
 			       const struct sock *sk)
 =======
-=======
->>>>>>> master
 			   iph->daddr, iph->saddr, 0, 0,
 			   sk ? sock_i_uid(sk) : 0);
 }
 
 static void build_skb_flow_key(struct flowi4 *fl4, const struct sk_buff *skb,
 			       struct sock *sk)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 {
 	const struct iphdr *iph = ip_hdr(skb);
 	int oif = skb->dev->ifindex;
@@ -614,14 +599,10 @@ static void build_skb_flow_key(struct flowi4 *fl4, const struct sk_buff *skb,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void build_sk_flow_key(struct flowi4 *fl4, const struct sock *sk)
 =======
 static void build_sk_flow_key(struct flowi4 *fl4, struct sock *sk)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static void build_sk_flow_key(struct flowi4 *fl4, struct sock *sk)
->>>>>>> master
 {
 	const struct inet_sock *inet = inet_sk(sk);
 	const struct ip_options_rcu *inet_opt;
@@ -636,25 +617,19 @@ static void build_sk_flow_key(struct flowi4 *fl4, struct sock *sk)
 			   inet->hdrincl ? IPPROTO_RAW : sk->sk_protocol,
 			   inet_sk_flowi_flags(sk),
 <<<<<<< HEAD
-<<<<<<< HEAD
 			   daddr, inet->inet_saddr, 0, 0);
 	rcu_read_unlock();
 }
 
 static void ip_rt_build_flow_key(struct flowi4 *fl4, const struct sock *sk,
 =======
-=======
->>>>>>> master
 			   daddr, inet->inet_saddr, 0, 0,
 			   sock_i_uid(sk));
 	rcu_read_unlock();
 }
 
 static void ip_rt_build_flow_key(struct flowi4 *fl4, struct sock *sk,
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 				 const struct sk_buff *skb)
 {
 	if (skb)
@@ -804,7 +779,6 @@ static void __ip_do_redirect(struct rtable *rt, struct sk_buff *skb, struct flow
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	n = __ipv4_neigh_lookup(rt->dst.dev, new_gw);
 	if (!n)
 		n = neigh_create(&arp_tbl, &new_gw, rt->dst.dev);
@@ -813,10 +787,6 @@ static void __ip_do_redirect(struct rtable *rt, struct sk_buff *skb, struct flow
 	n = ipv4_neigh_lookup(&rt->dst, NULL, &new_gw);
 	if (n) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	n = ipv4_neigh_lookup(&rt->dst, NULL, &new_gw);
-	if (n) {
->>>>>>> master
 		if (!(n->nud_state & NUD_VALID)) {
 			neigh_event_send(n, NULL);
 		} else {
@@ -974,15 +944,12 @@ static int ip_error(struct sk_buff *skb)
 	int code;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* IP on this device is disabled. */
 	if (!in_dev)
 		goto out;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	net = dev_net(rt->dst.dev);
 	if (!IN_DEV_FORWARD(in_dev)) {
 		switch (rt->dst.error) {
@@ -1120,7 +1087,6 @@ void ipv4_sk_update_pmtu(struct sk_buff *skb, struct sock *sk, u32 mtu)
 	struct flowi4 fl4;
 	struct rtable *rt;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct dst_entry *odst = NULL;
 	bool new = false;
 
@@ -1129,8 +1095,6 @@ void ipv4_sk_update_pmtu(struct sk_buff *skb, struct sock *sk, u32 mtu)
 
 	if (sock_owned_by_user(sk) || !odst) {
 =======
-=======
->>>>>>> master
 	struct dst_entry *dst;
 	bool new = false;
 
@@ -1138,10 +1102,7 @@ void ipv4_sk_update_pmtu(struct sk_buff *skb, struct sock *sk, u32 mtu)
 	rt = (struct rtable *) __sk_dst_get(sk);
 
 	if (sock_owned_by_user(sk) || !rt) {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		__ipv4_sk_update_pmtu(skb, sk, mtu);
 		goto out;
 	}
@@ -1149,15 +1110,11 @@ void ipv4_sk_update_pmtu(struct sk_buff *skb, struct sock *sk, u32 mtu)
 	__build_flow_key(&fl4, sk, iph, 0, 0, 0, 0, 0);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	rt = (struct rtable *)odst;
 	if (odst->obsolete && odst->ops->check(odst, 0) == NULL) {
 =======
 	if (!__sk_dst_check(sk, 0)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!__sk_dst_check(sk, 0)) {
->>>>>>> master
 		rt = ip_route_output_flow(sock_net(sk), &fl4, sk);
 		if (IS_ERR(rt))
 			goto out;
@@ -1168,16 +1125,11 @@ void ipv4_sk_update_pmtu(struct sk_buff *skb, struct sock *sk, u32 mtu)
 	__ip_rt_update_pmtu((struct rtable *) rt->dst.path, &fl4, mtu);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!dst_check(&rt->dst, 0)) {
 =======
 	dst = dst_check(&rt->dst, 0);
 	if (!dst) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	dst = dst_check(&rt->dst, 0);
-	if (!dst) {
->>>>>>> master
 		if (new)
 			dst_release(&rt->dst);
 
@@ -1190,23 +1142,17 @@ void ipv4_sk_update_pmtu(struct sk_buff *skb, struct sock *sk, u32 mtu)
 
 	if (new)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		sk_dst_set(sk, &rt->dst);
 
 out:
 	bh_unlock_sock(sk);
 	dst_release(odst);
 =======
-=======
->>>>>>> master
 		__sk_dst_set(sk, &rt->dst);
 
 out:
 	bh_unlock_sock(sk);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 EXPORT_SYMBOL_GPL(ipv4_sk_update_pmtu);
 
@@ -1661,14 +1607,10 @@ static int __mkroute_input(struct sk_buff *skb,
 	unsigned int flags = 0;
 	bool do_cache;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u32 itag = 0;
 =======
 	u32 itag;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u32 itag;
->>>>>>> master
 
 	/* get a working reference to the output device */
 	out_dev = __in_dev_get_rcu(FIB_RES_DEV(*res));
@@ -1689,14 +1631,10 @@ static int __mkroute_input(struct sk_buff *skb,
 	do_cache = res->fi && !itag;
 	if (out_dev == in_dev && err && IN_DEV_TX_REDIRECTS(out_dev) &&
 <<<<<<< HEAD
-<<<<<<< HEAD
 	    skb->protocol == htons(ETH_P_IP) &&
 =======
 	     skb->protocol == htons(ETH_P_IP) &&
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	     skb->protocol == htons(ETH_P_IP) &&
->>>>>>> master
 	    (IN_DEV_SHARED_MEDIA(out_dev) ||
 	     inet_addr_onlink(out_dev, saddr, FIB_RES_GW(*res))))
 		IPCB(skb)->flags |= IPSKB_DOREDIRECT;
@@ -1742,12 +1680,9 @@ static int __mkroute_input(struct sk_buff *skb,
 	rth->rt_uses_gateway = 0;
 	INIT_LIST_HEAD(&rth->rt_uncached);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	RT_CACHE_STAT_INC(in_slow_tot);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	rth->dst.input = ip_forward;
 	rth->dst.output = ip_output;
@@ -1850,15 +1785,10 @@ static int ip_route_input_slow(struct sk_buff *skb, __be32 daddr, __be32 saddr,
 		goto no_route;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	RT_CACHE_STAT_INC(in_slow_tot);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	RT_CACHE_STAT_INC(in_slow_tot);
-
->>>>>>> master
 	if (res.type == RTN_BROADCAST)
 		goto brd_input;
 
@@ -1928,18 +1858,14 @@ local_input:
 	rth->rt_uses_gateway = 0;
 	INIT_LIST_HEAD(&rth->rt_uncached);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	RT_CACHE_STAT_INC(in_slow_tot);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (res.type == RTN_UNREACHABLE) {
 		rth->dst.input= ip_error;
 		rth->dst.error= -err;
 		rth->rt_flags 	&= ~RTCF_LOCAL;
 	}
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (do_cache) {
 		if (unlikely(!rt_cache_route(&FIB_RES_NH(res), rth))) {
@@ -1951,10 +1877,6 @@ local_input:
 	if (do_cache)
 		rt_cache_route(&FIB_RES_NH(res), rth);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (do_cache)
-		rt_cache_route(&FIB_RES_NH(res), rth);
->>>>>>> master
 	skb_dst_set(skb, &rth->dst);
 	err = 0;
 	goto out;
@@ -1998,12 +1920,9 @@ int ip_route_input_noref(struct sk_buff *skb, __be32 daddr, __be32 saddr,
 	int res;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	tos &= IPTOS_RT_MASK;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	rcu_read_lock();
 
 	/* Multicast recognition logic is moved from route cache to here.
@@ -2094,7 +2013,6 @@ static struct rtable *__mkroute_output(const struct fib_result *res,
 		if (fi && res->prefixlen < 4)
 			fi = NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	} else if ((type == RTN_LOCAL) && (orig_oif != 0) &&
 		   (orig_oif != dev_out->ifindex)) {
 		/* For local routes that require a particular output interface
@@ -2109,8 +2027,6 @@ static struct rtable *__mkroute_output(const struct fib_result *res,
 		fi = NULL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	fnhe = NULL;
@@ -2279,14 +2195,10 @@ struct rtable *__ip_route_output_key(struct net *net, struct flowi4 *fl4)
 			goto make_route;
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!fl4->saddr) {
 =======
 		if (fl4->saddr) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (fl4->saddr) {
->>>>>>> master
 			if (ipv4_is_multicast(fl4->daddr))
 				fl4->saddr = inet_select_addr(dev_out, 0,
 							      fl4->flowi4_scope);
@@ -2562,15 +2474,11 @@ static int rt_fill_info(struct net *net,  __be32 dst, __be32 src,
 			int err = ipmr_get_route(net, skb,
 						 fl4->saddr, fl4->daddr,
 <<<<<<< HEAD
-<<<<<<< HEAD
 						 r, nowait, portid);
 
 =======
 						 r, nowait);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-						 r, nowait);
->>>>>>> master
 			if (err <= 0) {
 				if (!nowait) {
 					if (err == 0)
@@ -2585,14 +2493,10 @@ static int rt_fill_info(struct net *net,  __be32 dst, __be32 src,
 		} else
 #endif
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (nla_put_u32(skb, RTA_IIF, skb->dev->ifindex))
 =======
 			if (nla_put_u32(skb, RTA_IIF, rt->rt_iif))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			if (nla_put_u32(skb, RTA_IIF, rt->rt_iif))
->>>>>>> master
 				goto nla_put_failure;
 	}
 
@@ -2948,7 +2852,6 @@ int __init ip_rt_init(void)
 	int rc = 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ip_idents = kmalloc(IP_IDENTS_SZ * sizeof(*ip_idents), GFP_KERNEL);
 	if (!ip_idents)
 		panic("IP: failed to allocate ip_idents\n");
@@ -2957,8 +2860,6 @@ int __init ip_rt_init(void)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #ifdef CONFIG_IP_ROUTE_CLASSID
 	ip_rt_acct = __alloc_percpu(256 * sizeof(struct ip_rt_acct), __alignof__(struct ip_rt_acct));
 	if (!ip_rt_acct)

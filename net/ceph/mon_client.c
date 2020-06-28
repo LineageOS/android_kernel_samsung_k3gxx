@@ -153,14 +153,10 @@ static int __open_session(struct ceph_mon_client *monc)
 		ret = ceph_auth_build_hello(monc->auth,
 					    monc->m_auth->front.iov_base,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					    monc->m_auth->front_alloc_len);
 =======
 					    monc->m_auth->front_max);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					    monc->m_auth->front_max);
->>>>>>> master
 		__send_prepared_auth_request(monc, ret);
 	} else {
 		dout("open_session mon%d already open\n", monc->cur_mon);
@@ -205,14 +201,10 @@ static void __send_subscribe(struct ceph_mon_client *monc)
 
 		p = msg->front.iov_base;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		end = p + msg->front_alloc_len;
 =======
 		end = p + msg->front_max;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		end = p + msg->front_max;
->>>>>>> master
 
 		num = 1 + !!monc->want_next_osdmap + !!monc->want_mdsmap;
 		ceph_encode_32(&p, num);
@@ -914,14 +906,10 @@ static void handle_auth_reply(struct ceph_mon_client *monc,
 				     msg->front.iov_len,
 				     monc->m_auth->front.iov_base,
 <<<<<<< HEAD
-<<<<<<< HEAD
 				     monc->m_auth->front_alloc_len);
 =======
 				     monc->m_auth->front_max);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				     monc->m_auth->front_max);
->>>>>>> master
 	if (ret < 0) {
 		monc->client->auth_err = ret;
 		wake_up_all(&monc->client->auth_wq);
@@ -964,14 +952,10 @@ static int __validate_auth(struct ceph_mon_client *monc)
 
 	ret = ceph_build_auth(monc->auth, monc->m_auth->front.iov_base,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			      monc->m_auth->front_alloc_len);
 =======
 			      monc->m_auth->front_max);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			      monc->m_auth->front_max);
->>>>>>> master
 	if (ret <= 0)
 		return ret; /* either an error, or no need to authenticate */
 	__send_prepared_auth_request(monc, ret);
@@ -1074,7 +1058,6 @@ static struct ceph_msg *mon_alloc_msg(struct ceph_connection *con,
 		pr_info("alloc_msg unknown type %d\n", type);
 		*skip = 1;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	} else if (front_len > m->front_alloc_len) {
 		pr_warning("mon_alloc_msg front %d > prealloc %d (%u#%llu)\n",
 			   front_len, m->front_alloc_len,
@@ -1087,9 +1070,6 @@ static struct ceph_msg *mon_alloc_msg(struct ceph_connection *con,
 =======
 	}
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	}
->>>>>>> master
 	return m;
 }
 

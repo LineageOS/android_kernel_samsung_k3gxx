@@ -414,7 +414,6 @@ cifs_ses_oplock_break(struct work_struct *work)
 
 static bool
 <<<<<<< HEAD
-<<<<<<< HEAD
 smb2_tcon_has_lease(struct cifs_tcon *tcon, struct smb2_lease_break *rsp,
 		    struct smb2_lease_break_work *lw)
 {
@@ -486,8 +485,6 @@ smb2_is_valid_lease_break(char *buffer)
 	struct cifs_tcon *tcon;
 	struct smb2_lease_break_work *lw;
 =======
-=======
->>>>>>> master
 smb2_is_valid_lease_break(char *buffer, struct TCP_Server_Info *server)
 {
 	struct smb2_lease_break *rsp = (struct smb2_lease_break *)buffer;
@@ -501,10 +498,7 @@ smb2_is_valid_lease_break(char *buffer, struct TCP_Server_Info *server)
 	bool found;
 	int ack_req = le32_to_cpu(rsp->Flags &
 				  SMB2_NOTIFY_BREAK_LEASE_FLAG_ACK_REQUIRED);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	lw = kmalloc(sizeof(struct smb2_lease_break_work), GFP_KERNEL);
 	if (!lw)
@@ -517,7 +511,6 @@ smb2_is_valid_lease_break(char *buffer, struct TCP_Server_Info *server)
 
 	/* look up tcon based on tid & uid */
 	spin_lock(&cifs_tcp_ses_lock);
-<<<<<<< HEAD
 <<<<<<< HEAD
 	list_for_each(tmp, &cifs_tcp_ses_list) {
 		server = list_entry(tmp, struct TCP_Server_Info, tcp_ses_list);
@@ -540,8 +533,6 @@ smb2_is_valid_lease_break(char *buffer, struct TCP_Server_Info *server)
 			spin_unlock(&cifs_file_list_lock);
 		}
 =======
-=======
->>>>>>> master
 	list_for_each(tmp, &server->smb_ses_list) {
 		ses = list_entry(tmp, struct cifs_ses, smb_ses_list);
 
@@ -607,10 +598,7 @@ smb2_is_valid_lease_break(char *buffer, struct TCP_Server_Info *server)
 			}
 		}
 		spin_unlock(&cifs_file_list_lock);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 	spin_unlock(&cifs_tcp_ses_lock);
 	kfree(lw);
@@ -637,14 +625,10 @@ smb2_is_valid_oplock_break(char *buffer, struct TCP_Server_Info *server)
 				smb2_rsp_struct_sizes[SMB2_OPLOCK_BREAK_HE]) {
 		if (le16_to_cpu(rsp->StructureSize) == 44)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			return smb2_is_valid_lease_break(buffer);
 =======
 			return smb2_is_valid_lease_break(buffer, server);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			return smb2_is_valid_lease_break(buffer, server);
->>>>>>> master
 		else
 			return false;
 	}

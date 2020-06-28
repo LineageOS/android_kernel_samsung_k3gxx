@@ -1805,14 +1805,10 @@ void i915_teardown_sysfs(struct drm_device *dev_priv);
 extern int intel_setup_gmbus(struct drm_device *dev);
 extern void intel_teardown_gmbus(struct drm_device *dev);
 <<<<<<< HEAD
-<<<<<<< HEAD
 static inline bool intel_gmbus_is_port_valid(unsigned port)
 =======
 extern inline bool intel_gmbus_is_port_valid(unsigned port)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-extern inline bool intel_gmbus_is_port_valid(unsigned port)
->>>>>>> master
 {
 	return (port >= GMBUS_PORT_SSC && port <= GMBUS_PORT_DPD);
 }
@@ -1822,14 +1818,10 @@ extern struct i2c_adapter *intel_gmbus_get_adapter(
 extern void intel_gmbus_set_speed(struct i2c_adapter *adapter, int speed);
 extern void intel_gmbus_force_bit(struct i2c_adapter *adapter, bool force_bit);
 <<<<<<< HEAD
-<<<<<<< HEAD
 static inline bool intel_gmbus_is_forced_bit(struct i2c_adapter *adapter)
 =======
 extern inline bool intel_gmbus_is_forced_bit(struct i2c_adapter *adapter)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-extern inline bool intel_gmbus_is_forced_bit(struct i2c_adapter *adapter)
->>>>>>> master
 {
 	return container_of(adapter, struct intel_gmbus, adapter)->force_bit;
 }

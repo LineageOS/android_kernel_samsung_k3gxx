@@ -233,7 +233,6 @@ void print_cfs_rq(struct seq_file *m, int cpu, struct cfs_rq *cfs_rq)
 			atomic_read(&cfs_rq->tg->usage_avg));
 #endif
 <<<<<<< HEAD
-<<<<<<< HEAD
 #ifdef CONFIG_CFS_BANDWIDTH
 	SEQ_printf(m, "  .%-30s: %d\n", "tg->cfs_bandwidth.timer_active",
 			cfs_rq->tg->cfs_bandwidth.timer_active);
@@ -244,8 +243,6 @@ void print_cfs_rq(struct seq_file *m, int cpu, struct cfs_rq *cfs_rq)
 #endif
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	print_cfs_group_stats(m, cpu, cfs_rq->tg);
 #endif
@@ -566,14 +563,10 @@ void proc_sched_show_task(struct task_struct *p, struct seq_file *m)
 		avg_atom = p->se.sum_exec_runtime;
 		if (nr_switches)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			avg_atom = div64_ul(avg_atom, nr_switches);
 =======
 			do_div(avg_atom, nr_switches);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			do_div(avg_atom, nr_switches);
->>>>>>> master
 		else
 			avg_atom = -1LL;
 

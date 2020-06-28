@@ -929,13 +929,9 @@ omap_i2c_isr_thread(int this_irq, void *dev_id)
 			err |= OMAP_I2C_STAT_NACK;
 			omap_i2c_ack_stat(dev, OMAP_I2C_STAT_NACK);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 			break;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			break;
->>>>>>> master
 		}
 
 		if (stat & OMAP_I2C_STAT_AL) {
@@ -943,27 +939,20 @@ omap_i2c_isr_thread(int this_irq, void *dev_id)
 			err |= OMAP_I2C_STAT_AL;
 			omap_i2c_ack_stat(dev, OMAP_I2C_STAT_AL);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 			break;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			break;
->>>>>>> master
 		}
 
 		/*
 		 * ProDB0017052: Clear ARDY bit twice
 		 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (stat & OMAP_I2C_STAT_ARDY)
 			omap_i2c_ack_stat(dev, OMAP_I2C_STAT_ARDY);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (stat & (OMAP_I2C_STAT_ARDY | OMAP_I2C_STAT_NACK |
 					OMAP_I2C_STAT_AL)) {
 			omap_i2c_ack_stat(dev, (OMAP_I2C_STAT_RRDY |
@@ -981,7 +970,6 @@ omap_i2c_isr_thread(int this_irq, void *dev_id)
 				num_bytes = dev->buf_len;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (dev->errata & I2C_OMAP_ERRATA_I207) {
 				i2c_omap_errata_i207(dev, stat);
 				num_bytes = (omap_i2c_read_reg(dev,
@@ -990,17 +978,12 @@ omap_i2c_isr_thread(int this_irq, void *dev_id)
 
 			omap_i2c_receive_data(dev, num_bytes, true);
 =======
-=======
->>>>>>> master
 			omap_i2c_receive_data(dev, num_bytes, true);
 
 			if (dev->errata & I2C_OMAP_ERRATA_I207)
 				i2c_omap_errata_i207(dev, stat);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			omap_i2c_ack_stat(dev, OMAP_I2C_STAT_RDR);
 			continue;
 		}

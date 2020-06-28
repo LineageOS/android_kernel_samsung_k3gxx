@@ -411,13 +411,10 @@ static int recv_data(struct tpm_chip *chip, u8 *buf, size_t count)
 	       == 0) {
 		burstcnt = get_burstcount(chip);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (burstcnt < 0)
 			return burstcnt;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		len = min_t(int, burstcnt, count - size);
 		I2C_READ_DATA(client, TPM_DATA_FIFO, buf + size, len);
 		size += len;
@@ -460,15 +457,11 @@ static int tpm_stm_i2c_send(struct tpm_chip *chip, unsigned char *buf,
 			    size_t len)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u32 status, i, size;
 	int burstcnt = 0;
 =======
 	u32 status, burstcnt = 0, i, size;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u32 status, burstcnt = 0, i, size;
->>>>>>> master
 	int ret;
 	u8 data;
 	struct i2c_client *client;
@@ -500,7 +493,6 @@ static int tpm_stm_i2c_send(struct tpm_chip *chip, unsigned char *buf,
 	for (i = 0; i < len - 1;) {
 		burstcnt = get_burstcount(chip);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (burstcnt < 0)
 			return burstcnt;
 		size = min_t(int, len - i - 1, burstcnt);
@@ -509,10 +501,6 @@ static int tpm_stm_i2c_send(struct tpm_chip *chip, unsigned char *buf,
 		size = min_t(int, len - i - 1, burstcnt);
 		ret = I2C_WRITE_DATA(client, TPM_DATA_FIFO, buf, size);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		size = min_t(int, len - i - 1, burstcnt);
-		ret = I2C_WRITE_DATA(client, TPM_DATA_FIFO, buf, size);
->>>>>>> master
 		if (ret < 0)
 			goto out_err;
 

@@ -1349,7 +1349,6 @@ static int saa7164_initdev(struct pci_dev *pci_dev,
 			dev->kthread = kthread_run(saa7164_thread_function, dev,
 				"saa7164 debug");
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (IS_ERR(dev->kthread)) {
 				dev->kthread = NULL;
 				printk(KERN_ERR "%s() Failed to create "
@@ -1360,11 +1359,6 @@ static int saa7164_initdev(struct pci_dev *pci_dev,
 				printk(KERN_ERR "%s() Failed to create "
 					"debug kernel thread\n", __func__);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			if (!dev->kthread)
-				printk(KERN_ERR "%s() Failed to create "
-					"debug kernel thread\n", __func__);
->>>>>>> master
 		}
 
 	} /* != BOARD_UNKNOWN */

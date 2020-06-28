@@ -95,7 +95,6 @@ struct ib_umem *ib_umem_get(struct ib_ucontext *context, unsigned long addr,
 		dma_set_attr(DMA_ATTR_WRITE_BARRIER, &attrs);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!size)
 		return ERR_PTR(-EINVAL);
 
@@ -109,8 +108,6 @@ struct ib_umem *ib_umem_get(struct ib_ucontext *context, unsigned long addr,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (!can_do_mlock())
 		return ERR_PTR(-EPERM);
 

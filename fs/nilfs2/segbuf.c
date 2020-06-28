@@ -346,16 +346,11 @@ static void nilfs_end_bio_write(struct bio *bio, int err)
 	if (err == -EOPNOTSUPP) {
 		set_bit(BIO_EOPNOTSUPP, &bio->bi_flags);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* to be detected by nilfs_segbuf_submit_bio() */
 =======
 		bio_put(bio);
 		/* to be detected by submit_seg_bio() */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		bio_put(bio);
-		/* to be detected by submit_seg_bio() */
->>>>>>> master
 	}
 
 	if (!uptodate)
@@ -387,25 +382,18 @@ static int nilfs_segbuf_submit_bio(struct nilfs_segment_buffer *segbuf,
 	bio_get(bio);
 	submit_bio(mode, bio);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	segbuf->sb_nbio++;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (bio_flagged(bio, BIO_EOPNOTSUPP)) {
 		bio_put(bio);
 		err = -EOPNOTSUPP;
 		goto failed;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	segbuf->sb_nbio++;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	segbuf->sb_nbio++;
->>>>>>> master
 	bio_put(bio);
 
 	wi->bio = NULL;

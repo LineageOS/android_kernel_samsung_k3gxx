@@ -64,14 +64,11 @@ static struct acpi_scan_handler pci_root_handler = {
 	.attach = acpi_pci_root_add,
 	.detach = acpi_pci_root_remove,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.hotplug = {
 		.ignore = true,
 	},
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 /* Lock to protect both acpi_pci_roots lists */
@@ -392,12 +389,9 @@ static int acpi_pci_root_add(struct acpi_device *device,
 	struct acpi_pci_root *root;
 	u32 flags, base_flags;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	bool no_aspm = false, clear_aspm = false;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	root = kzalloc(sizeof(struct acpi_pci_root), GFP_KERNEL);
 	if (!root)
@@ -459,27 +453,18 @@ static int acpi_pci_root_add(struct acpi_device *device,
 	acpi_pci_osc_support(root, flags);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	/*
 	 * TBD: Need PCI interface for enumeration/configuration of roots.
 	 */
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	mutex_lock(&acpi_pci_root_lock);
 	list_add_tail(&root->node, &acpi_pci_roots);
 	mutex_unlock(&acpi_pci_root_lock);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	/*
 	 * Scan the Root Bridge
 	 * --------------------
@@ -497,10 +482,7 @@ static int acpi_pci_root_add(struct acpi_device *device,
 	}
 
 	/* Indicate support for various _OSC capabilities. */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (pci_ext_cfg_avail())
 		flags |= OSC_EXT_PCI_CONFIG_SUPPORT;
 	if (pcie_aspm_support_enabled()) {
@@ -515,14 +497,10 @@ static int acpi_pci_root_add(struct acpi_device *device,
 			dev_info(&device->dev, "ACPI _OSC support "
 				"notification failed, disabling PCIe ASPM\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 			no_aspm = true;
 =======
 			pcie_no_aspm();
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			pcie_no_aspm();
->>>>>>> master
 			flags = base_flags;
 		}
 	}
@@ -555,14 +533,10 @@ static int acpi_pci_root_add(struct acpi_device *device,
 				 * that it's unsupported. Clear it.
 				 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 				clear_aspm = true;
 =======
 				pcie_clear_aspm(root->bus);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				pcie_clear_aspm(root->bus);
->>>>>>> master
 			}
 		} else {
 			dev_info(&device->dev,
@@ -571,7 +545,6 @@ static int acpi_pci_root_add(struct acpi_device *device,
 				acpi_format_exception(status), flags);
 			pr_info("ACPI _OSC control for PCIe not granted, "
 				"disabling ASPM\n");
-<<<<<<< HEAD
 <<<<<<< HEAD
 			/*
 			 * We want to disable ASPM here, but aspm_disabled
@@ -584,9 +557,6 @@ static int acpi_pci_root_add(struct acpi_device *device,
 =======
 			pcie_no_aspm();
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			pcie_no_aspm();
->>>>>>> master
 		}
 	} else {
 		dev_info(&device->dev,
@@ -594,7 +564,6 @@ static int acpi_pci_root_add(struct acpi_device *device,
 			 "(_OSC support mask: 0x%02x)\n", flags);
 	}
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	/*
 	 * TBD: Need PCI interface for enumeration/configuration of roots.
@@ -625,8 +594,6 @@ static int acpi_pci_root_add(struct acpi_device *device,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	pci_acpi_add_bus_pm_notifier(device, root->bus);
 	if (device->wakeup.flags.run_wake)
 		device_set_run_wake(root->bus->bridge, true);
@@ -644,19 +611,13 @@ static int acpi_pci_root_add(struct acpi_device *device,
 	return 1;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 out_del_root:
 	mutex_lock(&acpi_pci_root_lock);
 	list_del(&root->node);
 	mutex_unlock(&acpi_pci_root_lock);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 end:
 	kfree(root);
 	return result;
@@ -722,7 +683,6 @@ static void handle_root_bridge_removal(struct acpi_device *device)
 	ej_event->event = ACPI_NOTIFY_EJECT_REQUEST;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	get_device(&device->dev);
 	status = acpi_os_hotplug_execute(acpi_bus_hot_remove_device, ej_event);
 	if (ACPI_FAILURE(status)) {
@@ -734,11 +694,6 @@ static void handle_root_bridge_removal(struct acpi_device *device)
 	if (ACPI_FAILURE(status))
 		kfree(ej_event);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	status = acpi_os_hotplug_execute(acpi_bus_hot_remove_device, ej_event);
-	if (ACPI_FAILURE(status))
-		kfree(ej_event);
->>>>>>> master
 }
 
 static void _handle_hotplug_event_root(struct work_struct *work)

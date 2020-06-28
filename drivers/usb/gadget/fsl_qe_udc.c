@@ -1882,21 +1882,15 @@ static int qe_get_frame(struct usb_gadget *gadget)
 	tmp = in_be16(&udc->usb_param->frame_n);
 	if (tmp & 0x8000)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		return tmp & 0x07ff;
 	return -EINVAL;
 =======
-=======
->>>>>>> master
 		tmp = tmp & 0x07ff;
 	else
 		tmp = -EINVAL;
 
 	return (int)tmp;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static int fsl_qe_start(struct usb_gadget *gadget,

@@ -20,14 +20,10 @@
  * table to check for several different types  of binary formats.  We keep
  * trying until we recognize the file or we run out of supported binary
 <<<<<<< HEAD
-<<<<<<< HEAD
  * formats.
 =======
  * formats. 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * formats. 
->>>>>>> master
  */
 
 #include <linux/slab.h>
@@ -205,7 +201,6 @@ static struct page *get_arg_page(struct linux_binprm *bprm, unsigned long pos,
 	if (write) {
 		unsigned long size = bprm->vma->vm_end - bprm->vma->vm_start;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		unsigned long ptr_size;
 		struct rlimit *rlim;
 
@@ -230,10 +225,6 @@ static struct page *get_arg_page(struct linux_binprm *bprm, unsigned long pos,
 		struct rlimit *rlim;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		struct rlimit *rlim;
-
->>>>>>> master
 		acct_arg_size(bprm, size / PAGE_SIZE);
 
 		/*
@@ -252,7 +243,6 @@ static struct page *get_arg_page(struct linux_binprm *bprm, unsigned long pos,
 		 */
 		rlim = current->signal->rlim;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (size > ACCESS_ONCE(rlim[RLIMIT_STACK].rlim_cur) / 4)
 			goto fail;
 	}
@@ -263,8 +253,6 @@ fail:
 	put_page(page);
 	return NULL;
 =======
-=======
->>>>>>> master
 		if (size > ACCESS_ONCE(rlim[RLIMIT_STACK].rlim_cur) / 4) {
 			put_page(page);
 			return NULL;
@@ -272,10 +260,7 @@ fail:
 	}
 
 	return page;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static void put_arg_page(struct page *page)
@@ -709,22 +694,16 @@ int setup_arg_pages(struct linux_binprm *bprm,
 
 #ifdef CONFIG_STACK_GROWSUP
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Limit stack size */
 	stack_base = rlimit_max(RLIMIT_STACK);
 	if (stack_base > STACK_SIZE_MAX)
 		stack_base = STACK_SIZE_MAX;
 =======
-=======
->>>>>>> master
 	/* Limit stack size to 1GB */
 	stack_base = rlimit_max(RLIMIT_STACK);
 	if (stack_base > (1 << 30))
 		stack_base = 1 << 30;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* Make sure we didn't let the argument array grow too large. */
 	if (vma->vm_end - vma->vm_start > stack_base)
@@ -1163,7 +1142,6 @@ int flush_old_exec(struct linux_binprm * bprm)
 	current->personality &= ~bprm->per_clear;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * We have to apply CLOEXEC before we change whether the process is
 	 * dumpable (in setup_new_exec) to avoid a race with a process in userspace
@@ -1173,8 +1151,6 @@ int flush_old_exec(struct linux_binprm * bprm)
 	do_close_on_exec(current->files);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 
 out:
@@ -1185,14 +1161,10 @@ EXPORT_SYMBOL(flush_old_exec);
 void would_dump(struct linux_binprm *bprm, struct file *file)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (inode_permission2(file->f_path.mnt, file_inode(file), MAY_READ) < 0)
 =======
 	if (inode_permission(file_inode(file), MAY_READ) < 0)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (inode_permission(file_inode(file), MAY_READ) < 0)
->>>>>>> master
 		bprm->interp_flags |= BINPRM_FLAGS_ENFORCE_NONDUMP;
 }
 EXPORT_SYMBOL(would_dump);
@@ -1234,13 +1206,9 @@ void setup_new_exec(struct linux_binprm * bprm)
 			
 	flush_signal_handlers(current, 0);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	do_close_on_exec(current->files);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	do_close_on_exec(current->files);
->>>>>>> master
 }
 EXPORT_SYMBOL(setup_new_exec);
 
@@ -1709,12 +1677,9 @@ static int do_execve_common(const char *filename,
 	int retval;
 	const struct cred *cred = current_cred();
 <<<<<<< HEAD
-<<<<<<< HEAD
 	bool is_su;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/*
 	 * We move the actual failure in case of RLIMIT_NPROC excess from
@@ -1792,19 +1757,15 @@ static int do_execve_common(const char *filename,
 		goto out;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* search_binary_handler can release file and it may be freed */
 	is_su = d_is_su(file->f_dentry);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	retval = search_binary_handler(bprm);
 	if (retval < 0)
 		goto out;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (is_su && capable(CAP_SYS_ADMIN)) {
 		current->flags |= PF_SU;
@@ -1813,8 +1774,6 @@ static int do_execve_common(const char *filename,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* execve succeeded */
 	current->fs->in_exec = 0;
 	current->in_execve = 0;
@@ -1941,7 +1900,6 @@ int __get_dumpable(unsigned long mm_flags)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * This returns the actual value of the suid_dumpable flag. For things
  * that are using this for checking for privilege transitions, it must
@@ -1950,8 +1908,6 @@ int __get_dumpable(unsigned long mm_flags)
  */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 int get_dumpable(struct mm_struct *mm)
 {
 	return __get_dumpable(mm->flags);

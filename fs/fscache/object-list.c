@@ -339,7 +339,6 @@ static void fscache_objlist_config(struct fscache_objlist_data *data)
 
 	confkey = key->payload.data;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!confkey) {
 		/* key was revoked */
 		rcu_read_unlock();
@@ -349,8 +348,6 @@ static void fscache_objlist_config(struct fscache_objlist_data *data)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	buf = confkey->data;
 
 	for (len = confkey->datalen - 1; len >= 0; len--) {

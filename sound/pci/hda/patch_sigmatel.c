@@ -84,14 +84,11 @@ enum {
 	STAC_DELL_EQ,
 	STAC_ALIENWARE_M17X,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	STAC_92HD89XX_HP_FRONT_JACK,
 	STAC_92HD89XX_HP_Z1_G2_RIGHT_MIC_JACK,
 	STAC_92HD73XX_ASUS_MOBO,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	STAC_92HD73XX_MODELS
 };
 
@@ -107,12 +104,9 @@ enum {
 	STAC_92HD83XXX_HP_INV_LED,
 	STAC_92HD83XXX_HP_MIC_LED,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	STAC_HP_LED_GPIO10,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	STAC_92HD83XXX_HEADSET_JACK,
 	STAC_92HD83XXX_HP,
 	STAC_HP_ENVY_BASS,
@@ -553,17 +547,12 @@ static void stac_init_power_map(struct hda_codec *codec)
 			continue;
 		if (def_conf == AC_JACK_PORT_COMPLEX &&
 <<<<<<< HEAD
-<<<<<<< HEAD
 		    spec->vref_mute_led_nid != nid &&
 		    is_jack_detectable(codec, nid)) {
 =======
 		    !(spec->vref_mute_led_nid == nid ||
 		      is_jack_detectable(codec, nid))) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		    !(spec->vref_mute_led_nid == nid ||
-		      is_jack_detectable(codec, nid))) {
->>>>>>> master
 			snd_hda_jack_detect_enable_callback(codec, nid,
 							    STAC_PWR_EVENT,
 							    jack_update_power);
@@ -597,7 +586,6 @@ static void stac_store_hints(struct hda_codec *codec)
 	}
 	if (get_int_hint(codec, "gpio_dir", &spec->gpio_dir))
 <<<<<<< HEAD
-<<<<<<< HEAD
 		spec->gpio_dir &= spec->gpio_mask;
 	if (get_int_hint(codec, "gpio_data", &spec->gpio_data))
 		spec->gpio_data &= spec->gpio_mask;
@@ -606,11 +594,6 @@ static void stac_store_hints(struct hda_codec *codec)
 	if (get_int_hint(codec, "gpio_data", &spec->gpio_data))
 		spec->gpio_dir &= spec->gpio_mask;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		spec->gpio_mask &= spec->gpio_mask;
-	if (get_int_hint(codec, "gpio_data", &spec->gpio_data))
-		spec->gpio_dir &= spec->gpio_mask;
->>>>>>> master
 	if (get_int_hint(codec, "eapd_mask", &spec->eapd_mask))
 		spec->eapd_mask &= spec->gpio_mask;
 	if (get_int_hint(codec, "gpio_mute", &spec->gpio_mute))
@@ -738,12 +721,9 @@ static bool hp_blike_system(u32 subsystem_id)
 {
 	switch (subsystem_id) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	case 0x103c1473: /* HP ProBook 6550b */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	case 0x103c1520:
 	case 0x103c1521:
 	case 0x103c1523:
@@ -1821,7 +1801,6 @@ static const struct hda_pintbl intel_dg45id_pin_configs[] = {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static const struct hda_pintbl stac92hd89xx_hp_front_jack_pin_configs[] = {
 	{ 0x0a, 0x02214030 },
 	{ 0x0b, 0x02A19010 },
@@ -1835,8 +1814,6 @@ static const struct hda_pintbl stac92hd89xx_hp_z1_g2_right_mic_jack_pin_configs[
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static void stac92hd73xx_fixup_ref(struct hda_codec *codec,
 				   const struct hda_fixup *fix, int action)
 {
@@ -1956,7 +1933,6 @@ static const struct hda_fixup stac92hd73xx_fixups[] = {
 		.type = HDA_FIXUP_FUNC,
 		.v.func = stac92hd73xx_fixup_no_jd,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	},
 	[STAC_92HD89XX_HP_FRONT_JACK] = {
 		.type = HDA_FIXUP_PINS,
@@ -1980,9 +1956,6 @@ static const struct hda_fixup stac92hd73xx_fixups[] = {
 =======
 	}
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	}
->>>>>>> master
 };
 
 static const struct hda_model_fixup stac92hd73xx_models[] = {
@@ -1995,12 +1968,9 @@ static const struct hda_model_fixup stac92hd73xx_models[] = {
 	{ .id = STAC_DELL_EQ, .name = "dell-eq" },
 	{ .id = STAC_ALIENWARE_M17X, .name = "alienware" },
 <<<<<<< HEAD
-<<<<<<< HEAD
 	{ .id = STAC_92HD73XX_ASUS_MOBO, .name = "asus-mobo" },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	{}
 };
 
@@ -2050,7 +2020,6 @@ static const struct snd_pci_quirk stac92hd73xx_fixup_tbl[] = {
 	SND_PCI_QUIRK(PCI_VENDOR_ID_DELL, 0x0490,
 		      "Alienware M17x R3", STAC_DELL_EQ),
 <<<<<<< HEAD
-<<<<<<< HEAD
 	SND_PCI_QUIRK(PCI_VENDOR_ID_HP, 0x1927,
 				"HP Z1 G2", STAC_92HD89XX_HP_Z1_G2_RIGHT_MIC_JACK),
 	SND_PCI_QUIRK(PCI_VENDOR_ID_HP, 0x2b17,
@@ -2059,8 +2028,6 @@ static const struct snd_pci_quirk stac92hd73xx_fixup_tbl[] = {
 		      STAC_92HD73XX_ASUS_MOBO),
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	{} /* terminator */
 };
 
@@ -2203,7 +2170,6 @@ static void stac92hd83xxx_fixup_hp_mic_led(struct hda_codec *codec,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void stac92hd83xxx_fixup_hp_led_gpio10(struct hda_codec *codec,
 				   const struct hda_fixup *fix, int action)
 {
@@ -2217,8 +2183,6 @@ static void stac92hd83xxx_fixup_hp_led_gpio10(struct hda_codec *codec,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static void stac92hd83xxx_fixup_headset_jack(struct hda_codec *codec,
 				   const struct hda_fixup *fix, int action)
 {
@@ -2286,7 +2250,6 @@ static const struct hda_fixup stac92hd83xxx_fixups[] = {
 		.chain_id = STAC_92HD83XXX_HP,
 	},
 <<<<<<< HEAD
-<<<<<<< HEAD
 	[STAC_HP_LED_GPIO10] = {
 		.type = HDA_FIXUP_FUNC,
 		.v.func = stac92hd83xxx_fixup_hp_led_gpio10,
@@ -2295,8 +2258,6 @@ static const struct hda_fixup stac92hd83xxx_fixups[] = {
 	},
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	[STAC_92HD83XXX_HEADSET_JACK] = {
 		.type = HDA_FIXUP_FUNC,
 		.v.func = stac92hd83xxx_fixup_headset_jack,
@@ -2369,13 +2330,10 @@ static const struct snd_pci_quirk stac92hd83xxx_fixup_tbl[] = {
 	SND_PCI_QUIRK(PCI_VENDOR_ID_HP, 0x1888,
 			  "HP Envy Spectre", STAC_HP_ENVY_BASS),
 <<<<<<< HEAD
-<<<<<<< HEAD
 	SND_PCI_QUIRK(PCI_VENDOR_ID_HP, 0x1899,
 			  "HP Folio 13", STAC_HP_LED_GPIO10),
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	SND_PCI_QUIRK(PCI_VENDOR_ID_HP, 0x18df,
 			  "HP Folio", STAC_92HD83XXX_HP_MIC_LED),
 	SND_PCI_QUIRK_MASK(PCI_VENDOR_ID_HP, 0xff00, 0x1900,
@@ -3748,7 +3706,6 @@ static int stac_parse_auto_config(struct hda_codec *codec)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return 0;
 }
 
@@ -3763,18 +3720,13 @@ static int stac_build_controls(struct hda_codec *codec)
 }
 
 =======
-=======
->>>>>>> master
 	stac_init_power_map(codec);
 
 	return 0;
 }
 
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int stac_init(struct hda_codec *codec)
 {
 	struct sigmatel_spec *spec = codec->spec;
@@ -3917,14 +3869,10 @@ static void stac_set_power_state(struct hda_codec *codec, hda_nid_t fg,
 
 static const struct hda_codec_ops stac_patch_ops = {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.build_controls = stac_build_controls,
 =======
 	.build_controls = snd_hda_gen_build_controls,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	.build_controls = snd_hda_gen_build_controls,
->>>>>>> master
 	.build_pcms = snd_hda_gen_build_pcms,
 	.init = stac_init,
 	.free = stac_free,

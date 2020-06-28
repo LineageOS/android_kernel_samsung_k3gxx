@@ -225,22 +225,16 @@ int zfcp_qdio_sbals_from_sg(struct zfcp_qdio *qdio, struct zfcp_qdio_req *q_req,
 static int zfcp_qdio_sbal_check(struct zfcp_qdio *qdio)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (atomic_read(&qdio->req_q_free) ||
 	    !(atomic_read(&qdio->adapter->status) & ZFCP_STATUS_ADAPTER_QDIOUP))
 		return 1;
 =======
-=======
->>>>>>> master
 	spin_lock_irq(&qdio->req_q_lock);
 	if (atomic_read(&qdio->req_q_free) ||
 	    !(atomic_read(&qdio->adapter->status) & ZFCP_STATUS_ADAPTER_QDIOUP))
 		return 1;
 	spin_unlock_irq(&qdio->req_q_lock);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 }
 
@@ -259,7 +253,6 @@ int zfcp_qdio_sbal_get(struct zfcp_qdio *qdio)
 	long ret;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = wait_event_interruptible_lock_irq_timeout(qdio->req_q_wq,
 		       zfcp_qdio_sbal_check(qdio), qdio->req_q_lock, 5 * HZ);
 =======
@@ -267,11 +260,6 @@ int zfcp_qdio_sbal_get(struct zfcp_qdio *qdio)
 	ret = wait_event_interruptible_timeout(qdio->req_q_wq,
 			       zfcp_qdio_sbal_check(qdio), 5 * HZ);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	spin_unlock_irq(&qdio->req_q_lock);
-	ret = wait_event_interruptible_timeout(qdio->req_q_wq,
-			       zfcp_qdio_sbal_check(qdio), 5 * HZ);
->>>>>>> master
 
 	if (!(atomic_read(&qdio->adapter->status) & ZFCP_STATUS_ADAPTER_QDIOUP))
 		return -EIO;
@@ -286,13 +274,9 @@ int zfcp_qdio_sbal_get(struct zfcp_qdio *qdio)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	spin_lock_irq(&qdio->req_q_lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	spin_lock_irq(&qdio->req_q_lock);
->>>>>>> master
 	return -EIO;
 }
 

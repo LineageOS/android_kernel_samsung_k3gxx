@@ -32,7 +32,6 @@
 
 enum {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	INET6_IFADDR_STATE_PREDAD,
 	INET6_IFADDR_STATE_DAD,
 	INET6_IFADDR_STATE_POSTDAD,
@@ -41,10 +40,6 @@ enum {
 	INET6_IFADDR_STATE_DAD,
 	INET6_IFADDR_STATE_POSTDAD,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	INET6_IFADDR_STATE_DAD,
-	INET6_IFADDR_STATE_POSTDAD,
->>>>>>> master
 	INET6_IFADDR_STATE_UP,
 	INET6_IFADDR_STATE_DEAD,
 };
@@ -63,14 +58,10 @@ struct inet6_ifaddr {
 	int			state;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	__u8			dad_probes;
 =======
 	__u8			probes;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	__u8			probes;
->>>>>>> master
 	__u8			flags;
 
 	__u16			scope;
@@ -79,14 +70,10 @@ struct inet6_ifaddr {
 	unsigned long		tstamp; /* updated timestamp */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct delayed_work	dad_work;
 =======
 	struct timer_list	timer;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct timer_list	timer;
->>>>>>> master
 
 	struct inet6_dev	*idev;
 	struct rt6_info		*rt;
@@ -224,15 +211,12 @@ struct inet6_dev {
 	struct ipv6_devconf	cnf;
 	struct ipv6_devstat	stats;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	struct timer_list	rs_timer;
 	__u8			rs_probes;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	unsigned long		tstamp; /* ipv6InterfaceTable update timestamp */
 	struct rcu_head		rcu;
 };

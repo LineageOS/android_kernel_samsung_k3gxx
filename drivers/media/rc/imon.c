@@ -1531,14 +1531,10 @@ static void imon_incoming_packet(struct imon_context *ictx,
 		ictx->last_keycode = kc;
 		if (!nomouse) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			ictx->pad_mouse = !ictx->pad_mouse;
 =======
 			ictx->pad_mouse = ~(ictx->pad_mouse) & 0x1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			ictx->pad_mouse = ~(ictx->pad_mouse) & 0x1;
->>>>>>> master
 			dev_dbg(dev, "toggling to %s mode\n",
 				ictx->pad_mouse ? "mouse" : "keyboard");
 			spin_unlock_irqrestore(&ictx->kc_lock, flags);

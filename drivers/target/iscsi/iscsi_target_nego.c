@@ -20,12 +20,9 @@
 
 #include <linux/ctype.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/kthread.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #include <scsi/iscsi_proto.h>
 #include <target/target_core_base.h>
 #include <target/target_core_fabric.h>
@@ -98,14 +95,10 @@ int extract_param(
 		return -1;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (len >= max_length) {
 =======
 	if (len > max_length) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (len > max_length) {
->>>>>>> master
 		pr_err("Length of input: %d exceeds max_length:"
 			" %d\n", len, max_length);
 		return -1;
@@ -368,7 +361,6 @@ static int iscsi_target_do_tx_login_io(struct iscsi_conn *conn, struct iscsi_log
 
 	padding = ((-login->rsp_length) & 3);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * Before sending the last login response containing the transition
 	 * bit for full-feature-phase, go ahead and start up TX/RX threads
@@ -388,16 +380,11 @@ static int iscsi_target_do_tx_login_io(struct iscsi_conn *conn, struct iscsi_log
 					login->rsp_length + padding) < 0)
 		goto err;
 =======
-=======
->>>>>>> master
 
 	if (conn->conn_transport->iscsit_put_login_tx(conn, login,
 					login->rsp_length + padding) < 0)
 		return -1;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	login->rsp_length		= 0;
 	mutex_lock(&sess->cmdsn_mutex);
@@ -406,7 +393,6 @@ static int iscsi_target_do_tx_login_io(struct iscsi_conn *conn, struct iscsi_log
 	mutex_unlock(&sess->cmdsn_mutex);
 
 	return 0;
-<<<<<<< HEAD
 <<<<<<< HEAD
 
 err:
@@ -428,8 +414,6 @@ err:
 	return -1;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static int iscsi_target_do_login_io(struct iscsi_conn *conn, struct iscsi_login *login)

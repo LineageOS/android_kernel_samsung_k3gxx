@@ -348,23 +348,17 @@ static bool start_new_rx_buffer(int offset, unsigned long size, int head)
 	 * own buffers as before.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	BUG_ON(size > MAX_BUFFER_OFFSET);
 	if ((offset + size > MAX_BUFFER_OFFSET) && offset && !head)
 =======
 	if ((offset + size > MAX_BUFFER_OFFSET) &&
 	    (size <= MAX_BUFFER_OFFSET) && offset && !head)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if ((offset + size > MAX_BUFFER_OFFSET) &&
-	    (size <= MAX_BUFFER_OFFSET) && offset && !head)
->>>>>>> master
 		return true;
 
 	return false;
 }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 struct xenvif_count_slot_state {
 	unsigned long copy_off;
@@ -411,8 +405,6 @@ unsigned int xenvif_count_frag_slots(struct xenvif *vif,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  * Figure out how many ring slots we're going to need to send @skb to
  * the guest. This function is essentially a dry run of
@@ -420,7 +412,6 @@ unsigned int xenvif_count_frag_slots(struct xenvif *vif,
  */
 unsigned int xen_netbk_count_skb_slots(struct xenvif *vif, struct sk_buff *skb)
 {
-<<<<<<< HEAD
 <<<<<<< HEAD
 	struct xenvif_count_slot_state state;
 	unsigned int count;
@@ -456,8 +447,6 @@ unsigned int xen_netbk_count_skb_slots(struct xenvif *vif, struct sk_buff *skb)
 
 		count += xenvif_count_frag_slots(vif, offset, size, &state);
 =======
-=======
->>>>>>> master
 	unsigned int count;
 	int i, copy_off;
 
@@ -500,10 +489,7 @@ unsigned int xen_netbk_count_skb_slots(struct xenvif *vif, struct sk_buff *skb)
 			if (offset == PAGE_SIZE)
 				offset = 0;
 		}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 	return count;
 }
@@ -522,7 +508,6 @@ static struct netbk_rx_meta *get_next_rx_buffer(struct xenvif *vif,
 {
 	struct netbk_rx_meta *meta;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct xen_netif_rx_request req;
 
 	RING_COPY_REQUEST(&vif->rx, vif->rx.req_cons++, &req);
@@ -531,32 +516,21 @@ static struct netbk_rx_meta *get_next_rx_buffer(struct xenvif *vif,
 
 	req = RING_GET_REQUEST(&vif->rx, vif->rx.req_cons++);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct xen_netif_rx_request *req;
-
-	req = RING_GET_REQUEST(&vif->rx, vif->rx.req_cons++);
->>>>>>> master
 
 	meta = npo->meta + npo->meta_prod++;
 	meta->gso_size = 0;
 	meta->size = 0;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	meta->id = req.id;
 
 	npo->copy_off = 0;
 	npo->copy_gref = req.gref;
 =======
-=======
->>>>>>> master
 	meta->id = req->id;
 
 	npo->copy_off = 0;
 	npo->copy_gref = req->gref;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	return meta;
 }
@@ -675,14 +649,10 @@ static int netbk_gop_skb(struct sk_buff *skb,
 	int nr_frags = skb_shinfo(skb)->nr_frags;
 	int i;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct xen_netif_rx_request req;
 =======
 	struct xen_netif_rx_request *req;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct xen_netif_rx_request *req;
->>>>>>> master
 	struct netbk_rx_meta *meta;
 	unsigned char *data;
 	int head = 1;
@@ -693,7 +663,6 @@ static int netbk_gop_skb(struct sk_buff *skb,
 	/* Set up a GSO prefix descriptor, if necessary */
 	if (skb_shinfo(skb)->gso_size && vif->gso_prefix) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		RING_COPY_REQUEST(&vif->rx, vif->rx.req_cons++, &req);
 		meta = npo->meta + npo->meta_prod++;
 		meta->gso_size = skb_shinfo(skb)->gso_size;
@@ -703,8 +672,6 @@ static int netbk_gop_skb(struct sk_buff *skb,
 
 	RING_COPY_REQUEST(&vif->rx, vif->rx.req_cons++, &req);
 =======
-=======
->>>>>>> master
 		req = RING_GET_REQUEST(&vif->rx, vif->rx.req_cons++);
 		meta = npo->meta + npo->meta_prod++;
 		meta->gso_size = skb_shinfo(skb)->gso_size;
@@ -713,10 +680,7 @@ static int netbk_gop_skb(struct sk_buff *skb,
 	}
 
 	req = RING_GET_REQUEST(&vif->rx, vif->rx.req_cons++);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	meta = npo->meta + npo->meta_prod++;
 
 	if (!vif->gso_prefix)
@@ -726,7 +690,6 @@ static int netbk_gop_skb(struct sk_buff *skb,
 
 	meta->size = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	meta->id = req.id;
 	npo->copy_off = 0;
 	npo->copy_gref = req.gref;
@@ -735,11 +698,6 @@ static int netbk_gop_skb(struct sk_buff *skb,
 	npo->copy_off = 0;
 	npo->copy_gref = req->gref;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	meta->id = req->id;
-	npo->copy_off = 0;
-	npo->copy_gref = req->gref;
->>>>>>> master
 
 	data = skb->data;
 	while (data < skb_tail_pointer(skb)) {
@@ -944,12 +902,9 @@ static void xen_netbk_rx_action(struct xen_netbk *netbk)
 		npo.meta_cons += sco->meta_slots_used;
 		dev_kfree_skb(skb);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		xenvif_put_rings(vif);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	list_for_each_entry_safe(vif, tmp, &notify, notify_list) {
@@ -1064,18 +1019,12 @@ static void tx_add_credit(struct xenvif *vif)
 	 * Otherwise the interface can seize up due to insufficient credit.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	max_burst = max(131072UL, vif->credit_bytes);
 =======
 	max_burst = RING_GET_REQUEST(&vif->tx, vif->tx.req_cons)->size;
 	max_burst = min(max_burst, 131072UL);
 	max_burst = max(max_burst, vif->credit_bytes);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	max_burst = RING_GET_REQUEST(&vif->tx, vif->tx.req_cons)->size;
-	max_burst = min(max_burst, 131072UL);
-	max_burst = max(max_burst, vif->credit_bytes);
->>>>>>> master
 
 	/* Take care that adding a new chunk of credit doesn't wrap to zero. */
 	max_credit = vif->remaining_credit + vif->credit_bytes;
@@ -1102,14 +1051,10 @@ static void netbk_tx_err(struct xenvif *vif,
 		if (cons == end)
 			break;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		RING_COPY_REQUEST(&vif->tx, cons++, txp);
 =======
 		txp = RING_GET_REQUEST(&vif->tx, cons++);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		txp = RING_GET_REQUEST(&vif->tx, cons++);
->>>>>>> master
 	} while (1);
 	vif->tx.req_cons = cons;
 	xen_netbk_check_rx_xenvif(vif);
@@ -1177,16 +1122,11 @@ static int netbk_count_requests(struct xenvif *vif,
 			txp = &dropped_tx;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		RING_COPY_REQUEST(&vif->tx, cons + slots, txp);
 =======
 		memcpy(txp, RING_GET_REQUEST(&vif->tx, cons + slots),
 		       sizeof(*txp));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		memcpy(txp, RING_GET_REQUEST(&vif->tx, cons + slots),
-		       sizeof(*txp));
->>>>>>> master
 
 		/* If the guest submitted a frame >= 64 KiB then
 		 * first->size overflowed and following slots will
@@ -1475,16 +1415,11 @@ static int xen_netbk_get_extras(struct xenvif *vif,
 		}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		RING_COPY_REQUEST(&vif->tx, cons, &extra);
 =======
 		memcpy(&extra, RING_GET_REQUEST(&vif->tx, cons),
 		       sizeof(extra));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		memcpy(&extra, RING_GET_REQUEST(&vif->tx, cons),
-		       sizeof(extra));
->>>>>>> master
 		if (unlikely(!extra.type ||
 			     extra.type >= XEN_NETIF_EXTRA_TYPE_MAX)) {
 			vif->tx.req_cons = ++cons;
@@ -1596,7 +1531,6 @@ out:
 static bool tx_credit_exceeded(struct xenvif *vif, unsigned size)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u64 now = get_jiffies_64();
 	u64 next_credit = vif->credit_window_start +
 =======
@@ -1604,11 +1538,6 @@ static bool tx_credit_exceeded(struct xenvif *vif, unsigned size)
 	unsigned long next_credit =
 		vif->credit_timeout.expires +
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned long now = jiffies;
-	unsigned long next_credit =
-		vif->credit_timeout.expires +
->>>>>>> master
 		msecs_to_jiffies(vif->credit_usec / 1000);
 
 	/* Timer could already be pending in rare cases. */
@@ -1617,17 +1546,12 @@ static bool tx_credit_exceeded(struct xenvif *vif, unsigned size)
 
 	/* Passed the point where we can replenish credit? */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (time_after_eq64(now, next_credit)) {
 		vif->credit_window_start = now;
 =======
 	if (time_after_eq(now, next_credit)) {
 		vif->credit_timeout.expires = now;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (time_after_eq(now, next_credit)) {
-		vif->credit_timeout.expires = now;
->>>>>>> master
 		tx_add_credit(vif);
 	}
 
@@ -1640,12 +1564,9 @@ static bool tx_credit_exceeded(struct xenvif *vif, unsigned size)
 		mod_timer(&vif->credit_timeout,
 			  next_credit);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		vif->credit_window_start = next_credit;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 		return true;
 	}
@@ -1703,14 +1624,10 @@ static unsigned xen_netbk_tx_build_gops(struct xen_netbk *netbk)
 		idx = vif->tx.req_cons;
 		rmb(); /* Ensure that we see the request before we copy it. */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		RING_COPY_REQUEST(&vif->tx, idx, &txreq);
 =======
 		memcpy(&txreq, RING_GET_REQUEST(&vif->tx, idx), sizeof(txreq));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		memcpy(&txreq, RING_GET_REQUEST(&vif->tx, idx), sizeof(txreq));
->>>>>>> master
 
 		/* Credit-based scheduling. */
 		if (txreq.size > vif->remaining_credit &&
@@ -2073,14 +1990,11 @@ static int xen_netbk_kthread(void *data)
 void xen_netbk_unmap_frontend_rings(struct xenvif *vif)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	atomic_dec(&vif->ring_refcnt);
 	wait_event(vif->waiting_to_unmap, atomic_read(&vif->ring_refcnt) == 0);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (vif->tx.sring)
 		xenbus_unmap_ring_vfree(xenvif_to_xenbus_device(vif),
 					vif->tx.sring);
@@ -2100,13 +2014,10 @@ int xen_netbk_map_frontend_rings(struct xenvif *vif,
 	int err = -ENOMEM;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	atomic_set(&vif->ring_refcnt, 1);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	err = xenbus_map_ring_valloc(xenvif_to_xenbus_device(vif),
 				     tx_ring_ref, &addr);
 	if (err)

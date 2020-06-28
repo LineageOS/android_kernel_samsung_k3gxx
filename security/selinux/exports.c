@@ -20,15 +20,11 @@
 bool selinux_is_enabled(void)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 #if defined(SELINUX_ALWAYS_ENFORCE) || \
 	defined(SELINUX_ALWAYS_PERMISSIVE)
 =======
 #ifdef CONFIG_ALWAYS_ENFORCE
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#ifdef CONFIG_ALWAYS_ENFORCE
->>>>>>> master
 	return true;
 #else
 	return selinux_enabled;
@@ -39,7 +35,6 @@ EXPORT_SYMBOL_GPL(selinux_is_enabled);
 bool selinux_is_enforcing(void)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 #if defined(SELINUX_ALWAYS_ENFORCE)
 	return true;
 #elif defined(SELINUX_ALWAYS_PERMISSIVE)
@@ -48,20 +43,12 @@ bool selinux_is_enforcing(void)
 #ifdef CONFIG_ALWAYS_ENFORCE
 	return true;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#ifdef CONFIG_ALWAYS_ENFORCE
-	return true;
->>>>>>> master
 #else
 	return selinux_enforcing;
 #endif
 }
 <<<<<<< HEAD
-<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(selinux_is_enforcing);
 =======
 EXPORT_SYMBOL_GPL(selinux_is_enforcing);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-EXPORT_SYMBOL_GPL(selinux_is_enforcing);
->>>>>>> master

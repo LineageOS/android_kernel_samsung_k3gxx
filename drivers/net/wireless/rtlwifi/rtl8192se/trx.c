@@ -50,7 +50,6 @@ static u8 _rtl92se_map_hwqueue_to_fwqueue(struct sk_buff *skb,	u8 skb_queue)
 		return QSLT_HIGH;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Kernel commit 1bf4bbb4024dcdab changed EAPOL packets to use
 	 * queue V0 at priority 7; however, the RTL8192SE appears to have
 	 * that queue at priority 6
@@ -59,8 +58,6 @@ static u8 _rtl92se_map_hwqueue_to_fwqueue(struct sk_buff *skb,	u8 skb_queue)
 		return QSLT_VO;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return skb->priority;
 }
 
@@ -342,14 +339,10 @@ bool rtl92se_rx_query_desc(struct ieee80211_hw *hw, struct rtl_stats *stats,
 
 	/*rx_status->qual = stats->signal; */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	rx_status->signal = stats->recvsignalpower + 10;
 =======
 	rx_status->signal = stats->rssi + 10;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	rx_status->signal = stats->rssi + 10;
->>>>>>> master
 	/*rx_status->noise = -stats->noise; */
 
 	return true;

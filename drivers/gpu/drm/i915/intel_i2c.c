@@ -277,39 +277,29 @@ gmbus_wait_idle(struct drm_i915_private *dev_priv)
 
 static int
 <<<<<<< HEAD
-<<<<<<< HEAD
 gmbus_xfer_read_chunk(struct drm_i915_private *dev_priv,
 		      unsigned short addr, u8 *buf, unsigned int len,
 		      u32 gmbus1_index)
 {
 	int reg_offset = dev_priv->gpio_mmio_base;
 =======
-=======
->>>>>>> master
 gmbus_xfer_read(struct drm_i915_private *dev_priv, struct i2c_msg *msg,
 		u32 gmbus1_index)
 {
 	int reg_offset = dev_priv->gpio_mmio_base;
 	u16 len = msg->len;
 	u8 *buf = msg->buf;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	I915_WRITE(GMBUS1 + reg_offset,
 		   gmbus1_index |
 		   GMBUS_CYCLE_WAIT |
 		   (len << GMBUS_BYTE_COUNT_SHIFT) |
 <<<<<<< HEAD
-<<<<<<< HEAD
 		   (addr << GMBUS_SLAVE_ADDR_SHIFT) |
 =======
 		   (msg->addr << GMBUS_SLAVE_ADDR_SHIFT) |
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		   (msg->addr << GMBUS_SLAVE_ADDR_SHIFT) |
->>>>>>> master
 		   GMBUS_SLAVE_READ | GMBUS_SW_RDY);
 	while (len) {
 		int ret;
@@ -331,7 +321,6 @@ gmbus_xfer_read(struct drm_i915_private *dev_priv, struct i2c_msg *msg,
 }
 
 static int
-<<<<<<< HEAD
 <<<<<<< HEAD
 gmbus_xfer_read(struct drm_i915_private *dev_priv, struct i2c_msg *msg,
 		u32 gmbus1_index)
@@ -363,17 +352,12 @@ gmbus_xfer_write_chunk(struct drm_i915_private *dev_priv,
 	int reg_offset = dev_priv->gpio_mmio_base;
 	unsigned int chunk_size = len;
 =======
-=======
->>>>>>> master
 gmbus_xfer_write(struct drm_i915_private *dev_priv, struct i2c_msg *msg)
 {
 	int reg_offset = dev_priv->gpio_mmio_base;
 	u16 len = msg->len;
 	u8 *buf = msg->buf;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	u32 val, loop;
 
 	val = loop = 0;
@@ -386,17 +370,12 @@ gmbus_xfer_write(struct drm_i915_private *dev_priv, struct i2c_msg *msg)
 	I915_WRITE(GMBUS1 + reg_offset,
 		   GMBUS_CYCLE_WAIT |
 <<<<<<< HEAD
-<<<<<<< HEAD
 		   (chunk_size << GMBUS_BYTE_COUNT_SHIFT) |
 		   (addr << GMBUS_SLAVE_ADDR_SHIFT) |
 =======
 		   (msg->len << GMBUS_BYTE_COUNT_SHIFT) |
 		   (msg->addr << GMBUS_SLAVE_ADDR_SHIFT) |
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		   (msg->len << GMBUS_BYTE_COUNT_SHIFT) |
-		   (msg->addr << GMBUS_SLAVE_ADDR_SHIFT) |
->>>>>>> master
 		   GMBUS_SLAVE_WRITE | GMBUS_SW_RDY);
 	while (len) {
 		int ret;
@@ -413,7 +392,6 @@ gmbus_xfer_write(struct drm_i915_private *dev_priv, struct i2c_msg *msg)
 		if (ret)
 			return ret;
 	}
-<<<<<<< HEAD
 <<<<<<< HEAD
 
 	return 0;
@@ -440,8 +418,6 @@ gmbus_xfer_write(struct drm_i915_private *dev_priv, struct i2c_msg *msg)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 }
 
@@ -495,14 +471,10 @@ gmbus_xfer(struct i2c_adapter *adapter,
 					       adapter);
 	struct drm_i915_private *dev_priv = bus->dev_priv;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int i = 0, inc, try = 0, reg_offset;
 =======
 	int i, reg_offset;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int i, reg_offset;
->>>>>>> master
 	int ret = 0;
 
 	mutex_lock(&dev_priv->gmbus_mutex);
@@ -515,7 +487,6 @@ gmbus_xfer(struct i2c_adapter *adapter,
 	reg_offset = dev_priv->gpio_mmio_base;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 retry:
 	I915_WRITE(GMBUS0 + reg_offset, bus->reg0);
 
@@ -525,18 +496,13 @@ retry:
 			ret = gmbus_xfer_index_read(dev_priv, &msgs[i]);
 			inc = 2; /* an index read is two msgs */
 =======
-=======
->>>>>>> master
 	I915_WRITE(GMBUS0 + reg_offset, bus->reg0);
 
 	for (i = 0; i < num; i++) {
 		if (gmbus_is_index_read(msgs, i, num)) {
 			ret = gmbus_xfer_index_read(dev_priv, &msgs[i]);
 			i += 1;  /* set i to the index of the read xfer */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		} else if (msgs[i].flags & I2C_M_RD) {
 			ret = gmbus_xfer_read(dev_priv, &msgs[i], 0);
 		} else {
@@ -609,7 +575,6 @@ clear_err:
 			 (msgs[i].flags & I2C_M_RD) ? 'r' : 'w', msgs[i].len);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * Passive adapters sometimes NAK the first probe. Retry the first
 	 * message once on -ENXIO for GMBUS transfers; the bit banging algorithm
@@ -624,8 +589,6 @@ clear_err:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	goto out;
 
 timeout:

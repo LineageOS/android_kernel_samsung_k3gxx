@@ -391,7 +391,6 @@ static inline int xfrm_replay_verify_len(struct xfrm_replay_state_esn *replay_es
 	ulen = xfrm_replay_state_esn_len(up);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Check the overall length and the internal bitmap length to avoid
 	 * potential overflow. */
 	if (nla_len(rp) < ulen ||
@@ -406,9 +405,6 @@ static inline int xfrm_replay_verify_len(struct xfrm_replay_state_esn *replay_es
 =======
 	if (nla_len(rp) < ulen || xfrm_replay_state_esn_len(replay_esn) != ulen)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (nla_len(rp) < ulen || xfrm_replay_state_esn_len(replay_esn) != ulen)
->>>>>>> master
 		return -EINVAL;
 
 	return 0;
@@ -2381,14 +2377,10 @@ static int xfrm_user_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
 
 	/* All operations require privileges, even GET */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!netlink_net_capable(skb, CAP_NET_ADMIN))
 =======
 	if (!ns_capable(net->user_ns, CAP_NET_ADMIN))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!ns_capable(net->user_ns, CAP_NET_ADMIN))
->>>>>>> master
 		return -EPERM;
 
 	if ((type == (XFRM_MSG_GETSA - XFRM_MSG_BASE) ||

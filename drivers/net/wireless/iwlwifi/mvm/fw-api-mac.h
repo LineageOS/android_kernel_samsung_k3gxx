@@ -72,7 +72,6 @@
 #define NUM_MAC_INDEX_DRIVER	MAC_INDEX_AUX
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 enum iwl_ac {
 	AC_BK,
 	AC_BE,
@@ -83,9 +82,6 @@ enum iwl_ac {
 =======
 #define AC_NUM	4 /* Number of access categories */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define AC_NUM	4 /* Number of access categories */
->>>>>>> master
 
 /**
  * enum iwl_mac_protection_flags - MAC context flags

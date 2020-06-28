@@ -269,7 +269,6 @@ const struct iwl_cfg iwl6035_2agn_cfg = {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 const struct iwl_cfg iwl6035_2agn_sff_cfg = {
 	.name = "Intel(R) Centrino(R) Ultimate-N 6235 AGN",
 	IWL_DEVICE_6035,
@@ -278,8 +277,6 @@ const struct iwl_cfg iwl6035_2agn_sff_cfg = {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 const struct iwl_cfg iwl1030_bgn_cfg = {
 	.name = "Intel(R) Centrino(R) Wireless-N 1030 BGN",
 	IWL_DEVICE_6030,

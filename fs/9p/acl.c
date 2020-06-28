@@ -321,7 +321,6 @@ static int v9fs_xattr_set_acl(struct dentry *dentry, const char *name,
 		name = POSIX_ACL_XATTR_ACCESS;
 		if (acl) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			struct iattr iattr;
 
 			retval = posix_acl_update_mode(inode, &iattr.ia_mode, &acl);
@@ -343,8 +342,6 @@ static int v9fs_xattr_set_acl(struct dentry *dentry, const char *name,
 			 */
 			v9fs_vfs_setattr_dotl(dentry, &iattr);
 =======
-=======
->>>>>>> master
 			umode_t mode = inode->i_mode;
 			retval = posix_acl_equiv_mode(acl, &mode);
 			if (retval < 0)
@@ -371,10 +368,7 @@ static int v9fs_xattr_set_acl(struct dentry *dentry, const char *name,
 				 */
 				v9fs_vfs_setattr_dotl(dentry, &iattr);
 			}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		}
 		break;
 	case ACL_TYPE_DEFAULT:

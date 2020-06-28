@@ -178,13 +178,10 @@ static void leak_balloon(struct virtio_balloon *vb, size_t num)
 
 	mutex_lock(&vb->balloon_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* We can't release more pages than taken */
 	num = min(num, (size_t)vb->num_pages);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	for (vb->num_pfns = 0; vb->num_pfns < num;
 	     vb->num_pfns += VIRTIO_BALLOON_PAGES_PER_PAGE) {
 		page = balloon_page_dequeue(vb_dev_info);
@@ -320,7 +317,6 @@ static int balloon(void *_vballoon)
 			leak_balloon(vb, -diff);
 		update_balloon_size(vb);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 		/*
 		 * For large balloon changes, we could spend a lot of time
@@ -329,8 +325,6 @@ static int balloon(void *_vballoon)
 		cond_resched();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 	return 0;
 }
@@ -362,13 +356,10 @@ static int init_vqs(struct virtio_balloon *vb)
 		 * use it to signal us later.
 		 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		update_balloon_stats(vb);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		sg_init_one(&sg, vb->stats, sizeof vb->stats);
 		if (virtqueue_add_outbuf(vb->stats_vq, &sg, 1, vb, GFP_KERNEL)
 		    < 0)

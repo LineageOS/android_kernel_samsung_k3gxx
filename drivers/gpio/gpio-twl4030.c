@@ -301,14 +301,10 @@ static int twl_direction_in(struct gpio_chip *chip, unsigned offset)
 		ret = twl4030_set_gpio_direction(offset, 1);
 	else
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ret = -EINVAL;	/* LED outputs can't be set as input */
 =======
 		ret = -EINVAL;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		ret = -EINVAL;
->>>>>>> master
 
 	if (!ret)
 		priv->direction &= ~BIT(offset);
@@ -363,7 +359,6 @@ static int twl_direction_out(struct gpio_chip *chip, unsigned offset, int value)
 {
 	struct gpio_twl4030_priv *priv = to_gpio_twl4030(chip);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int ret = 0;
 
 	mutex_lock(&priv->mutex);
@@ -379,16 +374,11 @@ static int twl_direction_out(struct gpio_chip *chip, unsigned offset, int value)
 	 *  LED gpios i.e. offset >= TWL4030_GPIO_MAX are always output
 	 */
 =======
-=======
->>>>>>> master
 
 	mutex_lock(&priv->mutex);
 	if (offset < TWL4030_GPIO_MAX)
 		twl4030_set_gpio_dataout(offset, value);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	priv->direction |= BIT(offset);
 	mutex_unlock(&priv->mutex);
@@ -396,14 +386,10 @@ static int twl_direction_out(struct gpio_chip *chip, unsigned offset, int value)
 	twl_set(chip, offset, value);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return ret;
 =======
 	return 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return 0;
->>>>>>> master
 }
 
 static int twl_to_irq(struct gpio_chip *chip, unsigned offset)

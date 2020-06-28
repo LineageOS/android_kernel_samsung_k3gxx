@@ -385,7 +385,6 @@ int ext4_bio_write_page(struct ext4_io_submit *io,
 
 	/*
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 * Comments copied from block_write_full_page_endio:
 	 *
 	 * The page straddles i_size.  It must be zeroed out on each and every
@@ -399,8 +398,6 @@ int ext4_bio_write_page(struct ext4_io_submit *io,
 	/*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	 * In the first loop we prepare and mark buffers to submit. We have to
 	 * mark all buffers in the page before submitting so that
 	 * end_page_writeback() cannot be called from ext4_bio_end_io() when IO
@@ -412,10 +409,7 @@ int ext4_bio_write_page(struct ext4_io_submit *io,
 		block_start = bh_offset(bh);
 		if (block_start >= len) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 			/*
 			 * Comments copied from block_write_full_page_endio:
 			 *
@@ -429,10 +423,7 @@ int ext4_bio_write_page(struct ext4_io_submit *io,
 			 */
 			zero_user_segment(page, block_start,
 					  block_start + blocksize);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			clear_buffer_dirty(bh);
 			set_buffer_uptodate(bh);
 			continue;

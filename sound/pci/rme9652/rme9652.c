@@ -286,14 +286,10 @@ static char channel_map_9636_ds[26] = {
 	1, 3, 5, 7, 9, 11, 13, 15,
 	/* channels 8 and 9 are S/PDIF */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	24, 25,
 =======
 	24, 25
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	24, 25
->>>>>>> master
 	/* others don't exist */
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
 };

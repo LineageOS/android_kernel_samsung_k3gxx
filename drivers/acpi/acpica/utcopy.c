@@ -999,7 +999,6 @@ acpi_ut_copy_iobject_to_iobject(union acpi_operand_object *source_desc,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Delete the allocated object if copy failed */
 
 	if (ACPI_FAILURE(status)) {
@@ -1008,7 +1007,5 @@ acpi_ut_copy_iobject_to_iobject(union acpi_operand_object *source_desc,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return_ACPI_STATUS(status);
 }

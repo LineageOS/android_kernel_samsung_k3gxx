@@ -217,14 +217,10 @@ static s32 dpot_read_i2c(struct dpot_data *dpot, u8 reg)
 			value = swab16(value);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (dpot->uid == DPOT_UID(AD5274_ID))
 =======
 			if (dpot->uid == DPOT_UID(AD5271_ID))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			if (dpot->uid == DPOT_UID(AD5271_ID))
->>>>>>> master
 				value = value >> 2;
 		return value;
 	default:

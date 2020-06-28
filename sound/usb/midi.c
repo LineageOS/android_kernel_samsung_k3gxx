@@ -175,13 +175,10 @@ struct snd_usb_midi_in_endpoint {
 	} ports[0x10];
 	u8 seen_f5;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	bool in_sysex;
 	u8 last_cin;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	u8 error_resubmit;
 	int current_port;
 };
@@ -373,13 +370,10 @@ static void snd_usbmidi_error_timer(unsigned long data)
 			in->error_resubmit = 0;
 			for (j = 0; j < INPUT_URBS; ++j) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 				if (atomic_read(&in->urbs[j]->use_count))
 					continue;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 				in->urbs[j]->dev = umidi->dev;
 				snd_usbmidi_submit_urb(in->urbs[j], GFP_ATOMIC);
 			}
@@ -480,7 +474,6 @@ static void snd_usbmidi_maudio_broken_running_status_input(
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * QinHeng CH345 is buggy: every second packet inside a SysEx has not CIN 4
  * but the previously seen CIN, but still with three data bytes.
  */
@@ -516,8 +509,6 @@ static void ch345_broken_sysex_input(struct snd_usb_midi_in_endpoint *ep,
 /*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  * CME protocol: like the standard protocol, but SysEx commands are sent as a
  * single USB packet preceded by a 0x0F byte.
  */
@@ -704,7 +695,6 @@ static struct usb_protocol_ops snd_usbmidi_cme_ops = {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static struct usb_protocol_ops snd_usbmidi_ch345_broken_sysex_ops = {
 	.input = ch345_broken_sysex_input,
 	.output = snd_usbmidi_standard_output,
@@ -713,8 +703,6 @@ static struct usb_protocol_ops snd_usbmidi_ch345_broken_sysex_ops = {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  * AKAI MPD16 protocol:
  *
@@ -1392,12 +1380,9 @@ static int snd_usbmidi_out_endpoint_create(struct snd_usb_midi* umidi,
 		 * do not actually work with larger packets:
 		 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	case USB_ID(0x0a67, 0x5011): /* Medeli DD305 */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	case USB_ID(0x0a92, 0x1020): /* ESI M4U */
 	case USB_ID(0x1430, 0x474b): /* RedOctane GH MIDI INTERFACE */
 	case USB_ID(0x15ca, 0x0101): /* Textech USB Midi Cable */
@@ -2289,15 +2274,12 @@ int snd_usbmidi_create(struct snd_card *card,
 		err = snd_usbmidi_detect_per_port_endpoints(umidi, endpoints);
 		break;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	case QUIRK_MIDI_CH345:
 		umidi->usb_protocol_ops = &snd_usbmidi_ch345_broken_sysex_ops;
 		err = snd_usbmidi_detect_per_port_endpoints(umidi, endpoints);
 		break;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	default:
 		snd_printd(KERN_ERR "invalid quirk type %d\n", quirk->type);
 		err = -ENXIO;

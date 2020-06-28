@@ -273,7 +273,6 @@ static irqreturn_t usbhs_interrupt(int irq, void *data)
 	usbhs_write(priv, INTSTS1, ~irq_state.intsts1 & INTSTS1_MAGIC);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * The driver should not clear the xxxSTS after the line of
 	 * "call irq callback functions" because each "if" statement is
@@ -289,11 +288,6 @@ static irqreturn_t usbhs_interrupt(int irq, void *data)
 	usbhs_write(priv, NRDYSTS, ~irq_state.nrdysts);
 	usbhs_write(priv, BEMPSTS, ~irq_state.bempsts);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	usbhs_write(priv, BRDYSTS, ~irq_state.brdysts);
-	usbhs_write(priv, NRDYSTS, ~irq_state.nrdysts);
-	usbhs_write(priv, BEMPSTS, ~irq_state.bempsts);
->>>>>>> master
 
 	/*
 	 * call irq callback functions

@@ -353,7 +353,6 @@ config LOGITECH_FF
 
 config LOGIRUMBLEPAD2_FF
 <<<<<<< HEAD
-<<<<<<< HEAD
 	bool "Logitech force feedback support (variant 2)"
 	depends on HID_LOGITECH
 	select INPUT_FF_MEMLESS
@@ -363,18 +362,13 @@ config LOGIRUMBLEPAD2_FF
 	  - Logitech Rumblepad 2
 	  - Logitech Formula Vibration Feedback Wheel
 =======
-=======
->>>>>>> master
 	bool "Logitech RumblePad/Rumblepad 2 force feedback support"
 	depends on HID_LOGITECH
 	select INPUT_FF_MEMLESS
 	help
 	  Say Y here if you want to enable force feedback support for Logitech
 	  RumblePad and Rumblepad 2 devices.
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 config LOGIG940_FF
 	bool "Logitech Flight System G940 force feedback support"
@@ -454,7 +448,6 @@ config HID_MULTITOUCH
 	  - Quanta panels
 	  - eGalax dual-touch panels, including the Joojoo and Wetab tablets
 <<<<<<< HEAD
-<<<<<<< HEAD
 	  - SiS multitouch panels
 	  - Stantum multitouch panels
 	  - Touch International Panels
@@ -465,11 +458,6 @@ config HID_MULTITOUCH
 	  - Touch International Panels
 	  - Unitec Panels
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	  - Stantum multitouch panels
-	  - Touch International Panels
-	  - Unitec Panels
->>>>>>> master
 	  - XAT optical touch panels
 	  - Xiroku optical touch panels
 	  - Zytronic touch panels

@@ -768,17 +768,11 @@ static void neigh_periodic_work(struct work_struct *work)
 					lockdep_is_held(&tbl->lock));
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if (atomic_read(&tbl->entries) < tbl->gc_thresh1)
 		goto out;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (atomic_read(&tbl->entries) < tbl->gc_thresh1)
-		goto out;
-
->>>>>>> master
 	/*
 	 *	periodically recompute ReachableTime from random function
 	 */
@@ -792,14 +786,11 @@ static void neigh_periodic_work(struct work_struct *work)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (atomic_read(&tbl->entries) < tbl->gc_thresh1)
 		goto out;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	for (i = 0 ; i < (1 << nht->hash_shift); i++) {
 		np = &nht->hash_buckets[i];
 
@@ -894,15 +885,11 @@ static void neigh_probe(struct neighbour *neigh)
 		skb = skb_copy(skb, GFP_ATOMIC);
 	write_unlock(&neigh->lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (neigh->ops->solicit)
 		neigh->ops->solicit(neigh, skb);
 =======
 	neigh->ops->solicit(neigh, skb);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	neigh->ops->solicit(neigh, skb);
->>>>>>> master
 	atomic_inc(&neigh->probes);
 	kfree_skb(skb);
 }
@@ -1305,14 +1292,10 @@ int neigh_compat_output(struct neighbour *neigh, struct sk_buff *skb)
 	if (dev_hard_header(skb, dev, ntohs(skb->protocol), NULL, NULL,
 			    skb->len) < 0 &&
 <<<<<<< HEAD
-<<<<<<< HEAD
 	    dev_rebuild_header(skb))
 =======
 	    dev->header_ops->rebuild(skb))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	    dev->header_ops->rebuild(skb))
->>>>>>> master
 		return 0;
 
 	return dev_queue_xmit(skb);
@@ -1484,7 +1467,6 @@ struct neigh_parms *neigh_parms_alloc(struct net_device *dev,
 		p->reachable_time =
 				neigh_rand_reach_time(p->base_reachable_time);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		dev_hold(dev);
 		p->dev = dev;
 		write_pnet(&p->net, hold_net(net));
@@ -1497,27 +1479,17 @@ struct neigh_parms *neigh_parms_alloc(struct net_device *dev,
 
 		if (ops->ndo_neigh_setup && ops->ndo_neigh_setup(dev, p)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-		if (ops->ndo_neigh_setup && ops->ndo_neigh_setup(dev, p)) {
->>>>>>> master
 			kfree(p);
 			return NULL;
 		}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 		dev_hold(dev);
 		p->dev = dev;
 		write_pnet(&p->net, hold_net(net));
 		p->sysctl_table = NULL;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		write_lock_bh(&tbl->lock);
 		p->next		= tbl->parms.next;
 		tbl->parms.next = p;

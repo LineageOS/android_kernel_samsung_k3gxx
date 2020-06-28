@@ -294,7 +294,6 @@ failure:
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * The final 8 bytes of the buffer list is a counter of frames dropped
  * because there was not a buffer in the buffer list capable of holding
@@ -309,8 +308,6 @@ static void ibmveth_update_rx_no_buffer(struct ibmveth_adapter *adapter)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /* replenish routine */
 static void ibmveth_replenish_task(struct ibmveth_adapter *adapter)
 {
@@ -327,16 +324,11 @@ static void ibmveth_replenish_task(struct ibmveth_adapter *adapter)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ibmveth_update_rx_no_buffer(adapter);
 =======
 	adapter->rx_no_buffer = *(u64 *)(((char*)adapter->buffer_list_addr) +
 						4096 - 8);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	adapter->rx_no_buffer = *(u64 *)(((char*)adapter->buffer_list_addr) +
-						4096 - 8);
->>>>>>> master
 }
 
 /* empty and free ana buffer pool - also used to do cleanup in error paths */
@@ -717,16 +709,11 @@ static int ibmveth_close(struct net_device *netdev)
 	free_irq(netdev->irq, netdev);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ibmveth_update_rx_no_buffer(adapter);
 =======
 	adapter->rx_no_buffer = *(u64 *)(((char *)adapter->buffer_list_addr) +
 						4096 - 8);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	adapter->rx_no_buffer = *(u64 *)(((char *)adapter->buffer_list_addr) +
-						4096 - 8);
->>>>>>> master
 
 	ibmveth_cleanup(adapter);
 

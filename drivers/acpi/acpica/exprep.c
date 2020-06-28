@@ -480,13 +480,10 @@ acpi_status acpi_ex_prep_field_value(struct acpi_create_field_info *info)
 		}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		obj_desc->field.pin_number_index = info->pin_number_index;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		/* Allow full data read from EC address space */
 
 		if ((obj_desc->field.region_obj->region.space_id ==

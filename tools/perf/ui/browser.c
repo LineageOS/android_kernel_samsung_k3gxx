@@ -673,14 +673,10 @@ static void __ui_browser__line_arrow_down(struct ui_browser *browser,
 		SLsmg_draw_hline(2);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (++row == 0)
 =======
 		if (row++ == 0)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (row++ == 0)
->>>>>>> master
 			goto out;
 	} else
 		row = 0;

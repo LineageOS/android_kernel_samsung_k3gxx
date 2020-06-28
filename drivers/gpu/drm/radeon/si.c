@@ -1468,15 +1468,11 @@ static u32 dce6_line_buffer_adjust(struct radeon_device *rdev,
 				   struct drm_display_mode *other_mode)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u32 tmp, buffer_alloc, i;
 	u32 pipe_offset = radeon_crtc->crtc_id * 0x20;
 =======
 	u32 tmp;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u32 tmp;
->>>>>>> master
 	/*
 	 * Line Buffer Setup
 	 * There are 3 line buffers, each one shared by 2 display controllers.
@@ -1492,7 +1488,6 @@ static u32 dce6_line_buffer_adjust(struct radeon_device *rdev,
 	 */
 	if (radeon_crtc->base.enabled && mode) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (other_mode) {
 			tmp = 0; /* 1/2 */
 			buffer_alloc = 1;
@@ -1505,23 +1500,17 @@ static u32 dce6_line_buffer_adjust(struct radeon_device *rdev,
 		buffer_alloc = 0;
 	}
 =======
-=======
->>>>>>> master
 		if (other_mode)
 			tmp = 0; /* 1/2 */
 		else
 			tmp = 2; /* whole */
 	} else
 		tmp = 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	WREG32(DC_LB_MEMORY_SPLIT + radeon_crtc->crtc_offset,
 	       DC_LB_MEMORY_CONFIG(tmp));
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	WREG32(PIPE0_DMIF_BUFFER_CONTROL + pipe_offset,
 	       DMIF_BUFFERS_ALLOCATED(buffer_alloc));
@@ -1534,8 +1523,6 @@ static u32 dce6_line_buffer_adjust(struct radeon_device *rdev,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (radeon_crtc->base.enabled && mode) {
 		switch (tmp) {
 		case 0:
@@ -3645,7 +3632,6 @@ static int si_mc_init(struct radeon_device *rdev)
 	rdev->mc.aper_size = pci_resource_len(rdev->pdev, 0);
 	/* size in MB on si */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	tmp = RREG32(CONFIG_MEMSIZE);
 	/* some boards may have garbage in the upper 16 bits */
 	if (tmp & 0xffff0000) {
@@ -3659,10 +3645,6 @@ static int si_mc_init(struct radeon_device *rdev)
 	rdev->mc.mc_vram_size = RREG32(CONFIG_MEMSIZE) * 1024ULL * 1024ULL;
 	rdev->mc.real_vram_size = RREG32(CONFIG_MEMSIZE) * 1024ULL * 1024ULL;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	rdev->mc.mc_vram_size = RREG32(CONFIG_MEMSIZE) * 1024ULL * 1024ULL;
-	rdev->mc.real_vram_size = RREG32(CONFIG_MEMSIZE) * 1024ULL * 1024ULL;
->>>>>>> master
 	rdev->mc.visible_vram_size = rdev->mc.aper_size;
 	si_vram_gtt_location(rdev, &rdev->mc);
 	radeon_update_bandwidth_info(rdev);
@@ -3858,7 +3840,6 @@ static int si_vm_packet3_ce_check(struct radeon_device *rdev,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int si_vm_packet3_cp_dma_check(u32 *ib, u32 idx)
 {
 	u32 start_reg, reg, i;
@@ -3918,8 +3899,6 @@ static int si_vm_packet3_gfx_check(struct radeon_device *rdev,
 	u32 idx_value = ib[idx];
 	u32 start_reg, end_reg, reg, i;
 =======
-=======
->>>>>>> master
 static int si_vm_packet3_gfx_check(struct radeon_device *rdev,
 				   u32 *ib, struct radeon_cs_packet *pkt)
 {
@@ -3927,10 +3906,7 @@ static int si_vm_packet3_gfx_check(struct radeon_device *rdev,
 	u32 idx_value = ib[idx];
 	u32 start_reg, end_reg, reg, i;
 	u32 command, info;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	switch (pkt->opcode) {
 	case PACKET3_NOP:
@@ -4032,13 +4008,10 @@ static int si_vm_packet3_gfx_check(struct radeon_device *rdev,
 		break;
 	case PACKET3_CP_DMA:
 <<<<<<< HEAD
-<<<<<<< HEAD
 		r = si_vm_packet3_cp_dma_check(ib, idx);
 		if (r)
 			return r;
 =======
-=======
->>>>>>> master
 		command = ib[idx + 4];
 		info = ib[idx + 1];
 		if (command & PACKET3_CP_DMA_CMD_SAS) {
@@ -4083,10 +4056,7 @@ static int si_vm_packet3_gfx_check(struct radeon_device *rdev,
 				}
 			}
 		}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		break;
 	default:
 		DRM_ERROR("Invalid GFX packet3: 0x%x\n", pkt->opcode);
@@ -4099,12 +4069,9 @@ static int si_vm_packet3_compute_check(struct radeon_device *rdev,
 				       u32 *ib, struct radeon_cs_packet *pkt)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int r;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	u32 idx = pkt->idx + 1;
 	u32 idx_value = ib[idx];
 	u32 start_reg, reg, i;
@@ -4178,7 +4145,6 @@ static int si_vm_packet3_compute_check(struct radeon_device *rdev,
 		}
 		break;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	case PACKET3_CP_DMA:
 		r = si_vm_packet3_cp_dma_check(ib, idx);
 		if (r)
@@ -4186,8 +4152,6 @@ static int si_vm_packet3_compute_check(struct radeon_device *rdev,
 		break;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	default:
 		DRM_ERROR("Invalid Compute packet3: 0x%x\n", pkt->opcode);
 		return -EINVAL;
@@ -4640,14 +4604,10 @@ static void si_disable_interrupt_state(struct radeon_device *rdev)
 
 	if (!ASIC_IS_NODCE(rdev)) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		WREG32(DAC_AUTODETECT_INT_CONTROL, 0);
 =======
 		WREG32(DACA_AUTODETECT_INT_CONTROL, 0);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		WREG32(DACA_AUTODETECT_INT_CONTROL, 0);
->>>>>>> master
 
 		tmp = RREG32(DC_HPD1_INT_CONTROL) & DC_HPDx_INT_POLARITY;
 		WREG32(DC_HPD1_INT_CONTROL, tmp);
@@ -5288,15 +5248,12 @@ restart_ih:
 			}
 			break;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		case 124: /* UVD */
 			DRM_DEBUG("IH: UVD int: 0x%08x\n", src_data);
 			radeon_fence_process(rdev, R600_RING_TYPE_UVD_INDEX);
 			break;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		case 146:
 		case 147:
 			dev_err(rdev->dev, "GPU fault detected: %d 0x%08x\n", src_id, src_data);
@@ -5839,16 +5796,11 @@ int si_set_uvd_clocks(struct radeon_device *rdev, u32 vclk, u32 dclk)
 
 	if (!vclk || !dclk) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* keep the Bypass mode */
 =======
 		/* keep the Bypass mode, put PLL to sleep */
 		WREG32_P(CG_UPLL_FUNC_CNTL, UPLL_SLEEP_MASK, ~UPLL_SLEEP_MASK);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		/* keep the Bypass mode, put PLL to sleep */
-		WREG32_P(CG_UPLL_FUNC_CNTL, UPLL_SLEEP_MASK, ~UPLL_SLEEP_MASK);
->>>>>>> master
 		return 0;
 	}
 
@@ -5865,16 +5817,11 @@ int si_set_uvd_clocks(struct radeon_device *rdev, u32 vclk, u32 dclk)
 	WREG32_P(CG_UPLL_FUNC_CNTL, UPLL_VCO_MODE_MASK, ~UPLL_VCO_MODE_MASK);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* disable sleep mode */
 =======
 	/* toggle UPLL_SLEEP to 1 then back to 0 */
 	WREG32_P(CG_UPLL_FUNC_CNTL, UPLL_SLEEP_MASK, ~UPLL_SLEEP_MASK);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	/* toggle UPLL_SLEEP to 1 then back to 0 */
-	WREG32_P(CG_UPLL_FUNC_CNTL, UPLL_SLEEP_MASK, ~UPLL_SLEEP_MASK);
->>>>>>> master
 	WREG32_P(CG_UPLL_FUNC_CNTL, 0, ~UPLL_SLEEP_MASK);
 
 	/* deassert UPLL_RESET */
@@ -5931,13 +5878,10 @@ int si_set_uvd_clocks(struct radeon_device *rdev, u32 vclk, u32 dclk)
 	mdelay(100);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* posting read */
 	RREG32(SRBM_STATUS);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 }

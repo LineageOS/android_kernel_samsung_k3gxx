@@ -957,17 +957,12 @@ static int usb_8dev_probe(struct usb_interface *intf,
 		priv->tx_contexts[i].echo_index = MAX_TX_URBS;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	priv->cmd_msg_buffer = devm_kzalloc(&intf->dev, sizeof(struct usb_8dev_cmd_msg),
 					    GFP_KERNEL);
 =======
 	priv->cmd_msg_buffer = kzalloc(sizeof(struct usb_8dev_cmd_msg),
 				      GFP_KERNEL);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	priv->cmd_msg_buffer = kzalloc(sizeof(struct usb_8dev_cmd_msg),
-				      GFP_KERNEL);
->>>>>>> master
 	if (!priv->cmd_msg_buffer)
 		goto cleanup_candev;
 
@@ -982,14 +977,10 @@ static int usb_8dev_probe(struct usb_interface *intf,
 		netdev_err(netdev,
 			"couldn't register CAN device: %d\n", err);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto cleanup_candev;
 =======
 		goto cleanup_cmd_msg_buffer;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto cleanup_cmd_msg_buffer;
->>>>>>> master
 	}
 
 	err = usb_8dev_cmd_version(priv, &version);
@@ -1011,17 +1002,11 @@ cleanup_unregister_candev:
 	unregister_netdev(priv->netdev);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 cleanup_cmd_msg_buffer:
 	kfree(priv->cmd_msg_buffer);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-cleanup_cmd_msg_buffer:
-	kfree(priv->cmd_msg_buffer);
-
->>>>>>> master
 cleanup_candev:
 	free_candev(netdev);
 

@@ -80,13 +80,10 @@ static struct ib_cm {
 	struct list_head timewait_list;
 	struct workqueue_struct *wq;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Sync on cm change port state */
 	spinlock_t state_lock;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 } cm;
 
 /* Counter indexes ordered by attribute ID */
@@ -169,13 +166,10 @@ struct cm_port {
 	struct kobject port_obj;
 	u8 port_num;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct list_head cm_priv_prim_list;
 	struct list_head cm_priv_altr_list;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	struct cm_counter_group counter_group[CM_COUNTER_GROUPS];
 };
 
@@ -254,7 +248,6 @@ struct cm_id_private {
 	u8 target_ack_delay;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct list_head prim_list;
 	struct list_head altr_list;
 	/* Indicates that the send port mad is registered and av is set */
@@ -263,8 +256,6 @@ struct cm_id_private {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	struct list_head work_list;
 	atomic_t work_count;
 };
@@ -283,7 +274,6 @@ static int cm_alloc_msg(struct cm_id_private *cm_id_priv,
 	struct ib_mad_agent *mad_agent;
 	struct ib_mad_send_buf *m;
 	struct ib_ah *ah;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	struct cm_av *av;
 	unsigned long flags, flags2;
@@ -320,8 +310,6 @@ static int cm_alloc_msg(struct cm_id_private *cm_id_priv,
 	m = ib_create_send_mad(mad_agent, cm_id_priv->id.remote_cm_qpn,
 			       av->pkey_index,
 =======
-=======
->>>>>>> master
 
 	mad_agent = cm_id_priv->av.port->mad_agent;
 	ah = ib_create_ah(mad_agent->qp->pd, &cm_id_priv->av.ah_attr);
@@ -330,24 +318,17 @@ static int cm_alloc_msg(struct cm_id_private *cm_id_priv,
 
 	m = ib_create_send_mad(mad_agent, cm_id_priv->id.remote_cm_qpn,
 			       cm_id_priv->av.pkey_index,
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			       0, IB_MGMT_MAD_HDR, IB_MGMT_MAD_DATA,
 			       GFP_ATOMIC);
 	if (IS_ERR(m)) {
 		ib_destroy_ah(ah);
-<<<<<<< HEAD
 <<<<<<< HEAD
 		ret = PTR_ERR(m);
 		goto out;
 =======
 		return PTR_ERR(m);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		return PTR_ERR(m);
->>>>>>> master
 	}
 
 	/* Timeout set by caller if response is expected. */
@@ -358,7 +339,6 @@ static int cm_alloc_msg(struct cm_id_private *cm_id_priv,
 	m->context[0] = cm_id_priv;
 	*msg = m;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 out:
 	spin_unlock_irqrestore(&cm.state_lock, flags2);
@@ -366,9 +346,6 @@ out:
 =======
 	return 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return 0;
->>>>>>> master
 }
 
 static int cm_alloc_response_msg(struct cm_port *port,
@@ -438,15 +415,11 @@ static void cm_init_av_for_response(struct cm_port *port, struct ib_wc *wc,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int cm_init_av_by_path(struct ib_sa_path_rec *path, struct cm_av *av,
 			      struct cm_id_private *cm_id_priv)
 =======
 static int cm_init_av_by_path(struct ib_sa_path_rec *path, struct cm_av *av)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static int cm_init_av_by_path(struct ib_sa_path_rec *path, struct cm_av *av)
->>>>>>> master
 {
 	struct cm_device *cm_dev;
 	struct cm_port *port = NULL;
@@ -477,7 +450,6 @@ static int cm_init_av_by_path(struct ib_sa_path_rec *path, struct cm_av *av)
 			     &av->ah_attr);
 	av->timeout = path->packet_life_time + 1;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	spin_lock_irqsave(&cm.lock, flags);
 	if (&cm_id_priv->av == av)
@@ -493,9 +465,6 @@ static int cm_init_av_by_path(struct ib_sa_path_rec *path, struct cm_av *av)
 =======
 	return 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return 0;
->>>>>>> master
 }
 
 static int cm_alloc_id(struct cm_id_private *cm_id_priv)
@@ -836,13 +805,10 @@ struct ib_cm_id *ib_create_cm_id(struct ib_device *device,
 	init_completion(&cm_id_priv->comp);
 	INIT_LIST_HEAD(&cm_id_priv->work_list);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	INIT_LIST_HEAD(&cm_id_priv->prim_list);
 	INIT_LIST_HEAD(&cm_id_priv->altr_list);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	atomic_set(&cm_id_priv->work_count, -1);
 	atomic_set(&cm_id_priv->refcount, 1);
 	return &cm_id_priv->id;
@@ -985,7 +951,6 @@ retest:
 		spin_unlock_irq(&cm_id_priv->lock);
 		cm_reject_sidr_req(cm_id_priv, IB_SIDR_REJECT);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		spin_lock_irq(&cm.lock);
 		if (!RB_EMPTY_NODE(&cm_id_priv->sidr_id_node))
 			rb_erase(&cm_id_priv->sidr_id_node,
@@ -993,8 +958,6 @@ retest:
 		spin_unlock_irq(&cm.lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		break;
 	case IB_CM_REQ_SENT:
 		ib_cancel_mad(cm_id_priv->av.port->mad_agent, cm_id_priv->msg);
@@ -1048,7 +1011,6 @@ retest:
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_lock_irq(&cm.lock);
 	if (!list_empty(&cm_id_priv->altr_list) &&
 	    (!cm_id_priv->altr_send_port_not_ready))
@@ -1060,8 +1022,6 @@ retest:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	cm_free_id(cm_id->local_id);
 	cm_deref_id(cm_id_priv);
 	wait_for_completion(&cm_id_priv->comp);
@@ -1286,28 +1246,20 @@ int ib_send_cm_req(struct ib_cm_id *cm_id,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = cm_init_av_by_path(param->primary_path, &cm_id_priv->av,
 				 cm_id_priv);
 =======
 	ret = cm_init_av_by_path(param->primary_path, &cm_id_priv->av);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret = cm_init_av_by_path(param->primary_path, &cm_id_priv->av);
->>>>>>> master
 	if (ret)
 		goto error1;
 	if (param->alternate_path) {
 		ret = cm_init_av_by_path(param->alternate_path,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					 &cm_id_priv->alt_av, cm_id_priv);
 =======
 					 &cm_id_priv->alt_av);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					 &cm_id_priv->alt_av);
->>>>>>> master
 		if (ret)
 			goto error1;
 	}
@@ -1728,15 +1680,11 @@ static int cm_req_handler(struct cm_work *work)
 	cm_process_routed_req(req_msg, work->mad_recv_wc->wc);
 	cm_format_paths_from_req(req_msg, &work->path[0], &work->path[1]);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = cm_init_av_by_path(&work->path[0], &cm_id_priv->av,
 				 cm_id_priv);
 =======
 	ret = cm_init_av_by_path(&work->path[0], &cm_id_priv->av);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret = cm_init_av_by_path(&work->path[0], &cm_id_priv->av);
->>>>>>> master
 	if (ret) {
 		ib_get_cached_gid(work->port->cm_dev->ib_device,
 				  work->port->port_num, 0, &work->path[0].sgid);
@@ -1747,15 +1695,11 @@ static int cm_req_handler(struct cm_work *work)
 	}
 	if (req_msg->alt_local_lid) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ret = cm_init_av_by_path(&work->path[1], &cm_id_priv->alt_av,
 					 cm_id_priv);
 =======
 		ret = cm_init_av_by_path(&work->path[1], &cm_id_priv->alt_av);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		ret = cm_init_av_by_path(&work->path[1], &cm_id_priv->alt_av);
->>>>>>> master
 		if (ret) {
 			ib_send_cm_rej(cm_id, IB_CM_REJ_INVALID_ALT_GID,
 				       &work->path[0].sgid,
@@ -2811,15 +2755,11 @@ int ib_send_cm_lap(struct ib_cm_id *cm_id,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = cm_init_av_by_path(alternate_path, &cm_id_priv->alt_av,
 				 cm_id_priv);
 =======
 	ret = cm_init_av_by_path(alternate_path, &cm_id_priv->alt_av);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret = cm_init_av_by_path(alternate_path, &cm_id_priv->alt_av);
->>>>>>> master
 	if (ret)
 		goto out;
 	cm_id_priv->alt_av.timeout =
@@ -2932,15 +2872,11 @@ static int cm_lap_handler(struct cm_work *work)
 				work->mad_recv_wc->recv_buf.grh,
 				&cm_id_priv->av);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	cm_init_av_by_path(param->alternate_path, &cm_id_priv->alt_av,
 			   cm_id_priv);
 =======
 	cm_init_av_by_path(param->alternate_path, &cm_id_priv->alt_av);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	cm_init_av_by_path(param->alternate_path, &cm_id_priv->alt_av);
->>>>>>> master
 	ret = atomic_inc_and_test(&cm_id_priv->work_count);
 	if (!ret)
 		list_add_tail(&work->list, &cm_id_priv->work_list);
@@ -3133,14 +3069,10 @@ int ib_send_cm_sidr_req(struct ib_cm_id *cm_id,
 
 	cm_id_priv = container_of(cm_id, struct cm_id_private, id);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = cm_init_av_by_path(param->path, &cm_id_priv->av, cm_id_priv);
 =======
 	ret = cm_init_av_by_path(param->path, &cm_id_priv->av);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret = cm_init_av_by_path(param->path, &cm_id_priv->av);
->>>>>>> master
 	if (ret)
 		goto out;
 
@@ -3308,7 +3240,6 @@ int ib_send_cm_sidr_rep(struct ib_cm_id *cm_id,
 
 	spin_lock_irqsave(&cm.lock, flags);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!RB_EMPTY_NODE(&cm_id_priv->sidr_id_node)) {
 		rb_erase(&cm_id_priv->sidr_id_node, &cm.remote_sidr_table);
 		RB_CLEAR_NODE(&cm_id_priv->sidr_id_node);
@@ -3316,9 +3247,6 @@ int ib_send_cm_sidr_rep(struct ib_cm_id *cm_id,
 =======
 	rb_erase(&cm_id_priv->sidr_id_node, &cm.remote_sidr_table);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	rb_erase(&cm_id_priv->sidr_id_node, &cm.remote_sidr_table);
->>>>>>> master
 	spin_unlock_irqrestore(&cm.lock, flags);
 	return 0;
 
@@ -3570,16 +3498,12 @@ static int cm_migrate(struct ib_cm_id *cm_id)
 {
 	struct cm_id_private *cm_id_priv;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct cm_av tmp_av;
 	unsigned long flags;
 	int tmp_send_port_not_ready;
 =======
 	unsigned long flags;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned long flags;
->>>>>>> master
 	int ret = 0;
 
 	cm_id_priv = container_of(cm_id, struct cm_id_private, id);
@@ -3588,7 +3512,6 @@ static int cm_migrate(struct ib_cm_id *cm_id)
 	    (cm_id->lap_state == IB_CM_LAP_UNINIT ||
 	     cm_id->lap_state == IB_CM_LAP_IDLE)) {
 		cm_id->lap_state = IB_CM_LAP_IDLE;
-<<<<<<< HEAD
 <<<<<<< HEAD
 		/* Swap address vector */
 		tmp_av = cm_id_priv->av;
@@ -3601,9 +3524,6 @@ static int cm_migrate(struct ib_cm_id *cm_id)
 =======
 		cm_id_priv->av = cm_id_priv->alt_av;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		cm_id_priv->av = cm_id_priv->alt_av;
->>>>>>> master
 	} else
 		ret = -EINVAL;
 	spin_unlock_irqrestore(&cm_id_priv->lock, flags);
@@ -4010,14 +3930,11 @@ static void cm_add_one(struct ib_device *ib_device)
 		port->port_num = i;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		INIT_LIST_HEAD(&port->cm_priv_prim_list);
 		INIT_LIST_HEAD(&port->cm_priv_altr_list);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		ret = cm_create_port_fs(port);
 		if (ret)
 			goto error1;
@@ -4065,13 +3982,10 @@ static void cm_remove_one(struct ib_device *ib_device)
 	struct cm_device *cm_dev;
 	struct cm_port *port;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct cm_id_private *cm_id_priv;
 	struct ib_mad_agent *cur_mad_agent;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	struct ib_port_modify port_modify = {
 		.clr_port_cap_mask = IB_PORT_CM_SUP
 	};
@@ -4090,7 +4004,6 @@ static void cm_remove_one(struct ib_device *ib_device)
 		port = cm_dev->port[i-1];
 		ib_modify_port(ib_device, port->port_num, 0, &port_modify);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* Mark all the cm_id's as not valid */
 		spin_lock_irq(&cm.lock);
 		list_for_each_entry(cm_id_priv, &port->cm_priv_altr_list, altr_list)
@@ -4108,16 +4021,11 @@ static void cm_remove_one(struct ib_device *ib_device)
 	}
 
 =======
-=======
->>>>>>> master
 		ib_unregister_mad_agent(port->mad_agent);
 		flush_workqueue(cm.wq);
 		cm_remove_port_fs(port);
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	device_unregister(cm_dev->device);
 	kfree(cm_dev);
 }
@@ -4131,12 +4039,9 @@ static int __init ib_cm_init(void)
 	rwlock_init(&cm.device_lock);
 	spin_lock_init(&cm.lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_lock_init(&cm.state_lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	cm.listen_service_table = RB_ROOT;
 	cm.listen_service_id = be64_to_cpu(IB_CM_ASSIGN_SERVICE_ID);
 	cm.remote_id_table = RB_ROOT;

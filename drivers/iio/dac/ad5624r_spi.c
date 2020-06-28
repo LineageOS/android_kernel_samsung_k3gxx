@@ -23,14 +23,10 @@
 
 static int ad5624r_spi_write(struct spi_device *spi,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			     u8 cmd, u8 addr, u16 val, u8 shift)
 =======
 			     u8 cmd, u8 addr, u16 val, u8 len)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			     u8 cmd, u8 addr, u16 val, u8 len)
->>>>>>> master
 {
 	u32 data;
 	u8 msg[3];
@@ -44,14 +40,10 @@ static int ad5624r_spi_write(struct spi_device *spi,
 	 * for the AD5664R, AD5644R, and AD5624R, respectively.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	data = (0 << 22) | (cmd << 19) | (addr << 16) | (val << shift);
 =======
 	data = (0 << 22) | (cmd << 19) | (addr << 16) | (val << (16 - len));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	data = (0 << 22) | (cmd << 19) | (addr << 16) | (val << (16 - len));
->>>>>>> master
 	msg[0] = data >> 16;
 	msg[1] = data >> 8;
 	msg[2] = data;

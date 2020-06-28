@@ -606,14 +606,10 @@ static int wm2000_anc_mode_get(struct snd_kcontrol *kcontrol,
 	struct wm2000_priv *wm2000 = dev_get_drvdata(codec->dev);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ucontrol->value.integer.value[0] = wm2000->anc_active;
 =======
 	ucontrol->value.enumerated.item[0] = wm2000->anc_active;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ucontrol->value.enumerated.item[0] = wm2000->anc_active;
->>>>>>> master
 
 	return 0;
 }
@@ -624,14 +620,10 @@ static int wm2000_anc_mode_put(struct snd_kcontrol *kcontrol,
 	struct snd_soc_codec *codec = snd_kcontrol_chip(kcontrol);
 	struct wm2000_priv *wm2000 = dev_get_drvdata(codec->dev);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int anc_active = ucontrol->value.integer.value[0];
 =======
 	int anc_active = ucontrol->value.enumerated.item[0];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int anc_active = ucontrol->value.enumerated.item[0];
->>>>>>> master
 	int ret;
 
 	if (anc_active > 1)
@@ -655,14 +647,10 @@ static int wm2000_speaker_get(struct snd_kcontrol *kcontrol,
 	struct wm2000_priv *wm2000 = dev_get_drvdata(codec->dev);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ucontrol->value.integer.value[0] = wm2000->spk_ena;
 =======
 	ucontrol->value.enumerated.item[0] = wm2000->spk_ena;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ucontrol->value.enumerated.item[0] = wm2000->spk_ena;
->>>>>>> master
 
 	return 0;
 }
@@ -673,14 +661,10 @@ static int wm2000_speaker_put(struct snd_kcontrol *kcontrol,
 	struct snd_soc_codec *codec = snd_kcontrol_chip(kcontrol);
 	struct wm2000_priv *wm2000 = dev_get_drvdata(codec->dev);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int val = ucontrol->value.integer.value[0];
 =======
 	int val = ucontrol->value.enumerated.item[0];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int val = ucontrol->value.enumerated.item[0];
->>>>>>> master
 	int ret;
 
 	if (val > 1)

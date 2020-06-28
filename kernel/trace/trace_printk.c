@@ -39,15 +39,12 @@ static inline struct trace_bprintk_fmt *lookup_format(const char *fmt)
 {
 	struct trace_bprintk_fmt *pos;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	if (!fmt)
 		return ERR_PTR(-EINVAL);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	list_for_each_entry(pos, &trace_bprintk_fmt_list, list) {
 		if (!strcmp(pos->fmt, fmt))
 			return pos;
@@ -70,15 +67,11 @@ void hold_module_trace_bprintk_format(const char **start, const char **end)
 		struct trace_bprintk_fmt *tb_fmt = lookup_format(*iter);
 		if (tb_fmt) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (!IS_ERR(tb_fmt))
 				*iter = tb_fmt->fmt;
 =======
 			*iter = tb_fmt->fmt;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			*iter = tb_fmt->fmt;
->>>>>>> master
 			continue;
 		}
 
@@ -292,14 +285,11 @@ static int t_show(struct seq_file *m, void *v)
 	int i;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!*fmt)
 		return 0;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	seq_printf(m, "0x%lx : \"", *(unsigned long *)fmt);
 
 	/*

@@ -3512,14 +3512,10 @@ static int init_card(struct atm_dev *dev)
 	if (tmp) {
 		memcpy(card->atmdev->esi, tmp->dev_addr, 6);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		dev_put(tmp);
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 		printk("%s: ESI %pM\n", card->name, card->atmdev->esi);
 	}
 	/*

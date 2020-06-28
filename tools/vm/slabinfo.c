@@ -494,23 +494,17 @@ static void slab_stats(struct slabinfo *s)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (s->cmpxchg_double_fail || s->cmpxchg_double_cpu_fail) {
 		printf("\nCmpxchg_double Looping\n------------------------\n");
 		printf("Locked Cmpxchg Double redos   %lu\nUnlocked Cmpxchg Double redos %lu\n",
 			s->cmpxchg_double_fail, s->cmpxchg_double_cpu_fail);
 	}
 =======
-=======
->>>>>>> master
 	if (s->cmpxchg_double_fail || s->cmpxchg_double_cpu_fail)
 		printf("\nCmpxchg_double Looping\n------------------------\n");
 		printf("Locked Cmpxchg Double redos   %lu\nUnlocked Cmpxchg Double redos %lu\n",
 			s->cmpxchg_double_fail, s->cmpxchg_double_cpu_fail);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static void report(struct slabinfo *s)

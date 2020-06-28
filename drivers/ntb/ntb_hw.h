@@ -128,13 +128,10 @@ struct ntb_device {
 	struct delayed_work hb_timer;
 	unsigned long last_ts;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	struct dentry *debugfs_dir;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 /**
@@ -164,7 +161,6 @@ static inline struct pci_dev *ntb_query_pdev(struct ntb_device *ndev)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /**
  * ntb_query_debugfs() - return the debugfs pointer
  * @ndev: pointer to ntb_device instance
@@ -181,8 +177,6 @@ static inline struct dentry *ntb_query_debugfs(struct ntb_device *ndev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 struct ntb_device *ntb_register_transport(struct pci_dev *pdev,
 					  void *transport);
 void ntb_unregister_transport(struct ntb_device *ndev);

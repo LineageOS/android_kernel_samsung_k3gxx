@@ -30,16 +30,12 @@
 #include <drm/ttm/ttm_bo_driver.h>
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define VMW_PPN_SIZE (sizeof(unsigned long))
 /* A future safe maximum remap size. */
 #define VMW_PPN_PER_REMAP ((31 * 1024) / VMW_PPN_SIZE)
 =======
 #define VMW_PPN_SIZE sizeof(unsigned long)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define VMW_PPN_SIZE sizeof(unsigned long)
->>>>>>> master
 
 static int vmw_gmr2_bind(struct vmw_private *dev_priv,
 			 struct page *pages[],
@@ -48,7 +44,6 @@ static int vmw_gmr2_bind(struct vmw_private *dev_priv,
 {
 	SVGAFifoCmdDefineGMR2 define_cmd;
 	SVGAFifoCmdRemapGMR2 remap_cmd;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	uint32_t *cmd;
 	uint32_t *cmd_orig;
@@ -61,8 +56,6 @@ static int vmw_gmr2_bind(struct vmw_private *dev_priv,
 
 	cmd_orig = cmd = vmw_fifo_reserve(dev_priv, cmd_size);
 =======
-=======
->>>>>>> master
 	uint32_t define_size = sizeof(define_cmd) + 4;
 	uint32_t remap_size = VMW_PPN_SIZE * num_pages + sizeof(remap_cmd) + 4;
 	uint32_t *cmd;
@@ -70,17 +63,13 @@ static int vmw_gmr2_bind(struct vmw_private *dev_priv,
 	uint32_t i;
 
 	cmd_orig = cmd = vmw_fifo_reserve(dev_priv, define_size + remap_size);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (unlikely(cmd == NULL))
 		return -ENOMEM;
 
 	define_cmd.gmrId = gmr_id;
 	define_cmd.numPages = num_pages;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	*cmd++ = SVGA_CMD_DEFINE_GMR2;
 	memcpy(cmd, &define_cmd, sizeof(define_cmd));
@@ -122,8 +111,6 @@ static int vmw_gmr2_bind(struct vmw_private *dev_priv,
 
 	vmw_fifo_commit(dev_priv, cmd_size);
 =======
-=======
->>>>>>> master
 	remap_cmd.gmrId = gmr_id;
 	remap_cmd.flags = (VMW_PPN_SIZE > sizeof(*cmd)) ?
 		SVGA_REMAP_GMR2_PPN64 : SVGA_REMAP_GMR2_PPN32;
@@ -148,10 +135,7 @@ static int vmw_gmr2_bind(struct vmw_private *dev_priv,
 	}
 
 	vmw_fifo_commit(dev_priv, define_size + remap_size);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	return 0;
 }

@@ -406,12 +406,9 @@ int mei_cl_disconnect(struct mei_cl *cl)
 			goto free;
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 		cl->timer_count = MEI_CONNECT_TIMEOUT;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		mdelay(10); /* Wait for hardware disconnection ready */
 		list_add_tail(&cb->list, &dev->ctrl_rd_list.list);
 	} else {
@@ -519,12 +516,9 @@ int mei_cl_connect(struct mei_cl *cl, struct file *file)
 		list_add_tail(&cb->list, &dev->ctrl_rd_list.list);
 	} else {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		cl->state = MEI_FILE_INITIALIZING;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		list_add_tail(&cb->list, &dev->ctrl_wr_list.list);
 	}
 
@@ -679,13 +673,9 @@ int mei_cl_read_start(struct mei_cl *cl, size_t length)
 
 	cb->fop_type = MEI_FOP_READ;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	cl->read_cb = cb;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	cl->read_cb = cb;
->>>>>>> master
 	if (dev->hbuf_is_ready) {
 		dev->hbuf_is_ready = false;
 		if (mei_hbm_cl_flow_control_req(dev, cl)) {
@@ -697,14 +687,11 @@ int mei_cl_read_start(struct mei_cl *cl, size_t length)
 		list_add_tail(&cb->list, &dev->ctrl_wr_list.list);
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	cl->read_cb = cb;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return rets;
 err:
 	mei_io_cb_free(cb);
@@ -830,13 +817,9 @@ void mei_cl_all_disconnect(struct mei_device *dev)
 		cl->state = MEI_FILE_DISCONNECTED;
 		cl->mei_flow_ctrl_creds = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		cl->read_cb = NULL;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		cl->read_cb = NULL;
->>>>>>> master
 		cl->timer_count = 0;
 	}
 }
@@ -867,7 +850,6 @@ void mei_cl_all_write_clear(struct mei_device *dev)
 {
 	struct mei_cl_cb *cb, *next;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct list_head *list;
 
 	list = &dev->write_list.list;
@@ -882,10 +864,6 @@ void mei_cl_all_write_clear(struct mei_device *dev)
 
 	list_for_each_entry_safe(cb, next, &dev->write_list.list, list) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-	list_for_each_entry_safe(cb, next, &dev->write_list.list, list) {
->>>>>>> master
 		list_del(&cb->list);
 		mei_io_cb_free(cb);
 	}

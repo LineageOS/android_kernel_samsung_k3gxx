@@ -25,7 +25,6 @@
 #define debug_rt_mutex_detect_deadlock(w,d)		(d)
 #define debug_rt_mutex_reset_waiter(w)			do { } while (0)
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 static inline void rt_mutex_print_deadlock(struct rt_mutex_waiter *w)
 {
@@ -33,5 +32,3 @@ static inline void rt_mutex_print_deadlock(struct rt_mutex_waiter *w)
 }
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master

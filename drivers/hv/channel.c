@@ -115,14 +115,10 @@ int vmbus_open(struct vmbus_channel *newchannel, u32 send_ringbuffer_size,
 	void *in, *out;
 	unsigned long flags;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int ret, err = 0;
 =======
 	int ret, t, err = 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int ret, t, err = 0;
->>>>>>> master
 
 	newchannel->onchannel_callback = onchannelcallback;
 	newchannel->channel_callback_context = context;
@@ -178,14 +174,10 @@ int vmbus_open(struct vmbus_channel *newchannel, u32 send_ringbuffer_size,
 	if (!open_info) {
 		err = -ENOMEM;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto error_gpadl;
 =======
 		goto error0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto error0;
->>>>>>> master
 	}
 
 	init_completion(&open_info->waitevent);
@@ -202,14 +194,10 @@ int vmbus_open(struct vmbus_channel *newchannel, u32 send_ringbuffer_size,
 	if (userdatalen > MAX_USER_DEFINED_BYTES) {
 		err = -EINVAL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto error_gpadl;
 =======
 		goto error0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto error0;
->>>>>>> master
 	}
 
 	if (userdatalen)
@@ -224,7 +212,6 @@ int vmbus_open(struct vmbus_channel *newchannel, u32 send_ringbuffer_size,
 			       sizeof(struct vmbus_channel_open_channel));
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ret != 0) {
 		err = ret;
 		goto error1;
@@ -232,8 +219,6 @@ int vmbus_open(struct vmbus_channel *newchannel, u32 send_ringbuffer_size,
 
 	wait_for_completion(&open_info->waitevent);
 =======
-=======
->>>>>>> master
 	if (ret != 0)
 		goto error1;
 
@@ -242,10 +227,7 @@ int vmbus_open(struct vmbus_channel *newchannel, u32 send_ringbuffer_size,
 		err = -ETIMEDOUT;
 		goto error1;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 
 	if (open_info->response.open_result.status)
@@ -264,14 +246,11 @@ error1:
 	spin_unlock_irqrestore(&vmbus_connection.channelmsg_lock, flags);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 error_gpadl:
 	vmbus_teardown_gpadl(newchannel, newchannel->ringbuffer_gpadlhandle);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 error0:
 	free_pages((unsigned long)out,
 		get_order(send_ringbuffer_size + recv_ringbuffer_size));
@@ -435,27 +414,19 @@ int vmbus_establish_gpadl(struct vmbus_channel *channel, void *kbuffer,
 	struct vmbus_channel_gpadl_body *gpadl_body;
 	struct vmbus_channel_msginfo *msginfo = NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct vmbus_channel_msginfo *submsginfo, *tmp;
 =======
 	struct vmbus_channel_msginfo *submsginfo;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct vmbus_channel_msginfo *submsginfo;
->>>>>>> master
 	u32 msgcount;
 	struct list_head *curr;
 	u32 next_gpadl_handle;
 	unsigned long flags;
 	int ret = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	int t;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int t;
->>>>>>> master
 
 	next_gpadl_handle = atomic_read(&vmbus_connection.next_gpadl_handle);
 	atomic_inc(&vmbus_connection.next_gpadl_handle);
@@ -503,18 +474,12 @@ int vmbus_establish_gpadl(struct vmbus_channel *channel, void *kbuffer,
 		}
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	wait_for_completion(&msginfo->waitevent);
 =======
 	t = wait_for_completion_timeout(&msginfo->waitevent, 5*HZ);
 	BUG_ON(t == 0);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	t = wait_for_completion_timeout(&msginfo->waitevent, 5*HZ);
-	BUG_ON(t == 0);
-
->>>>>>> master
 
 	/* At this point, we received the gpadl created msg */
 	*gpadl_handle = gpadlmsg->gpadl;
@@ -525,7 +490,6 @@ cleanup:
 	spin_unlock_irqrestore(&vmbus_connection.channelmsg_lock, flags);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (msgcount > 1) {
 		list_for_each_entry_safe(submsginfo, tmp, &msginfo->submsglist,
 			 msglistentry) {
@@ -535,8 +499,6 @@ cleanup:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	kfree(msginfo);
 	return ret;
 }
@@ -551,14 +513,10 @@ int vmbus_teardown_gpadl(struct vmbus_channel *channel, u32 gpadl_handle)
 	struct vmbus_channel_msginfo *info;
 	unsigned long flags;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int ret;
 =======
 	int ret, t;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int ret, t;
->>>>>>> master
 
 	info = kmalloc(sizeof(*info) +
 		       sizeof(struct vmbus_channel_gpadl_teardown), GFP_KERNEL);
@@ -581,7 +539,6 @@ int vmbus_teardown_gpadl(struct vmbus_channel *channel, u32 gpadl_handle)
 			       sizeof(struct vmbus_channel_gpadl_teardown));
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ret)
 		goto post_msg_err;
 
@@ -589,17 +546,12 @@ int vmbus_teardown_gpadl(struct vmbus_channel *channel, u32 gpadl_handle)
 
 post_msg_err:
 =======
-=======
->>>>>>> master
 	BUG_ON(ret != 0);
 	t = wait_for_completion_timeout(&info->waitevent, 5*HZ);
 	BUG_ON(t == 0);
 
 	/* Received a torndown response */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	spin_lock_irqsave(&vmbus_connection.channelmsg_lock, flags);
 	list_del(&info->msglistentry);
 	spin_unlock_irqrestore(&vmbus_connection.channelmsg_lock, flags);

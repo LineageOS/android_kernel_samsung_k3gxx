@@ -1054,12 +1054,9 @@ struct snd_soc_card {
 	struct snd_soc_dapm_context dapm;
 	struct snd_soc_dapm_stats dapm_stats;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct snd_soc_dapm_update *update;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 #ifdef CONFIG_DEBUG_FS
 	struct dentry *debugfs_card_root;

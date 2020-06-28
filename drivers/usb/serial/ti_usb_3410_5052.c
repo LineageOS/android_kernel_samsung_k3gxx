@@ -159,14 +159,10 @@ static unsigned int product_5052_count;
 /* TI_EXTRA_VID_PID_COUNT user defined entries plus 1 terminating */
 /* null entry */
 <<<<<<< HEAD
-<<<<<<< HEAD
 static struct usb_device_id ti_id_table_3410[16+TI_EXTRA_VID_PID_COUNT+1] = {
 =======
 static struct usb_device_id ti_id_table_3410[15+TI_EXTRA_VID_PID_COUNT+1] = {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static struct usb_device_id ti_id_table_3410[15+TI_EXTRA_VID_PID_COUNT+1] = {
->>>>>>> master
 	{ USB_DEVICE(TI_VENDOR_ID, TI_3410_PRODUCT_ID) },
 	{ USB_DEVICE(TI_VENDOR_ID, TI_3410_EZ430_ID) },
 	{ USB_DEVICE(MTS_VENDOR_ID, MTS_GSM_NO_FW_PRODUCT_ID) },
@@ -193,14 +189,10 @@ static struct usb_device_id ti_id_table_5052[5+TI_EXTRA_VID_PID_COUNT+1] = {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static struct usb_device_id ti_id_table_combined[20+2*TI_EXTRA_VID_PID_COUNT+1] = {
 =======
 static struct usb_device_id ti_id_table_combined[19+2*TI_EXTRA_VID_PID_COUNT+1] = {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static struct usb_device_id ti_id_table_combined[19+2*TI_EXTRA_VID_PID_COUNT+1] = {
->>>>>>> master
 	{ USB_DEVICE(TI_VENDOR_ID, TI_3410_PRODUCT_ID) },
 	{ USB_DEVICE(TI_VENDOR_ID, TI_3410_EZ430_ID) },
 	{ USB_DEVICE(MTS_VENDOR_ID, MTS_GSM_NO_FW_PRODUCT_ID) },
@@ -220,12 +212,9 @@ static struct usb_device_id ti_id_table_combined[19+2*TI_EXTRA_VID_PID_COUNT+1] 
 	{ USB_DEVICE(IBM_VENDOR_ID, IBM_454C_PRODUCT_ID) },
 	{ USB_DEVICE(ABBOTT_VENDOR_ID, ABBOTT_PRODUCT_ID) },
 <<<<<<< HEAD
-<<<<<<< HEAD
 	{ USB_DEVICE(ABBOTT_VENDOR_ID, ABBOTT_STRIP_PORT_ID) },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	{ USB_DEVICE(TI_VENDOR_ID, FRI2_PRODUCT_ID) },
 	{ }
 };
@@ -424,7 +413,6 @@ static int ti_startup(struct usb_serial *serial)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (serial->num_bulk_in < serial->num_ports ||
 			serial->num_bulk_out < serial->num_ports) {
 		dev_err(&serial->interface->dev, "missing endpoints\n");
@@ -434,8 +422,6 @@ static int ti_startup(struct usb_serial *serial)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 
 free_tdev:

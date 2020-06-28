@@ -203,14 +203,11 @@ static bool ieee80211_prep_hw_scan(struct ieee80211_local *local)
 	int i, ielen, n_chans;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (test_bit(SCAN_HW_CANCELLED, &local->scanning))
 		return false;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	do {
 		if (local->hw_scan_band == IEEE80211_NUM_BANDS)
 			return false;
@@ -888,7 +885,6 @@ void ieee80211_scan_cancel(struct ieee80211_local *local)
 		goto out;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * We have a scan running and the driver already reported completion,
 	 * but the worker hasn't run yet or is stuck on the mutex - mark it as
@@ -909,9 +905,6 @@ void ieee80211_scan_cancel(struct ieee80211_local *local)
 =======
 	if (test_bit(SCAN_HW_SCANNING, &local->scanning)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (test_bit(SCAN_HW_SCANNING, &local->scanning)) {
->>>>>>> master
 		if (local->ops->cancel_hw_scan)
 			drv_cancel_hw_scan(local,
 				rcu_dereference_protected(local->scan_sdata,

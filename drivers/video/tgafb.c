@@ -189,13 +189,10 @@ tgafb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
 	if (var->xres_virtual != var->xres || var->yres_virtual != var->yres)
 		return -EINVAL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (var->xres * var->yres * (var->bits_per_pixel >> 3) > info->fix.smem_len)
 		return -EINVAL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (var->nonstd)
 		return -EINVAL;
 	if (1000000000 / var->pixclock > TGA_PLL_MAX_FREQ)
@@ -277,12 +274,9 @@ tgafb_set_par(struct fb_info *info)
 	par->pll_freq = pll_freq = 1000000000 / info->var.pixclock;
 	par->bits_per_pixel = info->var.bits_per_pixel;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	info->fix.line_length = par->xres * (par->bits_per_pixel >> 3);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	tga_type = par->tga_type;
 
@@ -1158,7 +1152,6 @@ copyarea_line_32bpp(struct fb_info *info, u32 dy, u32 sy,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* The (almost) general case of backward copy in 8bpp mode.  */
 static inline void
 copyarea_8bpp(struct fb_info *info, u32 dx, u32 dy, u32 sx, u32 sy,
@@ -1180,8 +1173,6 @@ copyarea_8bpp(struct fb_info *info, u32 dx, u32 dy, u32 sx, u32 sy,
 	}
 
 =======
-=======
->>>>>>> master
 /* The general case of forward copy in 8bpp mode.  */
 static inline void
 copyarea_foreward_8bpp(struct fb_info *info, u32 dx, u32 dy, u32 sx, u32 sy,
@@ -1357,17 +1348,13 @@ copyarea_backward_8bpp(struct fb_info *info, u32 dx, u32 dy, u32 sx, u32 sy,
 	void __iomem *tga_regs;
 	void __iomem *tga_fb;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	yincr = line_length;
 	if (dy > sy) {
 		dy += height - 1;
 		sy += height - 1;
 		yincr = -yincr;
 	}
-<<<<<<< HEAD
 <<<<<<< HEAD
 	backward = dy == sy && dx > sx && dx < sx + width;
 
@@ -1395,8 +1382,6 @@ copyarea_backward_8bpp(struct fb_info *info, u32 dx, u32 dy, u32 sx, u32 sy,
 		depos -= 32;
 	}
 =======
-=======
->>>>>>> master
 
 	/* Compute the offsets and alignments in the frame buffer.
 	   More than anything else, these control how we do copies.  */
@@ -1432,10 +1417,7 @@ copyarea_backward_8bpp(struct fb_info *info, u32 dx, u32 dy, u32 sx, u32 sy,
 
 	/* Finally copy the unaligned head of the span.  */
 	mask_last = -1 << (32 - left);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	tga_regs = par->tga_regs_base;
 	tga_fb = par->tga_fb_base;
@@ -1452,7 +1434,6 @@ copyarea_backward_8bpp(struct fb_info *info, u32 dx, u32 dy, u32 sx, u32 sy,
 
 		sfb = tga_fb + sepos;
 		dfb = tga_fb + depos;
-<<<<<<< HEAD
 <<<<<<< HEAD
 
 		for (j = 0; j < n32; j++) {
@@ -1471,8 +1452,6 @@ copyarea_backward_8bpp(struct fb_info *info, u32 dx, u32 dy, u32 sx, u32 sy,
 				continue;
 			}
 =======
-=======
->>>>>>> master
 		if (mask_first) {
 			__raw_writel(mask_first, sfb);
 			wmb();
@@ -1483,15 +1462,11 @@ copyarea_backward_8bpp(struct fb_info *info, u32 dx, u32 dy, u32 sx, u32 sy,
 		for (j = 0; j < n32; ++j) {
 			sfb -= 32;
 			dfb -= 32;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			__raw_writel(0xffffffff, sfb);
 			wmb();
 			__raw_writel(0xffffffff, dfb);
 			wmb();
-<<<<<<< HEAD
 <<<<<<< HEAD
 			sfb += step;
 			dfb += step;
@@ -1501,17 +1476,12 @@ copyarea_backward_8bpp(struct fb_info *info, u32 dx, u32 dy, u32 sx, u32 sy,
 			sfb += last_step - step;
 			dfb += last_step - step;
 =======
-=======
->>>>>>> master
 		}
 
 		if (mask_last) {
 			sfb -= 32;
 			dfb -= 32;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			__raw_writel(mask_last, sfb);
 			wmb();
 			__raw_writel(mask_last, dfb);
@@ -1573,13 +1543,10 @@ tgafb_copyarea(struct fb_info *info, const struct fb_copyarea *area)
 		cfb_copyarea(info, area);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	else
 		copyarea_8bpp(info, dx, dy, sx, sy, height,
 			      width, line_length, area);
 =======
-=======
->>>>>>> master
 	/* Detect overlapping source and destination that requires
 	   a backward copy.  */
 	else if (dy == sy && dx > sx && dx < sx + width)
@@ -1588,10 +1555,7 @@ tgafb_copyarea(struct fb_info *info, const struct fb_copyarea *area)
 	else
 		copyarea_foreward_8bpp(info, dx, dy, sx, sy, height,
 				       width, line_length);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 
@@ -1608,12 +1572,9 @@ tgafb_init_fix(struct fb_info *info)
 	u8 tga_type = par->tga_type;
 	const char *tga_type_name = NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned memory_size;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	switch (tga_type) {
 	case TGA_TYPE_8PLANE:
@@ -1622,12 +1583,9 @@ tgafb_init_fix(struct fb_info *info)
 		if (tga_bus_tc)
 			tga_type_name = "Digital ZLX-E1";
 <<<<<<< HEAD
-<<<<<<< HEAD
 		memory_size = 2097152;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		break;
 	case TGA_TYPE_24PLANE:
 		if (tga_bus_pci)
@@ -1635,12 +1593,9 @@ tgafb_init_fix(struct fb_info *info)
 		if (tga_bus_tc)
 			tga_type_name = "Digital ZLX-E2";
 <<<<<<< HEAD
-<<<<<<< HEAD
 		memory_size = 8388608;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		break;
 	case TGA_TYPE_24PLUSZ:
 		if (tga_bus_pci)
@@ -1648,7 +1603,6 @@ tgafb_init_fix(struct fb_info *info)
 		if (tga_bus_tc)
 			tga_type_name = "Digital ZLX-E3";
 <<<<<<< HEAD
-<<<<<<< HEAD
 		memory_size = 16777216;
 		break;
 	default:
@@ -1659,11 +1613,6 @@ tgafb_init_fix(struct fb_info *info)
 	default:
 		tga_type_name = "Unknown";
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		break;
-	default:
-		tga_type_name = "Unknown";
->>>>>>> master
 		break;
 	}
 
@@ -1676,7 +1625,6 @@ tgafb_init_fix(struct fb_info *info)
 			    : FB_VISUAL_DIRECTCOLOR);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	info->fix.smem_start = (size_t) par->tga_fb_base;
 	info->fix.smem_len = memory_size;
 =======
@@ -1684,11 +1632,6 @@ tgafb_init_fix(struct fb_info *info)
 	info->fix.smem_start = (size_t) par->tga_fb_base;
 	info->fix.smem_len = info->fix.line_length * par->yres;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	info->fix.line_length = par->xres * (par->bits_per_pixel >> 3);
-	info->fix.smem_start = (size_t) par->tga_fb_base;
-	info->fix.smem_len = info->fix.line_length * par->yres;
->>>>>>> master
 	info->fix.mmio_start = (size_t) par->tga_regs_base;
 	info->fix.mmio_len = 512;
 
@@ -1813,14 +1756,11 @@ static int tgafb_register(struct device *dev)
 		modedbsize_tga = 1;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	tgafb_init_fix(info);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ret = fb_find_mode(&info->var, info,
 			   mode_option ? mode_option : mode_option_tga,
 			   modedb_tga, modedbsize_tga, NULL,
@@ -1839,13 +1779,9 @@ static int tgafb_register(struct device *dev)
 
 	tgafb_set_par(info);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	tgafb_init_fix(info);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	tgafb_init_fix(info);
->>>>>>> master
 
 	if (register_framebuffer(info) < 0) {
 		printk(KERN_ERR "tgafb: Could not register framebuffer\n");

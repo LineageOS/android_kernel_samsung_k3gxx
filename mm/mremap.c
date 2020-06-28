@@ -176,7 +176,6 @@ unsigned long move_page_tables(struct vm_area_struct *vma,
 		if (pmd_trans_huge(*old_pmd)) {
 			int err = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (extent == HPAGE_PMD_SIZE) {
 				VM_BUG_ON(vma->vm_file || !vma->anon_vma);
 				/* See comment in move_ptes() */
@@ -189,16 +188,11 @@ unsigned long move_page_tables(struct vm_area_struct *vma,
 					anon_vma_unlock_write(vma->anon_vma);
 			}
 =======
-=======
->>>>>>> master
 			if (extent == HPAGE_PMD_SIZE)
 				err = move_huge_pmd(vma, new_vma, old_addr,
 						    new_addr, old_end,
 						    old_pmd, new_pmd);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			if (err > 0) {
 				need_flush = true;
 				continue;

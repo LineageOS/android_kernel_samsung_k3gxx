@@ -242,13 +242,10 @@ struct iwl_eeprom_params {
  * @internal_wimax_coex: internal wifi/wimax combo device
  * @temp_offset_v2: support v2 of temperature offset calibration
 <<<<<<< HEAD
-<<<<<<< HEAD
  * @host_interrupt_operation_mode: device needs host interrupt operation
  *	mode set
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  *
  * We enable the driver to be backward compatible wrt. hardware features.
  * API differences in uCode shouldn't be handled here but through TLVs
@@ -282,12 +279,9 @@ struct iwl_cfg {
 	const bool internal_wimax_coex;
 	const bool temp_offset_v2;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	const bool host_interrupt_operation_mode;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 /*
@@ -332,17 +326,13 @@ extern const struct iwl_cfg iwl2000_2bgn_d_cfg;
 extern const struct iwl_cfg iwl2030_2bgn_cfg;
 extern const struct iwl_cfg iwl6035_2agn_cfg;
 <<<<<<< HEAD
-<<<<<<< HEAD
 extern const struct iwl_cfg iwl6035_2agn_sff_cfg;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 extern const struct iwl_cfg iwl105_bgn_cfg;
 extern const struct iwl_cfg iwl105_bgn_d_cfg;
 extern const struct iwl_cfg iwl135_bgn_cfg;
 extern const struct iwl_cfg iwl7260_2ac_cfg;
-<<<<<<< HEAD
 <<<<<<< HEAD
 extern const struct iwl_cfg iwl7260_2n_cfg;
 extern const struct iwl_cfg iwl7260_n_cfg;
@@ -352,8 +342,5 @@ extern const struct iwl_cfg iwl3160_n_cfg;
 =======
 extern const struct iwl_cfg iwl3160_ac_cfg;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-extern const struct iwl_cfg iwl3160_ac_cfg;
->>>>>>> master
 
 #endif /* __IWL_CONFIG_H__ */

@@ -42,7 +42,6 @@ __releases(ohci->lock)
 __acquires(ohci->lock)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct usb_host_endpoint *ep = urb->ep;
 	struct urb_priv *urb_priv;
 
@@ -53,10 +52,6 @@ __acquires(ohci->lock)
 	// ASSERT (urb->hcpriv != 0);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	// ASSERT (urb->hcpriv != 0);
-
->>>>>>> master
 	urb_free_priv (ohci, urb->hcpriv);
 	urb->hcpriv = NULL;
 	if (likely(status == -EINPROGRESS))
@@ -94,7 +89,6 @@ __acquires(ohci->lock)
 		ohci_writel (ohci, ohci->hc_control, &ohci->regs->control);
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	/*
 	 * An isochronous URB that is sumitted too late won't have any TDs
@@ -112,8 +106,6 @@ __acquires(ohci->lock)
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 
@@ -331,16 +323,11 @@ static void periodic_unlink (struct ohci_hcd *ohci, struct ed *ed)
  *    immediately.  HC should be working on them.
  *
 <<<<<<< HEAD
-<<<<<<< HEAD
  *  - ED_IDLE: when there's no TD queue or the HC isn't running.
 =======
  *  - ED_IDLE:  when there's no TD queue. there's no reason for the HC
  *    to care about this ED; safe to disable the endpoint.
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- *  - ED_IDLE:  when there's no TD queue. there's no reason for the HC
- *    to care about this ED; safe to disable the endpoint.
->>>>>>> master
  *
  * When finish_unlinks() runs later, after SOF interrupt, it will often
  * complete one or more URB unlinks before making that state change.
@@ -590,13 +577,9 @@ td_fill (struct ohci_hcd *ohci, u32 info,
 		*ohci_hwPSWp(ohci, td, 0) = cpu_to_hc16 (ohci,
 						(data & 0x0FFF) | 0xE000);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		td->ed->last_iso = info & 0xffff;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		td->ed->last_iso = info & 0xffff;
->>>>>>> master
 	} else {
 		td->hwCBP = cpu_to_hc32 (ohci, data);
 	}
@@ -991,7 +974,6 @@ skip_ed:
 		}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* ED's now officially unlinked, hc doesn't see */
 		if (quirk_zfmicro(ohci) && ed->type == PIPE_INTERRUPT)
 			ohci->eds_scheduled--;
@@ -1002,22 +984,15 @@ skip_ed:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		/* reentrancy:  if we drop the schedule lock, someone might
 		 * have modified this list.  normally it's just prepending
 		 * entries (which we'd ignore), but paranoia won't hurt.
 		 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		*last = ed->ed_next;
 		ed->ed_next = NULL;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		*last = ed->ed_next;
-		ed->ed_next = NULL;
->>>>>>> master
 		modified = 0;
 
 		/* unlink urbs as requested, but rescan the list after
@@ -1068,14 +1043,10 @@ rescan_this:
 
 			/* if URB is done, clean up */
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (urb_priv->td_cnt >= urb_priv->length) {
 =======
 			if (urb_priv->td_cnt == urb_priv->length) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			if (urb_priv->td_cnt == urb_priv->length) {
->>>>>>> master
 				modified = completed = 1;
 				finish_urb(ohci, urb, 0);
 			}
@@ -1083,7 +1054,6 @@ rescan_this:
 		if (completed && !list_empty (&ed->td_list))
 			goto rescan_this;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 		/*
 		 * If no TDs are queued, take ED off the ed_rm_list.
@@ -1101,8 +1071,6 @@ rescan_this:
 		} else {
 			last = &ed->ed_next;
 =======
-=======
->>>>>>> master
 		/* ED's now officially unlinked, hc doesn't see */
 		ed->state = ED_IDLE;
 		if (quirk_zfmicro(ohci) && ed->type == PIPE_INTERRUPT)
@@ -1116,10 +1084,7 @@ rescan_this:
 		if (!list_empty (&ed->td_list)) {
 			if (ohci->rh_state == OHCI_RH_RUNNING)
 				ed_schedule (ohci, ed);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		}
 
 		if (modified)
@@ -1190,14 +1155,10 @@ static void takeback_td(struct ohci_hcd *ohci, struct td *td)
 
 	/* If all this urb's TDs are done, call complete() */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (urb_priv->td_cnt >= urb_priv->length)
 =======
 	if (urb_priv->td_cnt == urb_priv->length)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (urb_priv->td_cnt == urb_priv->length)
->>>>>>> master
 		finish_urb(ohci, urb, status);
 
 	/* clean schedule:  unlink EDs that are no longer busy */

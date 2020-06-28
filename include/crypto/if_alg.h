@@ -31,14 +31,11 @@ struct alg_sock {
 	struct sock *parent;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned int refcnt;
 	unsigned int nokey_refcnt;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	const struct af_alg_type *type;
 	void *private;
 };
@@ -59,7 +56,6 @@ struct af_alg_type {
 	int (*setkey)(void *private, const u8 *key, unsigned int keylen);
 	int (*accept)(void *private, struct sock *sk);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int (*accept_nokey)(void *private, struct sock *sk);
 
 	struct proto_ops *ops;
@@ -68,10 +64,6 @@ struct af_alg_type {
 
 	struct proto_ops *ops;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-	struct proto_ops *ops;
->>>>>>> master
 	struct module *owner;
 	char name[14];
 };
@@ -86,12 +78,9 @@ int af_alg_unregister_type(const struct af_alg_type *type);
 
 int af_alg_release(struct socket *sock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 void af_alg_release_parent(struct sock *sk);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 int af_alg_accept(struct sock *sk, struct socket *newsock);
 
 int af_alg_make_sg(struct af_alg_sgl *sgl, void __user *addr, int len,
@@ -109,19 +98,13 @@ static inline struct alg_sock *alg_sk(struct sock *sk)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 static inline void af_alg_release_parent(struct sock *sk)
 {
 	sock_put(alg_sk(sk)->parent);
 }
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static inline void af_alg_init_completion(struct af_alg_completion *completion)
 {
 	init_completion(&completion->completion);

@@ -553,7 +553,6 @@ int rds_ib_xmit(struct rds_connection *conn, struct rds_message *rm,
 		rds_cong_map_updated(conn->c_fcong, ~(u64) 0);
 		scat = &rm->data.op_sg[sg];
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ret = max_t(int, RDS_CONG_MAP_BYTES, scat->length);
 		return sizeof(struct rds_header) + ret;
 =======
@@ -561,11 +560,6 @@ int rds_ib_xmit(struct rds_connection *conn, struct rds_message *rm,
 		ret = min_t(int, ret, scat->length - conn->c_xmit_data_off);
 		return ret;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		ret = sizeof(struct rds_header) + RDS_CONG_MAP_BYTES;
-		ret = min_t(int, ret, scat->length - conn->c_xmit_data_off);
-		return ret;
->>>>>>> master
 	}
 
 	/* FIXME we may overallocate here */

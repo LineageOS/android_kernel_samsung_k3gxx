@@ -64,14 +64,10 @@ sbc_emulate_readcapacity(struct se_cmd *cmd)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	target_complete_cmd_with_length(cmd, GOOD, 8);
 =======
 	target_complete_cmd(cmd, GOOD);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	target_complete_cmd(cmd, GOOD);
->>>>>>> master
 	return 0;
 }
 
@@ -110,14 +106,10 @@ sbc_emulate_readcapacity_16(struct se_cmd *cmd)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	target_complete_cmd_with_length(cmd, GOOD, 32);
 =======
 	target_complete_cmd(cmd, GOOD);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	target_complete_cmd(cmd, GOOD);
->>>>>>> master
 	return 0;
 }
 
@@ -578,13 +570,10 @@ sbc_parse_cdb(struct se_cmd *cmd, struct sbc_ops *ops)
 		unsigned long long end_lba;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		end_lba = dev->transport->get_blocks(dev) + 1;
 		if (((cmd->t_task_lba + sectors) < cmd->t_task_lba) ||
 		    ((cmd->t_task_lba + sectors) > end_lba)) {
 =======
-=======
->>>>>>> master
 		if (sectors > dev->dev_attrib.fabric_max_sectors) {
 			printk_ratelimited(KERN_ERR "SCSI OP %02xh with too"
 				" big sectors %u exceeds fabric_max_sectors:"
@@ -602,10 +591,7 @@ sbc_parse_cdb(struct se_cmd *cmd, struct sbc_ops *ops)
 
 		end_lba = dev->transport->get_blocks(dev) + 1;
 		if (cmd->t_task_lba + sectors > end_lba) {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			pr_err("cmd exceeds last lba %llu "
 				"(lba %llu, sectors %u)\n",
 				end_lba, cmd->t_task_lba, sectors);

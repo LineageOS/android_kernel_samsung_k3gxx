@@ -108,7 +108,6 @@ static int try_to_freeze_tasks(bool user_only)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * Returns true if all freezable tasks (except for current) are frozen already
  */
@@ -133,8 +132,6 @@ done:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /**
  * freeze_processes - Signal user space processes to enter the refrigerator.
  *
@@ -144,12 +141,9 @@ int freeze_processes(void)
 {
 	int error;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int oom_kills_saved;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	error = __usermodehelper_disable(UMH_FREEZING);
 	if (error)
@@ -160,7 +154,6 @@ int freeze_processes(void)
 
 	printk("Freezing user space processes ... ");
 	pm_freezing = true;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	oom_kills_saved = oom_kills_count();
 	error = try_to_freeze_tasks(true);
@@ -184,18 +177,13 @@ int freeze_processes(void)
 	}
 done:
 =======
-=======
->>>>>>> master
 	error = try_to_freeze_tasks(true);
 	if (!error) {
 		printk("done.");
 		__usermodehelper_set_disable_depth(UMH_DISABLED);
 		oom_killer_disable();
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	printk("\n");
 	BUG_ON(in_atomic());
 
@@ -244,12 +232,9 @@ void thaw_processes(void)
 	printk("Restarting tasks ... ");
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	__usermodehelper_set_disable_depth(UMH_FREEZING);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	thaw_workqueues();
 
 	read_lock(&tasklist_lock);

@@ -532,15 +532,10 @@ int vcc_recvmsg(struct kiocb *iocb, struct socket *sock, struct msghdr *msg,
 	int copied, error = -EINVAL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	msg->msg_namelen = 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	msg->msg_namelen = 0;
-
->>>>>>> master
 	if (sock->state != SS_CONNECTED)
 		return -ENOTCONN;
 

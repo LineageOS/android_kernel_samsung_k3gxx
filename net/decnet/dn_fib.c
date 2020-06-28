@@ -506,14 +506,10 @@ static int dn_fib_rtm_delroute(struct sk_buff *skb, struct nlmsghdr *nlh)
 	int err;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!netlink_capable(skb, CAP_NET_ADMIN))
 =======
 	if (!capable(CAP_NET_ADMIN))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!capable(CAP_NET_ADMIN))
->>>>>>> master
 		return -EPERM;
 
 	if (!net_eq(net, &init_net))
@@ -539,14 +535,10 @@ static int dn_fib_rtm_newroute(struct sk_buff *skb, struct nlmsghdr *nlh)
 	int err;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!netlink_capable(skb, CAP_NET_ADMIN))
 =======
 	if (!capable(CAP_NET_ADMIN))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!capable(CAP_NET_ADMIN))
->>>>>>> master
 		return -EPERM;
 
 	if (!net_eq(net, &init_net))

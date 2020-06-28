@@ -44,7 +44,6 @@ static const struct usb_device_id usb_quirk_list[] = {
 	{ USB_DEVICE(0x041e, 0x3020), .driver_info = USB_QUIRK_RESET_RESUME },
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Microsoft Wireless Laser Mouse 6000 Receiver */
 	{ USB_DEVICE(0x045e, 0x00e1), .driver_info = USB_QUIRK_RESET_RESUME },
 
@@ -67,11 +66,6 @@ static const struct usb_device_id usb_quirk_list[] = {
 	{ USB_DEVICE(0x045e, 0x0770), .driver_info = USB_QUIRK_RESET_RESUME },
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	/* Microsoft LifeCam-VX700 v2.0 */
-	{ USB_DEVICE(0x045e, 0x0770), .driver_info = USB_QUIRK_RESET_RESUME },
-
->>>>>>> master
 	/* Logitech Quickcam Fusion */
 	{ USB_DEVICE(0x046d, 0x08c1), .driver_info = USB_QUIRK_RESET_RESUME },
 
@@ -97,7 +91,6 @@ static const struct usb_device_id usb_quirk_list[] = {
 	{ USB_DEVICE(0x0471, 0x0155), .driver_info = USB_QUIRK_RESET_RESUME },
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Plantronic Audio 655 DSP */
 	{ USB_DEVICE(0x047f, 0xc008), .driver_info = USB_QUIRK_RESET_RESUME },
 
@@ -106,8 +99,6 @@ static const struct usb_device_id usb_quirk_list[] = {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* Artisman Watchdog Dongle */
 	{ USB_DEVICE(0x04b4, 0x0526), .driver_info =
 			USB_QUIRK_CONFIG_INTF_STRINGS },
@@ -136,14 +127,11 @@ static const struct usb_device_id usb_quirk_list[] = {
 	{ USB_DEVICE(0x058f, 0x9254), .driver_info = USB_QUIRK_RESET_RESUME },
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* MicroTouch Systems touchscreen */
 	{ USB_DEVICE(0x0596, 0x051e), .driver_info = USB_QUIRK_RESET_RESUME },
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* appletouch */
 	{ USB_DEVICE(0x05ac, 0x021a), .driver_info = USB_QUIRK_RESET_RESUME },
 
@@ -178,14 +166,11 @@ static const struct usb_device_id usb_quirk_list[] = {
 	{ USB_DEVICE(0x0a5c, 0x2021), .driver_info = USB_QUIRK_RESET_RESUME },
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* MAYA44USB sound device */
 	{ USB_DEVICE(0x0a92, 0x0091), .driver_info = USB_QUIRK_RESET_RESUME },
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* Action Semiconductor flash disk */
 	{ USB_DEVICE(0x10d6, 0x2200), .driver_info =
 			USB_QUIRK_STRING_FETCH_255 },
@@ -230,7 +215,6 @@ static const struct usb_device_id usb_quirk_list[] = {
 		.driver_info = USB_QUIRK_HSIC_TUNE},
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* ASUS Base Station(T100) */
 	{ USB_DEVICE(0x0b05, 0x17e0), .driver_info =
 			USB_QUIRK_IGNORE_REMOTE_WAKEUP },
@@ -243,8 +227,6 @@ static const struct usb_device_id usb_quirk_list[] = {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	{ }  /* terminating entry must be last */
 };
 

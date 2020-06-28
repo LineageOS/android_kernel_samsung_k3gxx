@@ -476,12 +476,9 @@ static void sync_cmos_clock(struct work_struct *work)
 	 * This code is run on a timer.  If the clock is set, that timer
 	 * may not expire at the correct time.  Thus, we adjust...
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 * We want the clock to be within a couple of ticks from the target.
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	 */
 	if (!ntp_synced()) {
 		/*
@@ -493,14 +490,10 @@ static void sync_cmos_clock(struct work_struct *work)
 
 	getnstimeofday(&now);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (abs(now.tv_nsec - (NSEC_PER_SEC / 2)) <= tick_nsec * 5) {
 =======
 	if (abs(now.tv_nsec - (NSEC_PER_SEC / 2)) <= tick_nsec / 2) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (abs(now.tv_nsec - (NSEC_PER_SEC / 2)) <= tick_nsec / 2) {
->>>>>>> master
 		struct timespec adjust = now;
 
 		fail = -ENODEV;
@@ -532,28 +525,20 @@ static void sync_cmos_clock(struct work_struct *work)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 void ntp_notify_cmos_timer(void)
 =======
 static void notify_cmos_timer(void)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static void notify_cmos_timer(void)
->>>>>>> master
 {
 	schedule_delayed_work(&sync_cmos_work, 0);
 }
 
 #else
 <<<<<<< HEAD
-<<<<<<< HEAD
 void ntp_notify_cmos_timer(void) { }
 =======
 static inline void notify_cmos_timer(void) { }
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static inline void notify_cmos_timer(void) { }
->>>>>>> master
 #endif
 
 
@@ -662,7 +647,6 @@ int ntp_validate_timex(struct timex *txc)
 		return -EPERM;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * Check for potential multiplication overflows that can
 	 * only happen on 64-bit systems:
@@ -676,8 +660,6 @@ int ntp_validate_timex(struct timex *txc)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 }
 
@@ -736,15 +718,10 @@ int __do_adjtimex(struct timex *txc, struct timespec *ts, s32 *time_tai)
 		txc->time.tv_usec /= NSEC_PER_USEC;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	notify_cmos_timer();
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	notify_cmos_timer();
-
->>>>>>> master
 	return result;
 }
 

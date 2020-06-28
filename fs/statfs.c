@@ -95,14 +95,10 @@ retry:
 int fd_statfs(int fd, struct kstatfs *st)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct fd f = fdget_raw(fd);
 =======
 	struct fd f = fdget(fd);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct fd f = fdget(fd);
->>>>>>> master
 	int error = -EBADF;
 	if (f.file) {
 		error = vfs_statfs(&f.file->f_path, st);

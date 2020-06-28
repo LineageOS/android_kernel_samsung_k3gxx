@@ -462,19 +462,14 @@ int usb_driver_claim_interface(struct usb_driver *driver,
 				struct usb_interface *iface, void *priv)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct device *dev;
 =======
 	struct device *dev = &iface->dev;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct device *dev = &iface->dev;
->>>>>>> master
 	struct usb_device *udev;
 	int retval = 0;
 	int lpm_disable_error;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!iface)
 		return -ENODEV;
@@ -482,8 +477,6 @@ int usb_driver_claim_interface(struct usb_driver *driver,
 	dev = &iface->dev;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (dev->driver)
 		return -EBUSY;
 
@@ -972,16 +965,11 @@ EXPORT_SYMBOL_GPL(usb_deregister);
  * because it doesn't support suspend/resume.
  *
 <<<<<<< HEAD
-<<<<<<< HEAD
  * The caller must hold @intf's device's lock, but not @intf's lock.
 =======
  * The caller must hold @intf's device's lock, but not its pm_mutex
  * and not @intf->dev.sem.
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * The caller must hold @intf's device's lock, but not its pm_mutex
- * and not @intf->dev.sem.
->>>>>>> master
  */
 void usb_forced_unbind_intf(struct usb_interface *intf)
 {
@@ -994,7 +982,6 @@ void usb_forced_unbind_intf(struct usb_interface *intf)
 	intf->needs_binding = 1;
 }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 /*
  * Unbind drivers for @udev's marked interfaces.  These interfaces have
@@ -1023,30 +1010,21 @@ static void unbind_marked_interfaces(struct usb_device *udev)
  *
  * The caller must hold @intf's device's lock, but not @intf's lock.
 =======
-=======
->>>>>>> master
 /* Delayed forced unbinding of a USB interface driver and scan
  * for rebinding.
  *
  * The caller must hold @intf's device's lock, but not its pm_mutex
  * and not @intf->dev.sem.
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  *
  * Note: Rebinds will be skipped if a system sleep transition is in
  * progress and the PM "complete" callback hasn't occurred yet.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void usb_rebind_intf(struct usb_interface *intf)
 =======
 void usb_rebind_intf(struct usb_interface *intf)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-void usb_rebind_intf(struct usb_interface *intf)
->>>>>>> master
 {
 	int rc;
 
@@ -1064,7 +1042,6 @@ void usb_rebind_intf(struct usb_interface *intf)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * Rebind drivers to @udev's marked interfaces.  These interfaces have
  * the needs_binding flag set.
@@ -1073,8 +1050,6 @@ void usb_rebind_intf(struct usb_interface *intf)
  */
 static void rebind_marked_interfaces(struct usb_device *udev)
 =======
-=======
->>>>>>> master
 #ifdef CONFIG_PM
 
 /* Unbind drivers for @udev's interfaces that don't support suspend/resume
@@ -1084,49 +1059,35 @@ static void rebind_marked_interfaces(struct usb_device *udev)
  * The caller must hold @udev's device lock.
  */
 static void unbind_no_pm_drivers_interfaces(struct usb_device *udev)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 {
 	struct usb_host_config	*config;
 	int			i;
 	struct usb_interface	*intf;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	struct usb_driver	*drv;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct usb_driver	*drv;
->>>>>>> master
 
 	config = udev->actconfig;
 	if (config) {
 		for (i = 0; i < config->desc.bNumInterfaces; ++i) {
 			intf = config->interface[i];
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (intf->needs_binding)
 				usb_rebind_intf(intf);
 =======
-=======
->>>>>>> master
 
 			if (intf->dev.driver) {
 				drv = to_usb_driver(intf->dev.driver);
 				if (!drv->suspend || !drv->resume)
 					usb_forced_unbind_intf(intf);
 			}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		}
 	}
 }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 /*
  * Unbind all of @udev's marked interfaces and then rebind all of them.
@@ -1151,8 +1112,6 @@ void usb_unbind_and_rebind_marked_interfaces(struct usb_device *udev)
  */
 static void unbind_no_pm_drivers_interfaces(struct usb_device *udev)
 =======
-=======
->>>>>>> master
 /* Unbind drivers for @udev's interfaces that failed to support reset-resume.
  * These interfaces have the needs_binding flag set by usb_resume_interface().
  *
@@ -1175,27 +1134,20 @@ static void unbind_no_reset_resume_drivers_interfaces(struct usb_device *udev)
 }
 
 static void do_rebind_interfaces(struct usb_device *udev)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 {
 	struct usb_host_config	*config;
 	int			i;
 	struct usb_interface	*intf;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct usb_driver	*drv;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	config = udev->actconfig;
 	if (config) {
 		for (i = 0; i < config->desc.bNumInterfaces; ++i) {
 			intf = config->interface[i];
-<<<<<<< HEAD
 <<<<<<< HEAD
 
 			if (intf->dev.driver) {
@@ -1207,10 +1159,6 @@ static void do_rebind_interfaces(struct usb_device *udev)
 			if (intf->needs_binding)
 				usb_rebind_intf(intf);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			if (intf->needs_binding)
-				usb_rebind_intf(intf);
->>>>>>> master
 		}
 	}
 }
@@ -1539,14 +1487,10 @@ int usb_resume_complete(struct device *dev)
 	 */
 	if (udev->state != USB_STATE_NOTATTACHED)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		rebind_marked_interfaces(udev);
 =======
 		do_rebind_interfaces(udev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		do_rebind_interfaces(udev);
->>>>>>> master
 	return 0;
 }
 
@@ -1569,14 +1513,10 @@ int usb_resume(struct device *dev, pm_message_t msg)
 		pm_runtime_set_active(dev);
 		pm_runtime_enable(dev);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		unbind_marked_interfaces(udev);
 =======
 		unbind_no_reset_resume_drivers_interfaces(udev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		unbind_no_reset_resume_drivers_interfaces(udev);
->>>>>>> master
 	}
 
 	/* Avoid PM error messages for devices disconnected while suspended
@@ -1912,7 +1852,6 @@ int usb_runtime_suspend(struct device *dev)
 		usb_mark_last_busy(udev);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * The PM core reacts badly unless the return code is 0,
 	 * -EAGAIN, or -EBUSY, so always return -EBUSY on an error
@@ -1921,16 +1860,11 @@ int usb_runtime_suspend(struct device *dev)
 	 */
 	if (status != 0 && udev->parent)
 =======
-=======
->>>>>>> master
 	/* The PM core reacts badly unless the return code is 0,
 	 * -EAGAIN, or -EBUSY, so always return -EBUSY on an error.
 	 */
 	if (status != 0)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		return -EBUSY;
 
 	return status;

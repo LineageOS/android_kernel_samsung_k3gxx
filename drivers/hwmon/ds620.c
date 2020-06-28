@@ -167,14 +167,10 @@ static ssize_t set_temp(struct device *dev, struct device_attribute *da,
 		return res;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	val = (clamp_val(val, -128000, 128000) * 10 / 625) * 8;
 =======
 	val = (val * 10 / 625) * 8;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	val = (val * 10 / 625) * 8;
->>>>>>> master
 
 	mutex_lock(&data->update_lock);
 	data->temp[attr->index] = val;

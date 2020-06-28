@@ -1040,15 +1040,12 @@ static pg_data_t __ref *hotadd_new_pgdat(int nid, u64 start)
 
 		arch_refresh_nodedata(nid, pgdat);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	} else {
 		/* Reset the nr_zones and classzone_idx to 0 before reuse */
 		pgdat->nr_zones = 0;
 		pgdat->classzone_idx = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	/* we can use NODE_DATA(nid) from here */
@@ -1212,7 +1209,6 @@ int is_mem_section_removable(unsigned long start_pfn, unsigned long nr_pages)
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * Confirm all pages in a range [start, end) belong to the same zone.
  */
 static int test_pages_in_a_zone(unsigned long start_pfn, unsigned long end_pfn)
@@ -1248,8 +1244,6 @@ static int test_pages_in_a_zone(unsigned long start_pfn, unsigned long end_pfn)
 	else
 		return 0;
 =======
-=======
->>>>>>> master
  * Confirm all pages in a range [start, end) is belongs to the same zone.
  */
 static int test_pages_in_a_zone(unsigned long start_pfn, unsigned long end_pfn)
@@ -1273,10 +1267,7 @@ static int test_pages_in_a_zone(unsigned long start_pfn, unsigned long end_pfn)
 		zone = page_zone(page);
 	}
 	return 1;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /*
@@ -1853,15 +1844,12 @@ void try_offline_node(int nid)
 		 * here only free if it's allocated by vmalloc.
 		 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (is_vmalloc_addr(zone->wait_table)) {
 			vfree(zone->wait_table);
 			zone->wait_table = NULL;
 		}
 	}
 =======
-=======
->>>>>>> master
 		if (is_vmalloc_addr(zone->wait_table))
 			vfree(zone->wait_table);
 	}
@@ -1874,10 +1862,7 @@ void try_offline_node(int nid)
 	 * the memory when the node is online again.
 	 */
 	memset(pgdat, 0, sizeof(*pgdat));
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 EXPORT_SYMBOL(try_offline_node);
 

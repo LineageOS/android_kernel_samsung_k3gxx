@@ -1346,13 +1346,10 @@ static struct iw_statistics *cfg80211_wireless_stats(struct net_device *dev)
 	wdev_unlock(wdev);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	memset(&sinfo, 0, sizeof(sinfo));
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (rdev_get_station(rdev, dev, bssid, &sinfo))
 		return NULL;
 

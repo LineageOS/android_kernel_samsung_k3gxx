@@ -72,15 +72,11 @@ enum {
 	WORK_OFFQ_FLAG_BASE	= WORK_STRUCT_COLOR_SHIFT,
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	__WORK_OFFQ_CANCELING	= WORK_OFFQ_FLAG_BASE,
 	WORK_OFFQ_CANCELING	= (1 << __WORK_OFFQ_CANCELING),
 =======
 	WORK_OFFQ_CANCELING	= (1 << WORK_OFFQ_FLAG_BASE),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	WORK_OFFQ_CANCELING	= (1 << WORK_OFFQ_FLAG_BASE),
->>>>>>> master
 
 	/*
 	 * When a work item is off queue, its high bits point to the last
@@ -313,7 +309,6 @@ enum {
 	WQ_SYSFS		= 1 << 6, /* visible in sysfs, see wq_sysfs_register() */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * Per-cpu workqueues are generally preferred because they tend to
 	 * show better performance thanks to cache locality.  Per-cpu
@@ -348,10 +343,6 @@ enum {
 	__WQ_DRAINING		= 1 << 16, /* internal: workqueue is draining */
 	__WQ_ORDERED		= 1 << 17, /* internal: workqueue is ordered */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	__WQ_DRAINING		= 1 << 16, /* internal: workqueue is draining */
-	__WQ_ORDERED		= 1 << 17, /* internal: workqueue is ordered */
->>>>>>> master
 
 	WQ_MAX_ACTIVE		= 512,	  /* I like 512, better ideas? */
 	WQ_MAX_UNBOUND_PER_CPU	= 4,	  /* 4 * #cpus for unbound wq */
@@ -381,7 +372,6 @@ enum {
  * system_freezable_wq is equivalent to system_wq except that it's
  * freezable.
 <<<<<<< HEAD
-<<<<<<< HEAD
  *
  * *_power_efficient_wq are inclined towards saving power and converted
  * into WQ_UNBOUND variants if 'wq_power_efficient' is enabled; otherwise,
@@ -390,21 +380,16 @@ enum {
  * 'wq_power_efficient' is disabled.  See WQ_POWER_EFFICIENT for more info.
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  */
 extern struct workqueue_struct *system_wq;
 extern struct workqueue_struct *system_long_wq;
 extern struct workqueue_struct *system_unbound_wq;
 extern struct workqueue_struct *system_freezable_wq;
 <<<<<<< HEAD
-<<<<<<< HEAD
 extern struct workqueue_struct *system_power_efficient_wq;
 extern struct workqueue_struct *system_freezable_power_efficient_wq;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 static inline struct workqueue_struct * __deprecated __system_nrt_wq(void)
 {
@@ -475,15 +460,11 @@ __alloc_workqueue_key(const char *fmt, unsigned int flags, int max_active,
  */
 #define alloc_ordered_workqueue(fmt, flags, args...)			\
 <<<<<<< HEAD
-<<<<<<< HEAD
 	alloc_workqueue(fmt, WQ_UNBOUND | __WQ_ORDERED |		\
 			__WQ_ORDERED_EXPLICIT | (flags), 1, ##args)
 =======
 	alloc_workqueue(fmt, WQ_UNBOUND | __WQ_ORDERED | (flags), 1, ##args)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	alloc_workqueue(fmt, WQ_UNBOUND | __WQ_ORDERED | (flags), 1, ##args)
->>>>>>> master
 
 #define create_workqueue(name)						\
 	alloc_workqueue((name), WQ_MEM_RECLAIM, 1)
@@ -491,14 +472,10 @@ __alloc_workqueue_key(const char *fmt, unsigned int flags, int max_active,
 	alloc_workqueue((name), WQ_FREEZABLE | WQ_UNBOUND | WQ_MEM_RECLAIM, 1)
 #define create_singlethread_workqueue(name)				\
 <<<<<<< HEAD
-<<<<<<< HEAD
 	alloc_ordered_workqueue("%s", WQ_MEM_RECLAIM, name)
 =======
 	alloc_workqueue((name), WQ_UNBOUND | WQ_MEM_RECLAIM, 1)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	alloc_workqueue((name), WQ_UNBOUND | WQ_MEM_RECLAIM, 1)
->>>>>>> master
 
 extern void destroy_workqueue(struct workqueue_struct *wq);
 

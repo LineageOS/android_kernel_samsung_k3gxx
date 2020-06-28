@@ -23,7 +23,6 @@
  */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include "bbd_internal.h"
 #include "bbd_engine.h"
 #include "bbd_bridge_c.h"
@@ -32,8 +31,6 @@
 #include "utils/bbd_utils.h"
 #include "bbd_ifc.h"
 =======
-=======
->>>>>>> master
 #include "../bbd_internal.h"
 #include "bbd_engine.h"
 #include "bbd_bridge_c.h"
@@ -41,10 +38,7 @@
 #include "rpc_codec_c.h"
 #include "../utils/bbd_utils.h"
 #include "../bbd_ifc.h"
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 #include <linux/workqueue.h>
 

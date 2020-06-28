@@ -92,14 +92,10 @@ static struct dentry *get_next_positive_subdir(struct dentry *prev,
 
 	if (prev)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		next = prev->d_child.next;
 =======
 		next = prev->d_u.d_child.next;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		next = prev->d_u.d_child.next;
->>>>>>> master
 	else {
 		prev = dget_dlock(root);
 		next = prev->d_subdirs.next;
@@ -114,28 +110,20 @@ cont:
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	q = list_entry(next, struct dentry, d_child);
 =======
 	q = list_entry(next, struct dentry, d_u.d_child);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	q = list_entry(next, struct dentry, d_u.d_child);
->>>>>>> master
 
 	spin_lock_nested(&q->d_lock, DENTRY_D_LOCK_NESTED);
 	/* Already gone or negative dentry (under construction) - try next */
 	if (q->d_count == 0 || !simple_positive(q)) {
 		spin_unlock(&q->d_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		next = q->d_child.next;
 =======
 		next = q->d_u.d_child.next;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		next = q->d_u.d_child.next;
->>>>>>> master
 		goto cont;
 	}
 	dget_dlock(q);
@@ -186,28 +174,20 @@ again:
 			}
 			spin_unlock(&p->d_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			next = p->d_child.next;
 =======
 			next = p->d_u.d_child.next;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			next = p->d_u.d_child.next;
->>>>>>> master
 			p = parent;
 			if (next != &parent->d_subdirs)
 				break;
 		}
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = list_entry(next, struct dentry, d_child);
 =======
 	ret = list_entry(next, struct dentry, d_u.d_child);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret = list_entry(next, struct dentry, d_u.d_child);
->>>>>>> master
 
 	spin_lock_nested(&ret->d_lock, DENTRY_D_LOCK_NESTED);
 	/* Negative dentry - try next */
@@ -488,14 +468,10 @@ found:
 	spin_lock(&expired->d_parent->d_lock);
 	spin_lock_nested(&expired->d_lock, DENTRY_D_LOCK_NESTED);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	list_move(&expired->d_parent->d_subdirs, &expired->d_child);
 =======
 	list_move(&expired->d_parent->d_subdirs, &expired->d_u.d_child);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	list_move(&expired->d_parent->d_subdirs, &expired->d_u.d_child);
->>>>>>> master
 	spin_unlock(&expired->d_lock);
 	spin_unlock(&expired->d_parent->d_lock);
 	spin_unlock(&sbi->lookup_lock);

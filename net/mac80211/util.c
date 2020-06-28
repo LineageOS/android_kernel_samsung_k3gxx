@@ -2175,15 +2175,12 @@ u64 ieee80211_calculate_rx_timestamp(struct ieee80211_local *local,
 
 	rate = cfg80211_calculate_bitrate(&ri);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (WARN_ONCE(!rate,
 		      "Invalid bitrate: flags=0x%x, idx=%d, vht_nss=%d\n",
 		      status->flag, status->rate_idx, status->vht_nss))
 		return 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* rewind from end of MPDU */
 	if (status->flag & RX_FLAG_MACTIME_END)

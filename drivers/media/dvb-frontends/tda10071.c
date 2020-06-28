@@ -21,14 +21,11 @@
 #include "tda10071_priv.h"
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* Max transfer size done by I2C transfer functions */
 #define MAX_XFER_SIZE  64
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static struct dvb_frontend_ops tda10071_ops;
 
 /* write multiple registers */
@@ -37,32 +34,23 @@ static int tda10071_wr_regs(struct tda10071_priv *priv, u8 reg, u8 *val,
 {
 	int ret;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u8 buf[MAX_XFER_SIZE];
 =======
 	u8 buf[len+1];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u8 buf[len+1];
->>>>>>> master
 	struct i2c_msg msg[1] = {
 		{
 			.addr = priv->cfg.demod_i2c_addr,
 			.flags = 0,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			.len = 1 + len,
 =======
 			.len = sizeof(buf),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			.len = sizeof(buf),
->>>>>>> master
 			.buf = buf,
 		}
 	};
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (1 + len > sizeof(buf)) {
 		dev_warn(&priv->i2c->dev,
@@ -73,8 +61,6 @@ static int tda10071_wr_regs(struct tda10071_priv *priv, u8 reg, u8 *val,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	buf[0] = reg;
 	memcpy(&buf[1], val, len);
 
@@ -95,14 +81,10 @@ static int tda10071_rd_regs(struct tda10071_priv *priv, u8 reg, u8 *val,
 {
 	int ret;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u8 buf[MAX_XFER_SIZE];
 =======
 	u8 buf[len];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u8 buf[len];
->>>>>>> master
 	struct i2c_msg msg[2] = {
 		{
 			.addr = priv->cfg.demod_i2c_addr,
@@ -113,19 +95,14 @@ static int tda10071_rd_regs(struct tda10071_priv *priv, u8 reg, u8 *val,
 			.addr = priv->cfg.demod_i2c_addr,
 			.flags = I2C_M_RD,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			.len = len,
 =======
 			.len = sizeof(buf),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			.len = sizeof(buf),
->>>>>>> master
 			.buf = buf,
 		}
 	};
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (len > sizeof(buf)) {
 		dev_warn(&priv->i2c->dev,
@@ -136,8 +113,6 @@ static int tda10071_rd_regs(struct tda10071_priv *priv, u8 reg, u8 *val,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ret = i2c_transfer(priv->i2c, msg, 2);
 	if (ret == 2) {
 		memcpy(val, buf, len);
@@ -718,12 +693,9 @@ static int tda10071_set_frontend(struct dvb_frontend *fe)
 	int ret, i;
 	u8 mode, rolloff, pilot, inversion, div;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	fe_modulation_t modulation;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	dev_dbg(&priv->i2c->dev, "%s: delivery_system=%d modulation=%d " \
 		"frequency=%d symbol_rate=%d inversion=%d pilot=%d " \
@@ -759,24 +731,18 @@ static int tda10071_set_frontend(struct dvb_frontend *fe)
 	switch (c->delivery_system) {
 	case SYS_DVBS:
 <<<<<<< HEAD
-<<<<<<< HEAD
 		modulation = QPSK;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		rolloff = 0;
 		pilot = 2;
 		break;
 	case SYS_DVBS2:
 <<<<<<< HEAD
-<<<<<<< HEAD
 		modulation = c->modulation;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		switch (c->rolloff) {
 		case ROLLOFF_20:
 			rolloff = 2;
@@ -822,14 +788,10 @@ static int tda10071_set_frontend(struct dvb_frontend *fe)
 	for (i = 0, mode = 0xff; i < ARRAY_SIZE(TDA10071_MODCOD); i++) {
 		if (c->delivery_system == TDA10071_MODCOD[i].delivery_system &&
 <<<<<<< HEAD
-<<<<<<< HEAD
 			modulation == TDA10071_MODCOD[i].modulation &&
 =======
 			c->modulation == TDA10071_MODCOD[i].modulation &&
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			c->modulation == TDA10071_MODCOD[i].modulation &&
->>>>>>> master
 			c->fec_inner == TDA10071_MODCOD[i].fec) {
 			mode = TDA10071_MODCOD[i].val;
 			dev_dbg(&priv->i2c->dev, "%s: mode found=%02x\n",

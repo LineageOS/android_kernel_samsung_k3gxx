@@ -410,7 +410,6 @@ static inline int core_alua_state_standby(
 	case RECEIVE_DIAGNOSTIC:
 	case SEND_DIAGNOSTIC:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	case READ_CAPACITY:
 		return 0;
 	case SERVICE_ACTION_IN:
@@ -424,9 +423,6 @@ static inline int core_alua_state_standby(
 =======
 		return 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		return 0;
->>>>>>> master
 	case MAINTENANCE_IN:
 		switch (cdb[1] & 0x1f) {
 		case MI_REPORT_TARGET_PGS:
@@ -748,14 +744,10 @@ static int core_alua_write_tpg_metadata(
 		pr_err("Error writing ALUA metadata file: %s\n", path);
 	fput(file);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return (ret < 0) ? -EIO : 0;
 =======
 	return ret ? -EIO : 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return ret ? -EIO : 0;
->>>>>>> master
 }
 
 /*

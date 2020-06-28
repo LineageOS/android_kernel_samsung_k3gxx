@@ -239,12 +239,9 @@ static void __exit virtio_exit(void)
 {
 	bus_unregister(&virtio_bus);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ida_destroy(&virtio_index_ida);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 core_initcall(virtio_init);
 module_exit(virtio_exit);

@@ -327,7 +327,6 @@ asmlinkage long compat_sys_keyctl(u32 option,
 asmlinkage long compat_sys_ustat(unsigned dev, struct compat_ustat __user *u32);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 asmlinkage ssize_t compat_sys_readv(compat_ulong_t fd,
 		const struct compat_iovec __user *vec, compat_ulong_t vlen);
 asmlinkage ssize_t compat_sys_writev(compat_ulong_t fd,
@@ -339,8 +338,6 @@ asmlinkage ssize_t compat_sys_pwritev(compat_ulong_t fd,
 		const struct compat_iovec __user *vec,
 		compat_ulong_t vlen, u32 pos_low, u32 pos_high);
 =======
-=======
->>>>>>> master
 asmlinkage ssize_t compat_sys_readv(unsigned long fd,
 		const struct compat_iovec __user *vec, unsigned long vlen);
 asmlinkage ssize_t compat_sys_writev(unsigned long fd,
@@ -351,10 +348,7 @@ asmlinkage ssize_t compat_sys_preadv(unsigned long fd,
 asmlinkage ssize_t compat_sys_pwritev(unsigned long fd,
 		const struct compat_iovec __user *vec,
 		unsigned long vlen, u32 pos_low, u32 pos_high);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 asmlinkage long comat_sys_lseek(unsigned int, compat_off_t, unsigned int);
 
 asmlinkage long compat_sys_execve(const char __user *filename, const compat_uptr_t __user *argv,
@@ -441,14 +435,10 @@ asmlinkage long compat_sys_ptrace(compat_long_t request, compat_long_t pid,
 				  compat_long_t addr, compat_long_t data);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 asmlinkage long compat_sys_lookup_dcookie(u32, u32, char __user *, compat_size_t);
 =======
 asmlinkage long compat_sys_lookup_dcookie(u32, u32, char __user *, size_t);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-asmlinkage long compat_sys_lookup_dcookie(u32, u32, char __user *, size_t);
->>>>>>> master
 /*
  * epoll (fs/eventpoll.c) compat bits follow ...
  */
@@ -697,7 +687,6 @@ asmlinkage long compat_sys_sigaltstack(const compat_stack_t __user *uss_ptr,
 int compat_restore_altstack(const compat_stack_t __user *uss);
 int __compat_save_altstack(compat_stack_t __user *, unsigned long);
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define compat_save_altstack_ex(uss, sp) do { \
 	compat_stack_t __user *__uss = uss; \
 	struct task_struct *t = current; \
@@ -707,8 +696,6 @@ int __compat_save_altstack(compat_stack_t __user *, unsigned long);
 } while (0);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 asmlinkage long compat_sys_sched_rr_get_interval(compat_pid_t pid,
 						 struct compat_timespec __user *interval);

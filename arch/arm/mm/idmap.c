@@ -25,7 +25,6 @@ static void idmap_add_pmd(pud_t *pud, unsigned long addr, unsigned long end,
 			return;
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/*
 		 * Copy the original PMD to ensure that the PMD entries for
 		 * the kernel image are preserved.
@@ -35,8 +34,6 @@ static void idmap_add_pmd(pud_t *pud, unsigned long addr, unsigned long end,
 			       PTRS_PER_PMD * sizeof(pmd_t));
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		pud_populate(&init_mm, pud, pmd);
 		pmd += pmd_index(addr);
 	} else

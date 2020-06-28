@@ -141,12 +141,9 @@ struct sock *dccp_create_openreq_child(struct sock *sk,
 			 * destructor and make plain sk_free() */
 			newsk->sk_destruct = NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			bh_unlock_sock(newsk);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			sk_free(newsk);
 			return NULL;
 		}

@@ -106,14 +106,10 @@ struct dentry *securityfs_create_file(const char *name, umode_t mode,
 
 	mutex_lock(&dir->i_mutex);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dentry = lookup_one_len2(name, mount, parent, strlen(name));
 =======
 	dentry = lookup_one_len(name, parent, strlen(name));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	dentry = lookup_one_len(name, parent, strlen(name));
->>>>>>> master
 	if (IS_ERR(dentry))
 		goto out;
 

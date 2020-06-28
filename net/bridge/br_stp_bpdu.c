@@ -154,14 +154,10 @@ void br_stp_rcv(const struct stp_proto *proto, struct sk_buff *skb,
 		goto err;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	p = br_port_get_check_rcu(dev);
 =======
 	p = br_port_get_rcu(dev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	p = br_port_get_rcu(dev);
->>>>>>> master
 	if (!p)
 		goto err;
 

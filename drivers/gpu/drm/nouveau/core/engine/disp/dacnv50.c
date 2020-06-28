@@ -50,7 +50,6 @@ nv50_dac_sense(struct nv50_disp_priv *priv, int or, u32 loadval)
 {
 	const u32 doff = (or * 0x800);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	nv_mask(priv, 0x61a004 + doff, 0x807f0000, 0x80150000);
 	nv_wait(priv, 0x61a004 + doff, 0x80000000, 0x00000000);
@@ -69,8 +68,6 @@ nv50_dac_sense(struct nv50_disp_priv *priv, int or, u32 loadval)
 
 	return (loadval & 0x38000000) >> 27;
 =======
-=======
->>>>>>> master
 	int load = -EINVAL;
 	nv_mask(priv, 0x61a004 + doff, 0x807f0000, 0x80150000);
 	nv_wait(priv, 0x61a004 + doff, 0x80000000, 0x00000000);
@@ -83,10 +80,7 @@ nv50_dac_sense(struct nv50_disp_priv *priv, int or, u32 loadval)
 	nv_mask(priv, 0x61a004 + doff, 0x807f0000, 0x80550000);
 	nv_wait(priv, 0x61a004 + doff, 0x80000000, 0x00000000);
 	return load;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 int

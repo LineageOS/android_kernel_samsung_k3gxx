@@ -2020,13 +2020,9 @@ bdx_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 		    | NETIF_F_HW_VLAN_CTAG_TX | NETIF_F_HW_VLAN_CTAG_RX |
 		    NETIF_F_HW_VLAN_CTAG_FILTER | NETIF_F_RXCSUM
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		    /*| NETIF_F_FRAGLIST */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		    /*| NETIF_F_FRAGLIST */
->>>>>>> master
 		    ;
 		ndev->hw_features = NETIF_F_IP_CSUM | NETIF_F_SG |
 			NETIF_F_TSO | NETIF_F_HW_VLAN_CTAG_TX;

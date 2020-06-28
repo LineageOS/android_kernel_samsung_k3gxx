@@ -403,7 +403,6 @@ struct mei_device {
 	DECLARE_BITMAP(me_clients_map, MEI_CLIENTS_MAX);
 	DECLARE_BITMAP(host_clients_map, MEI_CLIENTS_MAX);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned long me_clients_num;
 	unsigned long me_client_presentation_num;
 	unsigned long me_client_index;
@@ -412,11 +411,6 @@ struct mei_device {
 	u8 me_client_presentation_num;
 	u8 me_client_index;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u8 me_clients_num;
-	u8 me_client_presentation_num;
-	u8 me_client_index;
->>>>>>> master
 
 	struct mei_cl wd_cl;
 	enum mei_wd_states wd_state;

@@ -12,12 +12,9 @@
 
 #include <linux/delay.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/dmi.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #include <linux/slab.h>
 #include <linux/module.h>
 #include <linux/input.h>
@@ -321,14 +318,10 @@ static void elantech_report_semi_mt_data(struct input_dev *dev,
 {
 	elantech_set_slot(dev, 0, num_fingers != 0, x1, y1);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	elantech_set_slot(dev, 1, num_fingers >= 2, x2, y2);
 =======
 	elantech_set_slot(dev, 1, num_fingers == 2, x2, y2);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	elantech_set_slot(dev, 1, num_fingers == 2, x2, y2);
->>>>>>> master
 }
 
 /*
@@ -488,7 +481,6 @@ static void elantech_report_absolute_v3(struct psmouse *psmouse,
 	input_report_key(dev, BTN_TOOL_DOUBLETAP, fingers == 2);
 	input_report_key(dev, BTN_TOOL_TRIPLETAP, fingers == 3);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	/* For clickpads map both buttons to BTN_LEFT */
 	if (etd->fw_version & 0x001000) {
@@ -502,10 +494,6 @@ static void elantech_report_absolute_v3(struct psmouse *psmouse,
 	input_report_key(dev, BTN_LEFT, packet[0] & 0x01);
 	input_report_key(dev, BTN_RIGHT, packet[0] & 0x02);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	input_report_key(dev, BTN_LEFT, packet[0] & 0x01);
-	input_report_key(dev, BTN_RIGHT, packet[0] & 0x02);
->>>>>>> master
 	input_report_abs(dev, ABS_PRESSURE, pres);
 	input_report_abs(dev, ABS_TOOL_WIDTH, width);
 
@@ -515,7 +503,6 @@ static void elantech_report_absolute_v3(struct psmouse *psmouse,
 static void elantech_input_sync_v4(struct psmouse *psmouse)
 {
 	struct input_dev *dev = psmouse->dev;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	struct elantech_data *etd = psmouse->private;
 	unsigned char *packet = psmouse->packet;
@@ -533,11 +520,6 @@ static void elantech_input_sync_v4(struct psmouse *psmouse)
 
 	input_report_key(dev, BTN_LEFT, packet[0] & 0x01);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned char *packet = psmouse->packet;
-
-	input_report_key(dev, BTN_LEFT, packet[0] & 0x01);
->>>>>>> master
 	input_mt_report_pointer_emulation(dev, true);
 	input_sync(dev);
 }
@@ -821,7 +803,6 @@ static psmouse_ret_t elantech_process_byte(struct psmouse *psmouse)
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * This writes the reg_07 value again to the hardware at the end of every
  * set_rate call because the register loses its value. reg_07 allows setting
  * absolute mode on v4 hardware
@@ -839,8 +820,6 @@ static void elantech_set_rate_restore_reg_07(struct psmouse *psmouse,
 /*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  * Put the touchpad into absolute mode
  */
 static int elantech_set_absolute_mode(struct psmouse *psmouse)
@@ -874,7 +853,6 @@ static int elantech_set_absolute_mode(struct psmouse *psmouse)
 
 	case 3:
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (etd->set_hw_resolution)
 			etd->reg_10 = 0x0b;
 		else
@@ -883,9 +861,6 @@ static int elantech_set_absolute_mode(struct psmouse *psmouse)
 =======
 		etd->reg_10 = 0x0b;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		etd->reg_10 = 0x0b;
->>>>>>> master
 		if (elantech_write_reg(psmouse, 0x10, etd->reg_10))
 			rc = -1;
 
@@ -1040,7 +1015,6 @@ static int elantech_get_resolution_v4(struct psmouse *psmouse,
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * Advertise INPUT_PROP_BUTTONPAD for clickpads. The testing of bit 12 in
  * fw_version for this is based on the following fw_version & caps table:
  *
@@ -1083,8 +1057,6 @@ static void elantech_set_buttonpad_prop(struct psmouse *psmouse)
 /*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  * Set the appropriate event bits for the input subsystem
  */
 static int elantech_set_input_params(struct psmouse *psmouse)
@@ -1128,13 +1100,10 @@ static int elantech_set_input_params(struct psmouse *psmouse)
 		/* fall through */
 	case 3:
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (etd->hw_version == 3)
 			elantech_set_buttonpad_prop(psmouse);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		input_set_abs_params(dev, ABS_X, x_min, x_max, 0, 0);
 		input_set_abs_params(dev, ABS_Y, y_min, y_max, 0, 0);
 		if (etd->reports_pressure) {
@@ -1144,14 +1113,10 @@ static int elantech_set_input_params(struct psmouse *psmouse)
 					     ETP_WMAX_V2, 0, 0);
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 		input_mt_init_slots(dev, 2, INPUT_MT_SEMI_MT);
 =======
 		input_mt_init_slots(dev, 2, 0);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		input_mt_init_slots(dev, 2, 0);
->>>>>>> master
 		input_set_abs_params(dev, ABS_MT_POSITION_X, x_min, x_max, 0, 0);
 		input_set_abs_params(dev, ABS_MT_POSITION_Y, y_min, y_max, 0, 0);
 		break;
@@ -1165,18 +1130,12 @@ static int elantech_set_input_params(struct psmouse *psmouse)
 			psmouse_warn(psmouse, "couldn't query resolution data.\n");
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 		elantech_set_buttonpad_prop(psmouse);
 =======
 		/* v4 is clickpad, with only one button. */
 		__set_bit(INPUT_PROP_BUTTONPAD, dev->propbit);
 		__clear_bit(BTN_RIGHT, dev->keybit);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		/* v4 is clickpad, with only one button. */
-		__set_bit(INPUT_PROP_BUTTONPAD, dev->propbit);
-		__clear_bit(BTN_RIGHT, dev->keybit);
->>>>>>> master
 		__set_bit(BTN_TOOL_QUADTAP, dev->keybit);
 		/* For X to recognize me as touchpad. */
 		input_set_abs_params(dev, ABS_X, x_min, x_max, 0, 0);
@@ -1323,7 +1282,6 @@ static bool elantech_is_signature_valid(const unsigned char *param)
 		return true;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * Some hw_version >= 4 models have a revision higher then 20. Meaning
 	 * that param[2] may be 10 or 20, skip the rates check for these.
@@ -1334,8 +1292,6 @@ static bool elantech_is_signature_valid(const unsigned char *param)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	for (i = 0; i < ARRAY_SIZE(rates); i++)
 		if (param[2] == rates[i])
 			return false;
@@ -1434,7 +1390,6 @@ static int elantech_reconnect(struct psmouse *psmouse)
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * Some hw_version 3 models go into error state when we try to set
  * bit 3 and/or bit 1 of r10.
  */
@@ -1461,8 +1416,6 @@ static const struct dmi_system_id no_hw_res_dmi_table[] = {
 /*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  * determine hardware version and set some properties according to it.
  */
 static int elantech_set_properties(struct elantech_data *etd)
@@ -1514,14 +1467,11 @@ static int elantech_set_properties(struct elantech_data *etd)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Enable real hardware resolution on hw_version 3 ? */
 	etd->set_hw_resolution = !dmi_check_system(no_hw_res_dmi_table);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 }
 
@@ -1578,7 +1528,6 @@ int elantech_init(struct psmouse *psmouse)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (etd->fw_version == 0x381f17) {
 		etd->original_set_rate = psmouse->set_rate;
 		psmouse->set_rate = elantech_set_rate_restore_reg_07;
@@ -1586,8 +1535,6 @@ int elantech_init(struct psmouse *psmouse)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (elantech_set_input_params(psmouse)) {
 		psmouse_err(psmouse, "failed to query touchpad range.\n");
 		goto init_fail;

@@ -98,14 +98,11 @@ int __ip_local_out(struct sk_buff *skb)
 	iph->tot_len = htons(skb->len);
 	ip_send_check(iph);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	skb->protocol = htons(ETH_P_IP);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return nf_hook(NFPROTO_IPV4, NF_INET_LOCAL_OUT, skb, NULL,
 		       skb_dst(skb)->dev, dst_output);
 }
@@ -158,14 +155,10 @@ int ip_build_and_send_pkt(struct sk_buff *skb, struct sock *sk,
 	iph->saddr    = saddr;
 	iph->protocol = sk->sk_protocol;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ip_select_ident(skb, sk);
 =======
 	ip_select_ident(iph, &rt->dst, sk);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ip_select_ident(iph, &rt->dst, sk);
->>>>>>> master
 
 	if (opt && opt->opt.optlen) {
 		iph->ihl += opt->opt.optlen>>2;
@@ -412,16 +405,11 @@ packet_routed:
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ip_select_ident_segs(skb, sk, skb_shinfo(skb)->gso_segs ?: 1);
 =======
 	ip_select_ident_more(iph, &rt->dst, sk,
 			     (skb_shinfo(skb)->gso_segs ?: 1) - 1);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ip_select_ident_more(iph, &rt->dst, sk,
-			     (skb_shinfo(skb)->gso_segs ?: 1) - 1);
->>>>>>> master
 
 	skb->priority = sk->sk_priority;
 	skb->mark = sk->sk_mark;
@@ -871,7 +859,6 @@ static int __ip_append_data(struct sock *sk,
 
 	cork->length += length;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if ((skb && skb_has_frags(skb)) ||
 	    ((length > mtu) &&
 	    (skb_queue_len(queue) <= 1) &&
@@ -883,11 +870,6 @@ static int __ip_append_data(struct sock *sk,
 	    (sk->sk_protocol == IPPROTO_UDP) &&
 	    (rt->dst.dev->features & NETIF_F_UFO) && !rt->dst.header_len) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (((length > mtu) || (skb && skb_is_gso(skb))) &&
-	    (sk->sk_protocol == IPPROTO_UDP) &&
-	    (rt->dst.dev->features & NETIF_F_UFO) && !rt->dst.header_len) {
->>>>>>> master
 		err = ip_ufo_append_data(sk, queue, getfrag, from, length,
 					 hh_len, fragheaderlen, transhdrlen,
 					 maxfraglen, flags);
@@ -1199,12 +1181,9 @@ ssize_t	ip_append_page(struct sock *sk, struct flowi4 *fl4, struct page *page,
 	cork->length += size;
 	if ((size + skb->len > mtu) &&
 <<<<<<< HEAD
-<<<<<<< HEAD
 	    (skb_queue_len(&sk->sk_write_queue) == 1) &&
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	    (sk->sk_protocol == IPPROTO_UDP) &&
 	    (rt->dst.dev->features & NETIF_F_UFO)) {
 		skb_shinfo(skb)->gso_size = mtu - fragheaderlen;
@@ -1373,14 +1352,10 @@ struct sk_buff *__ip_make_skb(struct sock *sk,
 		ttl = ip_select_ttl(inet, &rt->dst);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	iph = ip_hdr(skb);
 =======
 	iph = (struct iphdr *)skb->data;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	iph = (struct iphdr *)skb->data;
->>>>>>> master
 	iph->version = 4;
 	iph->ihl = 5;
 	iph->tos = inet->tos;
@@ -1389,14 +1364,10 @@ struct sk_buff *__ip_make_skb(struct sock *sk,
 	iph->protocol = sk->sk_protocol;
 	ip_copy_addrs(iph, fl4);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ip_select_ident(skb, sk);
 =======
 	ip_select_ident(iph, &rt->dst, sk);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ip_select_ident(iph, &rt->dst, sk);
->>>>>>> master
 
 	if (opt) {
 		iph->ihl += opt->optlen>>2;
@@ -1520,12 +1491,9 @@ static int ip_reply_glue_bits(void *dptr, char *to, int offset,
  *	Generic function to send a packet as reply to another packet.
  *	Used to send some TCP resets/acks so far.
 <<<<<<< HEAD
-<<<<<<< HEAD
  */
 void ip_send_unicast_reply(struct sock *sk, struct sk_buff *skb, __be32 daddr,
 =======
-=======
->>>>>>> master
  *
  *	Use a fake percpu inet socket to avoid false sharing and contention.
  */
@@ -1543,10 +1511,7 @@ static DEFINE_PER_CPU(struct inet_sock, unicast_sock) = {
 };
 
 void ip_send_unicast_reply(struct net *net, struct sk_buff *skb, __be32 daddr,
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			   __be32 saddr, const struct ip_reply_arg *arg,
 			   unsigned int len)
 {
@@ -1554,7 +1519,6 @@ void ip_send_unicast_reply(struct net *net, struct sk_buff *skb, __be32 daddr,
 	struct ipcm_cookie ipc;
 	struct flowi4 fl4;
 	struct rtable *rt = skb_rtable(skb);
-<<<<<<< HEAD
 <<<<<<< HEAD
 	struct net *net = sock_net(sk);
 	struct sk_buff *nskb;
@@ -1564,11 +1528,6 @@ void ip_send_unicast_reply(struct net *net, struct sk_buff *skb, __be32 daddr,
 	struct sock *sk;
 	struct inet_sock *inet;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct sk_buff *nskb;
-	struct sock *sk;
-	struct inet_sock *inet;
->>>>>>> master
 
 	if (ip_options_echo(&replyopts.opt.opt, skb))
 		return;
@@ -1591,22 +1550,16 @@ void ip_send_unicast_reply(struct net *net, struct sk_buff *skb, __be32 daddr,
 			   ip_reply_arg_flowi_flags(arg),
 			   daddr, saddr,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			   tcp_hdr(skb)->source, tcp_hdr(skb)->dest);
 =======
 			   tcp_hdr(skb)->source, tcp_hdr(skb)->dest,
 			   arg->uid);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			   tcp_hdr(skb)->source, tcp_hdr(skb)->dest,
-			   arg->uid);
->>>>>>> master
 	security_skb_classify_flow(skb, flowi4_to_flowi(&fl4));
 	rt = ip_route_output_key(net, &fl4);
 	if (IS_ERR(rt))
 		return;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	inet_sk(sk)->tos = arg->tos;
 
@@ -1622,8 +1575,6 @@ void ip_send_unicast_reply(struct net *net, struct sk_buff *skb, __be32 daddr,
 	}
 
 =======
-=======
->>>>>>> master
 	inet = &get_cpu_var(unicast_sock);
 
 	inet->tos = arg->tos;
@@ -1636,10 +1587,7 @@ void ip_send_unicast_reply(struct net *net, struct sk_buff *skb, __be32 daddr,
 	sk->sk_sndbuf = sysctl_wmem_default;
 	ip_append_data(sk, &fl4, ip_reply_glue_bits, arg->iov->iov_base, len, 0,
 		       &ipc, &rt, MSG_DONTWAIT);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	nskb = skb_peek(&sk->sk_write_queue);
 	if (nskb) {
 		if (arg->csumoffset >= 0)
@@ -1648,14 +1596,11 @@ void ip_send_unicast_reply(struct net *net, struct sk_buff *skb, __be32 daddr,
 								arg->csum));
 		nskb->ip_summed = CHECKSUM_NONE;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		skb_set_queue_mapping(nskb, skb_get_queue_mapping(skb));
 		ip_push_pending_frames(sk, &fl4);
 	}
 out:
 =======
-=======
->>>>>>> master
 		skb_orphan(nskb);
 		skb_set_queue_mapping(nskb, skb_get_queue_mapping(skb));
 		ip_push_pending_frames(sk, &fl4);
@@ -1663,10 +1608,7 @@ out:
 
 	put_cpu_var(unicast_sock);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ip_rt_put(rt);
 }
 

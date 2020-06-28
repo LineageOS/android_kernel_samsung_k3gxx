@@ -1347,17 +1347,12 @@ static unsigned long kmem_cache_flags(unsigned long object_size,
 #else
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (slub_debug && (!slub_debug_slabs || (name &&
 		!strncmp(slub_debug_slabs, name, strlen(slub_debug_slabs)))))
 =======
 	if (slub_debug && (!slub_debug_slabs ||
 		!strncmp(slub_debug_slabs, name, strlen(slub_debug_slabs))))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (slub_debug && (!slub_debug_slabs ||
-		!strncmp(slub_debug_slabs, name, strlen(slub_debug_slabs))))
->>>>>>> master
 		flags |= slub_debug;
 
 	return flags;
@@ -4492,7 +4487,6 @@ static ssize_t show_slab_objects(struct kmem_cache *s,
 			page = ACCESS_ONCE(c->partial);
 			if (page) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 				node = page_to_nid(page);
 				if (flags & SO_TOTAL)
 					WARN_ON_ONCE(1);
@@ -4503,9 +4497,6 @@ static ssize_t show_slab_objects(struct kmem_cache *s,
 =======
 				x = page->pobjects;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				x = page->pobjects;
->>>>>>> master
 				total += x;
 				nodes[node] += x;
 			}

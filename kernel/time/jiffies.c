@@ -52,7 +52,6 @@
  * HZ=100.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #if HZ < 34
 #define JIFFIES_SHIFT	6
 #elif HZ < 67
@@ -63,9 +62,6 @@
 =======
 #define JIFFIES_SHIFT	8
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define JIFFIES_SHIFT	8
->>>>>>> master
 
 static cycle_t jiffies_read(struct clocksource *cs)
 {

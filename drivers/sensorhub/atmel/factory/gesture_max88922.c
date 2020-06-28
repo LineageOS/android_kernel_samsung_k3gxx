@@ -13,14 +13,10 @@
  *
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include "ssp.h"
 =======
 #include "../ssp.h"
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#include "../ssp.h"
->>>>>>> master
 
 #define	VENDOR		"MAXIM"
 #define	CHIP_ID		"MAX88922"

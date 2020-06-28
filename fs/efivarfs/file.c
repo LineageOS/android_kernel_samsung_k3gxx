@@ -11,12 +11,9 @@
 #include <linux/fs.h>
 #include <linux/slab.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/mount.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 #include "internal.h"
 
@@ -116,7 +113,6 @@ out_free:
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int
 efivarfs_ioc_getxflags(struct file *file, void __user *arg)
 {
@@ -188,18 +184,13 @@ efivarfs_file_ioctl(struct file *file, unsigned int cmd, unsigned long p)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 const struct file_operations efivarfs_file_operations = {
 	.open	= simple_open,
 	.read	= efivarfs_file_read,
 	.write	= efivarfs_file_write,
 	.llseek	= no_llseek,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.unlocked_ioctl = efivarfs_file_ioctl,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };

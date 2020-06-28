@@ -22,14 +22,11 @@
 #include "af9035.h"
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* Max transfer size done by I2C transfer functions */
 #define MAX_XFER_SIZE  64
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 DVB_DEFINE_MOD_OPT_ADAPTER_NR(adapter_nr);
 
 static u16 af9035_checksum(const u8 *buf, size_t len)
@@ -135,7 +132,6 @@ exit:
 static int af9035_wr_regs(struct dvb_usb_device *d, u32 reg, u8 *val, int len)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u8 wbuf[MAX_XFER_SIZE];
 	u8 mbox = (reg >> 16) & 0xff;
 	struct usb_req req = { CMD_MEM_WR, mbox, 6 + len, wbuf, 0, NULL };
@@ -150,11 +146,6 @@ static int af9035_wr_regs(struct dvb_usb_device *d, u32 reg, u8 *val, int len)
 	u8 mbox = (reg >> 16) & 0xff;
 	struct usb_req req = { CMD_MEM_WR, mbox, sizeof(wbuf), wbuf, 0, NULL };
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u8 wbuf[6 + len];
-	u8 mbox = (reg >> 16) & 0xff;
-	struct usb_req req = { CMD_MEM_WR, mbox, sizeof(wbuf), wbuf, 0, NULL };
->>>>>>> master
 
 	wbuf[0] = len;
 	wbuf[1] = 2;
@@ -255,7 +246,6 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
 		} else {
 			/* I2C */
 <<<<<<< HEAD
-<<<<<<< HEAD
 			u8 buf[MAX_XFER_SIZE];
 			struct usb_req req = { CMD_I2C_RD, 0, 5 + msg[0].len,
 					buf, msg[1].len, msg[1].buf };
@@ -272,11 +262,6 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
 			struct usb_req req = { CMD_I2C_RD, 0, sizeof(buf),
 					buf, msg[1].len, msg[1].buf };
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			u8 buf[5 + msg[0].len];
-			struct usb_req req = { CMD_I2C_RD, 0, sizeof(buf),
-					buf, msg[1].len, msg[1].buf };
->>>>>>> master
 			req.mbox |= ((msg[0].addr & 0x80)  >>  3);
 			buf[0] = msg[1].len;
 			buf[1] = msg[0].addr << 1;
@@ -304,7 +289,6 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
 		} else {
 			/* I2C */
 <<<<<<< HEAD
-<<<<<<< HEAD
 			u8 buf[MAX_XFER_SIZE];
 			struct usb_req req = { CMD_I2C_WR, 0, 5 + msg[0].len,
 					buf, 0, NULL };
@@ -321,11 +305,6 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
 			struct usb_req req = { CMD_I2C_WR, 0, sizeof(buf), buf,
 					0, NULL };
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			u8 buf[5 + msg[0].len];
-			struct usb_req req = { CMD_I2C_WR, 0, sizeof(buf), buf,
-					0, NULL };
->>>>>>> master
 			req.mbox |= ((msg[0].addr & 0x80)  >>  3);
 			buf[0] = msg[0].len;
 			buf[1] = msg[0].addr << 1;
@@ -345,12 +324,9 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 unlock:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	mutex_unlock(&d->i2c_mutex);
 
 	if (ret < 0)
@@ -1564,15 +1540,12 @@ static const struct usb_device_id af9035_id_table[] = {
 	{ DVB_USB_DEVICE(USB_VID_TERRATEC, 0x0099,
 		&af9035_props, "TerraTec Cinergy T Stick Dual RC (rev. 2)", NULL) },
 <<<<<<< HEAD
-<<<<<<< HEAD
 	{ DVB_USB_DEVICE(USB_VID_LEADTEK, 0x6a05,
 		&af9035_props, "Leadtek WinFast DTV Dongle Dual", NULL) },
 	{ DVB_USB_DEVICE(USB_VID_HAUPPAUGE, 0xf900,
 		&af9035_props, "Hauppauge WinTV-MiniStick 2", NULL) },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	{ }
 };
 MODULE_DEVICE_TABLE(usb, af9035_id_table);

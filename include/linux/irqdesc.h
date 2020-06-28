@@ -28,13 +28,10 @@ struct irq_desc;
  * @last_unhandled:	aging timer for unhandled count
  * @irqs_unhandled:	stats field for spurious unhandled interrupts
 <<<<<<< HEAD
-<<<<<<< HEAD
  * @threads_handled:	stats field for deferred spurious detection of threaded handlers
  * @threads_handled_last: comparator field for deferred spurious detection of theraded handlers
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  * @lock:		locking for SMP
  * @affinity_hint:	hint to user space for preferred irq affinity
  * @affinity_notify:	context for notification of affinity changes
@@ -61,13 +58,10 @@ struct irq_desc {
 	unsigned long		last_unhandled;	/* Aging timer for unhandled count */
 	unsigned int		irqs_unhandled;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	atomic_t		threads_handled;
 	int			threads_handled_last;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	raw_spinlock_t		lock;
 	struct cpumask		*percpu_enabled;
 #ifdef CONFIG_SMP

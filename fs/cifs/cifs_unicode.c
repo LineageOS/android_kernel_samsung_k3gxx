@@ -291,15 +291,11 @@ cifsConvertToUTF16(__le16 *target, const char *source, int srclen,
 		 const struct nls_table *cp, int mapChars)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int i, charlen;
 	int j = 0;
 =======
 	int i, j, charlen;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int i, j, charlen;
->>>>>>> master
 	char src_char;
 	__le16 dst_char;
 	wchar_t tmp;
@@ -308,26 +304,18 @@ cifsConvertToUTF16(__le16 *target, const char *source, int srclen,
 		return cifs_strtoUTF16(target, source, PATH_MAX, cp);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	for (i = 0; i < srclen; j++) {
 =======
 	for (i = 0, j = 0; i < srclen; j++) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	for (i = 0, j = 0; i < srclen; j++) {
->>>>>>> master
 		src_char = source[i];
 		charlen = 1;
 		switch (src_char) {
 		case 0:
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 			put_unaligned(0, &target[j]);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			put_unaligned(0, &target[j]);
->>>>>>> master
 			goto ctoUTF16_out;
 		case ':':
 			dst_char = cpu_to_le16(UNI_COLON);
@@ -375,12 +363,9 @@ cifsConvertToUTF16(__le16 *target, const char *source, int srclen,
 
 ctoUTF16_out:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	put_unaligned(0, &target[j]); /* Null terminate target unicode string */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return j;
 }
 

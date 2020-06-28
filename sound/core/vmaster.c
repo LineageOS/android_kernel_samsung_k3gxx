@@ -311,14 +311,11 @@ static int master_get(struct snd_kcontrol *kcontrol,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int sync_slaves(struct link_master *master, int old_val, int new_val)
 {
 	struct link_slave *slave;
 	struct snd_ctl_elem_value *uval;
 =======
-=======
->>>>>>> master
 static int master_put(struct snd_kcontrol *kcontrol,
 		      struct snd_ctl_elem_value *ucontrol)
 {
@@ -333,10 +330,7 @@ static int master_put(struct snd_kcontrol *kcontrol,
 	old_val = master->val;
 	if (ucontrol->value.integer.value[0] == old_val)
 		return 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	uval = kmalloc(sizeof(*uval), GFP_KERNEL);
 	if (!uval)
@@ -345,7 +339,6 @@ static int master_put(struct snd_kcontrol *kcontrol,
 		master->val = old_val;
 		uval->id = slave->slave.id;
 		slave_get_val(slave, uval);
-<<<<<<< HEAD
 <<<<<<< HEAD
 		master->val = new_val;
 		slave_put_val(slave, uval);
@@ -375,17 +368,12 @@ static int master_put(struct snd_kcontrol *kcontrol,
 		return err;
 	if (master->hook && !first_init)
 =======
-=======
->>>>>>> master
 		master->val = ucontrol->value.integer.value[0];
 		slave_put_val(slave, uval);
 	}
 	kfree(uval);
 	if (master->hook && !err)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		master->hook(master->hook_private_data, master->val);
 	return 1;
 }
@@ -492,7 +480,6 @@ EXPORT_SYMBOL_GPL(snd_ctl_add_vmaster_hook);
 
 /**
 <<<<<<< HEAD
-<<<<<<< HEAD
  * snd_ctl_sync_vmaster - Sync the vmaster slaves and hook
  * @kcontrol: vmaster kctl element
  * @hook_only: sync only the hook
@@ -524,8 +511,6 @@ void snd_ctl_sync_vmaster(struct snd_kcontrol *kcontrol, bool hook_only)
 }
 EXPORT_SYMBOL_GPL(snd_ctl_sync_vmaster);
 =======
-=======
->>>>>>> master
  * snd_ctl_sync_vmaster_hook - Sync the vmaster hook
  * @kcontrol: vmaster kctl element
  *
@@ -543,7 +528,4 @@ void snd_ctl_sync_vmaster_hook(struct snd_kcontrol *kcontrol)
 		master->hook(master->hook_private_data, master->val);
 }
 EXPORT_SYMBOL_GPL(snd_ctl_sync_vmaster_hook);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master

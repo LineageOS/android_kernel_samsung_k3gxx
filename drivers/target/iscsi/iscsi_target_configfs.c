@@ -1651,7 +1651,6 @@ static int lio_queue_status(struct se_cmd *se_cmd)
 
 	cmd->i_state = ISTATE_SEND_STATUS;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	if (cmd->se_cmd.scsi_status || cmd->sense_reason) {
 		iscsit_add_cmd_to_response_queue(cmd, cmd->conn, cmd->i_state);
@@ -1659,8 +1658,6 @@ static int lio_queue_status(struct se_cmd *se_cmd)
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	cmd->conn->conn_transport->iscsit_queue_status(cmd->conn, cmd);
 
 	return 0;
@@ -1737,15 +1734,11 @@ static void lio_tpg_release_fabric_acl(
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * Called with spin_lock_irq(struct se_portal_group->session_lock) held
  * or not held.
 =======
  * Called with spin_lock_bh(struct se_portal_group->session_lock) held..
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * Called with spin_lock_bh(struct se_portal_group->session_lock) held..
->>>>>>> master
  *
  * Also, this function calls iscsit_inc_session_usage_count() on the
  * struct iscsi_session in question.
@@ -1753,7 +1746,6 @@ static void lio_tpg_release_fabric_acl(
 static int lio_tpg_shutdown_session(struct se_session *se_sess)
 {
 	struct iscsi_session *sess = se_sess->fabric_sess_ptr;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	struct se_portal_group *se_tpg = se_sess->se_tpg;
 	bool local_lock = false;
@@ -1764,8 +1756,6 @@ static int lio_tpg_shutdown_session(struct se_session *se_sess)
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	spin_lock(&sess->conn_lock);
 	if (atomic_read(&sess->session_fall_back_to_erl0) ||
@@ -1773,20 +1763,16 @@ static int lio_tpg_shutdown_session(struct se_session *se_sess)
 	    (sess->time2retain_timer_flags & ISCSI_TF_EXPIRED)) {
 		spin_unlock(&sess->conn_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (local_lock)
 			spin_unlock_irq(&sess->conn_lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		return 0;
 	}
 	atomic_set(&sess->session_reinstatement, 1);
 	spin_unlock(&sess->conn_lock);
 
 	iscsit_stop_time2retain_timer(sess);
-<<<<<<< HEAD
 <<<<<<< HEAD
 	spin_unlock_irq(&se_tpg->session_lock);
 
@@ -1796,9 +1782,6 @@ static int lio_tpg_shutdown_session(struct se_session *se_sess)
 =======
 	iscsit_stop_session(sess, 1, 1);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	iscsit_stop_session(sess, 1, 1);
->>>>>>> master
 
 	return 1;
 }

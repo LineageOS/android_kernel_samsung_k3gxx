@@ -731,13 +731,10 @@ static int svc_handle_xprt(struct svc_rqst *rqstp, struct svc_xprt *xprt)
 		if (newxpt)
 			svc_add_new_temp_xprt(serv, newxpt);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		else
 			module_put(xprt->xpt_class->xcl_owner);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	} else if (xprt->xpt_ops->xpo_has_wspace(xprt)) {
 		/* XPT_DATA|XPT_DEFERRED case: */
 		dprintk("svc: server %p, pool %u, transport %p, inuse=%d\n",

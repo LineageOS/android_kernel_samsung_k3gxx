@@ -250,7 +250,6 @@ static const struct reg_default florida_revd_patch[] = {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* Add extra headphone write sequence locations */
 static const struct reg_default florida_reve_patch[] = {
 	{ 0x80, 0x3 },
@@ -263,8 +262,6 @@ static const struct reg_default florida_reve_patch[] = {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /* We use a function so we can use ARRAY_SIZE() */
 int florida_patch(struct arizona *arizona)
 {
@@ -283,16 +280,12 @@ int florida_patch(struct arizona *arizona)
 					     ARRAY_SIZE(florida_revd_patch));
 	default:
 <<<<<<< HEAD
-<<<<<<< HEAD
 		return regmap_register_patch(arizona->regmap,
 					     florida_reve_patch,
 					     ARRAY_SIZE(florida_reve_patch));
 =======
 		return 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		return 0;
->>>>>>> master
 	}
 }
 EXPORT_SYMBOL_GPL(florida_patch);
@@ -703,12 +696,9 @@ static const struct reg_default florida_reg_default[] = {
 	{ 0x00000040, 0x0000 },    /* R64    - Wake control */
 	{ 0x00000041, 0x0000 },    /* R65    - Sequence control */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	{ 0x00000042, 0x0000 },    /* R66    - Spare Triggers */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	{ 0x00000061, 0x01FF },    /* R97    - Sample Rate Sequence Select 1 */
 	{ 0x00000062, 0x01FF },    /* R98    - Sample Rate Sequence Select 2 */
 	{ 0x00000063, 0x01FF },    /* R99    - Sample Rate Sequence Select 3 */
@@ -788,22 +778,16 @@ static const struct reg_default florida_reg_default[] = {
 	{ 0x00000293, 0x0000 },    /* R659   - Accessory Detect Mode 1 */
 	{ 0x0000029B, 0x0028 },    /* R667   - Headphone Detect 1 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	{ 0x000002A2, 0x0000 },    /* R674   - Micd clamp control */
 	{ 0x000002A3, 0x1102 },    /* R675   - Mic Detect 1 */
 	{ 0x000002A4, 0x009F },    /* R676   - Mic Detect 2 */
 =======
-=======
->>>>>>> master
 	{ 0x0000029C, 0x0000 },    /* R668   - Headphone Detect 2 */
 	{ 0x000002A2, 0x0000 },    /* R674   - Micd clamp control */
 	{ 0x000002A3, 0x1102 },    /* R675   - Mic Detect 1 */
 	{ 0x000002A4, 0x009F },    /* R676   - Mic Detect 2 */
 	{ 0x000002A5, 0x0000 },    /* R677   - Mic Detect 3 */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	{ 0x000002A6, 0x3737 },    /* R678   - Mic Detect Level 1 */
 	{ 0x000002A7, 0x372C },    /* R679   - Mic Detect Level 2 */
 	{ 0x000002A8, 0x1422 },    /* R680   - Mic Detect Level 3 */
@@ -925,15 +909,10 @@ static const struct reg_default florida_reg_default[] = {
 	{ 0x0000047D, 0x0001 },
 	{ 0x0000047E, 0x07FF },
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	{ 0x00000480, 0x0040 },    /* R1152  - Class W ANC Threshold 1 */
 	{ 0x00000481, 0x0040 },    /* R1153  - Class W ANC Threshold 2 */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	{ 0x00000480, 0x0040 },    /* R1152  - Class W ANC Threshold 1 */
-	{ 0x00000481, 0x0040 },    /* R1153  - Class W ANC Threshold 2 */
->>>>>>> master
 	{ 0x00000483, 0x0826 },
 	{ 0x00000490, 0x0069 },    /* R1168  - PDM SPK1 CTRL 1 */
 	{ 0x00000491, 0x0000 },    /* R1169  - PDM SPK1 CTRL 2 */
@@ -1595,13 +1574,9 @@ static const struct reg_default florida_reg_default[] = {
 	{ 0x00000D56, 0x0000 },    /* R3414  - Jack detect debounce */
 	{ 0x00000E00, 0x0000 },    /* R3584  - FX_Ctrl1 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	{ 0x00000E01, 0x0000 },    /* R3585  - FX_Ctrl2 */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	{ 0x00000E01, 0x0000 },    /* R3585  - FX_Ctrl2 */
->>>>>>> master
 	{ 0x00000E10, 0x6318 },    /* R3600  - EQ1_1 */
 	{ 0x00000E11, 0x6300 },    /* R3601  - EQ1_2 */
 	{ 0x00000E12, 0x0FC8 },    /* R3602  - EQ1_3 */
@@ -1721,12 +1696,9 @@ static const struct reg_default florida_reg_default[] = {
 	{ 0x00000F08, 0x001c },    /* R3848  - ANC Coefficient */
 	{ 0x00000F09, 0x0000 },    /* R3849  - ANC Coefficient */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	{ 0x00000F0A, 0x0000 },    /* R3850  - ANC Coefficient */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	{ 0x00000F0B, 0x0000 },    /* R3851  - ANC Coefficient */
 	{ 0x00000F0C, 0x0000 },    /* R3852  - ANC Coefficient */
 	{ 0x00000F0D, 0x0000 },    /* R3853  - ANC Coefficient */
@@ -1991,12 +1963,9 @@ static bool florida_readable_register(struct device *dev, unsigned int reg)
 	case ARIZONA_WAKE_CONTROL:
 	case ARIZONA_SEQUENCE_CONTROL:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	case ARIZONA_SPARE_TRIGGERS:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	case ARIZONA_SAMPLE_RATE_SEQUENCE_SELECT_1:
 	case ARIZONA_SAMPLE_RATE_SEQUENCE_SELECT_2:
 	case ARIZONA_SAMPLE_RATE_SEQUENCE_SELECT_3:
@@ -2141,13 +2110,9 @@ static bool florida_readable_register(struct device *dev, unsigned int reg)
 	case ARIZONA_OUTPUT_ENABLES_1:
 	case ARIZONA_OUTPUT_STATUS_1:
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	case ARIZONA_OUTPUT_STANDBY_1:
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	case ARIZONA_OUTPUT_STANDBY_1:
->>>>>>> master
 	case ARIZONA_RAW_OUTPUT_STATUS_1:
 	case ARIZONA_OUTPUT_RATE_1:
 	case ARIZONA_OUTPUT_VOLUME_RAMP:
@@ -2211,13 +2176,9 @@ static bool florida_readable_register(struct device *dev, unsigned int reg)
 	case ARIZONA_HP3_SHORT_CIRCUIT_CTRL:
 	case ARIZONA_HP_TEST_CTRL_1:
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	case ARIZONA_SPK_CTRL_3:
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	case ARIZONA_SPK_CTRL_3:
->>>>>>> master
 	case ARIZONA_AIF1_BCLK_CTRL:
 	case ARIZONA_AIF1_TX_PIN_CTRL:
 	case ARIZONA_AIF1_RX_PIN_CTRL:
@@ -3144,13 +3105,10 @@ static bool florida_readable_register(struct device *dev, unsigned int reg)
 	case ARIZONA_DSP4_SCRATCH_2:
 	case ARIZONA_DSP4_SCRATCH_3:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	case 0x460 ... 0x47E:
 	case 0x483:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		return true;
 	default:
 		return florida_is_adsp_memory(dev, reg);

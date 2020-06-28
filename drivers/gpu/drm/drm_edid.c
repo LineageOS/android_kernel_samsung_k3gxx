@@ -69,13 +69,10 @@
 /* Force reduced-blanking timings for detailed modes */
 #define EDID_QUIRK_FORCE_REDUCED_BLANKING	(1 << 7)
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* Force 8bpc */
 #define EDID_QUIRK_FORCE_8BPC			(1 << 8)
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 struct detailed_mode_closure {
 	struct drm_connector *connector;
@@ -134,7 +131,6 @@ static struct edid_quirk {
 	/* ViewSonic VA2026w */
 	{ "VSC", 5020, EDID_QUIRK_FORCE_REDUCED_BLANKING },
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	/* Medion MD 30217 PG */
 	{ "MED", 0x7b8, EDID_QUIRK_PREFER_LARGE_75 },
@@ -143,8 +139,6 @@ static struct edid_quirk {
 	{ "SEC", 0xd033, EDID_QUIRK_FORCE_8BPC },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 /*
@@ -2973,14 +2967,11 @@ int drm_add_edid_modes(struct drm_connector *connector, struct edid *edid)
 	drm_add_display_info(edid, &connector->display_info);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (quirks & EDID_QUIRK_FORCE_8BPC)
 		connector->display_info.bpc = 8;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return num_modes;
 }
 EXPORT_SYMBOL(drm_add_edid_modes);

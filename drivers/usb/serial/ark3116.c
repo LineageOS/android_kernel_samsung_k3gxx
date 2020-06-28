@@ -101,7 +101,6 @@ static int ark3116_read_reg(struct usb_serial *serial,
 				 0xfe, 0xc0, 0, reg,
 				 buf, 1, ARK_TIMEOUT);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (result < 1) {
 		dev_err(&serial->interface->dev,
 				"failed to read register %u: %d\n",
@@ -114,16 +113,11 @@ static int ark3116_read_reg(struct usb_serial *serial,
 
 	return buf[0];
 =======
-=======
->>>>>>> master
 	if (result < 0)
 		return result;
 	else
 		return buf[0];
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static inline int calc_divisor(int bps)

@@ -314,7 +314,6 @@ static int striped_read(struct inode *inode,
 	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
 	struct ceph_inode_info *ci = ceph_inode(inode);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u64 pos, this_len, left;
 	int io_align, page_align;
 	int pages_left;
@@ -323,11 +322,6 @@ static int striped_read(struct inode *inode,
 	int io_align, page_align;
 	int left, pages_left;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u64 pos, this_len;
-	int io_align, page_align;
-	int left, pages_left;
->>>>>>> master
 	int read;
 	struct page **page_pos;
 	int ret;
@@ -359,7 +353,6 @@ more:
 	hit_stripe = this_len < left;
 	was_short = ret >= 0 && ret < this_len;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dout("striped_read %llu~%llu (read %u) got %d%s%s\n", pos, left, read,
 	     ret, hit_stripe ? " HITSTRIPE" : "", was_short ? " SHORT" : "");
 
@@ -377,8 +370,6 @@ more:
 
 		didpages = (page_align + ret) >> PAGE_CACHE_SHIFT;
 =======
-=======
->>>>>>> master
 	dout("striped_read %llu~%u (read %u) got %d%s%s\n", pos, left, read,
 	     ret, hit_stripe ? " HITSTRIPE" : "", was_short ? " SHORT" : "");
 
@@ -390,17 +381,13 @@ more:
 			ceph_zero_page_vector_range(page_align + read,
 						    pos - off - read, pages);
 		}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		pos += ret;
 		read = pos - off;
 		left -= ret;
 		page_pos += didpages;
 		pages_left -= didpages;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 		/* hit stripe and need continue*/
 		if (left && hit_stripe && pos < inode->i_size)
@@ -415,8 +402,6 @@ more:
 	}
 
 =======
-=======
->>>>>>> master
 		/* hit stripe? */
 		if (left && hit_stripe)
 			goto more;
@@ -441,10 +426,7 @@ more:
 
 	if (ret >= 0)
 		ret = read;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	dout("striped_read returns %d\n", ret);
 	return ret;
 }
@@ -677,13 +659,10 @@ out:
 			ceph_check_caps(ceph_inode(inode), CHECK_CAPS_AUTHONLY,
 					NULL);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	} else if (ret != -EOLDSNAPC && written > 0) {
 		ret = written;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 	return ret;
 }

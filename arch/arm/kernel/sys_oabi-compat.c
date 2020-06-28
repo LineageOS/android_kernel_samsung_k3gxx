@@ -277,7 +277,6 @@ asmlinkage long sys_oabi_epoll_wait(int epfd,
 	long ret, err, i;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (maxevents <= 0 ||
 			maxevents > (INT_MAX/sizeof(*kbuf)) ||
 			maxevents > (INT_MAX/sizeof(*events)))
@@ -288,10 +287,6 @@ asmlinkage long sys_oabi_epoll_wait(int epfd,
 	if (maxevents <= 0 || maxevents > (INT_MAX/sizeof(struct epoll_event)))
 		return -EINVAL;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (maxevents <= 0 || maxevents > (INT_MAX/sizeof(struct epoll_event)))
-		return -EINVAL;
->>>>>>> master
 	kbuf = kmalloc(sizeof(*kbuf) * maxevents, GFP_KERNEL);
 	if (!kbuf)
 		return -ENOMEM;
@@ -329,13 +324,10 @@ asmlinkage long sys_oabi_semtimedop(int semid,
 	if (nsops < 1 || nsops > SEMOPM)
 		return -EINVAL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!access_ok(VERIFY_READ, tsops, sizeof(*tsops) * nsops))
 		return -EFAULT;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	sops = kmalloc(sizeof(*sops) * nsops, GFP_KERNEL);
 	if (!sops)
 		return -ENOMEM;

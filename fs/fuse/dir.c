@@ -253,7 +253,6 @@ static int fuse_dentry_revalidate(struct dentry *entry, unsigned int flags)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * Get the canonical path. Since we must translate to a path, this must be done
  * in the context of the userspace daemon, however, the userspace daemon cannot
@@ -300,8 +299,6 @@ default_path:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int invalid_nodeid(u64 nodeid)
 {
 	return !nodeid || nodeid == FUSE_ROOT_ID;
@@ -310,12 +307,9 @@ static int invalid_nodeid(u64 nodeid)
 const struct dentry_operations fuse_dentry_operations = {
 	.d_revalidate	= fuse_dentry_revalidate,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.d_canonical_path = fuse_dentry_canonical_path,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 int fuse_valid_type(int m)
@@ -1233,13 +1227,10 @@ static int parse_dirfile(char *buf, size_t nbytes, struct file *file,
 		if (reclen > nbytes)
 			break;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (memchr(dirent->name, '/', dirent->namelen) != NULL)
 			return -EIO;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 		over = filldir(dstbuf, dirent->name, dirent->namelen,
 			       file->f_pos, dirent->ino, dirent->type);
@@ -1389,13 +1380,10 @@ static int parse_dirplusfile(char *buf, size_t nbytes, struct file *file,
 		if (reclen > nbytes)
 			break;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (memchr(dirent->name, '/', dirent->namelen) != NULL)
 			return -EIO;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 		if (!over) {
 			/* We fill entries into dstbuf only as much as
@@ -1668,12 +1656,9 @@ int fuse_do_setattr(struct inode *inode, struct iattr *attr,
 {
 	struct fuse_conn *fc = get_fuse_conn(inode);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct fuse_inode *fi = get_fuse_inode(inode);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	struct fuse_req *req;
 	struct fuse_setattr_in inarg;
 	struct fuse_attr_out outarg;
@@ -1702,7 +1687,6 @@ int fuse_do_setattr(struct inode *inode, struct iattr *attr,
 		return PTR_ERR(req);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (is_truncate) {
 		fuse_set_nowrite(inode);
 		set_bit(FUSE_I_SIZE_UNSTABLE, &fi->state);
@@ -1711,10 +1695,6 @@ int fuse_do_setattr(struct inode *inode, struct iattr *attr,
 	if (is_truncate)
 		fuse_set_nowrite(inode);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (is_truncate)
-		fuse_set_nowrite(inode);
->>>>>>> master
 
 	memset(&inarg, 0, sizeof(inarg));
 	memset(&outarg, 0, sizeof(outarg));
@@ -1777,12 +1757,9 @@ int fuse_do_setattr(struct inode *inode, struct iattr *attr,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	clear_bit(FUSE_I_SIZE_UNSTABLE, &fi->state);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 
 error:
@@ -1790,12 +1767,9 @@ error:
 		fuse_release_nowrite(inode);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	clear_bit(FUSE_I_SIZE_UNSTABLE, &fi->state);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return err;
 }
 
@@ -1860,13 +1834,10 @@ static int fuse_setxattr(struct dentry *entry, const char *name,
 		err = -EOPNOTSUPP;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!err)
 		fuse_invalidate_attr(inode);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return err;
 }
 
@@ -1997,13 +1968,10 @@ static int fuse_removexattr(struct dentry *entry, const char *name)
 		err = -EOPNOTSUPP;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!err)
 		fuse_invalidate_attr(inode);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return err;
 }
 

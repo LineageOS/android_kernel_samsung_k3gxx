@@ -23,14 +23,10 @@
  * Or, point your browser to http://www.gnu.org/copyleft/gpl.html
  *
 <<<<<<< HEAD
-<<<<<<< HEAD
  * the project's page is at http://www.linuxtv.org/
 =======
  * the project's page is at http://www.linuxtv.org/ 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * the project's page is at http://www.linuxtv.org/ 
->>>>>>> master
  */
 
 /* for debugging ARM communication: */
@@ -49,7 +45,6 @@
 #define _NOHANDSHAKE
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * Max transfer size done by av7110_fw_cmd()
  *
@@ -60,8 +55,6 @@
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /****************************************************************************
  * DEBI functions
  ****************************************************************************/
@@ -511,19 +504,14 @@ int av7110_fw_cmd(struct av7110 *av7110, int type, int com, int num, ...)
 {
 	va_list args;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u16 buf[MAX_XFER_SIZE];
 =======
 	u16 buf[num + 2];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u16 buf[num + 2];
->>>>>>> master
 	int i, ret;
 
 //	dprintk(4, "%p\n", av7110);
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (2 + num > sizeof(buf)) {
 		printk(KERN_WARNING
@@ -534,8 +522,6 @@ int av7110_fw_cmd(struct av7110 *av7110, int type, int com, int num, ...)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	buf[0] = ((type << 8) | com);
 	buf[1] = num;
 

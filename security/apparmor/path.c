@@ -26,13 +26,9 @@
 #include "include/policy.h"
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 /* modified from dcache.c */
 static int prepend(char **buffer, int buflen, const char *str, int namelen)
 {
@@ -46,7 +42,6 @@ static int prepend(char **buffer, int buflen, const char *str, int namelen)
 
 #define CHROOT_NSCONNECT (PATH_CHROOT_REL | PATH_CHROOT_NSCONNECT)
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 /* If the path is not connected to the expected root,
  * check if it is a sysctl and handle specially else remove any
@@ -82,8 +77,6 @@ static int disconnect(const struct path *path, char *buf, char **name,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /**
  * d_namespace_path - lookup a name associated with a given path
  * @path: path to lookup  (NOT NULL)
@@ -120,15 +113,11 @@ static int d_namespace_path(struct path *path, char *buf, int buflen,
 			 */
 			return prepend(name, *name - buf, "/proc", 5);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		} else
 			return disconnect(path, buf, name, flags);
 =======
 		}
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		}
->>>>>>> master
 		return 0;
 	}
 
@@ -175,12 +164,9 @@ static int d_namespace_path(struct path *path, char *buf, int buflen,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!connected)
 		error = disconnect(path, buf, name, flags);
 =======
-=======
->>>>>>> master
 	/* If the path is not connected to the expected root,
 	 * check if it is a sysctl and handle specially else remove any
 	 * leading / that __d_path may have returned.
@@ -204,10 +190,7 @@ static int d_namespace_path(struct path *path, char *buf, int buflen,
 				*name = res + 1;
 		}
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 out:
 	return error;

@@ -281,11 +281,8 @@ static int ecryptfs_mm_task(void *arg)
 
 void ecryptfs_mm_drop_cache(int userid, int engineid) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ecryptfs_mm_task(&userid);
 =======
-=======
->>>>>>> master
 #if 1
 	struct task_struct *task;
 	struct ecryptfs_mm_drop_cache_param *param =
@@ -308,10 +305,7 @@ void ecryptfs_mm_drop_cache(int userid, int engineid) {
 #else
 	ecryptfs_mm_task(&userid);
 #endif
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 #include <linux/pagevec.h>

@@ -679,14 +679,10 @@ static const void *daqboard2000_find_boardinfo(struct comedi_device *dev,
 	int i;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (pcidev->subsystem_vendor != PCI_VENDOR_ID_IOTECH)
 =======
 	if (pcidev->subsystem_device != PCI_VENDOR_ID_IOTECH)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (pcidev->subsystem_device != PCI_VENDOR_ID_IOTECH)
->>>>>>> master
 		return NULL;
 
 	for (i = 0; i < ARRAY_SIZE(boardtypes); i++) {

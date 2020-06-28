@@ -129,17 +129,12 @@ struct clk *clk_sp810_timerclken_of_get(struct of_phandle_args *clkspec,
 	struct clk_sp810 *sp810 = data;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (WARN_ON(clkspec->args_count != 1 ||
 		    clkspec->args[0] >=	ARRAY_SIZE(sp810->timerclken)))
 =======
 	if (WARN_ON(clkspec->args_count != 1 || clkspec->args[0] >
 			ARRAY_SIZE(sp810->timerclken)))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (WARN_ON(clkspec->args_count != 1 || clkspec->args[0] >
-			ARRAY_SIZE(sp810->timerclken)))
->>>>>>> master
 		return NULL;
 
 	return sp810->timerclken[clkspec->args[0]].clk;
@@ -152,12 +147,9 @@ void __init clk_sp810_of_setup(struct device_node *node)
 	char name[12];
 	struct clk_init_data init;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	static int instance;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	int i;
 
 	if (!sp810) {
@@ -190,14 +182,10 @@ void __init clk_sp810_of_setup(struct device_node *node)
 
 	for (i = 0; i < ARRAY_SIZE(sp810->timerclken); i++) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		snprintf(name, sizeof(name), "sp810_%d_%d", instance, i);
 =======
 		snprintf(name, ARRAY_SIZE(name), "timerclken%d", i);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		snprintf(name, ARRAY_SIZE(name), "timerclken%d", i);
->>>>>>> master
 
 		sp810->timerclken[i].sp810 = sp810;
 		sp810->timerclken[i].channel = i;
@@ -210,11 +198,8 @@ void __init clk_sp810_of_setup(struct device_node *node)
 
 	of_clk_add_provider(node, clk_sp810_timerclken_of_get, sp810);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	instance++;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 CLK_OF_DECLARE(sp810, "arm,sp810", clk_sp810_of_setup);

@@ -202,15 +202,11 @@ void fuse_change_attributes(struct inode *inode, struct fuse_attr *attr,
 
 	spin_lock(&fc->lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if ((attr_version != 0 && fi->attr_version > attr_version) ||
 	    test_bit(FUSE_I_SIZE_UNSTABLE, &fi->state)) {
 =======
 	if (attr_version != 0 && fi->attr_version > attr_version) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (attr_version != 0 && fi->attr_version > attr_version) {
->>>>>>> master
 		spin_unlock(&fc->lock);
 		return;
 	}
@@ -470,7 +466,6 @@ static const match_table_t tokens = {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int fuse_match_uint(substring_t *s, unsigned int *res)
 {
 	int err = -ENOMEM;
@@ -484,8 +479,6 @@ static int fuse_match_uint(substring_t *s, unsigned int *res)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int parse_fuse_opt(char *opt, struct fuse_mount_data *d, int is_bdev)
 {
 	char *p;
@@ -497,12 +490,9 @@ static int parse_fuse_opt(char *opt, struct fuse_mount_data *d, int is_bdev)
 		int token;
 		int value;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		unsigned uv;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		substring_t args[MAX_OPT_ARGS];
 		if (!*p)
 			continue;
@@ -527,7 +517,6 @@ static int parse_fuse_opt(char *opt, struct fuse_mount_data *d, int is_bdev)
 
 		case OPT_USER_ID:
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (fuse_match_uint(&args[0], &uv))
 				return 0;
 			d->user_id = make_kuid(current_user_ns(), uv);
@@ -536,18 +525,12 @@ static int parse_fuse_opt(char *opt, struct fuse_mount_data *d, int is_bdev)
 				return 0;
 			d->user_id = make_kuid(current_user_ns(), value);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			if (match_int(&args[0], &value))
-				return 0;
-			d->user_id = make_kuid(current_user_ns(), value);
->>>>>>> master
 			if (!uid_valid(d->user_id))
 				return 0;
 			d->user_id_present = 1;
 			break;
 
 		case OPT_GROUP_ID:
-<<<<<<< HEAD
 <<<<<<< HEAD
 			if (fuse_match_uint(&args[0], &uv))
 				return 0;
@@ -557,11 +540,6 @@ static int parse_fuse_opt(char *opt, struct fuse_mount_data *d, int is_bdev)
 				return 0;
 			d->group_id = make_kgid(current_user_ns(), value);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			if (match_int(&args[0], &value))
-				return 0;
-			d->group_id = make_kgid(current_user_ns(), value);
->>>>>>> master
 			if (!gid_valid(d->group_id))
 				return 0;
 			d->group_id_present = 1;
@@ -958,14 +936,10 @@ static void fuse_send_init(struct fuse_conn *fc, struct fuse_req *req)
 		FUSE_EXPORT_SUPPORT | FUSE_BIG_WRITES | FUSE_DONT_MASK |
 		FUSE_SPLICE_WRITE | FUSE_SPLICE_MOVE | FUSE_SPLICE_READ |
 <<<<<<< HEAD
-<<<<<<< HEAD
 		FUSE_FLOCK_LOCKS | FUSE_HAS_IOCTL_DIR | FUSE_AUTO_INVAL_DATA |
 =======
 		FUSE_FLOCK_LOCKS | FUSE_IOCTL_DIR | FUSE_AUTO_INVAL_DATA |
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		FUSE_FLOCK_LOCKS | FUSE_IOCTL_DIR | FUSE_AUTO_INVAL_DATA |
->>>>>>> master
 		FUSE_DO_READDIRPLUS | FUSE_READDIRPLUS_AUTO | FUSE_ASYNC_DIO;
 	req->in.h.opcode = FUSE_INIT;
 	req->in.numargs = 1;
@@ -1081,12 +1055,9 @@ static int fuse_fill_super(struct super_block *sb, void *data, int silent)
 
 	fuse_conn_init(fc);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	fc->release = fuse_free_conn;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	fc->dev = sb->s_dev;
 	fc->sb = sb;
@@ -1102,13 +1073,9 @@ static int fuse_fill_super(struct super_block *sb, void *data, int silent)
 	sb->s_flags |= MS_POSIXACL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	fc->release = fuse_free_conn;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	fc->release = fuse_free_conn;
->>>>>>> master
 	fc->flags = d.flags;
 	fc->user_id = d.user_id;
 	fc->group_id = d.group_id;

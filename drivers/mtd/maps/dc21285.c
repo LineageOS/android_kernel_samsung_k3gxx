@@ -39,7 +39,6 @@ static void nw_en_write(void)
 	 * the write gate, which will be open for about the next 2ms.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	raw_spin_lock_irqsave(&nw_gpio_lock, flags);
 	nw_cpld_modify(CPLD_FLASH_WR_ENABLE, CPLD_FLASH_WR_ENABLE);
 	raw_spin_unlock_irqrestore(&nw_gpio_lock, flags);
@@ -48,11 +47,6 @@ static void nw_en_write(void)
 	nw_cpld_modify(CPLD_FLASH_WR_ENABLE, CPLD_FLASH_WR_ENABLE);
 	spin_unlock_irqrestore(&nw_gpio_lock, flags);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	spin_lock_irqsave(&nw_gpio_lock, flags);
-	nw_cpld_modify(CPLD_FLASH_WR_ENABLE, CPLD_FLASH_WR_ENABLE);
-	spin_unlock_irqrestore(&nw_gpio_lock, flags);
->>>>>>> master
 
 	/*
 	 * let the ISA bus to catch on...

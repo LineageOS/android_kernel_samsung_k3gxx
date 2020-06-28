@@ -53,14 +53,10 @@ static struct sk_buff *l2cap_build_cmd(struct l2cap_conn *conn,
 static void l2cap_send_cmd(struct l2cap_conn *conn, u8 ident, u8 code, u16 len,
 			   void *data);
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int l2cap_build_conf_req(struct l2cap_chan *chan, void *data, size_t data_size);
 =======
 static int l2cap_build_conf_req(struct l2cap_chan *chan, void *data);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static int l2cap_build_conf_req(struct l2cap_chan *chan, void *data);
->>>>>>> master
 static void l2cap_send_disconn_req(struct l2cap_chan *chan, int err);
 
 static void l2cap_tx(struct l2cap_chan *chan, struct l2cap_ctrl *control,
@@ -1292,14 +1288,10 @@ static void l2cap_conn_start(struct l2cap_conn *conn)
 			set_bit(CONF_REQ_SENT, &chan->conf_state);
 			l2cap_send_cmd(conn, l2cap_get_ident(conn), L2CAP_CONF_REQ,
 <<<<<<< HEAD
-<<<<<<< HEAD
 				       l2cap_build_conf_req(chan, buf, sizeof(buf)), buf);
 =======
 				       l2cap_build_conf_req(chan, buf), buf);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				       l2cap_build_conf_req(chan, buf), buf);
->>>>>>> master
 			chan->num_conf_req++;
 		}
 
@@ -2958,28 +2950,21 @@ static inline int l2cap_get_conf_opt(void **ptr, int *type, int *olen,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void l2cap_add_conf_opt(void **ptr, u8 type, u8 len, unsigned long val, size_t size)
 =======
 static void l2cap_add_conf_opt(void **ptr, u8 type, u8 len, unsigned long val)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static void l2cap_add_conf_opt(void **ptr, u8 type, u8 len, unsigned long val)
->>>>>>> master
 {
 	struct l2cap_conf_opt *opt = *ptr;
 
 	BT_DBG("type 0x%2.2x len %u val 0x%lx", type, len, val);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (size < L2CAP_CONF_OPT_SIZE + len)
 		return;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	opt->type = type;
 	opt->len  = len;
 
@@ -3005,14 +2990,10 @@ static void l2cap_add_conf_opt(void **ptr, u8 type, u8 len, unsigned long val)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void l2cap_add_opt_efs(void **ptr, struct l2cap_chan *chan, size_t size)
 =======
 static void l2cap_add_opt_efs(void **ptr, struct l2cap_chan *chan)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static void l2cap_add_opt_efs(void **ptr, struct l2cap_chan *chan)
->>>>>>> master
 {
 	struct l2cap_conf_efs efs;
 
@@ -3041,14 +3022,10 @@ static void l2cap_add_opt_efs(void **ptr, struct l2cap_chan *chan)
 
 	l2cap_add_conf_opt(ptr, L2CAP_CONF_EFS, sizeof(efs),
 <<<<<<< HEAD
-<<<<<<< HEAD
 			   (unsigned long) &efs, size);
 =======
 			   (unsigned long) &efs);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			   (unsigned long) &efs);
->>>>>>> master
 }
 
 static void l2cap_ack_timeout(struct work_struct *work)
@@ -3193,25 +3170,18 @@ static inline void l2cap_txwin_setup(struct l2cap_chan *chan)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int l2cap_build_conf_req(struct l2cap_chan *chan, void *data, size_t data_size)
 =======
 static int l2cap_build_conf_req(struct l2cap_chan *chan, void *data)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static int l2cap_build_conf_req(struct l2cap_chan *chan, void *data)
->>>>>>> master
 {
 	struct l2cap_conf_req *req = data;
 	struct l2cap_conf_rfc rfc = { .mode = chan->mode };
 	void *ptr = req->data;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	void *endptr = data + data_size;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	u16 size;
 
 	BT_DBG("chan %p", chan);
@@ -3237,14 +3207,10 @@ static int l2cap_build_conf_req(struct l2cap_chan *chan, void *data)
 done:
 	if (chan->imtu != L2CAP_DEFAULT_MTU)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		l2cap_add_conf_opt(&ptr, L2CAP_CONF_MTU, 2, chan->imtu, endptr - ptr);
 =======
 		l2cap_add_conf_opt(&ptr, L2CAP_CONF_MTU, 2, chan->imtu);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		l2cap_add_conf_opt(&ptr, L2CAP_CONF_MTU, 2, chan->imtu);
->>>>>>> master
 
 	switch (chan->mode) {
 	case L2CAP_MODE_BASIC:
@@ -3261,14 +3227,10 @@ done:
 
 		l2cap_add_conf_opt(&ptr, L2CAP_CONF_RFC, sizeof(rfc),
 <<<<<<< HEAD
-<<<<<<< HEAD
 				   (unsigned long) &rfc, endptr - ptr);
 =======
 				   (unsigned long) &rfc);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				   (unsigned long) &rfc);
->>>>>>> master
 		break;
 
 	case L2CAP_MODE_ERTM:
@@ -3289,7 +3251,6 @@ done:
 
 		l2cap_add_conf_opt(&ptr, L2CAP_CONF_RFC, sizeof(rfc),
 <<<<<<< HEAD
-<<<<<<< HEAD
 				   (unsigned long) &rfc, endptr - ptr);
 
 		if (test_bit(FLAG_EFS_ENABLE, &chan->flags))
@@ -3299,8 +3260,6 @@ done:
 			l2cap_add_conf_opt(&ptr, L2CAP_CONF_EWS, 2,
 					   chan->tx_win, endptr - ptr);
 =======
-=======
->>>>>>> master
 				   (unsigned long) &rfc);
 
 		if (test_bit(FLAG_EFS_ENABLE, &chan->flags))
@@ -3309,10 +3268,7 @@ done:
 		if (test_bit(FLAG_EXT_CTRL, &chan->flags))
 			l2cap_add_conf_opt(&ptr, L2CAP_CONF_EWS, 2,
 					   chan->tx_win);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 		if (chan->conn->feat_mask & L2CAP_FEAT_FCS)
 			if (chan->fcs == L2CAP_FCS_NONE ||
@@ -3320,14 +3276,10 @@ done:
 				chan->fcs = L2CAP_FCS_NONE;
 				l2cap_add_conf_opt(&ptr, L2CAP_CONF_FCS, 1,
 <<<<<<< HEAD
-<<<<<<< HEAD
 						   chan->fcs, endptr - ptr);
 =======
 						   chan->fcs);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-						   chan->fcs);
->>>>>>> master
 			}
 		break;
 
@@ -3346,22 +3298,16 @@ done:
 
 		l2cap_add_conf_opt(&ptr, L2CAP_CONF_RFC, sizeof(rfc),
 <<<<<<< HEAD
-<<<<<<< HEAD
 				   (unsigned long) &rfc, endptr - ptr);
 
 		if (test_bit(FLAG_EFS_ENABLE, &chan->flags))
 			l2cap_add_opt_efs(&ptr, chan, endptr - ptr);
 =======
-=======
->>>>>>> master
 				   (unsigned long) &rfc);
 
 		if (test_bit(FLAG_EFS_ENABLE, &chan->flags))
 			l2cap_add_opt_efs(&ptr, chan);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 		if (chan->conn->feat_mask & L2CAP_FEAT_FCS)
 			if (chan->fcs == L2CAP_FCS_NONE ||
@@ -3369,14 +3315,10 @@ done:
 				chan->fcs = L2CAP_FCS_NONE;
 				l2cap_add_conf_opt(&ptr, L2CAP_CONF_FCS, 1,
 <<<<<<< HEAD
-<<<<<<< HEAD
 						   chan->fcs, endptr - ptr);
 =======
 						   chan->fcs);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-						   chan->fcs);
->>>>>>> master
 			}
 		break;
 	}
@@ -3388,23 +3330,17 @@ done:
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int l2cap_parse_conf_req(struct l2cap_chan *chan, void *data, size_t data_size)
 {
 	struct l2cap_conf_rsp *rsp = data;
 	void *ptr = rsp->data;
 	void *endptr = data + data_size;
 =======
-=======
->>>>>>> master
 static int l2cap_parse_conf_req(struct l2cap_chan *chan, void *data)
 {
 	struct l2cap_conf_rsp *rsp = data;
 	void *ptr = rsp->data;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	void *req = chan->conf_req;
 	int len = chan->conf_len;
 	int type, hint, olen;
@@ -3507,14 +3443,10 @@ done:
 
 		l2cap_add_conf_opt(&ptr, L2CAP_CONF_RFC, sizeof(rfc),
 <<<<<<< HEAD
-<<<<<<< HEAD
 				   (unsigned long) &rfc, endptr - ptr);
 =======
 				   (unsigned long) &rfc);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				   (unsigned long) &rfc);
->>>>>>> master
 	}
 
 	if (result == L2CAP_CONF_SUCCESS) {
@@ -3528,14 +3460,10 @@ done:
 			set_bit(CONF_MTU_DONE, &chan->conf_state);
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 		l2cap_add_conf_opt(&ptr, L2CAP_CONF_MTU, 2, chan->omtu, endptr - ptr);
 =======
 		l2cap_add_conf_opt(&ptr, L2CAP_CONF_MTU, 2, chan->omtu);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		l2cap_add_conf_opt(&ptr, L2CAP_CONF_MTU, 2, chan->omtu);
->>>>>>> master
 
 		if (remote_efs) {
 			if (chan->local_stype != L2CAP_SERV_NOTRAFIC &&
@@ -3550,14 +3478,10 @@ done:
 				l2cap_add_conf_opt(&ptr, L2CAP_CONF_EFS,
 						   sizeof(efs),
 <<<<<<< HEAD
-<<<<<<< HEAD
 						   (unsigned long) &efs, endptr - ptr);
 =======
 						   (unsigned long) &efs);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-						   (unsigned long) &efs);
->>>>>>> master
 			} else {
 				/* Send PENDING Conf Rsp */
 				result = L2CAP_CONF_PENDING;
@@ -3591,14 +3515,10 @@ done:
 
 			l2cap_add_conf_opt(&ptr, L2CAP_CONF_RFC,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					   sizeof(rfc), (unsigned long) &rfc, endptr - ptr);
 =======
 					   sizeof(rfc), (unsigned long) &rfc);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					   sizeof(rfc), (unsigned long) &rfc);
->>>>>>> master
 
 			if (test_bit(FLAG_EFS_ENABLE, &chan->flags)) {
 				chan->remote_id = efs.id;
@@ -3613,14 +3533,10 @@ done:
 				l2cap_add_conf_opt(&ptr, L2CAP_CONF_EFS,
 						   sizeof(efs),
 <<<<<<< HEAD
-<<<<<<< HEAD
 						   (unsigned long) &efs, endptr - ptr);
 =======
 						   (unsigned long) &efs);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-						   (unsigned long) &efs);
->>>>>>> master
 			}
 			break;
 
@@ -3635,14 +3551,10 @@ done:
 
 			l2cap_add_conf_opt(&ptr, L2CAP_CONF_RFC, sizeof(rfc),
 <<<<<<< HEAD
-<<<<<<< HEAD
 					   (unsigned long) &rfc, endptr - ptr);
 =======
 					   (unsigned long) &rfc);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					   (unsigned long) &rfc);
->>>>>>> master
 
 			break;
 
@@ -3665,23 +3577,17 @@ done:
 
 static int l2cap_parse_conf_rsp(struct l2cap_chan *chan, void *rsp, int len,
 <<<<<<< HEAD
-<<<<<<< HEAD
 				void *data, size_t size, u16 *result)
 {
 	struct l2cap_conf_req *req = data;
 	void *ptr = req->data;
 	void *endptr = data + size;
 =======
-=======
->>>>>>> master
 				void *data, u16 *result)
 {
 	struct l2cap_conf_req *req = data;
 	void *ptr = req->data;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	int type, olen;
 	unsigned long val;
 	struct l2cap_conf_rfc rfc = { .mode = L2CAP_MODE_BASIC };
@@ -3700,28 +3606,20 @@ static int l2cap_parse_conf_rsp(struct l2cap_chan *chan, void *rsp, int len,
 			} else
 				chan->imtu = val;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			l2cap_add_conf_opt(&ptr, L2CAP_CONF_MTU, 2, chan->imtu, endptr - ptr);
 =======
 			l2cap_add_conf_opt(&ptr, L2CAP_CONF_MTU, 2, chan->imtu);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			l2cap_add_conf_opt(&ptr, L2CAP_CONF_MTU, 2, chan->imtu);
->>>>>>> master
 			break;
 
 		case L2CAP_CONF_FLUSH_TO:
 			chan->flush_to = val;
 			l2cap_add_conf_opt(&ptr, L2CAP_CONF_FLUSH_TO,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					   2, chan->flush_to, endptr - ptr);
 =======
 					   2, chan->flush_to);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					   2, chan->flush_to);
->>>>>>> master
 			break;
 
 		case L2CAP_CONF_RFC:
@@ -3736,28 +3634,20 @@ static int l2cap_parse_conf_rsp(struct l2cap_chan *chan, void *rsp, int len,
 
 			l2cap_add_conf_opt(&ptr, L2CAP_CONF_RFC,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					   sizeof(rfc), (unsigned long) &rfc, endptr - ptr);
 =======
 					   sizeof(rfc), (unsigned long) &rfc);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					   sizeof(rfc), (unsigned long) &rfc);
->>>>>>> master
 			break;
 
 		case L2CAP_CONF_EWS:
 			chan->ack_win = min_t(u16, val, chan->ack_win);
 			l2cap_add_conf_opt(&ptr, L2CAP_CONF_EWS, 2,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					   chan->tx_win, endptr - ptr);
 =======
 					   chan->tx_win);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					   chan->tx_win);
->>>>>>> master
 			break;
 
 		case L2CAP_CONF_EFS:
@@ -3771,14 +3661,10 @@ static int l2cap_parse_conf_rsp(struct l2cap_chan *chan, void *rsp, int len,
 
 			l2cap_add_conf_opt(&ptr, L2CAP_CONF_EFS, sizeof(efs),
 <<<<<<< HEAD
-<<<<<<< HEAD
 					   (unsigned long) &efs, endptr - ptr);
 =======
 					   (unsigned long) &efs);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					   (unsigned long) &efs);
->>>>>>> master
 			break;
 
 		case L2CAP_CONF_FCS:
@@ -3867,14 +3753,10 @@ void __l2cap_connect_rsp_defer(struct l2cap_chan *chan)
 
 	l2cap_send_cmd(conn, l2cap_get_ident(conn), L2CAP_CONF_REQ,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		       l2cap_build_conf_req(chan, buf, sizeof(buf)), buf);
 =======
 		       l2cap_build_conf_req(chan, buf), buf);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		       l2cap_build_conf_req(chan, buf), buf);
->>>>>>> master
 	chan->num_conf_req++;
 }
 
@@ -4079,14 +3961,10 @@ sendresp:
 		set_bit(CONF_REQ_SENT, &chan->conf_state);
 		l2cap_send_cmd(conn, l2cap_get_ident(conn), L2CAP_CONF_REQ,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			       l2cap_build_conf_req(chan, buf, sizeof(buf)), buf);
 =======
 			       l2cap_build_conf_req(chan, buf), buf);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			       l2cap_build_conf_req(chan, buf), buf);
->>>>>>> master
 		chan->num_conf_req++;
 	}
 
@@ -4167,14 +4045,10 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
 
 		l2cap_send_cmd(conn, l2cap_get_ident(conn), L2CAP_CONF_REQ,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			       l2cap_build_conf_req(chan, req, sizeof(req)), req);
 =======
 			       l2cap_build_conf_req(chan, req), req);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			       l2cap_build_conf_req(chan, req), req);
->>>>>>> master
 		chan->num_conf_req++;
 		break;
 
@@ -4279,14 +4153,10 @@ static inline int l2cap_config_req(struct l2cap_conn *conn,
 
 	/* Complete config. */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	len = l2cap_parse_conf_req(chan, rsp, sizeof(rsp));
 =======
 	len = l2cap_parse_conf_req(chan, rsp);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	len = l2cap_parse_conf_req(chan, rsp);
->>>>>>> master
 	if (len < 0) {
 		l2cap_send_disconn_req(chan, ECONNRESET);
 		goto unlock;
@@ -4321,14 +4191,10 @@ static inline int l2cap_config_req(struct l2cap_conn *conn,
 		u8 buf[64];
 		l2cap_send_cmd(conn, l2cap_get_ident(conn), L2CAP_CONF_REQ,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			       l2cap_build_conf_req(chan, buf, sizeof(buf)), buf);
 =======
 			       l2cap_build_conf_req(chan, buf), buf);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			       l2cap_build_conf_req(chan, buf), buf);
->>>>>>> master
 		chan->num_conf_req++;
 	}
 
@@ -4389,14 +4255,10 @@ static inline int l2cap_config_rsp(struct l2cap_conn *conn,
 
 			len = l2cap_parse_conf_rsp(chan, rsp->data, len,
 <<<<<<< HEAD
-<<<<<<< HEAD
 						   buf, sizeof(buf), &result);
 =======
 						   buf, &result);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-						   buf, &result);
->>>>>>> master
 			if (len < 0) {
 				l2cap_send_disconn_req(chan, ECONNRESET);
 				goto done;
@@ -4427,14 +4289,10 @@ static inline int l2cap_config_rsp(struct l2cap_conn *conn,
 			result = L2CAP_CONF_SUCCESS;
 			len = l2cap_parse_conf_rsp(chan, rsp->data, len,
 <<<<<<< HEAD
-<<<<<<< HEAD
 						   req, sizeof(req), &result);
 =======
 						   req, &result);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-						   req, &result);
->>>>>>> master
 			if (len < 0) {
 				l2cap_send_disconn_req(chan, ECONNRESET);
 				goto done;
@@ -5017,14 +4875,10 @@ static void l2cap_do_create(struct l2cap_chan *chan, int result,
 			l2cap_send_cmd(chan->conn, l2cap_get_ident(chan->conn),
 				       L2CAP_CONF_REQ,
 <<<<<<< HEAD
-<<<<<<< HEAD
 				       l2cap_build_conf_req(chan, buf, sizeof(buf)), buf);
 =======
 				       l2cap_build_conf_req(chan, buf), buf);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				       l2cap_build_conf_req(chan, buf), buf);
->>>>>>> master
 			chan->num_conf_req++;
 		}
 	}
@@ -6911,14 +6765,10 @@ int l2cap_security_cfm(struct hci_conn *hcon, u8 status, u8 encrypt)
 				l2cap_send_cmd(conn, l2cap_get_ident(conn),
 					       L2CAP_CONF_REQ,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					       l2cap_build_conf_req(chan, buf, sizeof(buf)),
 =======
 					       l2cap_build_conf_req(chan, buf),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					       l2cap_build_conf_req(chan, buf),
->>>>>>> master
 					       buf);
 				chan->num_conf_req++;
 			}

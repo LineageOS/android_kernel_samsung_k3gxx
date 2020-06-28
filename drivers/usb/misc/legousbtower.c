@@ -954,10 +954,7 @@ static int tower_probe (struct usb_interface *interface, const struct usb_device
 	dev->interrupt_out_interval = interrupt_out_interval ? interrupt_out_interval : dev->interrupt_out_endpoint->bInterval;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	/* we can register the device now, as it is ready */
 	usb_set_intfdata (interface, dev);
 
@@ -976,10 +973,7 @@ static int tower_probe (struct usb_interface *interface, const struct usb_device
 		 "%d minor %d\n", (dev->minor - LEGO_USB_TOWER_MINOR_BASE),
 		 USB_MAJOR, dev->minor);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* get the firmware version and log it */
 	result = usb_control_msg (udev,
 				  usb_rcvctrlpipe(udev, 0),
@@ -1001,7 +995,6 @@ static int tower_probe (struct usb_interface *interface, const struct usb_device
 		 le16_to_cpu(get_version_reply.build_no));
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* we can register the device now, as it is ready */
 	usb_set_intfdata (interface, dev);
 
@@ -1021,8 +1014,6 @@ static int tower_probe (struct usb_interface *interface, const struct usb_device
 		 USB_MAJOR, dev->minor);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 exit:
 	dbg(2, "%s: leave, return value 0x%.8lx (dev)", __func__, (long) dev);

@@ -368,14 +368,10 @@ sctp_disposition_t sctp_sf_do_5_1B_init(struct net *net,
 	/* Verify the INIT chunk before processing it. */
 	err_chunk = NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!sctp_verify_init(net, ep, asoc, chunk->chunk_hdr->type,
 =======
 	if (!sctp_verify_init(net, asoc, chunk->chunk_hdr->type,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!sctp_verify_init(net, asoc, chunk->chunk_hdr->type,
->>>>>>> master
 			      (sctp_init_chunk_t *)chunk->chunk_hdr, chunk,
 			      &err_chunk)) {
 		/* This chunk contains fatal error. It is to be discarded.
@@ -543,14 +539,10 @@ sctp_disposition_t sctp_sf_do_5_1C_ack(struct net *net,
 	/* Verify the INIT chunk before processing it. */
 	err_chunk = NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!sctp_verify_init(net, ep, asoc, chunk->chunk_hdr->type,
 =======
 	if (!sctp_verify_init(net, asoc, chunk->chunk_hdr->type,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!sctp_verify_init(net, asoc, chunk->chunk_hdr->type,
->>>>>>> master
 			      (sctp_init_chunk_t *)chunk->chunk_hdr, chunk,
 			      &err_chunk)) {
 
@@ -785,7 +777,6 @@ sctp_disposition_t sctp_sf_do_5_1D_ce(struct net *net,
 		sctp_ierror_t ret;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* Make sure that we and the peer are AUTH capable */
 		if (!net->sctp.auth_enable || !new_asoc->peer.auth_capable) {
 			sctp_association_free(new_asoc);
@@ -794,8 +785,6 @@ sctp_disposition_t sctp_sf_do_5_1D_ce(struct net *net,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		/* set-up our fake chunk so that we can process it */
 		auth.skb = chunk->auth_chunk;
 		auth.asoc = chunk->asoc;
@@ -807,18 +796,12 @@ sctp_disposition_t sctp_sf_do_5_1D_ce(struct net *net,
 
 		ret = sctp_sf_authenticate(net, ep, new_asoc, type, &auth);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 
 		/* We can now safely free the auth_chunk clone */
 		kfree_skb(chunk->auth_chunk);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (ret != SCTP_IERROR_NO_ERROR) {
 			sctp_association_free(new_asoc);
 			return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
@@ -1476,14 +1459,10 @@ static sctp_disposition_t sctp_sf_do_unexpected_init(
 	/* Verify the INIT chunk before processing it. */
 	err_chunk = NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!sctp_verify_init(net, ep, asoc, chunk->chunk_hdr->type,
 =======
 	if (!sctp_verify_init(net, asoc, chunk->chunk_hdr->type,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!sctp_verify_init(net, asoc, chunk->chunk_hdr->type,
->>>>>>> master
 			      (sctp_init_chunk_t *)chunk->chunk_hdr, chunk,
 			      &err_chunk)) {
 		/* This chunk contains fatal error. It is to be discarded.
@@ -1829,7 +1808,6 @@ static sctp_disposition_t sctp_sf_do_dupcook_a(struct net *net,
 	sctp_add_cmd_sf(commands, SCTP_CMD_UPDATE_ASSOC, SCTP_ASOC(new_asoc));
 	sctp_add_cmd_sf(commands, SCTP_CMD_EVENT_ULP, SCTP_ULPEVENT(ev));
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (sctp_state(asoc, SHUTDOWN_PENDING) &&
 	    (sctp_sstate(asoc->base.sk, CLOSING) ||
 	     sock_flag(asoc->base.sk, SOCK_DEAD))) {
@@ -1851,11 +1829,6 @@ static sctp_disposition_t sctp_sf_do_dupcook_a(struct net *net,
 			SCTP_STATE(SCTP_STATE_ESTABLISHED));
 	sctp_add_cmd_sf(commands, SCTP_CMD_REPLY, SCTP_CHUNK(repl));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	sctp_add_cmd_sf(commands, SCTP_CMD_NEW_STATE,
-			SCTP_STATE(SCTP_STATE_ESTABLISHED));
-	sctp_add_cmd_sf(commands, SCTP_CMD_REPLY, SCTP_CHUNK(repl));
->>>>>>> master
 	return SCTP_DISPOSITION_CONSUME;
 
 nomem_ev:
@@ -3490,7 +3463,6 @@ sctp_disposition_t sctp_sf_ootb(struct net *net,
 						  commands);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* Report violation if chunk len overflows */
 		ch_end = ((__u8 *)ch) + WORD_ROUND(ntohs(ch->length));
 		if (ch_end > skb_tail_pointer(skb))
@@ -3499,8 +3471,6 @@ sctp_disposition_t sctp_sf_ootb(struct net *net,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		/* Now that we know we at least have a chunk header,
 		 * do things that are type appropriate.
 		 */
@@ -4903,15 +4873,11 @@ sctp_disposition_t sctp_sf_do_9_1_prm_abort(
 	retval = SCTP_DISPOSITION_CONSUME;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (abort)
 		sctp_add_cmd_sf(commands, SCTP_CMD_REPLY, SCTP_CHUNK(abort));
 =======
 	sctp_add_cmd_sf(commands, SCTP_CMD_REPLY, SCTP_CHUNK(abort));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	sctp_add_cmd_sf(commands, SCTP_CMD_REPLY, SCTP_CHUNK(abort));
->>>>>>> master
 
 	/* Even if we can't send the ABORT due to low memory delete the
 	 * TCB.  This is a departure from our typical NOMEM handling.
@@ -5049,15 +5015,11 @@ sctp_disposition_t sctp_sf_cookie_wait_prm_abort(
 	retval = SCTP_DISPOSITION_CONSUME;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (abort)
 		sctp_add_cmd_sf(commands, SCTP_CMD_REPLY, SCTP_CHUNK(abort));
 =======
 	sctp_add_cmd_sf(commands, SCTP_CMD_REPLY, SCTP_CHUNK(abort));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	sctp_add_cmd_sf(commands, SCTP_CMD_REPLY, SCTP_CHUNK(abort));
->>>>>>> master
 
 	sctp_add_cmd_sf(commands, SCTP_CMD_NEW_STATE,
 			SCTP_STATE(SCTP_STATE_CLOSED));

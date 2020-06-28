@@ -23,12 +23,9 @@
 #define PL2303_PRODUCT_ID_HCR331	0x331a
 #define PL2303_PRODUCT_ID_MOTOROLA	0x0307
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define PL2303_PRODUCT_ID_ZTEK		0xe1f1
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 #define ATEN_VENDOR_ID		0x0557
 #define ATEN_VENDOR_ID2		0x0547
@@ -69,18 +66,12 @@
 #define ALCATEL_PRODUCT_ID	0x02df
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 /* Samsung I330 phone cradle */
 #define SAMSUNG_VENDOR_ID	0x04e8
 #define SAMSUNG_PRODUCT_ID	0x8001
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define SIEMENS_VENDOR_ID	0x11f5
 #define SIEMENS_PRODUCT_ID_SX1	0x0001
 #define SIEMENS_PRODUCT_ID_X65	0x0003
@@ -138,7 +129,6 @@
 #define SUPERIAL_PRODUCT_ID	0x2303
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* Hewlett-Packard POS Pole Displays */
 #define HP_VENDOR_ID		0x03f0
 #define HP_LD960_PRODUCT_ID	0x0b39
@@ -148,10 +138,6 @@
 /* Hewlett-Packard LD220-HP POS Pole Display */
 #define HP_VENDOR_ID		0x03f0
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-/* Hewlett-Packard LD220-HP POS Pole Display */
-#define HP_VENDOR_ID		0x03f0
->>>>>>> master
 #define HP_LD220_PRODUCT_ID	0x3524
 
 /* Cressi Edy (diving computer) PC interface */

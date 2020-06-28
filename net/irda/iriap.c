@@ -192,7 +192,6 @@ struct iriap_cb *iriap_open(__u8 slsap_sel, int mode, void *priv,
 	self->magic = IAS_MAGIC;
 	self->mode = mode;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (mode == IAS_CLIENT) {
 		if (iriap_register_lsap(self, slsap_sel, mode)) {
 			kfree(self);
@@ -203,10 +202,6 @@ struct iriap_cb *iriap_open(__u8 slsap_sel, int mode, void *priv,
 	if (mode == IAS_CLIENT)
 		iriap_register_lsap(self, slsap_sel, mode);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (mode == IAS_CLIENT)
-		iriap_register_lsap(self, slsap_sel, mode);
->>>>>>> master
 
 	self->confirm = callback;
 	self->priv = priv;

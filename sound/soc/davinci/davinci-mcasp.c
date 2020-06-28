@@ -633,7 +633,6 @@ static int davinci_config_channel_size(struct davinci_audio_dev *dev,
 	u32 fmt;
 	u32 tx_rotate = (word_length / 4) & 0x7;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u32 mask = (1ULL << word_length) - 1;
 	/*
 	 * For captured data we should not rotate, inversion and masking is
@@ -649,10 +648,6 @@ static int davinci_config_channel_size(struct davinci_audio_dev *dev,
 	u32 rx_rotate = (32 - word_length) / 4;
 	u32 mask = (1ULL << word_length) - 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u32 rx_rotate = (32 - word_length) / 4;
-	u32 mask = (1ULL << word_length) - 1;
->>>>>>> master
 
 	/*
 	 * if s BCLK-to-LRCLK ratio has been configured via the set_clkdiv()

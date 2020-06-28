@@ -31,7 +31,6 @@
 #include "udf_i.h"
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int udf_pc_to_char(struct super_block *sb, unsigned char *from,
 			  int fromlen, unsigned char *to, int tolen)
 {
@@ -43,8 +42,6 @@ static int udf_pc_to_char(struct super_block *sb, unsigned char *from,
 	/* Reserve one byte for terminating \0 */
 	tolen--;
 =======
-=======
->>>>>>> master
 static void udf_pc_to_char(struct super_block *sb, unsigned char *from,
 			   int fromlen, unsigned char *to)
 {
@@ -52,10 +49,7 @@ static void udf_pc_to_char(struct super_block *sb, unsigned char *from,
 	int elen = 0;
 	unsigned char *p = to;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	while (elen < fromlen) {
 		pc = (struct pathComponent *)(from + elen);
 		switch (pc->componentType) {
@@ -68,7 +62,6 @@ static void udf_pc_to_char(struct super_block *sb, unsigned char *from,
 				break;
 			/* Fall through */
 		case 2:
-<<<<<<< HEAD
 <<<<<<< HEAD
 			if (tolen == 0)
 				return -ENAMETOOLONG;
@@ -102,8 +95,6 @@ static void udf_pc_to_char(struct super_block *sb, unsigned char *from,
 			*p++ = '/';
 			tolen--;
 =======
-=======
->>>>>>> master
 			p = to;
 			*p++ = '/';
 			break;
@@ -120,10 +111,7 @@ static void udf_pc_to_char(struct super_block *sb, unsigned char *from,
 			p += udf_get_filename(sb, pc->componentIdent, p,
 					      pc->lengthComponentIdent);
 			*p++ = '/';
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			break;
 		}
 		elen += sizeof(struct pathComponent) + pc->lengthComponentIdent;
@@ -133,12 +121,9 @@ static void udf_pc_to_char(struct super_block *sb, unsigned char *from,
 	else
 		p[0] = '\0';
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static int udf_symlink_filler(struct file *file, struct page *page)
@@ -147,19 +132,14 @@ static int udf_symlink_filler(struct file *file, struct page *page)
 	struct buffer_head *bh = NULL;
 	unsigned char *symlink;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int err;
 =======
 	int err = -EIO;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int err = -EIO;
->>>>>>> master
 	unsigned char *p = kmap(page);
 	struct udf_inode_info *iinfo;
 	uint32_t pos;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	/* We don't support symlinks longer than one block */
 	if (inode->i_size > inode->i_sb->s_blocksize) {
@@ -169,8 +149,6 @@ static int udf_symlink_filler(struct file *file, struct page *page)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	iinfo = UDF_I(inode);
 	pos = udf_block_map(inode, 0);
 
@@ -181,7 +159,6 @@ static int udf_symlink_filler(struct file *file, struct page *page)
 		bh = sb_bread(inode->i_sb, pos);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!bh) {
 			err = -EIO;
 			goto out_unlock_inode;
@@ -190,15 +167,10 @@ static int udf_symlink_filler(struct file *file, struct page *page)
 		if (!bh)
 			goto out;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!bh)
-			goto out;
->>>>>>> master
 
 		symlink = bh->b_data;
 	}
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	err = udf_pc_to_char(inode->i_sb, symlink, inode->i_size, p, PAGE_SIZE);
 	brelse(bh);
@@ -208,10 +180,6 @@ static int udf_symlink_filler(struct file *file, struct page *page)
 	udf_pc_to_char(inode->i_sb, symlink, inode->i_size, p);
 	brelse(bh);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	udf_pc_to_char(inode->i_sb, symlink, inode->i_size, p);
-	brelse(bh);
->>>>>>> master
 
 	up_read(&iinfo->i_data_sem);
 	SetPageUptodate(page);
@@ -219,7 +187,6 @@ static int udf_symlink_filler(struct file *file, struct page *page)
 	unlock_page(page);
 	return 0;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 out_unlock_inode:
 	up_read(&iinfo->i_data_sem);
@@ -230,11 +197,6 @@ out:
 	up_read(&iinfo->i_data_sem);
 	SetPageError(page);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-out:
-	up_read(&iinfo->i_data_sem);
-	SetPageError(page);
->>>>>>> master
 	kunmap(page);
 	unlock_page(page);
 	return err;

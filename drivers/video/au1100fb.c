@@ -362,7 +362,6 @@ int au1100fb_fb_mmap(struct fb_info *fbi, struct vm_area_struct *vma)
 {
 	struct au1100fb_device *fbdev;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	fbdev = to_au1100fb_device(fbi);
 
@@ -371,8 +370,6 @@ int au1100fb_fb_mmap(struct fb_info *fbi, struct vm_area_struct *vma)
 
 	return vm_iomap_memory(vma, fbdev->fb_phys, fbdev->fb_len);
 =======
-=======
->>>>>>> master
 	unsigned int len;
 	unsigned long start=0, off;
 
@@ -406,10 +403,7 @@ int au1100fb_fb_mmap(struct fb_info *fbi, struct vm_area_struct *vma)
 	}
 
 	return 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static struct fb_ops au1100fb_ops =

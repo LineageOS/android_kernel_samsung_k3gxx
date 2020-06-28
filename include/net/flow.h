@@ -12,7 +12,6 @@
 #include <linux/atomic.h>
 #include <linux/uidgid.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * ifindex generation is per-net namespace, and loopback is
  * always the 1st device in ns (see net_dev_init), thus any
@@ -22,8 +21,6 @@
 #define LOOPBACK_IFINDEX	1
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 struct flowi_common {
 	int	flowic_oif;
@@ -38,14 +35,10 @@ struct flowi_common {
 #define FLOWI_FLAG_KNOWN_NH		0x04
 	__u32	flowic_secid;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	kuid_t  flowic_uid;
 =======
 	kuid_t	flowic_uid;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	kuid_t	flowic_uid;
->>>>>>> master
 };
 
 union flowi_uli {
@@ -103,16 +96,11 @@ static inline void flowi4_init_output(struct flowi4 *fl4, int oif,
 				      __u8 proto, __u8 flags,
 				      __be32 daddr, __be32 saddr,
 <<<<<<< HEAD
-<<<<<<< HEAD
 				      __be16 dport, __be16 sport)
 =======
 				      __be16 dport, __be16 sport,
 				      kuid_t uid)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				      __be16 dport, __be16 sport,
-				      kuid_t uid)
->>>>>>> master
 {
 	fl4->flowi4_oif = oif;
 	fl4->flowi4_iif = 0;
@@ -123,13 +111,9 @@ static inline void flowi4_init_output(struct flowi4 *fl4, int oif,
 	fl4->flowi4_flags = flags;
 	fl4->flowi4_secid = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	fl4->flowi4_uid = uid;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	fl4->flowi4_uid = uid;
->>>>>>> master
 	fl4->daddr = daddr;
 	fl4->saddr = saddr;
 	fl4->fl4_dport = dport;

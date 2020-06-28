@@ -41,15 +41,10 @@ struct dentry;
 struct user_namespace;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 struct user_namespace *current_user_ns(void);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-struct user_namespace *current_user_ns(void);
-
->>>>>>> master
 extern const kernel_cap_t __cap_empty_set;
 extern const kernel_cap_t __cap_init_eff_set;
 
@@ -87,7 +82,6 @@ extern const kernel_cap_t __cap_init_eff_set;
 #else /* HAND-CODED capability initializers */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CAP_LAST_U32			((_KERNEL_CAPABILITY_U32S) - 1)
 #define CAP_LAST_U32_VALID_MASK		(CAP_TO_MASK(CAP_LAST_CAP + 1) -1)
 
@@ -97,10 +91,6 @@ extern const kernel_cap_t __cap_init_eff_set;
 # define CAP_EMPTY_SET    ((kernel_cap_t){{ 0, 0 }})
 # define CAP_FULL_SET     ((kernel_cap_t){{ ~0, ~0 }})
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-# define CAP_EMPTY_SET    ((kernel_cap_t){{ 0, 0 }})
-# define CAP_FULL_SET     ((kernel_cap_t){{ ~0, ~0 }})
->>>>>>> master
 # define CAP_FS_SET       ((kernel_cap_t){{ CAP_FS_MASK_B0 \
 				    | CAP_TO_MASK(CAP_LINUX_IMMUTABLE), \
 				    CAP_FS_MASK_B1 } })

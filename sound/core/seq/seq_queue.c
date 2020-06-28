@@ -184,13 +184,10 @@ void __exit snd_seq_queues_delete(void)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void queue_use(struct snd_seq_queue *queue, int client, int use);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /* allocate a new queue -
  * return queue index value or negative value for error
  */
@@ -203,24 +200,17 @@ int snd_seq_queue_alloc(int client, int locked, unsigned int info_flags)
 		return -ENOMEM;
 	q->info_flags = info_flags;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	queue_use(q, client, 1);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (queue_list_add(q) < 0) {
 		queue_delete(q);
 		return -ENOMEM;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	snd_seq_queue_use(q->queue, client, 1); /* use this queue */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	snd_seq_queue_use(q->queue, client, 1); /* use this queue */
->>>>>>> master
 	return q->queue;
 }
 
@@ -527,13 +517,10 @@ int snd_seq_queue_timer_set_tempo(int queueid, int client,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* use or unuse this queue */
 static void queue_use(struct snd_seq_queue *queue, int client, int use)
 {
 =======
-=======
->>>>>>> master
 
 /* use or unuse this queue -
  * if it is the first client, starts the timer.
@@ -547,10 +534,7 @@ int snd_seq_queue_use(int queueid, int client, int use)
 	if (queue == NULL)
 		return -EINVAL;
 	mutex_lock(&queue->timer_mutex);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (use) {
 		if (!test_and_set_bit(client, queue->clients_bitmap))
 			queue->clients++;
@@ -565,7 +549,6 @@ int snd_seq_queue_use(int queueid, int client, int use)
 	} else {
 		snd_seq_timer_close(queue);
 	}
-<<<<<<< HEAD
 <<<<<<< HEAD
 }
 
@@ -584,8 +567,6 @@ int snd_seq_queue_use(int queueid, int client, int use)
 	queue_use(queue, client, use);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	mutex_unlock(&queue->timer_mutex);
 	queuefree(queue);
 	return 0;

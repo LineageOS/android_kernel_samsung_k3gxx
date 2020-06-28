@@ -902,14 +902,10 @@ struct dwc3_event_depevt {
  * @reserved15_12: Reserved, not used
  * @event_info: Information about this event
 <<<<<<< HEAD
-<<<<<<< HEAD
  * @reserved31_25: Reserved, not used
 =======
  * @reserved31_24: Reserved, not used
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * @reserved31_24: Reserved, not used
->>>>>>> master
  */
 struct dwc3_event_devt {
 	u32	one_bit:1;
@@ -917,17 +913,12 @@ struct dwc3_event_devt {
 	u32	type:4;
 	u32	reserved15_12:4;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u32	event_info:9;
 	u32	reserved31_25:7;
 =======
 	u32	event_info:8;
 	u32	reserved31_24:8;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u32	event_info:8;
-	u32	reserved31_24:8;
->>>>>>> master
 } __packed;
 
 /**

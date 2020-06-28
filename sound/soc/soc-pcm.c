@@ -414,7 +414,6 @@ static int soc_pcm_close(struct snd_pcm_substream *substream)
 			/* start delayed pop wq here for playback streams */
 			rtd->pop_wait = 1;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			queue_delayed_work(system_power_efficient_wq,
 					   &rtd->delayed_work,
 					   msecs_to_jiffies(rtd->pmdown_time));
@@ -422,10 +421,6 @@ static int soc_pcm_close(struct snd_pcm_substream *substream)
 			schedule_delayed_work(&rtd->delayed_work,
 				msecs_to_jiffies(rtd->pmdown_time));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			schedule_delayed_work(&rtd->delayed_work,
-				msecs_to_jiffies(rtd->pmdown_time));
->>>>>>> master
 		}
 	} else {
 		if (codec_dai->capture_active)
@@ -1269,15 +1264,11 @@ static int dpcm_be_dai_hw_free(struct snd_soc_pcm_runtime *fe, int stream)
 		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_HW_FREE) &&
 		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_PAUSED) &&
 <<<<<<< HEAD
-<<<<<<< HEAD
 		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_STOP) &&
 		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_SUSPEND))
 =======
 		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_STOP))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_STOP))
->>>>>>> master
 			continue;
 
 		dev_dbg(be->dev, "ASoC: hw_free BE %s\n",
@@ -1859,14 +1850,11 @@ static int dpcm_run_old_update(struct snd_soc_pcm_runtime *fe, int stream)
  * any DAI links.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 int soc_dpcm_runtime_update(struct snd_soc_card *card)
 {
 	int i, old, new, paths;
 
 =======
-=======
->>>>>>> master
 int soc_dpcm_runtime_update(struct snd_soc_dapm_widget *widget)
 {
 	struct snd_soc_card *card;
@@ -1879,10 +1867,7 @@ int soc_dpcm_runtime_update(struct snd_soc_dapm_widget *widget)
 	else
 		return -EINVAL;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	mutex_lock_nested(&card->mutex, SND_SOC_CARD_CLASS_RUNTIME);
 	for (i = 0; i < card->num_rtd; i++) {
 		struct snd_soc_dapm_widget_list *list;
@@ -1929,12 +1914,9 @@ int soc_dpcm_runtime_update(struct snd_soc_dapm_widget *widget)
 		}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		dpcm_path_put(&list);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 capture:
 		/* skip if FE doesn't have capture capability */
 		if (!fe->cpu_dai->driver->capture.channels_min)

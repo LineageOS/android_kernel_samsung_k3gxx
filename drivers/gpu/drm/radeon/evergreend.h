@@ -811,15 +811,12 @@
 #       define LATENCY_HIGH_WATERMARK(x)                  ((x) << 16)
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define	PIPE0_DMIF_BUFFER_CONTROL			  0x0ca0
 #       define DMIF_BUFFERS_ALLOCATED(x)                  ((x) << 0)
 #       define DMIF_BUFFERS_ALLOCATED_COMPLETED           (1 << 4)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define IH_RB_CNTL                                        0x3e00
 #       define IH_RB_ENABLE                               (1 << 0)
 #       define IH_IB_SIZE(x)                              ((x) << 1) /* log2 */
@@ -1111,14 +1108,10 @@
  */
 #              define PACKET3_CP_DMA_DST_SEL(x)    ((x) << 20)
 <<<<<<< HEAD
-<<<<<<< HEAD
                 /* 0 - DST_ADDR
 =======
                 /* 0 - SRC_ADDR
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-                /* 0 - SRC_ADDR
->>>>>>> master
 		 * 1 - GDS
 		 */
 #              define PACKET3_CP_DMA_ENGINE(x)     ((x) << 27)
@@ -1134,14 +1127,10 @@
 /* COMMAND */
 #              define PACKET3_CP_DMA_DIS_WC        (1 << 21)
 <<<<<<< HEAD
-<<<<<<< HEAD
 #              define PACKET3_CP_DMA_CMD_SRC_SWAP(x) ((x) << 22)
 =======
 #              define PACKET3_CP_DMA_CMD_SRC_SWAP(x) ((x) << 23)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#              define PACKET3_CP_DMA_CMD_SRC_SWAP(x) ((x) << 23)
->>>>>>> master
                 /* 0 - none
 		 * 1 - 8 in 16
 		 * 2 - 8 in 32

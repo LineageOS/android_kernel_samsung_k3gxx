@@ -412,7 +412,6 @@ int snd_seq_pool_init(struct snd_seq_pool *pool)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* refuse the further insertion to the pool */
 void snd_seq_pool_mark_closing(struct snd_seq_pool *pool)
 {
@@ -427,27 +426,20 @@ void snd_seq_pool_mark_closing(struct snd_seq_pool *pool)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /* remove events */
 int snd_seq_pool_done(struct snd_seq_pool *pool)
 {
 	unsigned long flags;
 	struct snd_seq_event_cell *ptr;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	int max_count = 5 * HZ;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int max_count = 5 * HZ;
->>>>>>> master
 
 	if (snd_BUG_ON(!pool))
 		return -EINVAL;
 
 	/* wait for closing all threads */
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (waitqueue_active(&pool->output_sleep))
 		wake_up(&pool->output_sleep);
@@ -455,8 +447,6 @@ int snd_seq_pool_done(struct snd_seq_pool *pool)
 	while (atomic_read(&pool->counter) > 0)
 		schedule_timeout_uninterruptible(1);
 =======
-=======
->>>>>>> master
 	spin_lock_irqsave(&pool->lock, flags);
 	pool->closing = 1;
 	spin_unlock_irqrestore(&pool->lock, flags);
@@ -472,10 +462,7 @@ int snd_seq_pool_done(struct snd_seq_pool *pool)
 		schedule_timeout_uninterruptible(1);
 		max_count--;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	
 	/* release all resources */
 	spin_lock_irqsave(&pool->lock, flags);
@@ -530,12 +517,9 @@ int snd_seq_pool_delete(struct snd_seq_pool **ppool)
 	if (pool == NULL)
 		return 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	snd_seq_pool_mark_closing(pool);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	snd_seq_pool_done(pool);
 	kfree(pool);
 	return 0;

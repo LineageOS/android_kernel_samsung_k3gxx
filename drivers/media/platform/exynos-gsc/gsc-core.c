@@ -1123,7 +1123,6 @@ static int gsc_probe(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = v4l2_device_register(dev, &gsc->v4l2_dev);
 	if (ret)
 		goto err_clk;
@@ -1136,11 +1135,6 @@ static int gsc_probe(struct platform_device *pdev)
 	if (ret)
 		goto err_clk;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret = gsc_register_m2m_device(gsc);
-	if (ret)
-		goto err_clk;
->>>>>>> master
 
 	platform_set_drvdata(pdev, gsc);
 	pm_runtime_enable(dev);
@@ -1164,13 +1158,10 @@ err_pm:
 err_m2m:
 	gsc_unregister_m2m_device(gsc);
 <<<<<<< HEAD
-<<<<<<< HEAD
 err_v4l2:
 	v4l2_device_unregister(&gsc->v4l2_dev);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 err_clk:
 	gsc_clk_put(gsc);
 	return ret;
@@ -1182,12 +1173,9 @@ static int gsc_remove(struct platform_device *pdev)
 
 	gsc_unregister_m2m_device(gsc);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	v4l2_device_unregister(&gsc->v4l2_dev);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	vb2_dma_contig_cleanup_ctx(gsc->alloc_ctx);
 	pm_runtime_disable(&pdev->dev);

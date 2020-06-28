@@ -109,13 +109,10 @@ again:
 		if (!test_bit(NFS_DELEGATED_STATE, &state->flags))
 			continue;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!nfs4_valid_open_stateid(state))
 			continue;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (!nfs4_stateid_match(&state->stateid, stateid))
 			continue;
 		get_nfs_open_context(ctx);
@@ -184,7 +181,6 @@ static int nfs_do_return_delegation(struct inode *inode, struct nfs_delegation *
 	int res = 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!test_bit(NFS_DELEGATION_REVOKED, &delegation->flags))
 		res = nfs4_proc_delegreturn(inode,
 				delegation->cred,
@@ -193,9 +189,6 @@ static int nfs_do_return_delegation(struct inode *inode, struct nfs_delegation *
 =======
 	res = nfs4_proc_delegreturn(inode, delegation->cred, &delegation->stateid, issync);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	res = nfs4_proc_delegreturn(inode, delegation->cred, &delegation->stateid, issync);
->>>>>>> master
 	nfs_free_delegation(delegation);
 	return res;
 }
@@ -382,26 +375,19 @@ static int nfs_end_delegation_return(struct inode *inode, struct nfs_delegation 
 	struct nfs_client *clp = NFS_SERVER(inode)->nfs_client;
 	struct nfs_inode *nfsi = NFS_I(inode);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int err = 0;
 =======
 	int err;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int err;
->>>>>>> master
 
 	if (delegation == NULL)
 		return 0;
 	do {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (test_bit(NFS_DELEGATION_REVOKED, &delegation->flags))
 			break;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		err = nfs_delegation_claim_opens(inode, &delegation->stateid);
 		if (!issync || err != -EAGAIN)
 			break;
@@ -623,7 +609,6 @@ static void nfs_client_mark_return_unused_delegation_types(struct nfs_client *cl
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void nfs_revoke_delegation(struct inode *inode)
 {
 	struct nfs_delegation *delegation;
@@ -638,19 +623,14 @@ static void nfs_revoke_delegation(struct inode *inode)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 void nfs_remove_bad_delegation(struct inode *inode)
 {
 	struct nfs_delegation *delegation;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	nfs_revoke_delegation(inode);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	delegation = nfs_inode_detach_delegation(inode);
 	if (delegation) {
 		nfs_inode_find_state_and_recover(inode, &delegation->stateid);
@@ -718,38 +698,29 @@ int nfs_async_inode_return_delegation(struct inode *inode,
 	rcu_read_lock();
 	delegation = rcu_dereference(NFS_I(inode)->delegation);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (delegation == NULL)
 		goto out_enoent;
 
 	if (!clp->cl_mvops->match_stateid(&delegation->stateid, stateid))
 		goto out_enoent;
 =======
-=======
->>>>>>> master
 
 	if (!clp->cl_mvops->match_stateid(&delegation->stateid, stateid)) {
 		rcu_read_unlock();
 		return -ENOENT;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	nfs_mark_return_delegation(server, delegation);
 	rcu_read_unlock();
 
 	nfs_delegation_run_state_manager(clp);
 	return 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 out_enoent:
 	rcu_read_unlock();
 	return -ENOENT;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static struct inode *

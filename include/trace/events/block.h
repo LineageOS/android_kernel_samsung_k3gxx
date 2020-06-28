@@ -133,12 +133,9 @@ DEFINE_EVENT(block_rq_with_error, block_rq_requeue,
  * @q: queue containing the block operation request
  * @rq: block operations request
 <<<<<<< HEAD
-<<<<<<< HEAD
  * @nr_bytes: number of completed bytes
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  *
  * The block_rq_complete tracepoint event indicates that some portion
  * of operation request has been completed by the device driver.  If
@@ -146,7 +143,6 @@ DEFINE_EVENT(block_rq_with_error, block_rq_requeue,
  * do for the request. If @rq->bio is non-NULL then there is
  * additional work required to complete the request.
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 TRACE_EVENT(block_rq_complete,
 
@@ -180,17 +176,12 @@ TRACE_EVENT(block_rq_complete,
 		  (unsigned long long)__entry->sector,
 		  __entry->nr_sector, __entry->errors)
 =======
-=======
->>>>>>> master
 DEFINE_EVENT(block_rq_with_error, block_rq_complete,
 
 	TP_PROTO(struct request_queue *q, struct request *rq),
 
 	TP_ARGS(q, rq)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 );
 
 DECLARE_EVENT_CLASS(block_rq,

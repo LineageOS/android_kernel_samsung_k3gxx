@@ -4,14 +4,10 @@
  * Error Recovery Procedures (ERP).
  *
 <<<<<<< HEAD
-<<<<<<< HEAD
  * Copyright IBM Corp. 2002, 2016
 =======
  * Copyright IBM Corp. 2002, 2010
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * Copyright IBM Corp. 2002, 2010
->>>>>>> master
  */
 
 #define KMSG_COMPONENT "zfcp"
@@ -111,7 +107,6 @@ static void zfcp_erp_action_dismiss_port(struct zfcp_port *port)
 	if (atomic_read(&port->status) & ZFCP_STATUS_COMMON_ERP_INUSE)
 		zfcp_erp_action_dismiss(&port->erp_action);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	else {
 		spin_lock(port->adapter->scsi_host->host_lock);
 		__shost_for_each_device(sdev, port->adapter->scsi_host)
@@ -120,16 +115,11 @@ static void zfcp_erp_action_dismiss_port(struct zfcp_port *port)
 		spin_unlock(port->adapter->scsi_host->host_lock);
 	}
 =======
-=======
->>>>>>> master
 	else
 		shost_for_each_device(sdev, port->adapter->scsi_host)
 			if (sdev_to_zfcp(sdev)->port == port)
 				zfcp_erp_action_dismiss_lun(sdev);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static void zfcp_erp_action_dismiss_adapter(struct zfcp_adapter *adapter)
@@ -617,7 +607,6 @@ static void _zfcp_erp_lun_reopen_all(struct zfcp_port *port, int clear,
 	struct scsi_device *sdev;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_lock(port->adapter->scsi_host->host_lock);
 	__shost_for_each_device(sdev, port->adapter->scsi_host)
 		if (sdev_to_zfcp(sdev)->port == port)
@@ -628,11 +617,6 @@ static void _zfcp_erp_lun_reopen_all(struct zfcp_port *port, int clear,
 		if (sdev_to_zfcp(sdev)->port == port)
 			_zfcp_erp_lun_reopen(sdev, clear, id, 0);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	shost_for_each_device(sdev, port->adapter->scsi_host)
-		if (sdev_to_zfcp(sdev)->port == port)
-			_zfcp_erp_lun_reopen(sdev, clear, id, 0);
->>>>>>> master
 }
 
 static void zfcp_erp_strategy_followup_failed(struct zfcp_erp_action *act)
@@ -1246,7 +1230,6 @@ static void zfcp_erp_action_dequeue(struct zfcp_erp_action *erp_action)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /**
  * zfcp_erp_try_rport_unblock - unblock rport if no more/new recovery
  * @port: zfcp_port whose fc_rport we should try to unblock
@@ -1305,8 +1288,6 @@ static void zfcp_erp_try_rport_unblock(struct zfcp_port *port)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static void zfcp_erp_action_cleanup(struct zfcp_erp_action *act, int result)
 {
 	struct zfcp_adapter *adapter = act->adapter;
@@ -1317,7 +1298,6 @@ static void zfcp_erp_action_cleanup(struct zfcp_erp_action *act, int result)
 	case ZFCP_ERP_ACTION_REOPEN_LUN:
 		if (!(act->status & ZFCP_STATUS_ERP_NO_REF))
 			scsi_device_put(sdev);
-<<<<<<< HEAD
 <<<<<<< HEAD
 		zfcp_erp_try_rport_unblock(port);
 		break;
@@ -1332,17 +1312,12 @@ static void zfcp_erp_action_cleanup(struct zfcp_erp_action *act, int result)
 			if (result == ZFCP_ERP_SUCCEEDED)
 				zfcp_erp_try_rport_unblock(port);
 =======
-=======
->>>>>>> master
 		break;
 
 	case ZFCP_ERP_ACTION_REOPEN_PORT:
 		if (result == ZFCP_ERP_SUCCEEDED)
 			zfcp_scsi_schedule_rport_register(port);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		/* fall through */
 	case ZFCP_ERP_ACTION_REOPEN_PORT_FORCED:
 		put_device(&port->dev);
@@ -1557,7 +1532,6 @@ void zfcp_erp_set_adapter_status(struct zfcp_adapter *adapter, u32 mask)
 	read_unlock_irqrestore(&adapter->port_list_lock, flags);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_lock_irqsave(adapter->scsi_host->host_lock, flags);
 	__shost_for_each_device(sdev, adapter->scsi_host)
 		atomic_set_mask(common_mask, &sdev_to_zfcp(sdev)->status);
@@ -1566,10 +1540,6 @@ void zfcp_erp_set_adapter_status(struct zfcp_adapter *adapter, u32 mask)
 	shost_for_each_device(sdev, adapter->scsi_host)
 		atomic_set_mask(common_mask, &sdev_to_zfcp(sdev)->status);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	shost_for_each_device(sdev, adapter->scsi_host)
-		atomic_set_mask(common_mask, &sdev_to_zfcp(sdev)->status);
->>>>>>> master
 }
 
 /**
@@ -1604,26 +1574,19 @@ void zfcp_erp_clear_adapter_status(struct zfcp_adapter *adapter, u32 mask)
 	read_unlock_irqrestore(&adapter->port_list_lock, flags);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_lock_irqsave(adapter->scsi_host->host_lock, flags);
 	__shost_for_each_device(sdev, adapter->scsi_host) {
 =======
 	shost_for_each_device(sdev, adapter->scsi_host) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	shost_for_each_device(sdev, adapter->scsi_host) {
->>>>>>> master
 		atomic_clear_mask(common_mask, &sdev_to_zfcp(sdev)->status);
 		if (clear_counter)
 			atomic_set(&sdev_to_zfcp(sdev)->erp_counter, 0);
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_unlock_irqrestore(adapter->scsi_host->host_lock, flags);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /**
@@ -1638,19 +1601,15 @@ void zfcp_erp_set_port_status(struct zfcp_port *port, u32 mask)
 	struct scsi_device *sdev;
 	u32 common_mask = mask & ZFCP_COMMON_FLAGS;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned long flags;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	atomic_set_mask(mask, &port->status);
 
 	if (!common_mask)
 		return;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	spin_lock_irqsave(port->adapter->scsi_host->host_lock, flags);
 	__shost_for_each_device(sdev, port->adapter->scsi_host)
@@ -1659,16 +1618,11 @@ void zfcp_erp_set_port_status(struct zfcp_port *port, u32 mask)
 					&sdev_to_zfcp(sdev)->status);
 	spin_unlock_irqrestore(port->adapter->scsi_host->host_lock, flags);
 =======
-=======
->>>>>>> master
 	shost_for_each_device(sdev, port->adapter->scsi_host)
 		if (sdev_to_zfcp(sdev)->port == port)
 			atomic_set_mask(common_mask,
 					&sdev_to_zfcp(sdev)->status);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /**
@@ -1684,12 +1638,9 @@ void zfcp_erp_clear_port_status(struct zfcp_port *port, u32 mask)
 	u32 common_mask = mask & ZFCP_COMMON_FLAGS;
 	u32 clear_counter = mask & ZFCP_STATUS_COMMON_ERP_FAILED;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned long flags;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	atomic_clear_mask(mask, &port->status);
 
@@ -1700,15 +1651,11 @@ void zfcp_erp_clear_port_status(struct zfcp_port *port, u32 mask)
 		atomic_set(&port->erp_counter, 0);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_lock_irqsave(port->adapter->scsi_host->host_lock, flags);
 	__shost_for_each_device(sdev, port->adapter->scsi_host)
 =======
 	shost_for_each_device(sdev, port->adapter->scsi_host)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	shost_for_each_device(sdev, port->adapter->scsi_host)
->>>>>>> master
 		if (sdev_to_zfcp(sdev)->port == port) {
 			atomic_clear_mask(common_mask,
 					  &sdev_to_zfcp(sdev)->status);
@@ -1716,12 +1663,9 @@ void zfcp_erp_clear_port_status(struct zfcp_port *port, u32 mask)
 				atomic_set(&sdev_to_zfcp(sdev)->erp_counter, 0);
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_unlock_irqrestore(port->adapter->scsi_host->host_lock, flags);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /**

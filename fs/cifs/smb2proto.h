@@ -94,12 +94,9 @@ extern int smb2_unlock_range(struct cifsFileInfo *cfile,
 			     struct file_lock *flock, const unsigned int xid);
 extern int smb2_push_mandatory_locks(struct cifsFileInfo *cfile);
 <<<<<<< HEAD
-<<<<<<< HEAD
 extern void smb2_reconnect_server(struct work_struct *work);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * SMB2 Worker functions - most of protocol specific implementation details

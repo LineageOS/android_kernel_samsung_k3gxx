@@ -84,16 +84,12 @@ static int save_trace(struct stackframe *frame, void *d)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* This must be noinline to so that our skip calculation works correctly */
 static noinline void __save_stack_trace(struct task_struct *tsk,
 	struct stack_trace *trace, unsigned int nosched)
 =======
 void save_stack_trace_tsk(struct task_struct *tsk, struct stack_trace *trace)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-void save_stack_trace_tsk(struct task_struct *tsk, struct stack_trace *trace)
->>>>>>> master
 {
 	struct stack_trace_data data;
 	struct stackframe frame;
@@ -101,12 +97,9 @@ void save_stack_trace_tsk(struct task_struct *tsk, struct stack_trace *trace)
 	data.trace = trace;
 	data.skip = trace->skip;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	data.no_sched_functions = nosched;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (tsk != current) {
 #ifdef CONFIG_SMP
@@ -120,13 +113,9 @@ void save_stack_trace_tsk(struct task_struct *tsk, struct stack_trace *trace)
 		return;
 #else
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		data.no_sched_functions = 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		data.no_sched_functions = 1;
->>>>>>> master
 		frame.fp = thread_saved_fp(tsk);
 		frame.sp = thread_saved_sp(tsk);
 		frame.lr = 0;		/* recovered from the stack */
@@ -136,7 +125,6 @@ void save_stack_trace_tsk(struct task_struct *tsk, struct stack_trace *trace)
 		register unsigned long current_sp asm ("sp");
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* We don't want this function nor the caller */
 		data.skip += 2;
 		frame.fp = (unsigned long)__builtin_frame_address(0);
@@ -144,17 +132,12 @@ void save_stack_trace_tsk(struct task_struct *tsk, struct stack_trace *trace)
 		frame.lr = (unsigned long)__builtin_return_address(0);
 		frame.pc = (unsigned long)__save_stack_trace;
 =======
-=======
->>>>>>> master
 		data.no_sched_functions = 0;
 		frame.fp = (unsigned long)__builtin_frame_address(0);
 		frame.sp = current_sp;
 		frame.lr = (unsigned long)__builtin_return_address(0);
 		frame.pc = (unsigned long)save_stack_trace_tsk;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	walk_stackframe(&frame, save_trace, &data);
@@ -162,7 +145,6 @@ void save_stack_trace_tsk(struct task_struct *tsk, struct stack_trace *trace)
 		trace->entries[trace->nr_entries++] = ULONG_MAX;
 }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 void save_stack_trace_tsk(struct task_struct *tsk, struct stack_trace *trace)
 {
@@ -177,11 +159,6 @@ void save_stack_trace(struct stack_trace *trace)
 {
 	save_stack_trace_tsk(current, trace);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-void save_stack_trace(struct stack_trace *trace)
-{
-	save_stack_trace_tsk(current, trace);
->>>>>>> master
 }
 EXPORT_SYMBOL_GPL(save_stack_trace);
 #endif

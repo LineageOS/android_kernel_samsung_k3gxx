@@ -504,15 +504,12 @@ vcpu	.req	r0		@ vcpu pointer always in r0
 	strd	r2, r3, [r5]
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	@ Ensure host CNTVCT == CNTPCT
 	mov	r2, #0
 	mcrr	p15, 4, r2, r2, c14	@ CNTVOFF
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 1:
 #endif
 	@ Allow physical timer/counter access for the host
@@ -577,7 +574,6 @@ vcpu	.req	r0		@ vcpu pointer always in r0
 
 /* Configures the HCPTR (Hyp Coprocessor Trap Register) on entry/return
 <<<<<<< HEAD
-<<<<<<< HEAD
  * (hardware reset value is 0). Keep previous value in r2.
  * An ISB is emited on vmexit/vmtrap, but executed on vmexit only if
  * VFP wasn't already enabled (always executed on vmtrap).
@@ -589,10 +585,6 @@ vcpu	.req	r0		@ vcpu pointer always in r0
  * (hardware reset value is 0). Keep previous value in r2. */
 .macro set_hcptr operation, mask
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * (hardware reset value is 0). Keep previous value in r2. */
-.macro set_hcptr operation, mask
->>>>>>> master
 	mrc	p15, 4, r2, c1, c1, 2
 	ldr	r3, =\mask
 	.if \operation == vmentry
@@ -601,7 +593,6 @@ vcpu	.req	r0		@ vcpu pointer always in r0
 	bic	r3, r2, r3		@ Don't trap defined coproc-accesses
 	.endif
 	mcr	p15, 4, r3, c1, c1, 2
-<<<<<<< HEAD
 <<<<<<< HEAD
 	.if \operation != vmentry
 	.if \operation == vmexit
@@ -616,8 +607,6 @@ vcpu	.req	r0		@ vcpu pointer always in r0
 	.endif
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 .endm
 
 /* Configures the HDCR (Hyp Debug Configuration Register) on entry/return

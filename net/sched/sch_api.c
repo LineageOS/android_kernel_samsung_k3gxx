@@ -286,7 +286,6 @@ static struct Qdisc_ops *qdisc_lookup_ops(struct nlattr *kind)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* The linklayer setting were not transferred from iproute2, in older
  * versions, and the rate tables lookup systems have been dropped in
  * the kernel. To keep backward compatible with older iproute2 tc
@@ -328,8 +327,6 @@ static __u8 __detect_linklayer(struct tc_ratespec *r, __u32 *rtab)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static struct qdisc_rate_table *qdisc_rtab_list;
 
 struct qdisc_rate_table *qdisc_get_rtab(struct tc_ratespec *r, struct nlattr *tab)
@@ -354,13 +351,10 @@ struct qdisc_rate_table *qdisc_get_rtab(struct tc_ratespec *r, struct nlattr *ta
 		rtab->refcnt = 1;
 		memcpy(rtab->data, nla_data(tab), 1024);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (r->linklayer == TC_LINKLAYER_UNAWARE)
 			r->linklayer = __detect_linklayer(r, rtab->data);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		rtab->next = qdisc_rtab_list;
 		qdisc_rtab_list = rtab;
 	}
@@ -765,20 +759,14 @@ static int qdisc_graft(struct net_device *dev, struct Qdisc *parent,
 			dev_deactivate(dev);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (new && new->ops->attach)
 			goto skip;
 =======
-=======
->>>>>>> master
 		if (new && new->ops->attach) {
 			new->ops->attach(new);
 			num_q = 0;
 		}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 		for (i = 0; i < num_q; i++) {
 			struct netdev_queue *dev_queue = dev_ingress_queue(dev);
@@ -795,12 +783,9 @@ static int qdisc_graft(struct net_device *dev, struct Qdisc *parent,
 		}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 skip:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (!ingress) {
 			notify_and_destroy(net, skb, n, classid,
 					   dev->qdisc, new);
@@ -808,14 +793,11 @@ skip:
 				atomic_inc(&new->refcnt);
 			dev->qdisc = new ? : &noop_qdisc;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 			if (new && new->ops->attach)
 				new->ops->attach(new);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		} else {
 			notify_and_destroy(net, skb, n, classid, old, new);
 		}
@@ -1064,14 +1046,10 @@ static int tc_get_qdisc(struct sk_buff *skb, struct nlmsghdr *n)
 	int err;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if ((n->nlmsg_type != RTM_GETQDISC) && !netlink_capable(skb, CAP_NET_ADMIN))
 =======
 	if ((n->nlmsg_type != RTM_GETQDISC) && !capable(CAP_NET_ADMIN))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if ((n->nlmsg_type != RTM_GETQDISC) && !capable(CAP_NET_ADMIN))
->>>>>>> master
 		return -EPERM;
 
 	err = nlmsg_parse(n, sizeof(*tcm), tca, TCA_MAX, NULL);
@@ -1139,14 +1117,10 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n)
 	int err;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!netlink_capable(skb, CAP_NET_ADMIN))
 =======
 	if (!capable(CAP_NET_ADMIN))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!capable(CAP_NET_ADMIN))
->>>>>>> master
 		return -EPERM;
 
 replay:
@@ -1487,14 +1461,10 @@ static int tc_ctl_tclass(struct sk_buff *skb, struct nlmsghdr *n)
 	int err;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if ((n->nlmsg_type != RTM_GETTCLASS) && !netlink_capable(skb, CAP_NET_ADMIN))
 =======
 	if ((n->nlmsg_type != RTM_GETTCLASS) && !capable(CAP_NET_ADMIN))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if ((n->nlmsg_type != RTM_GETTCLASS) && !capable(CAP_NET_ADMIN))
->>>>>>> master
 		return -EPERM;
 
 	err = nlmsg_parse(n, sizeof(*tcm), tca, TCA_MAX, NULL);

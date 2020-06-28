@@ -165,7 +165,6 @@ static struct mount *propagation_next(struct mount *m,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static struct mount *next_group(struct mount *m, struct mount *origin)
 {
 	while (1) {
@@ -255,8 +254,6 @@ static int propagate_one(struct mount *m)
 	list_add_tail(&child->mnt_hash, list);
 	return 0;
 =======
-=======
->>>>>>> master
 /*
  * return the source mount to be used for cloning
  *
@@ -297,10 +294,7 @@ static struct mount *get_source(struct mount *dest,
 	if (IS_MNT_SHARED(dest))
 		*type |= CL_MAKE_SHARED;
 	return last_src;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /*
@@ -319,7 +313,6 @@ static struct mount *get_source(struct mount *dest,
 int propagate_mnt(struct mount *dest_mnt, struct mountpoint *dest_mp,
 		    struct mount *source_mnt, struct list_head *tree_list)
 {
-<<<<<<< HEAD
 <<<<<<< HEAD
 	struct mount *m, *n;
 	int ret = 0;
@@ -362,8 +355,6 @@ out:
 		if (m->mnt_master != dest_mnt->mnt_master)
 			CLEAR_MNT_MARK(m->mnt_master);
 =======
-=======
->>>>>>> master
 	struct user_namespace *user_ns = current->nsproxy->mnt_ns->user_ns;
 	struct mount *m, *child;
 	int ret = 0;
@@ -410,10 +401,7 @@ out:
 	while (!list_empty(&tmp_list)) {
 		child = list_first_entry(&tmp_list, struct mount, mnt_hash);
 		umount_tree(child, 0);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 	br_write_unlock(&vfsmount_lock);
 	return ret;
@@ -506,7 +494,6 @@ int propagate_umount(struct list_head *list)
 	return 0;
 }
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 /*
  *  Iterates over all slaves, and slaves of slaves.
@@ -538,5 +525,3 @@ void propagate_remount(struct mount *mnt)
 }
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master

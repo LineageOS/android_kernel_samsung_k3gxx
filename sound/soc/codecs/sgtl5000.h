@@ -276,14 +276,10 @@
 #define SGTL5000_BIAS_CTRL_SHIFT		1
 #define SGTL5000_BIAS_CTRL_WIDTH		3
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define SGTL5000_SMALL_POP			0
 =======
 #define SGTL5000_SMALL_POP			0x0001
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define SGTL5000_SMALL_POP			0x0001
->>>>>>> master
 
 /*
  * SGTL5000_CHIP_MIC_CTRL

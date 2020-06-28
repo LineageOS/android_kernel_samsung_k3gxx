@@ -446,54 +446,39 @@ int iwlagn_tx_skb(struct iwl_priv *priv,
 	memcpy(tx_cmd->hdr, hdr, hdr_len);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	txq_id = info->hw_queue;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (is_agg)
 		txq_id = priv->tid_data[sta_id][tid].agg.txq_id;
 	else if (info->flags & IEEE80211_TX_CTL_SEND_AFTER_DTIM) {
 		/*
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 		 * Send this frame after DTIM -- there's a special queue
 		 * reserved for this for contexts that support AP mode.
 		 */
 		txq_id = ctx->mcast_queue;
 
 		/*
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		 * The microcode will clear the more data
 		 * bit in the last frame it transmits.
 		 */
 		hdr->frame_control |=
 			cpu_to_le16(IEEE80211_FCTL_MOREDATA);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	}
 
 =======
-=======
->>>>>>> master
 	} else if (info->flags & IEEE80211_TX_CTL_TX_OFFCHAN)
 		txq_id = IWL_AUX_QUEUE;
 	else
 		txq_id = ctx->ac_to_queue[skb_get_queue_mapping(skb)];
 
 	WARN_ON_ONCE(!is_agg && txq_id != info->hw_queue);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	WARN_ON_ONCE(is_agg &&
 		     priv->queue_to_mac80211[txq_id] != info->hw_queue);
 
@@ -1359,15 +1344,10 @@ int iwlagn_rx_reply_compressed_ba(struct iwl_priv *priv,
 	struct iwl_ht_agg *agg;
 	struct sk_buff_head reclaimed_skbs;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	struct ieee80211_tx_info *info;
 	struct ieee80211_hdr *hdr;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct ieee80211_tx_info *info;
-	struct ieee80211_hdr *hdr;
->>>>>>> master
 	struct sk_buff *skb;
 	int sta_id;
 	int tid;
@@ -1455,22 +1435,17 @@ int iwlagn_rx_reply_compressed_ba(struct iwl_priv *priv,
 
 	skb_queue_walk(&reclaimed_skbs, skb) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		struct ieee80211_hdr *hdr = (void *)skb->data;
 		struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
 =======
 		hdr = (struct ieee80211_hdr *)skb->data;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		hdr = (struct ieee80211_hdr *)skb->data;
->>>>>>> master
 
 		if (ieee80211_is_data_qos(hdr->frame_control))
 			freed++;
 		else
 			WARN_ON_ONCE(1);
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 		iwl_trans_free_tx_cmd(priv->trans, info->driver_data[1]);
 
@@ -1486,24 +1461,15 @@ int iwlagn_rx_reply_compressed_ba(struct iwl_priv *priv,
 		iwl_trans_free_tx_cmd(priv->trans, info->driver_data[1]);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		info = IEEE80211_SKB_CB(skb);
-		iwl_trans_free_tx_cmd(priv->trans, info->driver_data[1]);
-
->>>>>>> master
 		if (freed == 1) {
 			/* this is the first skb we deliver in this batch */
 			/* put the rate scaling data there */
 			info = IEEE80211_SKB_CB(skb);
 			memset(&info->status, 0, sizeof(info->status));
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 			info->flags |= IEEE80211_TX_STAT_ACK;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			info->flags |= IEEE80211_TX_STAT_ACK;
->>>>>>> master
 			info->flags |= IEEE80211_TX_STAT_AMPDU;
 			info->status.ampdu_ack_len = ba_resp->txed_2_done;
 			info->status.ampdu_len = ba_resp->txed;

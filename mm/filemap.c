@@ -1138,7 +1138,6 @@ static void do_generic_file_read(struct file *filp, loff_t *ppos,
 		cond_resched();
 find_page:
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (fatal_signal_pending(current)) {
 			error = -EINTR;
 			goto out;
@@ -1146,8 +1145,6 @@ find_page:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		page = find_get_page(mapping, index);
 		if (!page) {
 			page_cache_sync_readahead(mapping,
@@ -2402,7 +2399,6 @@ again:
 		}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (fatal_signal_pending(current)) {
 			status = -EINTR;
 			break;
@@ -2410,8 +2406,6 @@ again:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		status = a_ops->write_begin(file, mapping, pos, bytes, flags,
 						&page, &fsdata);
 		if (unlikely(status))
@@ -2453,18 +2447,12 @@ again:
 
 		balance_dirty_pages_ratelimited(mapping);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 		if (fatal_signal_pending(current)) {
 			status = -EINTR;
 			break;
 		}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	} while (iov_iter_count(i));
 
 	return written ? written : status;

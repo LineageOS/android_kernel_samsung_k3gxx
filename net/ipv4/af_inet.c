@@ -277,20 +277,14 @@ void build_ehash_secret(void)
 	} while (rnd == 0);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (cmpxchg(&inet_ehash_secret, 0, rnd) == 0)
 		get_random_bytes(&ipv6_hash_secret, sizeof(ipv6_hash_secret));
 =======
-=======
->>>>>>> master
 	if (cmpxchg(&inet_ehash_secret, 0, rnd) == 0) {
 		get_random_bytes(&ipv6_hash_secret, sizeof(ipv6_hash_secret));
 		net_secret_init();
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 EXPORT_SYMBOL(build_ehash_secret);
 
@@ -321,14 +315,11 @@ static int inet_create(struct net *net, struct socket *sock, int protocol,
 			build_ehash_secret();
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (protocol < 0 || protocol >= IPPROTO_MAX)
 		return -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	sock->state = SS_UNCONNECTED;
 
 	/* Look for the requested type/protocol pair. */
@@ -1092,14 +1083,10 @@ static struct inet_protosw inetsw_array[] =
 		.protocol =   IPPROTO_ICMP,
 		.prot =       &ping_prot,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		.ops =        &inet_sockraw_ops,
 =======
 		.ops =        &inet_dgram_ops,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.ops =        &inet_dgram_ops,
->>>>>>> master
 		.no_check =   UDP_CSUM_DEFAULT,
 		.flags =      INET_PROTOSW_REUSE,
        },

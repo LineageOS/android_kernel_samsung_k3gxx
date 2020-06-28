@@ -108,12 +108,9 @@ struct netfront_info {
 	grant_ref_t gref_tx_head;
 	grant_ref_t grant_tx_ref[NET_TX_RING_SIZE];
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct page *grant_tx_page[NET_TX_RING_SIZE];
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	unsigned tx_skb_freelist;
 
 	spinlock_t   rx_lock ____cacheline_aligned_in_smp;
@@ -394,12 +391,9 @@ static void xennet_tx_buf_gc(struct net_device *dev)
 				&np->gref_tx_head, np->grant_tx_ref[id]);
 			np->grant_tx_ref[id] = GRANT_INVALID_REF;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			np->grant_tx_page[id] = NULL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			add_id_to_freelist(&np->tx_skb_freelist, np->tx_skbs, id);
 			dev_kfree_skb_irq(skb);
 		}
@@ -457,12 +451,9 @@ static void xennet_make_frags(struct sk_buff *skb, struct net_device *dev,
 						mfn, GNTMAP_readonly);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		np->grant_tx_page[id] = virt_to_page(data);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		tx->gref = np->grant_tx_ref[id] = ref;
 		tx->offset = offset;
 		tx->size = len;
@@ -478,17 +469,11 @@ static void xennet_make_frags(struct sk_buff *skb, struct net_device *dev,
 		offset = frag->page_offset;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		/* Data must not cross a page boundary. */
 		BUG_ON(len + offset > PAGE_SIZE<<compound_order(page));
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		/* Data must not cross a page boundary. */
-		BUG_ON(len + offset > PAGE_SIZE<<compound_order(page));
-
->>>>>>> master
 		/* Skip unused frames from start of page */
 		page += offset >> PAGE_SHIFT;
 		offset &= ~PAGE_MASK;
@@ -497,15 +482,10 @@ static void xennet_make_frags(struct sk_buff *skb, struct net_device *dev,
 			unsigned long bytes;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 			BUG_ON(offset >= PAGE_SIZE);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			BUG_ON(offset >= PAGE_SIZE);
-
->>>>>>> master
 			bytes = PAGE_SIZE - offset;
 			if (bytes > len)
 				bytes = len;
@@ -526,12 +506,9 @@ static void xennet_make_frags(struct sk_buff *skb, struct net_device *dev,
 							mfn, GNTMAP_readonly);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 			np->grant_tx_page[id] = page;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			tx->gref = np->grant_tx_ref[id] = ref;
 			tx->offset = offset;
 			tx->size = bytes;
@@ -632,12 +609,9 @@ static int xennet_start_xmit(struct sk_buff *skb, struct net_device *dev)
 	gnttab_grant_foreign_access_ref(
 		ref, np->xbdev->otherend_id, mfn, GNTMAP_readonly);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	np->grant_tx_page[id] = virt_to_page(data);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	tx->gref = np->grant_tx_ref[id] = ref;
 	tx->offset = offset;
 	tx->size = len;
@@ -1168,23 +1142,17 @@ static void xennet_release_tx_bufs(struct netfront_info *np)
 
 		skb = np->tx_skbs[i].skb;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		get_page(np->grant_tx_page[i]);
 		gnttab_end_foreign_access(np->grant_tx_ref[i],
 					  GNTMAP_readonly,
 					  (unsigned long)page_address(np->grant_tx_page[i]));
 		np->grant_tx_page[i] = NULL;
 =======
-=======
->>>>>>> master
 		gnttab_end_foreign_access_ref(np->grant_tx_ref[i],
 					      GNTMAP_readonly);
 		gnttab_release_grant_reference(&np->gref_tx_head,
 					       np->grant_tx_ref[i]);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		np->grant_tx_ref[i] = GRANT_INVALID_REF;
 		add_id_to_freelist(&np->tx_skb_freelist, np->tx_skbs, i);
 		dev_kfree_skb_irq(skb);
@@ -1193,7 +1161,6 @@ static void xennet_release_tx_bufs(struct netfront_info *np)
 
 static void xennet_release_rx_bufs(struct netfront_info *np)
 {
-<<<<<<< HEAD
 <<<<<<< HEAD
 	int id, ref;
 
@@ -1225,8 +1192,6 @@ static void xennet_release_rx_bufs(struct netfront_info *np)
 	}
 
 =======
-=======
->>>>>>> master
 	struct mmu_update      *mmu = np->rx_mmu;
 	struct multicall_entry *mcl = np->rx_mcl;
 	struct sk_buff_head free_list;
@@ -1299,10 +1264,7 @@ static void xennet_release_rx_bufs(struct netfront_info *np)
 
 	__skb_queue_purge(&free_list);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	spin_unlock_bh(&np->rx_lock);
 }
 
@@ -1438,12 +1400,9 @@ static struct net_device *xennet_create_dev(struct xenbus_device *dev)
 		np->rx_skbs[i] = NULL;
 		np->grant_rx_ref[i] = GRANT_INVALID_REF;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		np->grant_tx_page[i] = NULL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	/* A grant for every tx ring slot */

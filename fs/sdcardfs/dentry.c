@@ -3,24 +3,18 @@
  *
  * Copyright (c) 2013 Samsung Electronics Co. Ltd
 <<<<<<< HEAD
-<<<<<<< HEAD
  *   Authors: Daeho Jeong, Woojoong Lee, Seunghwan Hyun,
  *               Sunghwan Yun, Sungjong Seo
  *
  * This program has been developed as a stackable file system based on
  * the WrapFS which written by
 =======
-=======
->>>>>>> master
  *   Authors: Daeho Jeong, Woojoong Lee, Seunghwan Hyun, 
  *               Sunghwan Yun, Sungjong Seo
  *                      
  * This program has been developed as a stackable file system based on
  * the WrapFS which written by 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  *
  * Copyright (c) 1998-2011 Erez Zadok
  * Copyright (c) 2009     Shrikar Archak
@@ -49,13 +43,10 @@ static int sdcardfs_d_revalidate(struct dentry *dentry, unsigned int flags)
 	struct dentry *lower_cur_parent_dentry = NULL;
 	struct dentry *lower_dentry = NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct inode *inode;
 	struct sdcardfs_inode_data *data;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (flags & LOOKUP_RCU)
 		return -ECHILD;
@@ -68,7 +59,6 @@ static int sdcardfs_d_revalidate(struct dentry *dentry, unsigned int flags)
 	spin_unlock(&dentry->d_lock);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* check uninitialized obb_dentry and
 	 * whether the base obbpath has been changed or not
 	 */
@@ -76,10 +66,6 @@ static int sdcardfs_d_revalidate(struct dentry *dentry, unsigned int flags)
 	/* check uninitialized obb_dentry and  
 	 * whether the base obbpath has been changed or not */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	/* check uninitialized obb_dentry and  
-	 * whether the base obbpath has been changed or not */
->>>>>>> master
 	if (is_obbpath_invalid(dentry)) {
 		d_drop(dentry);
 		return 0;
@@ -93,7 +79,6 @@ static int sdcardfs_d_revalidate(struct dentry *dentry, unsigned int flags)
 	lower_cur_parent_dentry = dget_parent(lower_dentry);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if ((lower_dentry->d_flags & DCACHE_OP_REVALIDATE)) {
 		err = lower_dentry->d_op->d_revalidate(lower_dentry, flags);
 		if (err == 0) {
@@ -104,8 +89,6 @@ static int sdcardfs_d_revalidate(struct dentry *dentry, unsigned int flags)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	spin_lock(&lower_dentry->d_lock);
 	if (d_unhashed(lower_dentry)) {
 		spin_unlock(&lower_dentry->d_lock);
@@ -122,7 +105,6 @@ static int sdcardfs_d_revalidate(struct dentry *dentry, unsigned int flags)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (dentry < lower_dentry) {
 		spin_lock(&dentry->d_lock);
 		spin_lock_nested(&lower_dentry->d_lock, DENTRY_D_LOCK_NESTED);
@@ -133,8 +115,6 @@ static int sdcardfs_d_revalidate(struct dentry *dentry, unsigned int flags)
 
 	if (!qstr_case_eq(&dentry->d_name, &lower_dentry->d_name)) {
 =======
-=======
->>>>>>> master
 	if (dentry == lower_dentry) {
 		err = 0;
 		panic("sdcardfs: dentry is equal to lower_dentry\n");
@@ -154,10 +134,7 @@ static int sdcardfs_d_revalidate(struct dentry *dentry, unsigned int flags)
 		err = 0;
 	} else if (strncasecmp(dentry->d_name.name, lower_dentry->d_name.name,
 				dentry->d_name.len) != 0) {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		__d_drop(dentry);
 		err = 0;
 	}
@@ -169,7 +146,6 @@ static int sdcardfs_d_revalidate(struct dentry *dentry, unsigned int flags)
 		spin_unlock(&dentry->d_lock);
 		spin_unlock(&lower_dentry->d_lock);
 	}
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!err)
 		goto out;
@@ -188,8 +164,6 @@ static int sdcardfs_d_revalidate(struct dentry *dentry, unsigned int flags)
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 out:
 	dput(parent_dentry);
@@ -203,7 +177,6 @@ static void sdcardfs_d_release(struct dentry *dentry)
 {
 	/* release and reset the lower paths */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (has_graft_path(dentry))
 		sdcardfs_put_reset_orig_path(dentry);
 	sdcardfs_put_reset_lower_path(dentry);
@@ -215,8 +188,6 @@ static int sdcardfs_hash_ci(const struct dentry *dentry,
 {
 	/*
 =======
-=======
->>>>>>> master
 	if(has_graft_path(dentry)) {
 		sdcardfs_put_reset_orig_path(dentry);
 	}
@@ -229,10 +200,7 @@ static int sdcardfs_hash_ci(const struct dentry *dentry,
 				const struct inode *inode, struct qstr *qstr)
 {
 	/* 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	 * This function is copy of vfat_hashi.
 	 * FIXME Should we support national language?
 	 *       Refer to vfat_hashi()
@@ -244,24 +212,18 @@ static int sdcardfs_hash_ci(const struct dentry *dentry,
 
 	name = qstr->name;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	len = qstr->len;
 
 	hash = init_name_hash();
 	while (len--)
 =======
-=======
->>>>>>> master
 	//len = vfat_striptail_len(qstr);
 	len = qstr->len; 
 
 	hash = init_name_hash();
 	while (len--)
 		//hash = partial_name_hash(nls_tolower(t, *name++), hash);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		hash = partial_name_hash(tolower(*name++), hash);
 	qstr->hash = end_name_hash(hash);
 
@@ -272,19 +234,14 @@ static int sdcardfs_hash_ci(const struct dentry *dentry,
  * Case insensitive compare of two vfat names.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int sdcardfs_cmp_ci(const struct dentry *parent,
 =======
 static int sdcardfs_cmp_ci(const struct dentry *parent, 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static int sdcardfs_cmp_ci(const struct dentry *parent, 
->>>>>>> master
 		const struct inode *pinode,
 		const struct dentry *dentry, const struct inode *inode,
 		unsigned int len, const char *str, const struct qstr *name)
 {
-<<<<<<< HEAD
 <<<<<<< HEAD
 	/* FIXME Should we support national language? */
 
@@ -308,8 +265,6 @@ const struct dentry_operations sdcardfs_ci_dops = {
 	.d_compare	= sdcardfs_cmp_ci,
 	.d_canonical_path = sdcardfs_canonical_path,
 =======
-=======
->>>>>>> master
 	/* This function is copy of vfat_cmpi */
 	// FIXME Should we support national language? 
 	//struct nls_table *t = MSDOS_SB(parent->d_sb)->nls_io;
@@ -336,9 +291,6 @@ const struct dentry_operations sdcardfs_ci_dops = {
 	.d_release	= sdcardfs_d_release,
 	.d_hash 	= sdcardfs_hash_ci, 
 	.d_compare	= sdcardfs_cmp_ci,
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 

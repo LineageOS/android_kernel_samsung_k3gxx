@@ -26,12 +26,9 @@
  **************************************************************************/
 #include <linux/module.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/console.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 #include <drm/drmP.h>
 #include "vmwgfx_drv.h"
@@ -748,7 +745,6 @@ static void vmw_postclose(struct drm_device *dev,
 
 	vmw_fp = vmw_fpriv(file_priv);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	if (vmw_fp->locked_master) {
 		struct vmw_master *vmaster =
@@ -765,11 +761,6 @@ static void vmw_postclose(struct drm_device *dev,
 	if (vmw_fp->locked_master)
 		drm_master_put(&vmw_fp->locked_master);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ttm_object_file_release(&vmw_fp->tfile);
-	if (vmw_fp->locked_master)
-		drm_master_put(&vmw_fp->locked_master);
->>>>>>> master
 	kfree(vmw_fp);
 }
 
@@ -970,30 +961,21 @@ static void vmw_master_drop(struct drm_device *dev,
 	vmw_fp->locked_master = drm_master_get(file_priv->master);
 	ret = ttm_vt_lock(&vmaster->lock, false, vmw_fp->tfile);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	vmw_execbuf_release_pinned_bo(dev_priv);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	vmw_execbuf_release_pinned_bo(dev_priv);
-
->>>>>>> master
 	if (unlikely((ret != 0))) {
 		DRM_ERROR("Unable to lock TTM at VT switch.\n");
 		drm_master_put(&vmw_fp->locked_master);
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ttm_lock_set_kill(&vmaster->lock, false, SIGTERM);
 	vmw_execbuf_release_pinned_bo(dev_priv);
 =======
 	ttm_lock_set_kill(&vmaster->lock, true, SIGTERM);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ttm_lock_set_kill(&vmaster->lock, true, SIGTERM);
->>>>>>> master
 
 	if (!dev_priv->enable_fb) {
 		ret = ttm_bo_evict_mm(&dev_priv->bdev, TTM_PL_VRAM);
@@ -1230,7 +1212,6 @@ static int __init vmwgfx_init(void)
 {
 	int ret;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 #ifdef CONFIG_VGA_CONSOLE
 	if (vgacon_text_force())
@@ -1239,8 +1220,6 @@ static int __init vmwgfx_init(void)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ret = drm_pci_init(&driver, &vmw_pci_driver);
 	if (ret)
 		DRM_ERROR("Failed initializing DRM.\n");

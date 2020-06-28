@@ -19,14 +19,11 @@
 #define STI_FONT_KANA8 2
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define ALT_CODE_TYPE_UNKNOWN 0x00	/* alt code type values */
 #define ALT_CODE_TYPE_PA_RISC_64 0x01
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /* The latency of the STI functions cannot really be reduced by setting
  * this to 0;  STI doesn't seem to be designed to allow calling a different
  * function (or the same function with different arguments) after a
@@ -50,10 +47,7 @@
 #define STI_PTR(p)	( virt_to_phys(p) )
 #define PTR_STI(p)	( phys_to_virt((unsigned long)p) )
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #define STI_CALL(func, flags, inptr, outptr, glob_cfg)	\
        ({						\
                pdc_sti_call( func, STI_PTR(flags),	\
@@ -62,10 +56,7 @@
 				   STI_PTR(glob_cfg));	\
        })
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 #define sti_onscreen_x(sti) (sti->glob_cfg->onscreen_x)
 #define sti_onscreen_y(sti) (sti->glob_cfg->onscreen_y)
@@ -75,7 +66,6 @@
 #define sti_font_y(sti) (PTR_STI(sti->font)->height)
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #ifdef CONFIG_64BIT
 #define STI_LOWMEM	(GFP_KERNEL | GFP_DMA)
 #else
@@ -84,8 +74,6 @@
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /* STI function configuration structs */
 
@@ -337,7 +325,6 @@ struct sti_blkmv_outptr {
 
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* sti_all_data is an internal struct which needs to be allocated in
  * low memory (< 4GB) if STI is used with 32bit STI on a 64bit kernel */
 
@@ -368,8 +355,6 @@ struct sti_all_data {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /* internal generic STI struct */
 
 struct sti_struct {
@@ -395,24 +380,18 @@ struct sti_struct {
 	unsigned long regions_phys[STI_REGION_MAX];
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct sti_glob_cfg *glob_cfg;	/* points into sti_all_data */
 
 	struct sti_cooked_font *font;	/* ptr to selected font (cooked) */
 
 =======
-=======
->>>>>>> master
 	struct sti_glob_cfg *glob_cfg;
 	struct sti_cooked_font *font;	/* ptr to selected font (cooked) */
 
 	struct sti_conf_outptr outptr; /* configuration */
 	struct sti_conf_outptr_ext outptr_ext;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	struct pci_dev *pd;
 
 	/* PCI data structures (pg. 17ff from sti.pdf) */
@@ -421,14 +400,11 @@ struct sti_struct {
 	/* pointer to the fb_info where this STI device is used */
 	struct fb_info *info;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	/* pointer to all internal data */
 	struct sti_all_data *sti_data;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 
@@ -436,7 +412,6 @@ struct sti_struct {
 
 struct sti_struct *sti_get_rom(unsigned int index); /* 0: default sti */
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 
 /* sticore main function to call STI firmware */
@@ -448,8 +423,6 @@ int sti_call(const struct sti_struct *sti, unsigned long func,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /* functions to call the STI ROM directly */
 
 void sti_putc(struct sti_struct *sti, int c, int y, int x);

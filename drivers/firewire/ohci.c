@@ -272,12 +272,9 @@ static inline struct fw_ohci *fw_ohci(struct fw_card *card)
 static char ohci_driver_name[] = KBUILD_MODNAME;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define PCI_VENDOR_ID_PINNACLE_SYSTEMS	0x11bd
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define PCI_DEVICE_ID_AGERE_FW643	0x5901
 #define PCI_DEVICE_ID_CREATIVE_SB1394	0x4001
 #define PCI_DEVICE_ID_JMICRON_JMB38X_FW	0x2380
@@ -285,7 +282,6 @@ static char ohci_driver_name[] = KBUILD_MODNAME;
 #define PCI_DEVICE_ID_TI_TSB12LV26	0x8020
 #define PCI_DEVICE_ID_TI_TSB82AA2	0x8025
 #define PCI_DEVICE_ID_VIA_VT630X	0x3044
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define PCI_REV_ID_VIA_VT6306		0x46
 
@@ -297,8 +293,6 @@ static char ohci_driver_name[] = KBUILD_MODNAME;
 #define QUIRK_TI_SLLZ059		0x20
 #define QUIRK_IR_WAKE			0x40
 =======
-=======
->>>>>>> master
 #define PCI_VENDOR_ID_PINNACLE_SYSTEMS	0x11bd
 #define PCI_REV_ID_VIA_VT6306		0x46
 
@@ -310,10 +304,7 @@ static char ohci_driver_name[] = KBUILD_MODNAME;
 #define QUIRK_TI_SLLZ059		32
 #define QUIRK_IR_WAKE			64
 #define QUIRK_PHY_LCTRL_TIMEOUT		128
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /* In case of multiple matches in ohci_quirks[], only the first one is used. */
 static const struct {
@@ -327,19 +318,13 @@ static const struct {
 
 	{PCI_VENDOR_ID_ATT, PCI_DEVICE_ID_AGERE_FW643, 6,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		QUIRK_NO_MSI},
 =======
-=======
->>>>>>> master
 		QUIRK_PHY_LCTRL_TIMEOUT | QUIRK_NO_MSI},
 
 	{PCI_VENDOR_ID_ATT, PCI_ANY_ID, PCI_ANY_ID,
 		QUIRK_PHY_LCTRL_TIMEOUT},
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	{PCI_VENDOR_ID_CREATIVE, PCI_DEVICE_ID_CREATIVE_SB1394, PCI_ANY_ID,
 		QUIRK_RESET_PACKET},
@@ -387,13 +372,9 @@ MODULE_PARM_DESC(quirks, "Chip quirks (default = 0"
 	", TI SLLZ059 erratum = "	__stringify(QUIRK_TI_SLLZ059)
 	", IR wake unreliable = "	__stringify(QUIRK_IR_WAKE)
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	", phy LCtrl timeout = "	__stringify(QUIRK_PHY_LCTRL_TIMEOUT)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	", phy LCtrl timeout = "	__stringify(QUIRK_PHY_LCTRL_TIMEOUT)
->>>>>>> master
 	")");
 
 #define OHCI_PARAM_DEBUG_AT_AR		1
@@ -2336,17 +2317,11 @@ static int ohci_enable(struct fw_card *card,
 	 * cannot actually use the phy at that time.  These need tens of
 	 * millisecods pause between LPS write and first phy access too.
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	 *
 	 * But do not wait for 50msec on Agere/LSI cards.  Their phy
 	 * arbitration state machine may time out during such a long wait.
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	 *
-	 * But do not wait for 50msec on Agere/LSI cards.  Their phy
-	 * arbitration state machine may time out during such a long wait.
->>>>>>> master
 	 */
 
 	reg_write(ohci, OHCI1394_HCControlSet,
@@ -2355,21 +2330,15 @@ static int ohci_enable(struct fw_card *card,
 	flush_writes(ohci);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	for (lps = 0, i = 0; !lps && i < 3; i++) {
 		msleep(50);
 =======
-=======
->>>>>>> master
 	if (!(ohci->quirks & QUIRK_PHY_LCTRL_TIMEOUT))
 		msleep(50);
 
 	for (lps = 0, i = 0; !lps && i < 150; i++) {
 		msleep(1);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		lps = reg_read(ohci, OHCI1394_HCControlSet) &
 		      OHCI1394_HCControl_LPS;
 	}
@@ -3744,7 +3713,6 @@ static int pci_probe(struct pci_dev *dev,
 	reg_write(ohci, OHCI1394_IsoXmitIntMaskSet, ~0);
 	ohci->it_context_support = reg_read(ohci, OHCI1394_IsoXmitIntMaskSet);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* JMicron JMB38x often shows 0 at first read, just ignore it */
 	if (!ohci->it_context_support) {
 		ohci_notice(ohci, "overriding IsoXmitIntMask\n");
@@ -3752,8 +3720,6 @@ static int pci_probe(struct pci_dev *dev,
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	reg_write(ohci, OHCI1394_IsoXmitIntMaskClear, ~0);
 	ohci->it_context_mask = ohci->it_context_support;
 	ohci->n_it = hweight32(ohci->it_context_mask);

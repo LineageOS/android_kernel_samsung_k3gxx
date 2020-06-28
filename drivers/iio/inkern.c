@@ -179,27 +179,19 @@ static struct iio_channel *of_iio_channel_get_by_name(struct device_node *np,
 							 name);
 		chan = of_iio_channel_get(np, index);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!IS_ERR(chan) || PTR_ERR(chan) == -EPROBE_DEFER)
 =======
 		if (!IS_ERR(chan))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!IS_ERR(chan))
->>>>>>> master
 			break;
 		else if (name && index >= 0) {
 			pr_err("ERROR: could not get IIO channel %s:%s(%i)\n",
 				np->full_name, name ? name : "", index);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			return NULL;
 =======
 			return chan;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			return chan;
->>>>>>> master
 		}
 
 		/*
@@ -210,7 +202,6 @@ static struct iio_channel *of_iio_channel_get_by_name(struct device_node *np,
 		np = np->parent;
 		if (np && !of_get_property(np, "io-channel-ranges", NULL))
 <<<<<<< HEAD
-<<<<<<< HEAD
 			return NULL;
 	}
 
@@ -218,10 +209,6 @@ static struct iio_channel *of_iio_channel_get_by_name(struct device_node *np,
 			break;
 	}
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			break;
-	}
->>>>>>> master
 	return chan;
 }
 
@@ -345,12 +332,9 @@ struct iio_channel *iio_channel_get(struct device *dev,
 			return channel;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return iio_channel_get_sys(name, channel_name);
 }
 EXPORT_SYMBOL_GPL(iio_channel_get);

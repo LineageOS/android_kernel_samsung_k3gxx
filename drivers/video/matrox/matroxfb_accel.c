@@ -193,18 +193,14 @@ void matrox_cfbX_init(struct matrox_fb_info *minfo)
 	if (isMilleniumII(minfo)) minfo->accel.m_dwg_rect |= M_DWG_TRANSC;
 	minfo->accel.m_opmode = mopmode;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	minfo->accel.m_access = maccess;
 	minfo->accel.m_pitch = mpitch;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 EXPORT_SYMBOL(matrox_cfbX_init);
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 static void matrox_accel_restore_maccess(struct matrox_fb_info *minfo)
 {
@@ -214,8 +210,6 @@ static void matrox_accel_restore_maccess(struct matrox_fb_info *minfo)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static void matrox_accel_bmove(struct matrox_fb_info *minfo, int vxres, int sy,
 			       int sx, int dy, int dx, int height, int width)
 {
@@ -228,15 +222,11 @@ static void matrox_accel_bmove(struct matrox_fb_info *minfo, int vxres, int sy,
 
 	if ((dy < sy) || ((dy == sy) && (dx <= sx))) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		mga_fifo(4);
 		matrox_accel_restore_maccess(minfo);
 =======
 		mga_fifo(2);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		mga_fifo(2);
->>>>>>> master
 		mga_outl(M_DWGCTL, M_DWG_BITBLT | M_DWG_SHIFTZERO | M_DWG_SGNZERO |
 			 M_DWG_BFCOL | M_DWG_REPLACE);
 		mga_outl(M_AR5, vxres);
@@ -245,15 +235,11 @@ static void matrox_accel_bmove(struct matrox_fb_info *minfo, int vxres, int sy,
 		end = start+width;
 	} else {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		mga_fifo(5);
 		matrox_accel_restore_maccess(minfo);
 =======
 		mga_fifo(3);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		mga_fifo(3);
->>>>>>> master
 		mga_outl(M_DWGCTL, M_DWG_BITBLT | M_DWG_SHIFTZERO | M_DWG_BFCOL | M_DWG_REPLACE);
 		mga_outl(M_SGN, 5);
 		mga_outl(M_AR5, -vxres);
@@ -263,15 +249,11 @@ static void matrox_accel_bmove(struct matrox_fb_info *minfo, int vxres, int sy,
 		dy += height-1;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mga_fifo(6);
 	matrox_accel_restore_maccess(minfo);
 =======
 	mga_fifo(4);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mga_fifo(4);
->>>>>>> master
 	mga_outl(M_AR0, end);
 	mga_outl(M_AR3, start);
 	mga_outl(M_FXBNDRY, ((dx+width)<<16) | dx);
@@ -294,15 +276,11 @@ static void matrox_accel_bmove_lin(struct matrox_fb_info *minfo, int vxres,
 
 	if ((dy < sy) || ((dy == sy) && (dx <= sx))) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		mga_fifo(4);
 		matrox_accel_restore_maccess(minfo);
 =======
 		mga_fifo(2);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		mga_fifo(2);
->>>>>>> master
 		mga_outl(M_DWGCTL, M_DWG_BITBLT | M_DWG_SHIFTZERO | M_DWG_SGNZERO |
 			M_DWG_BFCOL | M_DWG_REPLACE);
 		mga_outl(M_AR5, vxres);
@@ -311,15 +289,11 @@ static void matrox_accel_bmove_lin(struct matrox_fb_info *minfo, int vxres,
 		end = start+width;
 	} else {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		mga_fifo(5);
 		matrox_accel_restore_maccess(minfo);
 =======
 		mga_fifo(3);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		mga_fifo(3);
->>>>>>> master
 		mga_outl(M_DWGCTL, M_DWG_BITBLT | M_DWG_SHIFTZERO | M_DWG_BFCOL | M_DWG_REPLACE);
 		mga_outl(M_SGN, 5);
 		mga_outl(M_AR5, -vxres);
@@ -329,15 +303,11 @@ static void matrox_accel_bmove_lin(struct matrox_fb_info *minfo, int vxres,
 		dy += height-1;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mga_fifo(7);
 	matrox_accel_restore_maccess(minfo);
 =======
 	mga_fifo(5);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mga_fifo(5);
->>>>>>> master
 	mga_outl(M_AR0, end);
 	mga_outl(M_AR3, start);
 	mga_outl(M_FXBNDRY, ((dx+width)<<16) | dx);
@@ -373,15 +343,11 @@ static void matroxfb_accel_clear(struct matrox_fb_info *minfo, u_int32_t color,
 	CRITBEGIN
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mga_fifo(7);
 	matrox_accel_restore_maccess(minfo);
 =======
 	mga_fifo(5);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mga_fifo(5);
->>>>>>> master
 	mga_outl(M_DWGCTL, minfo->accel.m_dwg_rect | M_DWG_REPLACE);
 	mga_outl(M_FCOL, color);
 	mga_outl(M_FXBNDRY, ((sx + width) << 16) | sx);
@@ -425,15 +391,11 @@ static void matroxfb_cfb4_clear(struct matrox_fb_info *minfo, u_int32_t bgx,
 	sx >>= 1;
 	if (width) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		mga_fifo(7);
 		matrox_accel_restore_maccess(minfo);
 =======
 		mga_fifo(5);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		mga_fifo(5);
->>>>>>> master
 		mga_outl(M_DWGCTL, minfo->accel.m_dwg_rect | M_DWG_REPLACE2);
 		mga_outl(M_FCOL, bgx);
 		mga_outl(M_FXBNDRY, ((sx + width) << 16) | sx);
@@ -508,15 +470,11 @@ static void matroxfb_1bpp_imageblit(struct matrox_fb_info *minfo, u_int32_t fgx,
 	CRITBEGIN
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mga_fifo(5);
 	matrox_accel_restore_maccess(minfo);
 =======
 	mga_fifo(3);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mga_fifo(3);
->>>>>>> master
 	if (easy)
 		mga_outl(M_DWGCTL, M_DWG_ILOAD | M_DWG_SGNZERO | M_DWG_SHIFTZERO | M_DWG_BMONOWF | M_DWG_LINEAR | M_DWG_REPLACE);
 	else
@@ -527,15 +485,11 @@ static void matroxfb_1bpp_imageblit(struct matrox_fb_info *minfo, u_int32_t fgx,
 	mmio = minfo->mmio.vbase;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mga_fifo(8);
 	matrox_accel_restore_maccess(minfo);
 =======
 	mga_fifo(6);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mga_fifo(6);
->>>>>>> master
 	mga_writel(mmio, M_FXBNDRY, fxbndry);
 	mga_writel(mmio, M_AR0, ar0);
 	mga_writel(mmio, M_AR3, 0);

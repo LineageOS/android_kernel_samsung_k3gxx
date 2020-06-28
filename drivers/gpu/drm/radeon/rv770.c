@@ -745,22 +745,16 @@ static void rv770_init_golden_registers(struct radeon_device *rdev)
 		radeon_program_register_sequence(rdev,
 						 rv730_golden_registers,
 <<<<<<< HEAD
-<<<<<<< HEAD
 						 (const u32)ARRAY_SIZE(rv730_golden_registers));
 		radeon_program_register_sequence(rdev,
 						 rv730_mgcg_init,
 						 (const u32)ARRAY_SIZE(rv730_mgcg_init));
 =======
-=======
->>>>>>> master
 						 (const u32)ARRAY_SIZE(rv770_golden_registers));
 		radeon_program_register_sequence(rdev,
 						 rv730_mgcg_init,
 						 (const u32)ARRAY_SIZE(rv770_mgcg_init));
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		break;
 	case CHIP_RV710:
 		radeon_program_register_sequence(rdev,
@@ -772,43 +766,31 @@ static void rv770_init_golden_registers(struct radeon_device *rdev)
 		radeon_program_register_sequence(rdev,
 						 rv710_golden_registers,
 <<<<<<< HEAD
-<<<<<<< HEAD
 						 (const u32)ARRAY_SIZE(rv710_golden_registers));
 		radeon_program_register_sequence(rdev,
 						 rv710_mgcg_init,
 						 (const u32)ARRAY_SIZE(rv710_mgcg_init));
 =======
-=======
->>>>>>> master
 						 (const u32)ARRAY_SIZE(rv770_golden_registers));
 		radeon_program_register_sequence(rdev,
 						 rv710_mgcg_init,
 						 (const u32)ARRAY_SIZE(rv770_mgcg_init));
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		break;
 	case CHIP_RV740:
 		radeon_program_register_sequence(rdev,
 						 rv740_golden_registers,
-<<<<<<< HEAD
 <<<<<<< HEAD
 						 (const u32)ARRAY_SIZE(rv740_golden_registers));
 		radeon_program_register_sequence(rdev,
 						 rv740_mgcg_init,
 						 (const u32)ARRAY_SIZE(rv740_mgcg_init));
 =======
-=======
->>>>>>> master
 						 (const u32)ARRAY_SIZE(rv770_golden_registers));
 		radeon_program_register_sequence(rdev,
 						 rv740_mgcg_init,
 						 (const u32)ARRAY_SIZE(rv770_mgcg_init));
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		break;
 	default:
 		break;

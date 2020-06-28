@@ -185,17 +185,12 @@ struct mapped_device {
 	struct hd_geometry geometry;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* kobject and completion */
 	struct dm_kobject_holder kobj_holder;
 =======
 	/* sysfs handle */
 	struct kobject kobj;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	/* sysfs handle */
-	struct kobject kobj;
->>>>>>> master
 
 	/* zero-length flush that will be cloned and submitted to targets */
 	struct bio flush_bio;
@@ -987,7 +982,6 @@ int dm_set_target_max_io_len(struct dm_target *ti, sector_t len)
 EXPORT_SYMBOL_GPL(dm_set_target_max_io_len);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * Flush current->bio_list when the target map method blocks.
  * This fixes deadlocks in snapshot and possibly in other targets.
@@ -1040,20 +1034,15 @@ static void dm_offload_end(struct dm_offload *o)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static void __map_bio(struct dm_target_io *tio)
 {
 	int r;
 	sector_t sector;
 	struct mapped_device *md;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct dm_offload o;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	struct bio *clone = &tio->clone;
 	struct dm_target *ti = tio->ti;
 
@@ -1068,7 +1057,6 @@ static void __map_bio(struct dm_target_io *tio)
 	atomic_inc(&tio->io->io_count);
 	sector = clone->bi_sector;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	dm_offload_start(&o);
 	r = ti->type->map(ti, clone);
@@ -1077,9 +1065,6 @@ static void __map_bio(struct dm_target_io *tio)
 =======
 	r = ti->type->map(ti, clone);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	r = ti->type->map(ti, clone);
->>>>>>> master
 	if (r == DM_MAPIO_REMAPPED) {
 		/* the bio has been remapped so dispatch it */
 
@@ -1990,12 +1975,9 @@ static struct mapped_device *alloc_dev(int minor)
 	INIT_WORK(&md->work, dm_wq_work);
 	init_waitqueue_head(&md->eventq);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	init_completion(&md->kobj_holder.completion);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	md->disk->major = _major;
 	md->disk->first_minor = minor;
@@ -2312,7 +2294,6 @@ struct target_type *dm_get_immutable_target_type(struct mapped_device *md)
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * The queue_limits are only valid as long as you have a reference
  * count on 'md'.
  */
@@ -2326,8 +2307,6 @@ EXPORT_SYMBOL_GPL(dm_get_queue_limits);
 /*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  * Fully initialize a request-based queue (->elevator, ->request_fn, etc).
  */
 static int dm_init_request_based_queue(struct mapped_device *md)
@@ -2368,14 +2347,10 @@ int dm_setup_md_queue(struct mapped_device *md)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 struct mapped_device *dm_get_md(dev_t dev)
 =======
 static struct mapped_device *dm_find_md(dev_t dev)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static struct mapped_device *dm_find_md(dev_t dev)
->>>>>>> master
 {
 	struct mapped_device *md;
 	unsigned minor = MINOR(dev);
@@ -2387,7 +2362,6 @@ static struct mapped_device *dm_find_md(dev_t dev)
 
 	md = idr_find(&_minor_idr, minor);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (md) {
 		if ((md == MINOR_ALLOCED ||
 		     (MINOR(disk_devt(dm_disk(md))) != minor) ||
@@ -2398,18 +2372,13 @@ static struct mapped_device *dm_find_md(dev_t dev)
 		}
 		dm_get(md);
 =======
-=======
->>>>>>> master
 	if (md && (md == MINOR_ALLOCED ||
 		   (MINOR(disk_devt(dm_disk(md))) != minor) ||
 		   dm_deleting_md(md) ||
 		   test_bit(DMF_FREEING, &md->flags))) {
 		md = NULL;
 		goto out;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 out:
@@ -2418,10 +2387,7 @@ out:
 	return md;
 }
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 
 struct mapped_device *dm_get_md(dev_t dev)
 {
@@ -2432,10 +2398,7 @@ struct mapped_device *dm_get_md(dev_t dev)
 
 	return md;
 }
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 EXPORT_SYMBOL_GPL(dm_get_md);
 
 void *dm_get_mdptr(struct mapped_device *md)
@@ -2463,12 +2426,9 @@ EXPORT_SYMBOL_GPL(dm_device_name);
 static void __dm_destroy(struct mapped_device *md, bool wait)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct request_queue *q = md->queue;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	struct dm_table *map;
 
 	might_sleep();
@@ -2479,7 +2439,6 @@ static void __dm_destroy(struct mapped_device *md, bool wait)
 	set_bit(DMF_FREEING, &md->flags);
 	spin_unlock(&_minor_lock);
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	spin_lock_irq(q->queue_lock);
 	queue_flag_set(QUEUE_FLAG_DYING, q);
@@ -2492,19 +2451,14 @@ static void __dm_destroy(struct mapped_device *md, bool wait)
 	mutex_lock(&md->suspend_lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (!dm_suspended_md(md)) {
 		dm_table_presuspend_targets(map);
 		dm_table_postsuspend_targets(map);
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mutex_unlock(&md->suspend_lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/*
 	 * Rare, but there may be I/O requests still going to complete,
@@ -2898,13 +2852,10 @@ struct gendisk *dm_disk(struct mapped_device *md)
 struct kobject *dm_kobject(struct mapped_device *md)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return &md->kobj_holder.kobj;
 }
 
 =======
-=======
->>>>>>> master
 	return &md->kobj;
 }
 
@@ -2912,15 +2863,11 @@ struct kobject *dm_kobject(struct mapped_device *md)
  * struct mapped_device should not be exported outside of dm.c
  * so use this check to verify that kobj is part of md structure
  */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 struct mapped_device *dm_get_from_kobject(struct kobject *kobj)
 {
 	struct mapped_device *md;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	md = container_of(kobj, struct mapped_device, kobj_holder.kobj);
 =======
@@ -2928,11 +2875,6 @@ struct mapped_device *dm_get_from_kobject(struct kobject *kobj)
 	if (&md->kobj != kobj)
 		return NULL;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	md = container_of(kobj, struct mapped_device, kobj);
-	if (&md->kobj != kobj)
-		return NULL;
->>>>>>> master
 
 	if (test_bit(DMF_FREEING, &md->flags) ||
 	    dm_deleting_md(md))

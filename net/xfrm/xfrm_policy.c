@@ -3202,7 +3202,6 @@ int xfrm_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
 	struct xfrm_migrate *mp;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Stage 0 - sanity checks */
 	if ((err = xfrm_migrate_check(m, num_migrate)) < 0)
 		goto out;
@@ -3217,11 +3216,6 @@ int xfrm_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
 		goto out;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if ((err = xfrm_migrate_check(m, num_migrate)) < 0)
-		goto out;
-
->>>>>>> master
 	/* Stage 1 - find policy */
 	if ((pol = xfrm_migrate_policy_find(sel, dir, type)) == NULL) {
 		err = -ENOENT;

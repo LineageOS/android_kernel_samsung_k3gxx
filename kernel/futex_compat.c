@@ -156,14 +156,10 @@ COMPAT_SYSCALL_DEFINE3(get_robust_list, int, pid,
 
 	ret = -EPERM;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!ptrace_may_access(p, PTRACE_MODE_READ_REALCREDS))
 =======
 	if (!ptrace_may_access(p, PTRACE_MODE_READ))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!ptrace_may_access(p, PTRACE_MODE_READ))
->>>>>>> master
 		goto err_unlock;
 
 	head = p->compat_robust_list;

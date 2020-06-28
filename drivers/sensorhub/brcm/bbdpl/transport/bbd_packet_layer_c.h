@@ -27,14 +27,10 @@
 
 #include "transport_layer_c.h"
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include "bbd_ifc.h"
 =======
 #include "../bbd_ifc.h"
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#include "../bbd_ifc.h"
->>>>>>> master
 
 #ifdef __cplusplus
 extern "C" {

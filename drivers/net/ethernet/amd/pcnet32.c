@@ -1517,14 +1517,10 @@ pcnet32_probe1(unsigned long ioaddr, int shared, struct pci_dev *pdev)
 	struct pcnet32_private *lp;
 	int i, media;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int fdx, mii, fset, dxsuflo, sram;
 =======
 	int fdx, mii, fset, dxsuflo;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int fdx, mii, fset, dxsuflo;
->>>>>>> master
 	int chip_version;
 	char *chipname;
 	struct net_device *dev;
@@ -1562,14 +1558,10 @@ pcnet32_probe1(unsigned long ioaddr, int shared, struct pci_dev *pdev)
 
 	/* initialize variables */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	fdx = mii = fset = dxsuflo = sram = 0;
 =======
 	fdx = mii = fset = dxsuflo = 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	fdx = mii = fset = dxsuflo = 0;
->>>>>>> master
 	chip_version = (chip_version >> 12) & 0xffff;
 
 	switch (chip_version) {
@@ -1603,12 +1595,9 @@ pcnet32_probe1(unsigned long ioaddr, int shared, struct pci_dev *pdev)
 		fdx = 1;
 		mii = 1;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		sram = 1;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		break;
 	case 0x2626:
 		chipname = "PCnet/Home 79C978";	/* PCI */
@@ -1633,12 +1622,9 @@ pcnet32_probe1(unsigned long ioaddr, int shared, struct pci_dev *pdev)
 		fdx = 1;
 		mii = 1;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		sram = 1;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		break;
 	case 0x2628:
 		chipname = "PCnet/PRO 79C976";
@@ -1668,7 +1654,6 @@ pcnet32_probe1(unsigned long ioaddr, int shared, struct pci_dev *pdev)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * The Am79C973/Am79C975 controllers come with 12K of SRAM
 	 * which we can use for the Tx/Rx buffers but most importantly,
@@ -1696,8 +1681,6 @@ pcnet32_probe1(unsigned long ioaddr, int shared, struct pci_dev *pdev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	dev = alloc_etherdev(sizeof(*lp));
 	if (!dev) {
 		ret = -ENOMEM;

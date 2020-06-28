@@ -159,7 +159,6 @@ static const u8 cckswing_table_ch14[CCK_TABLE_SIZE][8] = {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static u32 power_index_reg[6] = {0xc90, 0xc91, 0xc92, 0xc98, 0xc99, 0xc9a};
 
 void dm_restorepowerindex(struct ieee80211_hw *hw)
@@ -198,8 +197,6 @@ EXPORT_SYMBOL_GPL(dm_savepowerindex);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static void rtl92c_dm_diginit(struct ieee80211_hw *hw)
 {
 	struct rtl_priv *rtlpriv = rtl_priv(hw);

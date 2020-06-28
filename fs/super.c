@@ -77,13 +77,10 @@ static int prune_super(struct shrinker *shrink, struct shrink_control *sc)
 	total_objects = sb->s_nr_dentry_unused +
 			sb->s_nr_inodes_unused + fs_objects + 1;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!total_objects)
 		total_objects = 1;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (sc->nr_to_scan) {
 		int	dentries;
@@ -170,10 +167,7 @@ static struct super_block *alloc_super(struct file_system_type *type, int flags)
 			goto out;
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #ifdef CONFIG_SMP
 		s->s_files = alloc_percpu(struct list_head);
 		if (!s->s_files)
@@ -187,10 +181,7 @@ static struct super_block *alloc_super(struct file_system_type *type, int flags)
 #else
 		INIT_LIST_HEAD(&s->s_files);
 #endif
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (init_sb_writers(s, type))
 			goto err_out;
 		s->s_flags = flags;
@@ -241,18 +232,12 @@ out:
 err_out:
 	security_sb_free(s);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #ifdef CONFIG_SMP
 	if (s->s_files)
 		free_percpu(s->s_files);
 #endif
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	destroy_sb_writers(s);
 	kfree(s);
 	s = NULL;
@@ -268,17 +253,11 @@ err_out:
 static inline void destroy_super(struct super_block *s)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 #ifdef CONFIG_SMP
 	free_percpu(s->s_files);
 #endif
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#ifdef CONFIG_SMP
-	free_percpu(s->s_files);
-#endif
->>>>>>> master
 	destroy_sb_writers(s);
 	security_sb_free(s);
 	WARN_ON(!list_empty(&s->s_mounts));
@@ -729,15 +708,11 @@ rescan:
 
 /**
 <<<<<<< HEAD
-<<<<<<< HEAD
  *	do_remount_sb2 - asks filesystem to change mount options.
  *	@mnt:   mount we are looking at
 =======
  *	do_remount_sb - asks filesystem to change mount options.
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- *	do_remount_sb - asks filesystem to change mount options.
->>>>>>> master
  *	@sb:	superblock in question
  *	@flags:	numeric part of options
  *	@data:	the rest of options
@@ -746,14 +721,10 @@ rescan:
  *	Alters the mount options of a mounted file system.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 int do_remount_sb2(struct vfsmount *mnt, struct super_block *sb, int flags, void *data, int force)
 =======
 int do_remount_sb(struct super_block *sb, int flags, void *data, int force)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-int do_remount_sb(struct super_block *sb, int flags, void *data, int force)
->>>>>>> master
 {
 	int retval;
 	int remount_ro;
@@ -778,15 +749,11 @@ int do_remount_sb(struct super_block *sb, int flags, void *data, int force)
 	if (remount_ro) {
 		if (force) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			sb->s_readonly_remount = 1;
 			smp_wmb();
 =======
 			mark_files_ro(sb);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			mark_files_ro(sb);
->>>>>>> master
 		} else {
 			retval = sb_prepare_remount_readonly(sb);
 			if (retval)
@@ -794,7 +761,6 @@ int do_remount_sb(struct super_block *sb, int flags, void *data, int force)
 		}
 	}
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (mnt && sb->s_op->remount_fs2) {
 		retval = sb->s_op->remount_fs2(mnt, sb, &flags, data);
@@ -809,9 +775,6 @@ int do_remount_sb(struct super_block *sb, int flags, void *data, int force)
 =======
 	if (sb->s_op->remount_fs) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (sb->s_op->remount_fs) {
->>>>>>> master
 		retval = sb->s_op->remount_fs(sb, &flags, data);
 		if (retval) {
 			if (!force)
@@ -844,7 +807,6 @@ cancel_readonly:
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 int do_remount_sb(struct super_block *sb, int flags, void *data, int force)
 {
 	return do_remount_sb2(NULL, sb, flags, data, force);
@@ -852,8 +814,6 @@ int do_remount_sb(struct super_block *sb, int flags, void *data, int force)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static void do_emergency_remount(struct work_struct *work)
 {
 	struct super_block *sb, *p = NULL;
@@ -1174,14 +1134,10 @@ EXPORT_SYMBOL(mount_single);
 
 struct dentry *
 <<<<<<< HEAD
-<<<<<<< HEAD
 mount_fs(struct file_system_type *type, int flags, const char *name, struct vfsmount *mnt, void *data)
 =======
 mount_fs(struct file_system_type *type, int flags, const char *name, void *data)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-mount_fs(struct file_system_type *type, int flags, const char *name, void *data)
->>>>>>> master
 {
 	struct dentry *root;
 	struct super_block *sb;
@@ -1199,7 +1155,6 @@ mount_fs(struct file_system_type *type, int flags, const char *name, void *data)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (type->mount2)
 		root = type->mount2(mnt, type, flags, name, data);
 	else
@@ -1207,9 +1162,6 @@ mount_fs(struct file_system_type *type, int flags, const char *name, void *data)
 =======
 	root = type->mount(type, flags, name, data);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	root = type->mount(type, flags, name, data);
->>>>>>> master
 	if (IS_ERR(root)) {
 		error = PTR_ERR(root);
 		goto out_free_secdata;
@@ -1453,17 +1405,12 @@ int freeze_super(struct super_block *sb)
 	}
 	/*
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 * For debugging purposes so that fs can warn if it sees write activity
 	 * when frozen is set to SB_FREEZE_COMPLETE, and for thaw_super().
 =======
 	 * This is just for debugging purposes so that fs can warn if it
 	 * sees write activity when frozen is set to SB_FREEZE_COMPLETE.
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	 * This is just for debugging purposes so that fs can warn if it
-	 * sees write activity when frozen is set to SB_FREEZE_COMPLETE.
->>>>>>> master
 	 */
 	sb->s_writers.frozen = SB_FREEZE_COMPLETE;
 	up_write(&sb->s_umount);
@@ -1483,14 +1430,10 @@ int thaw_super(struct super_block *sb)
 
 	down_write(&sb->s_umount);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (sb->s_writers.frozen != SB_FREEZE_COMPLETE) {
 =======
 	if (sb->s_writers.frozen == SB_UNFROZEN) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (sb->s_writers.frozen == SB_UNFROZEN) {
->>>>>>> master
 		up_write(&sb->s_umount);
 		return -EINVAL;
 	}

@@ -55,14 +55,10 @@ struct fuse_file *fuse_file_alloc(struct fuse_conn *fc)
 	struct fuse_file *ff;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ff = kzalloc(sizeof(struct fuse_file), GFP_KERNEL);
 =======
 	ff = kmalloc(sizeof(struct fuse_file), GFP_KERNEL);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ff = kmalloc(sizeof(struct fuse_file), GFP_KERNEL);
->>>>>>> master
 	if (unlikely(!ff))
 		return NULL;
 
@@ -137,12 +133,9 @@ static void fuse_file_put(struct fuse_file *ff, bool sync)
 
 		if (sync) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			req->force = 1;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			req->background = 0;
 			fuse_request_send(ff->fc, req);
 			path_put(&req->misc.release.path);
@@ -646,15 +639,11 @@ static void fuse_read_update_size(struct inode *inode, loff_t size,
 
 	spin_lock(&fc->lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (attr_ver == fi->attr_version && size < inode->i_size &&
 	    !test_bit(FUSE_I_SIZE_UNSTABLE, &fi->state)) {
 =======
 	if (attr_ver == fi->attr_version && size < inode->i_size) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (attr_ver == fi->attr_version && size < inode->i_size) {
->>>>>>> master
 		fi->attr_version = ++fc->attr_version;
 		i_size_write(inode, size);
 	}
@@ -1017,12 +1006,9 @@ static ssize_t fuse_fill_write_pages(struct fuse_req *req,
 		mark_page_accessed(page);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		iov_iter_advance(ii, tmp);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (!tmp) {
 			unlock_page(page);
 			page_cache_release(page);
@@ -1036,13 +1022,9 @@ static ssize_t fuse_fill_write_pages(struct fuse_req *req,
 		req->num_pages++;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		iov_iter_advance(ii, tmp);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		iov_iter_advance(ii, tmp);
->>>>>>> master
 		count += tmp;
 		pos += tmp;
 		offset += tmp;
@@ -1072,12 +1054,9 @@ static ssize_t fuse_perform_write(struct file *file,
 	struct inode *inode = mapping->host;
 	struct fuse_conn *fc = get_fuse_conn(inode);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct fuse_inode *fi = get_fuse_inode(inode);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	int err = 0;
 	ssize_t res = 0;
 
@@ -1085,14 +1064,11 @@ static ssize_t fuse_perform_write(struct file *file,
 		return -EIO;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (inode->i_size < pos + iov_iter_count(ii))
 		set_bit(FUSE_I_SIZE_UNSTABLE, &fi->state);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	do {
 		struct fuse_req *req;
 		ssize_t count;
@@ -1129,12 +1105,9 @@ static ssize_t fuse_perform_write(struct file *file,
 		fuse_write_update_size(inode, pos);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	clear_bit(FUSE_I_SIZE_UNSTABLE, &fi->state);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	fuse_invalidate_attr(inode);
 
 	return res > 0 ? res : err;
@@ -1592,13 +1565,9 @@ static int fuse_writepage_locked(struct page *page)
 	inc_bdi_stat(mapping->backing_dev_info, BDI_WRITEBACK);
 	inc_zone_page_state(tmp_page, NR_WRITEBACK_TEMP);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	end_page_writeback(page);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	end_page_writeback(page);
->>>>>>> master
 
 	spin_lock(&fc->lock);
 	list_add(&req->writepages_entry, &fi->writepages);
@@ -1607,13 +1576,10 @@ static int fuse_writepage_locked(struct page *page)
 	spin_unlock(&fc->lock);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	end_page_writeback(page);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 
 err_free:
@@ -2468,12 +2434,9 @@ fuse_direct_IO(int rw, struct kiocb *iocb, const struct iovec *iov,
 	size_t count = iov_length(iov, nr_segs);
 	struct fuse_io_priv *io;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	bool is_sync = is_sync_kiocb(iocb);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	pos = offset;
 	inode = file->f_mapping->host;
@@ -2510,14 +2473,10 @@ fuse_direct_IO(int rw, struct kiocb *iocb, const struct iovec *iov,
 	 * synchronously.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!is_sync && (offset + count > i_size) && rw == WRITE)
 =======
 	if (!is_sync_kiocb(iocb) && (offset + count > i_size) && rw == WRITE)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!is_sync_kiocb(iocb) && (offset + count > i_size) && rw == WRITE)
->>>>>>> master
 		io->async = false;
 
 	if (rw == WRITE)
@@ -2530,14 +2489,10 @@ fuse_direct_IO(int rw, struct kiocb *iocb, const struct iovec *iov,
 
 		/* we have a non-extending, async request, so return */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!is_sync)
 =======
 		if (!is_sync_kiocb(iocb))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!is_sync_kiocb(iocb))
->>>>>>> master
 			return -EIOCBQUEUED;
 
 		ret = wait_on_sync_kiocb(iocb);
@@ -2561,12 +2516,9 @@ static long fuse_file_fallocate(struct file *file, int mode, loff_t offset,
 	struct fuse_file *ff = file->private_data;
 	struct inode *inode = file->f_inode;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct fuse_inode *fi = get_fuse_inode(inode);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	struct fuse_conn *fc = ff->fc;
 	struct fuse_req *req;
 	struct fuse_fallocate_in inarg = {
@@ -2585,7 +2537,6 @@ static long fuse_file_fallocate(struct file *file, int mode, loff_t offset,
 	if (lock_inode) {
 		mutex_lock(&inode->i_mutex);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (mode & FALLOC_FL_PUNCH_HOLE) {
 			loff_t endbyte = offset + length - 1;
 			err = filemap_write_and_wait_range(inode->i_mapping,
@@ -2601,16 +2552,11 @@ static long fuse_file_fallocate(struct file *file, int mode, loff_t offset,
 		set_bit(FUSE_I_SIZE_UNSTABLE, &fi->state);
 
 =======
-=======
->>>>>>> master
 		if (mode & FALLOC_FL_PUNCH_HOLE)
 			fuse_set_nowrite(inode);
 	}
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	req = fuse_get_req_nopages(fc);
 	if (IS_ERR(req)) {
 		err = PTR_ERR(req);
@@ -2644,24 +2590,18 @@ static long fuse_file_fallocate(struct file *file, int mode, loff_t offset,
 
 out:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!(mode & FALLOC_FL_KEEP_SIZE))
 		clear_bit(FUSE_I_SIZE_UNSTABLE, &fi->state);
 
 	if (lock_inode)
 		mutex_unlock(&inode->i_mutex);
 =======
-=======
->>>>>>> master
 	if (lock_inode) {
 		if (mode & FALLOC_FL_PUNCH_HOLE)
 			fuse_release_nowrite(inode);
 		mutex_unlock(&inode->i_mutex);
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	return err;
 }

@@ -1318,7 +1318,6 @@ static struct dentry *gfs2_mount(struct file_system_type *fs_type, int flags,
 		goto error_bdev;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (s->s_root) {
 		/*
 		 * s_umount nests inside bd_mutex during
@@ -1335,10 +1334,6 @@ static struct dentry *gfs2_mount(struct file_system_type *fs_type, int flags,
 	if (s->s_root)
 		blkdev_put(bdev, mode);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (s->s_root)
-		blkdev_put(bdev, mode);
->>>>>>> master
 
 	memset(&args, 0, sizeof(args));
 	args.ar_quota = GFS2_QUOTA_DEFAULT;

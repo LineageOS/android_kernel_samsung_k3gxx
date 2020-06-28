@@ -33,12 +33,9 @@
 
 #include <net/bluetooth/bluetooth.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <net/bluetooth/l2cap.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #include <net/bluetooth/hci_core.h>
 
 #include "bnep.h"
@@ -547,14 +544,11 @@ int bnep_add_connection(struct bnep_connadd_req *req, struct socket *sock)
 	BT_DBG("");
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!l2cap_is_socket(sock))
 		return -EBADFD;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	baswap((void *) dst, &bt_sk(sock->sk)->dst);
 	baswap((void *) src, &bt_sk(sock->sk)->src);
 

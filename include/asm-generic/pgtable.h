@@ -227,14 +227,10 @@ static inline int pmd_same(pmd_t pmd_a, pmd_t pmd_b)
 
 #ifndef pte_accessible
 <<<<<<< HEAD
-<<<<<<< HEAD
 # define pte_accessible(mm, pte)	((void)(pte), 1)
 =======
 # define pte_accessible(pte)		((void)(pte),1)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-# define pte_accessible(pte)		((void)(pte),1)
->>>>>>> master
 #endif
 
 #ifndef flush_tlb_fix_spurious_fault
@@ -634,7 +630,6 @@ static inline int pmd_numa(pmd_t pmd)
 static inline pte_t pte_mknonnuma(pte_t pte)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	pteval_t val = pte_val(pte);
 
 	val &= ~_PAGE_NUMA;
@@ -644,10 +639,6 @@ static inline pte_t pte_mknonnuma(pte_t pte)
 	pte = pte_clear_flags(pte, _PAGE_NUMA);
 	return pte_set_flags(pte, _PAGE_PRESENT|_PAGE_ACCESSED);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	pte = pte_clear_flags(pte, _PAGE_NUMA);
-	return pte_set_flags(pte, _PAGE_PRESENT|_PAGE_ACCESSED);
->>>>>>> master
 }
 #endif
 
@@ -655,7 +646,6 @@ static inline pte_t pte_mknonnuma(pte_t pte)
 static inline pmd_t pmd_mknonnuma(pmd_t pmd)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	pmdval_t val = pmd_val(pmd);
 
 	val &= ~_PAGE_NUMA;
@@ -666,17 +656,12 @@ static inline pmd_t pmd_mknonnuma(pmd_t pmd)
 	pmd = pmd_clear_flags(pmd, _PAGE_NUMA);
 	return pmd_set_flags(pmd, _PAGE_PRESENT|_PAGE_ACCESSED);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	pmd = pmd_clear_flags(pmd, _PAGE_NUMA);
-	return pmd_set_flags(pmd, _PAGE_PRESENT|_PAGE_ACCESSED);
->>>>>>> master
 }
 #endif
 
 #ifndef pte_mknuma
 static inline pte_t pte_mknuma(pte_t pte)
 {
-<<<<<<< HEAD
 <<<<<<< HEAD
 	pteval_t val = pte_val(pte);
 
@@ -688,17 +673,12 @@ static inline pte_t pte_mknuma(pte_t pte)
 	pte = pte_set_flags(pte, _PAGE_NUMA);
 	return pte_clear_flags(pte, _PAGE_PRESENT);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	pte = pte_set_flags(pte, _PAGE_NUMA);
-	return pte_clear_flags(pte, _PAGE_PRESENT);
->>>>>>> master
 }
 #endif
 
 #ifndef pmd_mknuma
 static inline pmd_t pmd_mknuma(pmd_t pmd)
 {
-<<<<<<< HEAD
 <<<<<<< HEAD
 	pmdval_t val = pmd_val(pmd);
 
@@ -710,10 +690,6 @@ static inline pmd_t pmd_mknuma(pmd_t pmd)
 	pmd = pmd_set_flags(pmd, _PAGE_NUMA);
 	return pmd_clear_flags(pmd, _PAGE_PRESENT);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	pmd = pmd_set_flags(pmd, _PAGE_NUMA);
-	return pmd_clear_flags(pmd, _PAGE_PRESENT);
->>>>>>> master
 }
 #endif
 #else

@@ -294,12 +294,9 @@ static void fsl_sata_set_irq_coalescing(struct ata_host *host,
 	struct sata_fsl_host_priv *host_priv = host->private_data;
 	void __iomem *hcr_base = host_priv->hcr_base;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned long flags;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (count > ICC_MAX_INT_COUNT_THRESHOLD)
 		count = ICC_MAX_INT_COUNT_THRESHOLD;
@@ -313,27 +310,19 @@ static void fsl_sata_set_irq_coalescing(struct ata_host *host,
 		ticks = ICC_SAFE_INT_TICKS;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_lock_irqsave(&host->lock, flags);
 =======
 	spin_lock(&host->lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	spin_lock(&host->lock);
->>>>>>> master
 	iowrite32((count << 24 | ticks), hcr_base + ICC);
 
 	intr_coalescing_count = count;
 	intr_coalescing_ticks = ticks;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_unlock_irqrestore(&host->lock, flags);
 =======
 	spin_unlock(&host->lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	spin_unlock(&host->lock);
->>>>>>> master
 
 	DPRINTK("interrupt coalescing, count = 0x%x, ticks = %x\n",
 			intr_coalescing_count, intr_coalescing_ticks);
@@ -1524,14 +1513,10 @@ static int sata_fsl_probe(struct platform_device *ofdev)
 
 	irq = irq_of_parse_and_map(ofdev->dev.of_node, 0);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!irq) {
 =======
 	if (irq < 0) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (irq < 0) {
->>>>>>> master
 		dev_err(&ofdev->dev, "invalid irq from platform\n");
 		goto error_exit_with_cleanup;
 	}

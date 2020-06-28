@@ -327,14 +327,10 @@ static ssize_t ipath_diagpkt_write(struct file *fp,
 {
 	u32 __iomem *piobuf;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u32 plen, pbufn, maxlen_reserve;
 =======
 	u32 plen, clen, pbufn;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u32 plen, clen, pbufn;
->>>>>>> master
 	struct ipath_diag_pkt odp;
 	struct ipath_diag_xpkt dp;
 	u32 *tmpbuf = NULL;
@@ -344,25 +340,18 @@ static ssize_t ipath_diagpkt_write(struct file *fp,
 	u32 l_state, lt_state; /* LinkState, LinkTrainingState */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	if (count < sizeof(odp)) {
 		ret = -EINVAL;
 		goto bail;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (count == sizeof(dp)) {
 		if (copy_from_user(&dp, data, sizeof(dp))) {
 			ret = -EFAULT;
 			goto bail;
 		}
-<<<<<<< HEAD
 <<<<<<< HEAD
 	} else if (count == sizeof(odp)) {
 		if (copy_from_user(&odp, data, sizeof(odp))) {
@@ -377,8 +366,6 @@ static ssize_t ipath_diagpkt_write(struct file *fp,
 		ret = -EINVAL;
 		goto bail;
 =======
-=======
->>>>>>> master
 	} else if (copy_from_user(&odp, data, sizeof(odp))) {
 		ret = -EFAULT;
 		goto bail;
@@ -405,10 +392,7 @@ static ssize_t ipath_diagpkt_write(struct file *fp,
 		dp.data = odp.data;
 		dp.len = odp.len;
 		dp.pbc_wd = 0; /* Indicate we need to compute PBC wd */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	/* send count must be an exact number of dwords */
@@ -418,14 +402,10 @@ static ssize_t ipath_diagpkt_write(struct file *fp,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	plen = dp.len >> 2;
 =======
 	clen = dp.len >> 2;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	clen = dp.len >> 2;
->>>>>>> master
 
 	dd = ipath_lookup(dp.unit);
 	if (!dd || !(dd->ipath_flags & IPATH_PRESENT) ||
@@ -469,7 +449,6 @@ static ssize_t ipath_diagpkt_write(struct file *fp,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * need total length before first word written, plus 2 Dwords. One Dword
 	 * is for padding so we get the full user data when not aligned on
@@ -487,8 +466,6 @@ static ssize_t ipath_diagpkt_write(struct file *fp,
 	plen = sizeof(u32) + dp.len;
 
 =======
-=======
->>>>>>> master
 	/* need total length before first word written */
 	/* +1 word is for the qword padding */
 	plen = sizeof(u32) + dp.len;
@@ -499,10 +476,7 @@ static ssize_t ipath_diagpkt_write(struct file *fp,
 		ret = -EINVAL;
 		goto bail;	/* before writing pbc */
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	tmpbuf = vmalloc(plen);
 	if (!tmpbuf) {
 		dev_info(&dd->pcidev->dev, "Unable to allocate tmp buffer, "
@@ -545,24 +519,18 @@ static ssize_t ipath_diagpkt_write(struct file *fp,
 	if (dd->ipath_flags & IPATH_PIO_FLUSH_WC) {
 		ipath_flush_wc();
 <<<<<<< HEAD
-<<<<<<< HEAD
 		__iowrite32_copy(piobuf + 2, tmpbuf, plen - 1);
 		ipath_flush_wc();
 		__raw_writel(tmpbuf[plen - 1], piobuf + plen + 1);
 	} else
 		__iowrite32_copy(piobuf + 2, tmpbuf, plen);
 =======
-=======
->>>>>>> master
 		__iowrite32_copy(piobuf + 2, tmpbuf, clen - 1);
 		ipath_flush_wc();
 		__raw_writel(tmpbuf[clen - 1], piobuf + clen + 1);
 	} else
 		__iowrite32_copy(piobuf + 2, tmpbuf, clen);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	ipath_flush_wc();
 

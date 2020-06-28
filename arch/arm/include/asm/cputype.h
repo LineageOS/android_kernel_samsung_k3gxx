@@ -59,14 +59,11 @@
 #define ARM_CPU_XSCALE_ARCH_V3		0x6000
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* Qualcomm implemented cores */
 #define ARM_CPU_PART_SCORPION		0x510002d0
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 extern unsigned int processor_id;
 
 #ifdef CONFIG_CPU_CP15

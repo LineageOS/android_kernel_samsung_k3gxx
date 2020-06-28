@@ -209,13 +209,9 @@ __v7_pj4b_setup:
 #define PJ4B_STATIC_BP (1 << 2) /* Enable Static BP */
 #define PJ4B_INTER_PARITY (1 << 8) /* Disable Internal Parity Handling */
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 #define PJ4B_BCK_OFF_STREX (1 << 5) /* Enable the back off of STREX instr */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define PJ4B_BCK_OFF_STREX (1 << 5) /* Enable the back off of STREX instr */
->>>>>>> master
 #define PJ4B_CLEAN_LINE (1 << 16) /* Disable data transfer for clean line */
 
 /* Auxiliary Debug Modes Control 2 Register */
@@ -239,13 +235,9 @@ __v7_pj4b_setup:
 	mrc	p15, 1,	r0, c15, c1, 1
 	orr     r0, r0, #PJ4B_CLEAN_LINE
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	orr     r0, r0, #PJ4B_BCK_OFF_STREX
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	orr     r0, r0, #PJ4B_BCK_OFF_STREX
->>>>>>> master
 	orr     r0, r0, #PJ4B_INTER_PARITY
 	bic	r0, r0, #PJ4B_STATIC_BP
 	mcr	p15, 1,	r0, c15, c1, 1

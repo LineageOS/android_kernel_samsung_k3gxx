@@ -169,14 +169,10 @@ static bool migrate_one_irq(struct irq_desc *desc)
 	if (!c->irq_set_affinity)
 		pr_debug("IRQ%u: unable to set affinity\n", d->irq);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	else if (c->irq_set_affinity(d, affinity, false) == IRQ_SET_MASK_OK && ret)
 =======
 	else if (c->irq_set_affinity(d, affinity, true) == IRQ_SET_MASK_OK && ret)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	else if (c->irq_set_affinity(d, affinity, true) == IRQ_SET_MASK_OK && ret)
->>>>>>> master
 		cpumask_copy(d->affinity, affinity);
 
 	return ret;

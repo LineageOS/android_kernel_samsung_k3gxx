@@ -38,12 +38,9 @@ struct xen_pcibk_device {
 	unsigned long flags;
 	struct work_struct op_work;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct xen_pci_op op;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 struct xen_pcibk_dev_data {

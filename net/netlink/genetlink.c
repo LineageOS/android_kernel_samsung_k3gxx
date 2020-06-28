@@ -365,14 +365,10 @@ EXPORT_SYMBOL(genl_unregister_ops);
 
 /**
 <<<<<<< HEAD
-<<<<<<< HEAD
  * __genl_register_family - register a generic netlink family
 =======
  * genl_register_family - register a generic netlink family
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * genl_register_family - register a generic netlink family
->>>>>>> master
  * @family: generic netlink family
  *
  * Registers the specified family after validating it first. Only one
@@ -383,14 +379,10 @@ EXPORT_SYMBOL(genl_unregister_ops);
  * Return 0 on success or a negative error code.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 int __genl_register_family(struct genl_family *family)
 =======
 int genl_register_family(struct genl_family *family)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-int genl_register_family(struct genl_family *family)
->>>>>>> master
 {
 	int err = -EINVAL;
 
@@ -447,22 +439,16 @@ errout:
 	return err;
 }
 <<<<<<< HEAD
-<<<<<<< HEAD
 EXPORT_SYMBOL(__genl_register_family);
 
 /**
  * __genl_register_family_with_ops - register a generic netlink family
 =======
-=======
->>>>>>> master
 EXPORT_SYMBOL(genl_register_family);
 
 /**
  * genl_register_family_with_ops - register a generic netlink family
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  * @family: generic netlink family
  * @ops: operations to be registered
  * @n_ops: number of elements to register
@@ -487,27 +473,19 @@ EXPORT_SYMBOL(genl_register_family);
  * Return 0 on success or a negative error code.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 int __genl_register_family_with_ops(struct genl_family *family,
 =======
 int genl_register_family_with_ops(struct genl_family *family,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-int genl_register_family_with_ops(struct genl_family *family,
->>>>>>> master
 	struct genl_ops *ops, size_t n_ops)
 {
 	int err, i;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	err = __genl_register_family(family);
 =======
 	err = genl_register_family(family);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	err = genl_register_family(family);
->>>>>>> master
 	if (err)
 		return err;
 
@@ -522,14 +500,10 @@ err_out:
 	return err;
 }
 <<<<<<< HEAD
-<<<<<<< HEAD
 EXPORT_SYMBOL(__genl_register_family_with_ops);
 =======
 EXPORT_SYMBOL(genl_register_family_with_ops);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-EXPORT_SYMBOL(genl_register_family_with_ops);
->>>>>>> master
 
 /**
  * genl_unregister_family - unregister generic netlink family
@@ -598,7 +572,6 @@ void *genlmsg_put(struct sk_buff *skb, u32 portid, u32 seq,
 EXPORT_SYMBOL(genlmsg_put);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int genl_lock_dumpit(struct sk_buff *skb, struct netlink_callback *cb)
 {
 	struct genl_ops *ops = cb->data;
@@ -625,8 +598,6 @@ static int genl_lock_done(struct netlink_callback *cb)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int genl_family_rcv_msg(struct genl_family *family,
 			       struct sk_buff *skb,
 			       struct nlmsghdr *nlh)
@@ -652,15 +623,12 @@ static int genl_family_rcv_msg(struct genl_family *family,
 
 	if ((ops->flags & GENL_ADMIN_PERM) &&
 <<<<<<< HEAD
-<<<<<<< HEAD
 	    !netlink_capable(skb, CAP_NET_ADMIN))
 		return -EPERM;
 
 	if (nlh->nlmsg_flags & NLM_F_DUMP) {
 		int rc;
 =======
-=======
->>>>>>> master
 	    !capable(CAP_NET_ADMIN))
 		return -EPERM;
 
@@ -669,15 +637,11 @@ static int genl_family_rcv_msg(struct genl_family *family,
 			.dump = ops->dumpit,
 			.done = ops->done,
 		};
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 		if (ops->dumpit == NULL)
 			return -EOPNOTSUPP;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 		if (!family->parallel_ops) {
 			struct netlink_dump_control c = {
@@ -705,9 +669,6 @@ static int genl_family_rcv_msg(struct genl_family *family,
 =======
 		return netlink_dump_start(net->genl_sock, skb, nlh, &c);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		return netlink_dump_start(net->genl_sock, skb, nlh, &c);
->>>>>>> master
 	}
 
 	if (ops->doit == NULL)

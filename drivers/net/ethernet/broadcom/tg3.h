@@ -2588,7 +2588,6 @@ struct tg3_rx_buffer_desc {
 #define RXD_ERR_NO_RESOURCES		0x00800000
 #define RXD_ERR_HUGE_FRAME		0x01000000
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 #define RXD_ERR_MASK	(RXD_ERR_BAD_CRC | RXD_ERR_COLLISION |		\
 			 RXD_ERR_LINK_LOST | RXD_ERR_PHY_DECODE |	\
@@ -2597,9 +2596,6 @@ struct tg3_rx_buffer_desc {
 =======
 #define RXD_ERR_MASK			0xffff0000
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define RXD_ERR_MASK			0xffff0000
->>>>>>> master
 
 	u32				reserved;
 	u32				opaque;

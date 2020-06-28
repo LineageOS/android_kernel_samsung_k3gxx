@@ -46,7 +46,6 @@ static inline size_t buffer_start(struct persistent_ram_zone *prz)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static DEFINE_RAW_SPINLOCK(buffer_lock);
 
 /* increase and wrap the start pointer, returning the old value */
@@ -66,8 +65,6 @@ static size_t buffer_start_add(struct persistent_ram_zone *prz, size_t a)
 
 	raw_spin_unlock_irqrestore(&buffer_lock, flags);
 =======
-=======
->>>>>>> master
 /* increase and wrap the start pointer, returning the old value */
 static inline size_t buffer_start_add(struct persistent_ram_zone *prz, size_t a)
 {
@@ -80,16 +77,12 @@ static inline size_t buffer_start_add(struct persistent_ram_zone *prz, size_t a)
 		while (unlikely(new > prz->buffer_size))
 			new -= prz->buffer_size;
 	} while (atomic_cmpxchg(&prz->buffer->start, old, new) != old);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	return old;
 }
 
 /* increase the size counter until it hits the max size */
-<<<<<<< HEAD
 <<<<<<< HEAD
 static void buffer_size_add(struct persistent_ram_zone *prz, size_t a)
 {
@@ -111,8 +104,6 @@ static void buffer_size_add(struct persistent_ram_zone *prz, size_t a)
 exit:
 	raw_spin_unlock_irqrestore(&buffer_lock, flags);
 =======
-=======
->>>>>>> master
 static inline void buffer_size_add(struct persistent_ram_zone *prz, size_t a)
 {
 	size_t old;
@@ -127,10 +118,7 @@ static inline void buffer_size_add(struct persistent_ram_zone *prz, size_t a)
 		if (new > prz->buffer_size)
 			new = prz->buffer_size;
 	} while (atomic_cmpxchg(&prz->buffer->size, old, new) != old);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static void notrace persistent_ram_encode_rs8(struct persistent_ram_zone *prz,
@@ -308,14 +296,10 @@ static void notrace persistent_ram_update(struct persistent_ram_zone *prz,
 {
 	struct persistent_ram_buffer *buffer = prz->buffer;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	memcpy_toio(buffer->data + start, s, count);
 =======
 	memcpy(buffer->data + start, s, count);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	memcpy(buffer->data + start, s, count);
->>>>>>> master
 	persistent_ram_update_ecc(prz, start, count);
 }
 
@@ -339,17 +323,12 @@ void persistent_ram_save_old(struct persistent_ram_zone *prz)
 
 	prz->old_log_size = size;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	memcpy_fromio(prz->old_log, &buffer->data[start], size - start);
 	memcpy_fromio(prz->old_log + size - start, &buffer->data[0], start);
 =======
 	memcpy(prz->old_log, &buffer->data[start], size - start);
 	memcpy(prz->old_log + size - start, &buffer->data[0], start);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	memcpy(prz->old_log, &buffer->data[start], size - start);
-	memcpy(prz->old_log + size - start, &buffer->data[0], start);
->>>>>>> master
 }
 
 int notrace persistent_ram_write(struct persistent_ram_zone *prz,
@@ -407,15 +386,11 @@ void persistent_ram_zap(struct persistent_ram_zone *prz)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void *persistent_ram_vmap(phys_addr_t start, size_t size,
 		unsigned int memtype)
 =======
 static void *persistent_ram_vmap(phys_addr_t start, size_t size)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static void *persistent_ram_vmap(phys_addr_t start, size_t size)
->>>>>>> master
 {
 	struct page **pages;
 	phys_addr_t page_start;
@@ -428,7 +403,6 @@ static void *persistent_ram_vmap(phys_addr_t start, size_t size)
 	page_count = DIV_ROUND_UP(size + offset_in_page(start), PAGE_SIZE);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (memtype)
 		prot = pgprot_noncached(PAGE_KERNEL);
 	else
@@ -436,9 +410,6 @@ static void *persistent_ram_vmap(phys_addr_t start, size_t size)
 =======
 	prot = pgprot_noncached(PAGE_KERNEL);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	prot = pgprot_noncached(PAGE_KERNEL);
->>>>>>> master
 
 	pages = kmalloc(sizeof(struct page *) * page_count, GFP_KERNEL);
 	if (!pages) {
@@ -458,7 +429,6 @@ static void *persistent_ram_vmap(phys_addr_t start, size_t size)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void *persistent_ram_iomap(phys_addr_t start, size_t size,
 		unsigned int memtype)
 {
@@ -468,17 +438,12 @@ static void *persistent_ram_iomap(phys_addr_t start, size_t size,
 static void *persistent_ram_iomap(phys_addr_t start, size_t size)
 {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static void *persistent_ram_iomap(phys_addr_t start, size_t size)
-{
->>>>>>> master
 	if (!request_mem_region(start, size, "persistent_ram")) {
 		pr_err("request mem region (0x%llx@0x%llx) failed\n",
 			(unsigned long long)size, (unsigned long long)start);
 		return NULL;
 	}
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (memtype)
 		va = ioremap(start, size);
@@ -491,23 +456,17 @@ static void *persistent_ram_iomap(phys_addr_t start, size_t size)
 static int persistent_ram_buffer_map(phys_addr_t start, phys_addr_t size,
 		struct persistent_ram_zone *prz, int memtype)
 =======
-=======
->>>>>>> master
 	return ioremap(start, size);
 }
 
 static int persistent_ram_buffer_map(phys_addr_t start, phys_addr_t size,
 		struct persistent_ram_zone *prz)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 {
 	prz->paddr = start;
 	prz->size = size;
 
 	if (pfn_valid(start >> PAGE_SHIFT))
-<<<<<<< HEAD
 <<<<<<< HEAD
 		prz->vaddr = persistent_ram_vmap(start, size, memtype);
 	else
@@ -517,11 +476,6 @@ static int persistent_ram_buffer_map(phys_addr_t start, phys_addr_t size,
 	else
 		prz->vaddr = persistent_ram_iomap(start, size);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		prz->vaddr = persistent_ram_vmap(start, size);
-	else
-		prz->vaddr = persistent_ram_iomap(start, size);
->>>>>>> master
 
 	if (!prz->vaddr) {
 		pr_err("%s: Failed to map 0x%llx pages at 0x%llx\n", __func__,
@@ -590,15 +544,11 @@ void persistent_ram_free(struct persistent_ram_zone *prz)
 
 struct persistent_ram_zone *persistent_ram_new(phys_addr_t start, size_t size,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			u32 sig, struct persistent_ram_ecc_info *ecc_info,
 			unsigned int memtype)
 =======
 			u32 sig, struct persistent_ram_ecc_info *ecc_info)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			u32 sig, struct persistent_ram_ecc_info *ecc_info)
->>>>>>> master
 {
 	struct persistent_ram_zone *prz;
 	int ret = -ENOMEM;
@@ -610,14 +560,10 @@ struct persistent_ram_zone *persistent_ram_new(phys_addr_t start, size_t size,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = persistent_ram_buffer_map(start, size, prz, memtype);
 =======
 	ret = persistent_ram_buffer_map(start, size, prz);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret = persistent_ram_buffer_map(start, size, prz);
->>>>>>> master
 	if (ret)
 		goto err;
 

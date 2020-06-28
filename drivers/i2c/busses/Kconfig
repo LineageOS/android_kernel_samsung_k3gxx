@@ -109,14 +109,11 @@ config I2C_I801
 	    Avoton (SOC)
 	    Wellsburg (PCH)
 <<<<<<< HEAD
-<<<<<<< HEAD
 	    Coleto Creek (PCH)
 	    Wildcat Point-LP (PCH)
 	    BayTrail (SOC)
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	  This driver can also be built as a module.  If so, the module
 	  will be called i2c-i801.

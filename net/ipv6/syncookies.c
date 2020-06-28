@@ -244,13 +244,9 @@ struct sock *cookie_v6_check(struct sock *sk, struct sk_buff *skb)
 		fl6.fl6_dport = inet_rsk(req)->rmt_port;
 		fl6.fl6_sport = inet_sk(sk)->inet_sport;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		fl6.flowi6_uid = sock_i_uid(sk);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		fl6.flowi6_uid = sock_i_uid(sk);
->>>>>>> master
 		security_req_classify_flow(req, flowi6_to_flowi(&fl6));
 
 		dst = ip6_dst_lookup_flow(sk, &fl6, final_p, false);

@@ -14,14 +14,10 @@
 #define PAGE_SHIFT		12
 #define PAGE_SIZE		(_AC(1,UL) << PAGE_SHIFT)
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define PAGE_MASK		(~((1 << PAGE_SHIFT) - 1))
 =======
 #define PAGE_MASK		(~(PAGE_SIZE-1))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define PAGE_MASK		(~(PAGE_SIZE-1))
->>>>>>> master
 
 #ifndef __ASSEMBLY__
 

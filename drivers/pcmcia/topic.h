@@ -105,14 +105,11 @@
 #define TOPIC_EXCA_IFC_33V_ENA		0x01
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define TOPIC_PCI_CFG_PPBCN		0x3e	/* 16-bit */
 #define TOPIC_PCI_CFG_PPBCN_WBEN	0x0400
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static void topic97_zoom_video(struct pcmcia_socket *sock, int onoff)
 {
 	struct yenta_socket *socket = container_of(sock, struct yenta_socket, socket);
@@ -148,12 +145,9 @@ static int topic95_override(struct yenta_socket *socket)
 {
 	u8 fctrl;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u16 ppbcn;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* enable 3.3V support for 16bit cards */
 	fctrl = exca_readb(socket, TOPIC_EXCA_IF_CONTROL);
@@ -162,7 +156,6 @@ static int topic95_override(struct yenta_socket *socket)
 	/* tell yenta to use exca registers to power 16bit cards */
 	socket->flags |= YENTA_16BIT_POWER_EXCA | YENTA_16BIT_POWER_DF;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Disable write buffers to prevent lockups under load with numerous
 	   Cardbus cards, observed on Tecra 500CDT and reported elsewhere on the
@@ -178,8 +171,6 @@ static int topic95_override(struct yenta_socket *socket)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 }
 

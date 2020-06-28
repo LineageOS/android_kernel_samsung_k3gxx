@@ -235,7 +235,6 @@ static int rds_tcp_data_recv(read_descriptor_t *desc, struct sk_buff *skb,
 
 			to_copy = min(tc->t_tinc_data_rem, left);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (!pskb_pull(clone, offset) ||
 			    pskb_trim(clone, to_copy)) {
 				pr_warn("rds_tcp_data_recv: pull/trim failed "
@@ -249,10 +248,6 @@ static int rds_tcp_data_recv(read_descriptor_t *desc, struct sk_buff *skb,
 			pskb_pull(clone, offset);
 			pskb_trim(clone, to_copy);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			pskb_pull(clone, offset);
-			pskb_trim(clone, to_copy);
->>>>>>> master
 			skb_queue_tail(&tinc->ti_skb_list, clone);
 
 			rdsdebug("skb %p data %p len %d off %u to_copy %zu -> "

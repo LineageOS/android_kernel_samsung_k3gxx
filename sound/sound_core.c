@@ -627,7 +627,6 @@ static int soundcore_open(struct inode *inode, struct file *file)
 			new_fops = fops_get(s->unit_fops);
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_unlock(&sound_loader_lock);
 	if (new_fops) {
 		/*
@@ -637,8 +636,6 @@ static int soundcore_open(struct inode *inode, struct file *file)
 		int err = 0;
 		replace_fops(file, new_fops);
 =======
-=======
->>>>>>> master
 	if (new_fops) {
 		/*
 		 * We rely upon the fact that we can't be unloaded while the
@@ -651,21 +648,15 @@ static int soundcore_open(struct inode *inode, struct file *file)
 		const struct file_operations *old_fops = file->f_op;
 		file->f_op = new_fops;
 		spin_unlock(&sound_loader_lock);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 		if (file->f_op->open)
 			err = file->f_op->open(inode,file);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		return err;
 	}
 =======
-=======
->>>>>>> master
 		if (err) {
 			fops_put(file->f_op);
 			file->f_op = fops_get(old_fops);
@@ -675,10 +666,7 @@ static int soundcore_open(struct inode *inode, struct file *file)
 		return err;
 	}
 	spin_unlock(&sound_loader_lock);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return -ENODEV;
 }
 

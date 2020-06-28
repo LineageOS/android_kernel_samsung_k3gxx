@@ -15,12 +15,9 @@ config SND_USB_AUDIO
 	select SND_RAWMIDI
 	select SND_PCM
 <<<<<<< HEAD
-<<<<<<< HEAD
 	select BITREVERSE
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	help
 	  Say Y here to include support for USB audio and USB MIDI
 	  devices.

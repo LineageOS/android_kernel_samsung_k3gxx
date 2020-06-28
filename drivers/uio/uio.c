@@ -631,20 +631,15 @@ static int uio_vma_fault(struct vm_area_struct *vma, struct vm_fault *vmf)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static const struct vm_operations_struct uio_logical_vm_ops = {
 =======
 static const struct vm_operations_struct uio_vm_ops = {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static const struct vm_operations_struct uio_vm_ops = {
->>>>>>> master
 	.open = uio_vma_open,
 	.close = uio_vma_close,
 	.fault = uio_vma_fault,
 };
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 static int uio_mmap_logical(struct vm_area_struct *vma)
 {
@@ -662,13 +657,10 @@ static const struct vm_operations_struct uio_physical_vm_ops = {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int uio_mmap_physical(struct vm_area_struct *vma)
 {
 	struct uio_device *idev = vma->vm_private_data;
 	int mi = uio_find_mem_index(vma);
-<<<<<<< HEAD
 <<<<<<< HEAD
 	struct uio_mem *mem;
 	if (mi < 0)
@@ -694,8 +686,6 @@ static int uio_mmap_physical(struct vm_area_struct *vma)
 			       vma->vm_start,
 			       mem->addr >> PAGE_SHIFT,
 =======
-=======
->>>>>>> master
 	if (mi < 0)
 		return -EINVAL;
 
@@ -704,19 +694,13 @@ static int uio_mmap_physical(struct vm_area_struct *vma)
 	return remap_pfn_range(vma,
 			       vma->vm_start,
 			       idev->info->mem[mi].addr >> PAGE_SHIFT,
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			       vma->vm_end - vma->vm_start,
 			       vma->vm_page_prot);
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 static int uio_mmap_logical(struct vm_area_struct *vma)
 {
 	vma->vm_flags |= VM_DONTEXPAND | VM_DONTDUMP;
@@ -725,10 +709,7 @@ static int uio_mmap_logical(struct vm_area_struct *vma)
 	return 0;
 }
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int uio_mmap(struct file *filep, struct vm_area_struct *vma)
 {
 	struct uio_listener *listener = filep->private_data;

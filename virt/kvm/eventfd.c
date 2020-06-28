@@ -754,12 +754,9 @@ kvm_assign_ioeventfd(struct kvm *kvm, struct kvm_ioeventfd *args)
 		goto unlock_fail;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	kvm->buses[bus_idx]->ioeventfd_count++;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	list_add_tail(&p->list, &kvm->ioeventfds);
 
 	mutex_unlock(&kvm->slots_lock);
@@ -806,13 +803,10 @@ kvm_deassign_ioeventfd(struct kvm *kvm, struct kvm_ioeventfd *args)
 
 		kvm_io_bus_unregister_dev(kvm, bus_idx, &p->dev);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (kvm->buses[bus_idx])
 			kvm->buses[bus_idx]->ioeventfd_count--;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		ioeventfd_release(p);
 		ret = 0;
 		break;

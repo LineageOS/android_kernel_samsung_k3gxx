@@ -229,15 +229,12 @@ struct sctp_sock {
 	/* Receive to here while partial delivery is in effect. */
 	struct sk_buff_head pd_lobby;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	/* These must be the last fields, as they will skipped on copies,
 	 * like on accept and peeloff operations
 	 */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	struct list_head auto_asconf_list;
 	int do_auto_asconf;
 };
@@ -1263,12 +1260,9 @@ struct sctp_endpoint {
 	struct list_head endpoint_shared_keys;
 	__u16 active_key_id;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	__u8  auth_enable;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 /* Recover the outter endpoint structure. */
@@ -1298,15 +1292,11 @@ int sctp_has_association(struct net *net, const union sctp_addr *laddr,
 			 const union sctp_addr *paddr);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 int sctp_verify_init(struct net *net, const struct sctp_endpoint *ep,
 		     const struct sctp_association *asoc,
 =======
 int sctp_verify_init(struct net *net, const struct sctp_association *asoc,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-int sctp_verify_init(struct net *net, const struct sctp_association *asoc,
->>>>>>> master
 		     sctp_cid_t, sctp_init_chunk_t *peer_init,
 		     struct sctp_chunk *chunk, struct sctp_chunk **err_chunk);
 int sctp_process_init(struct sctp_association *, struct sctp_chunk *chunk,

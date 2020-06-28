@@ -55,14 +55,10 @@ static __inline__ int scm_check_creds(struct ucred *creds)
 
 	if ((creds->pid == task_tgid_vnr(current) ||
 <<<<<<< HEAD
-<<<<<<< HEAD
 	     ns_capable(task_active_pid_ns(current)->user_ns, CAP_SYS_ADMIN)) &&
 =======
 	     ns_capable(current->nsproxy->pid_ns->user_ns, CAP_SYS_ADMIN)) &&
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	     ns_capable(current->nsproxy->pid_ns->user_ns, CAP_SYS_ADMIN)) &&
->>>>>>> master
 	    ((uid_eq(uid, cred->uid)   || uid_eq(uid, cred->euid) ||
 	      uid_eq(uid, cred->suid)) || nsown_capable(CAP_SETUID)) &&
 	    ((gid_eq(gid, cred->gid)   || gid_eq(gid, cred->egid) ||
@@ -321,13 +317,10 @@ void scm_detach_fds(struct msghdr *msg, struct scm_cookie *scm)
 		if (!err) {
 			cmlen = CMSG_SPACE(i*sizeof(int));
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (msg->msg_controllen < cmlen)
 				cmlen = msg->msg_controllen;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			msg->msg_control += cmlen;
 			msg->msg_controllen -= cmlen;
 		}

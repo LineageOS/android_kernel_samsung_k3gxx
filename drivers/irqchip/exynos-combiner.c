@@ -22,12 +22,9 @@
 
 #ifdef CONFIG_EXYNOS_ATAGS
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <mach/irqs.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #include <plat/cpu.h>
 #endif
 

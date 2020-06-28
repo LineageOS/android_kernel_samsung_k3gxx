@@ -290,38 +290,28 @@ static int sata_pmp_configure(struct ata_device *dev, int print_info)
 	/* Disable sending Early R_OK.
 	 * With "cached read" HDD testing and multiple ports busy on a SATA
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 * host controller, 3x26 PMP will very rarely drop a deferred
 	 * R_OK that was intended for the host. Symptom will be all
 	 * 5 drives under test will timeout, get reset, and recover.
 	 */
 	if (vendor == 0x1095 && (devid == 0x3726 || devid == 0x3826)) {
 =======
-=======
->>>>>>> master
 	 * host controller, 3726 PMP will very rarely drop a deferred
 	 * R_OK that was intended for the host. Symptom will be all
 	 * 5 drives under test will timeout, get reset, and recover.
 	 */
 	if (vendor == 0x1095 && devid == 0x3726) {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		u32 reg;
 
 		err_mask = sata_pmp_read(&ap->link, PMP_GSCR_SII_POL, &reg);
 		if (err_mask) {
 			rc = -EIO;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			reason = "failed to read Sil3x26 Private Register";
 =======
 			reason = "failed to read Sil3726 Private Register";
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			reason = "failed to read Sil3726 Private Register";
->>>>>>> master
 			goto fail;
 		}
 		reg &= ~0x1;
@@ -329,14 +319,10 @@ static int sata_pmp_configure(struct ata_device *dev, int print_info)
 		if (err_mask) {
 			rc = -EIO;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			reason = "failed to write Sil3x26 Private Register";
 =======
 			reason = "failed to write Sil3726 Private Register";
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			reason = "failed to write Sil3726 Private Register";
->>>>>>> master
 			goto fail;
 		}
 	}
@@ -414,17 +400,12 @@ static void sata_pmp_quirks(struct ata_port *ap)
 	struct ata_link *link;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (vendor == 0x1095 && (devid == 0x3726 || devid == 0x3826)) {
 		/* sil3x26 quirks */
 =======
 	if (vendor == 0x1095 && devid == 0x3726) {
 		/* sil3726 quirks */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (vendor == 0x1095 && devid == 0x3726) {
-		/* sil3726 quirks */
->>>>>>> master
 		ata_for_each_link(link, ap, EDGE) {
 			/* link reports offline after LPM */
 			link->flags |= ATA_LFLAG_NO_LPM;
@@ -488,7 +469,6 @@ static void sata_pmp_quirks(struct ata_port *ap)
 		 */
 		ap->pmp_link[ap->nr_pmp_links - 1].flags |= ATA_LFLAG_NO_RETRY;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	} else if (vendor == 0x197b && (devid == 0x2352 || devid == 0x0325)) {
 		/*
 		 * 0x2352: found in Thermaltake BlackX Duet, jmicron JMB350?
@@ -498,10 +478,6 @@ static void sata_pmp_quirks(struct ata_port *ap)
 	} else if (vendor == 0x197b && devid == 0x2352) {
 		/* chip found in Thermaltake BlackX Duet, jmicron JMB350? */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	} else if (vendor == 0x197b && devid == 0x2352) {
-		/* chip found in Thermaltake BlackX Duet, jmicron JMB350? */
->>>>>>> master
 		ata_for_each_link(link, ap, EDGE) {
 			/* SRST breaks detection and disks get misclassified
 			 * LPM disabled to avoid potential problems
@@ -510,7 +486,6 @@ static void sata_pmp_quirks(struct ata_port *ap)
 				       ATA_LFLAG_NO_SRST |
 				       ATA_LFLAG_ASSUME_ATA;
 		}
-<<<<<<< HEAD
 <<<<<<< HEAD
 	} else if (vendor == 0x11ab && devid == 0x4140) {
 		/* Marvell 4140 quirks */
@@ -521,8 +496,6 @@ static void sata_pmp_quirks(struct ata_port *ap)
 		}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 }
 

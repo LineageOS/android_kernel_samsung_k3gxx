@@ -1707,13 +1707,10 @@ static long vpfe_param_handler(struct file *file, void *priv,
 	switch (cmd) {
 	case VPFE_CMD_S_CCDC_RAW_PARAMS:
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ret = -EINVAL;
 		v4l2_warn(&vpfe_dev->v4l2_dev,
 			"VPFE_CMD_S_CCDC_RAW_PARAMS not supported\n");
 =======
-=======
->>>>>>> master
 		v4l2_warn(&vpfe_dev->v4l2_dev,
 			  "VPFE_CMD_S_CCDC_RAW_PARAMS: experimental ioctl\n");
 		if (ccdc_dev->hw_ops.set_params) {
@@ -1735,10 +1732,7 @@ static long vpfe_param_handler(struct file *file, void *priv,
 			v4l2_dbg(1, debug, &vpfe_dev->v4l2_dev,
 				"VPFE_CMD_S_CCDC_RAW_PARAMS not supported\n");
 		}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		break;
 	default:
 		ret = -ENOTTY;

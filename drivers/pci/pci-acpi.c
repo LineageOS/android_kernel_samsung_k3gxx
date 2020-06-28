@@ -48,14 +48,11 @@ static void pci_acpi_wake_dev(acpi_handle handle, u32 event, void *context)
 		return;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (pci_dev->pme_poll)
 		pci_dev->pme_poll = false;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (pci_dev->current_state == PCI_D3cold) {
 		pci_wakeup_event(pci_dev);
 		pm_runtime_resume(&pci_dev->dev);
@@ -67,17 +64,11 @@ static void pci_acpi_wake_dev(acpi_handle handle, u32 event, void *context)
 		pci_check_pme_status(pci_dev);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if (pci_dev->pme_poll)
 		pci_dev->pme_poll = false;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (pci_dev->pme_poll)
-		pci_dev->pme_poll = false;
-
->>>>>>> master
 	pci_wakeup_event(pci_dev);
 	pm_runtime_resume(&pci_dev->dev);
 
@@ -336,7 +327,6 @@ void acpi_pci_remove_bus(struct pci_bus *bus)
 static int acpi_pci_find_device(struct device *dev, acpi_handle *handle)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct pci_dev *pci_dev = to_pci_dev(dev);
 	bool is_bridge;
 	u64 addr;
@@ -352,8 +342,6 @@ static int acpi_pci_find_device(struct device *dev, acpi_handle *handle)
 	addr = (PCI_SLOT(pci_dev->devfn) << 16) | PCI_FUNC(pci_dev->devfn);
 	*handle = acpi_find_child(ACPI_HANDLE(dev->parent), addr, is_bridge);
 =======
-=======
->>>>>>> master
 	struct pci_dev * pci_dev;
 	u64	addr;
 
@@ -361,10 +349,7 @@ static int acpi_pci_find_device(struct device *dev, acpi_handle *handle)
 	/* Please ref to ACPI spec for the syntax of _ADR */
 	addr = (PCI_SLOT(pci_dev->devfn) << 16) | PCI_FUNC(pci_dev->devfn);
 	*handle = acpi_get_child(DEVICE_ACPI_HANDLE(dev->parent), addr);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (!*handle)
 		return -ENODEV;
 	return 0;

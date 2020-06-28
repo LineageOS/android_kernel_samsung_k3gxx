@@ -782,13 +782,9 @@ int ocfs2_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
 	mapping_end = ocfs2_clusters_for_bytes(inode->i_sb,
 					       map_start + map_len);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	mapping_end -= cpos;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mapping_end -= cpos;
->>>>>>> master
 	is_last = 0;
 	while (cpos < mapping_end && !is_last) {
 		u32 fe_flags;

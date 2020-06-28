@@ -2558,17 +2558,11 @@ static int __init comedi_init(void)
 	comedi_class->dev_attrs = comedi_dev_attrs;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	/* XXX requires /proc interface */
 	comedi_proc_init();
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	/* XXX requires /proc interface */
-	comedi_proc_init();
-
->>>>>>> master
 	/* create devices files for legacy/manual use */
 	for (i = 0; i < comedi_num_legacy_minors; i++) {
 		struct comedi_device *dev;
@@ -2576,12 +2570,9 @@ static int __init comedi_init(void)
 		if (IS_ERR(dev)) {
 			comedi_cleanup_board_minors();
 <<<<<<< HEAD
-<<<<<<< HEAD
 			class_destroy(comedi_class);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			cdev_del(&comedi_cdev);
 			unregister_chrdev_region(MKDEV(COMEDI_MAJOR, 0),
 						 COMEDI_NUM_MINORS);
@@ -2593,14 +2584,11 @@ static int __init comedi_init(void)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* XXX requires /proc interface */
 	comedi_proc_init();
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 }
 module_init(comedi_init);

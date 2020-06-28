@@ -93,28 +93,20 @@ static void __init test_wakealarm(struct rtc_device *rtc, suspend_state_t state)
 
 	if (state == PM_SUSPEND_MEM) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		printk(info_test, pm_states[state].label);
 =======
 		printk(info_test, pm_states[state]);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		printk(info_test, pm_states[state]);
->>>>>>> master
 		status = pm_suspend(state);
 		if (status == -ENODEV)
 			state = PM_SUSPEND_STANDBY;
 	}
 	if (state == PM_SUSPEND_STANDBY) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		printk(info_test, pm_states[state].label);
 =======
 		printk(info_test, pm_states[state]);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		printk(info_test, pm_states[state]);
->>>>>>> master
 		status = pm_suspend(state);
 	}
 	if (status < 0)
@@ -153,7 +145,6 @@ static char warn_bad_state[] __initdata =
 static int __init setup_test_suspend(char *value)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	suspend_state_t i;
 
 	/* "=mem" ==> "mem" */
@@ -165,8 +156,6 @@ static int __init setup_test_suspend(char *value)
 		}
 
 =======
-=======
->>>>>>> master
 	unsigned i;
 
 	/* "=mem" ==> "mem" */
@@ -179,10 +168,7 @@ static int __init setup_test_suspend(char *value)
 		test_state = (__force suspend_state_t) i;
 		return 0;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	printk(warn_bad_state, value);
 	return 0;
 }
@@ -200,23 +186,17 @@ static int __init test_suspend(void)
 	if (test_state == PM_SUSPEND_ON)
 		goto done;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!pm_states[test_state].state) {
 		printk(warn_bad_state, pm_states[test_state].label);
 =======
 	if (!valid_state(test_state)) {
 		printk(warn_bad_state, pm_states[test_state]);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!valid_state(test_state)) {
-		printk(warn_bad_state, pm_states[test_state]);
->>>>>>> master
 		goto done;
 	}
 
 	/* RTCs have initialized by now too ... can we use one? */
 	dev = class_find_device(rtc_class, NULL, NULL, has_wakealarm);
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (dev) {
 		rtc = rtc_class_open(dev_name(dev));
@@ -226,10 +206,6 @@ static int __init test_suspend(void)
 	if (dev)
 		rtc = rtc_class_open(dev_name(dev));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (dev)
-		rtc = rtc_class_open(dev_name(dev));
->>>>>>> master
 	if (!rtc) {
 		printk(warn_no_rtc);
 		goto done;

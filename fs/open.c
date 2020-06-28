@@ -35,17 +35,12 @@
 #include "internal.h"
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 int do_truncate2(struct vfsmount *mnt, struct dentry *dentry, loff_t length,
 		unsigned int time_attrs, struct file *filp)
 =======
 int do_truncate(struct dentry *dentry, loff_t length, unsigned int time_attrs,
 	struct file *filp)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-int do_truncate(struct dentry *dentry, loff_t length, unsigned int time_attrs,
-	struct file *filp)
->>>>>>> master
 {
 	int ret;
 	struct iattr newattrs;
@@ -68,7 +63,6 @@ int do_truncate(struct dentry *dentry, loff_t length, unsigned int time_attrs,
 
 	mutex_lock(&dentry->d_inode->i_mutex);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = notify_change2(mnt, dentry, &newattrs);
 	mutex_unlock(&dentry->d_inode->i_mutex);
 	return ret;
@@ -79,21 +73,15 @@ int do_truncate(struct dentry *dentry, loff_t length, unsigned int time_attrs,
 	return do_truncate2(NULL, dentry, length, time_attrs, filp);
 }
 =======
-=======
->>>>>>> master
 	ret = notify_change(dentry, &newattrs);
 	mutex_unlock(&dentry->d_inode->i_mutex);
 	return ret;
 }
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 long vfs_truncate(struct path *path, loff_t length)
 {
 	struct inode *inode;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	struct vfsmount *mnt;
 	long error;
@@ -105,11 +93,6 @@ long vfs_truncate(struct path *path, loff_t length)
 
 	inode = path->dentry->d_inode;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	long error;
-
-	inode = path->dentry->d_inode;
->>>>>>> master
 
 	/* For directories it's -EISDIR, for other non-regulars - -EINVAL */
 	if (S_ISDIR(inode->i_mode))
@@ -122,14 +105,10 @@ long vfs_truncate(struct path *path, loff_t length)
 		goto out;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	error = inode_permission2(mnt, inode, MAY_WRITE);
 =======
 	error = inode_permission(inode, MAY_WRITE);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	error = inode_permission(inode, MAY_WRITE);
->>>>>>> master
 	if (error)
 		goto mnt_drop_write_and_out;
 
@@ -154,14 +133,10 @@ long vfs_truncate(struct path *path, loff_t length)
 		error = security_path_truncate(path);
 	if (!error)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		error = do_truncate2(mnt, path->dentry, length, 0, NULL);
 =======
 		error = do_truncate(path->dentry, length, 0, NULL);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		error = do_truncate(path->dentry, length, 0, NULL);
->>>>>>> master
 
 put_write_and_out:
 	put_write_access(inode);
@@ -211,12 +186,9 @@ static long do_sys_ftruncate(unsigned int fd, loff_t length, int small)
 	struct inode *inode;
 	struct dentry *dentry;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct vfsmount *mnt;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	struct fd f;
 	int error;
 
@@ -234,12 +206,9 @@ static long do_sys_ftruncate(unsigned int fd, loff_t length, int small)
 
 	dentry = f.file->f_path.dentry;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mnt = f.file->f_path.mnt;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	inode = dentry->d_inode;
 	error = -EINVAL;
 	if (!S_ISREG(inode->i_mode) || !(f.file->f_mode & FMODE_WRITE))
@@ -260,14 +229,10 @@ static long do_sys_ftruncate(unsigned int fd, loff_t length, int small)
 		error = security_path_truncate(&f.file->f_path);
 	if (!error)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		error = do_truncate2(mnt, dentry, length, ATTR_MTIME|ATTR_CTIME, f.file);
 =======
 		error = do_truncate(dentry, length, ATTR_MTIME|ATTR_CTIME, f.file);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		error = do_truncate(dentry, length, ATTR_MTIME|ATTR_CTIME, f.file);
->>>>>>> master
 	sb_end_write(inode->i_sb);
 out_putf:
 	fdput(f);
@@ -383,12 +348,9 @@ SYSCALL_DEFINE3(faccessat, int, dfd, const char __user *, filename, int, mode)
 	struct path path;
 	struct inode *inode;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct vfsmount *mnt;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	int res;
 	unsigned int lookup_flags = LOOKUP_FOLLOW;
 
@@ -420,12 +382,9 @@ retry:
 
 	inode = path.dentry->d_inode;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mnt = path.mnt;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if ((mode & MAY_EXEC) && S_ISREG(inode->i_mode)) {
 		/*
@@ -438,14 +397,10 @@ retry:
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	res = inode_permission2(mnt, inode, mode | MAY_ACCESS);
 =======
 	res = inode_permission(inode, mode | MAY_ACCESS);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	res = inode_permission(inode, mode | MAY_ACCESS);
->>>>>>> master
 	/* SuS v2 requires we report a read only fs too */
 	if (res || !(mode & S_IWOTH) || special_file(inode->i_mode))
 		goto out_path_release;
@@ -490,14 +445,10 @@ retry:
 		goto out;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	error = inode_permission2(path.mnt, path.dentry->d_inode, MAY_EXEC | MAY_CHDIR);
 =======
 	error = inode_permission(path.dentry->d_inode, MAY_EXEC | MAY_CHDIR);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	error = inode_permission(path.dentry->d_inode, MAY_EXEC | MAY_CHDIR);
->>>>>>> master
 	if (error)
 		goto dput_and_out;
 
@@ -518,12 +469,9 @@ SYSCALL_DEFINE1(fchdir, unsigned int, fd)
 	struct fd f = fdget_raw(fd);
 	struct inode *inode;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct vfsmount *mnt;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	int error = -EBADF;
 
 	error = -EBADF;
@@ -532,26 +480,19 @@ SYSCALL_DEFINE1(fchdir, unsigned int, fd)
 
 	inode = file_inode(f.file);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mnt = f.file->f_path.mnt;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	error = -ENOTDIR;
 	if (!S_ISDIR(inode->i_mode))
 		goto out_putf;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	error = inode_permission2(mnt, inode, MAY_EXEC | MAY_CHDIR);
 =======
 	error = inode_permission(inode, MAY_EXEC | MAY_CHDIR);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	error = inode_permission(inode, MAY_EXEC | MAY_CHDIR);
->>>>>>> master
 	if (!error)
 		set_fs_pwd(current->fs, &f.file->f_path);
 out_putf:
@@ -571,14 +512,10 @@ retry:
 		goto out;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	error = inode_permission2(path.mnt, path.dentry->d_inode, MAY_EXEC | MAY_CHDIR);
 =======
 	error = inode_permission(path.dentry->d_inode, MAY_EXEC | MAY_CHDIR);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	error = inode_permission(path.dentry->d_inode, MAY_EXEC | MAY_CHDIR);
->>>>>>> master
 	if (error)
 		goto dput_and_out;
 
@@ -617,14 +554,10 @@ static int chmod_common(struct path *path, umode_t mode)
 	newattrs.ia_mode = (mode & S_IALLUGO) | (inode->i_mode & ~S_IALLUGO);
 	newattrs.ia_valid = ATTR_MODE | ATTR_CTIME;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	error = notify_change2(path->mnt, path->dentry, &newattrs);
 =======
 	error = notify_change(path->dentry, &newattrs);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	error = notify_change(path->dentry, &newattrs);
->>>>>>> master
 out_unlock:
 	mutex_unlock(&inode->i_mutex);
 	mnt_drop_write(path->mnt);
@@ -699,14 +632,10 @@ static int chown_common(struct path *path, uid_t user, gid_t group)
 	error = security_path_chown(path, uid, gid);
 	if (!error)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		error = notify_change2(path->mnt, path->dentry, &newattrs);
 =======
 		error = notify_change(path->dentry, &newattrs);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		error = notify_change(path->dentry, &newattrs);
->>>>>>> master
 	mutex_unlock(&inode->i_mutex);
 
 	return error;
@@ -785,7 +714,6 @@ static inline int __get_file_write_access(struct inode *inode,
 					  struct vfsmount *mnt)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int error = get_write_access(inode);
 	if (error)
 		return error;
@@ -793,8 +721,6 @@ static inline int __get_file_write_access(struct inode *inode,
 	if (error)
 		put_write_access(inode);
 =======
-=======
->>>>>>> master
 	int error;
 	error = get_write_access(inode);
 	if (error)
@@ -812,10 +738,7 @@ static inline int __get_file_write_access(struct inode *inode,
 		if (error)
 			put_write_access(inode);
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return error;
 }
 
@@ -849,7 +772,6 @@ static int do_dentry_open(struct file *f,
 	path_get(&f->f_path);
 	inode = f->f_inode = f->f_path.dentry->d_inode;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (f->f_mode & FMODE_WRITE && !special_file(inode->i_mode)) {
 		error = __get_file_write_access(inode, f->f_path.mnt);
 		if (error)
@@ -859,8 +781,6 @@ static int do_dentry_open(struct file *f,
 
 	f->f_mapping = inode->i_mapping;
 =======
-=======
->>>>>>> master
 	if (f->f_mode & FMODE_WRITE) {
 		error = __get_file_write_access(inode, f->f_path.mnt);
 		if (error)
@@ -871,10 +791,7 @@ static int do_dentry_open(struct file *f,
 
 	f->f_mapping = inode->i_mapping;
 	file_sb_list_add(f, inode->i_sb);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (unlikely(f->f_mode & FMODE_PATH)) {
 		f->f_op = &empty_fops;
@@ -882,15 +799,12 @@ static int do_dentry_open(struct file *f,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (S_ISREG(inode->i_mode))
 		f->f_mode |= FMODE_SPLICE_WRITE | FMODE_SPLICE_READ;
 
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	f->f_op = fops_get(inode->i_fop);
 
 	error = security_file_open(f, cred);
@@ -920,18 +834,12 @@ static int do_dentry_open(struct file *f,
 cleanup_all:
 	fops_put(f->f_op);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (f->f_mode & FMODE_WRITE) {
 =======
 	file_sb_list_del(f);
 	if (f->f_mode & FMODE_WRITE) {
 		put_write_access(inode);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	file_sb_list_del(f);
-	if (f->f_mode & FMODE_WRITE) {
-		put_write_access(inode);
->>>>>>> master
 		if (!special_file(inode->i_mode)) {
 			/*
 			 * We don't consider this a real
@@ -940,12 +848,9 @@ cleanup_all:
 			 * here, so just reset the state.
 			 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 			put_write_access(inode);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			file_reset_write(f);
 			__mnt_drop_write(f->f_path.mnt);
 		}

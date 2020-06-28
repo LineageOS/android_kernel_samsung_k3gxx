@@ -5,14 +5,10 @@
  * requests.
  *
 <<<<<<< HEAD
-<<<<<<< HEAD
  * Copyright IBM Corp. 2009, 2016
 =======
  * Copyright IBM Corp. 2009
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * Copyright IBM Corp. 2009
->>>>>>> master
  */
 
 #ifndef ZFCP_REQLIST_H
@@ -189,7 +185,6 @@ static inline void zfcp_reqlist_move(struct zfcp_reqlist *rl,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /**
  * zfcp_reqlist_apply_for_all() - apply a function to every request.
  * @rl: the requestlist that contains the target requests.
@@ -220,6 +215,4 @@ zfcp_reqlist_apply_for_all(struct zfcp_reqlist *rl,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #endif /* ZFCP_REQLIST_H */

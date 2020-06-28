@@ -934,10 +934,7 @@ static netdev_tx_t eth_start_xmit(struct sk_buff *skb,
 	req->length = length;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	/* throttle highspeed IRQ rate back slightly */
 	if (gadget_is_dualspeed(dev->gadget))
 		req->no_interrupt = (dev->gadget->speed == USB_SPEED_HIGH ||
@@ -945,10 +942,7 @@ static netdev_tx_t eth_start_xmit(struct sk_buff *skb,
 			? ((atomic_read(&dev->tx_qlen) % qmult) != 0)
 					: 0;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	retval = usb_ep_queue(in, req, GFP_ATOMIC);
 	switch (retval) {
 	default:

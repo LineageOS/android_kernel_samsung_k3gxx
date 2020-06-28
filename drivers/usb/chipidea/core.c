@@ -382,12 +382,9 @@ static int ci_hdrc_probe(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_lock_init(&ci->lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ci->dev = dev;
 	ci->platdata = dev->platform_data;
 	if (ci->platdata->phy)

@@ -864,7 +864,6 @@ int jbd2_journal_get_log_tail(journal_t *journal, tid_t *tid,
  * Requires j_checkpoint_mutex
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 int __jbd2_update_log_tail(journal_t *journal, tid_t tid, unsigned long block)
 {
 	unsigned long freed;
@@ -874,11 +873,6 @@ void __jbd2_update_log_tail(journal_t *journal, tid_t tid, unsigned long block)
 {
 	unsigned long freed;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-void __jbd2_update_log_tail(journal_t *journal, tid_t tid, unsigned long block)
-{
-	unsigned long freed;
->>>>>>> master
 
 	BUG_ON(!mutex_is_locked(&journal->j_checkpoint_mutex));
 
@@ -889,7 +883,6 @@ void __jbd2_update_log_tail(journal_t *journal, tid_t tid, unsigned long block)
 	 * old transaction with possibly newly overwritten data.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = jbd2_journal_update_sb_log_tail(journal, tid, block, WRITE_FUA);
 	if (ret)
 		goto out;
@@ -897,9 +890,6 @@ void __jbd2_update_log_tail(journal_t *journal, tid_t tid, unsigned long block)
 =======
 	jbd2_journal_update_sb_log_tail(journal, tid, block, WRITE_FUA);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	jbd2_journal_update_sb_log_tail(journal, tid, block, WRITE_FUA);
->>>>>>> master
 	write_lock(&journal->j_state_lock);
 	freed = block - journal->j_tail;
 	if (block < journal->j_tail)
@@ -916,14 +906,11 @@ void __jbd2_update_log_tail(journal_t *journal, tid_t tid, unsigned long block)
 	journal->j_tail = block;
 	write_unlock(&journal->j_state_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 out:
 	return ret;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /*
@@ -1343,14 +1330,10 @@ static int journal_reset(journal_t *journal)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int jbd2_write_superblock(journal_t *journal, int write_op)
 =======
 static void jbd2_write_superblock(journal_t *journal, int write_op)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static void jbd2_write_superblock(journal_t *journal, int write_op)
->>>>>>> master
 {
 	struct buffer_head *bh = journal->j_sb_buffer;
 	journal_superblock_t *sb = journal->j_superblock;
@@ -1390,7 +1373,6 @@ static void jbd2_write_superblock(journal_t *journal, int write_op)
 		       "journal superblock for %s.\n", ret,
 		       journal->j_devname);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		jbd2_journal_abort(journal, ret);
 	}
 
@@ -1398,9 +1380,6 @@ static void jbd2_write_superblock(journal_t *journal, int write_op)
 =======
 	}
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	}
->>>>>>> master
 }
 
 /**
@@ -1414,23 +1393,17 @@ static void jbd2_write_superblock(journal_t *journal, int write_op)
  * disk, waiting for the IO to complete.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 int jbd2_journal_update_sb_log_tail(journal_t *journal, tid_t tail_tid,
 				     unsigned long tail_block, int write_op)
 {
 	journal_superblock_t *sb = journal->j_superblock;
 	int ret;
 =======
-=======
->>>>>>> master
 void jbd2_journal_update_sb_log_tail(journal_t *journal, tid_t tail_tid,
 				     unsigned long tail_block, int write_op)
 {
 	journal_superblock_t *sb = journal->j_superblock;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	BUG_ON(!mutex_is_locked(&journal->j_checkpoint_mutex));
 	jbd_debug(1, "JBD2: updating superblock (start %lu, seq %u)\n",
@@ -1440,16 +1413,12 @@ void jbd2_journal_update_sb_log_tail(journal_t *journal, tid_t tail_tid,
 	sb->s_start    = cpu_to_be32(tail_block);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = jbd2_write_superblock(journal, write_op);
 	if (ret)
 		goto out;
 =======
 	jbd2_write_superblock(journal, write_op);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	jbd2_write_superblock(journal, write_op);
->>>>>>> master
 
 	/* Log is no longer empty */
 	write_lock(&journal->j_state_lock);
@@ -1457,39 +1426,29 @@ void jbd2_journal_update_sb_log_tail(journal_t *journal, tid_t tail_tid,
 	journal->j_flags &= ~JBD2_FLUSHED;
 	write_unlock(&journal->j_state_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 out:
 	return ret;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /**
  * jbd2_mark_journal_empty() - Mark on disk journal as empty.
  * @journal: The journal to update.
 <<<<<<< HEAD
-<<<<<<< HEAD
  * @write_op: With which operation should we write the journal sb
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  *
  * Update a journal's dynamic superblock fields to show that journal is empty.
  * Write updated superblock to disk waiting for IO to complete.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void jbd2_mark_journal_empty(journal_t *journal, int write_op)
 =======
 static void jbd2_mark_journal_empty(journal_t *journal)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static void jbd2_mark_journal_empty(journal_t *journal)
->>>>>>> master
 {
 	journal_superblock_t *sb = journal->j_superblock;
 
@@ -1508,14 +1467,10 @@ static void jbd2_mark_journal_empty(journal_t *journal)
 	read_unlock(&journal->j_state_lock);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	jbd2_write_superblock(journal, write_op);
 =======
 	jbd2_write_superblock(journal, WRITE_FUA);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	jbd2_write_superblock(journal, WRITE_FUA);
->>>>>>> master
 
 	/* Log is no longer empty */
 	write_lock(&journal->j_state_lock);
@@ -1784,7 +1739,6 @@ int jbd2_journal_destroy(journal_t *journal)
 		if (!is_journal_aborted(journal)) {
 			mutex_lock(&journal->j_checkpoint_mutex);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 			write_lock(&journal->j_state_lock);
 			journal->j_tail_sequence =
@@ -1795,9 +1749,6 @@ int jbd2_journal_destroy(journal_t *journal)
 =======
 			jbd2_mark_journal_empty(journal);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			jbd2_mark_journal_empty(journal);
->>>>>>> master
 			mutex_unlock(&journal->j_checkpoint_mutex);
 		} else
 			err = -EIO;
@@ -2039,7 +1990,6 @@ int jbd2_journal_flush(journal_t *journal)
 
 	mutex_lock(&journal->j_checkpoint_mutex);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!err) {
 		err = jbd2_cleanup_journal_tail(journal);
 		if (err < 0) {
@@ -2051,9 +2001,6 @@ int jbd2_journal_flush(journal_t *journal)
 =======
 	jbd2_cleanup_journal_tail(journal);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	jbd2_cleanup_journal_tail(journal);
->>>>>>> master
 
 	/* Finally, mark the journal as really needing no recovery.
 	 * This sets s_start==0 in the underlying superblock, which is
@@ -2061,14 +2008,10 @@ int jbd2_journal_flush(journal_t *journal)
 	 * commits of data to the journal will restore the current
 	 * s_start value. */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	jbd2_mark_journal_empty(journal, WRITE_FUA);
 =======
 	jbd2_mark_journal_empty(journal);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	jbd2_mark_journal_empty(journal);
->>>>>>> master
 	mutex_unlock(&journal->j_checkpoint_mutex);
 	write_lock(&journal->j_state_lock);
 	J_ASSERT(!journal->j_running_transaction);
@@ -2078,15 +2021,11 @@ int jbd2_journal_flush(journal_t *journal)
 	J_ASSERT(journal->j_tail_sequence == journal->j_transaction_sequence);
 	write_unlock(&journal->j_state_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 out:
 	return err;
 =======
 	return 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return 0;
->>>>>>> master
 }
 
 /**
@@ -2123,14 +2062,10 @@ int jbd2_journal_wipe(journal_t *journal, int write)
 		/* Lock to make assertions happy... */
 		mutex_lock(&journal->j_checkpoint_mutex);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		jbd2_mark_journal_empty(journal, WRITE_FUA);
 =======
 		jbd2_mark_journal_empty(journal);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		jbd2_mark_journal_empty(journal);
->>>>>>> master
 		mutex_unlock(&journal->j_checkpoint_mutex);
 	}
 
@@ -2182,7 +2117,6 @@ static void __journal_abort_soft (journal_t *journal, int errno)
 	__jbd2_journal_abort_hard(journal);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (errno) {
 		jbd2_journal_update_sb_errno(journal);
 		write_lock(&journal->j_state_lock);
@@ -2193,10 +2127,6 @@ static void __journal_abort_soft (journal_t *journal, int errno)
 	if (errno)
 		jbd2_journal_update_sb_errno(journal);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (errno)
-		jbd2_journal_update_sb_errno(journal);
->>>>>>> master
 }
 
 /**

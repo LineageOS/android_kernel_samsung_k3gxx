@@ -214,14 +214,10 @@ static int proc_pid_cmdline(struct task_struct *task, char *buffer)
 static int proc_pid_auxv(struct task_struct *task, char *buffer)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct mm_struct *mm = mm_access(task, PTRACE_MODE_READ_FSCREDS);
 =======
 	struct mm_struct *mm = mm_access(task, PTRACE_MODE_READ);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct mm_struct *mm = mm_access(task, PTRACE_MODE_READ);
->>>>>>> master
 	int res = PTR_ERR(mm);
 	if (mm && !IS_ERR(mm)) {
 		unsigned int nwords = 0;
@@ -252,14 +248,10 @@ static int proc_pid_wchan(struct task_struct *task, char *buffer)
 
 	if (lookup_symbol_name(wchan, symname) < 0)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS))
 =======
 		if (!ptrace_may_access(task, PTRACE_MODE_READ))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!ptrace_may_access(task, PTRACE_MODE_READ))
->>>>>>> master
 			return 0;
 		else
 			return sprintf(buffer, "%lu", wchan);
@@ -274,14 +266,10 @@ static int lock_trace(struct task_struct *task)
 	if (err)
 		return err;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!ptrace_may_access(task, PTRACE_MODE_ATTACH_FSCREDS)) {
 =======
 	if (!ptrace_may_access(task, PTRACE_MODE_ATTACH)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!ptrace_may_access(task, PTRACE_MODE_ATTACH)) {
->>>>>>> master
 		mutex_unlock(&task->signal->cred_guard_mutex);
 		return -EPERM;
 	}
@@ -556,14 +544,10 @@ static int proc_fd_access_allowed(struct inode *inode)
 	task = get_proc_task(inode);
 	if (task) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		allowed = ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS);
 =======
 		allowed = ptrace_may_access(task, PTRACE_MODE_READ);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		allowed = ptrace_may_access(task, PTRACE_MODE_READ);
->>>>>>> master
 		put_task_struct(task);
 	}
 	return allowed;
@@ -599,14 +583,10 @@ static bool has_pid_permissions(struct pid_namespace *pid,
 	if (in_group_p(pid->pid_gid))
 		return true;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS);
 =======
 	return ptrace_may_access(task, PTRACE_MODE_READ);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return ptrace_may_access(task, PTRACE_MODE_READ);
->>>>>>> master
 }
 
 
@@ -722,14 +702,10 @@ static int __mem_open(struct inode *inode, struct file *file, unsigned int mode)
 		return -ESRCH;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mm = mm_access(task, mode | PTRACE_MODE_FSCREDS);
 =======
 	mm = mm_access(task, mode);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mm = mm_access(task, mode);
->>>>>>> master
 	put_task_struct(task);
 
 	if (IS_ERR(mm))
@@ -1814,14 +1790,10 @@ static int map_files_d_revalidate(struct dentry *dentry, unsigned int flags)
 		goto out_notask;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mm = mm_access(task, PTRACE_MODE_READ_FSCREDS);
 =======
 	mm = mm_access(task, PTRACE_MODE_READ);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mm = mm_access(task, PTRACE_MODE_READ);
->>>>>>> master
 	if (IS_ERR_OR_NULL(mm))
 		goto out;
 
@@ -1886,12 +1858,9 @@ static int proc_map_files_get_link(struct dentry *dentry, struct path *path)
 		goto out_mmput;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	rc = -ENOENT;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	down_read(&mm->mmap_sem);
 	vma = find_exact_vma(mm, vm_start, vm_end);
 	if (vma && vma->vm_file) {
@@ -1963,14 +1932,10 @@ static struct dentry *proc_map_files_lookup(struct inode *dir,
 
 	result = ERR_PTR(-EACCES);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS))
 =======
 	if (!ptrace_may_access(task, PTRACE_MODE_READ))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!ptrace_may_access(task, PTRACE_MODE_READ))
->>>>>>> master
 		goto out_put_task;
 
 	result = ERR_PTR(-ENOENT);
@@ -2027,14 +1992,10 @@ proc_map_files_readdir(struct file *filp, void *dirent, filldir_t filldir)
 
 	ret = -EACCES;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS))
 =======
 	if (!ptrace_may_access(task, PTRACE_MODE_READ))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!ptrace_may_access(task, PTRACE_MODE_READ))
->>>>>>> master
 		goto out_put_task;
 
 	ret = 0;
@@ -2571,14 +2532,10 @@ static int do_io_accounting(struct task_struct *task, char *buffer, int whole)
 		return result;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS)) {
 =======
 	if (!ptrace_may_access(task, PTRACE_MODE_READ)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!ptrace_may_access(task, PTRACE_MODE_READ)) {
->>>>>>> master
 		result = -EACCES;
 		goto out_unlock;
 	}
@@ -2703,7 +2660,6 @@ static const struct file_operations proc_projid_map_operations = {
 	.release	= proc_id_map_release,
 };
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 static int proc_setgroups_open(struct inode *inode, struct file *file)
 {
@@ -2757,8 +2713,6 @@ static const struct file_operations proc_setgroups_operations = {
 };
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #endif /* CONFIG_USER_NS */
 
 static int proc_pid_personality(struct seq_file *m, struct pid_namespace *ns,
@@ -2869,12 +2823,9 @@ static const struct pid_entry tgid_base_stuff[] = {
 	REG("gid_map",    S_IRUGO|S_IWUSR, proc_gid_map_operations),
 	REG("projid_map", S_IRUGO|S_IWUSR, proc_projid_map_operations),
 <<<<<<< HEAD
-<<<<<<< HEAD
 	REG("setgroups",  S_IRUGO|S_IWUSR, proc_setgroups_operations),
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #endif
 #ifdef CONFIG_CHECKPOINT_RESTORE
 	REG("timers",	  S_IRUGO, proc_timers_operations),
@@ -3229,12 +3180,9 @@ static const struct pid_entry tid_base_stuff[] = {
 	REG("gid_map",    S_IRUGO|S_IWUSR, proc_gid_map_operations),
 	REG("projid_map", S_IRUGO|S_IWUSR, proc_projid_map_operations),
 <<<<<<< HEAD
-<<<<<<< HEAD
 	REG("setgroups",  S_IRUGO|S_IWUSR, proc_setgroups_operations),
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #endif
 };
 

@@ -798,14 +798,10 @@ static int dma_dwc_init(struct sata_dwc_device *hsdev, int irq)
 		dev_err(host_pvt.dwc_dev, "%s: dma_request_interrupts returns"
 			" %d\n", __func__, err);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		return err;
 =======
 		goto error_out;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto error_out;
->>>>>>> master
 	}
 
 	/* Enabe DMA */
@@ -817,19 +813,13 @@ static int dma_dwc_init(struct sata_dwc_device *hsdev, int irq)
 
 	return 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 
 error_out:
 	dma_dwc_exit(hsdev);
 
 	return err;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static int sata_dwc_scr_read(struct ata_link *link, unsigned int scr, u32 *val)
@@ -1680,14 +1670,10 @@ static int sata_dwc_probe(struct platform_device *ofdev)
 	u8 *base = NULL;
 	int err = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int irq;
 =======
 	int irq, rc;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int irq, rc;
->>>>>>> master
 	struct ata_host *host;
 	struct ata_port_info pi = sata_dwc_port_info[0];
 	const struct ata_port_info *ppi[] = { &pi, NULL };
@@ -1751,14 +1737,10 @@ static int sata_dwc_probe(struct platform_device *ofdev)
 		dev_err(&ofdev->dev, "no SATA DMA irq\n");
 		err = -ENODEV;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto error_iomap;
 =======
 		goto error_out;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto error_out;
->>>>>>> master
 	}
 
 	/* Get physical SATA DMA register base address */
@@ -1768,14 +1750,10 @@ static int sata_dwc_probe(struct platform_device *ofdev)
 			" address\n");
 		err = -ENODEV;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto error_iomap;
 =======
 		goto error_out;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto error_out;
->>>>>>> master
 	}
 
 	/* Save dev for later use in dev_xxx() routines */
@@ -1783,16 +1761,12 @@ static int sata_dwc_probe(struct platform_device *ofdev)
 
 	/* Initialize AHB DMAC */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	err = dma_dwc_init(hsdev, irq);
 	if (err)
 		goto error_dma_iomap;
 =======
 	dma_dwc_init(hsdev, irq);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	dma_dwc_init(hsdev, irq);
->>>>>>> master
 
 	/* Enable SATA Interrupts */
 	sata_dwc_enable_interrupts(hsdev);
@@ -1811,7 +1785,6 @@ static int sata_dwc_probe(struct platform_device *ofdev)
 	 * error_handler() to execute a dummy Softreset EH session
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	err = ata_host_activate(host, irq, sata_dwc_isr, 0, &sata_dwc_sht);
 	if (err)
 =======
@@ -1819,11 +1792,6 @@ static int sata_dwc_probe(struct platform_device *ofdev)
 
 	if (rc != 0)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	rc = ata_host_activate(host, irq, sata_dwc_isr, 0, &sata_dwc_sht);
-
-	if (rc != 0)
->>>>>>> master
 		dev_err(&ofdev->dev, "failed to activate host");
 
 	dev_set_drvdata(&ofdev->dev, host);
@@ -1833,15 +1801,11 @@ error_out:
 	/* Free SATA DMA resources */
 	dma_dwc_exit(hsdev);
 <<<<<<< HEAD
-<<<<<<< HEAD
 error_dma_iomap:
 	iounmap((void __iomem *)host_pvt.sata_dma_regs);
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 error_iomap:
 	iounmap(base);
 error_kmalloc:
@@ -1863,12 +1827,9 @@ static int sata_dwc_remove(struct platform_device *ofdev)
 	dma_dwc_exit(hsdev);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	iounmap((void __iomem *)host_pvt.sata_dma_regs);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	iounmap(hsdev->reg_base);
 	kfree(hsdev);
 	kfree(host);

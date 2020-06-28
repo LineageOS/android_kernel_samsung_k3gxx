@@ -169,36 +169,27 @@ static inline void task_state(struct seq_file *m, struct pid_namespace *ns,
 	struct fdtable *fdt = NULL;
 	const struct cred *cred;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	pid_t ppid = 0, tpid = 0;
 	struct task_struct *leader = NULL;
 
 	rcu_read_lock();
 =======
-=======
->>>>>>> master
 	pid_t ppid, tpid;
 
 	rcu_read_lock();
 	ppid = pid_alive(p) ?
 		task_tgid_nr_ns(rcu_dereference(p->real_parent), ns) : 0;
 	tpid = 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (pid_alive(p)) {
 		struct task_struct *tracer = ptrace_parent(p);
 		if (tracer)
 			tpid = task_pid_nr_ns(tracer, ns);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ppid = task_tgid_nr_ns(rcu_dereference(p->real_parent), ns);
 		leader = p->group_leader;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 	cred = get_task_cred(p);
 	seq_printf(m,
@@ -211,14 +202,10 @@ static inline void task_state(struct seq_file *m, struct pid_namespace *ns,
 		"Gid:\t%d\t%d\t%d\t%d\n",
 		get_task_state(p),
 <<<<<<< HEAD
-<<<<<<< HEAD
 		leader ? task_pid_nr_ns(leader, ns) : 0,
 =======
 		task_tgid_nr_ns(p, ns),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		task_tgid_nr_ns(p, ns),
->>>>>>> master
 		pid_nr_ns(pid, ns),
 		ppid, tpid,
 		from_kuid_munged(user_ns, cred->uid),
@@ -334,19 +321,14 @@ static void render_cap_t(struct seq_file *m, const char *header,
 	CAP_FOR_EACH_U32(__capi) {
 		seq_printf(m, "%08x",
 <<<<<<< HEAD
-<<<<<<< HEAD
 			   a->cap[CAP_LAST_U32 - __capi]);
 =======
 			   a->cap[(_KERNEL_CAPABILITY_U32S-1) - __capi]);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			   a->cap[(_KERNEL_CAPABILITY_U32S-1) - __capi]);
->>>>>>> master
 	}
 	seq_putc(m, '\n');
 }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 static inline void task_cap(struct seq_file *m, struct task_struct *p)
 {
@@ -354,8 +336,6 @@ static inline void task_cap(struct seq_file *m, struct task_struct *p)
 	kernel_cap_t cap_inheritable, cap_permitted, cap_effective,
 			cap_bset, cap_ambient;
 =======
-=======
->>>>>>> master
 /* Remove non-existent capabilities */
 #define NORM_CAPS(v) (v.cap[CAP_TO_INDEX(CAP_LAST_CAP)] &= \
 				CAP_TO_MASK(CAP_LAST_CAP + 1) - 1)
@@ -364,10 +344,7 @@ static inline void task_cap(struct seq_file *m, struct task_struct *p)
 {
 	const struct cred *cred;
 	kernel_cap_t cap_inheritable, cap_permitted, cap_effective, cap_bset;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	rcu_read_lock();
 	cred = __task_cred(p);
@@ -376,13 +353,10 @@ static inline void task_cap(struct seq_file *m, struct task_struct *p)
 	cap_effective	= cred->cap_effective;
 	cap_bset	= cred->cap_bset;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	cap_ambient	= cred->cap_ambient;
 	rcu_read_unlock();
 
 =======
-=======
->>>>>>> master
 	rcu_read_unlock();
 
 	NORM_CAPS(cap_inheritable);
@@ -390,21 +364,15 @@ static inline void task_cap(struct seq_file *m, struct task_struct *p)
 	NORM_CAPS(cap_effective);
 	NORM_CAPS(cap_bset);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	render_cap_t(m, "CapInh:\t", &cap_inheritable);
 	render_cap_t(m, "CapPrm:\t", &cap_permitted);
 	render_cap_t(m, "CapEff:\t", &cap_effective);
 	render_cap_t(m, "CapBnd:\t", &cap_bset);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	render_cap_t(m, "CapAmb:\t", &cap_ambient);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static inline void task_seccomp(struct seq_file *m, struct task_struct *p)
@@ -478,14 +446,10 @@ static int do_task_stat(struct seq_file *m, struct pid_namespace *ns,
 	state = *get_task_state(task);
 	vsize = eip = esp = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	permitted = ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS | PTRACE_MODE_NOAUDIT);
 =======
 	permitted = ptrace_may_access(task, PTRACE_MODE_READ | PTRACE_MODE_NOAUDIT);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	permitted = ptrace_may_access(task, PTRACE_MODE_READ | PTRACE_MODE_NOAUDIT);
->>>>>>> master
 	mm = get_task_mm(task);
 	if (mm) {
 		vsize = task_vsize(mm);

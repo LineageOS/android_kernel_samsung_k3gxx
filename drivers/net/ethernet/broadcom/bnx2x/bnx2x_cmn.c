@@ -154,12 +154,9 @@ static u16 bnx2x_free_tx_pkt(struct bnx2x *bp, struct bnx2x_fp_txdata *txdata,
 	u16 bd_idx = TX_BD(tx_buf->first_bd), new_cons;
 	int nbd;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u16 split_bd_len = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* prefetch skb end pointer to speedup dev_kfree_skb() */
 	prefetch(&skb->end);
@@ -168,19 +165,13 @@ static u16 bnx2x_free_tx_pkt(struct bnx2x *bp, struct bnx2x_fp_txdata *txdata,
 	   txdata->txq_index, idx, tx_buf, skb);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	tx_start_bd = &txdata->tx_desc_ring[bd_idx].start_bd;
 =======
-=======
->>>>>>> master
 	/* unmap first bd */
 	tx_start_bd = &txdata->tx_desc_ring[bd_idx].start_bd;
 	dma_unmap_single(&bp->pdev->dev, BD_UNMAP_ADDR(tx_start_bd),
 			 BD_UNMAP_LEN(tx_start_bd), DMA_TO_DEVICE);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 
 	nbd = le16_to_cpu(tx_start_bd->nbd) - 1;
@@ -200,7 +191,6 @@ static u16 bnx2x_free_tx_pkt(struct bnx2x *bp, struct bnx2x_fp_txdata *txdata,
 	bd_idx = TX_BD(NEXT_TX_IDX(bd_idx));
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (tx_buf->flags & BNX2X_HAS_SECOND_PBD) {
 		/* Skip second parse bd... */
 		--nbd;
@@ -215,15 +205,10 @@ static u16 bnx2x_free_tx_pkt(struct bnx2x *bp, struct bnx2x_fp_txdata *txdata,
 	/* ...and the TSO split header bd since they have no mapping */
 	if (tx_buf->flags & BNX2X_TSO_SPLIT_BD) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	/* ...and the TSO split header bd since they have no mapping */
-	if (tx_buf->flags & BNX2X_TSO_SPLIT_BD) {
->>>>>>> master
 		--nbd;
 		bd_idx = TX_BD(NEXT_TX_IDX(bd_idx));
 	}
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	/* unmap first bd */
 	dma_unmap_single(&bp->pdev->dev, BD_UNMAP_ADDR(tx_start_bd),
@@ -232,8 +217,6 @@ static u16 bnx2x_free_tx_pkt(struct bnx2x *bp, struct bnx2x_fp_txdata *txdata,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* now free frags */
 	while (nbd > 0) {
 
@@ -717,12 +700,9 @@ static void bnx2x_gro_receive(struct bnx2x *bp, struct bnx2x_fastpath *fp,
 	}
 #endif
 <<<<<<< HEAD
-<<<<<<< HEAD
 	skb_record_rx_queue(skb, fp->rx_queue);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	napi_gro_receive(&fp->napi, skb);
 }
 
@@ -793,15 +773,11 @@ static void bnx2x_tpa_stop(struct bnx2x *bp, struct bnx2x_fastpath *fp,
 		return;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (new_data)
 		bnx2x_frag_free(fp, new_data);
 =======
 	bnx2x_frag_free(fp, new_data);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	bnx2x_frag_free(fp, new_data);
->>>>>>> master
 drop:
 	/* drop the packet and keep the buffer in the bin */
 	DP(NETIF_MSG_RX_STATUS,
@@ -3811,14 +3787,11 @@ netdev_tx_t bnx2x_start_xmit(struct sk_buff *skb, struct net_device *dev)
 			SET_FLAG(tx_start_bd->general_data,
 				 ETH_TX_START_BD_TUNNEL_EXIST, 1);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 			tx_buf->flags |= BNX2X_HAS_SECOND_PBD;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			nbd++;
 		} else if (xmit_type & XMIT_CSUM) {
 			/* Set PBD in checksum offload case w/o encapsulation */

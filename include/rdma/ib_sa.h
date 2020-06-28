@@ -138,27 +138,19 @@ struct ib_sa_path_rec {
 	__be16       dlid;
 	__be16       slid;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u8           raw_traffic;
 =======
 	int          raw_traffic;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int          raw_traffic;
->>>>>>> master
 	/* reserved */
 	__be32       flow_label;
 	u8           hop_limit;
 	u8           traffic_class;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u8           reversible;
 =======
 	int          reversible;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int          reversible;
->>>>>>> master
 	u8           numb_path;
 	__be16       pkey;
 	__be16       qos_class;
@@ -210,14 +202,10 @@ struct ib_sa_mcmember_rec {
 	u8           scope;
 	u8           join_state;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u8           proxy_join;
 =======
 	int          proxy_join;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int          proxy_join;
->>>>>>> master
 };
 
 /* Service Record Component Mask Sec 15.2.5.14 Ver 1.1	*/

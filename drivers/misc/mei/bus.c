@@ -72,14 +72,10 @@ static int mei_cl_device_probe(struct device *dev)
 	dev_dbg(dev, "Device probe\n");
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	strlcpy(id.name, dev_name(dev), sizeof(id.name));
 =======
 	strncpy(id.name, dev_name(dev), MEI_CL_NAME_SIZE);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	strncpy(id.name, dev_name(dev), MEI_CL_NAME_SIZE);
->>>>>>> master
 
 	return driver->probe(device, &id);
 }
@@ -304,7 +300,6 @@ int __mei_cl_recv(struct mei_cl *cl, u8 *buf, size_t length)
 	if (cl->reading_state != MEI_READ_COMPLETE &&
 	    !waitqueue_active(&cl->rx_wait)) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 		mutex_unlock(&dev->device_lock);
 
@@ -313,16 +308,11 @@ int __mei_cl_recv(struct mei_cl *cl, u8 *buf, size_t length)
 				mei_cl_is_transitioning(cl))) {
 
 =======
-=======
->>>>>>> master
 		mutex_unlock(&dev->device_lock);
 
 		if (wait_event_interruptible(cl->rx_wait,
 				(MEI_READ_COMPLETE == cl->reading_state))) {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			if (signal_pending(current))
 				return -EINTR;
 			return -ERESTARTSYS;

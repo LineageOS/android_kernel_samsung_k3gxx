@@ -40,12 +40,9 @@
 #include <linux/device.h>
 #include <linux/pnp.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/spinlock.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 MODULE_AUTHOR("Zhao Yakui");
 MODULE_DESCRIPTION("ACPI IPMI Opregion driver");
@@ -65,14 +62,10 @@ struct acpi_ipmi_device {
 	/* the IPMI request message list */
 	struct list_head tx_msg_list;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spinlock_t	tx_msg_lock;
 =======
 	struct mutex	tx_msg_lock;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct mutex	tx_msg_lock;
->>>>>>> master
 	acpi_handle handle;
 	struct pnp_dev *pnp_dev;
 	ipmi_user_t	user_interface;
@@ -163,12 +156,9 @@ static void acpi_format_ipmi_msg(struct acpi_ipmi_msg *tx_msg,
 	struct acpi_ipmi_buffer *buffer;
 	struct acpi_ipmi_device *device;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned long flags;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	msg = &tx_msg->tx_message;
 	/*
@@ -200,22 +190,16 @@ static void acpi_format_ipmi_msg(struct acpi_ipmi_msg *tx_msg,
 	/* Get the msgid */
 	device = tx_msg->device;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_lock_irqsave(&device->tx_msg_lock, flags);
 	device->curr_msgid++;
 	tx_msg->tx_msgid = device->curr_msgid;
 	spin_unlock_irqrestore(&device->tx_msg_lock, flags);
 =======
-=======
->>>>>>> master
 	mutex_lock(&device->tx_msg_lock);
 	device->curr_msgid++;
 	tx_msg->tx_msgid = device->curr_msgid;
 	mutex_unlock(&device->tx_msg_lock);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static void acpi_format_ipmi_response(struct acpi_ipmi_msg *msg,
@@ -278,12 +262,9 @@ static void ipmi_msg_handler(struct ipmi_recv_msg *msg, void *user_msg_data)
 	struct acpi_ipmi_msg *tx_msg;
 	struct pnp_dev *pnp_dev = ipmi_device->pnp_dev;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned long flags;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (msg->user != ipmi_device->user_interface) {
 		dev_warn(&pnp_dev->dev, "Unexpected response is returned. "
@@ -293,14 +274,10 @@ static void ipmi_msg_handler(struct ipmi_recv_msg *msg, void *user_msg_data)
 		return;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_lock_irqsave(&ipmi_device->tx_msg_lock, flags);
 =======
 	mutex_lock(&ipmi_device->tx_msg_lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mutex_lock(&ipmi_device->tx_msg_lock);
->>>>>>> master
 	list_for_each_entry(tx_msg, &ipmi_device->tx_msg_list, head) {
 		if (msg->msgid == tx_msg->tx_msgid) {
 			msg_found = 1;
@@ -309,14 +286,10 @@ static void ipmi_msg_handler(struct ipmi_recv_msg *msg, void *user_msg_data)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_unlock_irqrestore(&ipmi_device->tx_msg_lock, flags);
 =======
 	mutex_unlock(&ipmi_device->tx_msg_lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mutex_unlock(&ipmi_device->tx_msg_lock);
->>>>>>> master
 	if (!msg_found) {
 		dev_warn(&pnp_dev->dev, "Unexpected response (msg id %ld) is "
 			"returned.\n", msg->msgid);
@@ -437,12 +410,9 @@ acpi_ipmi_space_handler(u32 function, acpi_physical_address address,
 	int err, rem_time;
 	acpi_status status;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned long flags;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/*
 	 * IPMI opregion message.
 	 * IPMI message is firstly written to the BMC and system software
@@ -461,7 +431,6 @@ acpi_ipmi_space_handler(u32 function, acpi_physical_address address,
 
 	acpi_format_ipmi_msg(tx_msg, address, value);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_lock_irqsave(&ipmi_device->tx_msg_lock, flags);
 	list_add_tail(&tx_msg->head, &ipmi_device->tx_msg_list);
 	spin_unlock_irqrestore(&ipmi_device->tx_msg_lock, flags);
@@ -470,11 +439,6 @@ acpi_ipmi_space_handler(u32 function, acpi_physical_address address,
 	list_add_tail(&tx_msg->head, &ipmi_device->tx_msg_list);
 	mutex_unlock(&ipmi_device->tx_msg_lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mutex_lock(&ipmi_device->tx_msg_lock);
-	list_add_tail(&tx_msg->head, &ipmi_device->tx_msg_list);
-	mutex_unlock(&ipmi_device->tx_msg_lock);
->>>>>>> master
 	err = ipmi_request_settime(ipmi_device->user_interface,
 					&tx_msg->addr,
 					tx_msg->tx_msgid,
@@ -491,7 +455,6 @@ acpi_ipmi_space_handler(u32 function, acpi_physical_address address,
 
 end_label:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_lock_irqsave(&ipmi_device->tx_msg_lock, flags);
 	list_del(&tx_msg->head);
 	spin_unlock_irqrestore(&ipmi_device->tx_msg_lock, flags);
@@ -500,11 +463,6 @@ end_label:
 	list_del(&tx_msg->head);
 	mutex_unlock(&ipmi_device->tx_msg_lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mutex_lock(&ipmi_device->tx_msg_lock);
-	list_del(&tx_msg->head);
-	mutex_unlock(&ipmi_device->tx_msg_lock);
->>>>>>> master
 	kfree(tx_msg);
 	return status;
 }
@@ -547,14 +505,10 @@ static void acpi_add_ipmi_device(struct acpi_ipmi_device *ipmi_device)
 	INIT_LIST_HEAD(&ipmi_device->head);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_lock_init(&ipmi_device->tx_msg_lock);
 =======
 	mutex_init(&ipmi_device->tx_msg_lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mutex_init(&ipmi_device->tx_msg_lock);
->>>>>>> master
 	INIT_LIST_HEAD(&ipmi_device->tx_msg_list);
 	ipmi_install_space_handler(ipmi_device);
 

@@ -96,12 +96,9 @@ void tcp_init_congestion_control(struct sock *sk)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	tcp_sk(sk)->prior_ssthresh = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (icsk->icsk_ca_ops->init)
 		icsk->icsk_ca_ops->init(sk);
 }

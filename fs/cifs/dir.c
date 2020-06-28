@@ -84,12 +84,9 @@ build_path_from_dentry(struct dentry *direntry)
 	int namelen;
 	int dfsplen;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int pplen = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	char *full_path;
 	char dirsep;
 	struct cifs_sb_info *cifs_sb = CIFS_SB(direntry->d_sb);
@@ -102,7 +99,6 @@ build_path_from_dentry(struct dentry *direntry)
 	else
 		dfsplen = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_USE_PREFIX_PATH)
 		pplen = cifs_sb->prepath ? strlen(cifs_sb->prepath) + 1 : 0;
@@ -113,10 +109,6 @@ cifs_bp_rename_retry:
 cifs_bp_rename_retry:
 	namelen = dfsplen;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-cifs_bp_rename_retry:
-	namelen = dfsplen;
->>>>>>> master
 	seq = read_seqbegin(&rename_lock);
 	rcu_read_lock();
 	for (temp = direntry; !IS_ROOT(temp);) {
@@ -158,14 +150,10 @@ cifs_bp_rename_retry:
 	}
 	rcu_read_unlock();
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (namelen != dfsplen + pplen || read_seqretry(&rename_lock, seq)) {
 =======
 	if (namelen != dfsplen || read_seqretry(&rename_lock, seq)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (namelen != dfsplen || read_seqretry(&rename_lock, seq)) {
->>>>>>> master
 		cifs_dbg(FYI, "did not end path lookup where expected. namelen=%ddfsplen=%d\n",
 			 namelen, dfsplen);
 		/* presumably this is only possible if racing with a rename
@@ -182,7 +170,6 @@ cifs_bp_rename_retry:
 	/* BB test paths to Windows with '/' in the midst of prepath */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (pplen) {
 		int i;
 
@@ -196,8 +183,6 @@ cifs_bp_rename_retry:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (dfsplen) {
 		strncpy(full_path, tcon->treeName, dfsplen);
 		if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_POSIX_PATHS) {
@@ -274,7 +259,6 @@ cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned int xid,
 			}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (S_ISDIR(newinode->i_mode)) {
 				CIFSSMBClose(xid, tcon, fid->netfid);
 				iput(newinode);
@@ -284,8 +268,6 @@ cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned int xid,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			if (!S_ISREG(newinode->i_mode)) {
 				/*
 				 * The server may allow us to open things like
@@ -451,7 +433,6 @@ cifs_create_set_dentry:
 		cifs_dbg(FYI, "Create worked, get_inode_info failed rc = %d\n",
 			 rc);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto out_err;
 	}
 
@@ -461,16 +442,11 @@ cifs_create_set_dentry:
 	}
 
 =======
-=======
->>>>>>> master
 		if (server->ops->close)
 			server->ops->close(xid, tcon, fid);
 		goto out;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	d_drop(direntry);
 	d_add(direntry, newinode);
 
@@ -478,7 +454,6 @@ out:
 	kfree(buf);
 	kfree(full_path);
 	return rc;
-<<<<<<< HEAD
 <<<<<<< HEAD
 
 out_err:
@@ -489,8 +464,6 @@ out_err:
 	goto out;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 int
@@ -581,12 +554,9 @@ cifs_atomic_open(struct inode *inode, struct dentry *direntry,
 			server->ops->close(xid, tcon, &fid);
 		cifs_del_pending_open(&open);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		fput(file);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		rc = -ENOMEM;
 	}
 

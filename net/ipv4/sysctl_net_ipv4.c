@@ -30,12 +30,9 @@ static int zero;
 static int one = 1;
 static int four = 4;
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int gso_max_segs = GSO_MAX_SEGS;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int tcp_retr1_max = 255;
 static int ip_local_port_range_min[] = { 1, 1 };
 static int ip_local_port_range_max[] = { 65535, 65535 };
@@ -787,7 +784,6 @@ static struct ctl_table ipv4_table[] = {
 	},
 	{
 <<<<<<< HEAD
-<<<<<<< HEAD
 		.procname	= "tcp_min_tso_segs",
 		.data		= &sysctl_tcp_min_tso_segs,
 		.maxlen		= sizeof(int),
@@ -799,8 +795,6 @@ static struct ctl_table ipv4_table[] = {
 	{
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		.procname	= "udp_mem",
 		.data		= &sysctl_udp_mem,
 		.maxlen		= sizeof(sysctl_udp_mem),

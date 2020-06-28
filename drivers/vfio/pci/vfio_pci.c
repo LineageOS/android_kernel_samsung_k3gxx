@@ -345,7 +345,6 @@ static long vfio_pci_ioctl(void *device_data,
 	} else if (cmd == VFIO_DEVICE_SET_IRQS) {
 		struct vfio_irq_set hdr;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		size_t size;
 		u8 *data = NULL;
 		int max, ret = 0;
@@ -353,10 +352,6 @@ static long vfio_pci_ioctl(void *device_data,
 		u8 *data = NULL;
 		int ret = 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		u8 *data = NULL;
-		int ret = 0;
->>>>>>> master
 
 		minsz = offsetofend(struct vfio_irq_set, count);
 
@@ -365,17 +360,13 @@ static long vfio_pci_ioctl(void *device_data,
 
 		if (hdr.argsz < minsz || hdr.index >= VFIO_PCI_NUM_IRQS ||
 <<<<<<< HEAD
-<<<<<<< HEAD
 		    hdr.count >= (U32_MAX - hdr.start) ||
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		    hdr.flags & ~(VFIO_IRQ_SET_DATA_TYPE_MASK |
 				  VFIO_IRQ_SET_ACTION_TYPE_MASK))
 			return -EINVAL;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 		max = vfio_pci_get_irq_count(vdev, hdr.index);
 		if (hdr.start >= max || hdr.start + hdr.count > max)
@@ -398,8 +389,6 @@ static long vfio_pci_ioctl(void *device_data,
 		if (size) {
 			if (hdr.argsz - minsz < hdr.count * size)
 =======
-=======
->>>>>>> master
 		if (!(hdr.flags & VFIO_IRQ_SET_DATA_NONE)) {
 			size_t size;
 			int max = vfio_pci_get_irq_count(vdev, hdr.index);
@@ -413,10 +402,7 @@ static long vfio_pci_ioctl(void *device_data,
 
 			if (hdr.argsz - minsz < hdr.count * size ||
 			    hdr.start >= max || hdr.start + hdr.count > max)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 				return -EINVAL;
 
 			data = memdup_user((void __user *)(arg + minsz),
@@ -567,28 +553,19 @@ static const struct vfio_device_ops vfio_pci_ops = {
 static int vfio_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	u8 type;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u8 type;
->>>>>>> master
 	struct vfio_pci_device *vdev;
 	struct iommu_group *group;
 	int ret;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (pdev->hdr_type != PCI_HEADER_TYPE_NORMAL)
 =======
 	pci_read_config_byte(pdev, PCI_HEADER_TYPE, &type);
 	if ((type & PCI_HEADER_TYPE) != PCI_HEADER_TYPE_NORMAL)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	pci_read_config_byte(pdev, PCI_HEADER_TYPE, &type);
-	if ((type & PCI_HEADER_TYPE) != PCI_HEADER_TYPE_NORMAL)
->>>>>>> master
 		return -EINVAL;
 
 	group = iommu_group_get(&pdev->dev);

@@ -204,21 +204,15 @@ void kvm_ioapic_scan_entry(struct kvm_vcpu *vcpu, u64 *eoi_exit_bitmap,
 	for (index = 0; index < IOAPIC_NUM_PINS; index++) {
 		e = &ioapic->redirtbl[index];
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (e->fields.trig_mode == IOAPIC_LEVEL_TRIG ||
 		    kvm_irq_has_notifier(ioapic->kvm, KVM_IRQCHIP_IOAPIC, index) ||
 		    index == RTC_GSI) {
 =======
-=======
->>>>>>> master
 		if (!e->fields.mask &&
 			(e->fields.trig_mode == IOAPIC_LEVEL_TRIG ||
 			 kvm_irq_has_notifier(ioapic->kvm, KVM_IRQCHIP_IOAPIC,
 				 index) || index == RTC_GSI)) {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			if (kvm_apic_match_dest(vcpu, NULL, 0,
 				e->fields.dest_id, e->fields.dest_mode)) {
 				__set_bit(e->fields.vector,
@@ -319,14 +313,10 @@ static int ioapic_deliver(struct kvm_ioapic *ioapic, int irq, bool line_status)
 		ret = kvm_irq_delivery_to_apic(ioapic->kvm, NULL, &irqe,
 				ioapic->rtc_status.dest_map);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ioapic->rtc_status.pending_eoi = (ret < 0 ? 0 : ret);
 =======
 		ioapic->rtc_status.pending_eoi = ret;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		ioapic->rtc_status.pending_eoi = ret;
->>>>>>> master
 	} else
 		ret = kvm_irq_delivery_to_apic(ioapic->kvm, NULL, &irqe, NULL);
 

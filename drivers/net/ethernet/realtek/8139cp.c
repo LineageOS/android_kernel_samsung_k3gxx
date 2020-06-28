@@ -525,12 +525,9 @@ rx_status_loop:
 		if (dma_mapping_error(&cp->pdev->dev, new_mapping)) {
 			dev->stats.rx_dropped++;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			kfree_skb(new_skb);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			goto rx_next;
 		}
 
@@ -685,17 +682,11 @@ static void cp_tx (struct cp_private *cp)
 				 PCI_DMA_TODEVICE);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		bytes_compl += skb->len;
 		pkts_compl++;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		bytes_compl += skb->len;
-		pkts_compl++;
-
->>>>>>> master
 		if (status & LastFrag) {
 			if (status & (TxError | TxFIFOUnder)) {
 				netif_dbg(cp, tx_err, cp->dev,
@@ -718,13 +709,10 @@ static void cp_tx (struct cp_private *cp)
 					  "tx done, slot %d\n", tx_tail);
 			}
 <<<<<<< HEAD
-<<<<<<< HEAD
 			bytes_compl += skb->len;
 			pkts_compl++;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			dev_kfree_skb_irq(skb);
 		}
 
@@ -924,14 +912,10 @@ out_unlock:
 	return NETDEV_TX_OK;
 out_dma_error:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dev_kfree_skb_any(skb);
 =======
 	kfree_skb(skb);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	kfree_skb(skb);
->>>>>>> master
 	cp->dev->stats.tx_dropped++;
 	goto out_unlock;
 }

@@ -212,7 +212,6 @@ static const struct ad7887_chip_info ad7887_chip_info_tbl[] = {
 			.address = 1,
 			.scan_index = 1,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			.scan_type = {
 				.sign = 'u',
 				.realbits = 12,
@@ -223,9 +222,6 @@ static const struct ad7887_chip_info ad7887_chip_info_tbl[] = {
 =======
 			.scan_type = IIO_ST('u', 12, 16, 0),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			.scan_type = IIO_ST('u', 12, 16, 0),
->>>>>>> master
 		},
 		.channel[1] = {
 			.type = IIO_VOLTAGE,
@@ -236,7 +232,6 @@ static const struct ad7887_chip_info ad7887_chip_info_tbl[] = {
 			.address = 0,
 			.scan_index = 0,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			.scan_type = {
 				.sign = 'u',
 				.realbits = 12,
@@ -247,9 +242,6 @@ static const struct ad7887_chip_info ad7887_chip_info_tbl[] = {
 =======
 			.scan_type = IIO_ST('u', 12, 16, 0),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			.scan_type = IIO_ST('u', 12, 16, 0),
->>>>>>> master
 		},
 		.channel[2] = IIO_CHAN_SOFT_TIMESTAMP(2),
 		.int_vref_mv = 2500,

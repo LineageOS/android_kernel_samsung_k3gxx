@@ -268,14 +268,11 @@ acpi_ds_begin_method_execution(struct acpi_namespace_node *method_node,
 				    original_sync_level =
 				    obj_desc->method.mutex->mutex.sync_level;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 				obj_desc->method.mutex->mutex.thread_id =
 				    acpi_os_get_thread_id();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			}
 		}
 

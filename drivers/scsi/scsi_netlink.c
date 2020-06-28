@@ -78,14 +78,10 @@ scsi_nl_rcv_msg(struct sk_buff *skb)
 		}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!netlink_capable(skb, CAP_SYS_ADMIN)) {
 =======
 		if (!capable(CAP_SYS_ADMIN)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!capable(CAP_SYS_ADMIN)) {
->>>>>>> master
 			err = -EPERM;
 			goto next_msg;
 		}

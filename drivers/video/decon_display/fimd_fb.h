@@ -457,12 +457,9 @@ struct s3c_fb_win_config {
 		S3C_FB_WIN_STATE_COLOR,
 		S3C_FB_WIN_STATE_BUFFER,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		S3C_FB_WIN_STATE_OTF,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	} state;
 
 	union {
@@ -485,13 +482,10 @@ struct s3c_fb_win_config {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define WIN_CONFIG_DMA(x) (regs->otf_state[x] != S3C_FB_WIN_STATE_OTF)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 struct s3c_fb_win_config_data {
 	int	fence;
 	struct s3c_fb_win_config config[S3C_FB_MAX_WIN];

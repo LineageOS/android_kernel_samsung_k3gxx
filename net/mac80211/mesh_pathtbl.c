@@ -748,20 +748,14 @@ static void mesh_path_node_reclaim(struct rcu_head *rp)
 {
 	struct mpath_node *node = container_of(rp, struct mpath_node, rcu);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	del_timer_sync(&node->mpath->timer);
 =======
-=======
->>>>>>> master
 	struct ieee80211_sub_if_data *sdata = node->mpath->sdata;
 
 	del_timer_sync(&node->mpath->timer);
 	atomic_dec(&sdata->u.mesh.mpaths);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	kfree(node->mpath);
 	kfree(node);
 }
@@ -770,7 +764,6 @@ static void mesh_path_node_reclaim(struct rcu_head *rp)
 static void __mesh_path_del(struct mesh_table *tbl, struct mpath_node *node)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct mesh_path *mpath = node->mpath;
 	struct ieee80211_sub_if_data *sdata = node->mpath->sdata;
 
@@ -778,10 +771,6 @@ static void __mesh_path_del(struct mesh_table *tbl, struct mpath_node *node)
 	struct mesh_path *mpath;
 	mpath = node->mpath;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct mesh_path *mpath;
-	mpath = node->mpath;
->>>>>>> master
 	spin_lock(&mpath->state_lock);
 	mpath->flags |= MESH_PATH_RESOLVING;
 	if (mpath->is_gate)
@@ -790,12 +779,9 @@ static void __mesh_path_del(struct mesh_table *tbl, struct mpath_node *node)
 	call_rcu(&node->rcu, mesh_path_node_reclaim);
 	spin_unlock(&mpath->state_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	atomic_dec(&sdata->u.mesh.mpaths);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	atomic_dec(&tbl->entries);
 }
 

@@ -688,7 +688,6 @@ static irqreturn_t ehci_irq (struct usb_hcd *hcd)
 	u32			status, masked_status, pcd_status = 0, cmd;
 	int			bh;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned long		flags;
 
 	/*
@@ -702,10 +701,6 @@ static irqreturn_t ehci_irq (struct usb_hcd *hcd)
 
 	spin_lock (&ehci->lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-	spin_lock (&ehci->lock);
->>>>>>> master
 
 	status = ehci_readl(ehci, &ehci->regs->status);
 
@@ -724,14 +719,10 @@ static irqreturn_t ehci_irq (struct usb_hcd *hcd)
 	/* Shared IRQ? */
 	if (!masked_status || unlikely(ehci->rh_state == EHCI_RH_HALTED)) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		spin_unlock_irqrestore(&ehci->lock, flags);
 =======
 		spin_unlock(&ehci->lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		spin_unlock(&ehci->lock);
->>>>>>> master
 		return IRQ_NONE;
 	}
 
@@ -850,14 +841,10 @@ dead:
 	if (bh)
 		ehci_work (ehci);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_unlock_irqrestore(&ehci->lock, flags);
 =======
 	spin_unlock (&ehci->lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	spin_unlock (&ehci->lock);
->>>>>>> master
 	if (pcd_status)
 		usb_hcd_poll_rh_status(hcd);
 	return IRQ_HANDLED;
@@ -1000,15 +987,10 @@ rescan:
 
 	qh->exception = 1;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if (ehci->rh_state < EHCI_RH_RUNNING)
 		qh->qh_state = QH_STATE_IDLE;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (ehci->rh_state < EHCI_RH_RUNNING)
-		qh->qh_state = QH_STATE_IDLE;
->>>>>>> master
 	switch (qh->qh_state) {
 	case QH_STATE_LINKED:
 	case QH_STATE_COMPLETING:

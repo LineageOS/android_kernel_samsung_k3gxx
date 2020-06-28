@@ -942,12 +942,9 @@ int BBbVT3184Init(struct vnt_private *pDevice)
     u16                    wLengthAgc;
     u8                    abyArray[256];
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u8 data;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
     ntStatus = CONTROLnsRequestIn(pDevice,
                                   MESSAGE_TYPE_READ,
@@ -1114,7 +1111,6 @@ else {
 
     RFbRFTableDownload(pDevice);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	/* Fix for TX USB resets from vendors driver */
 	CONTROLnsRequestIn(pDevice, MESSAGE_TYPE_READ, USB_REG4,
@@ -1127,8 +1123,6 @@ else {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
     return true;//ntStatus;
 }
 
@@ -1479,13 +1473,9 @@ void BBvUpdatePreEDThreshold(struct vnt_private *pDevice, int bScanning)
             if( bScanning )
             {   // need Max sensitivity //RSSI -69, -70,....
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
                 if(pDevice->byBBPreEDIndex == 0) break;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-                if(pDevice->byBBPreEDIndex == 0) break;
->>>>>>> master
                 pDevice->byBBPreEDIndex = 0;
                 ControlvWriteByte(pDevice, MESSAGE_REQUEST_BBREG, 0xC9, 0x00); //CR201(0xC9)
                 ControlvWriteByte(pDevice, MESSAGE_REQUEST_BBREG, 0xCE, 0x30); //CR206(0xCE)
@@ -1629,13 +1619,9 @@ void BBvUpdatePreEDThreshold(struct vnt_private *pDevice, int bScanning)
             if( bScanning )
             {   // need Max sensitivity  //RSSI -69, -70, ...
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
                 if(pDevice->byBBPreEDIndex == 0) break;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-                if(pDevice->byBBPreEDIndex == 0) break;
->>>>>>> master
                 pDevice->byBBPreEDIndex = 0;
                 ControlvWriteByte(pDevice, MESSAGE_REQUEST_BBREG, 0xC9, 0x00); //CR201(0xC9)
                 ControlvWriteByte(pDevice, MESSAGE_REQUEST_BBREG, 0xCE, 0x24); //CR206(0xCE)
@@ -1788,13 +1774,9 @@ void BBvUpdatePreEDThreshold(struct vnt_private *pDevice, int bScanning)
             if( bScanning )
             {   // need Max sensitivity  //RSSI -67, -68, ...
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
                 if(pDevice->byBBPreEDIndex == 0) break;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-                if(pDevice->byBBPreEDIndex == 0) break;
->>>>>>> master
                 pDevice->byBBPreEDIndex = 0;
                 ControlvWriteByte(pDevice, MESSAGE_REQUEST_BBREG, 0xC9, 0x00); //CR201(0xC9)
                 ControlvWriteByte(pDevice, MESSAGE_REQUEST_BBREG, 0xCE, 0x38); //CR206(0xCE)

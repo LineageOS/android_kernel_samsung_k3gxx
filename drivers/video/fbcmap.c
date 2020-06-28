@@ -164,23 +164,17 @@ void fb_dealloc_cmap(struct fb_cmap *cmap)
 int fb_copy_cmap(const struct fb_cmap *from, struct fb_cmap *to)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned int tooff = 0, fromoff = 0;
 	size_t size;
 =======
 	int tooff = 0, fromoff = 0;
 	int size;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int tooff = 0, fromoff = 0;
-	int size;
->>>>>>> master
 
 	if (to->start > from->start)
 		fromoff = to->start - from->start;
 	else
 		tooff = from->start - to->start;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (fromoff >= from->len || tooff >= to->len)
 		return -EINVAL;
@@ -188,16 +182,11 @@ int fb_copy_cmap(const struct fb_cmap *from, struct fb_cmap *to)
 	size = min_t(size_t, to->len - tooff, from->len - fromoff);
 	if (size == 0)
 =======
-=======
->>>>>>> master
 	size = to->len - tooff;
 	if (size > (int) (from->len - fromoff))
 		size = from->len - fromoff;
 	if (size <= 0)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		return -EINVAL;
 	size *= sizeof(u16);
 
@@ -212,23 +201,17 @@ int fb_copy_cmap(const struct fb_cmap *from, struct fb_cmap *to)
 int fb_cmap_to_user(const struct fb_cmap *from, struct fb_cmap_user *to)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned int tooff = 0, fromoff = 0;
 	size_t size;
 =======
 	int tooff = 0, fromoff = 0;
 	int size;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int tooff = 0, fromoff = 0;
-	int size;
->>>>>>> master
 
 	if (to->start > from->start)
 		fromoff = to->start - from->start;
 	else
 		tooff = from->start - to->start;
-<<<<<<< HEAD
 <<<<<<< HEAD
     
 	if (fromoff >= from->len || tooff >= to->len)
@@ -238,8 +221,6 @@ int fb_cmap_to_user(const struct fb_cmap *from, struct fb_cmap_user *to)
 	if (size == 0)
 		return -EINVAL;
 =======
-=======
->>>>>>> master
 	if ((to->len <= tooff) || (from->len <= fromoff))
 		return -EINVAL;
 
@@ -247,10 +228,7 @@ int fb_cmap_to_user(const struct fb_cmap *from, struct fb_cmap_user *to)
 	if (size > (int) (from->len - fromoff))
 		size = from->len - fromoff;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	size *= sizeof(u16);
 
 	if (copy_to_user(to->red+tooff, from->red+fromoff, size))

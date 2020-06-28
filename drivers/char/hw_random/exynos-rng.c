@@ -106,12 +106,9 @@ static int exynos_rng_probe(struct platform_device *pdev)
 	struct exynos_rng *exynos_rng;
 	struct resource *res;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int ret;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	exynos_rng = devm_kzalloc(&pdev->dev, sizeof(struct exynos_rng),
 					GFP_KERNEL);
@@ -140,7 +137,6 @@ static int exynos_rng_probe(struct platform_device *pdev)
 	pm_runtime_enable(&pdev->dev);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = hwrng_register(&exynos_rng->rng);
 	if (ret) {
 		pm_runtime_dont_use_autosuspend(&pdev->dev);
@@ -151,9 +147,6 @@ static int exynos_rng_probe(struct platform_device *pdev)
 =======
 	return hwrng_register(&exynos_rng->rng);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return hwrng_register(&exynos_rng->rng);
->>>>>>> master
 }
 
 static int exynos_rng_remove(struct platform_device *pdev)

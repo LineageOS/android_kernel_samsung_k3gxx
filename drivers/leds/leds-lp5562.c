@@ -11,13 +11,9 @@
  */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 #include <linux/kernel.h>
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#include <linux/kernel.h>
->>>>>>> master
 #include <linux/delay.h>
 #include <linux/firmware.h>
 #include <linux/i2c.h>
@@ -30,13 +26,9 @@
 #include <linux/slab.h>
 #include <linux/sec_sysfs.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 #include <linux/sysfs_helpers.h>
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#include <linux/sysfs_helpers.h>
->>>>>>> master
 
 #include "leds-lp55xx-common.h"
 
@@ -160,20 +152,14 @@ struct lp5562_wait_param {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 enum colour_channel {
 	RED = 0,
 	GREEN = 1,
 	BLUE = 2
 };
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 struct lp5562_pattern_data {
 	u8 r[LP5562_PROGRAM_LENGTH];
 	u8 g[LP5562_PROGRAM_LENGTH];
@@ -184,10 +170,7 @@ struct lp5562_pattern_data {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 static struct leds_control {
 	u8 	current_low;
 	u8 	current_high;
@@ -212,10 +195,7 @@ static struct leds_control {
 	.b = 254,
 };
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static const struct lp5562_wait_param lp5562_wait_cycle[LP5562_CYCLE_MAX] = {
 	[LP5562_CYCLE_50ms] = {
 		.cycle = 50,
@@ -562,10 +542,7 @@ static void lp5562_set_wait_cmd(struct lp5562_pattern_data *ptn,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 static unsigned int lp5562_get_pc(struct lp5562_pattern_data *ptn,
 			 	enum colour_channel i)
 {
@@ -731,10 +708,7 @@ static void lp5562_set_ramp_cmd(struct lp5562_pattern_data *ptn,
 	}
 }
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static void lp5562_set_pwm_cmd(struct lp5562_pattern_data *ptn,
 			unsigned int color)
 {
@@ -840,13 +814,9 @@ static int lp5562_run_predef_led_pattern(struct lp55xx_chip *chip, int mode)
 	int num_patterns = chip->pdata->num_patterns;
 	int ret = -EINVAL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	unsigned int rgb;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned int rgb;
->>>>>>> master
 
 	pr_info("%s: mode %d, lpmode %d\n", __func__, mode, LED_LOWPOWER_MODE);
 	/* invalid pattern data */
@@ -865,7 +835,6 @@ static int lp5562_run_predef_led_pattern(struct lp55xx_chip *chip, int mode)
 		struct lp5562_pattern_data ptn = { };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ret = lp5562_lookup_pattern(chip, mode, &ptn);
 		if (ret)
 			return ret;
@@ -875,8 +844,6 @@ static int lp5562_run_predef_led_pattern(struct lp55xx_chip *chip, int mode)
 		else
 			LED_DYNAMIC_CURRENT = 0x28;
 =======
-=======
->>>>>>> master
 		if (mode != 3) {
 			ret = lp5562_lookup_pattern(chip, mode, &ptn);
 			if (ret)
@@ -887,20 +854,14 @@ static int lp5562_run_predef_led_pattern(struct lp55xx_chip *chip, int mode)
 			LED_DYNAMIC_CURRENT = ledc.current_low;
 		else
 			LED_DYNAMIC_CURRENT = ledc.current_high;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 		chip->pdata->led_config[0].led_current = LED_DYNAMIC_CURRENT;
 		chip->pdata->led_config[1].led_current = LED_DYNAMIC_CURRENT;
 		chip->pdata->led_config[2].led_current = LED_DYNAMIC_CURRENT;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 		if (mode == 3) {
 			rgb = ((ledc.r << 16) | (ledc.g << 8) | ledc.b);
 
@@ -930,10 +891,7 @@ static int lp5562_run_predef_led_pattern(struct lp55xx_chip *chip, int mode)
 			lp5562_set_wait3_cmd(&ptn, ledc.blink_delay);
 		}
 run:
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		lp55xx_write(chip, LP5562_REG_R_CURRENT, LED_DYNAMIC_CURRENT);
 		lp55xx_write(chip, LP5562_REG_G_CURRENT, LED_DYNAMIC_CURRENT);
 		lp55xx_write(chip, LP5562_REG_B_CURRENT, LED_DYNAMIC_CURRENT);
@@ -992,17 +950,13 @@ static ssize_t lp5562_store_blink(struct device *dev,
 	unsigned int off = 0;
 	struct lp5562_pattern_data ptn = { };
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u8 jump_pc = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	sscanf(buf, "0x%08x %d %d", &rgb, &on, &off);
 	pr_info("%s: 0x%08x %d %d\n", __func__, rgb, on, off);
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!rgb) {
 		pr_info("%s: led engines stopped !",
@@ -1013,8 +967,6 @@ static ssize_t lp5562_store_blink(struct device *dev,
 			__func__, on, off);
 	}
 =======
-=======
->>>>>>> master
 	if (on == 0) {
         pr_info("%s: wrong on/off time. on: %d, off: %d\n",
             __func__, on, off);
@@ -1025,10 +977,7 @@ static ssize_t lp5562_store_blink(struct device *dev,
             __func__, on, off);
 
     }
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	lp5562_stop_engine(chip);
 
@@ -1041,7 +990,6 @@ static ssize_t lp5562_store_blink(struct device *dev,
 	mutex_lock(&chip->lock);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* make on-time pattern */
 	lp5562_set_pwm_cmd(&ptn, rgb);
 	lp5562_set_wait_cmd(&ptn, on, jump_pc);
@@ -1052,8 +1000,6 @@ static ssize_t lp5562_store_blink(struct device *dev,
 	lp5562_set_wait_cmd(&ptn, off, jump_pc);
 
 =======
-=======
->>>>>>> master
 	if (ledc.blink_fading) {
 		if (LED_LOWPOWER_MODE == 1)
 			LED_DYNAMIC_CURRENT = ledc.current_low * 2;
@@ -1090,10 +1036,7 @@ static ssize_t lp5562_store_blink(struct device *dev,
 	lp5562_set_wait3_cmd(&ptn, off);
 
 run:
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* run the pattern */
 	lp5562_run_led_pattern(chip, &ptn);
 
@@ -1317,10 +1260,7 @@ static ssize_t lp5562_store_led_br_lev(struct device *dev,
 #endif
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 static ssize_t show_leds_property(struct device *dev,
 			struct device_attribute *attr, char *buf);
 
@@ -1437,10 +1377,7 @@ static ssize_t store_leds_property(struct device *dev,
 	return len;
 }
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #ifdef SEC_LED_SPECIFIC
 /* below nodes is SAMSUNG specific nodes */
 static DEVICE_ATTR(led_r, 0664, NULL, store_led_r);
@@ -1654,14 +1591,10 @@ static int lp5562_probe(struct i2c_client *client,
 			const struct i2c_device_id *id)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int ret;
 =======
 	int i, ret;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int i, ret;
->>>>>>> master
 	struct lp55xx_chip *chip;
 	struct lp55xx_led *led;
 	struct lp55xx_platform_data *pdata = NULL;
@@ -1734,18 +1667,12 @@ static int lp5562_probe(struct i2c_client *client,
 #endif
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	for(i = 0; i < ARRAY_SIZE(leds_control_attrs); i++) {
 		ret = sysfs_create_file(&led_dev->kobj, &leds_control_attrs[i].attr);
 	}
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	g_chip = chip;
 
 	pr_info("%s: done\n", __func__);

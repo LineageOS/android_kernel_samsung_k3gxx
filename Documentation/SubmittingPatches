@@ -132,7 +132,6 @@ then only post say 15 or so at a time and wait for review and integration.
 
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 If your patch fixes a bug in a specific commit, e.g. you found an issue using
 git-bisect, please use the 'Fixes:' tag with the first 12 characters of the
 SHA-1 ID, and the one line summary.
@@ -149,8 +148,6 @@ outputting the above style in the git log or git show commands
 		fixes = Fixes: %h (\"%s\")
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 4) Style check your changes.
 
@@ -441,14 +438,10 @@ have been included in the discussion
 
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 14) Using Reported-by:, Tested-by:, Reviewed-by:, Suggested-by: and Fixes:
 =======
 14) Using Reported-by:, Tested-by:, Reviewed-by: and Suggested-by:
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-14) Using Reported-by:, Tested-by:, Reviewed-by: and Suggested-by:
->>>>>>> master
 
 If this patch fixes a problem reported by somebody else, consider adding a
 Reported-by: tag to credit the reporter for their contribution.  Please
@@ -504,7 +497,6 @@ idea reporters, they will, hopefully, be inspired to help us again in the
 future.
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 A Fixes: tag indicates that the patch fixes an issue in a previous commit. It
 is used to make it easy to determine where a bug originated, which can help
 review a bug fix. This tag also assists the stable kernel team in determining
@@ -513,8 +505,6 @@ method for indicating a bug fixed by the patch. See #2 above for more details.
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 15) The canonical patch format
 

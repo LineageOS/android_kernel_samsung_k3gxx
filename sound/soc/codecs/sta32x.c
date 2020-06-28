@@ -188,7 +188,6 @@ static const unsigned int sta32x_limiter_drc_release_tlv[] = {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static SOC_ENUM_SINGLE_DECL(sta32x_drc_ac_enum,
 			    STA32X_CONFD, STA32X_CONFD_DRC_SHIFT,
 			    sta32x_drc_ac);
@@ -226,8 +225,6 @@ static SOC_ENUM_SINGLE_DECL(sta32x_limiter2_release_rate_enum,
 			    STA32X_L2AR, STA32X_LxR_SHIFT,
 			    sta32x_limiter_release_rate);
 =======
-=======
->>>>>>> master
 static const struct soc_enum sta32x_drc_ac_enum =
 	SOC_ENUM_SINGLE(STA32X_CONFD, STA32X_CONFD_DRC_SHIFT,
 			2, sta32x_drc_ac);
@@ -264,10 +261,7 @@ static const struct soc_enum sta32x_limiter1_release_rate_enum =
 static const struct soc_enum sta32x_limiter2_release_rate_enum =
 	SOC_ENUM_SINGLE(STA32X_L2AR, STA32X_LxR_SHIFT,
 			16, sta32x_limiter_release_rate);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /* byte array controls for setting biquad, mixer, scaling coefficients;
  * for biquads all five coefficients need to be set in one go,
@@ -377,14 +371,10 @@ static int sta32x_sync_coef_shadow(struct snd_soc_codec *codec)
 static int sta32x_cache_sync(struct snd_soc_codec *codec)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct sta32x_priv *sta32x = snd_soc_codec_get_drvdata(codec);
 =======
 	struct sta32x_priv *sta32x = codec->control_data;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct sta32x_priv *sta32x = codec->control_data;
->>>>>>> master
 	unsigned int mute;
 	int rc;
 
@@ -486,14 +476,10 @@ SOC_ENUM("Limiter1 Attack Rate (dB/ms)", sta32x_limiter1_attack_rate_enum),
 SOC_ENUM("Limiter2 Attack Rate (dB/ms)", sta32x_limiter2_attack_rate_enum),
 SOC_ENUM("Limiter1 Release Rate (dB/ms)", sta32x_limiter1_release_rate_enum),
 <<<<<<< HEAD
-<<<<<<< HEAD
 SOC_ENUM("Limiter2 Release Rate (dB/ms)", sta32x_limiter2_release_rate_enum),
 =======
 SOC_ENUM("Limiter2 Release Rate (dB/ms)", sta32x_limiter1_release_rate_enum),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-SOC_ENUM("Limiter2 Release Rate (dB/ms)", sta32x_limiter1_release_rate_enum),
->>>>>>> master
 
 /* depending on mode, the attack/release thresholds have
  * two different enum definitions; provide both

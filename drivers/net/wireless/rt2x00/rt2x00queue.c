@@ -161,7 +161,6 @@ void rt2x00queue_align_frame(struct sk_buff *skb)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * H/W needs L2 padding between the header and the paylod if header size
  * is not 4 bytes aligned.
@@ -181,8 +180,6 @@ void rt2x00queue_remove_l2pad(struct sk_buff *skb, unsigned int hdr_len)
 {
 	unsigned int l2pad = (skb->len > hdr_len) ? L2PAD_SIZE(hdr_len) : 0;
 =======
-=======
->>>>>>> master
 void rt2x00queue_insert_l2pad(struct sk_buff *skb, unsigned int header_length)
 {
 	unsigned int payload_length = skb->len - header_length;
@@ -227,23 +224,16 @@ void rt2x00queue_remove_l2pad(struct sk_buff *skb, unsigned int header_length)
 	 */
 	unsigned int l2pad = (skb->len > header_length) ?
 				L2PAD_SIZE(header_length) : 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (!l2pad)
 		return;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	memmove(skb->data + l2pad, skb->data, hdr_len);
 =======
 	memmove(skb->data + l2pad, skb->data, header_length);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	memmove(skb->data + l2pad, skb->data, header_length);
->>>>>>> master
 	skb_pull(skb, l2pad);
 }
 
@@ -671,14 +661,10 @@ static void rt2x00queue_bar_check(struct queue_entry *entry)
 
 int rt2x00queue_write_tx_frame(struct data_queue *queue, struct sk_buff *skb,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			       struct ieee80211_sta *sta, bool local)
 =======
 			       bool local)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			       bool local)
->>>>>>> master
 {
 	struct ieee80211_tx_info *tx_info;
 	struct queue_entry *entry;
@@ -693,14 +679,10 @@ int rt2x00queue_write_tx_frame(struct data_queue *queue, struct sk_buff *skb,
 	 * for our information.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	rt2x00queue_create_tx_descriptor(queue->rt2x00dev, skb, &txdesc, sta);
 =======
 	rt2x00queue_create_tx_descriptor(queue->rt2x00dev, skb, &txdesc, NULL);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	rt2x00queue_create_tx_descriptor(queue->rt2x00dev, skb, &txdesc, NULL);
->>>>>>> master
 
 	/*
 	 * All information is retrieved from the skb->cb array,

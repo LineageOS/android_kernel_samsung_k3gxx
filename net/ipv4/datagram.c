@@ -21,14 +21,10 @@
 #include <net/tcp_states.h>
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 int __ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 =======
 int ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-int ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
->>>>>>> master
 {
 	struct inet_sock *inet = inet_sk(sk);
 	struct sockaddr_in *usin = (struct sockaddr_in *) uaddr;
@@ -48,15 +44,10 @@ int ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 	sk_dst_reset(sk);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	lock_sock(sk);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	lock_sock(sk);
-
->>>>>>> master
 	oif = sk->sk_bound_dev_if;
 	saddr = inet->inet_saddr;
 	if (ipv4_is_multicast(usin->sin_addr.s_addr)) {
@@ -74,14 +65,10 @@ int ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 		err = PTR_ERR(rt);
 		if (err == -ENETUNREACH)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			IP_INC_STATS(sock_net(sk), IPSTATS_MIB_OUTNOROUTES);
 =======
 			IP_INC_STATS_BH(sock_net(sk), IPSTATS_MIB_OUTNOROUTES);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			IP_INC_STATS_BH(sock_net(sk), IPSTATS_MIB_OUTNOROUTES);
->>>>>>> master
 		goto out;
 	}
 
@@ -106,7 +93,6 @@ int ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 	err = 0;
 out:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return err;
 }
 EXPORT_SYMBOL(__ip4_datagram_connect);
@@ -127,23 +113,17 @@ EXPORT_SYMBOL(ip4_datagram_connect);
  * even if we own the socket lock.
  */
 =======
-=======
->>>>>>> master
 	release_sock(sk);
 	return err;
 }
 EXPORT_SYMBOL(ip4_datagram_connect);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 void ip4_datagram_release_cb(struct sock *sk)
 {
 	const struct inet_sock *inet = inet_sk(sk);
 	const struct ip_options_rcu *inet_opt;
 	__be32 daddr = inet->inet_daddr;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	struct dst_entry *dst;
 	struct flowi4 fl4;
@@ -157,8 +137,6 @@ void ip4_datagram_release_cb(struct sock *sk)
 		return;
 	}
 =======
-=======
->>>>>>> master
 	struct flowi4 fl4;
 	struct rtable *rt;
 
@@ -166,10 +144,7 @@ void ip4_datagram_release_cb(struct sock *sk)
 		return;
 
 	rcu_read_lock();
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	inet_opt = rcu_dereference(inet->inet_opt);
 	if (inet_opt && inet_opt->opt.srr)
 		daddr = inet_opt->opt.faddr;
@@ -177,7 +152,6 @@ void ip4_datagram_release_cb(struct sock *sk)
 				   inet->inet_saddr, inet->inet_dport,
 				   inet->inet_sport, sk->sk_protocol,
 				   RT_CONN_FLAGS(sk), sk->sk_bound_dev_if);
-<<<<<<< HEAD
 <<<<<<< HEAD
 
 	dst = !IS_ERR(rt) ? &rt->dst : NULL;
@@ -187,10 +161,6 @@ void ip4_datagram_release_cb(struct sock *sk)
 	if (!IS_ERR(rt))
 		__sk_dst_set(sk, &rt->dst);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!IS_ERR(rt))
-		__sk_dst_set(sk, &rt->dst);
->>>>>>> master
 	rcu_read_unlock();
 }
 EXPORT_SYMBOL_GPL(ip4_datagram_release_cb);

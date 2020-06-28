@@ -124,7 +124,6 @@ Transmission process is similar to capture as shown below.
                               deallocation of all associated resources.
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 Socket creation and destruction is also straight forward, and is done
 the same way as in capturing described in the previous paragraph:
 
@@ -137,8 +136,6 @@ set. Otherwise, htons(ETH_P_ALL) or any other protocol, for example.
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 Binding the socket to your network interface is mandatory (with zero copy) to
 know the header size of frames used in the circular buffer.
 

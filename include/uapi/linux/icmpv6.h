@@ -116,13 +116,10 @@ struct icmp6hdr {
 #define ICMPV6_ADDR_UNREACH		3
 #define ICMPV6_PORT_UNREACH		4
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define ICMPV6_POLICY_FAIL		5
 #define ICMPV6_REJECT_ROUTE		6
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  *	Codes for Time Exceeded

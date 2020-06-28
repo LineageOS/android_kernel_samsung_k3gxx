@@ -384,7 +384,6 @@ static int ni_65xx_dio_insn_bits(struct comedi_device *dev,
 	const struct ni_65xx_board *board = comedi_board(dev);
 	struct ni_65xx_private *devpriv = dev->private;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int base_bitfield_channel;
 	unsigned read_bits = 0;
 	int last_port_offset = ni_65xx_port_by_channel(s->n_chan - 1);
@@ -403,8 +402,6 @@ static int ni_65xx_dio_insn_bits(struct comedi_device *dev,
 		port_mask = data[0];
 		port_data = data[1];
 =======
-=======
->>>>>>> master
 	unsigned base_bitfield_channel;
 	const unsigned max_ports_per_bitfield = 5;
 	unsigned read_bits = 0;
@@ -427,10 +424,7 @@ static int ni_65xx_dio_insn_bits(struct comedi_device *dev,
 		bitshift = base_port_channel - base_bitfield_channel;
 		if (bitshift >= 32 || bitshift <= -32)
 			break;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (bitshift > 0) {
 			port_mask >>= bitshift;
 			port_data >>= bitshift;

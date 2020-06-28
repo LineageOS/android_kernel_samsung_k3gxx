@@ -517,7 +517,6 @@ static noinline int hiddev_ioctl_usage(struct hiddev *hiddev, unsigned int cmd, 
 			} else if (uref->usage_index >= field->report_count)
 				goto inval;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		}
 
 		if ((cmd == HIDIOCGUSAGES || cmd == HIDIOCSUSAGES) &&
@@ -525,18 +524,13 @@ static noinline int hiddev_ioctl_usage(struct hiddev *hiddev, unsigned int cmd, 
 		     uref->usage_index + uref_multi->num_values > field->report_count))
 			goto inval;
 =======
-=======
->>>>>>> master
 
 			else if ((cmd == HIDIOCGUSAGES || cmd == HIDIOCSUSAGES) &&
 				 (uref_multi->num_values > HID_MAX_MULTI_USAGES ||
 				  uref->usage_index + uref_multi->num_values > field->report_count))
 				goto inval;
 		}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 		switch (cmd) {
 		case HIDIOCGUSAGE:

@@ -179,13 +179,10 @@ static int pstore_unlink(struct inode *dir, struct dentry *dentry)
 		p->psi->erase(p->type, p->id, p->count,
 			      dentry->d_inode->i_ctime, p->psi);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	else
 		return -EPERM;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	return simple_unlink(dir, dentry);
 }
@@ -325,22 +322,16 @@ int pstore_mkfile(enum pstore_type_id type, char *psname, u64 id, int count,
 		break;
 	case PSTORE_TYPE_CONSOLE:
 <<<<<<< HEAD
-<<<<<<< HEAD
 		sprintf(name, "console-%s-%lld", psname, id);
 		break;
 	case PSTORE_TYPE_FTRACE:
 		sprintf(name, "ftrace-%s-%lld", psname, id);
 =======
-=======
->>>>>>> master
 		sprintf(name, "console-%s", psname);
 		break;
 	case PSTORE_TYPE_FTRACE:
 		sprintf(name, "ftrace-%s", psname);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		break;
 	case PSTORE_TYPE_MCE:
 		sprintf(name, "mce-%s-%lld", psname, id);
@@ -356,7 +347,6 @@ int pstore_mkfile(enum pstore_type_id type, char *psname, u64 id, int count,
 	mutex_lock(&root->d_inode->i_mutex);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dentry = d_alloc_name(root, name);
 	if (!dentry)
 =======
@@ -364,11 +354,6 @@ int pstore_mkfile(enum pstore_type_id type, char *psname, u64 id, int count,
 	dentry = d_alloc_name(root, name);
 	if (IS_ERR(dentry))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	rc = -ENOSPC;
-	dentry = d_alloc_name(root, name);
-	if (IS_ERR(dentry))
->>>>>>> master
 		goto fail_lockedalloc;
 
 	memcpy(private->data, data, size);

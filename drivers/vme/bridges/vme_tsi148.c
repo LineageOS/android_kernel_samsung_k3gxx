@@ -1284,14 +1284,10 @@ static ssize_t tsi148_master_read(struct vme_master_resource *image, void *buf,
 			goto out;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if ((uintptr_t)(addr + done) & 0x2) {
 =======
 	if ((uintptr_t)addr & 0x2) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if ((uintptr_t)addr & 0x2) {
->>>>>>> master
 		if ((count - done) < 2) {
 			*(u8 *)(buf + done) = ioread8(addr + done);
 			done += 1;
@@ -1374,14 +1370,10 @@ static ssize_t tsi148_master_write(struct vme_master_resource *image, void *buf,
 			goto out;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if ((uintptr_t)(addr + done) & 0x2) {
 =======
 	if ((uintptr_t)addr & 0x2) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if ((uintptr_t)addr & 0x2) {
->>>>>>> master
 		if ((count - done) < 2) {
 			iowrite8(*(u8 *)(buf + done), addr + done);
 			done += 1;

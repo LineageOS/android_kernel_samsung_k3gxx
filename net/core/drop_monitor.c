@@ -65,13 +65,9 @@ static struct genl_family net_drop_monitor_family = {
 	.name           = "NET_DM",
 	.version        = 2,
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	.maxattr        = NET_DM_CMD_MAX,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	.maxattr        = NET_DM_CMD_MAX,
->>>>>>> master
 };
 
 static DEFINE_PER_CPU(struct per_cpu_dm_data, dm_cpu_data);
@@ -89,12 +85,9 @@ static struct sk_buff *reset_per_cpu_data(struct per_cpu_dm_data *data)
 	struct sk_buff *skb;
 	unsigned long flags;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	void *msg_header;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	al = sizeof(struct net_dm_alert_msg);
 	al += dm_hit_limit * sizeof(struct net_dm_drop_point);
@@ -102,7 +95,6 @@ static struct sk_buff *reset_per_cpu_data(struct per_cpu_dm_data *data)
 
 	skb = genlmsg_new(al, GFP_KERNEL);
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!skb)
 		goto err;
@@ -129,8 +121,6 @@ err:
 	mod_timer(&data->send_timer, jiffies + HZ / 10);
 out:
 =======
-=======
->>>>>>> master
 	if (skb) {
 		genlmsg_put(skb, 0, 0, &net_drop_monitor_family,
 				0, NET_DM_CMD_ALERT);
@@ -142,15 +132,11 @@ out:
 		mod_timer(&data->send_timer, jiffies + HZ / 10);
 	}
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	spin_lock_irqsave(&data->lock, flags);
 	swap(data->skb, skb);
 	spin_unlock_irqrestore(&data->lock, flags);
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (skb) {
 		struct nlmsghdr *nlh = (struct nlmsghdr *)skb->data;
@@ -161,8 +147,6 @@ out:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return skb;
 }
 

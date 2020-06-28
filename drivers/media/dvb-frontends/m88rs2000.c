@@ -111,7 +111,6 @@ static u8 m88rs2000_readreg(struct m88rs2000_state *state, u8 reg)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static u32 m88rs2000_get_mclk(struct dvb_frontend *fe)
 {
 	struct m88rs2000_state *state = fe->demodulator_priv;
@@ -160,28 +159,21 @@ static int m88rs2000_set_carrieroffset(struct dvb_frontend *fe, s16 offset)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int m88rs2000_set_symbolrate(struct dvb_frontend *fe, u32 srate)
 {
 	struct m88rs2000_state *state = fe->demodulator_priv;
 	int ret;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	u64 temp;
 	u32 mclk;
 =======
 	u32 temp;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u32 temp;
->>>>>>> master
 	u8 b[3];
 
 	if ((srate < 1000000) || (srate > 45000000))
 		return -EINVAL;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	mclk = m88rs2000_get_mclk(fe);
 	if (!mclk)
@@ -192,32 +184,23 @@ static int m88rs2000_set_symbolrate(struct dvb_frontend *fe, u32 srate)
 
 	do_div(temp, mclk);
 =======
-=======
->>>>>>> master
 	temp = srate / 1000;
 	temp *= 11831;
 	temp /= 68;
 	temp -= 3;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	b[0] = (u8) (temp >> 16) & 0xff;
 	b[1] = (u8) (temp >> 8) & 0xff;
 	b[2] = (u8) temp & 0xff;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ret = m88rs2000_writereg(state, 0x93, b[2]);
 	ret |= m88rs2000_writereg(state, 0x94, b[1]);
 	ret |= m88rs2000_writereg(state, 0x95, b[0]);
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (srate > 10000000)
 		ret |= m88rs2000_writereg(state, 0xa0, 0x20);
@@ -235,8 +218,6 @@ static int m88rs2000_set_symbolrate(struct dvb_frontend *fe, u32 srate)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	deb_info("m88rs2000: m88rs2000_set_symbolrate\n");
 	return ret;
 }
@@ -367,15 +348,10 @@ struct inittab m88rs2000_shutdown[] = {
 struct inittab fe_reset[] = {
 	{DEMOD_WRITE, 0x00, 0x01},
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	{DEMOD_WRITE, 0xf1, 0xbf},
 	{DEMOD_WRITE, 0x00, 0x01},
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	{DEMOD_WRITE, 0xf1, 0xbf},
-	{DEMOD_WRITE, 0x00, 0x01},
->>>>>>> master
 	{DEMOD_WRITE, 0x20, 0x81},
 	{DEMOD_WRITE, 0x21, 0x80},
 	{DEMOD_WRITE, 0x10, 0x33},
@@ -419,17 +395,11 @@ struct inittab fe_trigger[] = {
 	{DEMOD_WRITE, 0x9e, 0x00},
 	{DEMOD_WRITE, 0x9f, 0xf8},
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	{DEMOD_WRITE, 0xa0, 0x20},
 	{DEMOD_WRITE, 0xa1, 0xe0},
 	{DEMOD_WRITE, 0xa3, 0x38},
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	{DEMOD_WRITE, 0xa0, 0x20},
-	{DEMOD_WRITE, 0xa1, 0xe0},
-	{DEMOD_WRITE, 0xa3, 0x38},
->>>>>>> master
 	{DEMOD_WRITE, 0x98, 0xff},
 	{DEMOD_WRITE, 0xc0, 0x0f},
 	{DEMOD_WRITE, 0x89, 0x01},
@@ -663,7 +633,6 @@ static int m88rs2000_set_frontend(struct dvb_frontend *fe)
 	fe_status_t status;
 	int i, ret = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u32 tuner_freq;
 	s16 offset = 0;
 =======
@@ -671,11 +640,6 @@ static int m88rs2000_set_frontend(struct dvb_frontend *fe)
 	u32 tuner_freq;
 	u16 offset = 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	s32 tmp;
-	u32 tuner_freq;
-	u16 offset = 0;
->>>>>>> master
 	u8 reg;
 
 	state->no_lock_count = 0;
@@ -701,7 +665,6 @@ static int m88rs2000_set_frontend(struct dvb_frontend *fe)
 		return -ENODEV;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	offset = (s16)((s32)tuner_freq - c->frequency);
 
 	/* default mclk value 96.4285 * 2 * 1000 = 192857 */
@@ -723,8 +686,6 @@ static int m88rs2000_set_frontend(struct dvb_frontend *fe)
 
 	ret |= m88rs2000_tab_set(state, fe_reset);
 =======
-=======
->>>>>>> master
 	offset = tuner_freq - c->frequency;
 
 	/* calculate offset assuming 96000kHz*/
@@ -748,10 +709,7 @@ static int m88rs2000_set_frontend(struct dvb_frontend *fe)
 
 	/* Reset Demod */
 	ret = m88rs2000_tab_set(state, fe_reset);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (ret < 0)
 		return -ENODEV;
 
@@ -818,7 +776,6 @@ static int m88rs2000_get_frontend(struct dvb_frontend *fe)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int m88rs2000_get_tune_settings(struct dvb_frontend *fe,
 	struct dvb_frontend_tune_settings *tune)
 {
@@ -837,8 +794,6 @@ static int m88rs2000_get_tune_settings(struct dvb_frontend *fe,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int m88rs2000_i2c_gate_ctrl(struct dvb_frontend *fe, int enable)
 {
 	struct m88rs2000_state *state = fe->demodulator_priv;
@@ -871,14 +826,10 @@ static struct dvb_frontend_ops m88rs2000_ops = {
 		.caps = FE_CAN_FEC_1_2 | FE_CAN_FEC_2_3 | FE_CAN_FEC_3_4 |
 		      FE_CAN_FEC_5_6 | FE_CAN_FEC_7_8 |
 <<<<<<< HEAD
-<<<<<<< HEAD
 		      FE_CAN_QPSK | FE_CAN_INVERSION_AUTO |
 =======
 		      FE_CAN_QPSK |
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		      FE_CAN_QPSK |
->>>>>>> master
 		      FE_CAN_FEC_AUTO
 	},
 
@@ -899,12 +850,9 @@ static struct dvb_frontend_ops m88rs2000_ops = {
 	.set_frontend = m88rs2000_set_frontend,
 	.get_frontend = m88rs2000_get_frontend,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.get_tune_settings = m88rs2000_get_tune_settings,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 struct dvb_frontend *m88rs2000_attach(const struct m88rs2000_config *config,

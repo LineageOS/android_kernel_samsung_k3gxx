@@ -1008,14 +1008,10 @@ static int br_ip6_multicast_mld2_report(struct net_bridge *br,
 		err = br_ip6_multicast_add_group(br, port, &grec->grec_mca,
 						 vid);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (err)
 =======
 		if (!err)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!err)
->>>>>>> master
 			break;
 	}
 
@@ -1035,14 +1031,11 @@ static void br_multicast_add_router(struct net_bridge *br,
 	struct hlist_node *slot = NULL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!hlist_unhashed(&port->rlist))
 		return;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	hlist_for_each_entry(p, &br->router_list, rlist) {
 		if ((unsigned long) port >= (unsigned long) p)
 			break;
@@ -1071,22 +1064,16 @@ static void br_multicast_mark_router(struct net_bridge *br,
 		return;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	br_multicast_add_router(br, port);
 
 =======
-=======
->>>>>>> master
 	if (!hlist_unhashed(&port->rlist))
 		goto timer;
 
 	br_multicast_add_router(br, port);
 
 timer:
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	mod_timer(&port->multicast_router_timer,
 		  now + br->multicast_querier_interval);
 }
@@ -1205,7 +1192,6 @@ static int br_ip6_multicast_query(struct net_bridge *br,
 	br_multicast_query_received(br, port, !ipv6_addr_any(&ip6h->saddr));
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* RFC2710+RFC3810 (MLDv1+MLDv2) require link-local source addresses */
 	if (!(ipv6_addr_type(&ip6h->saddr) & IPV6_ADDR_LINKLOCAL)) {
 		err = -EINVAL;
@@ -1214,8 +1200,6 @@ static int br_ip6_multicast_query(struct net_bridge *br,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (skb->len == sizeof(*mld)) {
 		if (!pskb_may_pull(skb, sizeof(*mld))) {
 			err = -EINVAL;
@@ -1226,14 +1210,10 @@ static int br_ip6_multicast_query(struct net_bridge *br,
 		if (max_delay)
 			group = &mld->mld_mca;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	} else {
 =======
 	} else if (skb->len >= sizeof(*mld2q)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	} else if (skb->len >= sizeof(*mld2q)) {
->>>>>>> master
 		if (!pskb_may_pull(skb, sizeof(*mld2q))) {
 			err = -EINVAL;
 			goto out;
@@ -1242,15 +1222,11 @@ static int br_ip6_multicast_query(struct net_bridge *br,
 		if (!mld2q->mld2q_nsrcs)
 			group = &mld2q->mld2q_mca;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 		max_delay = max(msecs_to_jiffies(MLDV2_MRC(ntohs(mld2q->mld2q_mrc))), 1UL);
 =======
 		max_delay = mld2q->mld2q_mrc ? MLDV2_MRC(ntohs(mld2q->mld2q_mrc)) : 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		max_delay = mld2q->mld2q_mrc ? MLDV2_MRC(ntohs(mld2q->mld2q_mrc)) : 1;
->>>>>>> master
 	}
 
 	if (!group)
@@ -1896,14 +1872,10 @@ int br_multicast_set_hash_max(struct net_bridge *br, unsigned long val)
 	struct net_bridge_mdb_htable *mdb;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_lock_bh(&br->multicast_lock);
 =======
 	spin_lock(&br->multicast_lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	spin_lock(&br->multicast_lock);
->>>>>>> master
 	if (!netif_running(br->dev))
 		goto unlock;
 
@@ -1936,14 +1908,10 @@ rollback:
 
 unlock:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_unlock_bh(&br->multicast_lock);
 =======
 	spin_unlock(&br->multicast_lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	spin_unlock(&br->multicast_lock);
->>>>>>> master
 
 	return err;
 }

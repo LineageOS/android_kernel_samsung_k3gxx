@@ -4,14 +4,10 @@
  * Interface to Linux SCSI midlayer.
  *
 <<<<<<< HEAD
-<<<<<<< HEAD
  * Copyright IBM Corp. 2002, 2016
 =======
  * Copyright IBM Corp. 2002, 2013
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * Copyright IBM Corp. 2002, 2013
->>>>>>> master
  */
 
 #define KMSG_COMPONENT "zfcp"
@@ -118,18 +114,12 @@ int zfcp_scsi_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *scpnt)
 
 	if (unlikely(!(status & ZFCP_STATUS_COMMON_UNBLOCKED))) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* This could be
 =======
 		/* This could be either
 		 * open LUN pending: this is temporary, will result in
 		 *	open LUN or ERP_FAILED, so retry command
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		/* This could be either
-		 * open LUN pending: this is temporary, will result in
-		 *	open LUN or ERP_FAILED, so retry command
->>>>>>> master
 		 * call to rport_delete pending: mimic retry from
 		 * 	fc_remote_port_chkready until rport is BLOCKED
 		 */
@@ -249,7 +239,6 @@ static int zfcp_scsi_eh_abort_handler(struct scsi_cmnd *scpnt)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 struct zfcp_scsi_req_filter {
 	u8 tmf_scope;
 	u32 lun_handle;
@@ -303,8 +292,6 @@ static void zfcp_scsi_forget_cmnds(struct zfcp_scsi_dev *zsdev, u8 tm_flags)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int zfcp_task_mgmt_function(struct scsi_cmnd *scpnt, u8 tm_flags)
 {
 	struct zfcp_scsi_dev *zfcp_sdev = sdev_to_zfcp(scpnt->device);
@@ -321,7 +308,6 @@ static int zfcp_task_mgmt_function(struct scsi_cmnd *scpnt, u8 tm_flags)
 		zfcp_erp_wait(adapter);
 		ret = fc_block_scsi_eh(scpnt);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (ret) {
 			zfcp_dbf_scsi_devreset("fiof", scpnt, tm_flags);
 			return ret;
@@ -330,10 +316,6 @@ static int zfcp_task_mgmt_function(struct scsi_cmnd *scpnt, u8 tm_flags)
 		if (ret)
 			return ret;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (ret)
-			return ret;
->>>>>>> master
 
 		if (!(atomic_read(&adapter->status) &
 		      ZFCP_STATUS_COMMON_RUNNING)) {
@@ -341,7 +323,6 @@ static int zfcp_task_mgmt_function(struct scsi_cmnd *scpnt, u8 tm_flags)
 			return SUCCESS;
 		}
 	}
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!fsf_req) {
 		zfcp_dbf_scsi_devreset("reqf", scpnt, tm_flags);
@@ -351,17 +332,12 @@ static int zfcp_task_mgmt_function(struct scsi_cmnd *scpnt, u8 tm_flags)
 	if (!fsf_req)
 		return FAILED;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!fsf_req)
-		return FAILED;
->>>>>>> master
 
 	wait_for_completion(&fsf_req->completion);
 
 	if (fsf_req->status & ZFCP_STATUS_FSFREQ_TMFUNCFAILED) {
 		zfcp_dbf_scsi_devreset("fail", scpnt, tm_flags);
 		retval = FAILED;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	} else {
 		zfcp_dbf_scsi_devreset("okay", scpnt, tm_flags);
@@ -371,10 +347,6 @@ static int zfcp_task_mgmt_function(struct scsi_cmnd *scpnt, u8 tm_flags)
 	} else
 		zfcp_dbf_scsi_devreset("okay", scpnt, tm_flags);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	} else
-		zfcp_dbf_scsi_devreset("okay", scpnt, tm_flags);
->>>>>>> master
 
 	zfcp_fsf_req_free(fsf_req);
 	return retval;
@@ -689,14 +661,11 @@ static void zfcp_scsi_rport_register(struct zfcp_port *port)
 	ids.roles = FC_RPORT_ROLE_FCP_TARGET;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	zfcp_dbf_rec_trig("scpaddy", port->adapter, port, NULL,
 			  ZFCP_PSEUDO_ERP_ACTION_RPORT_ADD,
 			  ZFCP_PSEUDO_ERP_ACTION_RPORT_ADD);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	rport = fc_remote_port_add(port->adapter->scsi_host, 0, &ids);
 	if (!rport) {
 		dev_err(&port->adapter->ccw_device->dev,
@@ -719,14 +688,11 @@ static void zfcp_scsi_rport_block(struct zfcp_port *port)
 
 	if (rport) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		zfcp_dbf_rec_trig("scpdely", port->adapter, port, NULL,
 				  ZFCP_PSEUDO_ERP_ACTION_RPORT_DEL,
 				  ZFCP_PSEUDO_ERP_ACTION_RPORT_DEL);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		fc_remote_port_delete(rport);
 		port->rport = NULL;
 	}

@@ -130,7 +130,6 @@ static void print_amp_caps(struct snd_info_buffer *buffer,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* is this a stereo widget or a stereo-to-mono mix? */
 static bool is_stereo_amps(struct hda_codec *codec, hda_nid_t nid,
 			   int dir, unsigned int wcaps, int indices)
@@ -164,8 +163,6 @@ static void print_amp_vals(struct snd_info_buffer *buffer,
 	stereo = is_stereo_amps(codec, nid, dir, wcaps, indices);
 
 =======
-=======
->>>>>>> master
 static void print_amp_vals(struct snd_info_buffer *buffer,
 			   struct hda_codec *codec, hda_nid_t nid,
 			   int dir, int stereo, int indices)
@@ -173,10 +170,7 @@ static void print_amp_vals(struct snd_info_buffer *buffer,
 	unsigned int val;
 	int i;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	dir = dir == HDA_OUTPUT ? AC_AMP_GET_OUTPUT : AC_AMP_GET_INPUT;
 	for (i = 0; i < indices; i++) {
 		snd_iprintf(buffer, " [");
@@ -724,24 +718,18 @@ static void print_codec_info(struct snd_info_entry *entry,
 			     wid_type == AC_WID_AUD_IN))
 				print_amp_vals(buffer, codec, nid, HDA_INPUT,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					       wid_caps, 1);
 			else
 				print_amp_vals(buffer, codec, nid, HDA_INPUT,
 					       wid_caps, conn_len);
 =======
-=======
->>>>>>> master
 					       wid_caps & AC_WCAP_STEREO,
 					       1);
 			else
 				print_amp_vals(buffer, codec, nid, HDA_INPUT,
 					       wid_caps & AC_WCAP_STEREO,
 					       conn_len);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		}
 		if (wid_caps & AC_WCAP_OUT_AMP) {
 			snd_iprintf(buffer, "  Amp-Out caps: ");
@@ -751,23 +739,17 @@ static void print_codec_info(struct snd_info_entry *entry,
 			    codec->pin_amp_workaround)
 				print_amp_vals(buffer, codec, nid, HDA_OUTPUT,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					       wid_caps, conn_len);
 			else
 				print_amp_vals(buffer, codec, nid, HDA_OUTPUT,
 					       wid_caps, 1);
 =======
-=======
->>>>>>> master
 					       wid_caps & AC_WCAP_STEREO,
 					       conn_len);
 			else
 				print_amp_vals(buffer, codec, nid, HDA_OUTPUT,
 					       wid_caps & AC_WCAP_STEREO, 1);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		}
 
 		switch (wid_type) {

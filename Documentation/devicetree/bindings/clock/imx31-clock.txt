@@ -78,14 +78,10 @@ clks: ccm@53f80000{
 	compatible = "fsl,imx31-ccm";
 	reg = <0x53f80000 0x4000>;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	interrupts = <31>, <53>;
 =======
 	interrupts = <0 31 0x04 0 53 0x04>;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	interrupts = <0 31 0x04 0 53 0x04>;
->>>>>>> master
 	#clock-cells = <1>;
 };
 

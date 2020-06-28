@@ -25,12 +25,9 @@
 #include <linux/in.h>
 #include <linux/spinlock.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <net/net_namespace.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #include "flask.h"
 #include "avc.h"
 
@@ -86,12 +83,9 @@ struct ipc_security_struct {
 
 struct netif_security_struct {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct net *ns;			/* network namespace */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	int ifindex;			/* device index */
 	u32 sid;			/* SID for this interface */
 };

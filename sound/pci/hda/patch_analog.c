@@ -1198,7 +1198,6 @@ static void ad_fixup_inv_jack_detect(struct hda_codec *codec,
 				     const struct hda_fixup *fix, int action)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct ad198x_spec *spec = codec->spec;
 
 	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
@@ -1209,10 +1208,6 @@ static void ad_fixup_inv_jack_detect(struct hda_codec *codec,
 	if (action == HDA_FIXUP_ACT_PRE_PROBE)
 		codec->inv_jack_detect = 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (action == HDA_FIXUP_ACT_PRE_PROBE)
-		codec->inv_jack_detect = 1;
->>>>>>> master
 }
 
 enum {
@@ -1238,7 +1233,6 @@ static int ad1986a_parse_auto_config(struct hda_codec *codec)
 	int err;
 	struct ad198x_spec *spec;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	static hda_nid_t preferred_pairs[] = {
 		0x1a, 0x03,
 		0x1b, 0x03,
@@ -1249,8 +1243,6 @@ static int ad1986a_parse_auto_config(struct hda_codec *codec)
 	};
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	err = alloc_ad_spec(codec);
 	if (err < 0)
@@ -1272,13 +1264,10 @@ static int ad1986a_parse_auto_config(struct hda_codec *codec)
 	 */
 	spec->gen.multiout.no_share_stream = 1;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* give fixed DAC/pin pairs */
 	spec->gen.preferred_dacs = preferred_pairs;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	snd_hda_pick_fixup(codec, NULL, ad1986a_fixup_tbl, ad1986a_fixups);
 	snd_hda_apply_fixup(codec, HDA_FIXUP_ACT_PRE_PROBE);
@@ -1703,12 +1692,9 @@ static int ad1983_parse_auto_config(struct hda_codec *codec)
 	spec = codec->spec;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spec->gen.mixer_nid = 0x0e;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	spec->gen.beep_nid = 0x10;
 	set_beep_amp(spec, 0x10, 0, HDA_OUTPUT);
 	err = ad198x_parse_auto_config(codec);
@@ -3696,12 +3682,9 @@ static int ad1884_parse_auto_config(struct hda_codec *codec)
 
 	spec->gen.mixer_nid = 0x20;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spec->gen.mixer_merge_nid = 0x21;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	spec->gen.beep_nid = 0x10;
 	set_beep_amp(spec, 0x10, 0, HDA_OUTPUT);
 

@@ -25,12 +25,9 @@
  */
 #include <linux/hdmi.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/gcd.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #include <drm/drmP.h>
 #include <drm/radeon_drm.h>
 #include "radeon.h"
@@ -65,20 +62,15 @@ static const struct radeon_hdmi_acr r600_hdmi_predefined_acr[] = {
     /*	     32kHz	  44.1kHz	48kHz    */
     /* Clock      N     CTS      N     CTS      N     CTS */
 <<<<<<< HEAD
-<<<<<<< HEAD
     {  25175,  4096,  25175, 28224, 125875,  6144,  25175 }, /*  25,20/1.001 MHz */
 =======
     {  25174,  4576,  28125,  7007,  31250,  6864,  28125 }, /*  25,20/1.001 MHz */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-    {  25174,  4576,  28125,  7007,  31250,  6864,  28125 }, /*  25,20/1.001 MHz */
->>>>>>> master
     {  25200,  4096,  25200,  6272,  28000,  6144,  25200 }, /*  25.20       MHz */
     {  27000,  4096,  27000,  6272,  30000,  6144,  27000 }, /*  27.00       MHz */
     {  27027,  4096,  27027,  6272,  30030,  6144,  27027 }, /*  27.00*1.001 MHz */
     {  54000,  4096,  54000,  6272,  60000,  6144,  54000 }, /*  54.00       MHz */
     {  54054,  4096,  54054,  6272,  60060,  6144,  54054 }, /*  54.00*1.001 MHz */
-<<<<<<< HEAD
 <<<<<<< HEAD
     {  74176,  4096,  74176,  5733,  75335,  6144,  74176 }, /*  74.25/1.001 MHz */
     {  74250,  4096,  74250,  6272,  82500,  6144,  74250 }, /*  74.25       MHz */
@@ -126,8 +118,6 @@ static void r600_hdmi_calc_cts(uint32_t clock, int *CTS, int *N, int freq)
 	DRM_DEBUG("Calculated ACR timing N=%d CTS=%d for frequency %d\n",
 		  *N, *CTS, freq);
 =======
-=======
->>>>>>> master
     {  74175, 11648, 210937, 17836, 234375, 11648, 140625 }, /*  74.25/1.001 MHz */
     {  74250,  4096,  74250,  6272,  82500,  6144,  74250 }, /*  74.25       MHz */
     { 148351, 11648, 421875,  8918, 234375,  5824, 140625 }, /* 148.50/1.001 MHz */
@@ -144,10 +134,7 @@ static void r600_hdmi_calc_cts(uint32_t clock, int *CTS, int N, int freq)
 		*CTS = clock * N / (128 * freq) * 1000;
 	DRM_DEBUG("Using ACR timing N=%d CTS=%d for frequency %d\n",
 		  N, *CTS, freq);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 struct radeon_hdmi_acr r600_hdmi_acr(uint32_t clock)
@@ -155,7 +142,6 @@ struct radeon_hdmi_acr r600_hdmi_acr(uint32_t clock)
 	struct radeon_hdmi_acr res;
 	u8 i;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Precalculated values for common clocks */
 	for (i = 0; i < ARRAY_SIZE(r600_hdmi_predefined_acr); i++) {
@@ -168,8 +154,6 @@ struct radeon_hdmi_acr r600_hdmi_acr(uint32_t clock)
 	r600_hdmi_calc_cts(clock, &res.cts_44_1khz, &res.n_44_1khz, 44100);
 	r600_hdmi_calc_cts(clock, &res.cts_48khz, &res.n_48khz, 48000);
 =======
-=======
->>>>>>> master
 	for (i = 0; r600_hdmi_predefined_acr[i].clock != clock &&
 	     r600_hdmi_predefined_acr[i].clock != 0; i++)
 		;
@@ -179,10 +163,7 @@ struct radeon_hdmi_acr r600_hdmi_acr(uint32_t clock)
 	r600_hdmi_calc_cts(clock, &res.cts_32khz, res.n_32khz, 32000);
 	r600_hdmi_calc_cts(clock, &res.cts_44_1khz, res.n_44_1khz, 44100);
 	r600_hdmi_calc_cts(clock, &res.cts_48khz, res.n_48khz, 48000);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	return res;
 }
@@ -327,7 +308,6 @@ void r600_audio_set_dto(struct drm_encoder *encoder, u32 clock)
 	 * is the numerator, DCCG_AUDIO_DTOx_MODULE is the denominator
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ASIC_IS_DCE32(rdev)) {
 		if (dig->dig_encoder == 0) {
 			WREG32(DCCG_AUDIO_DTO0_PHASE, base_rate * 100);
@@ -346,11 +326,6 @@ void r600_audio_set_dto(struct drm_encoder *encoder, u32 clock)
 		/* according to the reg specs, this should DCE3.2 only, but in
 		 * practice it seems to cover DCE3.0 as well.
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (ASIC_IS_DCE3(rdev)) {
-		/* according to the reg specs, this should DCE3.2 only, but in
-		 * practice it seems to cover DCE3.0 as well.
->>>>>>> master
 		 */
 		if (dig->dig_encoder == 0) {
 			WREG32(DCCG_AUDIO_DTO0_PHASE, base_rate * 100);
@@ -362,18 +337,12 @@ void r600_audio_set_dto(struct drm_encoder *encoder, u32 clock)
 			WREG32(DCCG_AUDIO_DTO_SELECT, 1); /* select DTO1 */
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	} else {
 		/* according to the reg specs, this should be DCE2.0 and DCE3.0 */
 		WREG32(AUDIO_DTO, AUDIO_DTO_PHASE(base_rate / 10) |
 		       AUDIO_DTO_MODULE(clock / 10));
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 }
 
@@ -423,17 +392,12 @@ void r600_hdmi_setmode(struct drm_encoder *encoder, struct drm_display_mode *mod
 
 	WREG32(HDMI0_ACR_PACKET_CONTROL + offset,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	       HDMI0_ACR_SOURCE | /* select SW CTS value - XXX verify that hw CTS works on all families */
 	       HDMI0_ACR_AUTO_SEND); /* allow hw to sent ACR packets when required */
 =======
 	       HDMI0_ACR_AUTO_SEND | /* allow hw to sent ACR packets when required */
 	       HDMI0_ACR_SOURCE); /* select SW CTS value */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	       HDMI0_ACR_AUTO_SEND | /* allow hw to sent ACR packets when required */
-	       HDMI0_ACR_SOURCE); /* select SW CTS value */
->>>>>>> master
 
 	WREG32(HDMI0_VBI_PACKET_CONTROL + offset,
 	       HDMI0_NULL_SEND | /* send null packets when required */

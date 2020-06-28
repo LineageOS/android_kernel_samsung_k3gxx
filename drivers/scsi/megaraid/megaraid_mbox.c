@@ -368,12 +368,9 @@ static struct scsi_host_template megaraid_template_g = {
 	.change_queue_depth		= megaraid_change_queue_depth,
 	.use_clustering			= ENABLE_CLUSTERING,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.no_write_same			= 1,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	.sdev_attrs			= megaraid_sdev_attrs,
 	.shost_attrs			= megaraid_shost_attrs,
 };

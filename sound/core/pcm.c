@@ -50,13 +50,10 @@ static struct snd_pcm *snd_pcm_get(struct snd_card *card, int device)
 
 	list_for_each_entry(pcm, &snd_pcm_devices, list) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (pcm->internal)
 			continue;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (pcm->card == card && pcm->device == device)
 			return pcm;
 	}
@@ -69,13 +66,10 @@ static int snd_pcm_next(struct snd_card *card, int device)
 
 	list_for_each_entry(pcm, &snd_pcm_devices, list) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (pcm->internal)
 			continue;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (pcm->card == card && pcm->device > device)
 			return pcm->device;
 		else if (pcm->card->number > card->number)

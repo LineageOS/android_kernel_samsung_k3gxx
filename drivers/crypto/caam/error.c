@@ -17,7 +17,6 @@
 								\
 	tmp = kmalloc(sizeof(format) + max_alloc, GFP_ATOMIC);	\
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (likely(tmp)) {					\
 		sprintf(tmp, format, param);			\
 		strcat(str, tmp);				\
@@ -30,11 +29,6 @@
 	strcat(str, tmp);					\
 	kfree(tmp);						\
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	sprintf(tmp, format, param);				\
-	strcat(str, tmp);					\
-	kfree(tmp);						\
->>>>>>> master
 }
 
 static void report_jump_idx(u32 status, char *outstr)

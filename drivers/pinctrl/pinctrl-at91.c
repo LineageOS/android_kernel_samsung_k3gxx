@@ -326,14 +326,10 @@ static void at91_mux_disable_interrupt(void __iomem *pio, unsigned mask)
 static unsigned at91_mux_get_pullup(void __iomem *pio, unsigned pin)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return !((readl_relaxed(pio + PIO_PUSR) >> pin) & 0x1);
 =======
 	return (readl_relaxed(pio + PIO_PUSR) >> pin) & 0x1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return (readl_relaxed(pio + PIO_PUSR) >> pin) & 0x1;
->>>>>>> master
 }
 
 static void at91_mux_set_pullup(void __iomem *pio, unsigned mask, bool on)
@@ -454,14 +450,10 @@ static void at91_mux_pio3_set_debounce(void __iomem *pio, unsigned mask,
 static bool at91_mux_pio3_get_pulldown(void __iomem *pio, unsigned pin)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return !((__raw_readl(pio + PIO_PPDSR) >> pin) & 0x1);
 =======
 	return (__raw_readl(pio + PIO_PPDSR) >> pin) & 0x1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return (__raw_readl(pio + PIO_PPDSR) >> pin) & 0x1;
->>>>>>> master
 }
 
 static void at91_mux_pio3_set_pulldown(void __iomem *pio, unsigned mask, bool is_on)

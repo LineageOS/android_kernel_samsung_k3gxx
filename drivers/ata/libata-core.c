@@ -2200,7 +2200,6 @@ int ata_dev_configure(struct ata_device *dev)
 		return rc;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* some WD SATA-1 drives have issues with LPM, turn on NOLPM for them */
 	if ((dev->horkage & ATA_HORKAGE_WD_BROKEN_LPM) &&
 	    (id[ATA_ID_SATA_CAPABILITY] & 0xe) == 0x2)
@@ -2213,8 +2212,6 @@ int ata_dev_configure(struct ata_device *dev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* let ACPI work its magic */
 	rc = ata_acpi_on_devcfg(dev);
 	if (rc)
@@ -2418,14 +2415,10 @@ int ata_dev_configure(struct ata_device *dev)
 		}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (atapi_dmadir || (dev->horkage & ATA_HORKAGE_ATAPI_DMADIR) || atapi_id_dmadir(dev->id)) {
 =======
 		if (atapi_dmadir || atapi_id_dmadir(dev->id)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (atapi_dmadir || atapi_id_dmadir(dev->id)) {
->>>>>>> master
 			dev->flags |= ATA_DFLAG_DMADIR;
 			dma_dir_string = ", DMADIR";
 		}
@@ -4135,12 +4128,9 @@ static const struct ata_blacklist_entry ata_device_blacklist [] = {
 	{ "QUANTUM DAT    DAT72-000", NULL,	ATA_HORKAGE_ATAPI_MOD16_DMA },
 	{ "Slimtype DVD A  DS8A8SH", NULL,	ATA_HORKAGE_MAX_SEC_LBA48 },
 <<<<<<< HEAD
-<<<<<<< HEAD
 	{ "Slimtype DVD A  DS8A9SH", NULL,	ATA_HORKAGE_MAX_SEC_LBA48 },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* Devices we expect to fail diagnostics */
 
@@ -4171,7 +4161,6 @@ static const struct ata_blacklist_entry ata_device_blacklist [] = {
 						ATA_HORKAGE_FIRMWARE_WARN },
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* drives which fail FPDMA_AA activation (some may freeze afterwards) */
 	{ "ST1000LM024 HN-M101MBB", "2AR10001",	ATA_HORKAGE_BROKEN_FPDMA_AA },
 	{ "ST1000LM024 HN-M101MBB", "2BA30001",	ATA_HORKAGE_BROKEN_FPDMA_AA },
@@ -4179,8 +4168,6 @@ static const struct ata_blacklist_entry ata_device_blacklist [] = {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* Blacklist entries taken from Silicon Image 3124/3132
 	   Windows driver .inf file - also several Linux problem reports */
 	{ "HTS541060G9SA00",    "MB3OC60D",     ATA_HORKAGE_NONCQ, },
@@ -4228,7 +4215,6 @@ static const struct ata_blacklist_entry ata_device_blacklist [] = {
 	{ "PIONEER DVD-RW  DVR-216D",	NULL,	ATA_HORKAGE_NOSETXFER },
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* devices that don't properly handle TRIM commands */
 	{ "SuperSSpeed S238*",		NULL,	ATA_HORKAGE_NOTRIM, },
 
@@ -4251,8 +4237,6 @@ static const struct ata_blacklist_entry ata_device_blacklist [] = {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* End Marker */
 	{ }
 };
@@ -4541,15 +4525,11 @@ static unsigned int ata_dev_set_xfermode(struct ata_device *dev)
 		return 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* On some disks, this command causes spin-up, so we need longer timeout */
 	err_mask = ata_exec_internal(dev, &tf, NULL, DMA_NONE, NULL, 0, 15000);
 =======
 	err_mask = ata_exec_internal(dev, &tf, NULL, DMA_NONE, NULL, 0, 0);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	err_mask = ata_exec_internal(dev, &tf, NULL, DMA_NONE, NULL, 0, 0);
->>>>>>> master
 
 	DPRINTK("EXIT, err_mask=%x\n", err_mask);
 	return err_mask;
@@ -4804,15 +4784,12 @@ void swap_buf_le16(u16 *buf, unsigned int buf_words)
  *	@ap: target port
  *
 <<<<<<< HEAD
-<<<<<<< HEAD
  *	Some ATA host controllers may implement a queue depth which is less
  *	than ATA_MAX_QUEUE. So we shouldn't allocate a tag which is beyond
  *	the hardware limitation.
  *
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  *	LOCKING:
  *	None.
  */
@@ -4821,21 +4798,16 @@ static struct ata_queued_cmd *ata_qc_new(struct ata_port *ap)
 {
 	struct ata_queued_cmd *qc = NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned int max_queue = ap->host->n_tags;
 	unsigned int i, tag;
 =======
 	unsigned int i;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned int i;
->>>>>>> master
 
 	/* no command while frozen */
 	if (unlikely(ap->pflags & ATA_PFLAG_FROZEN))
 		return NULL;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	for (i = 0, tag = ap->last_tag + 1; i < max_queue; i++, tag++) {
 		tag = tag < max_queue ? tag : 0;
@@ -4852,8 +4824,6 @@ static struct ata_queued_cmd *ata_qc_new(struct ata_port *ap)
 		}
 	}
 =======
-=======
->>>>>>> master
 	/* the last tag is reserved for internal command. */
 	for (i = 0; i < ATA_MAX_QUEUE - 1; i++)
 		if (!test_and_set_bit(i, &ap->qc_allocated)) {
@@ -4863,10 +4833,7 @@ static struct ata_queued_cmd *ata_qc_new(struct ata_port *ap)
 
 	if (qc)
 		qc->tag = i;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	return qc;
 }
@@ -6156,12 +6123,9 @@ void ata_host_init(struct ata_host *host, struct device *dev,
 	spin_lock_init(&host->lock);
 	mutex_init(&host->eh_mutex);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	host->n_tags = ATA_MAX_QUEUE - 1;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	host->dev = dev;
 	host->ops = ops;
 }
@@ -6244,13 +6208,10 @@ int ata_host_register(struct ata_host *host, struct scsi_host_template *sht)
 	int i, rc;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	host->n_tags = clamp(sht->can_queue, 1, ATA_MAX_QUEUE - 1);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* host must have been started */
 	if (!(host->flags & ATA_HOST_STARTED)) {
 		dev_err(host->dev, "BUG: trying to register unstarted host\n");
@@ -6398,13 +6359,10 @@ static void ata_port_detach(struct ata_port *ap)
 {
 	unsigned long flags;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct ata_link *link;
 	struct ata_device *dev;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (!ap->ops->error_handler)
 		goto skip_eh;
@@ -6425,7 +6383,6 @@ static void ata_port_detach(struct ata_port *ap)
 
  skip_eh:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* clean up zpodd on port removal */
 	ata_for_each_link(link, ap, HOST_FIRST) {
 		ata_for_each_dev(dev, link, ALL) {
@@ -6435,8 +6392,6 @@ static void ata_port_detach(struct ata_port *ap)
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (ap->pmp_link) {
 		int i;
 		for (i = 0; i < SATA_PMP_MAX_PORTS; i++)
@@ -6658,13 +6613,10 @@ static int __init ata_parse_force_one(char **cur,
 		{ "norst",	.lflags		= ATA_LFLAG_NO_HRST | ATA_LFLAG_NO_SRST },
 		{ "rstonce",	.lflags		= ATA_LFLAG_RST_ONCE },
 <<<<<<< HEAD
-<<<<<<< HEAD
 		{ "atapi_dmadir", .horkage_on	= ATA_HORKAGE_ATAPI_DMADIR },
 		{ "disable",	.horkage_on	= ATA_HORKAGE_DISABLE },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	};
 	char *start = *cur, *p = *cur;
 	char *id, *val, *endp;
@@ -6908,7 +6860,6 @@ u32 ata_wait_register(struct ata_port *ap, void __iomem *reg, u32 mask, u32 val,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /**
  *	sata_lpm_ignore_phy_events - test if PHY event should be ignored
  *	@link: Link receiving the event
@@ -6943,8 +6894,6 @@ EXPORT_SYMBOL_GPL(sata_lpm_ignore_phy_events);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  * Dummy port_ops
  */

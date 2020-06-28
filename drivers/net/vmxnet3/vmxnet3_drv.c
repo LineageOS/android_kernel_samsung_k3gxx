@@ -1742,7 +1742,6 @@ vmxnet3_netpoll(struct net_device *netdev)
 	struct vmxnet3_adapter *adapter = netdev_priv(netdev);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	switch (adapter->intr.type) {
 #ifdef CONFIG_PCI_MSI
 	case VMXNET3_IT_MSIX: {
@@ -1758,17 +1757,12 @@ vmxnet3_netpoll(struct net_device *netdev)
 		break;
 	}
 =======
-=======
->>>>>>> master
 	if (adapter->intr.mask_mode == VMXNET3_IMM_ACTIVE)
 		vmxnet3_disable_all_intrs(adapter);
 
 	vmxnet3_do_poll(adapter, adapter->rx_queue[0].rx_ring[0].size);
 	vmxnet3_enable_all_intrs(adapter);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 }
 #endif	/* CONFIG_NET_POLL_CONTROLLER */
@@ -2877,13 +2871,9 @@ vmxnet3_tx_timeout(struct net_device *netdev)
 	netdev_err(adapter->netdev, "tx hang\n");
 	schedule_work(&adapter->work);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	netif_wake_queue(adapter->netdev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	netif_wake_queue(adapter->netdev);
->>>>>>> master
 }
 
 
@@ -2911,12 +2901,9 @@ vmxnet3_reset_work(struct work_struct *data)
 	rtnl_unlock();
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	netif_wake_queue(adapter->netdev);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	clear_bit(VMXNET3_STATE_BIT_RESETTING, &adapter->state);
 }
 

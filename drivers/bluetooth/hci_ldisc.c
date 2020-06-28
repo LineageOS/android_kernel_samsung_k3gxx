@@ -119,18 +119,12 @@ static inline struct sk_buff *hci_uart_dequeue(struct hci_uart *hu)
 int hci_uart_tx_wakeup(struct hci_uart *hu)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	struct tty_struct *tty = hu->tty;
 	struct hci_dev *hdev = hu->hdev;
 	struct sk_buff *skb;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (test_and_set_bit(HCI_UART_SENDING, &hu->tx_state)) {
 		set_bit(HCI_UART_TX_WAKEUP, &hu->tx_state);
 		return 0;
@@ -138,7 +132,6 @@ int hci_uart_tx_wakeup(struct hci_uart *hu)
 
 	BT_DBG("");
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	schedule_work(&hu->write_work);
 
@@ -158,8 +151,6 @@ static void hci_uart_write_work(struct work_struct *work)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 restart:
 	clear_bit(HCI_UART_TX_WAKEUP, &hu->tx_state);
 
@@ -185,13 +176,9 @@ restart:
 
 	clear_bit(HCI_UART_SENDING, &hu->tx_state);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	return 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return 0;
->>>>>>> master
 }
 
 static void hci_uart_init_work(struct work_struct *work)
@@ -328,12 +315,9 @@ static int hci_uart_tty_open(struct tty_struct *tty)
 
 	INIT_WORK(&hu->init_ready, hci_uart_init_work);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	INIT_WORK(&hu->write_work, hci_uart_write_work);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	spin_lock_init(&hu->rx_lock);
 
@@ -372,13 +356,10 @@ static void hci_uart_tty_close(struct tty_struct *tty)
 		hci_uart_close(hdev);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	cancel_work_sync(&hu->write_work);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (test_and_clear_bit(HCI_UART_PROTO_SET, &hu->flags)) {
 		if (hdev) {
 			if (test_bit(HCI_UART_REGISTERED, &hu->flags))

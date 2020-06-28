@@ -177,14 +177,10 @@ int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 		err = PTR_ERR(rt);
 		if (err == -ENETUNREACH)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			IP_INC_STATS(sock_net(sk), IPSTATS_MIB_OUTNOROUTES);
 =======
 			IP_INC_STATS_BH(sock_net(sk), IPSTATS_MIB_OUTNOROUTES);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			IP_INC_STATS_BH(sock_net(sk), IPSTATS_MIB_OUTNOROUTES);
->>>>>>> master
 		return err;
 	}
 
@@ -277,7 +273,6 @@ EXPORT_SYMBOL(tcp_v4_connect);
  * at the time tcp_v4_err() was called to handle ICMP message.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 void tcp_v4_mtu_reduced(struct sock *sk)
 {
 	struct inet_sock *inet = inet_sk(sk);
@@ -288,18 +283,13 @@ void tcp_v4_mtu_reduced(struct sock *sk)
 		return;
 	mtu = tcp_sk(sk)->mtu_info;
 =======
-=======
->>>>>>> master
 static void tcp_v4_mtu_reduced(struct sock *sk)
 {
 	struct dst_entry *dst;
 	struct inet_sock *inet = inet_sk(sk);
 	u32 mtu = tcp_sk(sk)->mtu_info;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	dst = inet_csk_update_pmtu(sk, mtu);
 	if (!dst)
 		return;
@@ -325,12 +315,9 @@ static void tcp_v4_mtu_reduced(struct sock *sk)
 	} /* else let the usual retransmit timer handle it */
 }
 <<<<<<< HEAD
-<<<<<<< HEAD
 EXPORT_SYMBOL(tcp_v4_mtu_reduced);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 static void do_redirect(struct sk_buff *skb, struct sock *sk)
 {
@@ -422,15 +409,11 @@ void tcp_v4_err(struct sk_buff *icmp_skb, u32 info)
 	switch (type) {
 	case ICMP_REDIRECT:
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!sock_owned_by_user(sk))
 			do_redirect(icmp_skb, sk);
 =======
 		do_redirect(icmp_skb, sk);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		do_redirect(icmp_skb, sk);
->>>>>>> master
 		goto out;
 	case ICMP_SOURCE_QUENCH:
 		/* Just silently ignore these. */
@@ -749,15 +732,11 @@ static void tcp_v4_send_reset(struct sock *sk, struct sk_buff *skb)
 	net = dev_net(skb_dst(skb)->dev);
 	arg.tos = ip_hdr(skb)->tos;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ip_send_unicast_reply(*this_cpu_ptr(net->ipv4.tcp_sk),
 			      skb, ip_hdr(skb)->saddr,
 =======
 	ip_send_unicast_reply(net, skb, ip_hdr(skb)->saddr,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ip_send_unicast_reply(net, skb, ip_hdr(skb)->saddr,
->>>>>>> master
 			      ip_hdr(skb)->daddr, &arg, arg.iov[0].iov_len);
 
 	TCP_INC_STATS_BH(net, TCP_MIB_OUTSEGS);
@@ -841,15 +820,11 @@ static void tcp_v4_send_ack(struct sk_buff *skb, u32 seq, u32 ack,
 		arg.bound_dev_if = oif;
 	arg.tos = tos;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ip_send_unicast_reply(*this_cpu_ptr(net->ipv4.tcp_sk),
 			      skb, ip_hdr(skb)->saddr,
 =======
 	ip_send_unicast_reply(net, skb, ip_hdr(skb)->saddr,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ip_send_unicast_reply(net, skb, ip_hdr(skb)->saddr,
->>>>>>> master
 			      ip_hdr(skb)->daddr, &arg, arg.iov[0].iov_len);
 
 	TCP_INC_STATS_BH(net, TCP_MIB_OUTSEGS);
@@ -882,15 +857,11 @@ static void tcp_v4_reqsk_send_ack(struct sock *sk, struct sk_buff *skb,
 	tcp_v4_send_ack(skb, (sk->sk_state == TCP_LISTEN) ?
 			tcp_rsk(req)->snt_isn + 1 : tcp_sk(sk)->snd_nxt,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			tcp_rsk(req)->rcv_nxt,
 			req->rcv_wnd >> inet_rsk(req)->rcv_wscale,
 =======
 			tcp_rsk(req)->rcv_nxt, req->rcv_wnd,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			tcp_rsk(req)->rcv_nxt, req->rcv_wnd,
->>>>>>> master
 			tcp_time_stamp,
 			req->ts_recent,
 			0,
@@ -1082,15 +1053,11 @@ int tcp_md5_do_add(struct sock *sk, const union tcp_md5_addr *addr,
 
 	md5sig = rcu_dereference_protected(tp->md5sig_info,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					   sock_owned_by_user(sk) ||
 					   lockdep_is_held(&sk->sk_lock.slock));
 =======
 					   sock_owned_by_user(sk));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					   sock_owned_by_user(sk));
->>>>>>> master
 	if (!md5sig) {
 		md5sig = kmalloc(sizeof(*md5sig), gfp);
 		if (!md5sig)
@@ -1496,12 +1463,9 @@ static int tcp_v4_conn_req_fastopen(struct sock *sk,
 	 */
 	tp->snd_wnd = ntohs(tcp_hdr(skb)->window);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	tp->max_window = tp->snd_wnd;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* Activate the retrans timer so that SYNACK can be retransmitted.
 	 * The request socket is not added to the SYN table of the parent
@@ -1877,14 +1841,10 @@ static __sum16 tcp_v4_checksum_init(struct sk_buff *skb)
 
 /* The socket must have it's spinlock held when we get
 <<<<<<< HEAD
-<<<<<<< HEAD
  * here, unless it is a TCP_LISTEN socket.
 =======
  * here.
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * here.
->>>>>>> master
  *
  * We have a potential double-lock case here, so even when
  * doing backlog processing we use the BH locking scheme.
@@ -1993,14 +1953,10 @@ void tcp_v4_early_demux(struct sk_buff *skb)
 		skb->destructor = sock_edemux;
 		if (sk->sk_state != TCP_TIME_WAIT) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			struct dst_entry *dst = ACCESS_ONCE(sk->sk_rx_dst);
 =======
 			struct dst_entry *dst = sk->sk_rx_dst;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			struct dst_entry *dst = sk->sk_rx_dst;
->>>>>>> master
 
 			if (dst)
 				dst = dst_check(dst, 0);
@@ -2057,7 +2013,6 @@ bool tcp_prequeue(struct sock *sk, struct sk_buff *skb)
 EXPORT_SYMBOL(tcp_prequeue);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 int tcp_filter(struct sock *sk, struct sk_buff *skb)
 {
 	struct tcphdr *th = (struct tcphdr *)skb->data;
@@ -2075,8 +2030,6 @@ EXPORT_SYMBOL(tcp_filter);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  *	From tcp_input.c
  */
@@ -2140,7 +2093,6 @@ process:
 	nf_reset(skb);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (tcp_filter(sk, skb))
 		goto discard_and_relse;
 	th = (const struct tcphdr *)skb->data;
@@ -2154,17 +2106,12 @@ process:
 	}
 
 =======
-=======
->>>>>>> master
 	if (sk_filter(sk, skb))
 		goto discard_and_relse;
 
 	skb->dev = NULL;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	bh_lock_sock_nested(sk);
 	ret = 0;
 	if (!sock_owned_by_user(sk)) {
@@ -2189,12 +2136,9 @@ process:
 	bh_unlock_sock(sk);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 put_and_return:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	sock_put(sk);
 
 	return ret;
@@ -2294,12 +2238,9 @@ const struct inet_connection_sock_af_ops ipv4_specific = {
 	.compat_getsockopt = compat_ip_getsockopt,
 #endif
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.mtu_reduced	   = tcp_v4_mtu_reduced,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 EXPORT_SYMBOL(ipv4_specific);
 
@@ -3026,13 +2967,9 @@ struct proto tcp_prot = {
 	.backlog_rcv		= tcp_v4_do_rcv,
 	.release_cb		= tcp_release_cb,
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	.mtu_reduced		= tcp_v4_mtu_reduced,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	.mtu_reduced		= tcp_v4_mtu_reduced,
->>>>>>> master
 	.hash			= inet_hash,
 	.unhash			= inet_unhash,
 	.get_port		= inet_csk_get_port,
@@ -3062,7 +2999,6 @@ struct proto tcp_prot = {
 };
 EXPORT_SYMBOL(tcp_prot);
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 static void __net_exit tcp_sk_exit(struct net *net)
 {
@@ -3098,8 +3034,6 @@ fail:
 
 	return res;
 =======
-=======
->>>>>>> master
 static int __net_init tcp_sk_init(struct net *net)
 {
 	net->ipv4.sysctl_tcp_ecn = 2;
@@ -3108,10 +3042,7 @@ static int __net_init tcp_sk_init(struct net *net)
 
 static void __net_exit tcp_sk_exit(struct net *net)
 {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static void __net_exit tcp_sk_exit_batch(struct list_head *net_exit_list)

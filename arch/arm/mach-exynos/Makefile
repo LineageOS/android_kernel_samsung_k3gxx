@@ -127,10 +127,6 @@ ifdef CONFIG_MSM_SUBSYSTEM_RESTART
 endif
 obj-$(CONFIG_EXYNOS_RUN_QUEUE_STATS) += exynos_rq_stats.o
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 obj-$(CONFIG_CHARGE_CONTROL) += charge_control.o
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-obj-$(CONFIG_CHARGE_CONTROL) += charge_control.o
->>>>>>> master

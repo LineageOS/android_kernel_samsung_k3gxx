@@ -220,16 +220,11 @@ void evergreen_hdmi_setmode(struct drm_encoder *encoder, struct drm_display_mode
 
 	WREG32(HDMI_ACR_PACKET_CONTROL + offset,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	       HDMI_ACR_AUTO_SEND); /* allow hw to sent ACR packets when required */
 =======
 	       HDMI_ACR_AUTO_SEND | /* allow hw to sent ACR packets when required */
 	       HDMI_ACR_SOURCE); /* select SW CTS value */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	       HDMI_ACR_AUTO_SEND | /* allow hw to sent ACR packets when required */
-	       HDMI_ACR_SOURCE); /* select SW CTS value */
->>>>>>> master
 
 	evergreen_hdmi_update_ACR(encoder, mode->clock);
 

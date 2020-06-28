@@ -79,12 +79,9 @@ static int modeset_init(struct drm_device *dev)
 		/* oh nos! */
 		dev_err(dev->dev, "no encoders/connectors found\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 		drm_mode_config_cleanup(dev);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		return -ENXIO;
 	}
 
@@ -124,12 +121,9 @@ static int tilcdc_unload(struct drm_device *dev)
 	struct tilcdc_module *mod, *cur;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	drm_fbdev_cma_fini(priv->fbdev);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	drm_kms_helper_poll_fini(dev);
 	drm_mode_config_cleanup(dev);
 	drm_vblank_cleanup(dev);
@@ -184,29 +178,22 @@ static int tilcdc_load(struct drm_device *dev, unsigned long flags)
 
 	priv->wq = alloc_ordered_workqueue("tilcdc", 0);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!priv->wq) {
 		ret = -ENOMEM;
 		goto fail_free_priv;
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	if (!res) {
 		dev_err(dev->dev, "failed to get memory resource\n");
 		ret = -EINVAL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto fail_free_wq;
 =======
 		goto fail;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto fail;
->>>>>>> master
 	}
 
 	priv->mmio = ioremap_nocache(res->start, resource_size(res));
@@ -214,14 +201,10 @@ static int tilcdc_load(struct drm_device *dev, unsigned long flags)
 		dev_err(dev->dev, "failed to ioremap\n");
 		ret = -ENOMEM;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto fail_free_wq;
 =======
 		goto fail;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto fail;
->>>>>>> master
 	}
 
 	priv->clk = clk_get(dev->dev, "fck");
@@ -229,14 +212,10 @@ static int tilcdc_load(struct drm_device *dev, unsigned long flags)
 		dev_err(dev->dev, "failed to get functional clock\n");
 		ret = -ENODEV;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto fail_iounmap;
 =======
 		goto fail;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto fail;
->>>>>>> master
 	}
 
 	priv->disp_clk = clk_get(dev->dev, "dpll_disp_ck");
@@ -244,14 +223,10 @@ static int tilcdc_load(struct drm_device *dev, unsigned long flags)
 		dev_err(dev->dev, "failed to get display clock\n");
 		ret = -ENODEV;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto fail_put_clk;
 =======
 		goto fail;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto fail;
->>>>>>> master
 	}
 
 #ifdef CONFIG_CPU_FREQ
@@ -262,14 +237,10 @@ static int tilcdc_load(struct drm_device *dev, unsigned long flags)
 	if (ret) {
 		dev_err(dev->dev, "failed to register cpufreq notifier\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto fail_put_disp_clk;
 =======
 		goto fail;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto fail;
->>>>>>> master
 	}
 #endif
 
@@ -302,28 +273,20 @@ static int tilcdc_load(struct drm_device *dev, unsigned long flags)
 	if (ret < 0) {
 		dev_err(dev->dev, "failed to initialize mode setting\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto fail_cpufreq_unregister;
 =======
 		goto fail;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto fail;
->>>>>>> master
 	}
 
 	ret = drm_vblank_init(dev, 1);
 	if (ret < 0) {
 		dev_err(dev->dev, "failed to initialize vblank\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto fail_mode_config_cleanup;
 =======
 		goto fail;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto fail;
->>>>>>> master
 	}
 
 	pm_runtime_get_sync(dev->dev);
@@ -332,14 +295,10 @@ static int tilcdc_load(struct drm_device *dev, unsigned long flags)
 	if (ret < 0) {
 		dev_err(dev->dev, "failed to install IRQ handler\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto fail_vblank_cleanup;
 =======
 		goto fail;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto fail;
->>>>>>> master
 	}
 
 	platform_set_drvdata(pdev, dev);
@@ -348,21 +307,17 @@ static int tilcdc_load(struct drm_device *dev, unsigned long flags)
 			dev->mode_config.num_crtc,
 			dev->mode_config.num_connector);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (IS_ERR(priv->fbdev)) {
 		ret = PTR_ERR(priv->fbdev);
 		goto fail_irq_uninstall;
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	drm_kms_helper_poll_init(dev);
 
 	return 0;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 fail_irq_uninstall:
 	pm_runtime_get_sync(dev->dev);
@@ -401,10 +356,6 @@ fail_free_priv:
 fail:
 	tilcdc_unload(dev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-fail:
-	tilcdc_unload(dev);
->>>>>>> master
 	return ret;
 }
 
@@ -736,22 +687,16 @@ static void __exit tilcdc_drm_fini(void)
 {
 	DBG("fini");
 <<<<<<< HEAD
-<<<<<<< HEAD
 	platform_driver_unregister(&tilcdc_platform_driver);
 	tilcdc_panel_fini();
 	tilcdc_slave_fini();
 	tilcdc_tfp410_fini();
 =======
-=======
->>>>>>> master
 	tilcdc_tfp410_fini();
 	tilcdc_slave_fini();
 	tilcdc_panel_fini();
 	platform_driver_unregister(&tilcdc_platform_driver);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 late_initcall(tilcdc_drm_init);

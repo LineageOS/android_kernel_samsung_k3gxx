@@ -222,10 +222,7 @@ hash_refile(struct svc_cacherep *rp)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 static inline bool
 nfsd_cache_entry_expired(struct svc_cacherep *rp)
 {
@@ -233,10 +230,7 @@ nfsd_cache_entry_expired(struct svc_cacherep *rp)
 	       time_after(jiffies, rp->c_timestamp + RC_EXPIRE);
 }
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  * Walk the LRU list and prune off entries that are older than RC_EXPIRE.
  * Also prune the oldest ones when the total exceeds the max number of entries.
@@ -247,7 +241,6 @@ prune_cache_entries(void)
 	struct svc_cacherep *rp, *tmp;
 
 	list_for_each_entry_safe(rp, tmp, &lru_head, c_lru) {
-<<<<<<< HEAD
 <<<<<<< HEAD
 		/*
 		 * Don't free entries attached to calls that are still
@@ -261,10 +254,6 @@ prune_cache_entries(void)
 		if (!nfsd_cache_entry_expired(rp) &&
 		    num_drc_entries <= max_drc_entries)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!nfsd_cache_entry_expired(rp) &&
-		    num_drc_entries <= max_drc_entries)
->>>>>>> master
 			break;
 		nfsd_reply_cache_free_locked(rp);
 	}
@@ -421,12 +410,9 @@ nfsd_cache_lookup(struct svc_rqst *rqstp)
 	/*
 	 * Since the common case is a cache miss followed by an insert,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 * preallocate an entry.
 	 */
 =======
-=======
->>>>>>> master
 	 * preallocate an entry. First, try to reuse the first entry on the LRU
 	 * if it works, then go ahead and prune the LRU list.
 	 */
@@ -443,10 +429,7 @@ nfsd_cache_lookup(struct svc_rqst *rqstp)
 
 	/* No expired ones available, allocate a new one. */
 	spin_unlock(&cache_lock);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	rp = nfsd_reply_cache_alloc();
 	spin_lock(&cache_lock);
 	if (likely(rp)) {
@@ -455,16 +438,12 @@ nfsd_cache_lookup(struct svc_rqst *rqstp)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* go ahead and prune the cache */
 	prune_cache_entries();
 
 =======
 search_cache:
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-search_cache:
->>>>>>> master
 	found = nfsd_cache_search(rqstp, csum);
 	if (found) {
 		if (likely(rp))
@@ -479,10 +458,7 @@ search_cache:
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	/*
 	 * We're keeping the one we just allocated. Are we now over the
 	 * limit? Prune one off the tip of the LRU in trade for the one we
@@ -492,10 +468,7 @@ search_cache:
 		nfsd_reply_cache_free_locked(list_first_entry(&lru_head,
 						struct svc_cacherep, c_lru));
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	nfsdstats.rcmisses++;
 	rqstp->rq_cacherep = rp;
 	rp->c_state = RC_INPROG;

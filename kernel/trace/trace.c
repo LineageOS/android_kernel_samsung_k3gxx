@@ -424,7 +424,6 @@ int __trace_puts(unsigned long ip, const char *str, int size)
 	unsigned long irq_flags;
 	int alloc;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int pc;
 
 	pc = preempt_count();
@@ -433,8 +432,6 @@ int __trace_puts(unsigned long ip, const char *str, int size)
 		return 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	alloc = sizeof(*entry) + size + 2; /* possible \n added */
 
@@ -442,14 +439,10 @@ int __trace_puts(unsigned long ip, const char *str, int size)
 	buffer = global_trace.trace_buffer.buffer;
 	event = trace_buffer_lock_reserve(buffer, TRACE_PRINT, alloc, 
 <<<<<<< HEAD
-<<<<<<< HEAD
 					  irq_flags, pc);
 =======
 					  irq_flags, preempt_count());
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					  irq_flags, preempt_count());
->>>>>>> master
 	if (!event)
 		return 0;
 
@@ -467,12 +460,9 @@ int __trace_puts(unsigned long ip, const char *str, int size)
 
 	__buffer_unlock_commit(buffer, event);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ftrace_trace_stack(buffer, irq_flags, 4, pc);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	return size;
 }
@@ -491,7 +481,6 @@ int __trace_bputs(unsigned long ip, const char *str)
 	unsigned long irq_flags;
 	int size = sizeof(struct bputs_entry);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int pc;
 
 	pc = preempt_count();
@@ -500,21 +489,15 @@ int __trace_bputs(unsigned long ip, const char *str)
 		return 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	local_save_flags(irq_flags);
 	buffer = global_trace.trace_buffer.buffer;
 	event = trace_buffer_lock_reserve(buffer, TRACE_BPUTS, size,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					  irq_flags, pc);
 =======
 					  irq_flags, preempt_count());
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					  irq_flags, preempt_count());
->>>>>>> master
 	if (!event)
 		return 0;
 
@@ -524,12 +507,9 @@ int __trace_bputs(unsigned long ip, const char *str)
 
 	__buffer_unlock_commit(buffer, event);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ftrace_trace_stack(buffer, irq_flags, 4, pc);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	return 1;
 }
@@ -783,14 +763,10 @@ static struct {
 	{ trace_clock_global,	"global",	1 },
 	{ trace_clock_counter,	"counter",	0 },
 <<<<<<< HEAD
-<<<<<<< HEAD
 	{ trace_clock_jiffies,	"uptime",	0 },
 =======
 	{ trace_clock_jiffies,	"uptime",	1 },
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	{ trace_clock_jiffies,	"uptime",	1 },
->>>>>>> master
 	{ trace_clock,		"perf",		1 },
 	ARCH_TRACE_CLOCKS
 };
@@ -890,7 +866,6 @@ int trace_get_user(struct trace_parser *parser, const char __user *ubuf,
 		parser->buffer[parser->idx] = 0;
 		parser->cont = false;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	} else if (parser->idx < parser->size - 1) {
 		parser->cont = true;
 		parser->buffer[parser->idx++] = ch;
@@ -902,11 +877,6 @@ int trace_get_user(struct trace_parser *parser, const char __user *ubuf,
 		parser->cont = true;
 		parser->buffer[parser->idx++] = ch;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	} else {
-		parser->cont = true;
-		parser->buffer[parser->idx++] = ch;
->>>>>>> master
 	}
 
 	*ppos += read;
@@ -1097,7 +1067,6 @@ update_max_tr_single(struct trace_array *tr, struct task_struct *tsk, int cpu)
 #endif /* CONFIG_TRACER_MAX_TRACE */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int default_wait_pipe(struct trace_iterator *iter)
 {
 	/* Iterators are static, they should be filled or empty */
@@ -1106,8 +1075,6 @@ static int default_wait_pipe(struct trace_iterator *iter)
 
 	return ring_buffer_wait(iter->trace_buffer->buffer, iter->cpu_file);
 =======
-=======
->>>>>>> master
 static void default_wait_pipe(struct trace_iterator *iter)
 {
 	/* Iterators are static, they should be filled or empty */
@@ -1115,10 +1082,7 @@ static void default_wait_pipe(struct trace_iterator *iter)
 		return;
 
 	ring_buffer_wait(iter->trace_buffer->buffer, iter->cpu_file);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 #ifdef CONFIG_FTRACE_STARTUP_TEST
@@ -1393,13 +1357,9 @@ void tracing_start(void)
 	arch_spin_unlock(&ftrace_max_lock);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	ftrace_start();
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ftrace_start();
->>>>>>> master
  out:
 	raw_spin_unlock_irqrestore(&global_trace.start_lock, flags);
 }
@@ -1447,13 +1407,9 @@ void tracing_stop(void)
 	unsigned long flags;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	ftrace_stop();
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ftrace_stop();
->>>>>>> master
 	raw_spin_lock_irqsave(&global_trace.start_lock, flags);
 	if (global_trace.stop_count++)
 		goto out;
@@ -1501,27 +1457,19 @@ static void tracing_stop_tr(struct trace_array *tr)
 void trace_stop_cmdline_recording(void);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int trace_save_cmdline(struct task_struct *tsk)
 =======
 static void trace_save_cmdline(struct task_struct *tsk)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static void trace_save_cmdline(struct task_struct *tsk)
->>>>>>> master
 {
 	unsigned pid, idx;
 
 	if (!tsk->pid || unlikely(tsk->pid > PID_MAX_DEFAULT))
 <<<<<<< HEAD
-<<<<<<< HEAD
 		return 0;
 =======
 		return;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		return;
->>>>>>> master
 
 	/*
 	 * It's not the end of the world if we don't get
@@ -1531,14 +1479,10 @@ static void trace_save_cmdline(struct task_struct *tsk)
 	 */
 	if (!arch_spin_trylock(&trace_cmdline_lock))
 <<<<<<< HEAD
-<<<<<<< HEAD
 		return 0;
 =======
 		return;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		return;
->>>>>>> master
 
 	idx = map_pid_to_cmdline[tsk->pid];
 	if (idx == NO_CMDLINE_MAP) {
@@ -1565,13 +1509,10 @@ static void trace_save_cmdline(struct task_struct *tsk)
 
 	arch_spin_unlock(&trace_cmdline_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	return 1;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 void trace_find_cmdline(int pid, char comm[])
@@ -1598,14 +1539,10 @@ void trace_find_cmdline(int pid, char comm[])
 	map = map_pid_to_cmdline[pid];
 	if (map != NO_CMDLINE_MAP)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		strlcpy(comm, saved_cmdlines[map], TASK_COMM_LEN-1);
 =======
 		strcpy(comm, saved_cmdlines[map]);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		strcpy(comm, saved_cmdlines[map]);
->>>>>>> master
 	else
 		strcpy(comm, "<...>");
 
@@ -1641,7 +1578,6 @@ void tracing_record_cmdline(struct task_struct *tsk)
 		return;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (trace_save_cmdline(tsk))
 		__this_cpu_write(trace_cmdline_save, false);
 =======
@@ -1649,11 +1585,6 @@ void tracing_record_cmdline(struct task_struct *tsk)
 
 	trace_save_cmdline(tsk);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	__this_cpu_write(trace_cmdline_save, false);
-
-	trace_save_cmdline(tsk);
->>>>>>> master
 }
 
 void
@@ -3039,7 +2970,6 @@ static int s_show(struct seq_file *m, void *v)
 	return 0;
 }
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * Should be used after trace_array_get(), trace_types_lock
  * ensures that i_cdev was already initialized.
@@ -3052,8 +2982,6 @@ static inline int tracing_get_cpu(struct inode *inode)
 }
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 static const struct seq_operations tracer_seq_ops = {
 	.start		= s_start,
@@ -3286,7 +3214,6 @@ static int tracing_open(struct inode *inode, struct file *file)
 
 	/* If this file was open for write, then erase contents */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if ((file->f_mode & FMODE_WRITE) && (file->f_flags & O_TRUNC)) {
 		int cpu = tracing_get_cpu(inode);
 		struct trace_buffer *trace_buf = &tr->trace_buffer;
@@ -3301,18 +3228,13 @@ static int tracing_open(struct inode *inode, struct file *file)
 		else
 			tracing_reset(trace_buf, cpu);
 =======
-=======
->>>>>>> master
 	if ((file->f_mode & FMODE_WRITE) &&
 	    (file->f_flags & O_TRUNC)) {
 		if (tc->cpu == RING_BUFFER_ALL_CPUS)
 			tracing_reset_online_cpus(&tr->trace_buffer);
 		else
 			tracing_reset(&tr->trace_buffer, tc->cpu);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	if (file->f_mode & FMODE_READ) {
@@ -4356,25 +4278,18 @@ tracing_poll_pipe(struct file *filp, poll_table *poll_table)
  *     Anyway, this is really very primitive wakeup.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 int poll_wait_pipe(struct trace_iterator *iter)
 =======
 void poll_wait_pipe(struct trace_iterator *iter)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-void poll_wait_pipe(struct trace_iterator *iter)
->>>>>>> master
 {
 	set_current_state(TASK_INTERRUPTIBLE);
 	/* sleep for 100 msecs, and try again. */
 	schedule_timeout(HZ / 10);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /* Must be called with trace_types_lock mutex held. */
@@ -4382,12 +4297,9 @@ static int tracing_wait_pipe(struct file *filp)
 {
 	struct trace_iterator *iter = filp->private_data;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int ret;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	while (trace_empty(iter)) {
 
@@ -4398,7 +4310,6 @@ static int tracing_wait_pipe(struct file *filp)
 		mutex_unlock(&iter->mutex);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ret = iter->trace->wait_pipe(iter);
 
 		mutex_lock(&iter->mutex);
@@ -4407,16 +4318,11 @@ static int tracing_wait_pipe(struct file *filp)
 			return ret;
 
 =======
-=======
->>>>>>> master
 		iter->trace->wait_pipe(iter);
 
 		mutex_lock(&iter->mutex);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (signal_pending(current))
 			return -EINTR;
 
@@ -4448,10 +4354,7 @@ tracing_read_pipe(struct file *filp, char __user *ubuf,
 	ssize_t sret;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	/* return any leftover data */
 	sret = trace_seq_to_user(&iter->seq, ubuf, cnt);
 	if (sret != -EBUSY)
@@ -4459,10 +4362,7 @@ tracing_read_pipe(struct file *filp, char __user *ubuf,
 
 	trace_seq_init(&iter->seq);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* copy the tracer to avoid using a global lock all around */
 	mutex_lock(&trace_types_lock);
 	if (unlikely(iter->trace->name != tr->current_trace->name))
@@ -4476,7 +4376,6 @@ tracing_read_pipe(struct file *filp, char __user *ubuf,
 	 */
 	mutex_lock(&iter->mutex);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	/* return any leftover data */
 	sret = trace_seq_to_user(&iter->seq, ubuf, cnt);
@@ -4487,8 +4386,6 @@ tracing_read_pipe(struct file *filp, char __user *ubuf,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (iter->trace->read) {
 		sret = iter->trace->read(iter, filp, ubuf, cnt, ppos);
 		if (sret)
@@ -4701,7 +4598,6 @@ static ssize_t tracing_splice_read_pipe(struct file *filp,
 	spd.nr_pages = i;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (i)
 		ret = splice_to_pipe(pipe, &spd);
 	else
@@ -4709,9 +4605,6 @@ static ssize_t tracing_splice_read_pipe(struct file *filp,
 =======
 	ret = splice_to_pipe(pipe, &spd);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret = splice_to_pipe(pipe, &spd);
->>>>>>> master
 out:
 	splice_shrink_spd(&spd);
 	return ret;
@@ -4948,14 +4841,10 @@ tracing_mark_write(struct file *filp, const char __user *ubuf,
 
  out_unlock:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	for (i = nr_pages - 1; i >= 0; i--) {
 =======
 	for (i = 0; i < nr_pages; i++){
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	for (i = 0; i < nr_pages; i++){
->>>>>>> master
 		kunmap_atomic(map_page[i]);
 		put_page(pages[i]);
 	}
@@ -5018,14 +4907,10 @@ static ssize_t tracing_clock_write(struct file *filp, const char __user *ubuf,
 
 #ifdef CONFIG_TRACER_MAX_TRACE
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (tr->max_buffer.buffer)
 =======
 	if (tr->flags & TRACE_ARRAY_FL_GLOBAL && tr->max_buffer.buffer)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (tr->flags & TRACE_ARRAY_FL_GLOBAL && tr->max_buffer.buffer)
->>>>>>> master
 		ring_buffer_set_clock(tr->max_buffer.buffer, trace_clocks[i].func);
 	tracing_reset_online_cpus(&tr->max_buffer);
 #endif
@@ -5402,7 +5287,6 @@ tracing_buffers_read(struct file *filp, char __user *ubuf,
 			}
 			mutex_unlock(&trace_types_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			ret = iter->trace->wait_pipe(iter);
 			mutex_lock(&trace_types_lock);
 			if (ret) {
@@ -5413,10 +5297,6 @@ tracing_buffers_read(struct file *filp, char __user *ubuf,
 			iter->trace->wait_pipe(iter);
 			mutex_lock(&trace_types_lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			iter->trace->wait_pipe(iter);
-			mutex_lock(&trace_types_lock);
->>>>>>> master
 			if (signal_pending(current)) {
 				size = -EINTR;
 				goto out_unlock;
@@ -5553,19 +5433,13 @@ tracing_buffers_splice_read(struct file *file, loff_t *ppos,
 #endif
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	if (splice_grow_spd(pipe, &spd)) {
 		ret = -ENOMEM;
 		goto out;
 	}
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (*ppos & (PAGE_SIZE - 1)) {
 		ret = -EINVAL;
 		goto out;
@@ -5580,7 +5454,6 @@ tracing_buffers_splice_read(struct file *file, loff_t *ppos,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (splice_grow_spd(pipe, &spd)) {
 		ret = -ENOMEM;
 		goto out;
@@ -5588,8 +5461,6 @@ tracing_buffers_splice_read(struct file *file, loff_t *ppos,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  again:
 	trace_access_lock(iter->cpu_file);
 	entries = ring_buffer_entries_cpu(iter->trace_buffer->buffer, iter->cpu_file);
@@ -5646,7 +5517,6 @@ tracing_buffers_splice_read(struct file *file, loff_t *ppos,
 		if ((file->f_flags & O_NONBLOCK) || (flags & SPLICE_F_NONBLOCK)) {
 			ret = -EAGAIN;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			goto out_shrink;
 		}
 		mutex_unlock(&trace_types_lock);
@@ -5658,8 +5528,6 @@ tracing_buffers_splice_read(struct file *file, loff_t *ppos,
 			ret = -EINTR;
 			goto out_shrink;
 =======
-=======
->>>>>>> master
 			goto out;
 		}
 		mutex_unlock(&trace_types_lock);
@@ -5668,22 +5536,16 @@ tracing_buffers_splice_read(struct file *file, loff_t *ppos,
 		if (signal_pending(current)) {
 			ret = -EINTR;
 			goto out;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		}
 		goto again;
 	}
 
 	ret = splice_to_pipe(pipe, &spd);
 <<<<<<< HEAD
-<<<<<<< HEAD
 out_shrink:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	splice_shrink_spd(&spd);
 out:
 	mutex_unlock(&trace_types_lock);
@@ -5895,7 +5757,6 @@ ftrace_trace_snapshot_callback(struct ftrace_hash *hash,
 
  out_reg:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = alloc_snapshot(&global_trace);
 	if (ret < 0)
 		goto out;
@@ -5904,17 +5765,12 @@ ftrace_trace_snapshot_callback(struct ftrace_hash *hash,
 
  out:
 =======
-=======
->>>>>>> master
 	ret = register_ftrace_function_probe(glob, ops, count);
 
 	if (ret >= 0)
 		alloc_snapshot(&global_trace);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return ret < 0 ? ret : 0;
 }
 
@@ -6340,13 +6196,10 @@ allocate_trace_buffer(struct trace_array *tr, struct trace_buffer *buf, int size
 	rb_flags = trace_flags & TRACE_ITER_OVERWRITE ? RB_FL_OVERWRITE : 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	buf->tr = tr;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	buf->buffer = ring_buffer_alloc(size, rb_flags);
 	if (!buf->buffer)
 		return -ENOMEM;
@@ -6507,14 +6360,10 @@ static int instance_mkdir (struct inode *inode, struct dentry *dentry, umode_t m
 
 	/* Paranoid: Make sure the parent is the "instances" directory */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	parent = hlist_entry(inode->i_dentry.first, struct dentry, d_u.d_alias);
 =======
 	parent = hlist_entry(inode->i_dentry.first, struct dentry, d_alias);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	parent = hlist_entry(inode->i_dentry.first, struct dentry, d_alias);
->>>>>>> master
 	if (WARN_ON_ONCE(parent != trace_instance_dir))
 		return -ENOENT;
 
@@ -6542,14 +6391,10 @@ static int instance_rmdir(struct inode *inode, struct dentry *dentry)
 
 	/* Paranoid: Make sure the parent is the "instances" directory */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	parent = hlist_entry(inode->i_dentry.first, struct dentry, d_u.d_alias);
 =======
 	parent = hlist_entry(inode->i_dentry.first, struct dentry, d_alias);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	parent = hlist_entry(inode->i_dentry.first, struct dentry, d_alias);
->>>>>>> master
 	if (WARN_ON_ONCE(parent != trace_instance_dir))
 		return -ENOENT;
 

@@ -931,14 +931,10 @@ static unsigned int cache_poll(struct file *filp, poll_table *wait,
 
 	/* alway allow write */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mask = POLLOUT | POLLWRNORM;
 =======
 	mask = POLL_OUT | POLLWRNORM;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mask = POLL_OUT | POLLWRNORM;
->>>>>>> master
 
 	if (!rp)
 		return mask;
@@ -1230,14 +1226,10 @@ int qword_get(char **bpp, char *dest, int bufsize)
 		/* HEX STRING */
 		bp += 2;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		while (len < bufsize - 1) {
 =======
 		while (len < bufsize) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		while (len < bufsize) {
->>>>>>> master
 			int h, l;
 
 			h = hex_to_bin(bp[0]);

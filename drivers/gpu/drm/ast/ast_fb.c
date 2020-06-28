@@ -367,7 +367,6 @@ void ast_fbdev_set_suspend(struct drm_device *dev, int state)
 	fb_set_suspend(ast->fbdev->helper.fbdev, state);
 }
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 void ast_fbdev_set_base(struct ast_private *ast, unsigned long gpu_addr)
 {
@@ -377,5 +376,3 @@ void ast_fbdev_set_base(struct ast_private *ast, unsigned long gpu_addr)
 }
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master

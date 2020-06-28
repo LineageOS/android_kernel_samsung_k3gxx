@@ -90,7 +90,6 @@ static struct crypto_blkcipher *ceph_crypto_alloc_cipher(void)
 static const u8 *aes_iv = (u8 *)CEPH_AES_IV;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * Should be used for buffers allocated with ceph_kvmalloc().
  * Currently these are encrypt out-buffer (ceph_buffer) and decrypt
@@ -163,22 +162,16 @@ static void teardown_sgtable(struct sg_table *sgt)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int ceph_aes_encrypt(const void *key, int key_len,
 			    void *dst, size_t *dst_len,
 			    const void *src, size_t src_len)
 {
-<<<<<<< HEAD
 <<<<<<< HEAD
 	struct scatterlist sg_in[2], prealloc_sg;
 	struct sg_table sg_out;
 =======
 	struct scatterlist sg_in[2], sg_out[1];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct scatterlist sg_in[2], sg_out[1];
->>>>>>> master
 	struct crypto_blkcipher *tfm = ceph_crypto_alloc_cipher();
 	struct blkcipher_desc desc = { .tfm = tfm, .flags = 0 };
 	int ret;
@@ -195,7 +188,6 @@ static int ceph_aes_encrypt(const void *key, int key_len,
 	*dst_len = src_len + zero_padding;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	sg_init_table(sg_in, 2);
 	sg_set_buf(&sg_in[0], src, src_len);
 	sg_set_buf(&sg_in[1], pad, zero_padding);
@@ -209,8 +201,6 @@ static int ceph_aes_encrypt(const void *key, int key_len,
 	memcpy(iv, aes_iv, ivsize);
 
 =======
-=======
->>>>>>> master
 	crypto_blkcipher_setkey((void *)tfm, key, key_len);
 	sg_init_table(sg_in, 2);
 	sg_set_buf(&sg_in[0], src, src_len);
@@ -221,10 +211,7 @@ static int ceph_aes_encrypt(const void *key, int key_len,
 	ivsize = crypto_blkcipher_ivsize(tfm);
 
 	memcpy(iv, aes_iv, ivsize);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/*
 	print_hex_dump(KERN_ERR, "enc key: ", DUMP_PREFIX_NONE, 16, 1,
 		       key, key_len, 1);
@@ -234,7 +221,6 @@ static int ceph_aes_encrypt(const void *key, int key_len,
 			pad, zero_padding, 1);
 	*/
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = crypto_blkcipher_encrypt(&desc, sg_out.sgl, sg_in,
 				     src_len + zero_padding);
 	if (ret < 0) {
@@ -242,22 +228,16 @@ static int ceph_aes_encrypt(const void *key, int key_len,
 		goto out_sg;
 	}
 =======
-=======
->>>>>>> master
 	ret = crypto_blkcipher_encrypt(&desc, sg_out, sg_in,
 				     src_len + zero_padding);
 	crypto_free_blkcipher(tfm);
 	if (ret < 0)
 		pr_err("ceph_aes_crypt failed %d\n", ret);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/*
 	print_hex_dump(KERN_ERR, "enc out: ", DUMP_PREFIX_NONE, 16, 1,
 		       dst, *dst_len, 1);
 	*/
-<<<<<<< HEAD
 <<<<<<< HEAD
 
 out_sg:
@@ -268,9 +248,6 @@ out_tfm:
 =======
 	return 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return 0;
->>>>>>> master
 }
 
 static int ceph_aes_encrypt2(const void *key, int key_len, void *dst,
@@ -279,15 +256,11 @@ static int ceph_aes_encrypt2(const void *key, int key_len, void *dst,
 			     const void *src2, size_t src2_len)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct scatterlist sg_in[3], prealloc_sg;
 	struct sg_table sg_out;
 =======
 	struct scatterlist sg_in[3], sg_out[1];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct scatterlist sg_in[3], sg_out[1];
->>>>>>> master
 	struct crypto_blkcipher *tfm = ceph_crypto_alloc_cipher();
 	struct blkcipher_desc desc = { .tfm = tfm, .flags = 0 };
 	int ret;
@@ -304,18 +277,13 @@ static int ceph_aes_encrypt2(const void *key, int key_len, void *dst,
 	*dst_len = src1_len + src2_len + zero_padding;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	crypto_blkcipher_setkey((void *)tfm, key, key_len);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	crypto_blkcipher_setkey((void *)tfm, key, key_len);
->>>>>>> master
 	sg_init_table(sg_in, 3);
 	sg_set_buf(&sg_in[0], src1, src1_len);
 	sg_set_buf(&sg_in[1], src2, src2_len);
 	sg_set_buf(&sg_in[2], pad, zero_padding);
-<<<<<<< HEAD
 <<<<<<< HEAD
 	ret = setup_sgtable(&sg_out, &prealloc_sg, dst, *dst_len);
 	if (ret)
@@ -327,18 +295,13 @@ static int ceph_aes_encrypt2(const void *key, int key_len, void *dst,
 	memcpy(iv, aes_iv, ivsize);
 
 =======
-=======
->>>>>>> master
 	sg_init_table(sg_out, 1);
 	sg_set_buf(sg_out, dst, *dst_len);
 	iv = crypto_blkcipher_crt(tfm)->iv;
 	ivsize = crypto_blkcipher_ivsize(tfm);
 
 	memcpy(iv, aes_iv, ivsize);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/*
 	print_hex_dump(KERN_ERR, "enc  key: ", DUMP_PREFIX_NONE, 16, 1,
 		       key, key_len, 1);
@@ -350,7 +313,6 @@ static int ceph_aes_encrypt2(const void *key, int key_len, void *dst,
 			pad, zero_padding, 1);
 	*/
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = crypto_blkcipher_encrypt(&desc, sg_out.sgl, sg_in,
 				     src1_len + src2_len + zero_padding);
 	if (ret < 0) {
@@ -358,22 +320,16 @@ static int ceph_aes_encrypt2(const void *key, int key_len, void *dst,
 		goto out_sg;
 	}
 =======
-=======
->>>>>>> master
 	ret = crypto_blkcipher_encrypt(&desc, sg_out, sg_in,
 				     src1_len + src2_len + zero_padding);
 	crypto_free_blkcipher(tfm);
 	if (ret < 0)
 		pr_err("ceph_aes_crypt2 failed %d\n", ret);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/*
 	print_hex_dump(KERN_ERR, "enc  out: ", DUMP_PREFIX_NONE, 16, 1,
 		       dst, *dst_len, 1);
 	*/
-<<<<<<< HEAD
 <<<<<<< HEAD
 
 out_sg:
@@ -384,9 +340,6 @@ out_tfm:
 =======
 	return 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return 0;
->>>>>>> master
 }
 
 static int ceph_aes_decrypt(const void *key, int key_len,
@@ -394,15 +347,11 @@ static int ceph_aes_decrypt(const void *key, int key_len,
 			    const void *src, size_t src_len)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct sg_table sg_in;
 	struct scatterlist sg_out[2], prealloc_sg;
 =======
 	struct scatterlist sg_in[1], sg_out[2];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct scatterlist sg_in[1], sg_out[2];
->>>>>>> master
 	struct crypto_blkcipher *tfm = ceph_crypto_alloc_cipher();
 	struct blkcipher_desc desc = { .tfm = tfm };
 	char pad[16];
@@ -415,7 +364,6 @@ static int ceph_aes_decrypt(const void *key, int key_len,
 		return PTR_ERR(tfm);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	sg_init_table(sg_out, 2);
 	sg_set_buf(&sg_out[0], dst, *dst_len);
 	sg_set_buf(&sg_out[1], pad, sizeof(pad));
@@ -427,8 +375,6 @@ static int ceph_aes_decrypt(const void *key, int key_len,
 	iv = crypto_blkcipher_crt(tfm)->iv;
 	ivsize = crypto_blkcipher_ivsize(tfm);
 =======
-=======
->>>>>>> master
 	crypto_blkcipher_setkey((void *)tfm, key, key_len);
 	sg_init_table(sg_in, 1);
 	sg_init_table(sg_out, 2);
@@ -439,10 +385,7 @@ static int ceph_aes_decrypt(const void *key, int key_len,
 	iv = crypto_blkcipher_crt(tfm)->iv;
 	ivsize = crypto_blkcipher_ivsize(tfm);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	memcpy(iv, aes_iv, ivsize);
 
 	/*
@@ -452,24 +395,18 @@ static int ceph_aes_decrypt(const void *key, int key_len,
 		       src, src_len, 1);
 	*/
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = crypto_blkcipher_decrypt(&desc, sg_out, sg_in.sgl, src_len);
 	if (ret < 0) {
 		pr_err("ceph_aes_decrypt failed %d\n", ret);
 		goto out_sg;
 =======
-=======
->>>>>>> master
 
 	ret = crypto_blkcipher_decrypt(&desc, sg_out, sg_in, src_len);
 	crypto_free_blkcipher(tfm);
 	if (ret < 0) {
 		pr_err("ceph_aes_decrypt failed %d\n", ret);
 		return ret;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	if (src_len <= *dst_len)
@@ -488,7 +425,6 @@ static int ceph_aes_decrypt(const void *key, int key_len,
 		       dst, *dst_len, 1);
 	*/
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 out_sg:
 	teardown_sgtable(&sg_in);
@@ -498,9 +434,6 @@ out_tfm:
 =======
 	return 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return 0;
->>>>>>> master
 }
 
 static int ceph_aes_decrypt2(const void *key, int key_len,
@@ -509,15 +442,11 @@ static int ceph_aes_decrypt2(const void *key, int key_len,
 			     const void *src, size_t src_len)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct sg_table sg_in;
 	struct scatterlist sg_out[3], prealloc_sg;
 =======
 	struct scatterlist sg_in[1], sg_out[3];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct scatterlist sg_in[1], sg_out[3];
->>>>>>> master
 	struct crypto_blkcipher *tfm = ceph_crypto_alloc_cipher();
 	struct blkcipher_desc desc = { .tfm = tfm };
 	char pad[16];
@@ -530,40 +459,28 @@ static int ceph_aes_decrypt2(const void *key, int key_len,
 		return PTR_ERR(tfm);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	sg_init_table(sg_in, 1);
 	sg_set_buf(sg_in, src, src_len);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	sg_init_table(sg_in, 1);
-	sg_set_buf(sg_in, src, src_len);
->>>>>>> master
 	sg_init_table(sg_out, 3);
 	sg_set_buf(&sg_out[0], dst1, *dst1_len);
 	sg_set_buf(&sg_out[1], dst2, *dst2_len);
 	sg_set_buf(&sg_out[2], pad, sizeof(pad));
-<<<<<<< HEAD
 <<<<<<< HEAD
 	ret = setup_sgtable(&sg_in, &prealloc_sg, src, src_len);
 	if (ret)
 		goto out_tfm;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	crypto_blkcipher_setkey((void *)tfm, key, key_len);
 	iv = crypto_blkcipher_crt(tfm)->iv;
 	ivsize = crypto_blkcipher_ivsize(tfm);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 	memcpy(iv, aes_iv, ivsize);
 
 	/*
@@ -573,24 +490,18 @@ static int ceph_aes_decrypt2(const void *key, int key_len,
 		       src, src_len, 1);
 	*/
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = crypto_blkcipher_decrypt(&desc, sg_out, sg_in.sgl, src_len);
 	if (ret < 0) {
 		pr_err("ceph_aes_decrypt failed %d\n", ret);
 		goto out_sg;
 =======
-=======
->>>>>>> master
 
 	ret = crypto_blkcipher_decrypt(&desc, sg_out, sg_in, src_len);
 	crypto_free_blkcipher(tfm);
 	if (ret < 0) {
 		pr_err("ceph_aes_decrypt failed %d\n", ret);
 		return ret;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	if (src_len <= *dst1_len)
@@ -621,7 +532,6 @@ static int ceph_aes_decrypt2(const void *key, int key_len,
 	*/
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 out_sg:
 	teardown_sgtable(&sg_in);
 out_tfm:
@@ -630,9 +540,6 @@ out_tfm:
 =======
 	return 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return 0;
->>>>>>> master
 }
 
 
@@ -709,7 +616,6 @@ int ceph_encrypt(struct ceph_crypto_key *secret, void *dst, size_t *dst_len,
 	}
 }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 static int ceph_aes_crypt(const struct ceph_crypto_key *key, bool encrypt,
 			  void *buf, int buf_len, int in_len, int *pout_len)
@@ -800,8 +706,6 @@ int ceph_crypt(const struct ceph_crypto_key *key, bool encrypt,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 int ceph_encrypt2(struct ceph_crypto_key *secret, void *dst, size_t *dst_len,
 		  const void *src1, size_t src1_len,
 		  const void *src2, size_t src2_len)

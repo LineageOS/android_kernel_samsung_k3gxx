@@ -30,7 +30,6 @@
 enum enclosure_component_type {
 	ENCLOSURE_COMPONENT_DEVICE = 0x01,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ENCLOSURE_COMPONENT_CONTROLLER_ELECTRONICS = 0x07,
 	ENCLOSURE_COMPONENT_SCSI_TARGET_PORT = 0x14,
 	ENCLOSURE_COMPONENT_SCSI_INITIATOR_PORT = 0x15,
@@ -39,9 +38,6 @@ enum enclosure_component_type {
 =======
 	ENCLOSURE_COMPONENT_ARRAY_DEVICE = 0x17,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ENCLOSURE_COMPONENT_ARRAY_DEVICE = 0x17,
->>>>>>> master
 };
 
 /* ses-2 common element status */

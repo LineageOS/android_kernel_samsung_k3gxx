@@ -415,14 +415,11 @@ int radeon_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
 		value_size = sizeof(uint32_t)*32;
 		break;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	case RADEON_INFO_SI_CP_DMA_COMPUTE:
 		*value = 1;
 		break;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	default:
 		DRM_DEBUG_KMS("Invalid request %d\n", info->request);
 		return -EINVAL;
@@ -492,15 +489,12 @@ int radeon_driver_open_kms(struct drm_device *dev, struct drm_file *file_priv)
 		radeon_vm_init(rdev, &fpriv->vm);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		r = radeon_bo_reserve(rdev->ring_tmp_bo.bo, false);
 		if (r)
 			return r;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		/* map the ib pool buffer read only into
 		 * virtual address space */
 		bo_va = radeon_vm_bo_add(rdev, &fpriv->vm,
@@ -509,13 +503,10 @@ int radeon_driver_open_kms(struct drm_device *dev, struct drm_file *file_priv)
 					  RADEON_VM_PAGE_READABLE |
 					  RADEON_VM_PAGE_SNOOPED);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 		radeon_bo_unreserve(rdev->ring_tmp_bo.bo);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (r) {
 			radeon_vm_fini(rdev, &fpriv->vm);
 			kfree(fpriv);
@@ -685,13 +676,10 @@ int radeon_get_vblank_timestamp_kms(struct drm_device *dev, int crtc,
 	/* Get associated drm_crtc: */
 	drmcrtc = &rdev->mode_info.crtcs[crtc]->base;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!drmcrtc)
 		return -EINVAL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* Helper routine in DRM core does all the work: */
 	return drm_calc_vbltimestamp_from_scanoutpos(dev, crtc, max_error,

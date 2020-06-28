@@ -245,15 +245,10 @@ static void acpi_scan_bus_device_check(acpi_handle handle, u32 ost_source)
 		}
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	acpi_evaluate_hotplug_ost(handle, ost_source,
 				  ACPI_OST_SC_INSERT_IN_PROGRESS, NULL);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	acpi_evaluate_hotplug_ost(handle, ost_source,
-				  ACPI_OST_SC_INSERT_IN_PROGRESS, NULL);
->>>>>>> master
 	error = acpi_bus_scan(handle);
 	if (error) {
 		acpi_handle_warn(handle, "Namespace scan failure\n");
@@ -780,20 +775,15 @@ static void acpi_device_notify(acpi_handle handle, u32 event, void *data)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void acpi_device_notify_fixed(void *data)
 =======
 static acpi_status acpi_device_notify_fixed(void *data)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static acpi_status acpi_device_notify_fixed(void *data)
->>>>>>> master
 {
 	struct acpi_device *device = data;
 
 	/* Fixed hardware devices have no handles */
 	acpi_device_notify(NULL, ACPI_FIXED_HARDWARE_EVENT, device);
-<<<<<<< HEAD
 <<<<<<< HEAD
 }
 
@@ -802,8 +792,6 @@ static acpi_status acpi_device_fixed_event(void *data)
 	acpi_os_execute(OSL_NOTIFY_HANDLER, acpi_device_notify_fixed, data);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return AE_OK;
 }
 
@@ -815,27 +803,19 @@ static int acpi_device_install_notify_handler(struct acpi_device *device)
 		status =
 		    acpi_install_fixed_event_handler(ACPI_EVENT_POWER_BUTTON,
 <<<<<<< HEAD
-<<<<<<< HEAD
 						     acpi_device_fixed_event,
 =======
 						     acpi_device_notify_fixed,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-						     acpi_device_notify_fixed,
->>>>>>> master
 						     device);
 	else if (device->device_type == ACPI_BUS_TYPE_SLEEP_BUTTON)
 		status =
 		    acpi_install_fixed_event_handler(ACPI_EVENT_SLEEP_BUTTON,
 <<<<<<< HEAD
-<<<<<<< HEAD
 						     acpi_device_fixed_event,
 =======
 						     acpi_device_notify_fixed,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-						     acpi_device_notify_fixed,
->>>>>>> master
 						     device);
 	else
 		status = acpi_install_notify_handler(device->handle,
@@ -853,22 +833,16 @@ static void acpi_device_remove_notify_handler(struct acpi_device *device)
 	if (device->device_type == ACPI_BUS_TYPE_POWER_BUTTON)
 		acpi_remove_fixed_event_handler(ACPI_EVENT_POWER_BUTTON,
 <<<<<<< HEAD
-<<<<<<< HEAD
 						acpi_device_fixed_event);
 	else if (device->device_type == ACPI_BUS_TYPE_SLEEP_BUTTON)
 		acpi_remove_fixed_event_handler(ACPI_EVENT_SLEEP_BUTTON,
 						acpi_device_fixed_event);
 =======
-=======
->>>>>>> master
 						acpi_device_notify_fixed);
 	else if (device->device_type == ACPI_BUS_TYPE_SLEEP_BUTTON)
 		acpi_remove_fixed_event_handler(ACPI_EVENT_SLEEP_BUTTON,
 						acpi_device_notify_fixed);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	else
 		acpi_remove_notify_handler(device->handle, ACPI_DEVICE_NOTIFY,
 					   acpi_device_notify);
@@ -1849,14 +1823,10 @@ static void acpi_scan_init_hotplug(acpi_handle handle, int type)
 	list_for_each_entry(hwid, &pnp.ids, list) {
 		handler = acpi_scan_match_handler(hwid->id, NULL);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (handler && !handler->hotplug.ignore) {
 =======
 		if (handler) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (handler) {
->>>>>>> master
 			acpi_install_notify_handler(handle, ACPI_SYSTEM_NOTIFY,
 					acpi_hotplug_notify_cb, handler);
 			break;

@@ -25,14 +25,10 @@
 #include <linux/string.h>
 #include "ring_buffer_c.h"
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include "bbd_internal.h"
 =======
 #include "../bbd_internal.h"
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#include "../bbd_internal.h"
->>>>>>> master
 
 void RingBuffer_RingBuffer(struct sRingBuffer* p,
                         unsigned long ulSizeRingBuffer)

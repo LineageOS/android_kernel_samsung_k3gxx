@@ -895,10 +895,7 @@ static int loop_set_fd(struct loop_device *lo, fmode_t mode,
 	bio_list_init(&lo->lo_bio_list);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	/*
 	 * set queue make_request_fn, and add limits based on lower level
 	 * device
@@ -906,10 +903,7 @@ static int loop_set_fd(struct loop_device *lo, fmode_t mode,
 	blk_queue_make_request(lo->lo_queue, loop_make_request);
 	lo->lo_queue->queuedata = lo;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (!(lo_flags & LO_FLAGS_READ_ONLY) && file->f_op->fsync)
 		blk_queue_flush(lo->lo_queue, REQ_FLUSH);
 
@@ -1628,13 +1622,10 @@ static int loop_add(struct loop_device **l, int i)
 		goto out;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	lo->lo_state = Lo_unbound;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* allocate id, if @id >= 0, we're requesting that specific id */
 	if (i >= 0) {
 		err = idr_alloc(&loop_index_idr, lo, i, i + 1, GFP_KERNEL);
@@ -1651,7 +1642,6 @@ static int loop_add(struct loop_device **l, int i)
 	lo->lo_queue = blk_alloc_queue(GFP_KERNEL);
 	if (!lo->lo_queue)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto out_free_idr;
 
 	/*
@@ -1662,9 +1652,6 @@ static int loop_add(struct loop_device **l, int i)
 =======
 		goto out_free_dev;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto out_free_dev;
->>>>>>> master
 
 	disk = lo->lo_disk = alloc_disk(1 << part_shift);
 	if (!disk)
@@ -1710,13 +1697,10 @@ static int loop_add(struct loop_device **l, int i)
 out_free_queue:
 	blk_cleanup_queue(lo->lo_queue);
 <<<<<<< HEAD
-<<<<<<< HEAD
 out_free_idr:
 	idr_remove(&loop_index_idr, i);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 out_free_dev:
 	kfree(lo);
 out:
@@ -1781,14 +1765,10 @@ static struct kobject *loop_probe(dev_t dev, int *part, void *data)
 		err = loop_add(&lo, MINOR(dev) >> part_shift);
 	if (err < 0)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		kobj = NULL;
 =======
 		kobj = ERR_PTR(err);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		kobj = ERR_PTR(err);
->>>>>>> master
 	else
 		kobj = get_disk(lo->lo_disk);
 	mutex_unlock(&loop_index_mutex);

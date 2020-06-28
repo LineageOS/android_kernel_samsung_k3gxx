@@ -189,12 +189,9 @@ static int usb_console_setup(struct console *co, char *options)
  reset_open_count:
 	port->port.count = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	info->port = NULL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	usb_autopm_put_interface(serial->interface);
  error_get_interface:
 	usb_serial_put(serial);

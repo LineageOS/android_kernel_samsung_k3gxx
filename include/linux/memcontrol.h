@@ -125,7 +125,6 @@ extern void mem_cgroup_replace_page_cache(struct page *oldpage,
 					struct page *newpage);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static inline void mem_cgroup_oom_enable(void)
 {
 	WARN_ON(current->memcg_oom.may_oom);
@@ -147,8 +146,6 @@ bool mem_cgroup_oom_synchronize(bool wait);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #ifdef CONFIG_MEMCG_SWAP
 extern int do_swap_account;
 #endif
@@ -373,7 +370,6 @@ static inline void mem_cgroup_end_update_page_stat(struct page *page,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static inline void mem_cgroup_oom_enable(void)
 {
 }
@@ -394,8 +390,6 @@ static inline bool mem_cgroup_oom_synchronize(bool wait)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static inline void mem_cgroup_inc_page_stat(struct page *page,
 					    enum mem_cgroup_page_stat_item idx)
 {

@@ -104,14 +104,10 @@ static int hw_ep_flush(struct ci13xxx *ci, int num, int dir)
 	do {
 		/* flush any pending transfer */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		hw_write(ci, OP_ENDPTFLUSH, ~0, BIT(n));
 =======
 		hw_write(ci, OP_ENDPTFLUSH, BIT(n), BIT(n));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		hw_write(ci, OP_ENDPTFLUSH, BIT(n), BIT(n));
->>>>>>> master
 		while (hw_read(ci, OP_ENDPTFLUSH, BIT(n)))
 			cpu_relax();
 	} while (hw_read(ci, OP_ENDPTSTAT, BIT(n)));
@@ -212,14 +208,10 @@ static int hw_ep_prime(struct ci13xxx *ci, int num, int dir, int is_ctrl)
 		return -EAGAIN;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	hw_write(ci, OP_ENDPTPRIME, ~0, BIT(n));
 =======
 	hw_write(ci, OP_ENDPTPRIME, BIT(n), BIT(n));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	hw_write(ci, OP_ENDPTPRIME, BIT(n), BIT(n));
->>>>>>> master
 
 	while (hw_read(ci, OP_ENDPTPRIME, BIT(n)))
 		cpu_relax();
@@ -1664,15 +1656,10 @@ static int udc_start(struct ci13xxx *ci)
 	int retval = 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	spin_lock_init(&ci->lock);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	spin_lock_init(&ci->lock);
-
->>>>>>> master
 	ci->gadget.ops          = &usb_gadget_ops;
 	ci->gadget.speed        = USB_SPEED_UNKNOWN;
 	ci->gadget.max_speed    = USB_SPEED_HIGH;

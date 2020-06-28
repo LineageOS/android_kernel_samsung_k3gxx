@@ -154,12 +154,9 @@ extern void console_unlock(void);
 extern void console_conditional_schedule(void);
 extern void console_unblank(void);
 <<<<<<< HEAD
-<<<<<<< HEAD
 extern void console_flush_on_panic(void);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 extern struct tty_driver *console_device(int *);
 extern void console_stop(struct console *);
 extern void console_start(struct console *);

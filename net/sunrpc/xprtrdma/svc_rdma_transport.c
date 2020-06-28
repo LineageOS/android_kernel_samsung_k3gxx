@@ -90,12 +90,9 @@ struct svc_xprt_class svc_rdma_class = {
 	.xcl_ops = &svc_rdma_ops,
 	.xcl_max_payload = RPCSVC_MAXPAYLOAD_TCP,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.xcl_ident = XPRT_TRANSPORT_RDMA,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 struct svc_rdma_op_ctxt *svc_rdma_get_context(struct svcxprt_rdma *xprt)

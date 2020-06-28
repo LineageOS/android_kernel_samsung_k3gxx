@@ -609,13 +609,9 @@ static int rfcomm_sock_recvmsg(struct kiocb *iocb, struct socket *sock,
 	if (test_and_clear_bit(RFCOMM_DEFER_SETUP, &d->flags)) {
 		rfcomm_dlc_accept(d);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		msg->msg_namelen = 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		msg->msg_namelen = 0;
->>>>>>> master
 		return 0;
 	}
 
@@ -896,15 +892,11 @@ static int rfcomm_sock_shutdown(struct socket *sock, int how)
 		__rfcomm_sock_close(sk);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (sock_flag(sk, SOCK_LINGER) && sk->sk_lingertime &&
 		    !(current->flags & PF_EXITING))
 =======
 		if (sock_flag(sk, SOCK_LINGER) && sk->sk_lingertime)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (sock_flag(sk, SOCK_LINGER) && sk->sk_lingertime)
->>>>>>> master
 			err = bt_sock_wait_state(sk, BT_CLOSED, sk->sk_lingertime);
 	}
 	release_sock(sk);

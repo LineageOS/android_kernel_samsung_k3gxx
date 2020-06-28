@@ -329,14 +329,10 @@ static noinline int i2cdev_ioctl_smbus(struct i2c_client *client,
 {
 	struct i2c_smbus_ioctl_data data_arg;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	union i2c_smbus_data temp = {};
 =======
 	union i2c_smbus_data temp;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	union i2c_smbus_data temp;
->>>>>>> master
 	int datasize, res;
 
 	if (copy_from_user(&data_arg,

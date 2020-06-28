@@ -86,13 +86,10 @@ snd_emu10k1_ops_setup(struct snd_emux *emux)
  *
  * terminate most inactive voice and give it as a pcm voice.
 <<<<<<< HEAD
-<<<<<<< HEAD
  *
  * voice_lock is already held.
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  */
 int
 snd_emu10k1_synth_get_voice(struct snd_emu10k1 *hw)
@@ -101,25 +98,17 @@ snd_emu10k1_synth_get_voice(struct snd_emu10k1 *hw)
 	struct snd_emux_voice *vp;
 	struct best_voice best[V_END];
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	unsigned long flags;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned long flags;
->>>>>>> master
 	int i;
 
 	emu = hw->synth;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	spin_lock_irqsave(&emu->voice_lock, flags);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	spin_lock_irqsave(&emu->voice_lock, flags);
->>>>>>> master
 	lookup_voices(emu, hw, best, 1); /* no OFF voices */
 	for (i = 0; i < V_END; i++) {
 		if (best[i].voice >= 0) {
@@ -136,22 +125,16 @@ snd_emu10k1_synth_get_voice(struct snd_emu10k1 *hw)
 			vp->ch = -1;
 			vp->state = SNDRV_EMUX_ST_OFF;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			return ch;
 		}
 	}
 =======
-=======
->>>>>>> master
 			spin_unlock_irqrestore(&emu->voice_lock, flags);
 			return ch;
 		}
 	}
 	spin_unlock_irqrestore(&emu->voice_lock, flags);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* not found */
 	return -ENOMEM;
@@ -452,14 +435,10 @@ start_voice(struct snd_emux_voice *vp)
 
 	/* invalidate maps */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	temp = (hw->silent_page.addr << hw->address_mode) | (hw->address_mode ? MAP_PTI_MASK1 : MAP_PTI_MASK0);
 =======
 	temp = (hw->silent_page.addr << 1) | MAP_PTI_MASK;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	temp = (hw->silent_page.addr << 1) | MAP_PTI_MASK;
->>>>>>> master
 	snd_emu10k1_ptr_write(hw, MAPA, ch, temp);
 	snd_emu10k1_ptr_write(hw, MAPB, ch, temp);
 #if 0
@@ -481,14 +460,10 @@ start_voice(struct snd_emux_voice *vp)
 
 		/* invalidate maps */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		temp = ((unsigned int)hw->silent_page.addr << hw_address_mode) | (hw->address_mode ? MAP_PTI_MASK1 : MAP_PTI_MASK0);
 =======
 		temp = ((unsigned int)hw->silent_page.addr << 1) | MAP_PTI_MASK;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		temp = ((unsigned int)hw->silent_page.addr << 1) | MAP_PTI_MASK;
->>>>>>> master
 		snd_emu10k1_ptr_write(hw, MAPA, ch, temp);
 		snd_emu10k1_ptr_write(hw, MAPB, ch, temp);
 		

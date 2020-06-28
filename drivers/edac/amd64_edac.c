@@ -1267,14 +1267,10 @@ static u64 f1x_get_norm_dct_addr(struct amd64_pvt *pvt, u8 range,
 	u64 dram_base		= get_dram_base(pvt, range);
 	u64 hole_off		= f10_dhar_offset(pvt);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u64 dct_sel_base_off	= (u64)(pvt->dct_sel_hi & 0xFFFFFC00) << 16;
 =======
 	u64 dct_sel_base_off	= (pvt->dct_sel_hi & 0xFFFFFC00) << 16;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u64 dct_sel_base_off	= (pvt->dct_sel_hi & 0xFFFFFC00) << 16;
->>>>>>> master
 
 	if (hi_rng) {
 		/*
@@ -2479,7 +2475,6 @@ static int amd64_init_one_instance(struct pci_dev *F2)
 	layers[0].is_virt_csrow = true;
 	layers[1].type = EDAC_MC_LAYER_CHANNEL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	/*
 	 * Always allocate two channels since we can have setups with DIMMs on
@@ -2493,10 +2488,6 @@ static int amd64_init_one_instance(struct pci_dev *F2)
 	layers[1].size = pvt->channel_count;
 	layers[1].is_virt_csrow = false;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	layers[1].size = pvt->channel_count;
-	layers[1].is_virt_csrow = false;
->>>>>>> master
 	mci = edac_mc_alloc(nid, ARRAY_SIZE(layers), layers, 0);
 	if (!mci)
 		goto err_siblings;

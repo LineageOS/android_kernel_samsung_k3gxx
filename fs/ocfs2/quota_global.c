@@ -718,7 +718,6 @@ static int ocfs2_release_dquot(struct dquot *dquot)
 	if (status < 0)
 		mlog_errno(status);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * Clear dq_off so that we search for the structure in quota file next
 	 * time we acquire it. The structure might be deleted and reallocated
@@ -727,8 +726,6 @@ static int ocfs2_release_dquot(struct dquot *dquot)
 	dquot->dq_off = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	clear_bit(DQ_ACTIVE_B, &dquot->dq_flags);
 out_trans:
 	ocfs2_commit_trans(osb, handle);
@@ -769,7 +766,6 @@ static int ocfs2_acquire_dquot(struct dquot *dquot)
 	if (status < 0)
 		goto out;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	status = ocfs2_qinfo_lock(info, 0);
 	if (status < 0)
 		goto out_dq;
@@ -782,8 +778,6 @@ static int ocfs2_acquire_dquot(struct dquot *dquot)
 	if (status < 0)
 		goto out_dq;
 =======
-=======
->>>>>>> master
 	if (!test_bit(DQ_READ_B, &dquot->dq_flags)) {
 		status = ocfs2_qinfo_lock(info, 0);
 		if (status < 0)
@@ -794,10 +788,7 @@ static int ocfs2_acquire_dquot(struct dquot *dquot)
 			goto out_dq;
 	}
 	set_bit(DQ_READ_B, &dquot->dq_flags);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	OCFS2_DQUOT(dquot)->dq_use_count++;
 	OCFS2_DQUOT(dquot)->dq_origspace = dquot->dq_dqb.dqb_curspace;

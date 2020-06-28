@@ -50,7 +50,6 @@ ucs2_strncmp(const ucs2_char_t *a, const ucs2_char_t *b, size_t len)
 }
 EXPORT_SYMBOL(ucs2_strncmp);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 unsigned long
 ucs2_utf8size(const ucs2_char_t *src)
@@ -115,5 +114,3 @@ ucs2_as_utf8(u8 *dest, const ucs2_char_t *src, unsigned long maxlength)
 EXPORT_SYMBOL(ucs2_as_utf8);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master

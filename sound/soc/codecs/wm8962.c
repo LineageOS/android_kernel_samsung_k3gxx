@@ -154,12 +154,9 @@ static struct reg_default wm8962_reg[] = {
 	{ 41, 0x0000 },   /* R41    - SPKOUTR volume */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	{ 49, 0x0010 },   /* R49    - Class D Control 1 */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	{ 51, 0x0003 },   /* R51    - Class D Control 2 */
 
 	{ 56, 0x0506 },   /* R56    - Clocking 4 */
@@ -370,17 +367,12 @@ static struct reg_default wm8962_reg[] = {
 	{ 16925, 0x999A },   /* R16925 - HDBASS_PG_0 */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	{ 17408, 0x0083 },   /* R17408 - HPF_C_1 */
 	{ 17409, 0x98AD },   /* R17409 - HPF_C_0 */
 =======
 	{ 17048, 0x0083 },   /* R17408 - HPF_C_1 */
 	{ 17049, 0x98AD },   /* R17409 - HPF_C_0 */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	{ 17048, 0x0083 },   /* R17408 - HPF_C_1 */
-	{ 17049, 0x98AD },   /* R17409 - HPF_C_0 */
->>>>>>> master
 
 	{ 17920, 0x007F },   /* R17920 - ADCL_RETUNE_C1_1 */
 	{ 17921, 0xFFFF },   /* R17921 - ADCL_RETUNE_C1_0 */
@@ -812,13 +804,9 @@ static bool wm8962_volatile_register(struct device *dev, unsigned int reg)
 	case WM8962_THERMAL_SHUTDOWN_STATUS:
 	case WM8962_ADDITIONAL_CONTROL_4:
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	case WM8962_CLASS_D_CONTROL_1:
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	case WM8962_CLASS_D_CONTROL_1:
->>>>>>> master
 	case WM8962_DC_SERVO_6:
 	case WM8962_INTERRUPT_STATUS_1:
 	case WM8962_INTERRUPT_STATUS_2:
@@ -2926,7 +2914,6 @@ static int wm8962_mute(struct snd_soc_dai *dai, int mute)
 {
 	struct snd_soc_codec *codec = dai->codec;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int val, ret;
 
 	if (mute)
@@ -2944,8 +2931,6 @@ static int wm8962_mute(struct snd_soc_dai *dai, int mute)
 		return ret;
 
 =======
-=======
->>>>>>> master
 	int val;
 
 	if (mute)
@@ -2953,10 +2938,7 @@ static int wm8962_mute(struct snd_soc_dai *dai, int mute)
 	else
 		val = 0;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return snd_soc_update_bits(codec, WM8962_ADC_DAC_CONTROL_1,
 				   WM8962_DAC_MUTE, val);
 }
@@ -3736,13 +3718,10 @@ static int wm8962_i2c_probe(struct i2c_client *i2c,
 		goto err_enable;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	regcache_cache_only(wm8962->regmap, true);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* The drivers should power up as needed */
 	regulator_bulk_disable(ARRAY_SIZE(wm8962->supplies), wm8962->supplies);
 

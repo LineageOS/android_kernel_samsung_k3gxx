@@ -182,7 +182,6 @@ static int snd_card_emu10k1_probe(struct pci_dev *pci,
 #endif
  
 <<<<<<< HEAD
-<<<<<<< HEAD
 	strlcpy(card->driver, emu->card_capabilities->driver,
 		sizeof(card->driver));
 	strlcpy(card->shortname, emu->card_capabilities->name,
@@ -191,10 +190,6 @@ static int snd_card_emu10k1_probe(struct pci_dev *pci,
 	strcpy(card->driver, emu->card_capabilities->driver);
 	strcpy(card->shortname, emu->card_capabilities->name);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	strcpy(card->driver, emu->card_capabilities->driver);
-	strcpy(card->shortname, emu->card_capabilities->name);
->>>>>>> master
 	snprintf(card->longname, sizeof(card->longname),
 		 "%s (rev.%d, serial:0x%x) at 0x%lx, irq %i",
 		 card->shortname, emu->revision, emu->serial, emu->port, emu->irq);

@@ -168,7 +168,6 @@ static __inline__ void rt6_release(struct rt6_info *rt)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void fib6_free_table(struct fib6_table *table)
 {
 	inetpeer_invalidate_tree(&table->tb6_peers);
@@ -177,8 +176,6 @@ static void fib6_free_table(struct fib6_table *table)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static void fib6_link_table(struct net *net, struct fib6_table *tb)
 {
 	unsigned int h;
@@ -651,7 +648,6 @@ static inline bool rt6_qualify_for_ecmp(struct rt6_info *rt)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void fib6_purge_rt(struct rt6_info *rt, struct fib6_node *fn,
 			  struct net *net)
 {
@@ -677,8 +673,6 @@ static void fib6_purge_rt(struct rt6_info *rt, struct fib6_node *fn,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  *	Insert routing information in a node.
  */
@@ -817,25 +811,18 @@ add:
 		atomic_inc(&rt->rt6i_ref);
 		inet6_rt_notify(RTM_NEWROUTE, rt, info);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		rt6_release(iter);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		rt6_release(iter);
->>>>>>> master
 		if (!(fn->fn_flags & RTN_RTINFO)) {
 			info->nl_net->ipv6.rt6_stats->fib_route_nodes++;
 			fn->fn_flags |= RTN_RTINFO;
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 		fib6_purge_rt(iter, fn, info->nl_net);
 		rt6_release(iter);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	return 0;
@@ -882,7 +869,6 @@ int fib6_add(struct fib6_node *root, struct rt6_info *rt, struct nl_info *info)
 			rt->rt6i_dst.plen, offsetof(struct rt6_info, rt6i_dst),
 			allow_create, replace_required);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (IS_ERR(fn)) {
 		err = PTR_ERR(fn);
 		fn = NULL;
@@ -891,11 +877,6 @@ int fib6_add(struct fib6_node *root, struct rt6_info *rt, struct nl_info *info)
 	if (IS_ERR(fn)) {
 		err = PTR_ERR(fn);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-	if (IS_ERR(fn)) {
-		err = PTR_ERR(fn);
->>>>>>> master
 		goto out;
 	}
 
@@ -1062,7 +1043,6 @@ static struct fib6_node * fib6_lookup_1(struct fib6_node *root,
 			if (ipv6_prefix_equal(&key->addr, args->addr, key->plen)) {
 #ifdef CONFIG_IPV6_SUBTREES
 <<<<<<< HEAD
-<<<<<<< HEAD
 				if (fn->subtree) {
 					struct fib6_node *sfn;
 					sfn = fib6_lookup_1(fn->subtree,
@@ -1080,8 +1060,6 @@ static struct fib6_node * fib6_lookup_1(struct fib6_node *root,
 backtrack:
 #endif
 =======
-=======
->>>>>>> master
 				if (fn->subtree)
 					fn = fib6_lookup_1(fn->subtree, args + 1);
 #endif
@@ -1090,10 +1068,7 @@ backtrack:
 			}
 		}
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (fn->fn_flags & RTN_ROOT)
 			break;
 
@@ -1370,11 +1345,8 @@ static void fib6_del_route(struct fib6_node *fn, struct rt6_info **rtp,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	fib6_purge_rt(rt, fn, net);
 =======
-=======
->>>>>>> master
 	if (atomic_read(&rt->rt6i_ref) != 1) {
 		/* This route is used as dummy address holder in some split
 		 * nodes. It is not leaked, but it still holds other resources,
@@ -1393,10 +1365,7 @@ static void fib6_del_route(struct fib6_node *fn, struct rt6_info **rtp,
 		/* No more references are possible at this point. */
 		BUG_ON(atomic_read(&rt->rt6i_ref) != 1);
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	inet6_rt_notify(RTM_DELROUTE, rt, info);
 	rt6_release(rt);
@@ -1514,14 +1483,10 @@ static int fib6_walk_continue(struct fib6_walker_t *w)
 				if (w->skip) {
 					w->skip--;
 <<<<<<< HEAD
-<<<<<<< HEAD
 					goto skip;
 =======
 					continue;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					continue;
->>>>>>> master
 				}
 
 				err = w->func(w);
@@ -1532,12 +1497,9 @@ static int fib6_walk_continue(struct fib6_walker_t *w)
 				continue;
 			}
 <<<<<<< HEAD
-<<<<<<< HEAD
 skip:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			w->state = FWS_U;
 		case FWS_U:
 			if (fn == w->root)
@@ -1751,7 +1713,6 @@ static int fib6_age(struct rt6_info *rt, void *arg)
 static DEFINE_SPINLOCK(fib6_gc_lock);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 void fib6_run_gc(unsigned long expires, struct net *net, bool force)
 {
 	unsigned long now;
@@ -1765,8 +1726,6 @@ void fib6_run_gc(unsigned long expires, struct net *net, bool force)
 	gc_args.timeout = expires ? (int)expires :
 			  net->ipv6.sysctl.ip6_rt_gc_interval;
 =======
-=======
->>>>>>> master
 void fib6_run_gc(unsigned long expires, struct net *net)
 {
 	if (expires != ~0UL) {
@@ -1780,15 +1739,11 @@ void fib6_run_gc(unsigned long expires, struct net *net)
 		}
 		gc_args.timeout = net->ipv6.sysctl.ip6_rt_gc_interval;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	gc_args.more = icmp6_dst_gc();
 
 	fib6_clean_all(net, fib6_age, 0, NULL);
-<<<<<<< HEAD
 <<<<<<< HEAD
 	now = jiffies;
 	net->ipv6.ip6_rt_last_gc = now;
@@ -1797,16 +1752,11 @@ void fib6_run_gc(unsigned long expires, struct net *net)
 		mod_timer(&net->ipv6.ip6_fib_timer,
 			  round_jiffies(now
 =======
-=======
->>>>>>> master
 
 	if (gc_args.more)
 		mod_timer(&net->ipv6.ip6_fib_timer,
 			  round_jiffies(jiffies
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 					+ net->ipv6.sysctl.ip6_rt_gc_interval));
 	else
 		del_timer(&net->ipv6.ip6_fib_timer);
@@ -1816,14 +1766,10 @@ void fib6_run_gc(unsigned long expires, struct net *net)
 static void fib6_gc_timer_cb(unsigned long arg)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	fib6_run_gc(0, (struct net *)arg, true);
 =======
 	fib6_run_gc(0, (struct net *)arg);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	fib6_run_gc(0, (struct net *)arg);
->>>>>>> master
 }
 
 static int __net_init fib6_net_init(struct net *net)
@@ -1884,7 +1830,6 @@ out_timer:
 static void fib6_net_exit(struct net *net)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned int i;
 
 	rt6_ifdown(net, NULL);
@@ -1902,8 +1847,6 @@ static void fib6_net_exit(struct net *net)
 	}
 
 =======
-=======
->>>>>>> master
 	rt6_ifdown(net, NULL);
 	del_timer_sync(&net->ipv6.ip6_fib_timer);
 
@@ -1913,10 +1856,7 @@ static void fib6_net_exit(struct net *net)
 #endif
 	inetpeer_invalidate_tree(&net->ipv6.fib6_main_tbl->tb6_peers);
 	kfree(net->ipv6.fib6_main_tbl);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	kfree(net->ipv6.fib_table_hash);
 	kfree(net->ipv6.rt6_stats);
 }

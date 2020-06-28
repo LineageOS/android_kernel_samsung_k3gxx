@@ -1534,7 +1534,6 @@ static const char *uvc_print_chain(struct uvc_video_chain *chain)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static struct uvc_video_chain *uvc_alloc_chain(struct uvc_device *dev)
 {
 	struct uvc_video_chain *chain;
@@ -1645,8 +1644,6 @@ error:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  * Scan the device for video chains and register video devices.
  *
@@ -1670,14 +1667,11 @@ static int uvc_scan_device(struct uvc_device *dev)
 			continue;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		chain = uvc_alloc_chain(dev);
 		if (chain == NULL)
 			return -ENOMEM;
 
 =======
-=======
->>>>>>> master
 		chain = kzalloc(sizeof(*chain), GFP_KERNEL);
 		if (chain == NULL)
 			return -ENOMEM;
@@ -1687,10 +1681,7 @@ static int uvc_scan_device(struct uvc_device *dev)
 		chain->dev = dev;
 		v4l2_prio_init(&chain->prio);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		term->flags |= UVC_ENTITY_FLAG_DEFAULT;
 
 		if (uvc_scan_chain(chain, term) < 0) {
@@ -1705,14 +1696,11 @@ static int uvc_scan_device(struct uvc_device *dev)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (list_empty(&dev->chains))
 		uvc_scan_fallback(dev);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (list_empty(&dev->chains)) {
 		uvc_printk(KERN_INFO, "No valid video chain found.\n");
 		return -1;
@@ -1740,7 +1728,6 @@ static void uvc_delete(struct uvc_device *dev)
 	struct list_head *p, *n;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	uvc_status_cleanup(dev);
 	uvc_ctrl_cleanup_device(dev);
 
@@ -1748,18 +1735,13 @@ static void uvc_delete(struct uvc_device *dev)
 	usb_put_dev(dev->udev);
 
 =======
-=======
->>>>>>> master
 	usb_put_intf(dev->intf);
 	usb_put_dev(dev->udev);
 
 	uvc_status_cleanup(dev);
 	uvc_ctrl_cleanup_device(dev);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (dev->vdev.dev)
 		v4l2_device_unregister(&dev->vdev);
 #ifdef CONFIG_MEDIA_CONTROLLER

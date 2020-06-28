@@ -129,7 +129,6 @@ out_noerr:
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static struct sk_buff *skb_set_peeked(struct sk_buff *skb)
 {
 	struct sk_buff *nskb;
@@ -161,8 +160,6 @@ done:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /**
  *	__skb_recv_datagram - Receive a datagram skbuff
  *	@sk: socket
@@ -198,16 +195,12 @@ struct sk_buff *__skb_recv_datagram(struct sock *sk, unsigned int flags,
 				    int *peeked, int *off, int *err)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct sk_buff_head *queue = &sk->sk_receive_queue;
 	struct sk_buff *skb, *last;
 	unsigned long cpu_flags;
 =======
 	struct sk_buff *skb, *last;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct sk_buff *skb, *last;
->>>>>>> master
 	long timeo;
 	/*
 	 * Caller is allowed not to check sk->sk_err before skb_recv_datagram()
@@ -227,15 +220,10 @@ struct sk_buff *__skb_recv_datagram(struct sock *sk, unsigned int flags,
 		 * However, this function was correct in any case. 8)
 		 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		unsigned long cpu_flags;
 		struct sk_buff_head *queue = &sk->sk_receive_queue;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		unsigned long cpu_flags;
-		struct sk_buff_head *queue = &sk->sk_receive_queue;
->>>>>>> master
 		int _off = *off;
 
 		last = (struct sk_buff *)queue;
@@ -250,7 +238,6 @@ struct sk_buff *__skb_recv_datagram(struct sock *sk, unsigned int flags,
 					continue;
 				}
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 				skb = skb_set_peeked(skb);
 				error = PTR_ERR(skb);
@@ -260,9 +247,6 @@ struct sk_buff *__skb_recv_datagram(struct sock *sk, unsigned int flags,
 =======
 				skb->peeked = 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				skb->peeked = 1;
->>>>>>> master
 				atomic_inc(&skb->users);
 			} else
 				__skb_unlink(skb, queue);
@@ -283,13 +267,10 @@ struct sk_buff *__skb_recv_datagram(struct sock *sk, unsigned int flags,
 	return NULL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 unlock_err:
 	spin_unlock_irqrestore(&queue->lock, cpu_flags);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 no_packet:
 	*err = error;
 	return NULL;
@@ -740,15 +721,11 @@ __sum16 __skb_checksum_complete_head(struct sk_buff *skb, int len)
 		if (unlikely(skb->ip_summed == CHECKSUM_COMPLETE))
 			netdev_rx_csum_fault(skb->dev);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!skb_shared(skb))
 			skb->ip_summed = CHECKSUM_UNNECESSARY;
 =======
 		skb->ip_summed = CHECKSUM_UNNECESSARY;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		skb->ip_summed = CHECKSUM_UNNECESSARY;
->>>>>>> master
 	}
 	return sum;
 }

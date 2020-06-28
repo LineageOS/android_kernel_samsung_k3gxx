@@ -119,14 +119,11 @@ MODULE_LICENSE("GPL v2");
 #define EMS_USB_ARM7_CLOCK 8000000
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CPC_TX_QUEUE_TRIGGER_LOW	25
 #define CPC_TX_QUEUE_TRIGGER_HIGH	35
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  * CAN-Message representation in a CPC_MSG. Message object type is
  * CPC_MSG_TYPE_CAN_FRAME or CPC_MSG_TYPE_RTR_FRAME or
@@ -289,7 +286,6 @@ static void ems_usb_read_interrupt_callback(struct urb *urb)
 	case 0:
 		dev->free_slots = dev->intr_in_buffer[1];
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if(dev->free_slots > CPC_TX_QUEUE_TRIGGER_HIGH){
 			if (netif_queue_stopped(netdev)){
 				netif_wake_queue(netdev);
@@ -297,8 +293,6 @@ static void ems_usb_read_interrupt_callback(struct urb *urb)
 		}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		break;
 
 	case -ECONNRESET: /* unlink */
@@ -551,15 +545,10 @@ static void ems_usb_write_bulk_callback(struct urb *urb)
 	context->echo_index = MAX_TX_URBS;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if (netif_queue_stopped(netdev))
 		netif_wake_queue(netdev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (netif_queue_stopped(netdev))
-		netif_wake_queue(netdev);
->>>>>>> master
 }
 
 /*
@@ -620,14 +609,10 @@ static int ems_usb_start(struct ems_usb *dev)
 
 	dev->intr_in_buffer[0] = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dev->free_slots = 50; /* initial size */
 =======
 	dev->free_slots = 15; /* initial size */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	dev->free_slots = 15; /* initial size */
->>>>>>> master
 
 	for (i = 0; i < MAX_RX_URBS; i++) {
 		struct urb *urb = NULL;
@@ -878,14 +863,10 @@ static netdev_tx_t ems_usb_start_xmit(struct sk_buff *skb, struct net_device *ne
 		/* Slow down tx path */
 		if (atomic_read(&dev->active_tx_urbs) >= MAX_TX_URBS ||
 <<<<<<< HEAD
-<<<<<<< HEAD
 		    dev->free_slots < CPC_TX_QUEUE_TRIGGER_LOW) {
 =======
 		    dev->free_slots < 5) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		    dev->free_slots < 5) {
->>>>>>> master
 			netif_stop_queue(netdev);
 		}
 	}

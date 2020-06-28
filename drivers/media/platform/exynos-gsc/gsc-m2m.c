@@ -752,12 +752,9 @@ int gsc_register_m2m_device(struct gsc_dev *gsc)
 	gsc->vdev.lock		= &gsc->lock;
 	gsc->vdev.vfl_dir	= VFL_DIR_M2M;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	gsc->vdev.v4l2_dev	= &gsc->v4l2_dev;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	snprintf(gsc->vdev.name, sizeof(gsc->vdev.name), "%s.%d:m2m",
 					GSC_MODULE_NAME, gsc->id);
 

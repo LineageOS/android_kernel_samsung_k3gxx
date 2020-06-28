@@ -1921,14 +1921,10 @@ struct mac_iveiv_entry {
  * 3 - increase tx power by 6dBm
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define BBP1_TX_POWER_CTRL		FIELD8(0x03)
 =======
 #define BBP1_TX_POWER_CTRL		FIELD8(0x07)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define BBP1_TX_POWER_CTRL		FIELD8(0x07)
->>>>>>> master
 #define BBP1_TX_ANTENNA			FIELD8(0x18)
 
 /*

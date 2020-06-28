@@ -664,7 +664,6 @@ static int hci_conn_auth(struct hci_conn *conn, __u8 sec_level, __u8 auth_type)
 		struct hci_cp_auth_requested cp;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		cp.handle = cpu_to_le16(conn->handle);
 		hci_send_cmd(conn->hdev, HCI_OP_AUTH_REQUESTED,
 			     sizeof(cp), &cp);
@@ -677,8 +676,6 @@ static int hci_conn_auth(struct hci_conn *conn, __u8 sec_level, __u8 auth_type)
 		else
 			set_bit(HCI_CONN_ENCRYPT_PEND, &conn->flags);
 =======
-=======
->>>>>>> master
 		/* encrypt must be pending if auth is also pending */
 		set_bit(HCI_CONN_ENCRYPT_PEND, &conn->flags);
 
@@ -687,10 +684,7 @@ static int hci_conn_auth(struct hci_conn *conn, __u8 sec_level, __u8 auth_type)
 			     sizeof(cp), &cp);
 		if (conn->key_type != 0xff)
 			set_bit(HCI_CONN_REAUTH_PEND, &conn->flags);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	return 0;

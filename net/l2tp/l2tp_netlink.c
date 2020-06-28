@@ -720,14 +720,10 @@ static int l2tp_nl_cmd_session_dump(struct sk_buff *skb, struct netlink_callback
 		}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		session = l2tp_session_get_nth(tunnel, si, false);
 =======
 		session = l2tp_session_find_nth(tunnel, si);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		session = l2tp_session_find_nth(tunnel, si);
->>>>>>> master
 		if (session == NULL) {
 			ti++;
 			tunnel = NULL;
@@ -738,7 +734,6 @@ static int l2tp_nl_cmd_session_dump(struct sk_buff *skb, struct netlink_callback
 		if (l2tp_nl_session_send(skb, NETLINK_CB(cb->skb).portid,
 					 cb->nlh->nlmsg_seq, NLM_F_MULTI,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					 session) <= 0) {
 			l2tp_session_dec_refcount(session);
 			break;
@@ -748,10 +743,6 @@ static int l2tp_nl_cmd_session_dump(struct sk_buff *skb, struct netlink_callback
 					 session) <= 0)
 			break;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					 session) <= 0)
-			break;
->>>>>>> master
 
 		si++;
 	}

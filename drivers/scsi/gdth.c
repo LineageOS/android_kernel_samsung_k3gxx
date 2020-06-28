@@ -4687,12 +4687,9 @@ static struct scsi_host_template gdth_template = {
         .unchecked_isa_dma      = 1,
         .use_clustering         = ENABLE_CLUSTERING,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.no_write_same		= 1,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 #ifdef CONFIG_ISA

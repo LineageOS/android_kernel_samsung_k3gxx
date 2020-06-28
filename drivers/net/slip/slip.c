@@ -164,14 +164,10 @@ static int sl_alloc_bufs(struct slip *sl, int mtu)
 		goto err_exit;
 	slcomp = slhc_init(16, 16);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (IS_ERR(slcomp))
 =======
 	if (slcomp == NULL)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (slcomp == NULL)
->>>>>>> master
 		goto err_exit;
 #endif
 	spin_lock_bh(&sl->lock);

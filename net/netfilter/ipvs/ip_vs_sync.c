@@ -600,14 +600,10 @@ static void ip_vs_sync_conn_v0(struct net *net, struct ip_vs_conn *cp,
 		else
 			pkts = sysctl_sync_threshold(ipvs);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ip_vs_sync_conn(net, cp, pkts);
 =======
 		ip_vs_sync_conn(net, cp->control, pkts);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		ip_vs_sync_conn(net, cp->control, pkts);
->>>>>>> master
 	}
 }
 
@@ -887,13 +883,10 @@ static void ip_vs_proc_conn(struct net *net, struct ip_vs_conn_param *param,
 			return;
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!(flags & IP_VS_CONN_F_TEMPLATE))
 			kfree(param->pe_data);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	if (opt)
@@ -1168,12 +1161,9 @@ static inline int ip_vs_proc_sync_conn(struct net *net, __u8 *p, __u8 *msg_end)
 				);
 #endif
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ip_vs_pe_put(param.pe);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 	/* Error exit */
 out:

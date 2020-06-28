@@ -190,14 +190,11 @@ ssize_t splice_to_pipe(struct pipe_inode_info *pipe,
 	int ret, do_wakeup, page_nr;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!spd_pages)
 		return 0;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ret = 0;
 	do_wakeup = 0;
 	page_nr = 0;
@@ -222,12 +219,9 @@ ssize_t splice_to_pipe(struct pipe_inode_info *pipe,
 			buf->private = spd->partial[page_nr].private;
 			buf->ops = spd->ops;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			buf->flags = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			if (spd->flags & SPLICE_F_GIFT)
 				buf->flags |= PIPE_BUF_FLAG_GIFT;
 
@@ -398,14 +392,11 @@ __generic_file_splice_read(struct file *in, loff_t *ppos,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (unlikely(!(in->f_mode & FMODE_SPLICE_READ)))
 		return -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/*
 	 * Now loop over the map and see if we need to start IO on any
 	 * pages, fill in the partial map, etc.
@@ -581,7 +572,6 @@ static const struct pipe_buf_operations default_pipe_buf_ops = {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int generic_pipe_buf_nosteal(struct pipe_inode_info *pipe,
 				    struct pipe_buffer *buf)
 {
@@ -602,8 +592,6 @@ EXPORT_SYMBOL(nosteal_pipe_buf_ops);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static ssize_t kernel_readv(struct file *file, const struct iovec *vec,
 			    unsigned long vlen, loff_t offset)
 {
@@ -981,12 +969,9 @@ ssize_t __splice_from_pipe(struct pipe_inode_info *pipe, struct splice_desc *sd,
 	splice_from_pipe_begin(sd);
 	do {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		cond_resched();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		ret = splice_from_pipe_next(pipe, sd);
 		if (ret > 0)
 			ret = splice_from_pipe_feed(pipe, sd, actor);
@@ -1051,23 +1036,16 @@ generic_file_splice_write(struct pipe_inode_info *pipe, struct file *out,
 	struct inode *inode = mapping->host;
 	struct splice_desc sd = {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		.flags = flags,
 =======
 		.total_len = len,
 		.flags = flags,
 		.pos = *ppos,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.total_len = len,
-		.flags = flags,
-		.pos = *ppos,
->>>>>>> master
 		.u.file = out,
 	};
 	ssize_t ret;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	ret = generic_write_checks(out, ppos, &len, S_ISBLK(inode->i_mode));
 	if (ret)
@@ -1077,8 +1055,6 @@ generic_file_splice_write(struct pipe_inode_info *pipe, struct file *out,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	pipe_lock(pipe);
 
 	splice_from_pipe_begin(&sd);
@@ -1141,14 +1117,11 @@ static ssize_t default_file_splice_write(struct pipe_inode_info *pipe,
 	ssize_t ret;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (unlikely(!(out->f_mode & FMODE_SPLICE_WRITE)))
 		return -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ret = splice_from_pipe(pipe, out, ppos, len, flags, write_pipe_buf);
 	if (ret > 0)
 		*ppos += ret;
@@ -1255,14 +1228,10 @@ ssize_t splice_direct_to_actor(struct file *in, struct splice_desc *sd,
 	umode_t i_mode;
 	size_t len;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int i, flags, more;
 =======
 	int i, flags;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int i, flags;
->>>>>>> master
 
 	/*
 	 * We require the input being a regular file, as we don't want to
@@ -1306,12 +1275,9 @@ ssize_t splice_direct_to_actor(struct file *in, struct splice_desc *sd,
 	 */
 	sd->flags &= ~SPLICE_F_NONBLOCK;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	more = sd->flags & SPLICE_F_MORE;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	while (len) {
 		size_t read_len;
@@ -1326,7 +1292,6 @@ ssize_t splice_direct_to_actor(struct file *in, struct splice_desc *sd,
 
 		/*
 <<<<<<< HEAD
-<<<<<<< HEAD
 		 * If more data is pending, set SPLICE_F_MORE
 		 * If this is the last data and SPLICE_F_MORE was not set
 		 * initially, clears it.
@@ -1338,8 +1303,6 @@ ssize_t splice_direct_to_actor(struct file *in, struct splice_desc *sd,
 		/*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		 * NOTE: nonblocking mode only applies to the input. We
 		 * must not do the output in nonblocking mode as then we
 		 * could get stuck data in the internal pipe:

@@ -1485,12 +1485,9 @@ enum ieee80211_hw_flags {
 	IEEE80211_HW_P2P_DEV_ADDR_FOR_INTF		= 1<<25,
 	IEEE80211_HW_TIMING_BEACON_ONLY			= 1<<26,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	IEEE80211_HW_SUPPORTS_HT_CCK_RATES		= 1<<27,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 /**

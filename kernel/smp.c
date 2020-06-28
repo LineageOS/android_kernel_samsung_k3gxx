@@ -659,14 +659,10 @@ void on_each_cpu_cond(bool (*cond_func)(int cpu, void *info),
 				ret = smp_call_function_single(cpu, func,
 								info, wait);
 <<<<<<< HEAD
-<<<<<<< HEAD
 				WARN_ON_ONCE(ret);
 =======
 				WARN_ON_ONCE(!ret);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				WARN_ON_ONCE(!ret);
->>>>>>> master
 			}
 		preempt_enable();
 	}

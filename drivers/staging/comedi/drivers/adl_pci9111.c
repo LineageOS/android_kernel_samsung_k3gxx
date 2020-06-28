@@ -874,14 +874,10 @@ static int pci9111_auto_attach(struct comedi_device *dev,
 
 	if (pcidev->irq > 0) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ret = request_irq(pcidev->irq, pci9111_interrupt,
 =======
 		ret = request_irq(dev->irq, pci9111_interrupt,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		ret = request_irq(dev->irq, pci9111_interrupt,
->>>>>>> master
 				  IRQF_SHARED, dev->board_name, dev);
 		if (ret)
 			return ret;

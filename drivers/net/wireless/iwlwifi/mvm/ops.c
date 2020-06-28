@@ -294,12 +294,9 @@ static const char *iwl_mvm_cmd_strings[REPLY_MAX] = {
 	CMD(BT_CONFIG),
 	CMD(MCAST_FILTER_CMD),
 <<<<<<< HEAD
-<<<<<<< HEAD
 	CMD(LTR_CONFIG),
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 #undef CMD
 
@@ -432,12 +429,9 @@ iwl_op_mode_mvm_start(struct iwl_trans *trans, const struct iwl_cfg *cfg,
  out_unregister:
 	ieee80211_unregister_hw(mvm->hw);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	iwl_mvm_leds_exit(mvm);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  out_free:
 	iwl_phy_db_free(mvm->phy_db);
 	kfree(mvm->scan_cmd);

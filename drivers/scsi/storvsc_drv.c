@@ -34,12 +34,9 @@
 #include <linux/hyperv.h>
 #include <linux/mempool.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/blkdev.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #include <scsi/scsi.h>
 #include <scsi/scsi_cmnd.h>
 #include <scsi/scsi_host.h>
@@ -211,12 +208,9 @@ enum storvsc_request_type {
 #define SRB_STATUS_ABORTED	0x02
 #define SRB_STATUS_ERROR	0x04
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define SRB_STATUS_DATA_OVERRUN	0x12
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * This is the end of Protocol specific defines.
@@ -645,7 +639,6 @@ static unsigned int copy_to_bounce_buffer(struct scatterlist *orig_sgl,
 				/* full..move to next entry */
 				sg_kunmap_atomic(bounce_addr);
 <<<<<<< HEAD
-<<<<<<< HEAD
 				bounce_addr = 0;
 				j++;
 			}
@@ -655,8 +648,6 @@ static unsigned int copy_to_bounce_buffer(struct scatterlist *orig_sgl,
 				bounce_addr = sg_kmap_atomic(bounce_sgl, j);
 
 =======
-=======
->>>>>>> master
 				j++;
 
 				/* if we need to use another bounce buffer */
@@ -667,24 +658,18 @@ static unsigned int copy_to_bounce_buffer(struct scatterlist *orig_sgl,
 				/* unmap the last bounce that is < PAGE_SIZE */
 				sg_kunmap_atomic(bounce_addr);
 			}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		}
 
 		sg_kunmap_atomic(src_addr - orig_sgl[i].offset);
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (bounce_addr)
 		sg_kunmap_atomic(bounce_addr);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	local_irq_restore(flags);
 
 	return total_copied;
@@ -834,7 +819,6 @@ static void storvsc_handle_error(struct vmscsi_request *vm_srb,
 	case SRB_STATUS_ERROR:
 		/*
 <<<<<<< HEAD
-<<<<<<< HEAD
 		 * Let upper layer deal with error when
 		 * sense message is present.
 		 */
@@ -844,8 +828,6 @@ static void storvsc_handle_error(struct vmscsi_request *vm_srb,
 		/*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		 * If there is an error; offline the device since all
 		 * error recovery strategies would have already been
 		 * deployed on the host side. However, if the command
@@ -857,7 +839,6 @@ static void storvsc_handle_error(struct vmscsi_request *vm_srb,
 			set_host_byte(scmnd, DID_PASSTHROUGH);
 			break;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/*
 		 * On Some Windows hosts TEST_UNIT_READY command can return
 		 * SRB_STATUS_ERROR, let the upper level code deal with it
@@ -867,8 +848,6 @@ static void storvsc_handle_error(struct vmscsi_request *vm_srb,
 			break;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		default:
 			set_host_byte(scmnd, DID_TARGET_FAILURE);
 		}
@@ -917,12 +896,9 @@ static void storvsc_command_completion(struct storvsc_cmd_request *cmd_request)
 	struct vmscsi_request *vm_srb;
 	struct stor_mem_pools *memp = scmnd->device->hostdata;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u32 data_transfer_length;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	struct Scsi_Host *host;
 	struct storvsc_device *stor_dev;
 	struct hv_device *dev = host_dev->dev;
@@ -932,12 +908,9 @@ static void storvsc_command_completion(struct storvsc_cmd_request *cmd_request)
 
 	vm_srb = &cmd_request->vstor_packet.vm_srb;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	data_transfer_length = vm_srb->data_transfer_length;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (cmd_request->bounce_sgl_count) {
 		if (vm_srb->data_in == READ_TYPE)
 			copy_from_bounce_buffer(scsi_sglist(scmnd),
@@ -957,7 +930,6 @@ static void storvsc_command_completion(struct storvsc_cmd_request *cmd_request)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (vm_srb->srb_status != SRB_STATUS_SUCCESS) {
 		storvsc_handle_error(vm_srb, scmnd, host, sense_hdr.asc,
 					 sense_hdr.ascq);
@@ -973,8 +945,6 @@ static void storvsc_command_completion(struct storvsc_cmd_request *cmd_request)
 	scsi_set_resid(scmnd,
 		cmd_request->data_buffer.len - data_transfer_length);
 =======
-=======
->>>>>>> master
 	if (vm_srb->srb_status != SRB_STATUS_SUCCESS)
 		storvsc_handle_error(vm_srb, scmnd, host, sense_hdr.asc,
 					 sense_hdr.ascq);
@@ -982,10 +952,7 @@ static void storvsc_command_completion(struct storvsc_cmd_request *cmd_request)
 	scsi_set_resid(scmnd,
 		cmd_request->data_buffer.len -
 		vm_srb->data_transfer_length);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	scsi_done_fn = scmnd->scsi_done;
 
@@ -1293,14 +1260,11 @@ static void storvsc_device_destroy(struct scsi_device *sdevice)
 	struct stor_mem_pools *memp = sdevice->hostdata;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!memp)
 		return;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	mempool_destroy(memp->request_mempool);
 	kmem_cache_destroy(memp->request_pool);
 	kfree(memp);
@@ -1395,7 +1359,6 @@ static int storvsc_host_reset_handler(struct scsi_cmnd *scmnd)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * The host guarantees to respond to each command, although I/O latencies might
  * be unbounded on Azure.  Reset the timer unconditionally to give the host a
@@ -1408,8 +1371,6 @@ static enum blk_eh_timer_return storvsc_eh_timed_out(struct scsi_cmnd *scmnd)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static bool storvsc_scsi_cmd_ok(struct scsi_cmnd *scmnd)
 {
 	bool allowed = true;
@@ -1547,7 +1508,6 @@ static int storvsc_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *scmnd)
 		/* no more space */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (cmd_request->bounce_sgl_count)
 			destroy_bounce_buffer(cmd_request->bounce_sgl,
 					cmd_request->bounce_sgl_count);
@@ -1555,8 +1515,6 @@ static int storvsc_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *scmnd)
 		ret = SCSI_MLQUEUE_DEVICE_BUSY;
 		goto queue_error;
 =======
-=======
->>>>>>> master
 		if (cmd_request->bounce_sgl_count) {
 			destroy_bounce_buffer(cmd_request->bounce_sgl,
 					cmd_request->bounce_sgl_count);
@@ -1564,10 +1522,7 @@ static int storvsc_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *scmnd)
 			ret = SCSI_MLQUEUE_DEVICE_BUSY;
 			goto queue_error;
 		}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	return 0;
@@ -1585,12 +1540,9 @@ static struct scsi_host_template scsi_driver = {
 	.queuecommand =		storvsc_queuecommand,
 	.eh_host_reset_handler =	storvsc_host_reset_handler,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.eh_timed_out =		storvsc_eh_timed_out,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	.slave_alloc =		storvsc_device_alloc,
 	.slave_destroy =	storvsc_device_destroy,
 	.slave_configure =	storvsc_device_configure,
@@ -1605,12 +1557,9 @@ static struct scsi_host_template scsi_driver = {
 	/* Make sure we dont get a sg segment crosses a page boundary */
 	.dma_boundary =		PAGE_SIZE-1,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.no_write_same =	1,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 enum {

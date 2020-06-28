@@ -1138,14 +1138,10 @@ static int rtsx_pci_probe(struct pci_dev *pcidev,
 	if (pcr->msi_en) {
 		ret = pci_enable_msi(pcidev);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (ret)
 =======
 		if (ret < 0)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (ret < 0)
->>>>>>> master
 			pcr->msi_en = false;
 	}
 
@@ -1204,7 +1200,6 @@ static void rtsx_pci_remove(struct pci_dev *pcidev)
 	pcr->remove_pci = true;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Disable interrupts at the pcr level */
 	spin_lock_irq(&pcr->lock);
 	rtsx_pci_writel(pcr, RTSX_BIER, 0);
@@ -1217,10 +1212,6 @@ static void rtsx_pci_remove(struct pci_dev *pcidev)
 	cancel_delayed_work(&pcr->carddet_work);
 	cancel_delayed_work(&pcr->idle_work);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	cancel_delayed_work(&pcr->carddet_work);
-	cancel_delayed_work(&pcr->idle_work);
->>>>>>> master
 
 	mfd_remove_devices(&pcidev->dev);
 

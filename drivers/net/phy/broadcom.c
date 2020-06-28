@@ -849,14 +849,10 @@ static struct mdio_device_id __maybe_unused broadcom_tbl[] = {
 	{ PHY_ID_BCM5461, 0xfffffff0 },
 	{ PHY_ID_BCM5464, 0xfffffff0 },
 <<<<<<< HEAD
-<<<<<<< HEAD
 	{ PHY_ID_BCM5481, 0xfffffff0 },
 =======
 	{ PHY_ID_BCM5482, 0xfffffff0 },
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	{ PHY_ID_BCM5482, 0xfffffff0 },
->>>>>>> master
 	{ PHY_ID_BCM5482, 0xfffffff0 },
 	{ PHY_ID_BCM50610, 0xfffffff0 },
 	{ PHY_ID_BCM50610M, 0xfffffff0 },

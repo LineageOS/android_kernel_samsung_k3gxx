@@ -56,14 +56,10 @@ extern int usb_match_device(struct usb_device *dev,
 			    const struct usb_device_id *id);
 extern void usb_forced_unbind_intf(struct usb_interface *intf);
 <<<<<<< HEAD
-<<<<<<< HEAD
 extern void usb_unbind_and_rebind_marked_interfaces(struct usb_device *udev);
 =======
 extern void usb_rebind_intf(struct usb_interface *intf);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-extern void usb_rebind_intf(struct usb_interface *intf);
->>>>>>> master
 
 extern int usb_hub_claim_port(struct usb_device *hdev, unsigned port,
 		struct dev_state *owner);

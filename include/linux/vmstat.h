@@ -143,17 +143,11 @@ static inline unsigned long zone_page_state_snapshot(struct zone *zone,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 extern unsigned long global_reclaimable_pages(void);
 extern unsigned long zone_reclaimable_pages(struct zone *zone);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-extern unsigned long global_reclaimable_pages(void);
-extern unsigned long zone_reclaimable_pages(struct zone *zone);
-
->>>>>>> master
 #ifdef CONFIG_NUMA
 /*
  * Determine the per node value of a stat item. This function

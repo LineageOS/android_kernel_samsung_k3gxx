@@ -1322,14 +1322,10 @@ read_again:
 			 * need another r10_bio.
 			 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 			sectors_handled = (r10_bio->sector + max_sectors
 =======
 			sectors_handled = (r10_bio->sectors + max_sectors
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			sectors_handled = (r10_bio->sectors + max_sectors
->>>>>>> master
 					   - bio->bi_sector);
 			r10_bio->sectors = max_sectors;
 			spin_lock_irq(&conf->device_lock);
@@ -1338,14 +1334,10 @@ read_again:
 			else
 				bio->bi_phys_segments++;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			spin_unlock_irq(&conf->device_lock);
 =======
 			spin_unlock(&conf->device_lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			spin_unlock(&conf->device_lock);
->>>>>>> master
 			/* Cannot call generic_make_request directly
 			 * as that will be queued in __generic_make_request
 			 * and subsequent mempool_alloc might block
@@ -1586,7 +1578,6 @@ retry_write:
 
 			atomic_inc(&r10_bio->remaining);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 			cb = blk_check_plugged(raid10_unplug, mddev,
 					       sizeof(*plug));
@@ -1606,17 +1597,12 @@ retry_write:
 			spin_unlock_irqrestore(&conf->device_lock, flags);
 			if (!plug)
 =======
-=======
->>>>>>> master
 			spin_lock_irqsave(&conf->device_lock, flags);
 			bio_list_add(&conf->pending_bio_list, mbio);
 			conf->pending_count++;
 			spin_unlock_irqrestore(&conf->device_lock, flags);
 			if (!mddev_check_plugged(mddev))
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 				md_wakeup_thread(mddev->thread);
 		}
 	}
@@ -1725,24 +1711,18 @@ static void error(struct mddev *mddev, struct md_rdev *rdev)
 		mddev->degraded++;
 		spin_unlock_irqrestore(&conf->device_lock, flags);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	}
 	/*
 	 * If recovery is running, make sure it aborts.
 	 */
 	set_bit(MD_RECOVERY_INTR, &mddev->recovery);
 =======
-=======
->>>>>>> master
 		/*
 		 * if recovery is running, make sure it aborts.
 		 */
 		set_bit(MD_RECOVERY_INTR, &mddev->recovery);
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	set_bit(Blocked, &rdev->flags);
 	set_bit(Faulty, &rdev->flags);
 	set_bit(MD_CHANGE_DEVS, &mddev->flags);
@@ -1820,12 +1800,9 @@ static int raid10_spare_active(struct mddev *mddev)
 			sysfs_notify_dirent_safe(tmp->replacement->sysfs_state);
 		} else if (tmp->rdev
 <<<<<<< HEAD
-<<<<<<< HEAD
 			   && tmp->rdev->recovery_offset == MaxSector
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			   && !test_bit(Faulty, &tmp->rdev->flags)
 			   && !test_and_set_bit(In_sync, &tmp->rdev->flags)) {
 			count++;
@@ -2661,14 +2638,10 @@ static int narrow_write_error(struct r10bio *r10_bio, int i)
 				   (sector - r10_bio->sector));
 		wbio->bi_bdev = rdev->bdev;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (submit_bio_wait(WRITE, wbio) < 0)
 =======
 		if (submit_bio_wait(WRITE, wbio) == 0)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (submit_bio_wait(WRITE, wbio) == 0)
->>>>>>> master
 			/* Failure! */
 			ok = rdev_set_badblocks(rdev, sector,
 						sectors, 0)
@@ -3020,12 +2993,9 @@ static sector_t sync_request(struct mddev *mddev, sector_t sector_nr,
 		if (test_bit(MD_RECOVERY_RESHAPE, &mddev->recovery)) {
 			end_reshape(conf);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			close_sync(conf);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			return 0;
 		}
 
@@ -3277,18 +3247,12 @@ static sector_t sync_request(struct mddev *mddev, sector_t sector_nr,
 				/* Cannot recover, so abort the recovery or
 				 * record a bad block */
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 				put_buf(r10_bio);
 				if (rb2)
 					atomic_dec(&rb2->remaining);
 				r10_bio = rb2;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 				if (any_working) {
 					/* problem is that there are bad blocks
 					 * on other device(s)
@@ -3321,15 +3285,12 @@ static sector_t sync_request(struct mddev *mddev, sector_t sector_nr,
 						= mddev->recovery_disabled;
 				}
 <<<<<<< HEAD
-<<<<<<< HEAD
 				put_buf(r10_bio);
 				if (rb2)
 					atomic_dec(&rb2->remaining);
 				r10_bio = rb2;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 				break;
 			}
 		}
@@ -3675,12 +3636,9 @@ static struct r10conf *setup_conf(struct mddev *mddev)
 			conf->prev.stride = conf->dev_sectors;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	conf->reshape_safe = conf->reshape_progress;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	spin_lock_init(&conf->device_lock);
 	INIT_LIST_HEAD(&conf->retry_list);
 
@@ -3889,13 +3847,9 @@ static int run(struct mddev *mddev)
 		conf->offset_diff = min_offset_diff;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		conf->reshape_safe = conf->reshape_progress;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		conf->reshape_safe = conf->reshape_progress;
->>>>>>> master
 		clear_bit(MD_RECOVERY_SYNC, &mddev->recovery);
 		clear_bit(MD_RECOVERY_CHECK, &mddev->recovery);
 		set_bit(MD_RECOVERY_RESHAPE, &mddev->recovery);
@@ -4241,12 +4195,9 @@ static int raid10_start_reshape(struct mddev *mddev)
 	} else
 		conf->reshape_progress = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	conf->reshape_safe = conf->reshape_progress;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	spin_unlock_irq(&conf->device_lock);
 
 	if (mddev->delta_disks && mddev->bitmap) {
@@ -4314,12 +4265,9 @@ abort:
 	smp_wmb();
 	conf->reshape_progress = MaxSector;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	conf->reshape_safe = MaxSector;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	mddev->reshape_position = MaxSector;
 	spin_unlock_irq(&conf->device_lock);
 	return ret;
@@ -4524,14 +4472,10 @@ read_more:
 	read_bio->bi_end_io = end_sync_read;
 	read_bio->bi_rw = READ;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	read_bio->bi_flags &= (~0UL << BIO_RESET_BITS);
 =======
 	read_bio->bi_flags &= ~(BIO_POOL_MASK - 1);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	read_bio->bi_flags &= ~(BIO_POOL_MASK - 1);
->>>>>>> master
 	read_bio->bi_flags |= 1 << BIO_UPTODATE;
 	read_bio->bi_vcnt = 0;
 	read_bio->bi_size = 0;
@@ -4676,12 +4620,9 @@ static void end_reshape(struct r10conf *conf)
 	smp_wmb();
 	conf->reshape_progress = MaxSector;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	conf->reshape_safe = MaxSector;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	spin_unlock_irq(&conf->device_lock);
 
 	/* read-ahead size must cover two whole stripes, which is

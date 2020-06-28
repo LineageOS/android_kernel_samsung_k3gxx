@@ -79,7 +79,6 @@ static struct acpi_bus_type *acpi_get_bus_type(struct device *dev)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static acpi_status acpi_dev_present(acpi_handle handle, u32 lvl_not_used,
 				  void *not_used, void **ret_p)
 {
@@ -129,16 +128,10 @@ static acpi_status do_acpi_find_child(acpi_handle handle, u32 lvl_not_used,
 				      void *addr_p, void **ret_p)
 {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static acpi_status do_acpi_find_child(acpi_handle handle, u32 lvl_not_used,
-				      void *addr_p, void **ret_p)
-{
->>>>>>> master
 	unsigned long long addr;
 	acpi_status status;
 
 	status = acpi_evaluate_integer(handle, METHOD_NAME__ADR, NULL, &addr);
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (ACPI_FAILURE(status) || addr != context->addr)
 		return AE_OK;
@@ -169,16 +162,11 @@ static acpi_status do_acpi_find_child(acpi_handle handle, u32 lvl_not_used,
 	if (ACPI_SUCCESS(status) && addr == *((u64 *)addr_p)) {
 		*ret_p = handle;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (ACPI_SUCCESS(status) && addr == *((u64 *)addr_p)) {
-		*ret_p = handle;
->>>>>>> master
 		return AE_CTRL_TERMINATE;
 	}
 	return AE_OK;
 }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 acpi_handle acpi_find_child(acpi_handle parent, u64 addr, bool is_bridge)
 {
@@ -196,8 +184,6 @@ acpi_handle acpi_find_child(acpi_handle parent, u64 addr, bool is_bridge)
 }
 EXPORT_SYMBOL_GPL(acpi_find_child);
 =======
-=======
->>>>>>> master
 acpi_handle acpi_get_child(acpi_handle parent, u64 address)
 {
 	void *ret = NULL;
@@ -210,10 +196,7 @@ acpi_handle acpi_get_child(acpi_handle parent, u64 address)
 	return (acpi_handle)ret;
 }
 EXPORT_SYMBOL(acpi_get_child);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 static int acpi_bind_one(struct device *dev, acpi_handle handle)
 {

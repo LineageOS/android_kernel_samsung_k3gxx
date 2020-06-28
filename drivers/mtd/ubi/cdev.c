@@ -476,14 +476,10 @@ static long vol_cdev_ioctl(struct file *file, unsigned int cmd,
 		err = -EINVAL;
 		if (req.lnum < 0 || req.lnum >= vol->reserved_pebs ||
 <<<<<<< HEAD
-<<<<<<< HEAD
 		    req.bytes < 0 || req.bytes > vol->usable_leb_size)
 =======
 		    req.bytes < 0 || req.lnum >= vol->usable_leb_size)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		    req.bytes < 0 || req.lnum >= vol->usable_leb_size)
->>>>>>> master
 			break;
 
 		err = get_exclusive(desc);

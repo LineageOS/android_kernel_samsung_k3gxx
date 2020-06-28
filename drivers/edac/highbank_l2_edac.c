@@ -91,7 +91,6 @@ static int highbank_l2_err_probe(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dci->mod_name = dev_name(&pdev->dev);
 	dci->dev_name = dev_name(&pdev->dev);
 
@@ -100,29 +99,22 @@ static int highbank_l2_err_probe(struct platform_device *pdev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	drvdata->db_irq = platform_get_irq(pdev, 0);
 	res = devm_request_irq(&pdev->dev, drvdata->db_irq,
 			       highbank_l2_err_handler,
 			       0, dev_name(&pdev->dev), dci);
 	if (res < 0)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto err2;
 =======
 		goto err;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto err;
->>>>>>> master
 
 	drvdata->sb_irq = platform_get_irq(pdev, 1);
 	res = devm_request_irq(&pdev->dev, drvdata->sb_irq,
 			       highbank_l2_err_handler,
 			       0, dev_name(&pdev->dev), dci);
 	if (res < 0)
-<<<<<<< HEAD
 <<<<<<< HEAD
 		goto err2;
 
@@ -131,8 +123,6 @@ static int highbank_l2_err_probe(struct platform_device *pdev)
 err2:
 	edac_device_del_device(&pdev->dev);
 =======
-=======
->>>>>>> master
 		goto err;
 
 	dci->mod_name = dev_name(&pdev->dev);
@@ -143,10 +133,7 @@ err2:
 
 	devres_close_group(&pdev->dev, NULL);
 	return 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 err:
 	devres_release_group(&pdev->dev, NULL);
 	edac_device_free_ctl_info(dci);

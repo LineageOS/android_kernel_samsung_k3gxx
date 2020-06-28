@@ -105,7 +105,6 @@ int mwifiex_request_set_multicast_list(struct mwifiex_private *priv,
 			priv->curr_pkt_filter &=
 				~HostCmd_ACT_MAC_ALL_MULTICAST_ENABLE;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			dev_dbg(priv->adapter->dev,
 				"info: Set multicast list=%d\n",
 				mcast_list->num_multicast_addr);
@@ -115,8 +114,6 @@ int mwifiex_request_set_multicast_list(struct mwifiex_private *priv,
 				HostCmd_ACT_GEN_SET, 0,
 				mcast_list);
 =======
-=======
->>>>>>> master
 			if (mcast_list->num_multicast_addr) {
 				dev_dbg(priv->adapter->dev,
 					"info: Set multicast list=%d\n",
@@ -127,10 +124,7 @@ int mwifiex_request_set_multicast_list(struct mwifiex_private *priv,
 					HostCmd_ACT_GEN_SET, 0,
 					mcast_list);
 			}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		}
 	}
 	dev_dbg(priv->adapter->dev,
@@ -329,17 +323,12 @@ int mwifiex_bss_start(struct mwifiex_private *priv, struct cfg80211_bss *bss,
 		    (!mwifiex_ssid_cmp(&priv->curr_bss_params.bss_descriptor.
 				       ssid, &bss_desc->ssid))) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			ret = 0;
 			goto done;
 =======
 			kfree(bss_desc);
 			return 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			kfree(bss_desc);
-			return 0;
->>>>>>> master
 		}
 
 		/* Exit Adhoc mode first */

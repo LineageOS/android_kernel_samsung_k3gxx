@@ -2773,14 +2773,11 @@ static int cma_accept_iw(struct rdma_id_private *id_priv,
 	int ret;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!conn_param)
 		return -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ret = cma_modify_qp_rtr(id_priv, conn_param);
 	if (ret)
 		return ret;

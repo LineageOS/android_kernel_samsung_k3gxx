@@ -72,7 +72,6 @@ int get_compat_msghdr(struct msghdr *kmsg, struct compat_msghdr __user *umsg)
 	    __get_user(kmsg->msg_flags, &umsg->msg_flags))
 		return -EFAULT;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	if (!tmp1)
 		kmsg->msg_namelen = 0;
@@ -84,8 +83,6 @@ int get_compat_msghdr(struct msghdr *kmsg, struct compat_msghdr __user *umsg)
 		kmsg->msg_namelen = sizeof(struct sockaddr_storage);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	kmsg->msg_name = compat_ptr(tmp1);
 	kmsg->msg_iov = compat_ptr(tmp2);
 	kmsg->msg_control = compat_ptr(tmp3);
@@ -99,14 +96,10 @@ int verify_compat_iovec(struct msghdr *kern_msg, struct iovec *kern_iov,
 	int tot_len;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (kern_msg->msg_name && kern_msg->msg_namelen) {
 =======
 	if (kern_msg->msg_namelen) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (kern_msg->msg_namelen) {
->>>>>>> master
 		if (mode == VERIFY_READ) {
 			int err = move_addr_to_kernel(kern_msg->msg_name,
 						      kern_msg->msg_namelen,
@@ -116,7 +109,6 @@ int verify_compat_iovec(struct msghdr *kern_msg, struct iovec *kern_iov,
 		}
 		kern_msg->msg_name = kern_address;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	} else {
 		kern_msg->msg_name = NULL;
 		kern_msg->msg_namelen = 0;
@@ -125,10 +117,6 @@ int verify_compat_iovec(struct msghdr *kern_msg, struct iovec *kern_iov,
 	} else
 		kern_msg->msg_name = NULL;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	} else
-		kern_msg->msg_name = NULL;
->>>>>>> master
 
 	tot_len = iov_from_user_compat_to_kern(kern_iov,
 					  (struct compat_iovec __user *)kern_msg->msg_iov,
@@ -770,15 +758,10 @@ static unsigned char nas[21] = {
 asmlinkage long compat_sys_sendmsg(int fd, struct compat_msghdr __user *msg, unsigned int flags)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if (flags & MSG_CMSG_COMPAT)
 		return -EINVAL;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (flags & MSG_CMSG_COMPAT)
-		return -EINVAL;
->>>>>>> master
 	return __sys_sendmsg(fd, (struct msghdr __user *)msg, flags | MSG_CMSG_COMPAT);
 }
 
@@ -786,15 +769,10 @@ asmlinkage long compat_sys_sendmmsg(int fd, struct compat_mmsghdr __user *mmsg,
 				    unsigned int vlen, unsigned int flags)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if (flags & MSG_CMSG_COMPAT)
 		return -EINVAL;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (flags & MSG_CMSG_COMPAT)
-		return -EINVAL;
->>>>>>> master
 	return __sys_sendmmsg(fd, (struct mmsghdr __user *)mmsg, vlen,
 			      flags | MSG_CMSG_COMPAT);
 }
@@ -802,15 +780,10 @@ asmlinkage long compat_sys_sendmmsg(int fd, struct compat_mmsghdr __user *mmsg,
 asmlinkage long compat_sys_recvmsg(int fd, struct compat_msghdr __user *msg, unsigned int flags)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if (flags & MSG_CMSG_COMPAT)
 		return -EINVAL;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (flags & MSG_CMSG_COMPAT)
-		return -EINVAL;
->>>>>>> master
 	return __sys_recvmsg(fd, (struct msghdr __user *)msg, flags | MSG_CMSG_COMPAT);
 }
 
@@ -834,10 +807,7 @@ asmlinkage long compat_sys_recvmmsg(int fd, struct compat_mmsghdr __user *mmsg,
 	struct timespec ktspec;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	if (flags & MSG_CMSG_COMPAT)
 		return -EINVAL;
 
@@ -846,36 +816,25 @@ asmlinkage long compat_sys_recvmmsg(int fd, struct compat_mmsghdr __user *mmsg,
 				      flags | MSG_CMSG_COMPAT,
 				      (struct timespec *) timeout);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (timeout == NULL)
 		return __sys_recvmmsg(fd, (struct mmsghdr __user *)mmsg, vlen,
 				      flags | MSG_CMSG_COMPAT, NULL);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (compat_get_timespec(&ktspec, timeout))
 =======
 	if (get_compat_timespec(&ktspec, timeout))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (get_compat_timespec(&ktspec, timeout))
->>>>>>> master
 		return -EFAULT;
 
 	datagrams = __sys_recvmmsg(fd, (struct mmsghdr __user *)mmsg, vlen,
 				   flags | MSG_CMSG_COMPAT, &ktspec);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (datagrams > 0 && compat_put_timespec(&ktspec, timeout))
 =======
 	if (datagrams > 0 && put_compat_timespec(&ktspec, timeout))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (datagrams > 0 && put_compat_timespec(&ktspec, timeout))
->>>>>>> master
 		datagrams = -EFAULT;
 
 	return datagrams;

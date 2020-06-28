@@ -1765,14 +1765,10 @@ void r100_io_wreg(struct radeon_device *rdev, u32 reg, u32 v);
 	} while (0)
 #define WREG32_AND(reg, and) WREG32_P(reg, 0, and)
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define WREG32_OR(reg, or) WREG32_P(reg, or, ~(or))
 =======
 #define WREG32_OR(reg, or) WREG32_P(reg, or, ~or)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define WREG32_OR(reg, or) WREG32_P(reg, or, ~or)
->>>>>>> master
 #define WREG32_PLL_P(reg, val, mask)				\
 	do {							\
 		uint32_t tmp_ = RREG32_PLL(reg);		\

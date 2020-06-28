@@ -136,12 +136,9 @@ static int oti6858_tiocmset(struct tty_struct *tty,
 				unsigned int set, unsigned int clear);
 static int oti6858_tiocmiwait(struct tty_struct *tty, unsigned long arg);
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int oti6858_attach(struct usb_serial *serial);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int oti6858_port_probe(struct usb_serial_port *port);
 static int oti6858_port_remove(struct usb_serial_port *port);
 
@@ -167,12 +164,9 @@ static struct usb_serial_driver oti6858_device = {
 	.write_room =		oti6858_write_room,
 	.chars_in_buffer =	oti6858_chars_in_buffer,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.attach =		oti6858_attach,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	.port_probe =		oti6858_port_probe,
 	.port_remove =		oti6858_port_remove,
 };
@@ -343,7 +337,6 @@ static void send_data(struct work_struct *work)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int oti6858_attach(struct usb_serial *serial)
 {
 	unsigned char num_ports = serial->num_ports;
@@ -360,8 +353,6 @@ static int oti6858_attach(struct usb_serial *serial)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int oti6858_port_probe(struct usb_serial_port *port)
 {
 	struct oti6858_private *priv;

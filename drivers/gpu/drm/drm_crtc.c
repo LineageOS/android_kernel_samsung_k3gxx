@@ -1956,7 +1956,6 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
 		return -EINVAL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * Universal plane src offsets are only 16.16, prevent havoc for
 	 * drivers using universal plane code internally.
@@ -1966,10 +1965,6 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
 	/* For some reason crtc x/y offsets are signed internally. */
 	if (crtc_req->x > INT_MAX || crtc_req->y > INT_MAX)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	/* For some reason crtc x/y offsets are signed internally. */
-	if (crtc_req->x > INT_MAX || crtc_req->y > INT_MAX)
->>>>>>> master
 		return -ERANGE;
 
 	drm_modeset_lock_all(dev);
@@ -2515,7 +2510,6 @@ int drm_mode_getfb(struct drm_device *dev,
 	r->bpp = fb->bits_per_pixel;
 	r->pitch = fb->pitches[0];
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (fb->funcs->create_handle) {
 		if (file_priv->is_master || capable(CAP_SYS_ADMIN)) {
 			ret = fb->funcs->create_handle(fb, file_priv,
@@ -2533,16 +2527,11 @@ int drm_mode_getfb(struct drm_device *dev,
 		ret = -ENODEV;
 	}
 =======
-=======
->>>>>>> master
 	if (fb->funcs->create_handle)
 		ret = fb->funcs->create_handle(fb, file_priv, &r->handle);
 	else
 		ret = -ENODEV;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	drm_framebuffer_unreference(fb);
 
@@ -3446,14 +3435,11 @@ int drm_mode_page_flip_ioctl(struct drm_device *dev,
 	int ret = -EINVAL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!drm_core_check_feature(dev, DRIVER_MODESET))
 		return -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (page_flip->flags & ~DRM_MODE_PAGE_FLIP_FLAGS ||
 	    page_flip->reserved != 0)
 		return -EINVAL;

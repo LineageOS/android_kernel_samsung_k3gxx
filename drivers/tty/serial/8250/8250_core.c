@@ -556,14 +556,10 @@ static void serial8250_set_sleep(struct uart_8250_port *p, int sleep)
 	if ((p->port.type == PORT_XR17V35X) ||
 	   (p->port.type == PORT_XR17D15X)) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		serial_out(p, UART_EXAR_SLEEP, sleep ? 0xff : 0);
 =======
 		serial_out(p, UART_EXAR_SLEEP, 0xff);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		serial_out(p, UART_EXAR_SLEEP, 0xff);
->>>>>>> master
 		return;
 	}
 
@@ -695,7 +691,6 @@ static int size_fifo(struct uart_8250_port *up)
 static unsigned int autoconfig_read_divisor_id(struct uart_8250_port *p)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned char old_lcr;
 	unsigned int id, old_dl;
 
@@ -707,8 +702,6 @@ static unsigned int autoconfig_read_divisor_id(struct uart_8250_port *p)
 	serial_dl_write(p, old_dl);
 
 =======
-=======
->>>>>>> master
 	unsigned char old_dll, old_dlm, old_lcr;
 	unsigned int id;
 
@@ -725,10 +718,7 @@ static unsigned int autoconfig_read_divisor_id(struct uart_8250_port *p)
 
 	serial_out(p, UART_DLL, old_dll);
 	serial_out(p, UART_DLM, old_dlm);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	serial_out(p, UART_LCR, old_lcr);
 
 	return id;
@@ -1548,14 +1538,10 @@ int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
 	}
 	serial8250_modem_status(up);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!up->dma && (status & UART_LSR_THRE))
 =======
 	if (status & UART_LSR_THRE)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (status & UART_LSR_THRE)
->>>>>>> master
 		serial8250_tx_chars(up);
 
 	spin_unlock_irqrestore(&port->lock, flags);
@@ -2706,15 +2692,12 @@ static void serial8250_config_port(struct uart_port *port, int flags)
 		up->bugs |= UART_BUG_NOMSR;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* HW bugs may trigger IRQ while IIR == NO_INT */
 	if (port->type == PORT_TEGRA)
 		up->bugs |= UART_BUG_NOMSR;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (port->type != PORT_UNKNOWN && flags & UART_CONFIG_IRQ)
 		autoconfig_irq(up);
 

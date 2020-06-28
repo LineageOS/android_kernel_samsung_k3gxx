@@ -110,14 +110,10 @@ ENTRY(stext)
 	add	r8, r8, r4			@ PHYS_OFFSET
 #else
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ldr	r8, =PLAT_PHYS_OFFSET		@ always constant in this case
 =======
 	ldr	r8, =PHYS_OFFSET		@ always constant in this case
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ldr	r8, =PHYS_OFFSET		@ always constant in this case
->>>>>>> master
 #endif
 
 	/*

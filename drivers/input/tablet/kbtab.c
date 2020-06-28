@@ -124,14 +124,11 @@ static int kbtab_probe(struct usb_interface *intf, const struct usb_device_id *i
 	int error = -ENOMEM;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (intf->cur_altsetting->desc.bNumEndpoints < 1)
 		return -ENODEV;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	kbtab = kzalloc(sizeof(struct kbtab), GFP_KERNEL);
 	input_dev = input_allocate_device();
 	if (!kbtab || !input_dev)

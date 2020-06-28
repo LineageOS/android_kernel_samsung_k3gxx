@@ -906,17 +906,11 @@ static int recv_msg(struct kiocb *iocb, struct socket *sock,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	/* will be updated in set_orig_addr() if needed */
 	m->msg_namelen = 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	/* will be updated in set_orig_addr() if needed */
-	m->msg_namelen = 0;
-
->>>>>>> master
 	timeout = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
 restart:
 
@@ -1027,17 +1021,11 @@ static int recv_stream(struct kiocb *iocb, struct socket *sock,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	/* will be updated in set_orig_addr() if needed */
 	m->msg_namelen = 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	/* will be updated in set_orig_addr() if needed */
-	m->msg_namelen = 0;
-
->>>>>>> master
 	target = sock_rcvlowat(sk, flags & MSG_WAITALL, buf_len);
 	timeout = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
 
@@ -1198,14 +1186,10 @@ static u32 filter_connect(struct tipc_sock *tsock, struct sk_buff **buf)
 		if (unlikely(msg_errcode(msg))) {
 			sock->state = SS_DISCONNECTING;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			sk->sk_err = ECONNREFUSED;
 =======
 			sk->sk_err = -ECONNREFUSED;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			sk->sk_err = -ECONNREFUSED;
->>>>>>> master
 			retval = TIPC_OK;
 			break;
 		}
@@ -1217,14 +1201,10 @@ static u32 filter_connect(struct tipc_sock *tsock, struct sk_buff **buf)
 		if (res) {
 			sock->state = SS_DISCONNECTING;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			sk->sk_err = -res;
 =======
 			sk->sk_err = res;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			sk->sk_err = res;
->>>>>>> master
 			retval = TIPC_OK;
 			break;
 		}
@@ -1569,12 +1549,9 @@ static int accept(struct socket *sock, struct socket *new_sock, int flags)
 	if (res)
 		goto exit;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	security_sk_clone(sock->sk, new_sock->sk);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	new_sk = new_sock->sk;
 	new_tsock = tipc_sk(new_sk);

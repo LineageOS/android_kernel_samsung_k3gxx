@@ -33,14 +33,10 @@ static int nfs_get_cb_ident_idr(struct nfs_client *clp, int minorversion)
 	idr_preload(GFP_KERNEL);
 	spin_lock(&nn->nfs_client_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = idr_alloc(&nn->cb_ident_idr, clp, 1, 0, GFP_NOWAIT);
 =======
 	ret = idr_alloc(&nn->cb_ident_idr, clp, 0, 0, GFP_NOWAIT);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret = idr_alloc(&nn->cb_ident_idr, clp, 0, 0, GFP_NOWAIT);
->>>>>>> master
 	if (ret >= 0)
 		clp->cl_cb_ident = ret;
 	spin_unlock(&nn->nfs_client_lock);
@@ -249,15 +245,12 @@ struct nfs_client *nfs4_init_client(struct nfs_client *clp,
 	if (error < 0)
 		goto error;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	if (clp != old)
 		clp->cl_preserve_clid = true;
 	nfs_put_client(clp);
 	return old;
 =======
-=======
->>>>>>> master
 	nfs_put_client(clp);
 	if (clp != old) {
 		clp->cl_preserve_clid = true;
@@ -265,10 +258,7 @@ struct nfs_client *nfs4_init_client(struct nfs_client *clp,
 	}
 
 	return clp;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 error:
 	nfs_mark_client_ready(clp, error);
@@ -336,7 +326,6 @@ int nfs40_walk_client_list(struct nfs_client *new,
 	spin_lock(&nn->nfs_client_lock);
 	list_for_each_entry(pos, &nn->nfs_client_list, cl_share_link) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 		if (pos->rpc_ops != new->rpc_ops)
 			continue;
@@ -349,8 +338,6 @@ int nfs40_walk_client_list(struct nfs_client *new,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		/* If "pos" isn't marked ready, we can't trust the
 		 * remaining fields in "pos" */
 		if (pos->cl_cons_state > NFS_CS_READY) {
@@ -363,7 +350,6 @@ int nfs40_walk_client_list(struct nfs_client *new,
 
 			status = nfs_wait_client_init_complete(pos);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (status < 0)
 				goto out;
 			status = -NFS4ERR_STALE_CLIENTID;
@@ -373,20 +359,12 @@ int nfs40_walk_client_list(struct nfs_client *new,
 			if (status < 0)
 				continue;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			spin_lock(&nn->nfs_client_lock);
-			if (status < 0)
-				continue;
->>>>>>> master
 		}
 		if (pos->cl_cons_state != NFS_CS_READY)
 			continue;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 		if (pos->rpc_ops != new->rpc_ops)
 			continue;
 
@@ -396,10 +374,7 @@ int nfs40_walk_client_list(struct nfs_client *new,
 		if (pos->cl_minorversion != new->cl_minorversion)
 			continue;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (pos->cl_clientid != new->cl_clientid)
 			continue;
 
@@ -455,41 +430,29 @@ static bool nfs4_match_clientids(struct nfs_client *a, struct nfs_client *b)
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * Returns true if the server major ids match
  */
 static bool
 nfs4_check_clientid_trunking(struct nfs_client *a, struct nfs_client *b)
 =======
-=======
->>>>>>> master
  * Returns true if the server owners match
  */
 static bool
 nfs4_match_serverowners(struct nfs_client *a, struct nfs_client *b)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 {
 	struct nfs41_server_owner *o1 = a->cl_serverowner;
 	struct nfs41_server_owner *o2 = b->cl_serverowner;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	if (o1->minor_id != o2->minor_id) {
 		dprintk("NFS: --> %s server owner minor IDs do not match\n",
 			__func__);
 		return false;
 	}
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (o1->major_id_sz != o2->major_id_sz)
 		goto out_major_mismatch;
 	if (memcmp(o1->major_id, o2->major_id, o1->major_id_sz) != 0)
@@ -528,7 +491,6 @@ int nfs41_walk_client_list(struct nfs_client *new,
 	spin_lock(&nn->nfs_client_lock);
 	list_for_each_entry(pos, &nn->nfs_client_list, cl_share_link) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 		if (pos->rpc_ops != new->rpc_ops)
 			continue;
@@ -541,8 +503,6 @@ int nfs41_walk_client_list(struct nfs_client *new,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		/* If "pos" isn't marked ready, we can't trust the
 		 * remaining fields in "pos", especially the client
 		 * ID and serverowner fields.  Wait for CREATE_SESSION
@@ -557,34 +517,25 @@ int nfs41_walk_client_list(struct nfs_client *new,
 
 			status = nfs_wait_client_init_complete(pos);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (pos->cl_cons_state == NFS_CS_SESSION_INITING) {
 =======
 			if (status == 0) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			if (status == 0) {
->>>>>>> master
 				nfs4_schedule_lease_recovery(pos);
 				status = nfs4_wait_clnt_recover(pos);
 			}
 			spin_lock(&nn->nfs_client_lock);
 			if (status < 0)
 <<<<<<< HEAD
-<<<<<<< HEAD
 				break;
 			status = -NFS4ERR_STALE_CLIENTID;
 =======
 				continue;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				continue;
->>>>>>> master
 		}
 		if (pos->cl_cons_state != NFS_CS_READY)
 			continue;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 		if (!nfs4_match_clientids(pos, new))
 			continue;
@@ -596,8 +547,6 @@ int nfs41_walk_client_list(struct nfs_client *new,
 		 */
 		if (!nfs4_check_clientid_trunking(pos, new))
 =======
-=======
->>>>>>> master
 		if (pos->rpc_ops != new->rpc_ops)
 			continue;
 
@@ -611,10 +560,7 @@ int nfs41_walk_client_list(struct nfs_client *new,
 			continue;
 
 		if (!nfs4_match_serverowners(pos, new))
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			continue;
 
 		atomic_inc(&pos->cl_count);

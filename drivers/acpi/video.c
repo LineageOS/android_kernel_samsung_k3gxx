@@ -734,12 +734,9 @@ acpi_video_init_brightness(struct acpi_video_device *device)
 	struct acpi_video_device_brightness *br = NULL;
 	int result = -EINVAL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u32 value;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (!ACPI_SUCCESS(acpi_video_device_lcd_query_levels(device, &obj))) {
 		ACPI_DEBUG_PRINT((ACPI_DB_INFO, "Could not query available "
@@ -771,7 +768,6 @@ acpi_video_init_brightness(struct acpi_video_device *device)
 			continue;
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 		value = (u32) o->integer.value;
 		/* Skip duplicate entries */
 		if (count > 2 && br->levels[count - 1] == value)
@@ -781,9 +777,6 @@ acpi_video_init_brightness(struct acpi_video_device *device)
 =======
 		br->levels[count] = (u32) o->integer.value;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		br->levels[count] = (u32) o->integer.value;
->>>>>>> master
 
 		if (br->levels[count] > max_level)
 			max_level = br->levels[count];
@@ -867,14 +860,10 @@ acpi_video_init_brightness(struct acpi_video_device *device)
 			if (level_old == br->levels[i])
 				break;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (i == br->count || !level)
 =======
 		if (i == br->count)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (i == br->count)
->>>>>>> master
 			level = max_level;
 	}
 
@@ -1286,14 +1275,11 @@ static int acpi_video_device_enumerate(struct acpi_video_bus *video)
 	union acpi_object *obj;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!video->cap._DOD)
 		return AE_NOT_EXIST;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	status = acpi_evaluate_object(video->device->handle, "_DOD", NULL, &buffer);
 	if (!ACPI_SUCCESS(status)) {
 		ACPI_EXCEPTION((AE_INFO, status, "Evaluating _DOD"));
@@ -1985,7 +1971,6 @@ EXPORT_SYMBOL(acpi_video_unregister);
 static int __init acpi_video_init(void)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * Let the module load even if ACPI is disabled (e.g. due to
 	 * a broken BIOS) so that i915.ko can still be loaded on such
@@ -1999,8 +1984,6 @@ static int __init acpi_video_init(void)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	dmi_check_system(video_dmi_table);
 
 	if (intel_opregion_present())

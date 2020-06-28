@@ -53,7 +53,6 @@
 #endif
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #ifdef CONFIG_HAVE_ARCH_MMAP_RND_BITS
 const int mmap_rnd_bits_min = CONFIG_ARCH_MMAP_RND_BITS_MIN;
 const int mmap_rnd_bits_max = CONFIG_ARCH_MMAP_RND_BITS_MAX;
@@ -67,8 +66,6 @@ int mmap_rnd_compat_bits __read_mostly = CONFIG_ARCH_MMAP_RND_COMPAT_BITS;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 extern int boot_mode_security;
 
 static void unmap_region(struct mm_struct *mm,
@@ -147,14 +144,10 @@ EXPORT_SYMBOL_GPL(vm_memory_committed);
 int __vm_enough_memory(struct mm_struct *mm, long pages, int cap_sys_admin)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	long free, allowed, reserve;
 =======
 	unsigned long free, allowed, reserve;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned long free, allowed, reserve;
->>>>>>> master
 
 	vm_acct_memory(pages);
 
@@ -221,14 +214,10 @@ int __vm_enough_memory(struct mm_struct *mm, long pages, int cap_sys_admin)
 	if (mm) {
 		reserve = sysctl_user_reserve_kbytes >> (PAGE_SHIFT - 10);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		allowed -= min_t(long, mm->total_vm / 32, reserve);
 =======
 		allowed -= min(mm->total_vm / 32, reserve);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		allowed -= min(mm->total_vm / 32, reserve);
->>>>>>> master
 	}
 
 	if (percpu_counter_read_positive(&vm_committed_as) < allowed)
@@ -299,12 +288,9 @@ SYSCALL_DEFINE1(brk, unsigned long, brk)
 	unsigned long newbrk, oldbrk;
 	struct mm_struct *mm = current->mm;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct vm_area_struct *next;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	unsigned long min_brk;
 	bool populate;
 
@@ -351,15 +337,11 @@ SYSCALL_DEFINE1(brk, unsigned long, brk)
 
 	/* Check against existing mmap mappings. */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	next = find_vma(mm, oldbrk);
 	if (next && newbrk + PAGE_SIZE > vm_start_gap(next))
 =======
 	if (find_vma_intersection(mm, oldbrk, newbrk+PAGE_SIZE))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (find_vma_intersection(mm, oldbrk, newbrk+PAGE_SIZE))
->>>>>>> master
 		goto out;
 
 	/* Ok, looks good - let it rip. */
@@ -383,7 +365,6 @@ out:
 static long vma_compute_subtree_gap(struct vm_area_struct *vma)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned long max, prev_end, subtree_gap;
 
 	/*
@@ -401,16 +382,11 @@ static long vma_compute_subtree_gap(struct vm_area_struct *vma)
 			max = 0;
 	}
 =======
-=======
->>>>>>> master
 	unsigned long max, subtree_gap;
 	max = vma->vm_start;
 	if (vma->vm_prev)
 		max -= vma->vm_prev->vm_end;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (vma->vm_rb.rb_left) {
 		subtree_gap = rb_entry(vma->vm_rb.rb_left,
 				struct vm_area_struct, vm_rb)->rb_subtree_gap;
@@ -495,14 +471,10 @@ void validate_mm(struct mm_struct *mm)
 			anon_vma_interval_tree_verify(avc);
 		vma_unlock_anon_vma(vma);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		highest_address = vm_end_gap(vma);
 =======
 		highest_address = vma->vm_end;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		highest_address = vma->vm_end;
->>>>>>> master
 		vma = vma->vm_next;
 		i++;
 	}
@@ -671,14 +643,10 @@ void __vma_link_rb(struct mm_struct *mm, struct vm_area_struct *vma,
 		vma_gap_update(vma->vm_next);
 	else
 <<<<<<< HEAD
-<<<<<<< HEAD
 		mm->highest_vm_end = vm_end_gap(vma);
 =======
 		mm->highest_vm_end = vma->vm_end;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		mm->highest_vm_end = vma->vm_end;
->>>>>>> master
 
 	/*
 	 * vma->vm_prev wasn't known when we followed the rbtree to find the
@@ -928,14 +896,10 @@ again:			remove_next = 1 + (end > next->vm_end);
 		if (end_changed) {
 			if (!next)
 <<<<<<< HEAD
-<<<<<<< HEAD
 				mm->highest_vm_end = vm_end_gap(vma);
 =======
 				mm->highest_vm_end = end;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				mm->highest_vm_end = end;
->>>>>>> master
 			else if (!adjust_next)
 				vma_gap_update(next);
 		}
@@ -979,14 +943,10 @@ again:			remove_next = 1 + (end > next->vm_end);
 			vma_gap_update(next);
 		else
 <<<<<<< HEAD
-<<<<<<< HEAD
 			WARN_ON(mm->highest_vm_end != vm_end_gap(vma));
 =======
 			mm->highest_vm_end = end;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			mm->highest_vm_end = end;
->>>>>>> master
 	}
 	if (insert && file)
 		uprobe_mmap(insert);
@@ -1828,14 +1788,10 @@ unsigned long unmapped_area(struct vm_unmapped_area_info *info)
 	while (true) {
 		/* Visit left subtree if it looks promising */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		gap_end = vm_start_gap(vma);
 =======
 		gap_end = vma->vm_start;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		gap_end = vma->vm_start;
->>>>>>> master
 		if (gap_end >= low_limit && vma->vm_rb.rb_left) {
 			struct vm_area_struct *left =
 				rb_entry(vma->vm_rb.rb_left,
@@ -1847,28 +1803,20 @@ unsigned long unmapped_area(struct vm_unmapped_area_info *info)
 		}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		gap_start = vma->vm_prev ? vm_end_gap(vma->vm_prev) : 0;
 =======
 		gap_start = vma->vm_prev ? vma->vm_prev->vm_end : 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		gap_start = vma->vm_prev ? vma->vm_prev->vm_end : 0;
->>>>>>> master
 check_current:
 		/* Check if current node has a suitable gap */
 		if (gap_start > high_limit)
 			return -ENOMEM;
-<<<<<<< HEAD
 <<<<<<< HEAD
 		if (gap_end >= low_limit &&
 		    gap_end > gap_start && gap_end - gap_start >= length)
 =======
 		if (gap_end >= low_limit && gap_end - gap_start >= length)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (gap_end >= low_limit && gap_end - gap_start >= length)
->>>>>>> master
 			goto found;
 
 		/* Visit right subtree if it looks promising */
@@ -1891,17 +1839,12 @@ check_current:
 				       struct vm_area_struct, vm_rb);
 			if (prev == vma->vm_rb.rb_left) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 				gap_start = vm_end_gap(vma->vm_prev);
 				gap_end = vm_start_gap(vma);
 =======
 				gap_start = vma->vm_prev->vm_end;
 				gap_end = vma->vm_start;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				gap_start = vma->vm_prev->vm_end;
-				gap_end = vma->vm_start;
->>>>>>> master
 				goto check_current;
 			}
 		}
@@ -1966,14 +1909,10 @@ unsigned long unmapped_area_topdown(struct vm_unmapped_area_info *info)
 	while (true) {
 		/* Visit right subtree if it looks promising */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		gap_start = vma->vm_prev ? vm_end_gap(vma->vm_prev) : 0;
 =======
 		gap_start = vma->vm_prev ? vma->vm_prev->vm_end : 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		gap_start = vma->vm_prev ? vma->vm_prev->vm_end : 0;
->>>>>>> master
 		if (gap_start <= high_limit && vma->vm_rb.rb_right) {
 			struct vm_area_struct *right =
 				rb_entry(vma->vm_rb.rb_right,
@@ -1987,23 +1926,17 @@ unsigned long unmapped_area_topdown(struct vm_unmapped_area_info *info)
 check_current:
 		/* Check if current node has a suitable gap */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		gap_end = vm_start_gap(vma);
 		if (gap_end < low_limit)
 			return -ENOMEM;
 		if (gap_start <= high_limit &&
 		    gap_end > gap_start && gap_end - gap_start >= length)
 =======
-=======
->>>>>>> master
 		gap_end = vma->vm_start;
 		if (gap_end < low_limit)
 			return -ENOMEM;
 		if (gap_start <= high_limit && gap_end - gap_start >= length)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			goto found;
 
 		/* Visit left subtree if it looks promising */
@@ -2027,14 +1960,10 @@ check_current:
 			if (prev == vma->vm_rb.rb_right) {
 				gap_start = vma->vm_prev ?
 <<<<<<< HEAD
-<<<<<<< HEAD
 					vm_end_gap(vma->vm_prev) : 0;
 =======
 					vma->vm_prev->vm_end : 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					vma->vm_prev->vm_end : 0;
->>>>>>> master
 				goto check_current;
 			}
 		}
@@ -2073,22 +2002,16 @@ arch_get_unmapped_area(struct file *filp, unsigned long addr,
 {
 	struct mm_struct *mm = current->mm;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct vm_area_struct *vma, *prev;
 	struct vm_unmapped_area_info info;
 
 	if (len > TASK_SIZE - mmap_min_addr)
 =======
-=======
->>>>>>> master
 	struct vm_area_struct *vma;
 	struct vm_unmapped_area_info info;
 
 	if (len > TASK_SIZE)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		return -ENOMEM;
 
 	if (flags & MAP_FIXED)
@@ -2096,7 +2019,6 @@ arch_get_unmapped_area(struct file *filp, unsigned long addr,
 
 	if (addr) {
 		addr = PAGE_ALIGN(addr);
-<<<<<<< HEAD
 <<<<<<< HEAD
 		vma = find_vma_prev(mm, addr, &prev);
 		if (TASK_SIZE - len >= addr && addr >= mmap_min_addr &&
@@ -2107,11 +2029,6 @@ arch_get_unmapped_area(struct file *filp, unsigned long addr,
 		if (TASK_SIZE - len >= addr &&
 		    (!vma || addr + len <= vma->vm_start))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		vma = find_vma(mm, addr);
-		if (TASK_SIZE - len >= addr &&
-		    (!vma || addr + len <= vma->vm_start))
->>>>>>> master
 			return addr;
 	}
 
@@ -2144,28 +2061,20 @@ arch_get_unmapped_area_topdown(struct file *filp, const unsigned long addr0,
 			  const unsigned long flags)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct vm_area_struct *vma, *prev;
 =======
 	struct vm_area_struct *vma;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct vm_area_struct *vma;
->>>>>>> master
 	struct mm_struct *mm = current->mm;
 	unsigned long addr = addr0;
 	struct vm_unmapped_area_info info;
 
 	/* requested length too big for entire address space */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (len > TASK_SIZE - mmap_min_addr)
 =======
 	if (len > TASK_SIZE)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (len > TASK_SIZE)
->>>>>>> master
 		return -ENOMEM;
 
 	if (flags & MAP_FIXED)
@@ -2174,7 +2083,6 @@ arch_get_unmapped_area_topdown(struct file *filp, const unsigned long addr0,
 	/* requesting a specific address */
 	if (addr) {
 		addr = PAGE_ALIGN(addr);
-<<<<<<< HEAD
 <<<<<<< HEAD
 		vma = find_vma_prev(mm, addr, &prev);
 		if (TASK_SIZE - len >= addr && addr >= mmap_min_addr &&
@@ -2185,25 +2093,16 @@ arch_get_unmapped_area_topdown(struct file *filp, const unsigned long addr0,
 		if (TASK_SIZE - len >= addr &&
 				(!vma || addr + len <= vma->vm_start))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		vma = find_vma(mm, addr);
-		if (TASK_SIZE - len >= addr &&
-				(!vma || addr + len <= vma->vm_start))
->>>>>>> master
 			return addr;
 	}
 
 	info.flags = VM_UNMAPPED_AREA_TOPDOWN;
 	info.length = len;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	info.low_limit = max(PAGE_SIZE, mmap_min_addr);
 =======
 	info.low_limit = PAGE_SIZE;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	info.low_limit = PAGE_SIZE;
->>>>>>> master
 	info.high_limit = mm->mmap_base;
 	info.align_mask = 0;
 	addr = vm_unmapped_area(&info);
@@ -2338,15 +2237,11 @@ find_vma_prev(struct mm_struct *mm, unsigned long addr,
  * grow-up and grow-down cases.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int acct_stack_growth(struct vm_area_struct *vma,
 			     unsigned long size, unsigned long grow)
 =======
 static int acct_stack_growth(struct vm_area_struct *vma, unsigned long size, unsigned long grow)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static int acct_stack_growth(struct vm_area_struct *vma, unsigned long size, unsigned long grow)
->>>>>>> master
 {
 	struct mm_struct *mm = vma->vm_mm;
 	struct rlimit *rlim = current->signal->rlim;
@@ -2399,21 +2294,16 @@ static int acct_stack_growth(struct vm_area_struct *vma, unsigned long size, uns
 int expand_upwards(struct vm_area_struct *vma, unsigned long address)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct vm_area_struct *next;
 	unsigned long gap_addr;
 	int error = 0;
 =======
 	int error;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int error;
->>>>>>> master
 
 	if (!(vma->vm_flags & VM_GROWSUP))
 		return -EFAULT;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Guard against exceeding limits of the address space. */
 	address &= PAGE_MASK;
@@ -2439,8 +2329,6 @@ int expand_upwards(struct vm_area_struct *vma, unsigned long address)
 	if (unlikely(anon_vma_prepare(vma)))
 		return -ENOMEM;
 =======
-=======
->>>>>>> master
 	/*
 	 * We must make sure the anon_vma is allocated
 	 * so that the anon_vma locking is not a noop.
@@ -2448,22 +2336,16 @@ int expand_upwards(struct vm_area_struct *vma, unsigned long address)
 	if (unlikely(anon_vma_prepare(vma)))
 		return -ENOMEM;
 	vma_lock_anon_vma(vma);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/*
 	 * vma->vm_start/vm_end cannot change under us because the caller
 	 * is required to hold the mmap_sem in read mode.  We need the
 	 * anon_vma lock to serialize against concurrent expand_stacks.
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 */
 	vma_lock_anon_vma(vma);
 =======
-=======
->>>>>>> master
 	 * Also guard against wrapping around to address 0.
 	 */
 	if (address < PAGE_ALIGN(address+4))
@@ -2473,10 +2355,7 @@ int expand_upwards(struct vm_area_struct *vma, unsigned long address)
 		return -ENOMEM;
 	}
 	error = 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* Somebody else might have raced and expanded it already */
 	if (address > vma->vm_end) {
@@ -2508,14 +2387,10 @@ int expand_upwards(struct vm_area_struct *vma, unsigned long address)
 					vma_gap_update(vma->vm_next);
 				else
 <<<<<<< HEAD
-<<<<<<< HEAD
 					vma->vm_mm->highest_vm_end = vm_end_gap(vma);
 =======
 					vma->vm_mm->highest_vm_end = address;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					vma->vm_mm->highest_vm_end = address;
->>>>>>> master
 				spin_unlock(&vma->vm_mm->page_table_lock);
 
 				perf_event_mmap(vma);
@@ -2536,14 +2411,11 @@ int expand_downwards(struct vm_area_struct *vma,
 				   unsigned long address)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct vm_area_struct *prev;
 	unsigned long gap_addr;
 	int error;
 
 =======
-=======
->>>>>>> master
 	int error;
 
 	/*
@@ -2553,16 +2425,12 @@ int expand_downwards(struct vm_area_struct *vma,
 	if (unlikely(anon_vma_prepare(vma)))
 		return -ENOMEM;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	address &= PAGE_MASK;
 	error = security_mmap_addr(address);
 	if (error)
 		return error;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Enforce stack_guard_gap */
 	gap_addr = address - stack_guard_gap;
@@ -2581,9 +2449,6 @@ int expand_downwards(struct vm_area_struct *vma,
 =======
 	vma_lock_anon_vma(vma);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	vma_lock_anon_vma(vma);
->>>>>>> master
 
 	/*
 	 * vma->vm_start/vm_end cannot change under us because the caller
@@ -2591,12 +2456,9 @@ int expand_downwards(struct vm_area_struct *vma,
 	 * anon_vma lock to serialize against concurrent expand_stacks.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	vma_lock_anon_vma(vma);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* Somebody else might have raced and expanded it already */
 	if (address < vma->vm_start) {
@@ -2639,7 +2501,6 @@ int expand_downwards(struct vm_area_struct *vma,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* enforced gap between the expanding stack and other mappings. */
 unsigned long stack_guard_gap = 256UL<<PAGE_SHIFT;
 
@@ -2660,8 +2521,6 @@ __setup("stack_guard_gap=", cmdline_parse_stack_guard_gap);
 int expand_stack(struct vm_area_struct *vma, unsigned long address)
 {
 =======
-=======
->>>>>>> master
 /*
  * Note how expand_stack() refuses to expand the stack all the way to
  * abut the next virtual mapping, *unless* that mapping itself is also
@@ -2684,10 +2543,7 @@ int expand_stack(struct vm_area_struct *vma, unsigned long address)
 		if (!(next->vm_flags & VM_GROWSUP))
 			return -ENOMEM;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return expand_upwards(vma, address);
 }
 
@@ -2710,10 +2566,7 @@ find_extend_vma(struct mm_struct *mm, unsigned long addr)
 int expand_stack(struct vm_area_struct *vma, unsigned long address)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	struct vm_area_struct *prev;
 
 	address &= PAGE_MASK;
@@ -2722,10 +2575,7 @@ int expand_stack(struct vm_area_struct *vma, unsigned long address)
 		if (!(prev->vm_flags & VM_GROWSDOWN))
 			return -ENOMEM;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return expand_downwards(vma, address);
 }
 
@@ -2823,14 +2673,10 @@ detach_vmas_to_be_unmapped(struct mm_struct *mm, struct vm_area_struct *vma,
 		vma_gap_update(vma);
 	} else
 <<<<<<< HEAD
-<<<<<<< HEAD
 		mm->highest_vm_end = prev ? vm_end_gap(prev) : 0;
 =======
 		mm->highest_vm_end = prev ? prev->vm_end : 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		mm->highest_vm_end = prev ? prev->vm_end : 0;
->>>>>>> master
 	tail_vma->vm_next = NULL;
 	if (mm->unmap_area == arch_unmap_area)
 		addr = prev ? prev->vm_end : mm->mmap_base;

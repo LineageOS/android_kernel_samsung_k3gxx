@@ -256,15 +256,10 @@ int bt_sock_recvmsg(struct kiocb *iocb, struct socket *sock,
 		return -EOPNOTSUPP;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	msg->msg_namelen = 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	msg->msg_namelen = 0;
-
->>>>>>> master
 	skb = skb_recv_datagram(sk, flags, noblock, &err);
 	if (!skb) {
 		if (sk->sk_shutdown & RCV_SHUTDOWN)
@@ -330,15 +325,10 @@ int bt_sock_stream_recvmsg(struct kiocb *iocb, struct socket *sock,
 		return -EOPNOTSUPP;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	msg->msg_namelen = 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	msg->msg_namelen = 0;
-
->>>>>>> master
 	BT_DBG("sk %p size %zu", sk, size);
 
 	lock_sock(sk);

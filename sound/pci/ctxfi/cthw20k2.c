@@ -27,20 +27,14 @@
 #include "ct20k2reg.h"
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #if BITS_PER_LONG == 32
 #define CT_XFI_DMA_MASK		DMA_BIT_MASK(32) /* 32 bit PTE */
 #else
 #define CT_XFI_DMA_MASK		DMA_BIT_MASK(64) /* 64 bit PTE */
 #endif
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 struct hw20k2 {
 	struct hw hw;
 	/* for i2c */
@@ -2036,12 +2030,9 @@ static int hw_card_start(struct hw *hw)
 	struct pci_dev *pci = hw->pci;
 	unsigned int gctl;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	const unsigned int dma_bits = BITS_PER_LONG;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	err = pci_enable_device(pci);
 	if (err < 0)
@@ -2049,25 +2040,19 @@ static int hw_card_start(struct hw *hw)
 
 	/* Set DMA transfer mask */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!dma_set_mask(&pci->dev, DMA_BIT_MASK(dma_bits))) {
 		dma_set_coherent_mask(&pci->dev, DMA_BIT_MASK(dma_bits));
 	} else {
 		dma_set_mask(&pci->dev, DMA_BIT_MASK(32));
 		dma_set_coherent_mask(&pci->dev, DMA_BIT_MASK(32));
 =======
-=======
->>>>>>> master
 	if (pci_set_dma_mask(pci, CT_XFI_DMA_MASK) < 0 ||
 	    pci_set_consistent_dma_mask(pci, CT_XFI_DMA_MASK) < 0) {
 		printk(KERN_ERR "ctxfi: architecture does not support PCI "
 		"busmaster DMA with mask 0x%llx\n", CT_XFI_DMA_MASK);
 		err = -ENXIO;
 		goto error1;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	if (!hw->io_base) {

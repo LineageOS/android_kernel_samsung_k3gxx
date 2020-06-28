@@ -256,18 +256,13 @@ scmd->allowed.
  3. scmd recovered
     ACTION: scsi_eh_finish_cmd() is invoked to EH-finish scmd
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	- shost->host_failed--
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	- shost->host_failed--
->>>>>>> master
 	- clear scmd->eh_eflags
 	- scsi_setup_cmd_retry()
 	- move from local eh_work_q to local eh_done_q
     LOCKING: none
-<<<<<<< HEAD
 <<<<<<< HEAD
     CONCURRENCY: at most one thread per separate eh_work_q to
 		 keep queue manipulation lockless
@@ -278,27 +273,19 @@ scmd->allowed.
 	    a no more than one thread per separate eh_work_q to
 	    manipulate the queue locklessly
 =======
-=======
->>>>>>> master
 
  4. EH completes
     ACTION: scsi_eh_flush_done_q() retries scmds or notifies upper
 	    layer of failure.
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	- scmd is removed from eh_done_q and scmd->eh_entry is cleared
 	- if retry is necessary, scmd is requeued using
           scsi_queue_insert()
 	- otherwise, scsi_finish_command() is invoked for scmd
 <<<<<<< HEAD
-<<<<<<< HEAD
 	- zero shost->host_failed
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
     LOCKING: queue or finish function performs appropriate locking
 
 

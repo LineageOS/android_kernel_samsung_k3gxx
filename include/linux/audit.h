@@ -104,7 +104,6 @@ extern struct filename *__audit_reusename(const __user char *uptr);
 extern void __audit_getname(struct filename *name);
 extern void audit_putname(struct filename *name);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 #define AUDIT_INODE_PARENT	1	/* dentry represents the parent */
 #define AUDIT_INODE_HIDDEN	2	/* audit record should be hidden */
@@ -114,10 +113,6 @@ extern void __audit_inode(struct filename *name, const struct dentry *dentry,
 extern void __audit_inode(struct filename *name, const struct dentry *dentry,
 				unsigned int parent);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-extern void __audit_inode(struct filename *name, const struct dentry *dentry,
-				unsigned int parent);
->>>>>>> master
 extern void __audit_inode_child(const struct inode *parent,
 				const struct dentry *dentry,
 				const unsigned char type);
@@ -146,14 +141,10 @@ static inline void audit_syscall_exit(void *pt_regs)
 	if (unlikely(current->audit_context)) {
 		int success = is_syscall_success(pt_regs);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		long return_code = regs_return_value(pt_regs);
 =======
 		int return_code = regs_return_value(pt_regs);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		int return_code = regs_return_value(pt_regs);
->>>>>>> master
 
 		__audit_syscall_exit(success, return_code);
 	}
@@ -169,7 +160,6 @@ static inline void audit_getname(struct filename *name)
 	if (unlikely(!audit_dummy_context()))
 		__audit_getname(name);
 }
-<<<<<<< HEAD
 <<<<<<< HEAD
 static inline void audit_inode(struct filename *name,
 				const struct dentry *dentry,
@@ -188,16 +178,11 @@ static inline void audit_inode_parent_hidden(struct filename *name,
 		__audit_inode(name, dentry,
 				AUDIT_INODE_PARENT | AUDIT_INODE_HIDDEN);
 =======
-=======
->>>>>>> master
 static inline void audit_inode(struct filename *name, const struct dentry *dentry,
 				unsigned int parent) {
 	if (unlikely(!audit_dummy_context()))
 		__audit_inode(name, dentry, parent);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 static inline void audit_inode_child(const struct inode *parent,
 				     const struct dentry *dentry,
@@ -358,14 +343,10 @@ static inline void audit_putname(struct filename *name)
 static inline void __audit_inode(struct filename *name,
 					const struct dentry *dentry,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					unsigned int flags)
 =======
 					unsigned int parent)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					unsigned int parent)
->>>>>>> master
 { }
 static inline void __audit_inode_child(const struct inode *parent,
 					const struct dentry *dentry,
@@ -376,14 +357,11 @@ static inline void audit_inode(struct filename *name,
 				unsigned int parent)
 { }
 <<<<<<< HEAD
-<<<<<<< HEAD
 static inline void audit_inode_parent_hidden(struct filename *name,
 				const struct dentry *dentry)
 { }
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static inline void audit_inode_child(const struct inode *parent,
 				     const struct dentry *dentry,
 				     const unsigned char type)

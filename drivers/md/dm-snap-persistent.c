@@ -257,14 +257,10 @@ static int chunk_io(struct pstore *ps, void *area, chunk_t chunk, int rw,
 	INIT_WORK_ONSTACK(&req.work, do_metadata);
 	queue_work(ps->metadata_wq, &req.work);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	flush_workqueue(ps->metadata_wq);
 =======
 	flush_work(&req.work);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	flush_work(&req.work);
->>>>>>> master
 
 	return req.result;
 }
@@ -655,14 +651,10 @@ static int persistent_prepare_exception(struct dm_exception_store *store,
 
 static void persistent_commit_exception(struct dm_exception_store *store,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					struct dm_exception *e, int valid,
 =======
 					struct dm_exception *e,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					struct dm_exception *e,
->>>>>>> master
 					void (*callback) (void *, int success),
 					void *callback_context)
 {
@@ -672,14 +664,11 @@ static void persistent_commit_exception(struct dm_exception_store *store,
 	struct commit_callback *cb;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!valid)
 		ps->valid = 0;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ce.old_chunk = e->old_chunk;
 	ce.new_chunk = e->new_chunk;
 	write_exception(ps, ps->current_committed++, &ce);

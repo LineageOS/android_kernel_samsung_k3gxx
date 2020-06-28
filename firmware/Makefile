@@ -142,12 +142,9 @@ fw-shipped-$(CONFIG_KEYBOARD_CYPRESS_TOUCH_20075) += \
 						cypress/cypress_20075_l_m06.fw
 fw-shipped-$(CONFIG_KEYBOARD_ABOV_TOUCH) += abov/abov_tk.fw
 <<<<<<< HEAD
-<<<<<<< HEAD
 fw-shipped-$(CONFIG_KEYBOARD_TC300K) += coreriver/tc300k_chagall.fw
 fw-shipped-$(CONFIG_KEYBOARD_CYPRESS_TOUCH_MBR31X5) += cypress/cypress_t.fw
 =======
-=======
->>>>>>> master
 fw-shipped-$(CONFIG_KEYBOARD_ABOV_TOUCH_A8) += abov/abov_tk_a8.fw
 fw-shipped-$(CONFIG_KEYBOARD_TC300K) += coreriver/tc300k_chagall.fw \
 										coreriver/tc350k_gts28.fw \
@@ -155,10 +152,7 @@ fw-shipped-$(CONFIG_KEYBOARD_TC300K) += coreriver/tc300k_chagall.fw \
 										coreriver/tc350k_gts210_swap.fw
 fw-shipped-$(CONFIG_KEYBOARD_CYPRESS_TOUCH_MBR31X5) += cypress/cypress_t.fw
 fw-shipped-$(CONFIG_TOUCHSCREEN_MELFAS_MMS449) += tsp_melfas/mms449_a8.fw
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 fw-shipped-$(or $(CONFIG_EPEN_WACOM_G10PM), \
 				$(CONFIG_EPEN_WACOM_W9012)) += epen/W9010_T.bin
 fw-shipped-$(CONFIG_EPEN_WACOM_W9012) += epen/W9012_T.bin epen/W9012_TB.bin
@@ -170,12 +164,9 @@ fw-shipped-$(CONFIG_SENSORS_MPU6500_BMI058_DUAL) += ssp_at_bmi.fw
 fw-shipped-$(CONFIG_ICE40LM_FPGA) += ice40lm/k640.fw
 TSPFIRMWARE_DIRECTORY = firmware/tsp_synaptics
 <<<<<<< HEAD
-<<<<<<< HEAD
 fw-shipped-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI) += tsp_synaptics/synaptics_b0_h.fw \
 	tsp_synaptics/synaptics_b0_fac.fw
 =======
-=======
->>>>>>> master
 ifeq ($(shell test -d $(TSPFIRMWARE_DIRECTORY) && echo yes),yes)
 fw-shipped-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI) += tsp_synaptics/synaptics_b0_h.fw \
 	tsp_synaptics/synaptics_b0_fac.fw
@@ -187,10 +178,7 @@ ifdef CONFIG_TOUCHSCREEN_KLIMTVE
 fw-shipped-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_DSX) += \
 						tsp_synaptics/synaptics_s5707_klimtve.fw
 else
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 fw-shipped-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_DSX) += \
 						tsp_synaptics/synaptics_s5100_a2_k.fw	\
 						tsp_synaptics/synaptics_s5100_a2_k_FHD.fw	\
@@ -200,12 +188,9 @@ fw-shipped-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_DSX) += \
 						tsp_synaptics/synaptics_s5100_a3_k_FHD.fw	\
 						tsp_synaptics/synaptics_5710_chagall.fw
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 TSPFIRMWARE_DIRECTORY = firmware/tsp_stm
 =======
-=======
->>>>>>> master
 endif
 endif
 else
@@ -219,10 +204,7 @@ fw-shipped-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_DSX2) +=  \
 
 TSPFIRMWARE_DIRECTORY = firmware/tsp_stm
 ifeq ($(shell test -d $(TSPFIRMWARE_DIRECTORY) && echo yes),yes)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 fw-shipped-$(CONFIG_TOUCHSCREEN_FTS) += \
 						tsp_stm/stm_s.fw	\
 						tsp_stm/stm_s_sync.fw	\
@@ -232,17 +214,11 @@ fw-shipped-$(CONFIG_TOUCHSCREEN_FTS) += \
 						tsp_stm/stm_tb_seper_2.fw	\
 						tsp_stm/stm_tb_integ.fw
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 else
 $(warning '$(TSPFIRMWARE_DIRECTORY)' directory dose not exist)
 endif
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-else
-$(warning '$(TSPFIRMWARE_DIRECTORY)' directory dose not exist)
-endif
->>>>>>> master
 
 fw-shipped-all := $(fw-shipped-y) $(fw-shipped-m) $(fw-shipped-)
 

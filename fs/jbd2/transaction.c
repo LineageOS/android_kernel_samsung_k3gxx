@@ -1146,7 +1146,6 @@ int jbd2_journal_dirty_metadata(handle_t *handle, struct buffer_head *bh)
 		 */
 		jh->b_modified = 1;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (handle->h_buffer_credits <= 0) {
 			ret = -ENOSPC;
 			goto out_unlock_bh;
@@ -1154,9 +1153,6 @@ int jbd2_journal_dirty_metadata(handle_t *handle, struct buffer_head *bh)
 =======
 		J_ASSERT_JH(jh, handle->h_buffer_credits > 0);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		J_ASSERT_JH(jh, handle->h_buffer_credits > 0);
->>>>>>> master
 		handle->h_buffer_credits--;
 	}
 
@@ -1240,13 +1236,9 @@ out_unlock_bh:
 out:
 	JBUFFER_TRACE(jh, "exit");
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	WARN_ON(ret);	/* All errors are bugs, so dump the stack */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	WARN_ON(ret);	/* All errors are bugs, so dump the stack */
->>>>>>> master
 	return ret;
 }
 
@@ -1453,7 +1445,6 @@ int jbd2_journal_stop(handle_t *handle)
 	 * case where a single process is doing a stream of sync
 	 * writes.  No point in waiting for joiners in that case.
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 *
 	 * Setting max_batch_time to 0 disables this completely.
 	 */
@@ -1465,11 +1456,6 @@ int jbd2_journal_stop(handle_t *handle)
 	pid = current->pid;
 	if (handle->h_sync && journal->j_last_sync_writer != pid) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	 */
-	pid = current->pid;
-	if (handle->h_sync && journal->j_last_sync_writer != pid) {
->>>>>>> master
 		u64 commit_time, trans_time;
 
 		journal->j_last_sync_writer = pid;
@@ -1672,7 +1658,6 @@ static void __jbd2_journal_temp_unlink_buffer(struct journal_head *jh)
 	__blist_del_buffer(list, jh);
 	jh->b_jlist = BJ_None;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (transaction && is_journal_aborted(transaction->t_journal))
 		clear_buffer_jbddirty(bh);
 	else if (test_clear_buffer_jbddirty(bh))
@@ -1681,10 +1666,6 @@ static void __jbd2_journal_temp_unlink_buffer(struct journal_head *jh)
 	if (test_clear_buffer_jbddirty(bh))
 		mark_buffer_dirty_sync(bh); /* Expose it to the VM */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (test_clear_buffer_jbddirty(bh))
-		mark_buffer_dirty_sync(bh); /* Expose it to the VM */
->>>>>>> master
 }
 
 /*
@@ -1965,12 +1946,9 @@ static int journal_unmap_buffer(journal_t *journal, struct buffer_head *bh,
 		if (!buffer_dirty(bh)) {
 			/* bdflush has written it.  We can drop it now */
 <<<<<<< HEAD
-<<<<<<< HEAD
 			__jbd2_journal_remove_checkpoint(jh);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			goto zap_buffer;
 		}
 
@@ -2001,12 +1979,9 @@ static int journal_unmap_buffer(journal_t *journal, struct buffer_head *bh,
 				 * committed.  We can cleanse this buffer */
 				clear_buffer_jbddirty(bh);
 <<<<<<< HEAD
-<<<<<<< HEAD
 				__jbd2_journal_remove_checkpoint(jh);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 				goto zap_buffer;
 			}
 		}

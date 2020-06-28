@@ -1616,7 +1616,6 @@ void dasd_int_handler(struct ccw_device *cdev, unsigned long intparm,
 	int expires;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	cqr = (struct dasd_ccw_req *) intparm;
 	if (IS_ERR(irb)) {
 		switch (PTR_ERR(irb)) {
@@ -1634,11 +1633,6 @@ void dasd_int_handler(struct ccw_device *cdev, unsigned long intparm,
 		switch (PTR_ERR(irb)) {
 		case -EIO:
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (IS_ERR(irb)) {
-		switch (PTR_ERR(irb)) {
-		case -EIO:
->>>>>>> master
 			break;
 		case -ETIMEDOUT:
 			DBF_EVENT_DEVID(DBF_WARNING, cdev, "%s: "
@@ -1655,13 +1649,9 @@ void dasd_int_handler(struct ccw_device *cdev, unsigned long intparm,
 
 	now = get_tod_clock();
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	cqr = (struct dasd_ccw_req *) intparm;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	cqr = (struct dasd_ccw_req *) intparm;
->>>>>>> master
 	/* check for conditions that should be handled immediately */
 	if (!cqr ||
 	    !(scsw_dstat(&irb->scsw) == (DEV_STAT_CHN_END | DEV_STAT_DEV_END) &&
@@ -2908,7 +2898,6 @@ static int dasd_alloc_queue(struct dasd_block *block)
 	elevator_exit(block->request_queue->elevator);
 	block->request_queue->elevator = NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mutex_lock(&block->request_queue->sysfs_lock);
 	rc = elevator_init(block->request_queue, "deadline");
 	if (rc)
@@ -2916,18 +2905,13 @@ static int dasd_alloc_queue(struct dasd_block *block)
 	mutex_unlock(&block->request_queue->sysfs_lock);
 	return rc;
 =======
-=======
->>>>>>> master
 	rc = elevator_init(block->request_queue, "deadline");
 	if (rc) {
 		blk_cleanup_queue(block->request_queue);
 		return rc;
 	}
 	return 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /*

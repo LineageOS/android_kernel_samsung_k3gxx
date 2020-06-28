@@ -514,20 +514,14 @@ static void fw_dev_release(struct device *dev)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int do_firmware_uevent(struct firmware_priv *fw_priv, struct kobj_uevent_env *env)
 {
 =======
-=======
->>>>>>> master
 static int firmware_uevent(struct device *dev, struct kobj_uevent_env *env)
 {
 	struct firmware_priv *fw_priv = to_firmware_priv(dev);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (add_uevent_var(env, "FIRMWARE=%s", fw_priv->buf->fw_id))
 		return -ENOMEM;
 	if (add_uevent_var(env, "TIMEOUT=%i", loading_timeout))
@@ -538,7 +532,6 @@ static int firmware_uevent(struct device *dev, struct kobj_uevent_env *env)
 	return 0;
 }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 static int firmware_uevent(struct device *dev, struct kobj_uevent_env *env)
 {
@@ -554,8 +547,6 @@ static int firmware_uevent(struct device *dev, struct kobj_uevent_env *env)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static struct class firmware_class = {
 	.name		= "firmware",
 	.class_attrs	= firmware_class_attrs,
@@ -1051,14 +1042,11 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
 		return -EINVAL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!name || name[0] == '\0')
 		return -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ret = _request_firmware_prepare(&fw, name, device);
 	if (ret <= 0) /* error or already assigned */
 		goto out;

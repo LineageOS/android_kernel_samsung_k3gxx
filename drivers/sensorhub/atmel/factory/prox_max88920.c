@@ -13,14 +13,10 @@
  *
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include "ssp.h"
 =======
 #include "../ssp.h"
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#include "../ssp.h"
->>>>>>> master
 
 #ifdef CONFIG_SENSORS_SSP_TMG399X
 #define	VENDOR		"AMS"

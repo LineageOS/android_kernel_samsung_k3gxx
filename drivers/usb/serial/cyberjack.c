@@ -52,12 +52,9 @@
 
 /* Function prototypes */
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int cyberjack_attach(struct usb_serial *serial);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int cyberjack_port_probe(struct usb_serial_port *port);
 static int cyberjack_port_remove(struct usb_serial_port *port);
 static int  cyberjack_open(struct tty_struct *tty,
@@ -86,12 +83,9 @@ static struct usb_serial_driver cyberjack_device = {
 	.id_table =		id_table,
 	.num_ports =		1,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.attach =		cyberjack_attach,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	.port_probe =		cyberjack_port_probe,
 	.port_remove =		cyberjack_port_remove,
 	.open =			cyberjack_open,
@@ -116,7 +110,6 @@ struct cyberjack_private {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int cyberjack_attach(struct usb_serial *serial)
 {
 	if (serial->num_bulk_out < serial->num_ports)
@@ -127,8 +120,6 @@ static int cyberjack_attach(struct usb_serial *serial)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int cyberjack_port_probe(struct usb_serial_port *port)
 {
 	struct cyberjack_private *priv;

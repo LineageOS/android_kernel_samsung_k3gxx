@@ -43,15 +43,11 @@ struct imx_pcm_runtime_data {
 	int poll_time_ns;
 	struct snd_pcm_substream *substream;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	atomic_t playing;
 	atomic_t capturing;
 =======
 	atomic_t running;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	atomic_t running;
->>>>>>> master
 };
 
 static enum hrtimer_restart snd_hrtimer_callback(struct hrtimer *hrt)
@@ -64,14 +60,10 @@ static enum hrtimer_restart snd_hrtimer_callback(struct hrtimer *hrt)
 	unsigned long delta;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!atomic_read(&iprtd->playing) && !atomic_read(&iprtd->capturing))
 =======
 	if (!atomic_read(&iprtd->running))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!atomic_read(&iprtd->running))
->>>>>>> master
 		return HRTIMER_NORESTART;
 
 	get_fiq_regs(&regs);
@@ -140,13 +132,9 @@ static int snd_imx_pcm_prepare(struct snd_pcm_substream *substream)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 static int fiq_enable;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static int fiq_enable;
->>>>>>> master
 static int imx_pcm_fiq;
 
 static int snd_imx_pcm_trigger(struct snd_pcm_substream *substream, int cmd)
@@ -159,7 +147,6 @@ static int snd_imx_pcm_trigger(struct snd_pcm_substream *substream, int cmd)
 	case SNDRV_PCM_TRIGGER_RESUME:
 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
 			atomic_set(&iprtd->playing, 1);
 		else
@@ -168,24 +155,18 @@ static int snd_imx_pcm_trigger(struct snd_pcm_substream *substream, int cmd)
 		      HRTIMER_MODE_REL);
 		enable_fiq(imx_pcm_fiq);
 =======
-=======
->>>>>>> master
 		atomic_set(&iprtd->running, 1);
 		hrtimer_start(&iprtd->hrt, ns_to_ktime(iprtd->poll_time_ns),
 		      HRTIMER_MODE_REL);
 		if (++fiq_enable == 1)
 			enable_fiq(imx_pcm_fiq);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		break;
 
 	case SNDRV_PCM_TRIGGER_STOP:
 	case SNDRV_PCM_TRIGGER_SUSPEND:
 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
-<<<<<<< HEAD
 <<<<<<< HEAD
 		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
 			atomic_set(&iprtd->playing, 0);
@@ -197,18 +178,13 @@ static int snd_imx_pcm_trigger(struct snd_pcm_substream *substream, int cmd)
 		break;
 
 =======
-=======
->>>>>>> master
 		atomic_set(&iprtd->running, 0);
 
 		if (--fiq_enable == 0)
 			disable_fiq(imx_pcm_fiq);
 
 		break;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	default:
 		return -EINVAL;
 	}
@@ -257,15 +233,11 @@ static int snd_imx_open(struct snd_pcm_substream *substream)
 	iprtd->substream = substream;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	atomic_set(&iprtd->playing, 0);
 	atomic_set(&iprtd->capturing, 0);
 =======
 	atomic_set(&iprtd->running, 0);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	atomic_set(&iprtd->running, 0);
->>>>>>> master
 	hrtimer_init(&iprtd->hrt, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
 	iprtd->hrt.function = snd_hrtimer_callback;
 

@@ -187,7 +187,6 @@ int elevator_init(struct request_queue *q, char *name)
 	int err;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * q->sysfs_lock must be held to provide mutual exclusion between
 	 * elevator_switch() and here.
@@ -196,8 +195,6 @@ int elevator_init(struct request_queue *q, char *name)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (unlikely(q->elevator))
 		return 0;
 
@@ -972,14 +969,10 @@ fail_init:
  * Switch this queue to the given IO scheduler.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int __elevator_change(struct request_queue *q, const char *name)
 =======
 int elevator_change(struct request_queue *q, const char *name)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-int elevator_change(struct request_queue *q, const char *name)
->>>>>>> master
 {
 	char elevator_name[ELV_NAME_MAX];
 	struct elevator_type *e;
@@ -1002,7 +995,6 @@ int elevator_change(struct request_queue *q, const char *name)
 	return elevator_switch(q, e);
 }
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 int elevator_change(struct request_queue *q, const char *name)
 {
@@ -1017,8 +1009,6 @@ int elevator_change(struct request_queue *q, const char *name)
 }
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 EXPORT_SYMBOL(elevator_change);
 
 ssize_t elv_iosched_store(struct request_queue *q, const char *name,
@@ -1030,14 +1020,10 @@ ssize_t elv_iosched_store(struct request_queue *q, const char *name,
 		return count;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = __elevator_change(q, name);
 =======
 	ret = elevator_change(q, name);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret = elevator_change(q, name);
->>>>>>> master
 	if (!ret)
 		return count;
 

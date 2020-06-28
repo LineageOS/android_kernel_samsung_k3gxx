@@ -35,7 +35,6 @@
 #include "ubifs.h"
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int try_read_node(const struct ubifs_info *c, void *buf, int type,
 			 int len, int lnum, int offs);
 static int fallible_read_node(struct ubifs_info *c, const union ubifs_key *key,
@@ -43,8 +42,6 @@ static int fallible_read_node(struct ubifs_info *c, const union ubifs_key *key,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  * Returned codes of 'matches_name()' and 'fallible_matches_name()' functions.
  * @NAME_LESS: name corresponding to the first argument is less than second
@@ -431,7 +428,6 @@ static int tnc_read_node_nm(struct ubifs_info *c, struct ubifs_zbranch *zbr,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (c->replaying) {
 		err = fallible_read_node(c, &zbr->key, zbr, node);
 		/*
@@ -448,9 +444,6 @@ static int tnc_read_node_nm(struct ubifs_info *c, struct ubifs_zbranch *zbr,
 =======
 	err = ubifs_tnc_read_node(c, zbr, node);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	err = ubifs_tnc_read_node(c, zbr, node);
->>>>>>> master
 	if (err)
 		return err;
 
@@ -2815,7 +2808,6 @@ struct ubifs_dent_node *ubifs_tnc_next_ent(struct ubifs_info *c,
 		if (err) {
 			/* Handle collisions */
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (c->replaying)
 				err = fallible_resolve_collision(c, key, &znode, &n,
 							 nm, 0);
@@ -2824,9 +2816,6 @@ struct ubifs_dent_node *ubifs_tnc_next_ent(struct ubifs_info *c,
 =======
 			err = resolve_collision(c, key, &znode, &n, nm);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			err = resolve_collision(c, key, &znode, &n, nm);
->>>>>>> master
 			dbg_tnc("rc returned %d, znode %p, n %d",
 				err, znode, n);
 			if (unlikely(err < 0))

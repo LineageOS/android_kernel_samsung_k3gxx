@@ -673,7 +673,6 @@ static int tsl2x7x_chip_on(struct iio_dev *indio_dev)
 			chip->tsl2x7x_settings.prox_pulse_count;
 	chip->tsl2x7x_config[TSL2X7X_PRX_MINTHRESHLO] =
 <<<<<<< HEAD
-<<<<<<< HEAD
 			(chip->tsl2x7x_settings.prox_thres_low) & 0xFF;
 	chip->tsl2x7x_config[TSL2X7X_PRX_MINTHRESHHI] =
 			(chip->tsl2x7x_settings.prox_thres_low >> 8) & 0xFF;
@@ -686,11 +685,6 @@ static int tsl2x7x_chip_on(struct iio_dev *indio_dev)
 	chip->tsl2x7x_config[TSL2X7X_PRX_MAXTHRESHLO] =
 			chip->tsl2x7x_settings.prox_thres_high;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	chip->tsl2x7x_settings.prox_thres_low;
-	chip->tsl2x7x_config[TSL2X7X_PRX_MAXTHRESHLO] =
-			chip->tsl2x7x_settings.prox_thres_high;
->>>>>>> master
 
 	/* and make sure we're not already on */
 	if (chip->tsl2x7x_chip_status == TSL2X7X_CHIP_WORKING) {

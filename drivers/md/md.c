@@ -1119,12 +1119,9 @@ static int super_90_validate(struct mddev *mddev, struct md_rdev *rdev)
 	clear_bit(Faulty, &rdev->flags);
 	clear_bit(In_sync, &rdev->flags);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	clear_bit(Bitmap_sync, &rdev->flags);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	clear_bit(WriteMostly, &rdev->flags);
 
 	if (mddev->raid_disks == 0) {
@@ -1204,13 +1201,10 @@ static int super_90_validate(struct mddev *mddev, struct md_rdev *rdev)
 		if (ev1 < mddev->bitmap->events_cleared)
 			return 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (ev1 < mddev->events)
 			set_bit(Bitmap_sync, &rdev->flags);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	} else {
 		if (ev1 < mddev->events)
 			/* just a hot-add of a new device, leave raid_disk at -1 */
@@ -1620,12 +1614,9 @@ static int super_1_validate(struct mddev *mddev, struct md_rdev *rdev)
 	clear_bit(Faulty, &rdev->flags);
 	clear_bit(In_sync, &rdev->flags);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	clear_bit(Bitmap_sync, &rdev->flags);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	clear_bit(WriteMostly, &rdev->flags);
 
 	if (mddev->raid_disks == 0) {
@@ -1709,13 +1700,10 @@ static int super_1_validate(struct mddev *mddev, struct md_rdev *rdev)
 		if (ev1 < mddev->bitmap->events_cleared)
 			return 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (ev1 < mddev->events)
 			set_bit(Bitmap_sync, &rdev->flags);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	} else {
 		if (ev1 < mddev->events)
 			/* just a hot-add of a new device, leave raid_disk at -1 */
@@ -1923,14 +1911,10 @@ super_1_rdev_size_change(struct md_rdev *rdev, sector_t num_sectors)
 	sb = page_address(rdev->sb_page);
 	sb->data_size = cpu_to_le64(num_sectors);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	sb->super_offset = cpu_to_le64(rdev->sb_start);
 =======
 	sb->super_offset = rdev->sb_start;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	sb->super_offset = rdev->sb_start;
->>>>>>> master
 	sb->sb_csum = calc_sb_1_csum(sb);
 	md_super_write(rdev->mddev, rdev, rdev->sb_start, rdev->sb_size,
 		       rdev->sb_page);
@@ -2868,12 +2852,9 @@ slot_store(struct md_rdev *rdev, const char *buf, size_t len)
 			rdev->saved_raid_disk = -1;
 		clear_bit(In_sync, &rdev->flags);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		clear_bit(Bitmap_sync, &rdev->flags);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		err = rdev->mddev->pers->
 			hot_add_disk(rdev->mddev, rdev);
 		if (err) {
@@ -3665,12 +3646,9 @@ level_store(struct mddev *mddev, const char *buf, size_t len)
 		del_timer_sync(&mddev->safemode_timer);
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	blk_set_stacking_limits(&mddev->queue->limits);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	pers->run(mddev);
 	set_bit(MD_CHANGE_DEVS, &mddev->flags);
 	mddev_resume(mddev);
@@ -5351,13 +5329,10 @@ static void __md_stop(struct mddev *mddev)
 {
 	mddev->ready = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Ensure ->event_work is done */
 	flush_workqueue(md_misc_wq);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	mddev->pers->stop(mddev);
 	if (mddev->pers->sync_request && mddev->to_remove == NULL)
 		mddev->to_remove = &md_redundancy_group;
@@ -5821,12 +5796,9 @@ static int add_new_disk(struct mddev * mddev, mdu_disk_info_t *info)
 				rdev->raid_disk = info->raid_disk;
 				set_bit(In_sync, &rdev->flags);
 <<<<<<< HEAD
-<<<<<<< HEAD
 				clear_bit(Bitmap_sync, &rdev->flags);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			} else
 				rdev->raid_disk = -1;
 		} else
@@ -6280,14 +6252,10 @@ static int update_array_info(struct mddev *mddev, mdu_array_info_t *info)
 	    mddev->level         != info->level         ||
 /*	    mddev->layout        != info->layout        || */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	    mddev->persistent	 != !info->not_persistent ||
 =======
 	    !mddev->persistent	 != info->not_persistent||
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	    !mddev->persistent	 != info->not_persistent||
->>>>>>> master
 	    mddev->chunk_sectors != info->chunk_size >> 9 ||
 	    /* ignore bottom 8 bits of state, and allow SB_BITMAP_PRESENT to change */
 	    ((state^info->state) & 0xfffffe00)
@@ -7405,7 +7373,6 @@ void md_do_sync(struct md_thread *thread)
 	if (test_bit(MD_RECOVERY_DONE, &mddev->recovery))
 		return;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (mddev->ro) {/* never try to sync a read-only array */
 		set_bit(MD_RECOVERY_INTR, &mddev->recovery);
 		return;
@@ -7414,10 +7381,6 @@ void md_do_sync(struct md_thread *thread)
 	if (mddev->ro) /* never try to sync a read-only array */
 		return;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (mddev->ro) /* never try to sync a read-only array */
-		return;
->>>>>>> master
 
 	if (test_bit(MD_RECOVERY_SYNC, &mddev->recovery)) {
 		if (test_bit(MD_RECOVERY_CHECK, &mddev->recovery))
@@ -7524,7 +7487,6 @@ void md_do_sync(struct md_thread *thread)
 				j = rdev->recovery_offset;
 		rcu_read_unlock();
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 		/* If there is a bitmap, we need to make sure all
 		 * writes that started before we added a spare
@@ -7540,8 +7502,6 @@ void md_do_sync(struct md_thread *thread)
 		}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	printk(KERN_INFO "md: %s of RAID array %s\n", desc, mdname(mddev));
@@ -7800,15 +7760,11 @@ static int remove_and_add_spares(struct mddev *mddev,
 			continue;
 		if (mddev->ro &&
 <<<<<<< HEAD
-<<<<<<< HEAD
 		    ! (rdev->saved_raid_disk >= 0 &&
 		       !test_bit(Bitmap_sync, &rdev->flags)))
 =======
 		    rdev->saved_raid_disk < 0)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		    rdev->saved_raid_disk < 0)
->>>>>>> master
 			continue;
 
 		rdev->recovery_offset = 0;
@@ -7890,7 +7846,6 @@ void md_check_recovery(struct mddev *mddev)
 			 * we can activate the spares immediately.
 			 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 			remove_and_add_spares(mddev, NULL);
 			/* There is no thread, but we need to call
 			 * ->spare_active and clear saved_raid_disk
@@ -7903,11 +7858,6 @@ void md_check_recovery(struct mddev *mddev)
 			remove_and_add_spares(mddev, NULL);
 			mddev->pers->spare_active(mddev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			clear_bit(MD_RECOVERY_NEEDED, &mddev->recovery);
-			remove_and_add_spares(mddev, NULL);
-			mddev->pers->spare_active(mddev);
->>>>>>> master
 			goto unlock;
 		}
 
@@ -8204,12 +8154,9 @@ static int md_set_badblocks(struct badblocks *bb, sector_t s, int sectors,
 	int lo, hi;
 	int rv = 1;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned long flags;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (bb->shift < 0)
 		/* badblocks are disabled */
@@ -8225,14 +8172,10 @@ static int md_set_badblocks(struct badblocks *bb, sector_t s, int sectors,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	write_seqlock_irqsave(&bb->lock, flags);
 =======
 	write_seqlock_irq(&bb->lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	write_seqlock_irq(&bb->lock);
->>>>>>> master
 
 	p = bb->page;
 	lo = 0;
@@ -8349,14 +8292,10 @@ static int md_set_badblocks(struct badblocks *bb, sector_t s, int sectors,
 	if (!acknowledged)
 		bb->unacked_exist = 1;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	write_sequnlock_irqrestore(&bb->lock, flags);
 =======
 	write_sequnlock_irq(&bb->lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	write_sequnlock_irq(&bb->lock);
->>>>>>> master
 
 	return rv;
 }
@@ -8622,15 +8561,11 @@ static int md_notify_reboot(struct notifier_block *this,
 			if (mddev->pers)
 				__md_stop_writes(mddev);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (mddev->persistent)
 				mddev->safemode = 2;
 =======
 			mddev->safemode = 2;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			mddev->safemode = 2;
->>>>>>> master
 			mddev_unlock(mddev);
 		}
 		need_delay = 1;

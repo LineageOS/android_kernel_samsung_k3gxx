@@ -376,7 +376,6 @@ static int dwc3_omap_remove(struct platform_device *pdev)
 
 	dwc3_omap_disable_irqs(omap);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	device_for_each_child(&pdev->dev, NULL, dwc3_omap_remove_core);
 	pm_runtime_put_sync(&pdev->dev);
 	pm_runtime_disable(&pdev->dev);
@@ -385,11 +384,6 @@ static int dwc3_omap_remove(struct platform_device *pdev)
 	pm_runtime_disable(&pdev->dev);
 	device_for_each_child(&pdev->dev, NULL, dwc3_omap_remove_core);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	pm_runtime_put_sync(&pdev->dev);
-	pm_runtime_disable(&pdev->dev);
-	device_for_each_child(&pdev->dev, NULL, dwc3_omap_remove_core);
->>>>>>> master
 
 	return 0;
 }

@@ -328,7 +328,6 @@ static struct dmi_system_id acpi_osi_dmi_table[] __initdata = {
 		},
 	},
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * Without this this EEEpc exports a non working WMI interface, with
 	 * this it exports a working "good old" eeepc_laptop interface, fixing
@@ -344,8 +343,6 @@ static struct dmi_system_id acpi_osi_dmi_table[] __initdata = {
 	},
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	{}
 };
 

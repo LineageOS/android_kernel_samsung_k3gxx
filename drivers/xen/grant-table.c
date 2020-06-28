@@ -730,7 +730,6 @@ void gnttab_request_free_callback(struct gnttab_free_callback *callback,
 {
 	unsigned long flags;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct gnttab_free_callback *cb;
 
 	spin_lock_irqsave(&gnttab_list_lock, flags);
@@ -748,11 +747,6 @@ void gnttab_request_free_callback(struct gnttab_free_callback *callback,
 	if (callback->next)
 		goto out;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	spin_lock_irqsave(&gnttab_list_lock, flags);
-	if (callback->next)
-		goto out;
->>>>>>> master
 	callback->fn = fn;
 	callback->arg = arg;
 	callback->count = count;
@@ -933,7 +927,6 @@ int gnttab_map_refs(struct gnttab_map_grant_ref *map_ops,
 				       &kmap_ops[i] : NULL);
 		if (ret)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			goto out;
 	}
 
@@ -943,11 +936,6 @@ int gnttab_map_refs(struct gnttab_map_grant_ref *map_ops,
 	}
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			return ret;
-	}
-
->>>>>>> master
 	if (lazy)
 		arch_leave_lazy_mmu_mode();
 
@@ -979,7 +967,6 @@ int gnttab_unmap_refs(struct gnttab_unmap_grant_ref *unmap_ops,
 				       &kmap_ops[i] : NULL);
 		if (ret)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			goto out;
 	}
 
@@ -989,11 +976,6 @@ int gnttab_unmap_refs(struct gnttab_unmap_grant_ref *unmap_ops,
 	}
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			return ret;
-	}
-
->>>>>>> master
 	if (lazy)
 		arch_leave_lazy_mmu_mode();
 

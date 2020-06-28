@@ -566,14 +566,11 @@ cifs_get_root(struct smb_vol *vol, struct super_block *sb)
 	char sep;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_USE_PREFIX_PATH)
 		return dget(sb->s_root);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	full_path = cifs_build_path_to_root(vol, cifs_sb,
 					    cifs_sb_master_tcon(cifs_sb));
 	if (full_path == NULL)
@@ -654,7 +651,6 @@ cifs_do_mount(struct file_system_type *fs_type,
 	if (cifs_sb->mountdata == NULL) {
 		root = ERR_PTR(-ENOMEM);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto out_free;
 	}
 
@@ -664,16 +660,11 @@ cifs_do_mount(struct file_system_type *fs_type,
 		goto out_free;
 	}
 =======
-=======
->>>>>>> master
 		goto out_cifs_sb;
 	}
 
 	cifs_setup_cifs_sb(volume_info, cifs_sb);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	rc = cifs_mount(cifs_sb, volume_info);
 	if (rc) {
@@ -682,14 +673,10 @@ cifs_do_mount(struct file_system_type *fs_type,
 				 rc);
 		root = ERR_PTR(rc);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto out_free;
 =======
 		goto out_mountdata;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto out_mountdata;
->>>>>>> master
 	}
 
 	mnt_data.vol = volume_info;
@@ -733,7 +720,6 @@ out:
 	return root;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 out_free:
 	kfree(cifs_sb->prepath);
 	kfree(cifs_sb->mountdata);
@@ -742,11 +728,6 @@ out_mountdata:
 	kfree(cifs_sb->mountdata);
 out_cifs_sb:
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-out_mountdata:
-	kfree(cifs_sb->mountdata);
-out_cifs_sb:
->>>>>>> master
 	kfree(cifs_sb);
 out_nls:
 	unload_nls(volume_info->local_nls);

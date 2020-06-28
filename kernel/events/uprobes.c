@@ -1512,13 +1512,9 @@ bool uprobe_deny_signal(void)
 			utask->state = UTASK_SSTEP_TRAPPED;
 			set_tsk_thread_flag(t, TIF_UPROBE);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 			set_tsk_thread_flag(t, TIF_NOTIFY_RESUME);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			set_tsk_thread_flag(t, TIF_NOTIFY_RESUME);
->>>>>>> master
 		}
 	}
 
@@ -1690,24 +1686,18 @@ static bool handle_trampoline(struct pt_regs *regs)
 		ri = ri->next;
 		kfree(tmp);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		utask->depth--;
 
 		if (!chained)
 			break;
 =======
-=======
->>>>>>> master
 
 		if (!chained)
 			break;
 
 		utask->depth--;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		BUG_ON(!ri);
 	}
 

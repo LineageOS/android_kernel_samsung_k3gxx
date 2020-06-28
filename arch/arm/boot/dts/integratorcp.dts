@@ -10,19 +10,13 @@
 	compatible = "arm,integrator-cp";
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	aliases {
 		arm,timer-primary = &timer2;
 		arm,timer-secondary = &timer1;
 	};
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	chosen {
 		bootargs = "root=/dev/ram0 console=ttyAMA0,38400n8 earlyprintk";
 	};
@@ -33,7 +27,6 @@
 	};
 
 	timer0: timer@13000000 {
-<<<<<<< HEAD
 <<<<<<< HEAD
 		/* TIMER0 runs @ 25MHz */
 		compatible = "arm,integrator-cp-timer";
@@ -48,23 +41,14 @@
 
 	timer1: timer@13000100 {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		compatible = "arm,integrator-cp-timer";
-	};
-
-	timer1: timer@13000100 {
->>>>>>> master
 		compatible = "arm,integrator-cp-timer";
 	};
 
 	timer2: timer@13000200 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* TIMER2 runs @ 1MHz */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		compatible = "arm,integrator-cp-timer";
 	};
 

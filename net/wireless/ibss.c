@@ -270,13 +270,10 @@ int cfg80211_ibss_wext_join(struct cfg80211_registered_device *rdev,
 					continue;
 				wdev->wext.ibss.chandef.chan = chan;
 <<<<<<< HEAD
-<<<<<<< HEAD
 				wdev->wext.ibss.chandef.center_freq1 =
 					chan->center_freq;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 				break;
 			}
 
@@ -362,12 +359,9 @@ int cfg80211_ibss_wext_siwfreq(struct net_device *dev,
 		wdev->wext.ibss.chandef.chan = chan;
 		wdev->wext.ibss.chandef.width = NL80211_CHAN_WIDTH_20_NOHT;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		wdev->wext.ibss.chandef.center_freq1 = freq;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		wdev->wext.ibss.channel_fixed = true;
 	} else {
 		/* cfg80211_ibss_wext_join will pick one if needed */

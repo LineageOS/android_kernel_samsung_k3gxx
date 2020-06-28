@@ -33,14 +33,11 @@
 #include "stv6110x_priv.h"
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* Max transfer size done by I2C transfer functions */
 #define MAX_XFER_SIZE  64
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static unsigned int verbose;
 module_param(verbose, int, 0644);
 MODULE_PARM_DESC(verbose, "Set Verbosity level");
@@ -71,15 +68,11 @@ static int stv6110x_write_regs(struct stv6110x_state *stv6110x, int start, u8 da
 	int ret;
 	const struct stv6110x_config *config = stv6110x->config;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u8 buf[MAX_XFER_SIZE];
 
 =======
 	u8 buf[len + 1];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u8 buf[len + 1];
->>>>>>> master
 	struct i2c_msg msg = {
 		.addr = config->addr,
 		.flags = 0,
@@ -87,7 +80,6 @@ static int stv6110x_write_regs(struct stv6110x_state *stv6110x, int start, u8 da
 		.len = len + 1
 	};
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (1 + len > sizeof(buf)) {
 		printk(KERN_WARNING
@@ -98,8 +90,6 @@ static int stv6110x_write_regs(struct stv6110x_state *stv6110x, int start, u8 da
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (start + len > 8)
 		return -EINVAL;
 

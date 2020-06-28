@@ -986,7 +986,6 @@ int rtl92cu_hw_init(struct ieee80211_hw *hw)
 	int err = 0;
 	static bool iqk_initialized;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned long flags;
 
 	/* As this function can take a very long time (up to 350 ms)
@@ -1000,22 +999,16 @@ int rtl92cu_hw_init(struct ieee80211_hw *hw)
 	local_irq_enable();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	rtlhal->hw_type = HARDWARE_TYPE_RTL8192CU;
 	err = _rtl92cu_init_mac(hw);
 	if (err) {
 		RT_TRACE(rtlpriv, COMP_ERR, DBG_EMERG, "init mac failed!\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto exit;
 =======
 		return err;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		return err;
->>>>>>> master
 	}
 	err = rtl92c_download_fw(hw);
 	if (err) {
@@ -1023,14 +1016,10 @@ int rtl92cu_hw_init(struct ieee80211_hw *hw)
 			 "Failed to download FW. Init HW without FW now..\n");
 		err = 1;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto exit;
 =======
 		return err;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		return err;
->>>>>>> master
 	}
 	rtlhal->last_hmeboxnum = 0; /* h2c */
 	_rtl92cu_phy_param_tab_init(hw);
@@ -1068,13 +1057,10 @@ int rtl92cu_hw_init(struct ieee80211_hw *hw)
 	_update_mac_setting(hw);
 	rtl92c_dm_init(hw);
 <<<<<<< HEAD
-<<<<<<< HEAD
 exit:
 	local_irq_restore(flags);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return err;
 }
 

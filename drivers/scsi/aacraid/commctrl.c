@@ -64,14 +64,10 @@ static int ioctl_send_fib(struct aac_dev * dev, void __user *arg)
 	struct hw_fib * hw_fib = (struct hw_fib *)0;
 	dma_addr_t hw_fib_pa = (dma_addr_t)0LL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned int size, osize;
 =======
 	unsigned size;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned size;
->>>>>>> master
 	int retval;
 
 	if (dev->in_reset) {
@@ -96,15 +92,11 @@ static int ioctl_send_fib(struct aac_dev * dev, void __user *arg)
 	 *	an error if we would.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	osize = size = le16_to_cpu(kfib->header.Size) +
 		sizeof(struct aac_fibhdr);
 =======
 	size = le16_to_cpu(kfib->header.Size) + sizeof(struct aac_fibhdr);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	size = le16_to_cpu(kfib->header.Size) + sizeof(struct aac_fibhdr);
->>>>>>> master
 	if (size < le16_to_cpu(kfib->header.SenderSize))
 		size = le16_to_cpu(kfib->header.SenderSize);
 	if (size > dev->max_fib_size) {
@@ -136,7 +128,6 @@ static int ioctl_send_fib(struct aac_dev * dev, void __user *arg)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Sanity check the second copy */
 	if ((osize != le16_to_cpu(kfib->header.Size) +
 		sizeof(struct aac_fibhdr))
@@ -147,8 +138,6 @@ static int ioctl_send_fib(struct aac_dev * dev, void __user *arg)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (kfib->header.Command == cpu_to_le16(TakeABreakPt)) {
 		aac_adapter_interrupt(dev);
 		/*
@@ -542,15 +531,11 @@ static int aac_send_raw_srb(struct aac_dev* dev, void __user * arg)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if ((fibsize < (sizeof(struct user_aac_srb) - sizeof(struct user_sgentry))) ||
 	    (fibsize > (dev->max_fib_size - sizeof(struct aac_fibhdr)))) {
 =======
 	if (fibsize > (dev->max_fib_size - sizeof(struct aac_fibhdr))) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (fibsize > (dev->max_fib_size - sizeof(struct aac_fibhdr))) {
->>>>>>> master
 		rcode = -EINVAL;
 		goto cleanup;
 	}

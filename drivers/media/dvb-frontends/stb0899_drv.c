@@ -33,14 +33,11 @@
 #include "stb0899_reg.h"
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* Max transfer size done by I2C transfer functions */
 #define MAX_XFER_SIZE  64
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static unsigned int verbose = 0;//1;
 module_param(verbose, int, 0644);
 
@@ -509,14 +506,10 @@ int stb0899_write_regs(struct stb0899_state *state, unsigned int reg, u8 *data, 
 {
 	int ret;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u8 buf[MAX_XFER_SIZE];
 =======
 	u8 buf[2 + count];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u8 buf[2 + count];
->>>>>>> master
 	struct i2c_msg i2c_msg = {
 		.addr	= state->config->demod_address,
 		.flags	= 0,
@@ -524,7 +517,6 @@ int stb0899_write_regs(struct stb0899_state *state, unsigned int reg, u8 *data, 
 		.len	= 2 + count
 	};
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (2 + count > sizeof(buf)) {
 		printk(KERN_WARNING
@@ -535,8 +527,6 @@ int stb0899_write_regs(struct stb0899_state *state, unsigned int reg, u8 *data, 
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	buf[0] = reg >> 8;
 	buf[1] = reg & 0xff;
 	memcpy(&buf[2], data, count);

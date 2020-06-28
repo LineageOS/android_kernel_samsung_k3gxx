@@ -162,14 +162,10 @@ void br_fdb_change_mac_address(struct net_bridge *br, const u8 *newaddr)
 		return;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	for_each_set_bit_from(vid, pv->vlan_bitmap, VLAN_N_VID) {
 =======
 	for_each_set_bit_from(vid, pv->vlan_bitmap, BR_VLAN_BITMAP_LEN) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	for_each_set_bit_from(vid, pv->vlan_bitmap, BR_VLAN_BITMAP_LEN) {
->>>>>>> master
 		f = __br_fdb_get(br, br->dev->dev_addr, vid);
 		if (f && f->is_local && !f->dst)
 			fdb_delete(br, f);
@@ -734,14 +730,10 @@ int br_fdb_add(struct ndmsg *ndm, struct nlattr *tb[],
 		err = __br_fdb_add(ndm, p, addr, nlh_flags, vid);
 	} else {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!pv || bitmap_empty(pv->vlan_bitmap, VLAN_N_VID)) {
 =======
 		if (!pv || bitmap_empty(pv->vlan_bitmap, BR_VLAN_BITMAP_LEN)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!pv || bitmap_empty(pv->vlan_bitmap, BR_VLAN_BITMAP_LEN)) {
->>>>>>> master
 			err = __br_fdb_add(ndm, p, addr, nlh_flags, 0);
 			goto out;
 		}
@@ -751,14 +743,10 @@ int br_fdb_add(struct ndmsg *ndm, struct nlattr *tb[],
 		 * vlan on this port.
 		 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		for_each_set_bit(vid, pv->vlan_bitmap, VLAN_N_VID) {
 =======
 		for_each_set_bit(vid, pv->vlan_bitmap, BR_VLAN_BITMAP_LEN) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		for_each_set_bit(vid, pv->vlan_bitmap, BR_VLAN_BITMAP_LEN) {
->>>>>>> master
 			err = __br_fdb_add(ndm, p, addr, nlh_flags, vid);
 			if (err)
 				goto out;
@@ -837,14 +825,10 @@ int br_fdb_delete(struct ndmsg *ndm, struct nlattr *tb[],
 		err = __br_fdb_delete(p, addr, vid);
 	} else {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!pv || bitmap_empty(pv->vlan_bitmap, VLAN_N_VID)) {
 =======
 		if (!pv || bitmap_empty(pv->vlan_bitmap, BR_VLAN_BITMAP_LEN)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!pv || bitmap_empty(pv->vlan_bitmap, BR_VLAN_BITMAP_LEN)) {
->>>>>>> master
 			err = __br_fdb_delete(p, addr, 0);
 			goto out;
 		}
@@ -855,14 +839,10 @@ int br_fdb_delete(struct ndmsg *ndm, struct nlattr *tb[],
 		 */
 		err = -ENOENT;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		for_each_set_bit(vid, pv->vlan_bitmap, VLAN_N_VID) {
 =======
 		for_each_set_bit(vid, pv->vlan_bitmap, BR_VLAN_BITMAP_LEN) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		for_each_set_bit(vid, pv->vlan_bitmap, BR_VLAN_BITMAP_LEN) {
->>>>>>> master
 			err &= __br_fdb_delete(p, addr, vid);
 		}
 	}

@@ -874,7 +874,6 @@ static psmouse_ret_t alps_process_byte(struct psmouse *psmouse)
 	struct alps_data *priv = psmouse->private;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * Check if we are dealing with a bare PS/2 packet, presumably from
 	 * a device connected to the external PS/2 port. Because bare PS/2
@@ -885,9 +884,6 @@ static psmouse_ret_t alps_process_byte(struct psmouse *psmouse)
 =======
 	if ((psmouse->packet[0] & 0xc8) == 0x08) { /* PS/2 packet */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if ((psmouse->packet[0] & 0xc8) == 0x08) { /* PS/2 packet */
->>>>>>> master
 		if (psmouse->pktcnt == 3) {
 			alps_report_bare_ps2_packet(psmouse, psmouse->packet,
 						    true);
@@ -1831,14 +1827,11 @@ int alps_init(struct psmouse *psmouse)
 	psmouse->resync_time = 0;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Allow 2 invalid packets without resetting device */
 	psmouse->resetafter = psmouse->pktsize * 2;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 
 init_fail:

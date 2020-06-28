@@ -52,12 +52,9 @@ struct user_namespace init_user_ns = {
 	.group = GLOBAL_ROOT_GID,
 	.proc_inum = PROC_USER_INIT_INO,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.flags = USERNS_INIT_FLAGS,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	.may_mount_sysfs = true,
 	.may_mount_proc = true,
 };

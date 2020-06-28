@@ -219,7 +219,6 @@ static void hid_lg4ff_set_autocenter_default(struct input_dev *dev, u16 magnitud
 	struct hid_report *report = list_entry(report_list->next, struct hid_report, list);
 	__s32 *value = report->field[0]->value;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	__u32 expand_a, expand_b;
 
 	/* De-activate Auto-Center */
@@ -261,18 +260,13 @@ static void hid_lg4ff_set_autocenter_default(struct input_dev *dev, u16 magnitud
 	value[3] = 0x00;
 	value[4] = 0x00;
 =======
-=======
->>>>>>> master
 
 	value[0] = 0xfe;
 	value[1] = 0x0d;
 	value[2] = magnitude >> 13;
 	value[3] = magnitude >> 13;
 	value[4] = magnitude >> 8;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	value[5] = 0x00;
 	value[6] = 0x00;
 
@@ -534,19 +528,13 @@ int lg4ff_init(struct hid_device *hid)
 {
 	struct hid_input *hidinput = list_entry(hid->inputs.next, struct hid_input, list);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct input_dev *dev = hidinput->input;
 =======
-=======
->>>>>>> master
 	struct list_head *report_list = &hid->report_enum[HID_OUTPUT_REPORT].report_list;
 	struct input_dev *dev = hidinput->input;
 	struct hid_report *report;
 	struct hid_field *field;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	struct lg4ff_device_entry *entry;
 	struct lg_drv_data *drv_data;
 	struct usb_device_descriptor *udesc;
@@ -554,13 +542,10 @@ int lg4ff_init(struct hid_device *hid)
 	__u16 bcdDevice, rev_maj, rev_min;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Check that the report looks ok */
 	if (!hid_validate_values(hid, HID_OUTPUT_REPORT, 0, 0, 7))
 		return -1;
 =======
-=======
->>>>>>> master
 	/* Find the report to use */
 	if (list_empty(report_list)) {
 		hid_err(hid, "No output report found\n");
@@ -579,10 +564,7 @@ int lg4ff_init(struct hid_device *hid)
 		hid_err(hid, "NULL field\n");
 		return -1;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* Check what wheel has been connected */
 	for (i = 0; i < ARRAY_SIZE(lg4ff_devices); i++) {
@@ -630,10 +612,7 @@ int lg4ff_init(struct hid_device *hid)
 		return error;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	/* Check if autocentering is available and
 	 * set the centering force to zero by default */
 	if (test_bit(FF_AUTOCENTER, dev->ffbit)) {
@@ -645,10 +624,7 @@ int lg4ff_init(struct hid_device *hid)
 		dev->ff->set_autocenter(dev, 0);
 	}
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* Get private driver data */
 	drv_data = hid_get_drvdata(hid);
 	if (!drv_data) {
@@ -670,7 +646,6 @@ int lg4ff_init(struct hid_device *hid)
 	entry->set_range = lg4ff_devices[i].set_range;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Check if autocentering is available and
 	 * set the centering force to zero by default */
 	if (test_bit(FF_AUTOCENTER, dev->ffbit)) {
@@ -684,8 +659,6 @@ int lg4ff_init(struct hid_device *hid)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* Create sysfs interface */
 	error = device_create_file(&hid->dev, &dev_attr_range);
 	if (error)

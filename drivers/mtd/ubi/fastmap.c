@@ -331,12 +331,9 @@ static int process_pool_aeb(struct ubi_device *ubi, struct ubi_attach_info *ai,
 	else {
 		ubi_err("orphaned volume in fastmap pool!");
 <<<<<<< HEAD
-<<<<<<< HEAD
 		kmem_cache_free(ai->aeb_slab_cache, new_aeb);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		return UBI_BAD_FASTMAP;
 	}
 
@@ -445,23 +442,17 @@ static int scan_pool(struct ubi_device *ubi, struct ubi_attach_info *ai,
 			unmap_peb(ai, pnum);
 			dbg_bld("Adding PEB to free: %i", pnum);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 			if (err == UBI_IO_FF_BITFLIPS)
 				scrub = 1;
 
 			add_aeb(ai, free, pnum, ec, scrub);
 =======
-=======
->>>>>>> master
 			if (err == UBI_IO_FF_BITFLIPS)
 				add_aeb(ai, free, pnum, ec, 1);
 			else
 				add_aeb(ai, free, pnum, ec, 0);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			continue;
 		} else if (err == 0 || err == UBI_IO_BITFLIPS) {
 			dbg_bld("Found non empty PEB:%i in pool", pnum);

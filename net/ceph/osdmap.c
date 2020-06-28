@@ -90,14 +90,10 @@ static int crush_decode_tree_bucket(void **p, void *end,
 	int j;
 	dout("crush_decode_tree_bucket %p to %p\n", *p, end);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ceph_decode_8_safe(p, end, b->num_nodes, bad);
 =======
 	ceph_decode_32_safe(p, end, b->num_nodes, bad);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ceph_decode_32_safe(p, end, b->num_nodes, bad);
->>>>>>> master
 	b->node_weights = kcalloc(b->num_nodes, sizeof(u32), GFP_NOFS);
 	if (b->node_weights == NULL)
 		return -ENOMEM;
@@ -807,7 +803,6 @@ bad:
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * Encoding order is (new_up_client, new_state, new_weight).  Need to
  * apply in the (new_weight, new_state, new_up_client) order, because
  * an incremental map may look like e.g.
@@ -913,8 +908,6 @@ e_inval:
 /*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  * decode and apply an incremental map update.
  */
 struct ceph_osdmap *osdmap_apply_incremental(void **p, void *end,
@@ -1030,14 +1023,11 @@ struct ceph_osdmap *osdmap_apply_incremental(void **p, void *end,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* new_up_client, new_state, new_weight */
 	err = decode_new_up_state_weight(p, end, map);
 	if (err)
 		goto bad;
 =======
-=======
->>>>>>> master
 	/* new_up */
 	err = -EINVAL;
 	ceph_decode_32_safe(p, end, len, bad);
@@ -1082,10 +1072,7 @@ struct ceph_osdmap *osdmap_apply_incremental(void **p, void *end,
 		if (osd < map->max_osd)
 			map->osd_weight[osd] = off;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* new_pg_temp */
 	ceph_decode_32_safe(p, end, len, bad);
@@ -1260,14 +1247,10 @@ static int *calc_pg_raw(struct ceph_osdmap *osdmap, struct ceph_pg pgid,
 	/* pg_temp? */
 	pgid.seed = ceph_stable_mod(pgid.seed, pool->pg_num,
 <<<<<<< HEAD
-<<<<<<< HEAD
 				    pool->pg_num_mask);
 =======
 				    pool->pgp_num_mask);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				    pool->pgp_num_mask);
->>>>>>> master
 	pg = __lookup_pg_mapping(&osdmap->pg_temp, pgid);
 	if (pg) {
 		*num = pg->len;

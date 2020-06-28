@@ -135,12 +135,9 @@ struct i2c_hid {
 	unsigned int		bufsize;	/* i2c buffer size */
 	char			*inbuf;		/* Input buffer */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	char			*rawbuf;	/* Raw Input buffer */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	char			*cmdbuf;	/* Command buffer */
 	char			*argsbuf;	/* Command arguments buffer */
 
@@ -333,7 +330,6 @@ static int i2c_hid_hwreset(struct i2c_client *client)
 		return ret;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * The HID over I2C specification states that if a DEVICE needs time
 	 * after the PWR_ON request, it should utilise CLOCK stretching.
@@ -345,8 +341,6 @@ static int i2c_hid_hwreset(struct i2c_client *client)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	i2c_hid_dbg(ihid, "resetting...\n");
 
 	ret = i2c_hid_command(client, &hid_reset_cmd, NULL, 0);
@@ -365,14 +359,11 @@ static void i2c_hid_get_input(struct i2c_hid *ihid)
 	int size = le16_to_cpu(ihid->hdesc.wMaxInputLength);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (size > ihid->bufsize)
 		size = ihid->bufsize;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ret = i2c_master_recv(ihid->client, ihid->inbuf, size);
 	if (ret != size) {
 		if (ret < 0)
@@ -503,7 +494,6 @@ static void i2c_hid_free_buffers(struct i2c_hid *ihid)
 {
 	kfree(ihid->inbuf);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	kfree(ihid->rawbuf);
 	kfree(ihid->argsbuf);
 	kfree(ihid->cmdbuf);
@@ -514,11 +504,6 @@ static void i2c_hid_free_buffers(struct i2c_hid *ihid)
 	kfree(ihid->cmdbuf);
 	ihid->inbuf = NULL;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	kfree(ihid->argsbuf);
-	kfree(ihid->cmdbuf);
-	ihid->inbuf = NULL;
->>>>>>> master
 	ihid->cmdbuf = NULL;
 	ihid->argsbuf = NULL;
 	ihid->bufsize = 0;
@@ -535,23 +520,17 @@ static int i2c_hid_alloc_buffers(struct i2c_hid *ihid, size_t report_size)
 
 	ihid->inbuf = kzalloc(report_size, GFP_KERNEL);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ihid->rawbuf = kzalloc(report_size, GFP_KERNEL);
 	ihid->argsbuf = kzalloc(args_len, GFP_KERNEL);
 	ihid->cmdbuf = kzalloc(sizeof(union command) + args_len, GFP_KERNEL);
 
 	if (!ihid->inbuf || !ihid->rawbuf || !ihid->argsbuf || !ihid->cmdbuf) {
 =======
-=======
->>>>>>> master
 	ihid->argsbuf = kzalloc(args_len, GFP_KERNEL);
 	ihid->cmdbuf = kzalloc(sizeof(union command) + args_len, GFP_KERNEL);
 
 	if (!ihid->inbuf || !ihid->argsbuf || !ihid->cmdbuf) {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		i2c_hid_free_buffers(ihid);
 		return -ENOMEM;
 	}
@@ -579,27 +558,19 @@ static int i2c_hid_get_raw_report(struct hid_device *hid,
 	ret = i2c_hid_get_report(client,
 			report_type == HID_FEATURE_REPORT ? 0x03 : 0x01,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			report_number, ihid->rawbuf, ask_count);
 =======
 			report_number, ihid->inbuf, ask_count);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			report_number, ihid->inbuf, ask_count);
->>>>>>> master
 
 	if (ret < 0)
 		return ret;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret_count = ihid->rawbuf[0] | (ihid->rawbuf[1] << 8);
 =======
 	ret_count = ihid->inbuf[0] | (ihid->inbuf[1] << 8);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret_count = ihid->inbuf[0] | (ihid->inbuf[1] << 8);
->>>>>>> master
 
 	if (ret_count <= 2)
 		return 0;
@@ -609,14 +580,10 @@ static int i2c_hid_get_raw_report(struct hid_device *hid,
 	/* The query buffer contains the size, dropping it in the reply */
 	count = min(count, ret_count - 2);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	memcpy(buf, ihid->rawbuf + 2, count);
 =======
 	memcpy(buf, ihid->inbuf + 2, count);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	memcpy(buf, ihid->inbuf + 2, count);
->>>>>>> master
 
 	return count;
 }

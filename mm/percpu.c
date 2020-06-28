@@ -613,14 +613,10 @@ static struct pcpu_chunk *pcpu_alloc_chunk(void)
 						sizeof(chunk->map[0]));
 	if (!chunk->map) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		pcpu_mem_free(chunk, pcpu_chunk_struct_size);
 =======
 		kfree(chunk);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		kfree(chunk);
->>>>>>> master
 		return NULL;
 	}
 

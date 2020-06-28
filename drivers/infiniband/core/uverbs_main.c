@@ -49,13 +49,10 @@
 #include <asm/uaccess.h>
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <rdma/ib.h>
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #include "uverbs.h"
 
 MODULE_AUTHOR("Roland Dreier");
@@ -128,7 +125,6 @@ static void ib_uverbs_add_one(struct ib_device *device);
 static void ib_uverbs_remove_one(struct ib_device *device);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void ib_uverbs_release_dev(struct kobject *kobj)
 {
 	struct ib_uverbs_device *dev =
@@ -142,8 +138,6 @@ static struct kobj_type ib_uverbs_dev_ktype = {
 };
 
 =======
-=======
->>>>>>> master
 static void ib_uverbs_release_dev(struct kref *ref)
 {
 	struct ib_uverbs_device *dev =
@@ -152,10 +146,7 @@ static void ib_uverbs_release_dev(struct kref *ref)
 	complete(&dev->comp);
 }
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static void ib_uverbs_release_event_file(struct kref *ref)
 {
 	struct ib_uverbs_event_file *file =
@@ -248,23 +239,17 @@ static int ib_uverbs_cleanup_ucontext(struct ib_uverbs_file *file,
 
 		idr_remove_uobj(&ib_uverbs_qp_idr, uobj);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (qp == qp->real_qp)
 			ib_uverbs_detach_umcast(qp, uqp);
 		ib_destroy_qp(qp);
 =======
-=======
->>>>>>> master
 		if (qp != qp->real_qp) {
 			ib_close_qp(qp);
 		} else {
 			ib_uverbs_detach_umcast(qp, uqp);
 			ib_destroy_qp(qp);
 		}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		ib_uverbs_release_uevent(file, &uqp->uevent);
 		kfree(uqp);
 	}
@@ -324,7 +309,6 @@ static int ib_uverbs_cleanup_ucontext(struct ib_uverbs_file *file,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void ib_uverbs_comp_dev(struct ib_uverbs_device *dev)
 {
 	complete(&dev->comp);
@@ -332,8 +316,6 @@ static void ib_uverbs_comp_dev(struct ib_uverbs_device *dev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static void ib_uverbs_release_file(struct kref *ref)
 {
 	struct ib_uverbs_file *file =
@@ -341,15 +323,11 @@ static void ib_uverbs_release_file(struct kref *ref)
 
 	module_put(file->device->ib_dev->owner);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (atomic_dec_and_test(&file->device->refcount))
 		ib_uverbs_comp_dev(file->device);
 =======
 	kref_put(&file->device->ref, ib_uverbs_release_dev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	kref_put(&file->device->ref, ib_uverbs_release_dev);
->>>>>>> master
 
 	kfree(file);
 }
@@ -522,12 +500,9 @@ static void ib_uverbs_async_handler(struct ib_uverbs_file *file,
 	entry->desc.async.element    = element;
 	entry->desc.async.event_type = event;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	entry->desc.async.reserved   = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	entry->counter               = counter;
 
 	list_add_tail(&entry->list, &file->async_file->event_list);
@@ -646,14 +621,11 @@ static ssize_t ib_uverbs_write(struct file *filp, const char __user *buf,
 	struct ib_uverbs_cmd_hdr hdr;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (WARN_ON_ONCE(!ib_safe_file_access(filp)))
 		return -EACCES;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (count < sizeof hdr)
 		return -EINVAL;
 
@@ -706,18 +678,12 @@ static int ib_uverbs_open(struct inode *inode, struct file *filp)
 
 	dev = container_of(inode->i_cdev, struct ib_uverbs_device, cdev);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!atomic_inc_not_zero(&dev->refcount))
 =======
 	if (dev)
 		kref_get(&dev->ref);
 	else
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (dev)
-		kref_get(&dev->ref);
-	else
->>>>>>> master
 		return -ENXIO;
 
 	if (!try_module_get(dev->ib_dev->owner)) {
@@ -739,12 +705,9 @@ static int ib_uverbs_open(struct inode *inode, struct file *filp)
 
 	filp->private_data = file;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	kobject_get(&dev->kobj);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	return nonseekable_open(inode, filp);
 
@@ -753,16 +716,12 @@ err_module:
 
 err:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (atomic_dec_and_test(&dev->refcount))
 		ib_uverbs_comp_dev(dev);
 
 =======
 	kref_put(&dev->ref, ib_uverbs_release_dev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	kref_put(&dev->ref, ib_uverbs_release_dev);
->>>>>>> master
 	return ret;
 }
 
@@ -770,12 +729,9 @@ static int ib_uverbs_close(struct inode *inode, struct file *filp)
 {
 	struct ib_uverbs_file *file = filp->private_data;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct ib_uverbs_device *dev = file->device;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	ib_uverbs_cleanup_ucontext(file, file->ucontext);
 
@@ -784,12 +740,9 @@ static int ib_uverbs_close(struct inode *inode, struct file *filp)
 
 	kref_put(&file->ref, ib_uverbs_release_file);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	kobject_put(&dev->kobj);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	return 0;
 }
@@ -886,23 +839,17 @@ static void ib_uverbs_add_one(struct ib_device *device)
 		return;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	atomic_set(&uverbs_dev->refcount, 1);
 	init_completion(&uverbs_dev->comp);
 	uverbs_dev->xrcd_tree = RB_ROOT;
 	mutex_init(&uverbs_dev->xrcd_tree_mutex);
 	kobject_init(&uverbs_dev->kobj, &ib_uverbs_dev_ktype);
 =======
-=======
->>>>>>> master
 	kref_init(&uverbs_dev->ref);
 	init_completion(&uverbs_dev->comp);
 	uverbs_dev->xrcd_tree = RB_ROOT;
 	mutex_init(&uverbs_dev->xrcd_tree_mutex);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	spin_lock(&map_lock);
 	devnum = find_first_zero_bit(dev_map, IB_UVERBS_MAX_DEVICES);
@@ -930,12 +877,9 @@ static void ib_uverbs_add_one(struct ib_device *device)
 	uverbs_dev->cdev.owner = THIS_MODULE;
 	uverbs_dev->cdev.ops = device->mmap ? &uverbs_mmap_fops : &uverbs_fops;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	uverbs_dev->cdev.kobj.parent = &uverbs_dev->kobj;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	kobject_set_name(&uverbs_dev->cdev.kobj, "uverbs%d", uverbs_dev->devnum);
 	if (cdev_add(&uverbs_dev->cdev, base, 1))
 		goto err_cdev;
@@ -967,7 +911,6 @@ err_cdev:
 
 err:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (atomic_dec_and_test(&uverbs_dev->refcount))
 		ib_uverbs_comp_dev(uverbs_dev);
 	wait_for_completion(&uverbs_dev->comp);
@@ -977,11 +920,6 @@ err:
 	wait_for_completion(&uverbs_dev->comp);
 	kfree(uverbs_dev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	kref_put(&uverbs_dev->ref, ib_uverbs_release_dev);
-	wait_for_completion(&uverbs_dev->comp);
-	kfree(uverbs_dev);
->>>>>>> master
 	return;
 }
 
@@ -1002,7 +940,6 @@ static void ib_uverbs_remove_one(struct ib_device *device)
 		clear_bit(uverbs_dev->devnum - IB_UVERBS_MAX_DEVICES, overflow_map);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (atomic_dec_and_test(&uverbs_dev->refcount))
 		ib_uverbs_comp_dev(uverbs_dev);
 	wait_for_completion(&uverbs_dev->comp);
@@ -1012,11 +949,6 @@ static void ib_uverbs_remove_one(struct ib_device *device)
 	wait_for_completion(&uverbs_dev->comp);
 	kfree(uverbs_dev);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	kref_put(&uverbs_dev->ref, ib_uverbs_release_dev);
-	wait_for_completion(&uverbs_dev->comp);
-	kfree(uverbs_dev);
->>>>>>> master
 }
 
 static char *uverbs_devnode(struct device *dev, umode_t *mode)

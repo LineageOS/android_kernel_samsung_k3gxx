@@ -176,14 +176,10 @@ static void iwl_mvm_set_tx_cmd_rate(struct iwl_mvm *mvm,
 	 */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ieee80211_is_data(fc) && sta) {
 =======
 	if (ieee80211_is_data(fc)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (ieee80211_is_data(fc)) {
->>>>>>> master
 		tx_cmd->initial_rate_index = 0;
 		tx_cmd->tx_flags |= cpu_to_le32(TX_CMD_FLG_STA_RATE);
 		return;
@@ -619,17 +615,12 @@ static void iwl_mvm_rx_tx_cmd_single(struct iwl_mvm *mvm,
 			info->flags |= IEEE80211_TX_STAT_AMPDU_NO_BACK;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* W/A FW bug: seq_ctl is wrong when the status isn't success */
 		if (status != TX_STATUS_SUCCESS) {
 =======
 		/* W/A FW bug: seq_ctl is wrong when the queue is flushed */
 		if (status == TX_STATUS_FAIL_FIFO_FLUSHED) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		/* W/A FW bug: seq_ctl is wrong when the queue is flushed */
-		if (status == TX_STATUS_FAIL_FIFO_FLUSHED) {
->>>>>>> master
 			struct ieee80211_hdr *hdr = (void *)skb->data;
 			seq_ctl = le16_to_cpu(hdr->seq_ctrl);
 		}
@@ -838,7 +829,6 @@ int iwl_mvm_rx_ba_notif(struct iwl_mvm *mvm, struct iwl_rx_cmd_buffer *rxb,
 	struct sk_buff_head reclaimed_skbs;
 	struct iwl_mvm_tid_data *tid_data;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct ieee80211_sta *sta;
 	struct iwl_mvm_sta *mvmsta;
 	struct sk_buff *skb;
@@ -846,8 +836,6 @@ int iwl_mvm_rx_ba_notif(struct iwl_mvm *mvm, struct iwl_rx_cmd_buffer *rxb,
 	/* "flow" corresponds to Tx queue */
 	u16 scd_flow = le16_to_cpu(ba_notif->scd_flow);
 =======
-=======
->>>>>>> master
 	struct ieee80211_tx_info *info;
 	struct ieee80211_sta *sta;
 	struct iwl_mvm_sta *mvmsta;
@@ -858,10 +846,7 @@ int iwl_mvm_rx_ba_notif(struct iwl_mvm *mvm, struct iwl_rx_cmd_buffer *rxb,
 	/* "flow" corresponds to Tx queue */
 	u16 scd_flow = le16_to_cpu(ba_notif->scd_flow);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* "ssn" is start of block-ack Tx window, corresponds to index
 	 * (in Tx queue's circular buffer) of first TFD/frame in window */
 	u16 ba_resp_scd_ssn = le16_to_cpu(ba_notif->scd_ssn);
@@ -870,7 +855,6 @@ int iwl_mvm_rx_ba_notif(struct iwl_mvm *mvm, struct iwl_rx_cmd_buffer *rxb,
 	tid = ba_notif->tid;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (WARN_ONCE(sta_id >= IWL_MVM_STATION_COUNT ||
 		      tid >= IWL_MAX_TID_COUNT,
 		      "sta_id %d tid %d", sta_id, tid))
@@ -878,8 +862,6 @@ int iwl_mvm_rx_ba_notif(struct iwl_mvm *mvm, struct iwl_rx_cmd_buffer *rxb,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	rcu_read_lock();
 
 	sta = rcu_dereference(mvm->fw_id_to_mac_id[sta_id]);
@@ -930,22 +912,17 @@ int iwl_mvm_rx_ba_notif(struct iwl_mvm *mvm, struct iwl_rx_cmd_buffer *rxb,
 
 	skb_queue_walk(&reclaimed_skbs, skb) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		struct ieee80211_hdr *hdr = (void *)skb->data;
 		struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
 =======
 		hdr = (struct ieee80211_hdr *)skb->data;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		hdr = (struct ieee80211_hdr *)skb->data;
->>>>>>> master
 
 		if (ieee80211_is_data_qos(hdr->frame_control))
 			freed++;
 		else
 			WARN_ON_ONCE(1);
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 		iwl_trans_free_tx_cmd(mvm->trans, info->driver_data[1]);
 
@@ -960,8 +937,6 @@ int iwl_mvm_rx_ba_notif(struct iwl_mvm *mvm, struct iwl_rx_cmd_buffer *rxb,
 			/* this is the first skb we deliver in this batch */
 			/* put the rate scaling data there */
 =======
-=======
->>>>>>> master
 		info = IEEE80211_SKB_CB(skb);
 		iwl_trans_free_tx_cmd(mvm->trans, info->driver_data[1]);
 
@@ -971,10 +946,7 @@ int iwl_mvm_rx_ba_notif(struct iwl_mvm *mvm, struct iwl_rx_cmd_buffer *rxb,
 			info = IEEE80211_SKB_CB(skb);
 			memset(&info->status, 0, sizeof(info->status));
 			info->flags |= IEEE80211_TX_STAT_ACK;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			info->flags |= IEEE80211_TX_STAT_AMPDU;
 			info->status.ampdu_ack_len = ba_notif->txed_2_done;
 			info->status.ampdu_len = ba_notif->txed;

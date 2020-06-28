@@ -824,7 +824,6 @@ static int radeon_debugfs_ring_info(struct seq_file *m, void *data)
 	 */
 	i = (ring->rptr + ring->ptr_mask + 1 - 32) & ring->ptr_mask;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ring->ready) {
 		for (j = 0; j <= (count + 32); j++) {
 			seq_printf(m, "r[%5d]=0x%08x\n", i, ring->ring[i]);
@@ -835,11 +834,6 @@ static int radeon_debugfs_ring_info(struct seq_file *m, void *data)
 		seq_printf(m, "r[%5d]=0x%08x\n", i, ring->ring[i]);
 		i = (i + 1) & ring->ptr_mask;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	for (j = 0; j <= (count + 32); j++) {
-		seq_printf(m, "r[%5d]=0x%08x\n", i, ring->ring[i]);
-		i = (i + 1) & ring->ptr_mask;
->>>>>>> master
 	}
 	return 0;
 }

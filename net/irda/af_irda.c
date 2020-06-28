@@ -1043,7 +1043,6 @@ static int irda_connect(struct socket *sock, struct sockaddr *uaddr,
 
 	/* Check if we have opened a local TSAP */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!self->tsap) {
 		err = irda_open_tsap(self, LSAP_ANY, addr->sir_name);
 		if (err)
@@ -1053,10 +1052,6 @@ static int irda_connect(struct socket *sock, struct sockaddr *uaddr,
 	if (!self->tsap)
 		irda_open_tsap(self, LSAP_ANY, addr->sir_name);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!self->tsap)
-		irda_open_tsap(self, LSAP_ANY, addr->sir_name);
->>>>>>> master
 
 	/* Move to connecting socket, start sending Connect Requests */
 	sock->state = SS_CONNECTING;
@@ -1122,14 +1117,11 @@ static int irda_create(struct net *net, struct socket *sock, int protocol,
 	IRDA_DEBUG(2, "%s()\n", __func__);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (protocol < 0 || protocol > SK_PROTOCOL_MAX)
 		return -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (net != &init_net)
 		return -EAFNOSUPPORT;
 
@@ -1411,15 +1403,10 @@ static int irda_recvmsg_dgram(struct kiocb *iocb, struct socket *sock,
 	IRDA_DEBUG(4, "%s()\n", __func__);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	msg->msg_namelen = 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	msg->msg_namelen = 0;
-
->>>>>>> master
 	skb = skb_recv_datagram(sk, flags & ~MSG_DONTWAIT,
 				flags & MSG_DONTWAIT, &err);
 	if (!skb)
@@ -1485,15 +1472,10 @@ static int irda_recvmsg_stream(struct kiocb *iocb, struct socket *sock,
 	timeo = sock_rcvtimeo(sk, noblock);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	msg->msg_namelen = 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	msg->msg_namelen = 0;
-
->>>>>>> master
 	do {
 		int chunk;
 		struct sk_buff *skb = skb_dequeue(&sk->sk_receive_queue);

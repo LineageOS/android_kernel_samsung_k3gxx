@@ -3,24 +3,18 @@
  *
  * Copyright (c) 2013 Samsung Electronics Co. Ltd
 <<<<<<< HEAD
-<<<<<<< HEAD
  *   Authors: Daeho Jeong, Woojoong Lee, Seunghwan Hyun,
  *               Sunghwan Yun, Sungjong Seo
  *
  * This program has been developed as a stackable file system based on
  * the WrapFS which written by
 =======
-=======
->>>>>>> master
  *   Authors: Daeho Jeong, Woojoong Lee, Seunghwan Hyun, 
  *               Sunghwan Yun, Sungjong Seo
  *                      
  * This program has been developed as a stackable file system based on
  * the WrapFS which written by 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  *
  * Copyright (c) 1998-2011 Erez Zadok
  * Copyright (c) 2009     Shrikar Archak
@@ -41,7 +35,6 @@
 static struct kmem_cache *sdcardfs_inode_cachep;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /*
  * To support the top references, we must track some data separately.
  * An sdcardfs_inode_info always has a reference to its data, and once set up,
@@ -61,8 +54,6 @@ void data_release(struct kref *ref)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /* final actions when unmounting a file system */
 static void sdcardfs_put_super(struct super_block *sb)
 {
@@ -74,54 +65,36 @@ static void sdcardfs_put_super(struct super_block *sb)
 		return;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (spd->obbpath_s) {
 =======
-=======
->>>>>>> master
 	printk(KERN_ERR "sdcardfs: umounted dev_name %s\n", 
 				spd->devpath ? spd->devpath : "");
 	if(spd->devpath)
 		kfree(spd->devpath);
 
 	if(spd->obbpath_s) {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		kfree(spd->obbpath_s);
 		path_put(&spd->obbpath);
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if(spd->options.label)
 		kfree(spd->options.label);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if(spd->options.label)
-		kfree(spd->options.label);
-
->>>>>>> master
 	/* decrement lower super references */
 	s = sdcardfs_lower_super(sb);
 	sdcardfs_set_lower_super(sb, NULL);
 	atomic_dec(&s->s_active);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if(spd->pkgl_id)
 		packagelist_destroy(spd->pkgl_id);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if(spd->pkgl_id)
-		packagelist_destroy(spd->pkgl_id);
-
->>>>>>> master
 	kfree(spd);
 	sb->s_fs_info = NULL;
 }
@@ -141,7 +114,6 @@ static int sdcardfs_statfs(struct dentry *dentry, struct kstatfs *buf)
 		/* Invalid statfs informations. */
 		if (buf->f_bsize == 0) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			pr_err("Returned block size is zero.\n");
 			return -EINVAL;
 		}
@@ -150,8 +122,6 @@ static int sdcardfs_statfs(struct dentry *dentry, struct kstatfs *buf)
 		buf->f_blocks -= min_blocks;
 
 =======
-=======
->>>>>>> master
 			printk(KERN_ERR "Returned block size is zero.\n");
 			return -EINVAL;
 		}
@@ -159,23 +129,16 @@ static int sdcardfs_statfs(struct dentry *dentry, struct kstatfs *buf)
 		min_blocks = ((sbi->options.reserved_mb * 1024 * 1024)/buf->f_bsize);
 		buf->f_blocks -= min_blocks;
 	
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (buf->f_bavail > min_blocks)
 			buf->f_bavail -= min_blocks;
 		else
 			buf->f_bavail = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 =======
 	
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	
->>>>>>> master
 		/* Make reserved blocks invisiable to media storage */
 		buf->f_bfree = buf->f_bavail;
 	}
@@ -201,16 +164,11 @@ static int sdcardfs_remount_fs(struct super_block *sb, int *flags, char *options
 	 */
 	if ((*flags & ~(MS_RDONLY | MS_MANDLOCK | MS_SILENT)) != 0) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		pr_err("sdcardfs: remount flags 0x%x unsupported\n", *flags);
 =======
 		printk(KERN_ERR
 		       "sdcardfs: remount flags 0x%x unsupported\n", *flags);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		printk(KERN_ERR
-		       "sdcardfs: remount flags 0x%x unsupported\n", *flags);
->>>>>>> master
 		err = -EINVAL;
 	}
 
@@ -218,7 +176,6 @@ static int sdcardfs_remount_fs(struct super_block *sb, int *flags, char *options
 }
 
 /*
-<<<<<<< HEAD
 <<<<<<< HEAD
  * @mnt: mount point we are remounting
  * @sb: superblock we are remounting
@@ -270,8 +227,6 @@ static void sdcardfs_copy_mnt_data(void *data, void *newdata)
 /*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  * Called by iput() when the inode reference count reached zero
  * and the inode is not hashed anywhere.  Used to clear anything
  * that needs to be, before the inode is completely destroyed and put
@@ -283,12 +238,9 @@ static void sdcardfs_evict_inode(struct inode *inode)
 
 	truncate_inode_pages(&inode->i_data, 0);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	set_top(SDCARDFS_I(inode), NULL);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	clear_inode(inode);
 	/*
 	 * Decrement a reference to a lower_inode, which was incremented
@@ -303,12 +255,9 @@ static struct inode *sdcardfs_alloc_inode(struct super_block *sb)
 {
 	struct sdcardfs_inode_info *i;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct sdcardfs_inode_data *d;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	i = kmem_cache_alloc(sdcardfs_inode_cachep, GFP_KERNEL);
 	if (!i)
@@ -317,7 +266,6 @@ static struct inode *sdcardfs_alloc_inode(struct super_block *sb)
 	/* memset everything up to the inode to 0 */
 	memset(i, 0, offsetof(struct sdcardfs_inode_info, vfs_inode));
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	d = kmem_cache_alloc(sdcardfs_inode_data_cachep,
 					GFP_KERNEL | __GFP_ZERO);
@@ -331,13 +279,10 @@ static struct inode *sdcardfs_alloc_inode(struct super_block *sb)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	i->vfs_inode.i_version = 1;
 	return &i->vfs_inode;
 }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 static void i_callback(struct rcu_head *head)
 {
@@ -355,11 +300,6 @@ static void sdcardfs_destroy_inode(struct inode *inode)
 {
 	kmem_cache_free(sdcardfs_inode_cachep, SDCARDFS_I(inode));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static void sdcardfs_destroy_inode(struct inode *inode)
-{
-	kmem_cache_free(sdcardfs_inode_cachep, SDCARDFS_I(inode));
->>>>>>> master
 }
 
 /* sdcardfs inode cache constructor */
@@ -373,20 +313,14 @@ static void init_once(void *obj)
 int sdcardfs_init_inode_cache(void)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	int err = 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int err = 0;
-
->>>>>>> master
 	sdcardfs_inode_cachep =
 		kmem_cache_create("sdcardfs_inode_cache",
 				  sizeof(struct sdcardfs_inode_info), 0,
 				  SLAB_RECLAIM_ACCOUNT, init_once);
-<<<<<<< HEAD
 <<<<<<< HEAD
 
 	if (!sdcardfs_inode_cachep)
@@ -407,23 +341,15 @@ int sdcardfs_init_inode_cache(void)
 		err = -ENOMEM;
 	return err;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!sdcardfs_inode_cachep)
-		err = -ENOMEM;
-	return err;
->>>>>>> master
 }
 
 /* sdcardfs inode cache destructor */
 void sdcardfs_destroy_inode_cache(void)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	kmem_cache_destroy(sdcardfs_inode_data_cachep);
 	kmem_cache_destroy(sdcardfs_inode_cachep);
 =======
-=======
->>>>>>> master
 	if (sdcardfs_inode_cachep)
 		kmem_cache_destroy(sdcardfs_inode_cachep);
 }
@@ -472,10 +398,7 @@ static long sdcardfs_propagate_lookup(struct super_block *sb, char* pathname) {
 	REVERT_CRED(saved_cred);
 	kfree(propagate_path);
 	return ret;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /*
@@ -491,7 +414,6 @@ static void sdcardfs_umount_begin(struct super_block *sb)
 		lower_sb->s_op->umount_begin(lower_sb);
 }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 static int sdcardfs_show_options(struct vfsmount *mnt, struct seq_file *m,
 			struct dentry *root)
@@ -513,8 +435,6 @@ static int sdcardfs_show_options(struct vfsmount *mnt, struct seq_file *m,
 	if (opts->fs_user_id)
 		seq_printf(m, ",userid=%u", opts->fs_user_id);
 =======
-=======
->>>>>>> master
 static int sdcardfs_show_options(struct seq_file *m, struct dentry *root)
 {
 	struct sdcardfs_sb_info *sbi = SDCARDFS_SB(root->d_sb);
@@ -532,10 +452,7 @@ static int sdcardfs_show_options(struct seq_file *m, struct dentry *root)
 		seq_printf(m, ",multi_user");
 	if (opts->mask != 0)
 		seq_printf(m, ",mask=%04o", opts->mask);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (opts->reserved_mb != 0)
 		seq_printf(m, ",reserved=%uMB", opts->reserved_mb);
 
@@ -547,7 +464,6 @@ const struct super_operations sdcardfs_sops = {
 	.statfs		= sdcardfs_statfs,
 	.remount_fs	= sdcardfs_remount_fs,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.remount_fs2	= sdcardfs_remount_fs2,
 	.clone_mnt_data	= sdcardfs_clone_mnt_data,
 	.copy_mnt_data	= sdcardfs_copy_mnt_data,
@@ -558,8 +474,6 @@ const struct super_operations sdcardfs_sops = {
 	.destroy_inode	= sdcardfs_destroy_inode,
 	.drop_inode	= generic_delete_inode,
 =======
-=======
->>>>>>> master
 	.evict_inode	= sdcardfs_evict_inode,
 	.umount_begin	= sdcardfs_umount_begin,
 	.show_options	= sdcardfs_show_options,
@@ -579,8 +493,5 @@ const struct super_operations sdcardfs_multimount_sops = {
 	.destroy_inode	= sdcardfs_destroy_inode,
 	.drop_inode	= generic_delete_inode,
 	.unlink_callback = sdcardfs_propagate_lookup,
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };

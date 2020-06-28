@@ -164,7 +164,6 @@ struct proto_ops {
 	int		(*sendmsg)   (struct kiocb *iocb, struct socket *sock,
 				      struct msghdr *m, size_t total_len);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Notes for implementing recvmsg:
 	 * ===============================
 	 * msg->msg_namelen should get updated by the recvmsg handlers
@@ -175,8 +174,6 @@ struct proto_ops {
 	 */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	int		(*recvmsg)   (struct kiocb *iocb, struct socket *sock,
 				      struct msghdr *m, size_t total_len,
 				      int flags);
@@ -187,14 +184,10 @@ struct proto_ops {
 	ssize_t 	(*splice_read)(struct socket *sock,  loff_t *ppos,
 				       struct pipe_inode_info *pipe, size_t len, unsigned int flags);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int		(*set_peek_off)(struct sock *sk, int val);
 =======
 	void		(*set_peek_off)(struct sock *sk, int val);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	void		(*set_peek_off)(struct sock *sk, int val);
->>>>>>> master
 };
 
 #define DECLARE_SOCKADDR(type, dst, src)	\

@@ -502,7 +502,6 @@ static void microread_target_discovered(struct nfc_hci_dev *hdev, u8 gate,
 			 be16_to_cpu(*(u16 *)&skb->data[MICROREAD_EMCF_A_ATQA]);
 		targets->sel_res = skb->data[MICROREAD_EMCF_A_SAK];
 <<<<<<< HEAD
-<<<<<<< HEAD
 		targets->nfcid1_len = skb->data[MICROREAD_EMCF_A_LEN];
 		if (targets->nfcid1_len > sizeof(targets->nfcid1)) {
 			r = -EINVAL;
@@ -515,11 +514,6 @@ static void microread_target_discovered(struct nfc_hci_dev *hdev, u8 gate,
 		       skb->data[MICROREAD_EMCF_A_LEN]);
 		targets->nfcid1_len = skb->data[MICROREAD_EMCF_A_LEN];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		memcpy(targets->nfcid1, &skb->data[MICROREAD_EMCF_A_UID],
-		       skb->data[MICROREAD_EMCF_A_LEN]);
-		targets->nfcid1_len = skb->data[MICROREAD_EMCF_A_LEN];
->>>>>>> master
 		break;
 	case MICROREAD_GATE_ID_MREAD_ISO_A_3:
 		targets->supported_protocols =
@@ -528,7 +522,6 @@ static void microread_target_discovered(struct nfc_hci_dev *hdev, u8 gate,
 			 be16_to_cpu(*(u16 *)&skb->data[MICROREAD_EMCF_A3_ATQA]);
 		targets->sel_res = skb->data[MICROREAD_EMCF_A3_SAK];
 <<<<<<< HEAD
-<<<<<<< HEAD
 		targets->nfcid1_len = skb->data[MICROREAD_EMCF_A3_LEN];
 		if (targets->nfcid1_len > sizeof(targets->nfcid1)) {
 			r = -EINVAL;
@@ -541,11 +534,6 @@ static void microread_target_discovered(struct nfc_hci_dev *hdev, u8 gate,
 		       skb->data[MICROREAD_EMCF_A3_LEN]);
 		targets->nfcid1_len = skb->data[MICROREAD_EMCF_A3_LEN];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		memcpy(targets->nfcid1, &skb->data[MICROREAD_EMCF_A3_UID],
-		       skb->data[MICROREAD_EMCF_A3_LEN]);
-		targets->nfcid1_len = skb->data[MICROREAD_EMCF_A3_LEN];
->>>>>>> master
 		break;
 	case MICROREAD_GATE_ID_MREAD_ISO_B:
 		targets->supported_protocols = NFC_PROTO_ISO14443_B_MASK;

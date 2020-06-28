@@ -163,12 +163,9 @@ struct key {
 #define KEY_FLAG_ROOT_CAN_CLEAR	6	/* set if key can be cleared by root without permission */
 #define KEY_FLAG_INVALIDATED	7	/* set if key has been invalidated */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define KEY_FLAG_UID_KEYRING	11	/* set if key is a user or user session keyring */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* the description string
 	 * - this is used to match a key against search criteria
@@ -211,12 +208,9 @@ extern struct key *key_alloc(struct key_type *type,
 #define KEY_ALLOC_QUOTA_OVERRUN	0x0001	/* add to quota, permit even if overrun */
 #define KEY_ALLOC_NOT_IN_QUOTA	0x0002	/* not in quota */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define KEY_ALLOC_UID_KEYRING	0x0010	/* allocating a user or user session keyring */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 extern void key_revoke(struct key *key);
 extern void key_invalidate(struct key *key);

@@ -46,12 +46,9 @@ lib-$(CONFIG_RWSEM_XCHGADD_ALGORITHM) += rwsem.o
 lib-$(CONFIG_PERCPU_RWSEM) += percpu-rwsem.o
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 GCOV_PROFILE_hweight.o := n
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 CFLAGS_hweight.o = $(subst $(quote),,$(CONFIG_ARCH_HWEIGHT_CFLAGS))
 obj-$(CONFIG_GENERIC_HWEIGHT) += hweight.o
 

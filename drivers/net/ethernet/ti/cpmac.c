@@ -558,15 +558,11 @@ fatal_error:
 static int cpmac_start_xmit(struct sk_buff *skb, struct net_device *dev)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int queue;
 	unsigned int len;
 =======
 	int queue, len;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int queue, len;
->>>>>>> master
 	struct cpmac_desc *desc;
 	struct cpmac_priv *priv = netdev_priv(dev);
 
@@ -577,14 +573,10 @@ static int cpmac_start_xmit(struct sk_buff *skb, struct net_device *dev)
 		return NETDEV_TX_OK;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	len = max_t(unsigned int, skb->len, ETH_ZLEN);
 =======
 	len = max(skb->len, ETH_ZLEN);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	len = max(skb->len, ETH_ZLEN);
->>>>>>> master
 	queue = skb_get_queue_mapping(skb);
 	netif_stop_subqueue(dev, queue);
 
@@ -1259,14 +1251,10 @@ int cpmac_init(void)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* FIXME: unhardcode gpio&reset bits */
 =======
 #warning FIXME: unhardcode gpio&reset bits
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#warning FIXME: unhardcode gpio&reset bits
->>>>>>> master
 	ar7_gpio_disable(26);
 	ar7_gpio_disable(27);
 	ar7_device_reset(AR7_RESET_BIT_CPMAC_LO);

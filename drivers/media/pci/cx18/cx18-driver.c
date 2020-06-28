@@ -325,7 +325,6 @@ static void cx18_eeprom_dump(struct cx18 *cx, unsigned char *eedata, int len)
 void cx18_read_eeprom(struct cx18 *cx, struct tveeprom *tv)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct i2c_client *c;
 	u8 eedata[256];
 
@@ -343,8 +342,6 @@ void cx18_read_eeprom(struct cx18 *cx, struct tveeprom *tv)
 		goto ret;
 
 =======
-=======
->>>>>>> master
 	struct i2c_client c;
 	u8 eedata[256];
 
@@ -357,23 +354,16 @@ void cx18_read_eeprom(struct cx18 *cx, struct tveeprom *tv)
 	if (tveeprom_read(&c, eedata, sizeof(eedata)))
 		return;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	switch (cx->card->type) {
 	case CX18_CARD_HVR_1600_ESMT:
 	case CX18_CARD_HVR_1600_SAMSUNG:
 	case CX18_CARD_HVR_1600_S5H1411:
 <<<<<<< HEAD
-<<<<<<< HEAD
 		tveeprom_hauppauge_analog(c, tv, eedata);
 =======
 		tveeprom_hauppauge_analog(&c, tv, eedata);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		tveeprom_hauppauge_analog(&c, tv, eedata);
->>>>>>> master
 		break;
 	case CX18_CARD_YUAN_MPC718:
 	case CX18_CARD_GOTVIEW_PCI_DVD3:
@@ -388,14 +378,11 @@ void cx18_read_eeprom(struct cx18 *cx, struct tveeprom *tv)
 		break;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 ret:
 	kfree(c);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static void cx18_process_eeprom(struct cx18 *cx)
@@ -1128,12 +1115,9 @@ static int cx18_probe(struct pci_dev *pci_dev,
 		setup.type = cx->options.tuner;
 		setup.mode_mask = T_ANALOG_TV;  /* matches TV tuners */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		setup.config = NULL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (cx->options.radio > 0)
 			setup.mode_mask |= T_RADIO;
 		setup.tuner_callback = (setup.type == TUNER_XC2028) ?

@@ -409,14 +409,10 @@ int ubi_compare_lebs(struct ubi_device *ubi, const struct ubi_ainf_peb *aeb,
 	} else {
 		dbg_bld("PEB %d CRC is OK", pnum);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		bitflips |= !!err;
 =======
 		bitflips = !!err;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		bitflips = !!err;
->>>>>>> master
 	}
 	mutex_unlock(&ubi->buf_mutex);
 

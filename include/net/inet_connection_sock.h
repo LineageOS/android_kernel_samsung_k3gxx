@@ -63,12 +63,9 @@ struct inet_connection_sock_af_ops {
 	int	    (*bind_conflict)(const struct sock *sk,
 				     const struct inet_bind_bucket *tb, bool relax);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	void	    (*mtu_reduced)(struct sock *sk);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 /** inet_connection_sock - INET connection oriented sock

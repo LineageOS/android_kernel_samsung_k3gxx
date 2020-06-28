@@ -151,7 +151,6 @@ void ping_unhash(struct sock *sk)
 {
 	struct inet_sock *isk = inet_sk(sk);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	pr_debug("ping_v4_unhash(isk=%p,isk->num=%u)\n", isk, isk->inet_num);
 	write_lock_bh(&ping_table.lock);
 	if (sk_hashed(sk)) {
@@ -160,11 +159,6 @@ void ping_unhash(struct sock *sk)
 	if (sk_hashed(sk)) {
 		write_lock_bh(&ping_table.lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	pr_debug("ping_unhash(isk=%p,isk->num=%u)\n", isk, isk->inet_num);
-	if (sk_hashed(sk)) {
-		write_lock_bh(&ping_table.lock);
->>>>>>> master
 		hlist_nulls_del(&sk->sk_nulls_node);
 		sk_nulls_node_init(&sk->sk_nulls_node);
 		sock_put(sk);
@@ -172,17 +166,12 @@ void ping_unhash(struct sock *sk)
 		isk->inet_sport = 0;
 		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	}
 	write_unlock_bh(&ping_table.lock);
 =======
 		write_unlock_bh(&ping_table.lock);
 	}
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		write_unlock_bh(&ping_table.lock);
-	}
->>>>>>> master
 }
 EXPORT_SYMBOL_GPL(ping_unhash);
 
@@ -652,13 +641,10 @@ static int ping_v4_push_pending_frames(struct sock *sk, struct pingfakehdr *pfh,
 	struct sk_buff *skb = skb_peek(&sk->sk_write_queue);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!skb)
 		return 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	pfh->wcheck = csum_partial((char *)&pfh->icmph,
 		sizeof(struct icmphdr), pfh->wcheck);
 	pfh->icmph.checksum = csum_fold(pfh->wcheck);
@@ -675,15 +661,12 @@ int ping_common_sendmsg(int family, struct msghdr *msg, size_t len,
 		return -EMSGSIZE;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Must have at least a full ICMP header. */
 	if (len < icmph_len)
 		return -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/*
 	 *	Check the flags.
 	 */
@@ -813,16 +796,11 @@ int ping_v4_sendmsg(struct kiocb *iocb, struct sock *sk, struct msghdr *msg,
 	flowi4_init_output(&fl4, ipc.oif, sk->sk_mark, tos,
 			   RT_SCOPE_UNIVERSE, sk->sk_protocol,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			   inet_sk_flowi_flags(sk), faddr, saddr, 0, 0);
 =======
 			   inet_sk_flowi_flags(sk), faddr, saddr, 0, 0,
 			   sock_i_uid(sk));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			   inet_sk_flowi_flags(sk), faddr, saddr, 0, 0,
-			   sock_i_uid(sk));
->>>>>>> master
 
 	security_sk_classify_flow(sk, flowi4_to_flowi(&fl4));
 	rt = ip_route_output_flow(net, &fl4, sk);
@@ -831,14 +809,10 @@ int ping_v4_sendmsg(struct kiocb *iocb, struct sock *sk, struct msghdr *msg,
 		rt = NULL;
 		if (err == -ENETUNREACH)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			IP_INC_STATS(net, IPSTATS_MIB_OUTNOROUTES);
 =======
 			IP_INC_STATS_BH(net, IPSTATS_MIB_OUTNOROUTES);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			IP_INC_STATS_BH(net, IPSTATS_MIB_OUTNOROUTES);
->>>>>>> master
 		goto out;
 	}
 
@@ -917,22 +891,16 @@ int ping_recvmsg(struct kiocb *iocb, struct sock *sk, struct msghdr *msg,
 	if (flags & MSG_ERRQUEUE) {
 		if (family == AF_INET) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			return ip_recv_error(sk, msg, len, addr_len);
 #if IS_ENABLED(CONFIG_IPV6)
 		} else if (family == AF_INET6) {
 			return pingv6_ops.ipv6_recv_error(sk, msg, len, addr_len);
 =======
-=======
->>>>>>> master
 			return ip_recv_error(sk, msg, len);
 #if IS_ENABLED(CONFIG_IPV6)
 		} else if (family == AF_INET6) {
 			return pingv6_ops.ipv6_recv_error(sk, msg, len);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #endif
 		}
 	}

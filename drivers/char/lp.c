@@ -858,7 +858,6 @@ static int __init lp_setup (char *str)
 		parport_nr[0] = LP_PARPORT_AUTO;
 	} else if (!strcmp(str, "none")) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (parport_ptr < LP_NO)
 			parport_nr[parport_ptr++] = LP_PARPORT_NONE;
 		else
@@ -867,9 +866,6 @@ static int __init lp_setup (char *str)
 =======
 		parport_nr[parport_ptr++] = LP_PARPORT_NONE;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		parport_nr[parport_ptr++] = LP_PARPORT_NONE;
->>>>>>> master
 	} else if (!strcmp(str, "reset")) {
 		reset = 1;
 	}

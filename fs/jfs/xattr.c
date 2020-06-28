@@ -694,24 +694,18 @@ static int can_set_system_xattr(struct inode *inode, const char *name,
 		}
 		if (acl) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			rc = posix_acl_update_mode(inode, &inode->i_mode, &acl);
 			posix_acl_release(acl);
 			if (rc) {
 				printk(KERN_ERR
 				       "posix_acl_update_mode returned %d\n",
 =======
-=======
->>>>>>> master
 			rc = posix_acl_equiv_mode(acl, &inode->i_mode);
 			posix_acl_release(acl);
 			if (rc < 0) {
 				printk(KERN_ERR
 				       "posix_acl_equiv_mode returned %d\n",
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 				       rc);
 				return rc;
 			}

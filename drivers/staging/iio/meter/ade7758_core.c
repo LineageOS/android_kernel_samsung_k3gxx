@@ -649,17 +649,11 @@ static const struct iio_chan_spec ade7758_channels[] = {
 		.indexed = 1,
 		.channel = 0,
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		.extend_name = "raw",
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
 		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.extend_name = "raw",
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
-		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
->>>>>>> master
 		.address = AD7758_WT(AD7758_PHASE_A, AD7758_VOLTAGE),
 		.scan_index = 0,
 		.scan_type = {
@@ -672,17 +666,11 @@ static const struct iio_chan_spec ade7758_channels[] = {
 		.indexed = 1,
 		.channel = 0,
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		.extend_name = "raw",
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
 		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.extend_name = "raw",
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
-		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
->>>>>>> master
 		.address = AD7758_WT(AD7758_PHASE_A, AD7758_CURRENT),
 		.scan_index = 1,
 		.scan_type = {
@@ -695,18 +683,12 @@ static const struct iio_chan_spec ade7758_channels[] = {
 		.indexed = 1,
 		.channel = 0,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		.extend_name = "apparent",
 =======
 		.extend_name = "apparent_raw",
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
 		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.extend_name = "apparent_raw",
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
-		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
->>>>>>> master
 		.address = AD7758_WT(AD7758_PHASE_A, AD7758_APP_PWR),
 		.scan_index = 2,
 		.scan_type = {
@@ -719,18 +701,12 @@ static const struct iio_chan_spec ade7758_channels[] = {
 		.indexed = 1,
 		.channel = 0,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		.extend_name = "active",
 =======
 		.extend_name = "active_raw",
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
 		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.extend_name = "active_raw",
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
-		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
->>>>>>> master
 		.address = AD7758_WT(AD7758_PHASE_A, AD7758_ACT_PWR),
 		.scan_index = 3,
 		.scan_type = {
@@ -743,18 +719,12 @@ static const struct iio_chan_spec ade7758_channels[] = {
 		.indexed = 1,
 		.channel = 0,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		.extend_name = "reactive",
 =======
 		.extend_name = "reactive_raw",
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
 		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.extend_name = "reactive_raw",
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
-		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
->>>>>>> master
 		.address = AD7758_WT(AD7758_PHASE_A, AD7758_REACT_PWR),
 		.scan_index = 4,
 		.scan_type = {
@@ -767,17 +737,11 @@ static const struct iio_chan_spec ade7758_channels[] = {
 		.indexed = 1,
 		.channel = 1,
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		.extend_name = "raw",
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
 		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.extend_name = "raw",
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
-		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
->>>>>>> master
 		.address = AD7758_WT(AD7758_PHASE_B, AD7758_VOLTAGE),
 		.scan_index = 5,
 		.scan_type = {
@@ -790,17 +754,11 @@ static const struct iio_chan_spec ade7758_channels[] = {
 		.indexed = 1,
 		.channel = 1,
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		.extend_name = "raw",
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
 		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.extend_name = "raw",
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
-		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
->>>>>>> master
 		.address = AD7758_WT(AD7758_PHASE_B, AD7758_CURRENT),
 		.scan_index = 6,
 		.scan_type = {
@@ -813,18 +771,12 @@ static const struct iio_chan_spec ade7758_channels[] = {
 		.indexed = 1,
 		.channel = 1,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		.extend_name = "apparent",
 =======
 		.extend_name = "apparent_raw",
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
 		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.extend_name = "apparent_raw",
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
-		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
->>>>>>> master
 		.address = AD7758_WT(AD7758_PHASE_B, AD7758_APP_PWR),
 		.scan_index = 7,
 		.scan_type = {
@@ -837,18 +789,12 @@ static const struct iio_chan_spec ade7758_channels[] = {
 		.indexed = 1,
 		.channel = 1,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		.extend_name = "active",
 =======
 		.extend_name = "active_raw",
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
 		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.extend_name = "active_raw",
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
-		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
->>>>>>> master
 		.address = AD7758_WT(AD7758_PHASE_B, AD7758_ACT_PWR),
 		.scan_index = 8,
 		.scan_type = {
@@ -861,18 +807,12 @@ static const struct iio_chan_spec ade7758_channels[] = {
 		.indexed = 1,
 		.channel = 1,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		.extend_name = "reactive",
 =======
 		.extend_name = "reactive_raw",
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
 		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.extend_name = "reactive_raw",
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
-		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
->>>>>>> master
 		.address = AD7758_WT(AD7758_PHASE_B, AD7758_REACT_PWR),
 		.scan_index = 9,
 		.scan_type = {
@@ -885,17 +825,11 @@ static const struct iio_chan_spec ade7758_channels[] = {
 		.indexed = 1,
 		.channel = 2,
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		.extend_name = "raw",
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
 		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.extend_name = "raw",
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
-		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
->>>>>>> master
 		.address = AD7758_WT(AD7758_PHASE_C, AD7758_VOLTAGE),
 		.scan_index = 10,
 		.scan_type = {
@@ -908,17 +842,11 @@ static const struct iio_chan_spec ade7758_channels[] = {
 		.indexed = 1,
 		.channel = 2,
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		.extend_name = "raw",
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
 		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.extend_name = "raw",
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
-		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
->>>>>>> master
 		.address = AD7758_WT(AD7758_PHASE_C, AD7758_CURRENT),
 		.scan_index = 11,
 		.scan_type = {
@@ -931,18 +859,12 @@ static const struct iio_chan_spec ade7758_channels[] = {
 		.indexed = 1,
 		.channel = 2,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		.extend_name = "apparent",
 =======
 		.extend_name = "apparent_raw",
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
 		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.extend_name = "apparent_raw",
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
-		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
->>>>>>> master
 		.address = AD7758_WT(AD7758_PHASE_C, AD7758_APP_PWR),
 		.scan_index = 12,
 		.scan_type = {
@@ -955,18 +877,12 @@ static const struct iio_chan_spec ade7758_channels[] = {
 		.indexed = 1,
 		.channel = 2,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		.extend_name = "active",
 =======
 		.extend_name = "active_raw",
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
 		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.extend_name = "active_raw",
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
-		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
->>>>>>> master
 		.address = AD7758_WT(AD7758_PHASE_C, AD7758_ACT_PWR),
 		.scan_index = 13,
 		.scan_type = {
@@ -979,18 +895,12 @@ static const struct iio_chan_spec ade7758_channels[] = {
 		.indexed = 1,
 		.channel = 2,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		.extend_name = "reactive",
 =======
 		.extend_name = "reactive_raw",
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
 		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.extend_name = "reactive_raw",
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
-		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),
->>>>>>> master
 		.address = AD7758_WT(AD7758_PHASE_C, AD7758_REACT_PWR),
 		.scan_index = 14,
 		.scan_type = {
@@ -1035,13 +945,9 @@ static int ade7758_probe(struct spi_device *spi)
 	}
 	st->us = spi;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	st->ade7758_ring_channels = &ade7758_channels[0];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	st->ade7758_ring_channels = &ade7758_channels[0];
->>>>>>> master
 	mutex_init(&st->buf_lock);
 
 	indio_dev->name = spi->dev.driver->name;
@@ -1049,13 +955,10 @@ static int ade7758_probe(struct spi_device *spi)
 	indio_dev->info = &ade7758_info;
 	indio_dev->modes = INDIO_DIRECT_MODE;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	indio_dev->channels = ade7758_channels;
 	indio_dev->num_channels = ARRAY_SIZE(ade7758_channels);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	ret = ade7758_configure_ring(indio_dev);
 	if (ret)

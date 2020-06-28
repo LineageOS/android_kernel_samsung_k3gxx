@@ -210,7 +210,6 @@ static void mvebu_mbus_disable_window(struct mvebu_mbus_state *mbus,
 
 /* Checks whether the given window number is available */
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 /* On Armada XP, 375 and 38x the MBus window 13 has the remap
  * capability, like windows 0 to 7. However, the mvebu-mbus driver
@@ -222,8 +221,6 @@ static void mvebu_mbus_disable_window(struct mvebu_mbus_state *mbus,
 */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int mvebu_mbus_window_is_free(struct mvebu_mbus_state *mbus,
 				     const int win)
 {
@@ -231,15 +228,12 @@ static int mvebu_mbus_window_is_free(struct mvebu_mbus_state *mbus,
 		mbus->soc->win_cfg_offset(win);
 	u32 ctrl = readl(addr + WIN_CTRL_OFF);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	if (win == 13)
 		return false;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return !(ctrl & WIN_CTRL_ENABLE);
 }
 
@@ -276,20 +270,14 @@ static int mvebu_mbus_window_conflicts(struct mvebu_mbus_state *mbus,
 		if ((u64)base < wend && end > wbase)
 			return 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 
 		/*
 		 * Check if target/attribute conflicts
 		 */
 		if (target == wtarget && attr == wattr)
 			return 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	return 1;
@@ -866,14 +854,10 @@ int __init mvebu_mbus_init(const char *soc, phys_addr_t mbuswins_phys_base,
 			   size_t mbuswins_size,
 			   phys_addr_t sdramwins_phys_base,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			   size_t sdramwins_size, int is_coherent)
 =======
 			   size_t sdramwins_size)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			   size_t sdramwins_size)
->>>>>>> master
 {
 	struct mvebu_mbus_state *mbus = &mbus_state;
 	const struct of_device_id *of_id;
@@ -901,16 +885,11 @@ int __init mvebu_mbus_init(const char *soc, phys_addr_t mbuswins_phys_base,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mbus->hw_io_coherency = is_coherent;
 =======
 	if (of_find_compatible_node(NULL, NULL, "marvell,coherency-fabric"))
 		mbus->hw_io_coherency = 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (of_find_compatible_node(NULL, NULL, "marvell,coherency-fabric"))
-		mbus->hw_io_coherency = 1;
->>>>>>> master
 
 	for (win = 0; win < mbus->soc->num_wins; win++)
 		mvebu_mbus_disable_window(mbus, win);

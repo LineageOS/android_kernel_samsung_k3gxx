@@ -127,17 +127,12 @@ static void __init mvebu_clk_core_setup(struct device_node *np,
 
 static const u32 __initconst armada_370_tclk_frequencies[] = {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	166000000,
 	200000000,
 =======
 	16600000,
 	20000000,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	16600000,
-	20000000,
->>>>>>> master
 };
 
 static u32 __init armada_370_get_tclk_freq(void __iomem *sar)

@@ -155,14 +155,10 @@ int hv_init(void)
 	rdmsrl(HV_X64_MSR_HYPERCALL, hypercall_msr.as_uint64);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	virtaddr = __vmalloc(PAGE_SIZE, GFP_KERNEL, PAGE_KERNEL_RX);
 =======
 	virtaddr = __vmalloc(PAGE_SIZE, GFP_KERNEL, PAGE_KERNEL_EXEC);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	virtaddr = __vmalloc(PAGE_SIZE, GFP_KERNEL, PAGE_KERNEL_EXEC);
->>>>>>> master
 
 	if (!virtaddr)
 		goto cleanup;
@@ -202,14 +198,10 @@ cleanup:
  * This routine is called normally during driver unloading or exiting.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 void hv_cleanup(bool crash)
 =======
 void hv_cleanup(void)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-void hv_cleanup(void)
->>>>>>> master
 {
 	union hv_x64_msr_hypercall_contents hypercall_msr;
 
@@ -220,15 +212,11 @@ void hv_cleanup(void)
 		hypercall_msr.as_uint64 = 0;
 		wrmsrl(HV_X64_MSR_HYPERCALL, hypercall_msr.as_uint64);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!crash)
 			vfree(hv_context.hypercall_page);
 =======
 		vfree(hv_context.hypercall_page);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		vfree(hv_context.hypercall_page);
->>>>>>> master
 		hv_context.hypercall_page = NULL;
 	}
 }

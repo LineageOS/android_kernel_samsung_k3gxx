@@ -764,14 +764,10 @@ static int udp_send_skb(struct sk_buff *skb, struct flowi4 *fl4)
 		csum = udplite_csum(skb);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	else if (sk->sk_no_check == UDP_CSUM_NOXMIT && !skb_has_frags(skb)) {   /* UDP csum off */
 =======
 	else if (sk->sk_no_check == UDP_CSUM_NOXMIT) {   /* UDP csum disabled */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	else if (sk->sk_no_check == UDP_CSUM_NOXMIT) {   /* UDP csum disabled */
->>>>>>> master
 
 		skb->ip_summed = CHECKSUM_NONE;
 		goto send;
@@ -972,16 +968,11 @@ int udp_sendmsg(struct kiocb *iocb, struct sock *sk, struct msghdr *msg,
 				   RT_SCOPE_UNIVERSE, sk->sk_protocol,
 				   inet_sk_flowi_flags(sk)|FLOWI_FLAG_CAN_SLEEP,
 <<<<<<< HEAD
-<<<<<<< HEAD
 				   faddr, saddr, dport, inet->inet_sport);
 =======
 				   faddr, saddr, dport, inet->inet_sport,
 				   sock_i_uid(sk));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				   faddr, saddr, dport, inet->inet_sport,
-				   sock_i_uid(sk));
->>>>>>> master
 
 		security_sk_classify_flow(sk, flowi4_to_flowi(fl4));
 		rt = ip_route_output_flow(net, fl4, sk);
@@ -990,14 +981,10 @@ int udp_sendmsg(struct kiocb *iocb, struct sock *sk, struct msghdr *msg,
 			rt = NULL;
 			if (err == -ENETUNREACH)
 <<<<<<< HEAD
-<<<<<<< HEAD
 				IP_INC_STATS(net, IPSTATS_MIB_OUTNOROUTES);
 =======
 				IP_INC_STATS_BH(net, IPSTATS_MIB_OUTNOROUTES);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				IP_INC_STATS_BH(net, IPSTATS_MIB_OUTNOROUTES);
->>>>>>> master
 			goto out;
 		}
 
@@ -1097,14 +1084,11 @@ int udp_sendpage(struct sock *sk, struct page *page, int offset,
 	int ret;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (flags & MSG_SENDPAGE_NOTLAST)
 		flags |= MSG_MORE;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (!up->pending) {
 		struct msghdr msg = {	.msg_flags = flags|MSG_MORE };
 
@@ -1241,15 +1225,12 @@ int udp_recvmsg(struct kiocb *iocb, struct sock *sk, struct msghdr *msg,
 	int err;
 	int is_udplite = IS_UDPLITE(sk);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	bool checksum_valid = false;
 	bool slow;
 
 	if (flags & MSG_ERRQUEUE)
 		return ip_recv_error(sk, msg, len, addr_len);
 =======
-=======
->>>>>>> master
 	bool slow;
 
 	/*
@@ -1260,10 +1241,7 @@ int udp_recvmsg(struct kiocb *iocb, struct sock *sk, struct msghdr *msg,
 
 	if (flags & MSG_ERRQUEUE)
 		return ip_recv_error(sk, msg, len);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 try_again:
 	skb = __skb_recv_datagram(sk, flags | (noblock ? MSG_DONTWAIT : 0),
@@ -1286,7 +1264,6 @@ try_again:
 
 	if (copied < ulen || UDP_SKB_CB(skb)->partial_cov) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		checksum_valid = !udp_lib_checksum_complete(skb);
 		if (!checksum_valid)
 			goto csum_copy_err;
@@ -1294,17 +1271,12 @@ try_again:
 
 	if (checksum_valid || skb_csum_unnecessary(skb))
 =======
-=======
->>>>>>> master
 		if (udp_lib_checksum_complete(skb))
 			goto csum_copy_err;
 	}
 
 	if (skb_csum_unnecessary(skb))
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		err = skb_copy_datagram_iovec(skb, sizeof(struct udphdr),
 					      msg->msg_iov, copied);
 	else {
@@ -1339,12 +1311,9 @@ try_again:
 		sin->sin_addr.s_addr = ip_hdr(skb)->saddr;
 		memset(sin->sin_zero, 0, sizeof(sin->sin_zero));
 <<<<<<< HEAD
-<<<<<<< HEAD
 		*addr_len = sizeof(*sin);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 	if (inet->cmsg_flags)
 		ip_cmsg_recv(msg, skb);

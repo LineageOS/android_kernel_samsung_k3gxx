@@ -16,14 +16,10 @@
  */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include "phy-fsm-usb.h"
 =======
 #include "otg_fsm.h"
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#include "otg_fsm.h"
->>>>>>> master
 #include <linux/usb/otg.h>
 #include <linux/ioctl.h>
 

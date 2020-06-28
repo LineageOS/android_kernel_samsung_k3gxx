@@ -124,7 +124,6 @@ static __le32 ext4_xattr_block_csum(struct inode *inode,
 	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
 	__u32 csum;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	__le64 dsk_block_nr = cpu_to_le64(block_nr);
 	__u32 dummy_csum = 0;
 	int offset = offsetof(struct ext4_xattr_header, h_checksum);
@@ -138,8 +137,6 @@ static __le32 ext4_xattr_block_csum(struct inode *inode,
 			   EXT4_BLOCK_SIZE(inode->i_sb) - offset);
 
 =======
-=======
->>>>>>> master
 	__le32 save_csum;
 	__le64 dsk_block_nr = cpu_to_le64(block_nr);
 
@@ -151,10 +148,7 @@ static __le32 ext4_xattr_block_csum(struct inode *inode,
 			   EXT4_BLOCK_SIZE(inode->i_sb));
 
 	hdr->h_checksum = save_csum;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return cpu_to_le32(csum);
 }
 
@@ -211,7 +205,6 @@ ext4_listxattr(struct dentry *dentry, char *buffer, size_t size)
 
 static int
 <<<<<<< HEAD
-<<<<<<< HEAD
 ext4_xattr_check_names(struct ext4_xattr_entry *entry, void *end,
 		       void *value_start)
 {
@@ -235,8 +228,6 @@ ext4_xattr_check_names(struct ext4_xattr_entry *entry, void *end,
 	}
 
 =======
-=======
->>>>>>> master
 ext4_xattr_check_names(struct ext4_xattr_entry *entry, void *end)
 {
 	while (!IS_LAST_ENTRY(entry)) {
@@ -245,10 +236,7 @@ ext4_xattr_check_names(struct ext4_xattr_entry *entry, void *end)
 			return -EIO;
 		entry = next;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 }
 
@@ -266,15 +254,11 @@ ext4_xattr_check_block(struct inode *inode, struct buffer_head *bh)
 	if (!ext4_xattr_block_csum_verify(inode, bh->b_blocknr, BHDR(bh)))
 		return -EIO;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	error = ext4_xattr_check_names(BFIRST(bh), bh->b_data + bh->b_size,
 				       bh->b_data);
 =======
 	error = ext4_xattr_check_names(BFIRST(bh), bh->b_data + bh->b_size);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	error = ext4_xattr_check_names(BFIRST(bh), bh->b_data + bh->b_size);
->>>>>>> master
 	if (!error)
 		set_buffer_verified(bh);
 	return error;
@@ -391,14 +375,10 @@ ext4_xattr_ibody_get(struct inode *inode, int name_index, const char *name,
 	entry = IFIRST(header);
 	end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	error = ext4_xattr_check_names(entry, end, entry);
 =======
 	error = ext4_xattr_check_names(entry, end);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	error = ext4_xattr_check_names(entry, end);
->>>>>>> master
 	if (error)
 		goto cleanup;
 	error = ext4_xattr_find_entry(&entry, name_index, name,
@@ -527,14 +507,10 @@ ext4_xattr_ibody_list(struct dentry *dentry, char *buffer, size_t buffer_size)
 	header = IHDR(inode, raw_inode);
 	end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	error = ext4_xattr_check_names(IFIRST(header), end, IFIRST(header));
 =======
 	error = ext4_xattr_check_names(IFIRST(header), end);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	error = ext4_xattr_check_names(IFIRST(header), end);
->>>>>>> master
 	if (error)
 		goto cleanup;
 	error = ext4_xattr_list_entries(dentry, IFIRST(header),
@@ -595,17 +571,12 @@ static void ext4_xattr_update_super_block(handle_t *handle,
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * Release the xattr block BH: If the reference count is > 1, decrement it;
  * otherwise free the block.
 =======
  * Release the xattr block BH: If the reference count is > 1, decrement
  * it; otherwise free the block.
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * Release the xattr block BH: If the reference count is > 1, decrement
- * it; otherwise free the block.
->>>>>>> master
  */
 static void
 ext4_xattr_release_block(handle_t *handle, struct inode *inode,
@@ -626,27 +597,20 @@ ext4_xattr_release_block(handle_t *handle, struct inode *inode,
 			mb_cache_entry_free(ce);
 		get_bh(bh);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		unlock_buffer(bh);
 		ext4_free_blocks(handle, inode, bh, 0, 1,
 				 EXT4_FREE_BLOCKS_METADATA |
 				 EXT4_FREE_BLOCKS_FORGET);
 =======
-=======
->>>>>>> master
 		ext4_free_blocks(handle, inode, bh, 0, 1,
 				 EXT4_FREE_BLOCKS_METADATA |
 				 EXT4_FREE_BLOCKS_FORGET);
 		unlock_buffer(bh);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	} else {
 		le32_add_cpu(&BHDR(bh)->h_refcount, -1);
 		if (ce)
 			mb_cache_entry_release(ce);
-<<<<<<< HEAD
 <<<<<<< HEAD
 		/*
 		 * Beware of this ugliness: Releasing of xattr block references
@@ -669,10 +633,6 @@ ext4_xattr_release_block(handle_t *handle, struct inode *inode,
 		unlock_buffer(bh);
 		error = ext4_handle_dirty_xattr_block(handle, inode, bh);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		unlock_buffer(bh);
-		error = ext4_handle_dirty_xattr_block(handle, inode, bh);
->>>>>>> master
 		if (IS_SYNC(inode))
 			ext4_handle_sync(handle);
 		dquot_free_block(inode, EXT4_C2B(EXT4_SB(inode->i_sb), 1));
@@ -1083,15 +1043,11 @@ int ext4_xattr_ibody_find(struct inode *inode, struct ext4_xattr_info *i,
 	is->s.end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
 	if (ext4_test_inode_state(inode, EXT4_STATE_XATTR)) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		error = ext4_xattr_check_names(IFIRST(header), is->s.end,
 					       IFIRST(header));
 =======
 		error = ext4_xattr_check_names(IFIRST(header), is->s.end);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		error = ext4_xattr_check_names(IFIRST(header), is->s.end);
->>>>>>> master
 		if (error)
 			return error;
 		/* Find the named attribute. */
@@ -1369,7 +1325,6 @@ int ext4_expand_extra_isize_ea(struct inode *inode, int new_extra_isize,
 
 	down_write(&EXT4_I(inode)->xattr_sem);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * Set EXT4_STATE_NO_EXPAND to avoid recursion when marking inode dirty
 	 */
@@ -1378,17 +1333,12 @@ retry:
 	if (EXT4_I(inode)->i_extra_isize >= new_extra_isize)
 		goto out;
 =======
-=======
->>>>>>> master
 retry:
 	if (EXT4_I(inode)->i_extra_isize >= new_extra_isize) {
 		up_write(&EXT4_I(inode)->xattr_sem);
 		return 0;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	header = IHDR(inode, raw_inode);
 	entry = IFIRST(header);
@@ -1414,16 +1364,11 @@ retry:
 				inode->i_sb->s_blocksize);
 		EXT4_I(inode)->i_extra_isize = new_extra_isize;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto out;
 =======
 		error = 0;
 		goto cleanup;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		error = 0;
-		goto cleanup;
->>>>>>> master
 	}
 
 	/*
@@ -1510,7 +1455,6 @@ retry:
 					tried_min_extra_isize++;
 					new_extra_isize = s_min_extra_isize;
 <<<<<<< HEAD
-<<<<<<< HEAD
 					kfree(is); is = NULL;
 					kfree(bs); bs = NULL;
 					brelse(bh);
@@ -1520,11 +1464,6 @@ retry:
 					kfree(bs);
 					brelse(bh);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					kfree(is);
-					kfree(bs);
-					brelse(bh);
->>>>>>> master
 					goto retry;
 				}
 				error = -1;
@@ -1598,13 +1537,10 @@ retry:
 	}
 	brelse(bh);
 <<<<<<< HEAD
-<<<<<<< HEAD
 out:
 	ext4_clear_inode_state(inode, EXT4_STATE_NO_EXPAND);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	up_write(&EXT4_I(inode)->xattr_sem);
 	return 0;
 
@@ -1617,15 +1553,12 @@ cleanup:
 	kfree(bs);
 	brelse(bh);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * We deliberately leave EXT4_STATE_NO_EXPAND set here since inode
 	 * size expansion failed.
 	 */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	up_write(&EXT4_I(inode)->xattr_sem);
 	return error;
 }

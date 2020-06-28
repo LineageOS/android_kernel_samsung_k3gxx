@@ -42,7 +42,6 @@ struct msg_msgseg {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define DATALEN_MSG	((size_t)PAGE_SIZE-sizeof(struct msg_msg))
 #define DATALEN_SEG	((size_t)PAGE_SIZE-sizeof(struct msg_msgseg))
 
@@ -53,8 +52,6 @@ static struct msg_msg *alloc_msg(size_t len)
 	struct msg_msgseg **pseg;
 	size_t alen;
 =======
-=======
->>>>>>> master
 #define DATALEN_MSG	(int)(PAGE_SIZE-sizeof(struct msg_msg))
 #define DATALEN_SEG	(int)(PAGE_SIZE-sizeof(struct msg_msgseg))
 
@@ -64,10 +61,7 @@ static struct msg_msg *alloc_msg(int len)
 	struct msg_msg *msg;
 	struct msg_msgseg **pseg;
 	int alen;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	alen = min(len, DATALEN_MSG);
 	msg = kmalloc(sizeof(*msg) + alen, GFP_KERNEL);
@@ -99,27 +93,19 @@ out_err:
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 struct msg_msg *load_msg(const void __user *src, size_t len)
 =======
 struct msg_msg *load_msg(const void __user *src, int len)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-struct msg_msg *load_msg(const void __user *src, int len)
->>>>>>> master
 {
 	struct msg_msg *msg;
 	struct msg_msgseg *seg;
 	int err = -EFAULT;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	size_t alen;
 =======
 	int alen;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int alen;
->>>>>>> master
 
 	msg = alloc_msg(len);
 	if (msg == NULL)
@@ -152,17 +138,12 @@ struct msg_msg *copy_msg(struct msg_msg *src, struct msg_msg *dst)
 {
 	struct msg_msgseg *dst_pseg, *src_pseg;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	size_t len = src->m_ts;
 	size_t alen;
 =======
 	int len = src->m_ts;
 	int alen;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int len = src->m_ts;
-	int alen;
->>>>>>> master
 
 	BUG_ON(dst == NULL);
 	if (src->m_ts > dst->m_ts)
@@ -192,7 +173,6 @@ struct msg_msg *copy_msg(struct msg_msg *src, struct msg_msg *dst)
 }
 #endif
 <<<<<<< HEAD
-<<<<<<< HEAD
 int store_msg(void __user *dest, struct msg_msg *msg, size_t len)
 {
 	size_t alen;
@@ -201,11 +181,6 @@ int store_msg(void __user *dest, struct msg_msg *msg, int len)
 {
 	int alen;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-int store_msg(void __user *dest, struct msg_msg *msg, int len)
-{
-	int alen;
->>>>>>> master
 	struct msg_msgseg *seg;
 
 	alen = min(len, DATALEN_MSG);

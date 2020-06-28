@@ -1685,7 +1685,6 @@ static int rt2500pci_init_eeprom(struct rt2x00_dev *rt2x00dev)
 	 * Detect if this device has an hardware controlled radio.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (rt2x00_get_field16(eeprom, EEPROM_ANTENNA_HARDWARE_RADIO)) {
 		__set_bit(CAPABILITY_HW_BUTTON, &rt2x00dev->cap_flags);
 		/*
@@ -1697,10 +1696,6 @@ static int rt2500pci_init_eeprom(struct rt2x00_dev *rt2x00dev)
 	if (rt2x00_get_field16(eeprom, EEPROM_ANTENNA_HARDWARE_RADIO))
 		__set_bit(CAPABILITY_HW_BUTTON, &rt2x00dev->cap_flags);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (rt2x00_get_field16(eeprom, EEPROM_ANTENNA_HARDWARE_RADIO))
-		__set_bit(CAPABILITY_HW_BUTTON, &rt2x00dev->cap_flags);
->>>>>>> master
 
 	/*
 	 * Check if the BBP tuning should be enabled.

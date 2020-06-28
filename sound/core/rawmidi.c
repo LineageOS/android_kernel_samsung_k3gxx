@@ -935,21 +935,16 @@ static long snd_rawmidi_kernel_read1(struct snd_rawmidi_substream *substream,
 	long result = 0, count1;
 	struct snd_rawmidi_runtime *runtime = substream->runtime;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned long appl_ptr;
 
 	spin_lock_irqsave(&runtime->lock, flags);
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 	while (count > 0 && runtime->avail) {
 		count1 = runtime->buffer_size - runtime->appl_ptr;
 		if (count1 > count)
 			count1 = count;
-<<<<<<< HEAD
 <<<<<<< HEAD
 		if (count1 > (int)runtime->avail)
 			count1 = runtime->avail;
@@ -967,8 +962,6 @@ static long snd_rawmidi_kernel_read1(struct snd_rawmidi_substream *substream,
 			if (copy_to_user(userbuf + result,
 					 runtime->buffer + appl_ptr, count1)) {
 =======
-=======
->>>>>>> master
 		spin_lock_irqsave(&runtime->lock, flags);
 		if (count1 > (int)runtime->avail)
 			count1 = runtime->avail;
@@ -978,23 +971,17 @@ static long snd_rawmidi_kernel_read1(struct snd_rawmidi_substream *substream,
 			spin_unlock_irqrestore(&runtime->lock, flags);
 			if (copy_to_user(userbuf + result,
 					 runtime->buffer + runtime->appl_ptr, count1)) {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 				return result > 0 ? result : -EFAULT;
 			}
 			spin_lock_irqsave(&runtime->lock, flags);
 		}
-<<<<<<< HEAD
 <<<<<<< HEAD
 		result += count1;
 		count -= count1;
 	}
 	spin_unlock_irqrestore(&runtime->lock, flags);
 =======
-=======
->>>>>>> master
 		runtime->appl_ptr += count1;
 		runtime->appl_ptr %= runtime->buffer_size;
 		runtime->avail -= count1;
@@ -1002,10 +989,7 @@ static long snd_rawmidi_kernel_read1(struct snd_rawmidi_substream *substream,
 		result += count1;
 		count -= count1;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return result;
 }
 
@@ -1209,7 +1193,6 @@ static long snd_rawmidi_kernel_write1(struct snd_rawmidi_substream *substream,
 	long count1, result;
 	struct snd_rawmidi_runtime *runtime = substream->runtime;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned long appl_ptr;
 
 	if (!kernelbuf && !userbuf)
@@ -1217,10 +1200,6 @@ static long snd_rawmidi_kernel_write1(struct snd_rawmidi_substream *substream,
 
 	if (snd_BUG_ON(!kernelbuf && !userbuf))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-	if (snd_BUG_ON(!kernelbuf && !userbuf))
->>>>>>> master
 		return -EINVAL;
 	if (snd_BUG_ON(!runtime->buffer))
 		return -EINVAL;
@@ -1240,7 +1219,6 @@ static long snd_rawmidi_kernel_write1(struct snd_rawmidi_substream *substream,
 		if (count1 > (long)runtime->avail)
 			count1 = runtime->avail;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 		/* update runtime->appl_ptr before unlocking for userbuf */
 		appl_ptr = runtime->appl_ptr;
@@ -1255,18 +1233,13 @@ static long snd_rawmidi_kernel_write1(struct snd_rawmidi_substream *substream,
 			spin_unlock_irqrestore(&runtime->lock, flags);
 			if (copy_from_user(runtime->buffer + appl_ptr,
 =======
-=======
->>>>>>> master
 		if (kernelbuf)
 			memcpy(runtime->buffer + runtime->appl_ptr,
 			       kernelbuf + result, count1);
 		else if (userbuf) {
 			spin_unlock_irqrestore(&runtime->lock, flags);
 			if (copy_from_user(runtime->buffer + runtime->appl_ptr,
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 					   userbuf + result, count1)) {
 				spin_lock_irqsave(&runtime->lock, flags);
 				result = result > 0 ? result : -EFAULT;
@@ -1275,17 +1248,11 @@ static long snd_rawmidi_kernel_write1(struct snd_rawmidi_substream *substream,
 			spin_lock_irqsave(&runtime->lock, flags);
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		runtime->appl_ptr += count1;
 		runtime->appl_ptr %= runtime->buffer_size;
 		runtime->avail -= count1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		runtime->appl_ptr += count1;
-		runtime->appl_ptr %= runtime->buffer_size;
-		runtime->avail -= count1;
->>>>>>> master
 		result += count1;
 		count -= count1;
 	}
@@ -1644,23 +1611,17 @@ static int snd_rawmidi_dev_register(struct snd_device *device)
 	list_add_tail(&rmidi->list, &snd_rawmidi_devices);
 	sprintf(name, "midiC%iD%i", rmidi->card->number, rmidi->device);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mutex_unlock(&register_mutex);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if ((err = snd_register_device(SNDRV_DEVICE_TYPE_RAWMIDI,
 				       rmidi->card, rmidi->device,
 				       &snd_rawmidi_f_ops, rmidi, name)) < 0) {
 		snd_printk(KERN_ERR "unable to register rawmidi device %i:%i\n", rmidi->card->number, rmidi->device);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		mutex_lock(&register_mutex);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		list_del(&rmidi->list);
 		mutex_unlock(&register_mutex);
 		return err;
@@ -1669,12 +1630,9 @@ static int snd_rawmidi_dev_register(struct snd_device *device)
 	    (err = rmidi->ops->dev_register(rmidi)) < 0) {
 		snd_unregister_device(SNDRV_DEVICE_TYPE_RAWMIDI, rmidi->card, rmidi->device);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		mutex_lock(&register_mutex);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		list_del(&rmidi->list);
 		mutex_unlock(&register_mutex);
 		return err;
@@ -1704,13 +1662,9 @@ static int snd_rawmidi_dev_register(struct snd_device *device)
 	}
 #endif /* CONFIG_SND_OSSEMUL */
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	mutex_unlock(&register_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mutex_unlock(&register_mutex);
->>>>>>> master
 	sprintf(name, "midi%d", rmidi->device);
 	entry = snd_info_create_card_entry(rmidi->card, name, rmidi->card->proc_root);
 	if (entry) {

@@ -67,14 +67,10 @@ static inline int init_kernel_text(unsigned long addr)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 int notrace core_kernel_text(unsigned long addr)
 =======
 int core_kernel_text(unsigned long addr)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-int core_kernel_text(unsigned long addr)
->>>>>>> master
 {
 	if (addr >= (unsigned long)_stext &&
 	    addr <= (unsigned long)_etext)

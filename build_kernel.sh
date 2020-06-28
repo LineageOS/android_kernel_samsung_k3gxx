@@ -108,14 +108,10 @@ BUILD_NOW()
 
 	# build zImage
 <<<<<<< HEAD
-<<<<<<< HEAD
 	time make ARCH=arm CROSS_COMPILE=/home/cnkzlyr/arm-eabi-4.8/bin/arm-eabi- zImage-dtb -j ${NR_CPUS}
 =======
 	time make ARCH=arm CROSS_COMPILE=/home/cnkzlyr/k/toolchain/arm-eabi-4.8/bin/arm-eabi- zImage-dtb -j ${NR_CPUS}
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	time make ARCH=arm CROSS_COMPILE=/home/cnkzlyr/arm-eabi-4.8/bin/arm-eabi- zImage-dtb -j ${NR_CPUS}
->>>>>>> master
 
 	stat "$KERNELDIR"/arch/arm/boot/zImage || exit 1;
 

@@ -523,7 +523,6 @@ void __init dma_contiguous_remap(void)
 
 		/*
 <<<<<<< HEAD
-<<<<<<< HEAD
 		 * Clear previous low-memory mapping to ensure that the
 		 * TLB does not see any conflicting entries, then flush
 		 * the TLB of the old entries before creating new mappings.
@@ -534,23 +533,17 @@ void __init dma_contiguous_remap(void)
 =======
 		 * Clear previous low-memory mapping
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		 * Clear previous low-memory mapping
->>>>>>> master
 		 */
 		for (addr = __phys_to_virt(start); addr < __phys_to_virt(end);
 		     addr += PMD_SIZE)
 			pmd_clear(pmd_off_k(addr));
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		flush_tlb_kernel_range(__phys_to_virt(start),
 				       __phys_to_virt(end));
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		iotable_init(&map, 1);
 	}
 }
@@ -1508,14 +1501,10 @@ static void *arm_iommu_alloc_attrs(struct device *dev, size_t size,
 	size = PAGE_ALIGN(size);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!(gfp & __GFP_WAIT))
 =======
 	if (gfp & GFP_ATOMIC)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (gfp & GFP_ATOMIC)
->>>>>>> master
 		return __iommu_alloc_atomic(dev, size, handle);
 
 	pages = __iommu_alloc_buffer(dev, size, gfp, attrs);
@@ -1551,20 +1540,16 @@ static int arm_iommu_mmap_attrs(struct device *dev, struct vm_area_struct *vma,
 	unsigned long usize = vma->vm_end - vma->vm_start;
 	struct page **pages = __iommu_get_pages(cpu_addr, attrs);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned long nr_pages = PAGE_ALIGN(size) >> PAGE_SHIFT;
 	unsigned long off = vma->vm_pgoff;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	vma->vm_page_prot = __get_dma_pgprot(attrs, vma->vm_page_prot);
 
 	if (!pages)
 		return -ENXIO;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (off >= nr_pages || (usize >> PAGE_SHIFT) > nr_pages - off)
 		return -ENXIO;
@@ -1573,8 +1558,6 @@ static int arm_iommu_mmap_attrs(struct device *dev, struct vm_area_struct *vma,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	do {
 		int ret = vm_insert_page(vma, uaddr, *pages++);
 		if (ret) {

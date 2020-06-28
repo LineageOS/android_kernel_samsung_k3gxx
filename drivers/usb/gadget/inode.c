@@ -1201,14 +1201,10 @@ ep0_write (struct file *fd, const char __user *buf, size_t len, loff_t *ptr)
 	} else if (dev->state == STATE_DEV_SETUP) {
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		len = min_t(size_t, len, dev->setup_wLength);
 =======
 		/* IN DATA+STATUS caller makes len <= wLength */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		/* IN DATA+STATUS caller makes len <= wLength */
->>>>>>> master
 		if (dev->setup_in) {
 			retval = setup_req (dev->gadget->ep0, dev->req, len);
 			if (retval == 0) {
@@ -1518,14 +1514,10 @@ gadgetfs_setup (struct usb_gadget *gadget, const struct usb_ctrlrequest *ctrl)
 		break;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #ifndef	CONFIG_USB_PXA25X
 =======
 #ifndef	CONFIG_USB_GADGET_PXA25X
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#ifndef	CONFIG_USB_GADGET_PXA25X
->>>>>>> master
 	/* PXA automagically handles this request too */
 	case USB_REQ_GET_CONFIGURATION:
 		if (ctrl->bRequestType != 0x80)
@@ -1851,7 +1843,6 @@ static struct usb_gadget_driver probe_driver = {
  */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int is_valid_config(struct usb_config_descriptor *config,
 		unsigned int total)
 {
@@ -1859,16 +1850,11 @@ static int is_valid_config(struct usb_config_descriptor *config,
 		&& config->bLength == USB_DT_CONFIG_SIZE
 		&& total >= USB_DT_CONFIG_SIZE
 =======
-=======
->>>>>>> master
 static int is_valid_config (struct usb_config_descriptor *config)
 {
 	return config->bDescriptorType == USB_DT_CONFIG
 		&& config->bLength == USB_DT_CONFIG_SIZE
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		&& config->bConfigurationValue != 0
 		&& (config->bmAttributes & USB_CONFIG_ATT_ONE) != 0
 		&& (config->bmAttributes & USB_CONFIG_ATT_WAKEUP) == 0;
@@ -1886,15 +1872,11 @@ dev_config (struct file *fd, const char __user *buf, size_t len, loff_t *ptr)
 	char			*kbuf;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if ((len < (USB_DT_CONFIG_SIZE + USB_DT_DEVICE_SIZE + 4)) ||
 	    (len > PAGE_SIZE * 4))
 =======
 	if (len < (USB_DT_CONFIG_SIZE + USB_DT_DEVICE_SIZE + 4))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (len < (USB_DT_CONFIG_SIZE + USB_DT_DEVICE_SIZE + 4))
->>>>>>> master
 		return -EINVAL;
 
 	/* we might need to change message format someday */
@@ -1919,15 +1901,11 @@ dev_config (struct file *fd, const char __user *buf, size_t len, loff_t *ptr)
 	dev->config = (void *) kbuf;
 	total = le16_to_cpu(dev->config->wTotalLength);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!is_valid_config(dev->config, total) ||
 			total > length - USB_DT_DEVICE_SIZE)
 =======
 	if (!is_valid_config (dev->config) || total >= length)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!is_valid_config (dev->config) || total >= length)
->>>>>>> master
 		goto fail;
 	kbuf += total;
 	length -= total;
@@ -1937,7 +1915,6 @@ dev_config (struct file *fd, const char __user *buf, size_t len, loff_t *ptr)
 		dev->hs_config = (void *) kbuf;
 		total = le16_to_cpu(dev->hs_config->wTotalLength);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!is_valid_config(dev->hs_config, total) ||
 				total > length - USB_DT_DEVICE_SIZE)
 			goto fail;
@@ -1946,16 +1923,11 @@ dev_config (struct file *fd, const char __user *buf, size_t len, loff_t *ptr)
 	} else {
 		dev->hs_config = NULL;
 =======
-=======
->>>>>>> master
 		if (!is_valid_config (dev->hs_config) || total >= length)
 			goto fail;
 		kbuf += total;
 		length -= total;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	/* could support multiple configs, using another encoding! */

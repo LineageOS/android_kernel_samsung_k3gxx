@@ -53,12 +53,9 @@
 
 /* Function prototypes */
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int kobil_attach(struct usb_serial *serial);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int kobil_port_probe(struct usb_serial_port *probe);
 static int kobil_port_remove(struct usb_serial_port *probe);
 static int  kobil_open(struct tty_struct *tty, struct usb_serial_port *port);
@@ -95,12 +92,9 @@ static struct usb_serial_driver kobil_device = {
 	.id_table =		id_table,
 	.num_ports =		1,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.attach =		kobil_attach,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	.port_probe =		kobil_port_probe,
 	.port_remove =		kobil_port_remove,
 	.ioctl =		kobil_ioctl,
@@ -129,7 +123,6 @@ struct kobil_private {
 
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int kobil_attach(struct usb_serial *serial)
 {
 	if (serial->num_interrupt_out < serial->num_ports) {
@@ -142,8 +135,6 @@ static int kobil_attach(struct usb_serial *serial)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int kobil_port_probe(struct usb_serial_port *port)
 {
 	struct usb_serial *serial = port->serial;
@@ -367,15 +358,11 @@ static int kobil_write(struct tty_struct *tty, struct usb_serial_port *port,
 
 			priv->cur_pos = priv->cur_pos + length;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			result = usb_submit_urb(port->interrupt_out_urb,
 					GFP_ATOMIC);
 =======
 			result = usb_submit_urb(port->interrupt_out_urb, GFP_NOIO);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			result = usb_submit_urb(port->interrupt_out_urb, GFP_NOIO);
->>>>>>> master
 			dev_dbg(&port->dev, "%s - Send write URB returns: %i\n", __func__, result);
 			todo = priv->filled - priv->cur_pos;
 
@@ -391,14 +378,10 @@ static int kobil_write(struct tty_struct *tty, struct usb_serial_port *port,
 			priv->device_type == KOBIL_ADAPTER_K_PRODUCT_ID) {
 			result = usb_submit_urb(port->interrupt_in_urb,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					GFP_ATOMIC);
 =======
 								GFP_NOIO);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-								GFP_NOIO);
->>>>>>> master
 			dev_dbg(&port->dev, "%s - Send read URB returns: %i\n", __func__, result);
 		}
 	}

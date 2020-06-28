@@ -372,19 +372,14 @@ static void to_utf8(struct vc_data *vc, uint c)
 static void do_compute_shiftstate(void)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned int k, sym, val;
 =======
 	unsigned int i, j, k, sym, val;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned int i, j, k, sym, val;
->>>>>>> master
 
 	shift_state = 0;
 	memset(shift_down, 0, sizeof(shift_down));
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	for_each_set_bit(k, key_down, min(NR_KEYS, KEY_CNT)) {
 		sym = U(key_maps[0][k]);
@@ -398,8 +393,6 @@ static void do_compute_shiftstate(void)
 		shift_down[val]++;
 		shift_state |= BIT(val);
 =======
-=======
->>>>>>> master
 	for (i = 0; i < ARRAY_SIZE(key_down); i++) {
 
 		if (!key_down[i])
@@ -423,10 +416,7 @@ static void do_compute_shiftstate(void)
 			shift_down[val]++;
 			shift_state |= (1 << val);
 		}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 }
 

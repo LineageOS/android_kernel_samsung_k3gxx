@@ -3212,7 +3212,6 @@ int reiserfs_setattr(struct dentry *dentry, struct iattr *attr)
 		error = inode_newsize_ok(inode, attr->ia_size);
 		if (!error) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			/*
 			 * Could race against reiserfs_file_release
 			 * if called from NFS, so take tailpack mutex.
@@ -3225,10 +3224,6 @@ int reiserfs_setattr(struct dentry *dentry, struct iattr *attr)
 			truncate_setsize(inode, attr->ia_size);
 			reiserfs_vfs_truncate_file(inode);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			truncate_setsize(inode, attr->ia_size);
-			reiserfs_vfs_truncate_file(inode);
->>>>>>> master
 		}
 	}
 

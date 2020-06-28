@@ -560,15 +560,11 @@ static void edac_mc_workq_function(struct work_struct *work_req)
  *		called with the mem_ctls_mutex held
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void edac_mc_workq_setup(struct mem_ctl_info *mci, unsigned msec,
 				bool init)
 =======
 static void edac_mc_workq_setup(struct mem_ctl_info *mci, unsigned msec)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static void edac_mc_workq_setup(struct mem_ctl_info *mci, unsigned msec)
->>>>>>> master
 {
 	edac_dbg(0, "\n");
 
@@ -577,16 +573,12 @@ static void edac_mc_workq_setup(struct mem_ctl_info *mci, unsigned msec)
 		return;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (init)
 		INIT_DELAYED_WORK(&mci->work, edac_mc_workq_function);
 
 =======
 	INIT_DELAYED_WORK(&mci->work, edac_mc_workq_function);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	INIT_DELAYED_WORK(&mci->work, edac_mc_workq_function);
->>>>>>> master
 	mod_delayed_work(edac_workqueue, &mci->work, msecs_to_jiffies(msec));
 }
 
@@ -621,14 +613,10 @@ static void edac_mc_workq_teardown(struct mem_ctl_info *mci)
  *	reset our workq delays
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 void edac_mc_reset_delay_period(unsigned long value)
 =======
 void edac_mc_reset_delay_period(int value)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-void edac_mc_reset_delay_period(int value)
->>>>>>> master
 {
 	struct mem_ctl_info *mci;
 	struct list_head *item;
@@ -639,14 +627,10 @@ void edac_mc_reset_delay_period(int value)
 		mci = list_entry(item, struct mem_ctl_info, link);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		edac_mc_workq_setup(mci, value, false);
 =======
 		edac_mc_workq_setup(mci, (unsigned long) value);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		edac_mc_workq_setup(mci, (unsigned long) value);
->>>>>>> master
 	}
 
 	mutex_unlock(&mem_ctls_mutex);
@@ -818,14 +802,10 @@ int edac_mc_add_mc(struct mem_ctl_info *mci)
 		mci->op_state = OP_RUNNING_POLL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		edac_mc_workq_setup(mci, edac_mc_get_poll_msec(), true);
 =======
 		edac_mc_workq_setup(mci, edac_mc_get_poll_msec());
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		edac_mc_workq_setup(mci, edac_mc_get_poll_msec());
->>>>>>> master
 	} else {
 		mci->op_state = OP_RUNNING_INTERRUPT;
 	}
@@ -1009,14 +989,10 @@ static void edac_inc_ue_error(struct mem_ctl_info *mci,
 
 	if (!enable_per_layer_report) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		mci->ue_noinfo_count += count;
 =======
 		mci->ce_noinfo_count += count;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		mci->ce_noinfo_count += count;
->>>>>>> master
 		return;
 	}
 

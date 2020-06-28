@@ -126,25 +126,18 @@ struct usbdevfs_hub_portinfo {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* System and bus capability flags */
 =======
 /* Device capability flags */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-/* Device capability flags */
->>>>>>> master
 #define USBDEVFS_CAP_ZERO_PACKET		0x01
 #define USBDEVFS_CAP_BULK_CONTINUATION		0x02
 #define USBDEVFS_CAP_NO_PACKET_SIZE_LIM		0x04
 #define USBDEVFS_CAP_BULK_SCATTER_GATHER	0x08
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define USBDEVFS_CAP_REAP_AFTER_DISCONNECT	0x10
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /* USBDEVFS_DISCONNECT_CLAIM flags & struct */
 

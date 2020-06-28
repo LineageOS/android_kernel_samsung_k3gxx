@@ -49,14 +49,11 @@ struct net_device_context {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* Restrict GSO size to account for NVGRE */
 #define NETVSC_GSO_MAX_SIZE	62768
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define RING_SIZE_MIN 64
 static int ring_size = 128;
 module_param(ring_size, int, S_IRUGO);
@@ -148,12 +145,9 @@ static int netvsc_start_xmit(struct sk_buff *skb, struct net_device *net)
 	int ret;
 	unsigned int i, num_pages, npg_data;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u32 skb_length = skb->len;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/* Add multipages for skb->data and additional 2 for RNDIS */
 	npg_data = (((unsigned long)skb->data + skb_headlen(skb) - 1)
@@ -225,14 +219,10 @@ static int netvsc_start_xmit(struct sk_buff *skb, struct net_device *net)
 				  packet);
 	if (ret == 0) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		net->stats.tx_bytes += skb_length;
 =======
 		net->stats.tx_bytes += skb->len;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		net->stats.tx_bytes += skb->len;
->>>>>>> master
 		net->stats.tx_packets++;
 	} else {
 		kfree(packet);
@@ -353,13 +343,9 @@ static int netvsc_change_mtu(struct net_device *ndev, int mtu)
 
 	nvdev->start_remove = true;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	cancel_delayed_work_sync(&ndevctx->dwork);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	cancel_delayed_work_sync(&ndevctx->dwork);
->>>>>>> master
 	cancel_work_sync(&ndevctx->work);
 	netif_tx_disable(ndev);
 	rndis_filter_device_remove(hdev);
@@ -468,12 +454,9 @@ static int netvsc_probe(struct hv_device *dev,
 	SET_ETHTOOL_OPS(net, &ethtool_ops);
 	SET_NETDEV_DEV(net, &dev->device);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	netif_set_gso_max_size(net, NETVSC_GSO_MAX_SIZE);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	ret = register_netdev(net);
 	if (ret != 0) {

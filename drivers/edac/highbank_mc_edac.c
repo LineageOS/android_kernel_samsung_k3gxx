@@ -190,10 +190,7 @@ static int highbank_mc_probe(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	irq = platform_get_irq(pdev, 0);
 	res = devm_request_irq(&pdev->dev, irq, highbank_mc_err_handler,
 			       0, dev_name(&pdev->dev), mci);
@@ -202,10 +199,7 @@ static int highbank_mc_probe(struct platform_device *pdev)
 		goto err;
 	}
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	mci->mtype_cap = MEM_FLAG_DDR3;
 	mci->edac_ctl_cap = EDAC_FLAG_NONE | EDAC_FLAG_SECDED;
 	mci->edac_cap = EDAC_FLAG_SECDED;
@@ -227,7 +221,6 @@ static int highbank_mc_probe(struct platform_device *pdev)
 		goto err;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	irq = platform_get_irq(pdev, 0);
 	res = devm_request_irq(&pdev->dev, irq, highbank_mc_err_handler,
 			       0, dev_name(&pdev->dev), mci);
@@ -238,20 +231,15 @@ static int highbank_mc_probe(struct platform_device *pdev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	highbank_mc_create_debugfs_nodes(mci);
 
 	devres_close_group(&pdev->dev, NULL);
 	return 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 err2:
 	edac_mc_del_mc(&pdev->dev);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 err:
 	devres_release_group(&pdev->dev, NULL);
 	edac_mc_free(mci);

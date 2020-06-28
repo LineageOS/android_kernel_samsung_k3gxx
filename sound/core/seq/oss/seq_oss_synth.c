@@ -311,14 +311,10 @@ snd_seq_oss_synth_cleanup(struct seq_oss_devinfo *dp)
 	struct seq_oss_synthinfo *info;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (snd_BUG_ON(dp->max_synthdev > SNDRV_SEQ_OSS_MAX_SYNTH_DEVS))
 =======
 	if (snd_BUG_ON(dp->max_synthdev >= SNDRV_SEQ_OSS_MAX_SYNTH_DEVS))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (snd_BUG_ON(dp->max_synthdev >= SNDRV_SEQ_OSS_MAX_SYNTH_DEVS))
->>>>>>> master
 		return;
 	for (i = 0; i < dp->max_synthdev; i++) {
 		info = &dp->synths[i];

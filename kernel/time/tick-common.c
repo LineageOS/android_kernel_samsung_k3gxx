@@ -19,12 +19,9 @@
 #include <linux/profile.h>
 #include <linux/sched.h>
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include <linux/module.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 #include <asm/irq_regs.h>
 
@@ -214,7 +211,6 @@ static void tick_setup_device(struct tick_device *td,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static bool tick_check_percpu(struct clock_event_device *curdev,
 			      struct clock_event_device *newdev, int cpu)
 {
@@ -260,8 +256,6 @@ void tick_check_new_device(struct clock_event_device *newdev)
 	struct tick_device *td;
 	int cpu;
 =======
-=======
->>>>>>> master
 /*
  * Check, if the new registered device should be used.
  */
@@ -270,10 +264,7 @@ static int tick_check_new_device(struct clock_event_device *newdev)
 	struct clock_event_device *curdev;
 	struct tick_device *td;
 	int cpu, ret = NOTIFY_OK;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	unsigned long flags;
 
 	raw_spin_lock_irqsave(&tick_device_lock, flags);
@@ -287,7 +278,6 @@ static int tick_check_new_device(struct clock_event_device *newdev)
 
 	/* cpu local device ? */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!tick_check_percpu(curdev, newdev, cpu))
 		goto out_bc;
 
@@ -298,8 +288,6 @@ static int tick_check_new_device(struct clock_event_device *newdev)
 	if (!try_module_get(newdev->owner))
 		return;
 =======
-=======
->>>>>>> master
 	if (!cpumask_equal(newdev->cpumask, cpumask_of(cpu))) {
 
 		/*
@@ -334,10 +322,7 @@ static int tick_check_new_device(struct clock_event_device *newdev)
 		if (curdev->rating >= newdev->rating)
 			goto out_bc;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	/*
 	 * Replace the eventually existing device by the new
@@ -355,36 +340,26 @@ static int tick_check_new_device(struct clock_event_device *newdev)
 
 	raw_spin_unlock_irqrestore(&tick_device_lock, flags);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return;
 =======
 	return NOTIFY_STOP;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return NOTIFY_STOP;
->>>>>>> master
 
 out_bc:
 	/*
 	 * Can the new device be used as a broadcast device ?
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	tick_install_broadcast_device(newdev);
 	raw_spin_unlock_irqrestore(&tick_device_lock, flags);
 =======
-=======
->>>>>>> master
 	if (tick_check_broadcast_device(newdev))
 		ret = NOTIFY_STOP;
 
 	raw_spin_unlock_irqrestore(&tick_device_lock, flags);
 
 	return ret;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /*
@@ -459,14 +434,11 @@ static void tick_resume(void)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 void tick_notify(unsigned long reason, void *dev)
 {
 	switch (reason) {
 
 =======
-=======
->>>>>>> master
 /*
  * Notification about clock event devices
  */
@@ -478,10 +450,7 @@ static int tick_notify(struct notifier_block *nb, unsigned long reason,
 	case CLOCK_EVT_NOTIFY_ADD:
 		return tick_check_new_device(dev);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	case CLOCK_EVT_NOTIFY_BROADCAST_ON:
 	case CLOCK_EVT_NOTIFY_BROADCAST_OFF:
 	case CLOCK_EVT_NOTIFY_BROADCAST_FORCE:
@@ -516,7 +485,6 @@ static int tick_notify(struct notifier_block *nb, unsigned long reason,
 		break;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 }
 
 /**
@@ -525,8 +493,6 @@ static int tick_notify(struct notifier_block *nb, unsigned long reason,
 void __init tick_init(void)
 {
 =======
-=======
->>>>>>> master
 
 	return NOTIFY_OK;
 }
@@ -543,9 +509,6 @@ static struct notifier_block tick_notifier = {
 void __init tick_init(void)
 {
 	clockevents_register_notifier(&tick_notifier);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	tick_broadcast_init();
 }

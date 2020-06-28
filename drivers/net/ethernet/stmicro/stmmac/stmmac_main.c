@@ -2698,20 +2698,14 @@ struct stmmac_priv *stmmac_dvr_probe(struct device *device,
 	spin_lock_init(&priv->tx_lock);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	ret = register_netdev(ndev);
 	if (ret) {
 		pr_err("%s: ERROR %i registering the device\n", __func__, ret);
 		goto error_netdev_register;
 	}
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	priv->stmmac_clk = clk_get(priv->device, STMMAC_RESOURCE_NAME);
 	if (IS_ERR(priv->stmmac_clk)) {
 		pr_warn("%s: warning: cannot get CSR clock\n", __func__);
@@ -2743,7 +2737,6 @@ struct stmmac_priv *stmmac_dvr_probe(struct device *device,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = register_netdev(ndev);
 	if (ret) {
 		netdev_err(priv->dev, "%s: ERROR %i registering the device\n",
@@ -2762,8 +2755,6 @@ error_mdio_register:
 	clk_put(priv->stmmac_clk);
 error_clk_get:
 =======
-=======
->>>>>>> master
 	return priv;
 
 error_mdio_register:
@@ -2771,10 +2762,7 @@ error_mdio_register:
 error_clk_get:
 	unregister_netdev(ndev);
 error_netdev_register:
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	netif_napi_del(&priv->napi);
 error_free_netdev:
 	free_netdev(ndev);

@@ -302,16 +302,11 @@ struct acpi_table_header *acpi_tb_table_override(struct acpi_table_header
 					"%4.4s %p Attempted physical table override failed",
 					table_header->signature,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					ACPI_PHYSADDR_TO_PTR(table_desc->address)));
 =======
 					ACPI_CAST_PTR(void,
 						      table_desc->address)));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					ACPI_CAST_PTR(void,
-						      table_desc->address)));
->>>>>>> master
 			return (NULL);
 		}
 
@@ -328,14 +323,10 @@ struct acpi_table_header *acpi_tb_table_override(struct acpi_table_header
 		   "%4.4s %p %s table override, new table: %p",
 		   table_header->signature,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		   ACPI_PHYSADDR_TO_PTR(table_desc->address),
 =======
 		   ACPI_CAST_PTR(void, table_desc->address),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		   ACPI_CAST_PTR(void, table_desc->address),
->>>>>>> master
 		   override_type, new_table));
 
 	/* We can now unmap/delete the original table (if fully mapped) */

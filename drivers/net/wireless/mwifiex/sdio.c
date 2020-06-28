@@ -931,7 +931,6 @@ static int mwifiex_decode_rx_packet(struct mwifiex_adapter *adapter,
 {
 	u8 *cmd_buf;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	__le16 *curr_ptr = (__le16 *)skb->data;
 	u16 pkt_len = le16_to_cpu(*curr_ptr);
 
@@ -939,9 +938,6 @@ static int mwifiex_decode_rx_packet(struct mwifiex_adapter *adapter,
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 	skb_pull(skb, INTF_HEADER_LEN);
 
 	switch (upld_typ) {

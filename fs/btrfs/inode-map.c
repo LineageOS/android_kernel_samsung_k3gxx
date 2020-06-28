@@ -284,14 +284,10 @@ void btrfs_unpin_free_ino(struct btrfs_root *root)
 free:
 		rb_erase(&info->offset_index, rbroot);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		kmem_cache_free(btrfs_free_space_cachep, info);
 =======
 		kfree(info);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		kfree(info);
->>>>>>> master
 	}
 }
 

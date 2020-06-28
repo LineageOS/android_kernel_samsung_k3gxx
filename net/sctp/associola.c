@@ -1214,12 +1214,9 @@ void sctp_assoc_update(struct sctp_association *asoc,
 	asoc->peer.rwnd = new->peer.rwnd;
 	asoc->peer.sack_needed = new->peer.sack_needed;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	asoc->peer.auth_capable = new->peer.auth_capable;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	asoc->peer.i = new->peer.i;
 	sctp_tsnmap_init(&asoc->peer.tsn_map, SCTP_TSN_MAP_INITIAL,
 			 asoc->peer.i.initial_tsn, GFP_ATOMIC);
@@ -1304,18 +1301,13 @@ void sctp_assoc_update(struct sctp_association *asoc,
 	new->peer.peer_hmacs = NULL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	sctp_auth_key_put(asoc->asoc_shared_key);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	sctp_auth_key_put(asoc->asoc_shared_key);
->>>>>>> master
 	sctp_auth_asoc_init_active_key(asoc, GFP_ATOMIC);
 }
 
 /* Update the retran path for sending a retransmitted packet.
-<<<<<<< HEAD
 <<<<<<< HEAD
  * See also RFC4960, 6.4. Multi-Homed SCTP Endpoints:
  *
@@ -1412,8 +1404,6 @@ struct sctp_transport *
 sctp_assoc_choose_alter_transport(struct sctp_association *asoc,
 				  struct sctp_transport *last_sent_to)
 =======
-=======
->>>>>>> master
  * Round-robin through the active transports, else round-robin
  * through the inactive transports as this is the next best thing
  * we can try.
@@ -1480,16 +1470,12 @@ void sctp_assoc_update_retran_path(struct sctp_association *asoc)
 /* Choose the transport for sending retransmit packet.  */
 struct sctp_transport *sctp_assoc_choose_alter_transport(
 	struct sctp_association *asoc, struct sctp_transport *last_sent_to)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 {
 	/* If this is the first time packet is sent, use the active path,
 	 * else use the retran path. If the last packet was sent over the
 	 * retran path, update the retran path and use it.
 	 */
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (last_sent_to == NULL) {
 		return asoc->peer.active_path;
@@ -1498,17 +1484,12 @@ struct sctp_transport *sctp_assoc_choose_alter_transport(
 			sctp_assoc_update_retran_path(asoc);
 
 =======
-=======
->>>>>>> master
 	if (!last_sent_to)
 		return asoc->peer.active_path;
 	else {
 		if (last_sent_to == asoc->peer.retran_path)
 			sctp_assoc_update_retran_path(asoc);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		return asoc->peer.retran_path;
 	}
 }

@@ -414,27 +414,19 @@ int sctp_packet_transmit(struct sctp_packet *packet)
 
 	/* Allocate the new skb.  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	nskb = alloc_skb(packet->size + MAX_HEADER, GFP_ATOMIC);
 =======
 	nskb = alloc_skb(packet->size + LL_MAX_HEADER, GFP_ATOMIC);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	nskb = alloc_skb(packet->size + LL_MAX_HEADER, GFP_ATOMIC);
->>>>>>> master
 	if (!nskb)
 		goto nomem;
 
 	/* Make sure the outbound skb has enough header room reserved. */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	skb_reserve(nskb, packet->overhead + MAX_HEADER);
 =======
 	skb_reserve(nskb, packet->overhead + LL_MAX_HEADER);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	skb_reserve(nskb, packet->overhead + LL_MAX_HEADER);
->>>>>>> master
 
 	/* Set the owning socket so that we know where to get the
 	 * destination IP address.
@@ -564,15 +556,11 @@ int sctp_packet_transmit(struct sctp_packet *packet)
 	 */
 	if (!sctp_checksum_disable) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!(dst->dev->features & NETIF_F_SCTP_CSUM) ||
 		    (dst_xfrm(dst) != NULL) || packet->ipfragok) {
 =======
 		if (!(dst->dev->features & NETIF_F_SCTP_CSUM)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!(dst->dev->features & NETIF_F_SCTP_CSUM)) {
->>>>>>> master
 			__u32 crc32 = sctp_start_cksum((__u8 *)sh, cksum_buf_len);
 
 			/* 3) Put the resultant value into the checksum field in the
@@ -643,16 +631,12 @@ out:
 no_route:
 	kfree_skb(nskb);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	if (asoc)
 		IP_INC_STATS(sock_net(asoc->base.sk), IPSTATS_MIB_OUTNOROUTES);
 =======
 	IP_INC_STATS_BH(sock_net(asoc->base.sk), IPSTATS_MIB_OUTNOROUTES);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	IP_INC_STATS_BH(sock_net(asoc->base.sk), IPSTATS_MIB_OUTNOROUTES);
->>>>>>> master
 
 	/* FIXME: Returning the 'err' will effect all the associations
 	 * associated with a socket, although only one of the paths of the

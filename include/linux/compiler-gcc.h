@@ -98,7 +98,6 @@
 #define __always_unused			__attribute__((unused))
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* gcc version specific checks */
 
 #if GCC_VERSION < 30200
@@ -210,16 +209,11 @@
 
 #endif	/* gcc version >= 40000 specific checks */
 =======
-=======
->>>>>>> master
 #define __gcc_header(x) #x
 #define _gcc_header(x) __gcc_header(linux/compiler-gcc##x.h)
 #define gcc_header(x) _gcc_header(x)
 #include gcc_header(__GNUC__)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 #if !defined(__noclone)
 #define __noclone	/* not needed */

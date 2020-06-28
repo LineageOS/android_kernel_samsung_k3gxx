@@ -25,7 +25,6 @@ static char *make_driver_name(struct device_driver *drv)
 static void module_create_drivers_dir(struct module_kobject *mk)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	static DEFINE_MUTEX(drivers_dir_mutex);
 
 	mutex_lock(&drivers_dir_mutex);
@@ -33,16 +32,11 @@ static void module_create_drivers_dir(struct module_kobject *mk)
 		mk->drivers_dir = kobject_create_and_add("drivers", &mk->kobj);
 	mutex_unlock(&drivers_dir_mutex);
 =======
-=======
->>>>>>> master
 	if (!mk || mk->drivers_dir)
 		return;
 
 	mk->drivers_dir = kobject_create_and_add("drivers", &mk->kobj);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 void module_add_driver(struct module *mod, struct device_driver *drv)

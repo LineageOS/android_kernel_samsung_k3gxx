@@ -54,17 +54,12 @@
 
 #define SNB_MSIX_CNT		4
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define SNB_MAX_B2B_SPADS	16
 #define SNB_MAX_COMPAT_SPADS	16
 =======
 #define SNB_MAX_SPADS		16
 #define SNB_MAX_COMPAT_SPADS	8
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define SNB_MAX_SPADS		16
-#define SNB_MAX_COMPAT_SPADS	8
->>>>>>> master
 /* Reserve the uppermost bit for link interrupt */
 #define SNB_MAX_DB_BITS		15
 #define SNB_DB_BITS_PER_VEC	5

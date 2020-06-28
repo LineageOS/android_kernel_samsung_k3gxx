@@ -74,7 +74,6 @@ struct tc_estimator {
 #define TC_H_INGRESS    (0xFFFFFFF1U)
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* Need to corrospond to iproute2 tc/tc_core.h "enum link_layer" */
 enum tc_link_layer {
 	TC_LINKLAYER_UNAWARE, /* Indicate unaware old iproute2 util */
@@ -91,11 +90,6 @@ struct tc_ratespec {
 	unsigned char	cell_log;
 	unsigned char	__reserved;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-struct tc_ratespec {
-	unsigned char	cell_log;
-	unsigned char	__reserved;
->>>>>>> master
 	unsigned short	overhead;
 	short		cell_align;
 	unsigned short	mpu;

@@ -150,14 +150,10 @@ mwifiex_11n_form_amsdu_txpd(struct mwifiex_private *priv,
 int
 mwifiex_11n_aggregate_pkt(struct mwifiex_private *priv,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			  struct mwifiex_ra_list_tbl *pra_list,
 =======
 			  struct mwifiex_ra_list_tbl *pra_list, int headroom,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			  struct mwifiex_ra_list_tbl *pra_list, int headroom,
->>>>>>> master
 			  int ptrindex, unsigned long ra_list_flags)
 			  __releases(&priv->wmm.ra_list_spinlock)
 {
@@ -168,12 +164,9 @@ mwifiex_11n_aggregate_pkt(struct mwifiex_private *priv,
 	struct mwifiex_tx_param tx_param;
 	struct txpd *ptx_pd = NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int headroom = adapter->iface_type == MWIFIEX_USB ? 0 : INTF_HEADER_LEN;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	skb_src = skb_peek(&pra_list->skb_head);
 	if (!skb_src) {

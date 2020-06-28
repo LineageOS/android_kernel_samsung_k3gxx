@@ -295,12 +295,9 @@ static int stat_open(struct inode *inode, struct file *file)
 
 static const struct file_operations stat_fops = {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	.owner = THIS_MODULE,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	.open = stat_open,
 	.read = seq_read,
 	.llseek = seq_lseek,

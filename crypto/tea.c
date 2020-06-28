@@ -271,7 +271,6 @@ static void __exit tea_mod_fini(void)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("tea");
 MODULE_ALIAS_CRYPTO("xtea");
 MODULE_ALIAS_CRYPTO("xeta");
@@ -279,10 +278,6 @@ MODULE_ALIAS_CRYPTO("xeta");
 MODULE_ALIAS("xtea");
 MODULE_ALIAS("xeta");
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-MODULE_ALIAS("xtea");
-MODULE_ALIAS("xeta");
->>>>>>> master
 
 module_init(tea_mod_init);
 module_exit(tea_mod_fini);

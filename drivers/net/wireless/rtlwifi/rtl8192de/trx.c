@@ -526,14 +526,10 @@ bool rtl92de_rx_query_desc(struct ieee80211_hw *hw,	struct rtl_stats *stats,
 	}
 	/*rx_status->qual = stats->signal; */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	rx_status->signal = stats->recvsignalpower + 10;
 =======
 	rx_status->signal = stats->rssi + 10;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	rx_status->signal = stats->rssi + 10;
->>>>>>> master
 	/*rx_status->noise = -stats->noise; */
 	return true;
 }

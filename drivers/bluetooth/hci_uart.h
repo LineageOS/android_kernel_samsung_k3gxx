@@ -69,12 +69,9 @@ struct hci_uart {
 
 	struct work_struct	init_ready;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct work_struct	write_work;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	struct hci_uart_proto	*proto;
 	void			*priv;

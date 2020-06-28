@@ -686,7 +686,6 @@ static snd_pcm_uframes_t snd_ice1712_playback_pointer(struct snd_pcm_substream *
 		return 0;
 	ptr = runtime->buffer_size - inw(ice->ddma_port + 4);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ptr = bytes_to_frames(substream->runtime, ptr);
 	if (ptr == runtime->buffer_size)
 		ptr = 0;
@@ -696,11 +695,6 @@ static snd_pcm_uframes_t snd_ice1712_playback_pointer(struct snd_pcm_substream *
 		ptr = 0;
 	return bytes_to_frames(substream->runtime, ptr);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (ptr == runtime->buffer_size)
-		ptr = 0;
-	return bytes_to_frames(substream->runtime, ptr);
->>>>>>> master
 }
 
 static snd_pcm_uframes_t snd_ice1712_playback_ds_pointer(struct snd_pcm_substream *substream)
@@ -718,7 +712,6 @@ static snd_pcm_uframes_t snd_ice1712_playback_ds_pointer(struct snd_pcm_substrea
 	ptr = snd_ice1712_ds_read(ice, substream->number * 2, addr) -
 		ice->playback_con_virt_addr[substream->number];
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ptr = bytes_to_frames(substream->runtime, ptr);
 	if (ptr == substream->runtime->buffer_size)
 		ptr = 0;
@@ -728,11 +721,6 @@ static snd_pcm_uframes_t snd_ice1712_playback_ds_pointer(struct snd_pcm_substrea
 		ptr = 0;
 	return bytes_to_frames(substream->runtime, ptr);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (ptr == substream->runtime->buffer_size)
-		ptr = 0;
-	return bytes_to_frames(substream->runtime, ptr);
->>>>>>> master
 }
 
 static snd_pcm_uframes_t snd_ice1712_capture_pointer(struct snd_pcm_substream *substream)
@@ -744,7 +732,6 @@ static snd_pcm_uframes_t snd_ice1712_capture_pointer(struct snd_pcm_substream *s
 		return 0;
 	ptr = inl(ICEREG(ice, CONCAP_ADDR)) - ice->capture_con_virt_addr;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ptr = bytes_to_frames(substream->runtime, ptr);
 	if (ptr == substream->runtime->buffer_size)
 		ptr = 0;
@@ -754,11 +741,6 @@ static snd_pcm_uframes_t snd_ice1712_capture_pointer(struct snd_pcm_substream *s
 		ptr = 0;
 	return bytes_to_frames(substream->runtime, ptr);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (ptr == substream->runtime->buffer_size)
-		ptr = 0;
-	return bytes_to_frames(substream->runtime, ptr);
->>>>>>> master
 }
 
 static const struct snd_pcm_hardware snd_ice1712_playback = {
@@ -1153,7 +1135,6 @@ static snd_pcm_uframes_t snd_ice1712_playback_pro_pointer(struct snd_pcm_substre
 		return 0;
 	ptr = ice->playback_pro_size - (inw(ICEMT(ice, PLAYBACK_SIZE)) << 2);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ptr = bytes_to_frames(substream->runtime, ptr);
 	if (ptr == substream->runtime->buffer_size)
 		ptr = 0;
@@ -1163,11 +1144,6 @@ static snd_pcm_uframes_t snd_ice1712_playback_pro_pointer(struct snd_pcm_substre
 		ptr = 0;
 	return bytes_to_frames(substream->runtime, ptr);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (ptr == substream->runtime->buffer_size)
-		ptr = 0;
-	return bytes_to_frames(substream->runtime, ptr);
->>>>>>> master
 }
 
 static snd_pcm_uframes_t snd_ice1712_capture_pro_pointer(struct snd_pcm_substream *substream)
@@ -1179,7 +1155,6 @@ static snd_pcm_uframes_t snd_ice1712_capture_pro_pointer(struct snd_pcm_substrea
 		return 0;
 	ptr = ice->capture_pro_size - (inw(ICEMT(ice, CAPTURE_SIZE)) << 2);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ptr = bytes_to_frames(substream->runtime, ptr);
 	if (ptr == substream->runtime->buffer_size)
 		ptr = 0;
@@ -1189,11 +1164,6 @@ static snd_pcm_uframes_t snd_ice1712_capture_pro_pointer(struct snd_pcm_substrea
 		ptr = 0;
 	return bytes_to_frames(substream->runtime, ptr);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (ptr == substream->runtime->buffer_size)
-		ptr = 0;
-	return bytes_to_frames(substream->runtime, ptr);
->>>>>>> master
 }
 
 static const struct snd_pcm_hardware snd_ice1712_playback_pro = {

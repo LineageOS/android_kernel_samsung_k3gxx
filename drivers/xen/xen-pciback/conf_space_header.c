@@ -10,15 +10,12 @@
 #include "conf_space.h"
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 struct pci_cmd_info {
 	u16 val;
 };
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 struct pci_bar_info {
 	u32 val;
 	u32 len_val;
@@ -28,7 +25,6 @@ struct pci_bar_info {
 #define is_enable_cmd(value) ((value)&(PCI_COMMAND_MEMORY|PCI_COMMAND_IO))
 #define is_master_cmd(value) ((value)&PCI_COMMAND_MASTER)
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 /* Bits guests are allowed to control in permissive mode. */
 #define PCI_COMMAND_GUEST (PCI_COMMAND_MASTER|PCI_COMMAND_SPECIAL| \
@@ -60,8 +56,6 @@ static int command_read(struct pci_dev *dev, int offset, u16 *value, void *data)
 	*value &= PCI_COMMAND_GUEST;
 	*value |= cmd->val & ~PCI_COMMAND_GUEST;
 =======
-=======
->>>>>>> master
 static int command_read(struct pci_dev *dev, int offset, u16 *value, void *data)
 {
 	int i;
@@ -77,10 +71,7 @@ static int command_read(struct pci_dev *dev, int offset, u16 *value, void *data)
 		if (dev->resource[i].flags & IORESOURCE_MEM)
 			*value |= PCI_COMMAND_MEMORY;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	return ret;
 }
@@ -90,13 +81,10 @@ static int command_write(struct pci_dev *dev, int offset, u16 value, void *data)
 	struct xen_pcibk_dev_data *dev_data;
 	int err;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u16 val;
 	struct pci_cmd_info *cmd = data;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	dev_data = pci_get_drvdata(dev);
 	if (!pci_is_enabled(dev) && is_enable_cmd(value)) {
@@ -140,7 +128,6 @@ static int command_write(struct pci_dev *dev, int offset, u16 value, void *data)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	cmd->val = value;
 
 	if (!xen_pcibk_permissive && (!dev_data || !dev_data->permissive))
@@ -156,8 +143,6 @@ static int command_write(struct pci_dev *dev, int offset, u16 value, void *data)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return pci_write_config_word(dev, offset, value);
 }
 
@@ -358,13 +343,10 @@ static const struct config_field header_common[] = {
 	 .offset    = PCI_COMMAND,
 	 .size      = 2,
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 .init      = command_init,
 	 .release   = bar_release,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	 .u.w.read  = command_read,
 	 .u.w.write = command_write,
 	},

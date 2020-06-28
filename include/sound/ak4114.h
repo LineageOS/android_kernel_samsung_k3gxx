@@ -169,14 +169,10 @@ struct ak4114 {
 	ak4114_read_t * read;
 	void * private_data;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	atomic_t wq_processing;
 =======
 	unsigned int init: 1;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned int init: 1;
->>>>>>> master
 	spinlock_t lock;
 	unsigned char regmap[7];
 	unsigned char txcsb[5];

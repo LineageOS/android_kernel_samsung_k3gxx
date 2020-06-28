@@ -2516,13 +2516,10 @@ static int process_ipsec(struct pktgen_dev *pkt_dev,
 			int ret;
 			__u8 *eth;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			struct iphdr *iph;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			nhead = x->props.header_len - skb_headroom(skb);
 			if (nhead > 0) {
 				ret = pskb_expand_head(skb, nhead, 0, GFP_ATOMIC);
@@ -2545,7 +2542,6 @@ static int process_ipsec(struct pktgen_dev *pkt_dev,
 			memcpy(eth, pkt_dev->hh, 12);
 			*(u16 *) &eth[12] = protocol;
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 			/* Update IPv4 header len as well as checksum value */
 			iph = ip_hdr(skb);
@@ -2553,8 +2549,6 @@ static int process_ipsec(struct pktgen_dev *pkt_dev,
 			ip_send_check(iph);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		}
 	}
 	return 1;
@@ -3390,7 +3384,6 @@ static int pktgen_thread_worker(void *arg)
 
 	/* Wait for kthread_stop */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	for (;;) {
 		set_current_state(TASK_INTERRUPTIBLE);
 		if (kthread_should_stop())
@@ -3399,10 +3392,6 @@ static int pktgen_thread_worker(void *arg)
 	while (!kthread_should_stop()) {
 		set_current_state(TASK_INTERRUPTIBLE);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	while (!kthread_should_stop()) {
-		set_current_state(TASK_INTERRUPTIBLE);
->>>>>>> master
 		schedule();
 	}
 	__set_current_state(TASK_RUNNING);

@@ -21,24 +21,18 @@
 #include <asm/uaccess.h>
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 int iterate_dir(struct file *file, struct dir_context *ctx)
 {
 	struct inode *inode = file_inode(file);
 	int res = -ENOTDIR;
 	if (!file->f_op || (!file->f_op->readdir && !file->f_op->iterate))
 =======
-=======
->>>>>>> master
 int vfs_readdir(struct file *file, filldir_t filler, void *buf)
 {
 	struct inode *inode = file_inode(file);
 	int res = -ENOTDIR;
 	if (!file->f_op || !file->f_op->readdir)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		goto out;
 
 	res = security_file_permission(file, MAY_READ);
@@ -52,7 +46,6 @@ int vfs_readdir(struct file *file, filldir_t filler, void *buf)
 	res = -ENOENT;
 	if (!IS_DEADDIR(inode)) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ctx->romnt = (inode->i_sb->s_flags & MS_RDONLY);
 		if (file->f_op->iterate) {
 			ctx->pos = file->f_pos;
@@ -65,16 +58,12 @@ int vfs_readdir(struct file *file, filldir_t filler, void *buf)
 =======
 		res = file->f_op->readdir(file, buf, filler);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		res = file->f_op->readdir(file, buf, filler);
->>>>>>> master
 		file_accessed(file);
 	}
 	mutex_unlock(&inode->i_mutex);
 out:
 	return res;
 }
-<<<<<<< HEAD
 <<<<<<< HEAD
 EXPORT_SYMBOL(iterate_dir);
 
@@ -89,10 +78,6 @@ static bool hide_name(const char *name, int namlen)
 
 EXPORT_SYMBOL(vfs_readdir);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-EXPORT_SYMBOL(vfs_readdir);
->>>>>>> master
 
 /*
  * Traditional linux readdir() handling..
@@ -114,12 +99,9 @@ struct old_linux_dirent {
 
 struct readdir_callback {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct dir_context ctx;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	struct old_linux_dirent __user * dirent;
 	int result;
 };
@@ -128,14 +110,10 @@ static int fillonedir(void * __buf, const char * name, int namlen, loff_t offset
 		      u64 ino, unsigned int d_type)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct readdir_callback *buf = (struct readdir_callback *) __buf;
 =======
 	struct readdir_callback * buf = (struct readdir_callback *) __buf;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct readdir_callback * buf = (struct readdir_callback *) __buf;
->>>>>>> master
 	struct old_linux_dirent __user * dirent;
 	unsigned long d_ino;
 
@@ -147,13 +125,10 @@ static int fillonedir(void * __buf, const char * name, int namlen, loff_t offset
 		return -EOVERFLOW;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (hide_name(name, namlen) && buf->ctx.romnt)
 		return 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	buf->result++;
 	dirent = buf->dirent;
 	if (!access_ok(VERIFY_WRITE, dirent,
@@ -183,23 +158,17 @@ SYSCALL_DEFINE3(old_readdir, unsigned int, fd,
 		return -EBADF;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	buf.ctx.actor = fillonedir;
 	buf.result = 0;
 	buf.dirent = dirent;
 
 	error = iterate_dir(f.file, &buf.ctx);
 =======
-=======
->>>>>>> master
 	buf.result = 0;
 	buf.dirent = dirent;
 
 	error = vfs_readdir(f.file, fillonedir, &buf);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (buf.result)
 		error = buf.result;
 
@@ -222,12 +191,9 @@ struct linux_dirent {
 
 struct getdents_callback {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct dir_context ctx;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	struct linux_dirent __user * current_dir;
 	struct linux_dirent __user * previous;
 	int count;
@@ -252,13 +218,10 @@ static int filldir(void * __buf, const char * name, int namlen, loff_t offset,
 		return -EOVERFLOW;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (hide_name(name, namlen) && buf->ctx.romnt)
 		return 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	dirent = buf->previous;
 	if (dirent) {
 		if (__put_user(offset, &dirent->d_off))
@@ -305,7 +268,6 @@ SYSCALL_DEFINE3(getdents, unsigned int, fd,
 	buf.count = count;
 	buf.error = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	buf.ctx.actor = filldir;
 
 	error = iterate_dir(f.file, &buf.ctx);
@@ -313,23 +275,15 @@ SYSCALL_DEFINE3(getdents, unsigned int, fd,
 
 	error = vfs_readdir(f.file, filldir, &buf);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-	error = vfs_readdir(f.file, filldir, &buf);
->>>>>>> master
 	if (error >= 0)
 		error = buf.error;
 	lastdirent = buf.previous;
 	if (lastdirent) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (put_user(buf.ctx.pos, &lastdirent->d_off))
 =======
 		if (put_user(f.file->f_pos, &lastdirent->d_off))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (put_user(f.file->f_pos, &lastdirent->d_off))
->>>>>>> master
 			error = -EFAULT;
 		else
 			error = count - buf.count;
@@ -340,12 +294,9 @@ SYSCALL_DEFINE3(getdents, unsigned int, fd,
 
 struct getdents_callback64 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct dir_context ctx;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	struct linux_dirent64 __user * current_dir;
 	struct linux_dirent64 __user * previous;
 	int count;
@@ -364,13 +315,10 @@ static int filldir64(void * __buf, const char * name, int namlen, loff_t offset,
 	if (reclen > buf->count)
 		return -EINVAL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (hide_name(name, namlen) && buf->ctx.romnt)
 		return 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	dirent = buf->previous;
 	if (dirent) {
 		if (__put_user(offset, &dirent->d_off))
@@ -419,7 +367,6 @@ SYSCALL_DEFINE3(getdents64, unsigned int, fd,
 	buf.count = count;
 	buf.error = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	buf.ctx.actor = filldir64;
 
 	error = iterate_dir(f.file, &buf.ctx);
@@ -427,23 +374,15 @@ SYSCALL_DEFINE3(getdents64, unsigned int, fd,
 
 	error = vfs_readdir(f.file, filldir64, &buf);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-	error = vfs_readdir(f.file, filldir64, &buf);
->>>>>>> master
 	if (error >= 0)
 		error = buf.error;
 	lastdirent = buf.previous;
 	if (lastdirent) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		typeof(lastdirent->d_off) d_off = buf.ctx.pos;
 =======
 		typeof(lastdirent->d_off) d_off = f.file->f_pos;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		typeof(lastdirent->d_off) d_off = f.file->f_pos;
->>>>>>> master
 		if (__put_user(d_off, &lastdirent->d_off))
 			error = -EFAULT;
 		else

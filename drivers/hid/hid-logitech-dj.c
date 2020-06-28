@@ -193,12 +193,9 @@ static int logi_dj_output_hidraw_report(struct hid_device *hid, u8 * buf,
 					size_t count,
 					unsigned char report_type);
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int logi_dj_recv_query_paired_devices(struct dj_receiver_dev *djrcv_dev);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 static void logi_dj_recv_destroy_djhid_device(struct dj_receiver_dev *djrcv_dev,
 						struct dj_report *dj_report)
@@ -240,7 +237,6 @@ static void logi_dj_recv_add_djhid_device(struct dj_receiver_dev *djrcv_dev,
 	    SPFUNCTION_DEVICE_LIST_EMPTY) {
 		dbg_hid("%s: device list is empty\n", __func__);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		djrcv_dev->querying_devices = false;
 		return;
 	}
@@ -256,11 +252,6 @@ static void logi_dj_recv_add_djhid_device(struct dj_receiver_dev *djrcv_dev,
 	}
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		return;
-	}
-
->>>>>>> master
 	dj_hiddev = hid_allocate_device();
 	if (IS_ERR(dj_hiddev)) {
 		dev_err(&djrcv_hdev->dev, "%s: hid_allocate_device failed\n",
@@ -325,12 +316,9 @@ static void delayedwork_callback(struct work_struct *work)
 	unsigned long flags;
 	int count;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int retval;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	dbg_hid("%s\n", __func__);
 
@@ -364,7 +352,6 @@ static void delayedwork_callback(struct work_struct *work)
 		break;
 	default:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* A normal report (i. e. not belonging to a pair/unpair notification)
 	 * arriving here, means that the report arrived but we did not have a
 	 * paired dj_device associated to the report's device_index, this
@@ -386,8 +373,6 @@ static void delayedwork_callback(struct work_struct *work)
 		}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		dbg_hid("%s: unexpected report type\n", __func__);
 	}
 }
@@ -419,7 +404,6 @@ static void logi_dj_recv_forward_null_report(struct dj_receiver_dev *djrcv_dev,
 		dbg_hid("djrcv_dev->paired_dj_devices[dj_report->device_index]"
 			" is NULL, index %d\n", dj_report->device_index);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		kfifo_in(&djrcv_dev->notif_fifo, dj_report, sizeof(struct dj_report));
 
 		if (schedule_work(&djrcv_dev->work) == 0) {
@@ -428,8 +412,6 @@ static void logi_dj_recv_forward_null_report(struct dj_receiver_dev *djrcv_dev,
 		}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		return;
 	}
 
@@ -461,7 +443,6 @@ static void logi_dj_recv_forward_report(struct dj_receiver_dev *djrcv_dev,
 		dbg_hid("djrcv_dev->paired_dj_devices[dj_report->device_index]"
 			" is NULL, index %d\n", dj_report->device_index);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		kfifo_in(&djrcv_dev->notif_fifo, dj_report, sizeof(struct dj_report));
 
 		if (schedule_work(&djrcv_dev->work) == 0) {
@@ -470,8 +451,6 @@ static void logi_dj_recv_forward_report(struct dj_receiver_dev *djrcv_dev,
 		}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		return;
 	}
 
@@ -520,15 +499,12 @@ static int logi_dj_recv_query_paired_devices(struct dj_receiver_dev *djrcv_dev)
 	int retval;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* no need to protect djrcv_dev->querying_devices */
 	if (djrcv_dev->querying_devices)
 		return 0;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	dj_report = kzalloc(sizeof(struct dj_report), GFP_KERNEL);
 	if (!dj_report)
 		return -ENOMEM;
@@ -541,12 +517,9 @@ static int logi_dj_recv_query_paired_devices(struct dj_receiver_dev *djrcv_dev)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int logi_dj_recv_switch_to_dj_mode(struct dj_receiver_dev *djrcv_dev,
 					  unsigned timeout)
 {
@@ -667,14 +640,10 @@ static int logi_dj_ll_input_event(struct input_dev *dev, unsigned int type,
 	struct hid_field *field;
 	struct hid_report *report;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned char *data;
 =======
 	unsigned char data[8];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned char data[8];
->>>>>>> master
 	int offset;
 
 	dbg_hid("%s: %s, type:%d | code:%d | value:%d\n",
@@ -691,7 +660,6 @@ static int logi_dj_ll_input_event(struct input_dev *dev, unsigned int type,
 	}
 	hid_set_field(field, offset, value);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	data = hid_alloc_report_buf(field->report, GFP_KERNEL);
 	if (!data) {
@@ -701,8 +669,6 @@ static int logi_dj_ll_input_event(struct input_dev *dev, unsigned int type,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	hid_output_report(field->report, &data[0]);
 
 	output_report_enum = &dj_rcv_hiddev->report_enum[HID_OUTPUT_REPORT];
@@ -714,7 +680,6 @@ static int logi_dj_ll_input_event(struct input_dev *dev, unsigned int type,
 	hid_hw_request(dj_rcv_hiddev, report, HID_REQ_SET_REPORT);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	kfree(data);
 
 	return 0;
@@ -722,10 +687,6 @@ static int logi_dj_ll_input_event(struct input_dev *dev, unsigned int type,
 	return 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return 0;
-
->>>>>>> master
 }
 
 static int logi_dj_ll_start(struct hid_device *hid)
@@ -758,13 +719,9 @@ static int logi_dj_raw_event(struct hid_device *hdev,
 	struct dj_report *dj_report = (struct dj_report *) data;
 	unsigned long flags;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	bool report_processed = false;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	bool report_processed = false;
->>>>>>> master
 
 	dbg_hid("%s, size:%d\n", __func__, size);
 
@@ -792,7 +749,6 @@ static int logi_dj_raw_event(struct hid_device *hdev,
 	 * anything else with it.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	/* case 1) */
 	if (data[0] != REPORT_ID_DJ_SHORT)
@@ -812,17 +768,11 @@ static int logi_dj_raw_event(struct hid_device *hdev,
 	    (dj_report->device_index > DJ_DEVICE_INDEX_MAX)) {
 		dev_err(&hdev->dev, "%s: invalid device index:%d\n",
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if ((dj_report->device_index < DJ_DEVICE_INDEX_MIN) ||
-	    (dj_report->device_index > DJ_DEVICE_INDEX_MAX)) {
-		dev_err(&hdev->dev, "%s: invalid device index:%d\n",
->>>>>>> master
 				__func__, dj_report->device_index);
 		return false;
 	}
 
 	spin_lock_irqsave(&djrcv_dev->lock, flags);
-<<<<<<< HEAD
 <<<<<<< HEAD
 	switch (dj_report->report_type) {
 	case REPORT_TYPE_NOTIF_DEVICE_PAIRED:
@@ -842,8 +792,6 @@ static int logi_dj_raw_event(struct hid_device *hdev,
 
 	return true;
 =======
-=======
->>>>>>> master
 	if (dj_report->report_id == REPORT_ID_DJ_SHORT) {
 		switch (dj_report->report_type) {
 		case REPORT_TYPE_NOTIF_DEVICE_PAIRED:
@@ -864,10 +812,7 @@ static int logi_dj_raw_event(struct hid_device *hdev,
 	spin_unlock_irqrestore(&djrcv_dev->lock, flags);
 
 	return report_processed;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static int logi_dj_probe(struct hid_device *hdev,

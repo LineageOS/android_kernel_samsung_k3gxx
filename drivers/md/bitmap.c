@@ -565,13 +565,10 @@ static int bitmap_read_sb(struct bitmap *bitmap)
 		return err;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	err = -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	sb = kmap_atomic(sb_page);
 
 	chunksize = le32_to_cpu(sb->chunksize);
@@ -892,13 +889,9 @@ void bitmap_unplug(struct bitmap *bitmap)
 	unsigned long i;
 	int dirty, need_write;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	int wait = 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int wait = 0;
->>>>>>> master
 
 	if (!bitmap || !bitmap->storage.filemap ||
 	    test_bit(BITMAP_STALE, &bitmap->flags))
@@ -917,7 +910,6 @@ void bitmap_unplug(struct bitmap *bitmap)
 			write_page(bitmap, bitmap->storage.filemap[i], 0);
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	}
 	if (bitmap->storage.file)
 		wait_event(bitmap->write_wait,
@@ -926,8 +918,6 @@ void bitmap_unplug(struct bitmap *bitmap)
 		md_super_wait(bitmap->mddev);
 
 =======
-=======
->>>>>>> master
 		if (dirty)
 			wait = 1;
 	}
@@ -938,10 +928,7 @@ void bitmap_unplug(struct bitmap *bitmap)
 		else
 			md_super_wait(bitmap->mddev);
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (test_bit(BITMAP_WRITE_ERROR, &bitmap->flags))
 		bitmap_file_kick(bitmap);
 }
@@ -1840,7 +1827,6 @@ int bitmap_resize(struct bitmap *bitmap, sector_t blocks,
 	struct bitmap_page *new_bp;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (bitmap->storage.file && !init) {
 		pr_info("md: cannot resize file-based bitmap\n");
 		return -EINVAL;
@@ -1848,8 +1834,6 @@ int bitmap_resize(struct bitmap *bitmap, sector_t blocks,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (chunksize == 0) {
 		/* If there is enough space, leave the chunk size unchanged,
 		 * else increase by factor of two until there is enough space.

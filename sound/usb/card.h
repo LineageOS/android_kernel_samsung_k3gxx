@@ -91,12 +91,9 @@ struct snd_usb_endpoint {
 	unsigned int syncmaxsize;	/* sync endpoint packet size */
 	unsigned int fill_max:1;	/* fill max packet size always */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned int udh01_fb_quirk:1;	/* corrupted feedback data */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	unsigned int datainterval;      /* log_2 of data packet interval */
 	unsigned int syncinterval;	/* P for adaptive mode, 0 otherwise */
 	unsigned char silence_value;

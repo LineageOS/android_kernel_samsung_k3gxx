@@ -583,7 +583,6 @@ int rs600_gart_set_page(struct radeon_device *rdev, int i, uint64_t addr)
 	}
 	addr = addr & 0xFFFFFFFFFFFFF000ULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (addr != rdev->dummy_page.addr)
 		addr |= R600_PTE_VALID | R600_PTE_READABLE |
 			R600_PTE_WRITEABLE;
@@ -592,10 +591,6 @@ int rs600_gart_set_page(struct radeon_device *rdev, int i, uint64_t addr)
 	addr |= R600_PTE_VALID | R600_PTE_SYSTEM | R600_PTE_SNOOPED;
 	addr |= R600_PTE_READABLE | R600_PTE_WRITEABLE;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	addr |= R600_PTE_VALID | R600_PTE_SYSTEM | R600_PTE_SNOOPED;
-	addr |= R600_PTE_READABLE | R600_PTE_WRITEABLE;
->>>>>>> master
 	writeq(addr, ptr + (i * 8));
 	return 0;
 }
@@ -647,15 +642,12 @@ int rs600_irq_set(struct radeon_device *rdev)
 	if (ASIC_IS_DCE2(rdev))
 		WREG32(R_007408_HDMI0_AUDIO_PACKET_CONTROL, hdmi0);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 	/* posting read */
 	RREG32(R_000040_GEN_INT_CNTL);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 }
 

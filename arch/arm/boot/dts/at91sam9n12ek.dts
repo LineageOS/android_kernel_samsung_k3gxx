@@ -15,24 +15,18 @@
 
 	chosen {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		bootargs = "console=ttyS0,115200 root=/dev/mtdblock1 rw rootfstype=jffs2";
 	};
 
 	memory {
 		reg = <0x20000000 0x8000000>;
 =======
-=======
->>>>>>> master
 		bootargs = "mem=128M console=ttyS0,115200 root=/dev/mtdblock1 rw rootfstype=jffs2";
 	};
 
 	memory {
 		reg = <0x20000000 0x10000000>;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	};
 
 	clocks {

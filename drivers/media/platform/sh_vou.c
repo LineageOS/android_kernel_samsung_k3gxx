@@ -777,14 +777,10 @@ static int sh_vou_try_fmt_vid_out(struct file *file, void *priv,
 			      &pix->height, 0, VOU_MAX_IMAGE_HEIGHT, 1, 0);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	for (i = 0; i < ARRAY_SIZE(vou_fmt); i++)
 =======
 	for (i = 0; ARRAY_SIZE(vou_fmt); i++)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	for (i = 0; ARRAY_SIZE(vou_fmt); i++)
->>>>>>> master
 		if (vou_fmt[i].pfmt == pix->pixelformat)
 			return 0;
 

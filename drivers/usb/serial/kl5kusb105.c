@@ -199,23 +199,17 @@ static int klsi_105_get_line_state(struct usb_serial_port *port,
 			     10000
 			     );
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (rc != KLSI_STATUSBUF_LEN) {
 		dev_err(&port->dev, "reading line status failed: %d\n", rc);
 		if (rc >= 0)
 			rc = -EIO;
 	} else {
 =======
-=======
->>>>>>> master
 	if (rc < 0)
 		dev_err(&port->dev, "Reading line status failed (error = %d)\n",
 			rc);
 	else {
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		status = get_unaligned_le16(status_buf);
 
 		dev_info(&port->serial->dev->dev, "read status %x %x",
@@ -319,14 +313,10 @@ static int  klsi_105_open(struct tty_struct *tty, struct usb_serial_port *port)
 	if (rc) {
 		retval = rc;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto err_free_cfg;
 =======
 		goto exit;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto exit;
->>>>>>> master
 	}
 
 	rc = usb_control_msg(port->serial->dev,
@@ -342,17 +332,13 @@ static int  klsi_105_open(struct tty_struct *tty, struct usb_serial_port *port)
 		dev_err(&port->dev, "Enabling read failed (error = %d)\n", rc);
 		retval = rc;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto err_generic_close;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	} else
 		dev_dbg(&port->dev, "%s - enabled reading\n", __func__);
 
 	rc = klsi_105_get_line_state(port, &line_state);
-<<<<<<< HEAD
 <<<<<<< HEAD
 	if (rc < 0) {
 		retval = rc;
@@ -382,8 +368,6 @@ err_free_cfg:
 	kfree(cfg);
 
 =======
-=======
->>>>>>> master
 	if (rc >= 0) {
 		spin_lock_irqsave(&priv->lock, flags);
 		priv->line_state = line_state;
@@ -395,10 +379,7 @@ err_free_cfg:
 
 exit:
 	kfree(cfg);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return retval;
 }
 

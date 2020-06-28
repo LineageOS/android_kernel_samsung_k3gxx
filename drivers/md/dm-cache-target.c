@@ -152,14 +152,11 @@ struct cache {
 	wait_queue_head_t migration_wait;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	wait_queue_head_t quiescing_wait;
 	atomic_t quiescing_ack;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/*
 	 * cache_size entries, dirty if set
 	 */
@@ -752,7 +749,6 @@ static void cell_defer(struct cache *cache, struct dm_bio_prison_cell *cell,
 static void cleanup_migration(struct dm_cache_migration *mg)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct cache *cache = mg->cache;
 	free_migration(mg);
 	dec_nr_migrations(cache);
@@ -760,10 +756,6 @@ static void cleanup_migration(struct dm_cache_migration *mg)
 	dec_nr_migrations(mg->cache);
 	free_migration(mg);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	dec_nr_migrations(mg->cache);
-	free_migration(mg);
->>>>>>> master
 }
 
 static void migration_failure(struct dm_cache_migration *mg)
@@ -878,26 +870,19 @@ static void issue_copy_real(struct dm_cache_migration *mg)
 	struct dm_io_region o_region, c_region;
 	struct cache *cache = mg->cache;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	sector_t cblock = from_cblock(mg->cblock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	o_region.bdev = cache->origin_dev->bdev;
 	o_region.count = cache->sectors_per_block;
 
 	c_region.bdev = cache->cache_dev->bdev;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	c_region.sector = cblock * cache->sectors_per_block;
 =======
 	c_region.sector = from_cblock(mg->cblock) * cache->sectors_per_block;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	c_region.sector = from_cblock(mg->cblock) * cache->sectors_per_block;
->>>>>>> master
 	c_region.count = cache->sectors_per_block;
 
 	if (mg->writeback || mg->demote) {
@@ -1376,7 +1361,6 @@ static void writeback_some_dirty_blocks(struct cache *cache)
  * Main worker loop
  *--------------------------------------------------------------*/
 <<<<<<< HEAD
-<<<<<<< HEAD
 static bool is_quiescing(struct cache *cache)
 {
 	int r;
@@ -1404,8 +1388,6 @@ static void wait_for_quiescing_ack(struct cache *cache)
 
 static void start_quiescing(struct cache *cache)
 =======
-=======
->>>>>>> master
 static void start_quiescing(struct cache *cache)
 {
 	unsigned long flags;
@@ -1416,15 +1398,11 @@ static void start_quiescing(struct cache *cache)
 }
 
 static void stop_quiescing(struct cache *cache)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 {
 	unsigned long flags;
 
 	spin_lock_irqsave(&cache->lock, flags);
-<<<<<<< HEAD
 <<<<<<< HEAD
 	cache->quiescing = true;
 	spin_unlock_irqrestore(&cache->lock, flags);
@@ -1442,8 +1420,6 @@ static void stop_quiescing(struct cache *cache)
 
 	atomic_set(&cache->quiescing_ack, 0);
 =======
-=======
->>>>>>> master
 	cache->quiescing = 0;
 	spin_unlock_irqrestore(&cache->lock, flags);
 }
@@ -1458,10 +1434,7 @@ static bool is_quiescing(struct cache *cache)
 	spin_unlock_irqrestore(&cache->lock, flags);
 
 	return r;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static void wait_for_migrations(struct cache *cache)
@@ -1509,7 +1482,6 @@ static void do_worker(struct work_struct *ws)
 
 	do {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!is_quiescing(cache)) {
 			writeback_some_dirty_blocks(cache);
 			process_deferred_writethrough_bios(cache);
@@ -1519,27 +1491,17 @@ static void do_worker(struct work_struct *ws)
 		if (!is_quiescing(cache))
 			process_deferred_bios(cache);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (!is_quiescing(cache))
-			process_deferred_bios(cache);
->>>>>>> master
 
 		process_migrations(cache, &cache->quiesced_migrations, issue_copy);
 		process_migrations(cache, &cache->completed_migrations, complete_migration);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 		writeback_some_dirty_blocks(cache);
 
 		process_deferred_writethrough_bios(cache);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (commit_if_needed(cache)) {
 			process_deferred_flush_bios(cache, false);
 
@@ -1553,14 +1515,11 @@ static void do_worker(struct work_struct *ws)
 					   migration_success_post_commit);
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 		ack_quiescing(cache);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	} while (more_work(cache));
 }
 
@@ -2056,13 +2015,10 @@ static int cache_create(struct cache_args *ca, struct cache **result)
 	ti->discards_supported = true;
 	ti->discard_zeroes_data_unsupported = true;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Discard bios must be split on a block boundary */
 	ti->split_discard_bios = true;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	cache->features = ca->features;
 	ti->per_bio_data_size = get_per_bio_data_size(cache);
@@ -2132,14 +2088,11 @@ static int cache_create(struct cache_args *ca, struct cache **result)
 	init_waitqueue_head(&cache->migration_wait);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	init_waitqueue_head(&cache->quiescing_wait);
 	atomic_set(&cache->quiescing_ack, 0);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	r = -ENOMEM;
 	cache->nr_dirty = 0;
 	cache->dirty_bitset = alloc_bitset(from_cblock(cache->cache_size));
@@ -2291,7 +2244,6 @@ static int cache_map(struct dm_target *ti, struct bio *bio)
 	struct dm_bio_prison_cell *cell;
 	struct policy_result lookup_result;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct per_bio_data *pb = init_per_bio_data(bio, pb_data_size);
 
 	if (unlikely(from_oblock(block) >= from_oblock(cache->origin_blocks))) {
@@ -2300,35 +2252,24 @@ static int cache_map(struct dm_target *ti, struct bio *bio)
 
 	if (from_oblock(block) > from_oblock(cache->origin_blocks)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct per_bio_data *pb;
-
-	if (from_oblock(block) > from_oblock(cache->origin_blocks)) {
->>>>>>> master
 		/*
 		 * This can only occur if the io goes to a partial block at
 		 * the end of the origin device.  We don't cache these.
 		 * Just remap to the origin and carry on.
 		 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		remap_to_origin(cache, bio);
 		return DM_MAPIO_REMAPPED;
 	}
 
 =======
-=======
->>>>>>> master
 		remap_to_origin_clear_discard(cache, bio, block);
 		return DM_MAPIO_REMAPPED;
 	}
 
 	pb = init_per_bio_data(bio, pb_data_size);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (bio->bi_rw & (REQ_FLUSH | REQ_FUA | REQ_DISCARD)) {
 		defer_bio(cache, bio);
 		return DM_MAPIO_SUBMITTED;

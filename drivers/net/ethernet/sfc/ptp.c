@@ -1320,7 +1320,6 @@ void efx_ptp_event(struct efx_nic *efx, efx_qword_t *ev)
 	int code = EFX_QWORD_FIELD(*ev, MCDI_EVENT_CODE);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!ptp) {
 		if (net_ratelimit())
 			netif_warn(efx, drv, efx->net_dev,
@@ -1330,8 +1329,6 @@ void efx_ptp_event(struct efx_nic *efx, efx_qword_t *ev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (!ptp->enabled)
 		return;
 

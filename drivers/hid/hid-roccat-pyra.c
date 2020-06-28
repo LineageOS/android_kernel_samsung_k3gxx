@@ -36,13 +36,10 @@ static void profile_activated(struct pyra_device *pyra,
 		unsigned int new_profile)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (new_profile >= ARRAY_SIZE(pyra->profile_settings))
 		return;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	pyra->actual_profile = new_profile;
 	pyra->actual_cpi = pyra->profile_settings[pyra->actual_profile].y_cpi;
 }
@@ -245,7 +242,6 @@ static ssize_t pyra_sysfs_write_settings(struct file *fp,
 		return -EINVAL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	settings = (struct pyra_settings const *)buf;
 	if (settings->startup_profile >= ARRAY_SIZE(pyra->profile_settings))
 		return -EINVAL;
@@ -253,16 +249,11 @@ static ssize_t pyra_sysfs_write_settings(struct file *fp,
 	mutex_lock(&pyra->pyra_lock);
 
 =======
-=======
->>>>>>> master
 	mutex_lock(&pyra->pyra_lock);
 
 	settings = (struct pyra_settings const *)buf;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	retval = pyra_set_settings(usb_dev, settings);
 	if (retval) {
 		mutex_unlock(&pyra->pyra_lock);

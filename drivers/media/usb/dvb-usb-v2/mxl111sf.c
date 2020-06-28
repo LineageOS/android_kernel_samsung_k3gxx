@@ -24,14 +24,11 @@
 #include "lg2160.h"
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* Max transfer size done by I2C transfer functions */
 #define MAX_XFER_SIZE  64
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 int dvb_usb_mxl111sf_debug;
 module_param_named(debug, dvb_usb_mxl111sf_debug, int, 0644);
 MODULE_PARM_DESC(debug, "set debugging level "
@@ -73,7 +70,6 @@ int mxl111sf_ctrl_msg(struct dvb_usb_device *d,
 	int wo = (rbuf == NULL || rlen == 0); /* write-only */
 	int ret;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u8 sndbuf[MAX_XFER_SIZE];
 
 	if (1 + wlen > sizeof(sndbuf)) {
@@ -83,9 +79,6 @@ int mxl111sf_ctrl_msg(struct dvb_usb_device *d,
 =======
 	u8 sndbuf[1+wlen];
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u8 sndbuf[1+wlen];
->>>>>>> master
 
 	deb_adv("%s(wlen = %d, rlen = %d)\n", __func__, wlen, rlen);
 

@@ -1078,14 +1078,10 @@ EXPORT_SYMBOL_GPL(devm_pinctrl_put);
 
 int pinctrl_register_map(struct pinctrl_map const *maps, unsigned num_maps,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			 bool dup)
 =======
 			 bool dup, bool locked)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			 bool dup, bool locked)
->>>>>>> master
 {
 	int i, ret;
 	struct pinctrl_maps *maps_node;
@@ -1154,22 +1150,16 @@ int pinctrl_register_map(struct pinctrl_map const *maps, unsigned num_maps,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	mutex_lock(&pinctrl_maps_mutex);
 	list_add_tail(&maps_node->node, &pinctrl_maps);
 	mutex_unlock(&pinctrl_maps_mutex);
 =======
-=======
->>>>>>> master
 	if (!locked)
 		mutex_lock(&pinctrl_maps_mutex);
 	list_add_tail(&maps_node->node, &pinctrl_maps);
 	if (!locked)
 		mutex_unlock(&pinctrl_maps_mutex);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	return 0;
 }
@@ -1185,14 +1175,10 @@ int pinctrl_register_mappings(struct pinctrl_map const *maps,
 			      unsigned num_maps)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return pinctrl_register_map(maps, num_maps, true);
 =======
 	return pinctrl_register_map(maps, num_maps, true, false);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return pinctrl_register_map(maps, num_maps, true, false);
->>>>>>> master
 }
 
 void pinctrl_unregister_map(struct pinctrl_map const *map)

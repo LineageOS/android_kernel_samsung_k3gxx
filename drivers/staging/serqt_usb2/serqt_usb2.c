@@ -726,14 +726,10 @@ static int qt_startup(struct usb_serial *serial)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	switch (le16_to_cpu(serial->dev->descriptor.idProduct)) {
 =======
 	switch (serial->dev->descriptor.idProduct) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	switch (serial->dev->descriptor.idProduct) {
->>>>>>> master
 	case QUATECH_DSU100:
 	case QUATECH_QSU100:
 	case QUATECH_ESU100A:

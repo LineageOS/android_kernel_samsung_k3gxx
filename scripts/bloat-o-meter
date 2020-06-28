@@ -56,21 +56,15 @@ delta.sort()
 delta.reverse()
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 print("add/remove: %s/%s grow/shrink: %s/%s up/down: %s/%s (%s)" % \
       (add, remove, grow, shrink, up, -down, up-down))
 print("%-40s %7s %7s %+7s" % ("function", "old", "new", "delta"))
 for d, n in delta:
     if d: print("%-40s %7s %7s %+7d" % (n, old.get(n,"-"), new.get(n,"-"), d))
 =======
-=======
->>>>>>> master
 print "add/remove: %s/%s grow/shrink: %s/%s up/down: %s/%s (%s)" % \
       (add, remove, grow, shrink, up, -down, up-down)
 print "%-40s %7s %7s %+7s" % ("function", "old", "new", "delta")
 for d, n in delta:
     if d: print "%-40s %7s %7s %+7d" % (n, old.get(n,"-"), new.get(n,"-"), d)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master

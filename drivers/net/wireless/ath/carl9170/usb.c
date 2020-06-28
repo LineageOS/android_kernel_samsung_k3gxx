@@ -622,7 +622,6 @@ int __carl9170_exec_cmd(struct ar9170 *ar, struct carl9170_cmd *cmd,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ar->usb_ep_cmd_is_bulk)
 		usb_fill_bulk_urb(urb, ar->udev,
 				  usb_sndbulkpipe(ar->udev, AR9170_USB_EP_CMD),
@@ -638,11 +637,6 @@ int __carl9170_exec_cmd(struct ar9170 *ar, struct carl9170_cmd *cmd,
 		AR9170_USB_EP_CMD), cmd, cmd->hdr.len + 4,
 		carl9170_usb_cmd_complete, ar, 1);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	usb_fill_int_urb(urb, ar->udev, usb_sndintpipe(ar->udev,
-		AR9170_USB_EP_CMD), cmd, cmd->hdr.len + 4,
-		carl9170_usb_cmd_complete, ar, 1);
->>>>>>> master
 
 	if (free_buf)
 		urb->transfer_flags |= URB_FREE_BUFFER;
@@ -1052,7 +1046,6 @@ static int carl9170_usb_probe(struct usb_interface *intf,
 			      const struct usb_device_id *id)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct usb_endpoint_descriptor *ep;
 	struct ar9170 *ar;
 	struct usb_device *udev;
@@ -1062,11 +1055,6 @@ static int carl9170_usb_probe(struct usb_interface *intf,
 	struct usb_device *udev;
 	int err;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct ar9170 *ar;
-	struct usb_device *udev;
-	int err;
->>>>>>> master
 
 	err = usb_reset_device(interface_to_usbdev(intf));
 	if (err)
@@ -1082,7 +1070,6 @@ static int carl9170_usb_probe(struct usb_interface *intf,
 	ar->intf = intf;
 	ar->features = id->driver_info;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	/* We need to remember the type of endpoint 4 because it differs
 	 * between high- and full-speed configuration. The high-speed
@@ -1101,8 +1088,6 @@ static int carl9170_usb_probe(struct usb_interface *intf,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	usb_set_intfdata(intf, ar);
 	SET_IEEE80211_DEV(ar->hw, &intf->dev);
 

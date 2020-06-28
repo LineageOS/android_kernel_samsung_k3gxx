@@ -16,7 +16,6 @@
  *            OpenVZ, SWsoft Inc.
  *            Pavel Emelianov <xemul@openvz.org>
 <<<<<<< HEAD
-<<<<<<< HEAD
  *
  * General sysv ipc locking scheme:
  *	rcu_read_lock()
@@ -42,8 +41,6 @@
  *  see sem_lock().
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  */
 
 #include <linux/mm.h>
@@ -149,14 +146,10 @@ __initcall(ipc_init);
 void ipc_init_ids(struct ipc_ids *ids)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	init_rwsem(&ids->rwsem);
 =======
 	init_rwsem(&ids->rw_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	init_rwsem(&ids->rw_mutex);
->>>>>>> master
 
 	ids->in_use = 0;
 	ids->seq = 0;
@@ -212,14 +205,10 @@ void __init ipc_init_proc_interface(const char *path, const char *header,
  *	@key: The key to find
  *	
 <<<<<<< HEAD
-<<<<<<< HEAD
  *	Requires ipc_ids.rwsem locked.
 =======
  *	Requires ipc_ids.rw_mutex locked.
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- *	Requires ipc_ids.rw_mutex locked.
->>>>>>> master
  *	Returns the LOCKED pointer to the ipc structure if found or NULL
  *	if not.
  *	If key is found ipc points to the owning ipc structure
@@ -243,15 +232,11 @@ static struct kern_ipc_perm *ipc_findkey(struct ipc_ids *ids, key_t key)
 		}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		rcu_read_lock();
 		ipc_lock_object(ipc);
 =======
 		ipc_lock_by_ptr(ipc);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		ipc_lock_by_ptr(ipc);
->>>>>>> master
 		return ipc;
 	}
 
@@ -263,14 +248,10 @@ static struct kern_ipc_perm *ipc_findkey(struct ipc_ids *ids, key_t key)
  *	@ids: IPC identifier set
  *
 <<<<<<< HEAD
-<<<<<<< HEAD
  *	Called with ipc_ids.rwsem held.
 =======
  *	Called with ipc_ids.rw_mutex held.
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- *	Called with ipc_ids.rw_mutex held.
->>>>>>> master
  */
 
 int ipc_get_maxid(struct ipc_ids *ids)
@@ -309,7 +290,6 @@ int ipc_get_maxid(struct ipc_ids *ids)
  *	On failure the entry is not locked and a negative err-code is returned.
  *
 <<<<<<< HEAD
-<<<<<<< HEAD
  *	Called with writer ipc_ids.rwsem held.
  */
 =======
@@ -317,11 +297,6 @@ int ipc_get_maxid(struct ipc_ids *ids)
  */
  
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- *	Called with ipc_ids.rw_mutex held as a writer.
- */
- 
->>>>>>> master
 int ipc_addid(struct ipc_ids* ids, struct kern_ipc_perm* new, int size)
 {
 	kuid_t euid;
@@ -343,15 +318,12 @@ int ipc_addid(struct ipc_ids* ids, struct kern_ipc_perm* new, int size)
 	spin_lock(&new->lock);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	current_euid_egid(&euid, &egid);
 	new->cuid = new->uid = euid;
 	new->gid = new->cgid = egid;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	id = idr_alloc(&ids->ipcs_idr, new,
 		       (next_id < 0) ? 0 : ipcid_to_idx(next_id), 0,
 		       GFP_NOWAIT);
@@ -365,18 +337,12 @@ int ipc_addid(struct ipc_ids* ids, struct kern_ipc_perm* new, int size)
 	ids->in_use++;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	current_euid_egid(&euid, &egid);
 	new->cuid = new->uid = euid;
 	new->gid = new->cgid = egid;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (next_id < 0) {
 		new->seq = ids->seq++;
 		if (ids->seq > ids->seq_max)
@@ -406,7 +372,6 @@ static int ipcget_new(struct ipc_namespace *ns, struct ipc_ids *ids,
 	int err;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	down_write(&ids->rwsem);
 	err = ops->getnew(ns, params);
 	up_write(&ids->rwsem);
@@ -415,11 +380,6 @@ static int ipcget_new(struct ipc_namespace *ns, struct ipc_ids *ids,
 	err = ops->getnew(ns, params);
 	up_write(&ids->rw_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	down_write(&ids->rw_mutex);
-	err = ops->getnew(ns, params);
-	up_write(&ids->rw_mutex);
->>>>>>> master
 	return err;
 }
 
@@ -437,14 +397,10 @@ static int ipcget_new(struct ipc_namespace *ns, struct ipc_ids *ids,
  *	On success, the IPC id is returned.
  *
 <<<<<<< HEAD
-<<<<<<< HEAD
  *	It is called with ipc_ids.rwsem and ipcp->lock held.
 =======
  *	It is called with ipc_ids.rw_mutex and ipcp->lock held.
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- *	It is called with ipc_ids.rw_mutex and ipcp->lock held.
->>>>>>> master
  */
 static int ipc_check_perms(struct ipc_namespace *ns,
 			   struct kern_ipc_perm *ipcp,
@@ -490,14 +446,10 @@ static int ipcget_public(struct ipc_namespace *ns, struct ipc_ids *ids,
 	 * a new entry + read locks are not "upgradable"
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	down_write(&ids->rwsem);
 =======
 	down_write(&ids->rw_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	down_write(&ids->rw_mutex);
->>>>>>> master
 	ipcp = ipc_findkey(ids, params->key);
 	if (ipcp == NULL) {
 		/* key not used */
@@ -524,14 +476,10 @@ static int ipcget_public(struct ipc_namespace *ns, struct ipc_ids *ids,
 		ipc_unlock(ipcp);
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	up_write(&ids->rwsem);
 =======
 	up_write(&ids->rw_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	up_write(&ids->rw_mutex);
->>>>>>> master
 
 	return err;
 }
@@ -543,14 +491,10 @@ static int ipcget_public(struct ipc_namespace *ns, struct ipc_ids *ids,
  *	@ipcp: ipc perm structure containing the identifier to remove
  *
 <<<<<<< HEAD
-<<<<<<< HEAD
  *	ipc_ids.rwsem (as a writer) and the spinlock for this ID are held
 =======
  *	ipc_ids.rw_mutex (as a writer) and the spinlock for this ID are held
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- *	ipc_ids.rw_mutex (as a writer) and the spinlock for this ID are held
->>>>>>> master
  *	before this function is called, and remain locked on the exit.
  */
  
@@ -603,10 +547,7 @@ void ipc_free(void* ptr, int size)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 struct ipc_rcu {
 	struct rcu_head rcu;
 	atomic_t refcount;
@@ -614,10 +555,7 @@ struct ipc_rcu {
 	void *data[0];
 };
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /**
  *	ipc_rcu_alloc	-	allocate ipc and rcu space 
  *	@size: size desired
@@ -635,19 +573,14 @@ void *ipc_rcu_alloc(int size)
 		return NULL;
 	atomic_set(&out->refcount, 1);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return out + 1;
 =======
 	return out->data;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return out->data;
->>>>>>> master
 }
 
 int ipc_rcu_getref(void *ptr)
 {
-<<<<<<< HEAD
 <<<<<<< HEAD
 	struct ipc_rcu *p = ((struct ipc_rcu *)ptr) - 1;
 
@@ -658,8 +591,6 @@ void ipc_rcu_putref(void *ptr, void (*func)(struct rcu_head *head))
 {
 	struct ipc_rcu *p = ((struct ipc_rcu *)ptr) - 1;
 =======
-=======
->>>>>>> master
 	return atomic_inc_not_zero(&container_of(ptr, struct ipc_rcu, data)->refcount);
 }
 
@@ -675,15 +606,11 @@ static void ipc_schedule_free(struct rcu_head *head)
 void ipc_rcu_putref(void *ptr)
 {
 	struct ipc_rcu *p = container_of(ptr, struct ipc_rcu, data);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (!atomic_dec_and_test(&p->refcount))
 		return;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	call_rcu(&p->rcu, func);
 }
@@ -697,17 +624,12 @@ void ipc_rcu_free(struct rcu_head *head)
 	else
 		kfree(p);
 =======
-=======
->>>>>>> master
 	if (is_vmalloc_addr(ptr)) {
 		call_rcu(&p->rcu, ipc_schedule_free);
 	} else {
 		kfree_rcu(p, rcu);
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 /**
@@ -813,14 +735,10 @@ struct kern_ipc_perm *ipc_obtain_object(struct ipc_ids *ids, int id)
 
 /**
 <<<<<<< HEAD
-<<<<<<< HEAD
  * ipc_lock - Lock an ipc structure without rwsem held
 =======
  * ipc_lock - Lock an ipc structure without rw_mutex held
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * ipc_lock - Lock an ipc structure without rw_mutex held
->>>>>>> master
  * @ids: IPC identifier set
  * @id: ipc id to look for
  *
@@ -877,10 +795,7 @@ out:
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 struct kern_ipc_perm *ipc_lock_check(struct ipc_ids *ids, int id)
 {
 	struct kern_ipc_perm *out;
@@ -897,10 +812,7 @@ struct kern_ipc_perm *ipc_lock_check(struct ipc_ids *ids, int id)
 	return out;
 }
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /**
  * ipcget - Common sys_*get() code
  * @ns : namsepace
@@ -942,14 +854,10 @@ int ipc_update_perm(struct ipc64_perm *in, struct kern_ipc_perm *out)
 
 /**
 <<<<<<< HEAD
-<<<<<<< HEAD
  * ipcctl_pre_down_nolock - retrieve an ipc and check permissions for some IPC_XXX cmd
 =======
  * ipcctl_pre_down - retrieve an ipc and check permissions for some IPC_XXX cmd
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * ipcctl_pre_down - retrieve an ipc and check permissions for some IPC_XXX cmd
->>>>>>> master
  * @ns:  the ipc namespace
  * @ids:  the table of ids where to look for the ipc
  * @id:   the id of the ipc to retrieve
@@ -963,7 +871,6 @@ int ipc_update_perm(struct ipc64_perm *in, struct kern_ipc_perm *out)
  *  - retrieves the ipc with the given id in the given table.
  *  - performs some audit and permission check, depending on the given cmd
 <<<<<<< HEAD
-<<<<<<< HEAD
  *  - returns a pointer to the ipc object or otherwise, the corresponding error.
  *
  * Call holding the both the rwsem and the rcu read lock.
@@ -972,8 +879,6 @@ struct kern_ipc_perm *ipcctl_pre_down_nolock(struct ipc_namespace *ns,
 					struct ipc_ids *ids, int id, int cmd,
 					struct ipc64_perm *perm, int extra_perm)
 =======
-=======
->>>>>>> master
  *  - returns the ipc with both ipc and rw_mutex locks held in case of success
  *    or an err-code without any lock held otherwise.
  */
@@ -995,24 +900,18 @@ out:
 struct kern_ipc_perm *ipcctl_pre_down_nolock(struct ipc_namespace *ns,
 					     struct ipc_ids *ids, int id, int cmd,
 					     struct ipc64_perm *perm, int extra_perm)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 {
 	kuid_t euid;
 	int err = -EPERM;
 	struct kern_ipc_perm *ipcp;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ipcp = ipc_obtain_object_check(ids, id);
 	if (IS_ERR(ipcp)) {
 		err = PTR_ERR(ipcp);
 		goto err;
 =======
-=======
->>>>>>> master
 	down_write(&ids->rw_mutex);
 	rcu_read_lock();
 
@@ -1020,10 +919,7 @@ struct kern_ipc_perm *ipcctl_pre_down_nolock(struct ipc_namespace *ns,
 	if (IS_ERR(ipcp)) {
 		err = PTR_ERR(ipcp);
 		goto out_up;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	audit_ipc_obj(ipcp);
@@ -1035,12 +931,9 @@ struct kern_ipc_perm *ipcctl_pre_down_nolock(struct ipc_namespace *ns,
 	if (uid_eq(euid, ipcp->cuid) || uid_eq(euid, ipcp->uid)  ||
 	    ns_capable(ns->user_ns, CAP_SYS_ADMIN))
 <<<<<<< HEAD
-<<<<<<< HEAD
 		return ipcp; /* successful lookup */
 err:
 =======
-=======
->>>>>>> master
 		return ipcp;
 
 out_up:
@@ -1051,10 +944,7 @@ out_up:
 	rcu_read_unlock();
 	up_write(&ids->rw_mutex);
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return ERR_PTR(err);
 }
 
@@ -1112,15 +1002,11 @@ static struct kern_ipc_perm *sysvipc_find_ipc(struct ipc_ids *ids, loff_t pos,
 		if (ipc != NULL) {
 			*new_pos = pos + 1;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			rcu_read_lock();
 			ipc_lock_object(ipc);
 =======
 			ipc_lock_by_ptr(ipc);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			ipc_lock_by_ptr(ipc);
->>>>>>> master
 			return ipc;
 		}
 	}
@@ -1159,14 +1045,10 @@ static void *sysvipc_proc_start(struct seq_file *s, loff_t *pos)
 	 * call to stop().
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	down_read(&ids->rwsem);
 =======
 	down_read(&ids->rw_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	down_read(&ids->rw_mutex);
->>>>>>> master
 
 	/* pos < 0 is invalid */
 	if (*pos < 0)
@@ -1194,14 +1076,10 @@ static void sysvipc_proc_stop(struct seq_file *s, void *it)
 	ids = &iter->ns->ids[iface->ids];
 	/* Release the lock we took in start() */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	up_read(&ids->rwsem);
 =======
 	up_read(&ids->rw_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	up_read(&ids->rw_mutex);
->>>>>>> master
 }
 
 static int sysvipc_proc_show(struct seq_file *s, void *it)

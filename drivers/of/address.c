@@ -70,10 +70,7 @@ static u64 of_bus_default_map(__be32 *addr, const __be32 *range,
 		 (unsigned long long)da);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	/*
 	 * If the number of address cells is larger than 2 we assume the
 	 * mapping doesn't specify a physical address. Rather, the address
@@ -82,10 +79,7 @@ static u64 of_bus_default_map(__be32 *addr, const __be32 *range,
 	if (na > 2 && memcmp(range, addr, na * 4) != 0)
 		return OF_BAD_ADDR;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (da < cp || da >= (cp + s))
 		return OF_BAD_ADDR;
 	return da - cp;
@@ -117,7 +111,6 @@ static int of_bus_pci_match(struct device_node *np)
 {
 	/*
 <<<<<<< HEAD
-<<<<<<< HEAD
  	 * "pciex" is PCI Express
 	 * "vci" is for the /chaos bridge on 1st-gen PCI powermacs
 	 * "ht" is hypertransport
@@ -125,17 +118,12 @@ static int of_bus_pci_match(struct device_node *np)
 	return !strcmp(np->type, "pci") || !strcmp(np->type, "pciex") ||
 		!strcmp(np->type, "vci") || !strcmp(np->type, "ht");
 =======
-=======
->>>>>>> master
 	 * "vci" is for the /chaos bridge on 1st-gen PCI powermacs
 	 * "ht" is hypertransport
 	 */
 	return !strcmp(np->type, "pci") || !strcmp(np->type, "vci") ||
 		!strcmp(np->type, "ht");
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static void of_bus_pci_count_cells(struct device_node *np,
@@ -433,7 +421,6 @@ static struct of_bus *of_match_bus(struct device_node *np)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int of_empty_ranges_quirk(void)
 {
 	if (IS_ENABLED(CONFIG_PPC)) {
@@ -451,8 +438,6 @@ static int of_empty_ranges_quirk(void)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int of_translate_one(struct device_node *parent, struct of_bus *bus,
 			    struct of_bus *pbus, __be32 *addr,
 			    int na, int ns, int pna, const char *rprop)
@@ -479,24 +464,18 @@ static int of_translate_one(struct device_node *parent, struct of_bus *bus,
 	 */
 	ranges = of_get_property(parent, rprop, &rlen);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ranges == NULL && !of_empty_ranges_quirk()) {
 		pr_err("OF: no ranges; cannot translate\n");
 		return 1;
 	}
 =======
-=======
->>>>>>> master
 #if !defined(CONFIG_PPC)
 	if (ranges == NULL) {
 		pr_err("OF: no ranges; cannot translate\n");
 		return 1;
 	}
 #endif /* !defined(CONFIG_PPC) */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (ranges == NULL || rlen == 0) {
 		offset = of_read_number(addr, na);
 		memset(addr, 0, pna * 4);
@@ -749,22 +728,16 @@ struct device_node *of_find_matching_node_by_address(struct device_node *from,
 
 	while (dn) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!of_address_to_resource(dn, 0, &res) &&
 		    res.start == base_address)
 			return dn;
 
 =======
-=======
->>>>>>> master
 		if (of_address_to_resource(dn, 0, &res))
 			continue;
 		if (res.start == base_address)
 			return dn;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		dn = of_find_matching_node(dn, matches);
 	}
 

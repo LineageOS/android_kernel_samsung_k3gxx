@@ -85,12 +85,9 @@ int snd_seq_pool_init(struct snd_seq_pool *pool);
 
 /* done pool - free events */
 <<<<<<< HEAD
-<<<<<<< HEAD
 void snd_seq_pool_mark_closing(struct snd_seq_pool *pool);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 int snd_seq_pool_done(struct snd_seq_pool *pool);
 
 /* create pool */

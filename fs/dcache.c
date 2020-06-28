@@ -44,14 +44,10 @@
  * Usage:
  * dcache->d_inode->i_lock protects:
 <<<<<<< HEAD
-<<<<<<< HEAD
  *   - i_dentry, d_u.d_alias, d_inode of aliases
 =======
  *   - i_dentry, d_alias, d_inode of aliases
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- *   - i_dentry, d_alias, d_inode of aliases
->>>>>>> master
  * dcache_hash_bucket lock protects:
  *   - the dcache hash table
  * s_anon bl list spinlock protects:
@@ -67,14 +63,10 @@
  *   - d_parent and d_subdirs
  *   - childrens' d_child and d_parent
 <<<<<<< HEAD
-<<<<<<< HEAD
  *   - d_u.d_alias, d_inode
 =======
  *   - d_alias, d_inode
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- *   - d_alias, d_inode
->>>>>>> master
  *
  * Ordering:
  * dentry->d_inode->i_lock
@@ -113,15 +105,10 @@ static struct kmem_cache *dentry_cache __read_mostly;
  * information, yet avoid using a prime hash-size or similar.
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 #define D_HASHBITS     d_hash_shift
 #define D_HASHMASK     d_hash_mask
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define D_HASHBITS     d_hash_shift
-#define D_HASHMASK     d_hash_mask
->>>>>>> master
 
 static unsigned int d_hash_mask __read_mostly;
 static unsigned int d_hash_shift __read_mostly;
@@ -133,16 +120,11 @@ static inline struct hlist_bl_head *d_hash(const struct dentry *parent,
 {
 	hash += (unsigned long) parent / L1_CACHE_BYTES;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return dentry_hashtable + hash_32(hash, d_hash_shift);
 =======
 	hash = hash + (hash >> D_HASHBITS);
 	return dentry_hashtable + (hash & D_HASHMASK);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	hash = hash + (hash >> D_HASHBITS);
-	return dentry_hashtable + (hash & D_HASHMASK);
->>>>>>> master
 }
 
 /* Statistics gathering. */
@@ -252,13 +234,9 @@ static void __d_free(struct rcu_head *head)
 	struct dentry *dentry = container_of(head, struct dentry, d_u.d_rcu);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	WARN_ON(!hlist_unhashed(&dentry->d_alias));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	WARN_ON(!hlist_unhashed(&dentry->d_alias));
->>>>>>> master
 	if (dname_external(dentry))
 		kfree(dentry->d_name.name);
 	kmem_cache_free(dentry_cache, dentry); 
@@ -270,12 +248,9 @@ static void __d_free(struct rcu_head *head)
 static void d_free(struct dentry *dentry)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	WARN_ON(!hlist_unhashed(&dentry->d_u.d_alias));
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	BUG_ON(dentry->d_count);
 	this_cpu_dec(nr_dentry);
 	if (dentry->d_op && dentry->d_op->d_release)
@@ -315,14 +290,10 @@ static void dentry_iput(struct dentry * dentry)
 	if (inode) {
 		dentry->d_inode = NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		hlist_del_init(&dentry->d_u.d_alias);
 =======
 		hlist_del_init(&dentry->d_alias);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		hlist_del_init(&dentry->d_alias);
->>>>>>> master
 		spin_unlock(&dentry->d_lock);
 		spin_unlock(&inode->i_lock);
 		if (!inode->i_nlink)
@@ -347,14 +318,10 @@ static void dentry_unlink_inode(struct dentry * dentry)
 	struct inode *inode = dentry->d_inode;
 	dentry->d_inode = NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	hlist_del_init(&dentry->d_u.d_alias);
 =======
 	hlist_del_init(&dentry->d_alias);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	hlist_del_init(&dentry->d_alias);
->>>>>>> master
 	dentry_rcuwalk_barrier(dentry);
 	spin_unlock(&dentry->d_lock);
 	spin_unlock(&inode->i_lock);
@@ -431,7 +398,6 @@ static struct dentry *d_kill(struct dentry *dentry, struct dentry *parent)
 	__releases(dentry->d_inode->i_lock)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	__list_del_entry(&dentry->d_child);
 	/*
 	 * Inform ascending readers that we are no longer attached to the
@@ -440,11 +406,6 @@ static struct dentry *d_kill(struct dentry *dentry, struct dentry *parent)
 	/*
 	 * Inform try_to_ascend() that we are no longer attached to the
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	list_del(&dentry->d_u.d_child);
-	/*
-	 * Inform try_to_ascend() that we are no longer attached to the
->>>>>>> master
 	 * dentry tree
 	 */
 	dentry->d_flags |= DCACHE_DENTRY_KILLED;
@@ -599,14 +560,11 @@ repeat:
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (unlikely(dentry->d_flags & DCACHE_DISCONNECTED))
 		goto kill_it;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (dentry->d_flags & DCACHE_OP_DELETE) {
 		if (dentry->d_op->d_delete(dentry))
 			goto kill_it;
@@ -748,14 +706,10 @@ static struct dentry *__d_find_alias(struct inode *inode, int want_discon)
 again:
 	discon_alias = NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	hlist_for_each_entry(alias, &inode->i_dentry, d_u.d_alias) {
 =======
 	hlist_for_each_entry(alias, &inode->i_dentry, d_alias) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	hlist_for_each_entry(alias, &inode->i_dentry, d_alias) {
->>>>>>> master
 		spin_lock(&alias->d_lock);
  		if (S_ISDIR(inode->i_mode) || !d_unhashed(alias)) {
 			if (IS_ROOT(alias) &&
@@ -809,14 +763,10 @@ void d_prune_aliases(struct inode *inode)
 restart:
 	spin_lock(&inode->i_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	hlist_for_each_entry(dentry, &inode->i_dentry, d_u.d_alias) {
 =======
 	hlist_for_each_entry(dentry, &inode->i_dentry, d_alias) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	hlist_for_each_entry(dentry, &inode->i_dentry, d_alias) {
->>>>>>> master
 		spin_lock(&dentry->d_lock);
 		if (!dentry->d_count) {
 			__dget_dlock(dentry);
@@ -997,14 +947,10 @@ static void shrink_dcache_for_umount_subtree(struct dentry *dentry)
 		while (!list_empty(&dentry->d_subdirs))
 			dentry = list_entry(dentry->d_subdirs.next,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					    struct dentry, d_child);
 =======
 					    struct dentry, d_u.d_child);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					    struct dentry, d_u.d_child);
->>>>>>> master
 
 		/* consume the dentries from this leaf up through its parents
 		 * until we find one with children or run out altogether */
@@ -1039,38 +985,28 @@ static void shrink_dcache_for_umount_subtree(struct dentry *dentry)
 			if (IS_ROOT(dentry)) {
 				parent = NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 				list_del(&dentry->d_child);
 			} else {
 				parent = dentry->d_parent;
 				parent->d_count--;
 				list_del(&dentry->d_child);
 =======
-=======
->>>>>>> master
 				list_del(&dentry->d_u.d_child);
 			} else {
 				parent = dentry->d_parent;
 				parent->d_count--;
 				list_del(&dentry->d_u.d_child);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			}
 
 			inode = dentry->d_inode;
 			if (inode) {
 				dentry->d_inode = NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 				hlist_del_init(&dentry->d_u.d_alias);
 =======
 				hlist_del_init(&dentry->d_alias);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				hlist_del_init(&dentry->d_alias);
->>>>>>> master
 				if (dentry->d_op && dentry->d_op->d_iput)
 					dentry->d_op->d_iput(dentry, inode);
 				else
@@ -1089,14 +1025,10 @@ static void shrink_dcache_for_umount_subtree(struct dentry *dentry)
 
 		dentry = list_entry(dentry->d_subdirs.next,
 <<<<<<< HEAD
-<<<<<<< HEAD
 				    struct dentry, d_child);
 =======
 				    struct dentry, d_u.d_child);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				    struct dentry, d_u.d_child);
->>>>>>> master
 	}
 }
 
@@ -1130,10 +1062,7 @@ void shrink_dcache_for_umount(struct super_block *sb)
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
  * This tries to ascend one level of parenthood, but
  * we can race with renaming, so we need to re-check
  * the parenthood after dropping the lock and check
@@ -1163,10 +1092,7 @@ static struct dentry *try_to_ascend(struct dentry *old, int locked, unsigned seq
 
 
 /*
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  * Search for at least 1 mount point in the dentry's subdirs.
  * We descend to the next level whenever the d_subdirs
  * list is non-empty and continue searching.
@@ -1199,14 +1125,10 @@ resume:
 	while (next != &this_parent->d_subdirs) {
 		struct list_head *tmp = next;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		struct dentry *dentry = list_entry(tmp, struct dentry, d_child);
 =======
 		struct dentry *dentry = list_entry(tmp, struct dentry, d_u.d_child);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		struct dentry *dentry = list_entry(tmp, struct dentry, d_u.d_child);
->>>>>>> master
 		next = tmp->next;
 
 		spin_lock_nested(&dentry->d_lock, DENTRY_D_LOCK_NESTED);
@@ -1228,7 +1150,6 @@ resume:
 	/*
 	 * All done at this level ... ascend and resume the search.
 	 */
-<<<<<<< HEAD
 <<<<<<< HEAD
 	rcu_read_lock();
 ascend:
@@ -1257,8 +1178,6 @@ ascend:
 	spin_unlock(&this_parent->d_lock);
 	rcu_read_unlock();
 =======
-=======
->>>>>>> master
 	if (this_parent != parent) {
 		struct dentry *child = this_parent;
 		this_parent = try_to_ascend(this_parent, locked, seq);
@@ -1270,30 +1189,22 @@ ascend:
 	spin_unlock(&this_parent->d_lock);
 	if (!locked && read_seqretry(&rename_lock, seq))
 		goto rename_retry;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (locked)
 		write_sequnlock(&rename_lock);
 	return 0; /* No mount points found in tree */
 positive:
 	if (!locked && read_seqretry(&rename_lock, seq))
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto rename_retry_unlocked;
 =======
 		goto rename_retry;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		goto rename_retry;
->>>>>>> master
 	if (locked)
 		write_sequnlock(&rename_lock);
 	return 1;
 
 rename_retry:
-<<<<<<< HEAD
 <<<<<<< HEAD
 	spin_unlock(&this_parent->d_lock);
 	rcu_read_unlock();
@@ -1304,10 +1215,6 @@ rename_retry_unlocked:
 	if (locked)
 		goto again;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (locked)
-		goto again;
->>>>>>> master
 	locked = 1;
 	write_seqlock(&rename_lock);
 	goto again;
@@ -1346,14 +1253,10 @@ resume:
 	while (next != &this_parent->d_subdirs) {
 		struct list_head *tmp = next;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		struct dentry *dentry = list_entry(tmp, struct dentry, d_child);
 =======
 		struct dentry *dentry = list_entry(tmp, struct dentry, d_u.d_child);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		struct dentry *dentry = list_entry(tmp, struct dentry, d_u.d_child);
->>>>>>> master
 		next = tmp->next;
 
 		spin_lock_nested(&dentry->d_lock, DENTRY_D_LOCK_NESTED);
@@ -1381,12 +1284,9 @@ resume:
 		if (found && need_resched()) {
 			spin_unlock(&dentry->d_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			rcu_read_lock();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			goto out;
 		}
 
@@ -1406,7 +1306,6 @@ resume:
 	/*
 	 * All done at this level ... ascend and resume the search.
 	 */
-<<<<<<< HEAD
 <<<<<<< HEAD
 	rcu_read_lock();
 ascend:
@@ -1436,8 +1335,6 @@ out:
 	spin_unlock(&this_parent->d_lock);
 	rcu_read_unlock();
 =======
-=======
->>>>>>> master
 	if (this_parent != parent) {
 		struct dentry *child = this_parent;
 		this_parent = try_to_ascend(this_parent, locked, seq);
@@ -1450,23 +1347,17 @@ out:
 	spin_unlock(&this_parent->d_lock);
 	if (!locked && read_seqretry(&rename_lock, seq))
 		goto rename_retry;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (locked)
 		write_sequnlock(&rename_lock);
 	return found;
 
 rename_retry:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_unlock(&this_parent->d_lock);
 	rcu_read_unlock();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (found)
 		return found;
 	if (locked)
@@ -1552,17 +1443,12 @@ struct dentry *__d_alloc(struct super_block *sb, const struct qstr *name)
 	INIT_LIST_HEAD(&dentry->d_lru);
 	INIT_LIST_HEAD(&dentry->d_subdirs);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	INIT_HLIST_NODE(&dentry->d_u.d_alias);
 	INIT_LIST_HEAD(&dentry->d_child);
 =======
 	INIT_HLIST_NODE(&dentry->d_alias);
 	INIT_LIST_HEAD(&dentry->d_u.d_child);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	INIT_HLIST_NODE(&dentry->d_alias);
-	INIT_LIST_HEAD(&dentry->d_u.d_child);
->>>>>>> master
 	d_set_d_op(dentry, dentry->d_sb->s_d_op);
 
 	this_cpu_inc(nr_dentry);
@@ -1585,14 +1471,10 @@ struct dentry *d_alloc(struct dentry * parent, const struct qstr *name)
 	if (!dentry)
 		return NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dentry->d_flags |= DCACHE_RCUACCESS;
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 	spin_lock(&parent->d_lock);
 	/*
 	 * don't need child lock because it is not subject
@@ -1601,14 +1483,10 @@ struct dentry *d_alloc(struct dentry * parent, const struct qstr *name)
 	__dget_dlock(parent);
 	dentry->d_parent = parent;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	list_add(&dentry->d_child, &parent->d_subdirs);
 =======
 	list_add(&dentry->d_u.d_child, &parent->d_subdirs);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	list_add(&dentry->d_u.d_child, &parent->d_subdirs);
->>>>>>> master
 	spin_unlock(&parent->d_lock);
 
 	return dentry;
@@ -1669,14 +1547,10 @@ static void __d_instantiate(struct dentry *dentry, struct inode *inode)
 		if (unlikely(IS_AUTOMOUNT(inode)))
 			dentry->d_flags |= DCACHE_NEED_AUTOMOUNT;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		hlist_add_head(&dentry->d_u.d_alias, &inode->i_dentry);
 =======
 		hlist_add_head(&dentry->d_alias, &inode->i_dentry);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		hlist_add_head(&dentry->d_alias, &inode->i_dentry);
->>>>>>> master
 	}
 	dentry->d_inode = inode;
 	dentry_rcuwalk_barrier(dentry);
@@ -1702,14 +1576,10 @@ static void __d_instantiate(struct dentry *dentry, struct inode *inode)
 void d_instantiate(struct dentry *entry, struct inode * inode)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	BUG_ON(!hlist_unhashed(&entry->d_u.d_alias));
 =======
 	BUG_ON(!hlist_unhashed(&entry->d_alias));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	BUG_ON(!hlist_unhashed(&entry->d_alias));
->>>>>>> master
 	if (inode)
 		spin_lock(&inode->i_lock);
 	__d_instantiate(entry, inode);
@@ -1749,14 +1619,10 @@ static struct dentry *__d_instantiate_unique(struct dentry *entry,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	hlist_for_each_entry(alias, &inode->i_dentry, d_u.d_alias) {
 =======
 	hlist_for_each_entry(alias, &inode->i_dentry, d_alias) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	hlist_for_each_entry(alias, &inode->i_dentry, d_alias) {
->>>>>>> master
 		/*
 		 * Don't need alias->d_lock here, because aliases with
 		 * d_parent == entry->d_parent are not subject to name or
@@ -1783,14 +1649,10 @@ struct dentry *d_instantiate_unique(struct dentry *entry, struct inode *inode)
 	struct dentry *result;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	BUG_ON(!hlist_unhashed(&entry->d_u.d_alias));
 =======
 	BUG_ON(!hlist_unhashed(&entry->d_alias));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	BUG_ON(!hlist_unhashed(&entry->d_alias));
->>>>>>> master
 
 	if (inode)
 		spin_lock(&inode->i_lock);
@@ -1834,14 +1696,10 @@ static struct dentry * __d_find_any_alias(struct inode *inode)
 	if (hlist_empty(&inode->i_dentry))
 		return NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	alias = hlist_entry(inode->i_dentry.first, struct dentry, d_u.d_alias);
 =======
 	alias = hlist_entry(inode->i_dentry.first, struct dentry, d_alias);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	alias = hlist_entry(inode->i_dentry.first, struct dentry, d_alias);
->>>>>>> master
 	__dget(alias);
 	return alias;
 }
@@ -1916,14 +1774,10 @@ struct dentry *d_obtain_alias(struct inode *inode)
 	tmp->d_inode = inode;
 	tmp->d_flags |= DCACHE_DISCONNECTED;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	hlist_add_head(&tmp->d_u.d_alias, &inode->i_dentry);
 =======
 	hlist_add_head(&tmp->d_alias, &inode->i_dentry);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	hlist_add_head(&tmp->d_alias, &inode->i_dentry);
->>>>>>> master
 	hlist_bl_lock(&tmp->d_sb->s_anon);
 	hlist_bl_add_head(&tmp->d_hash, &tmp->d_sb->s_anon);
 	hlist_bl_unlock(&tmp->d_sb->s_anon);
@@ -2367,14 +2221,10 @@ int d_validate(struct dentry *dentry, struct dentry *dparent)
 
 	spin_lock(&dparent->d_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	list_for_each_entry(child, &dparent->d_subdirs, d_child) {
 =======
 	list_for_each_entry(child, &dparent->d_subdirs, d_u.d_child) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	list_for_each_entry(child, &dparent->d_subdirs, d_u.d_child) {
->>>>>>> master
 		if (dentry == child) {
 			spin_lock_nested(&dentry->d_lock, DENTRY_D_LOCK_NESTED);
 			__dget_dlock(dentry);
@@ -2447,13 +2297,9 @@ static void __d_rehash(struct dentry * entry, struct hlist_bl_head *b)
 	BUG_ON(!d_unhashed(entry));
 	hlist_bl_lock(b);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	entry->d_flags |= DCACHE_RCUACCESS;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	entry->d_flags |= DCACHE_RCUACCESS;
->>>>>>> master
 	hlist_bl_add_head_rcu(&entry->d_hash, b);
 	hlist_bl_unlock(b);
 }
@@ -2629,17 +2475,12 @@ static void __d_move(struct dentry * dentry, struct dentry * target)
 	__d_drop(target);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	list_del(&dentry->d_child);
 	list_del(&target->d_child);
 =======
 	list_del(&dentry->d_u.d_child);
 	list_del(&target->d_u.d_child);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	list_del(&dentry->d_u.d_child);
-	list_del(&target->d_u.d_child);
->>>>>>> master
 
 	/* Switch the names.. */
 	switch_names(dentry, target);
@@ -2647,7 +2488,6 @@ static void __d_move(struct dentry * dentry, struct dentry * target)
 
 	/* ... and switch the parents */
 	if (IS_ROOT(dentry)) {
-<<<<<<< HEAD
 <<<<<<< HEAD
 		dentry->d_flags |= DCACHE_RCUACCESS;
 		dentry->d_parent = target->d_parent;
@@ -2658,32 +2498,21 @@ static void __d_move(struct dentry * dentry, struct dentry * target)
 		target->d_parent = target;
 		INIT_LIST_HEAD(&target->d_u.d_child);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		dentry->d_parent = target->d_parent;
-		target->d_parent = target;
-		INIT_LIST_HEAD(&target->d_u.d_child);
->>>>>>> master
 	} else {
 		swap(dentry->d_parent, target->d_parent);
 
 		/* And add them back to the (new) parent lists */
-<<<<<<< HEAD
 <<<<<<< HEAD
 		list_add(&target->d_child, &target->d_parent->d_subdirs);
 	}
 
 	list_add(&dentry->d_child, &dentry->d_parent->d_subdirs);
 =======
-=======
->>>>>>> master
 		list_add(&target->d_u.d_child, &target->d_parent->d_subdirs);
 	}
 
 	list_add(&dentry->d_u.d_child, &dentry->d_parent->d_subdirs);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	write_seqcount_end(&target->d_seq);
 	write_seqcount_end(&dentry->d_seq);
@@ -2790,7 +2619,6 @@ static void __d_materialise_dentry(struct dentry *dentry, struct dentry *anon)
 	swap(dentry->d_name.hash, anon->d_name.hash);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	dentry->d_flags |= DCACHE_RCUACCESS;
 	dentry->d_parent = dentry;
 	list_del_init(&dentry->d_child);
@@ -2803,16 +2631,11 @@ static void __d_materialise_dentry(struct dentry *dentry, struct dentry *anon)
 	}
 	list_move(&anon->d_child, &dparent->d_subdirs);
 =======
-=======
->>>>>>> master
 	dentry->d_parent = dentry;
 	list_del_init(&dentry->d_u.d_child);
 	anon->d_parent = dparent;
 	list_move(&anon->d_u.d_child, &dparent->d_subdirs);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	write_seqcount_end(&dentry->d_seq);
 	write_seqcount_end(&anon->d_seq);
@@ -2867,13 +2690,9 @@ struct dentry *d_materialise_unique(struct dentry *dentry, struct inode *inode)
 				__d_materialise_dentry(dentry, alias);
 				write_sequnlock(&rename_lock);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 				__d_drop(alias);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				__d_drop(alias);
->>>>>>> master
 				goto found;
 			} else {
 				/* Nope, but we must(!) avoid directory
@@ -2995,10 +2814,7 @@ static int prepend_path(const struct path *path,
 
 global_root:
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	/*
 	 * Filesystems needing to implement special "root names"
 	 * should do so with ->d_dname()
@@ -3008,10 +2824,7 @@ global_root:
 		WARN(1, "Root dentry has weird name <%.*s>\n",
 		     (int) dentry->d_name.len, dentry->d_name.name);
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (!slash)
 		error = prepend(buffer, buflen, "/", 1);
 	if (!error)
@@ -3128,7 +2941,6 @@ char *d_path(const struct path *path, char *buf, int buflen)
 	 * user wants to identify the object in /proc/pid/fd/.  The little hack
 	 * below allows us to generate a name for these objects on demand:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 *
 	 * Some pseudo inodes are mountable.  When they are mounted
 	 * path->dentry == path->mnt->mnt_root.  In that case don't call d_dname
@@ -3140,10 +2952,6 @@ char *d_path(const struct path *path, char *buf, int buflen)
 	 */
 	if (path->dentry->d_op && path->dentry->d_op->d_dname)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	 */
-	if (path->dentry->d_op && path->dentry->d_op->d_dname)
->>>>>>> master
 		return path->dentry->d_op->d_dname(path->dentry, buf, buflen);
 
 	get_fs_root(current->fs, &root);
@@ -3388,14 +3196,10 @@ resume:
 	while (next != &this_parent->d_subdirs) {
 		struct list_head *tmp = next;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		struct dentry *dentry = list_entry(tmp, struct dentry, d_child);
 =======
 		struct dentry *dentry = list_entry(tmp, struct dentry, d_u.d_child);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		struct dentry *dentry = list_entry(tmp, struct dentry, d_u.d_child);
->>>>>>> master
 		next = tmp->next;
 
 		spin_lock_nested(&dentry->d_lock, DENTRY_D_LOCK_NESTED);
@@ -3417,20 +3221,16 @@ resume:
 		spin_unlock(&dentry->d_lock);
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	rcu_read_lock();
 ascend:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (this_parent != root) {
 		struct dentry *child = this_parent;
 		if (!(this_parent->d_flags & DCACHE_GENOCIDE)) {
 			this_parent->d_flags |= DCACHE_GENOCIDE;
 			this_parent->d_count--;
 		}
-<<<<<<< HEAD
 <<<<<<< HEAD
 		this_parent = child->d_parent;
 
@@ -3455,8 +3255,6 @@ ascend:
 	spin_unlock(&this_parent->d_lock);
 	rcu_read_unlock();
 =======
-=======
->>>>>>> master
 		this_parent = try_to_ascend(this_parent, locked, seq);
 		if (!this_parent)
 			goto rename_retry;
@@ -3466,23 +3264,17 @@ ascend:
 	spin_unlock(&this_parent->d_lock);
 	if (!locked && read_seqretry(&rename_lock, seq))
 		goto rename_retry;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (locked)
 		write_sequnlock(&rename_lock);
 	return;
 
 rename_retry:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	spin_unlock(&this_parent->d_lock);
 	rcu_read_unlock();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (locked)
 		goto again;
 	locked = 1;

@@ -538,7 +538,6 @@ static ssize_t bonding_store_arp_interval(struct device *d,
 	}
 	if (bond->params.mode == BOND_MODE_ALB ||
 <<<<<<< HEAD
-<<<<<<< HEAD
 	    bond->params.mode == BOND_MODE_TLB ||
 	    bond->params.mode == BOND_MODE_8023AD) {
 		pr_info("%s: ARP monitoring cannot be used with ALB/TLB/802.3ad. Only MII monitoring is supported on %s.\n",
@@ -546,10 +545,6 @@ static ssize_t bonding_store_arp_interval(struct device *d,
 	    bond->params.mode == BOND_MODE_TLB) {
 		pr_info("%s: ARP monitoring cannot be used with ALB/TLB. Only MII monitoring is supported on %s.\n",
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	    bond->params.mode == BOND_MODE_TLB) {
-		pr_info("%s: ARP monitoring cannot be used with ALB/TLB. Only MII monitoring is supported on %s.\n",
->>>>>>> master
 			bond->dev->name, bond->dev->name);
 		ret = -EINVAL;
 		goto out;
@@ -708,13 +703,10 @@ static ssize_t bonding_store_downdelay(struct device *d,
 	struct bonding *bond = to_bond(d);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!rtnl_trylock())
 		return restart_syscall();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (!(bond->params.miimon)) {
 		pr_err("%s: Unable to set down delay as MII monitoring is disabled\n",
 		       bond->dev->name);
@@ -749,12 +741,9 @@ static ssize_t bonding_store_downdelay(struct device *d,
 
 out:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	rtnl_unlock();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return ret;
 }
 static DEVICE_ATTR(downdelay, S_IRUGO | S_IWUSR,
@@ -778,13 +767,10 @@ static ssize_t bonding_store_updelay(struct device *d,
 	struct bonding *bond = to_bond(d);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!rtnl_trylock())
 		return restart_syscall();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (!(bond->params.miimon)) {
 		pr_err("%s: Unable to set up delay as MII monitoring is disabled\n",
 		       bond->dev->name);
@@ -819,12 +805,9 @@ static ssize_t bonding_store_updelay(struct device *d,
 
 out:
 <<<<<<< HEAD
-<<<<<<< HEAD
 	rtnl_unlock();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return ret;
 }
 static DEVICE_ATTR(updelay, S_IRUGO | S_IWUSR,

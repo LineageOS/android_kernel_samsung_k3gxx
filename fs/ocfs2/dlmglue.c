@@ -3265,7 +3265,6 @@ static int ocfs2_downconvert_lock(struct ocfs2_super *osb,
 	     lockres->l_level, new_level);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * On DLM_LKF_VALBLK, fsdlm behaves differently with o2cb. It always
 	 * expects DLM_LKF_VALBLK being set if the LKB has LVB, so that
@@ -3278,8 +3277,6 @@ static int ocfs2_downconvert_lock(struct ocfs2_super *osb,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (lvb)
 		dlm_flags |= DLM_LKF_VALBLK;
 
@@ -3988,7 +3985,6 @@ static void ocfs2_downconvert_thread_do_work(struct ocfs2_super *osb)
 
 	processed = osb->blocked_lock_count;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * blocked lock processing in this loop might call iput which can
 	 * remove items off osb->blocked_lock_list. Downconvert up to
@@ -4001,11 +3997,6 @@ static void ocfs2_downconvert_thread_do_work(struct ocfs2_super *osb)
 		BUG_ON(list_empty(&osb->blocked_lock_list));
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	while (processed) {
-		BUG_ON(list_empty(&osb->blocked_lock_list));
-
->>>>>>> master
 		lockres = list_entry(osb->blocked_lock_list.next,
 				     struct ocfs2_lock_res, l_blocked_list);
 		list_del_init(&lockres->l_blocked_list);

@@ -58,7 +58,6 @@ acpi_ex_store_object_to_index(union acpi_operand_object *val_desc,
 			      struct acpi_walk_state *walk_state);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static acpi_status
 acpi_ex_store_direct_to_node(union acpi_operand_object *source_desc,
 			     struct acpi_namespace_node *node,
@@ -66,8 +65,6 @@ acpi_ex_store_direct_to_node(union acpi_operand_object *source_desc,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*******************************************************************************
  *
  * FUNCTION:    acpi_ex_store
@@ -388,7 +385,6 @@ acpi_ex_store_object_to_index(union acpi_operand_object *source_desc,
  *              target object type then stored in the object. This means
  *              that the target object type (for an initialized target) will
 <<<<<<< HEAD
-<<<<<<< HEAD
  *              not be changed by a store operation. A copy_object can change
  *              the target type, however.
  *
@@ -397,9 +393,6 @@ acpi_ex_store_object_to_index(union acpi_operand_object *source_desc,
 =======
  *              not be changed by a store operation.
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- *              not be changed by a store operation.
->>>>>>> master
  *
  *              Assumes parameters are already validated.
  *
@@ -424,14 +417,10 @@ acpi_ex_store_object_to_node(union acpi_operand_object *source_desc,
 	target_desc = acpi_ns_get_attached_object(node);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ACPI_DEBUG_PRINT((ACPI_DB_EXEC, "Storing %p (%s) to node %p (%s)\n",
 =======
 	ACPI_DEBUG_PRINT((ACPI_DB_EXEC, "Storing %p(%s) into node %p(%s)\n",
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ACPI_DEBUG_PRINT((ACPI_DB_EXEC, "Storing %p(%s) into node %p(%s)\n",
->>>>>>> master
 			  source_desc,
 			  acpi_ut_get_object_type_name(source_desc), node,
 			  acpi_ut_get_type_name(target_type)));
@@ -446,13 +435,10 @@ acpi_ex_store_object_to_node(union acpi_operand_object *source_desc,
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Do the actual store operation */
 
 	switch (target_type) {
 =======
-=======
->>>>>>> master
 	/* If no implicit conversion, drop into the default case below */
 
 	if ((!implicit_conversion) ||
@@ -483,16 +469,12 @@ acpi_ex_store_object_to_node(union acpi_operand_object *source_desc,
 						     &walk_state->result_obj);
 		break;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	case ACPI_TYPE_INTEGER:
 	case ACPI_TYPE_STRING:
 	case ACPI_TYPE_BUFFER:
 
 		/*
-<<<<<<< HEAD
 <<<<<<< HEAD
 		 * The simple data types all support implicit source operand
 		 * conversion before the store.
@@ -512,17 +494,12 @@ acpi_ex_store_object_to_node(union acpi_operand_object *source_desc,
 		/* Store with implicit source operand conversion support */
 
 =======
-=======
->>>>>>> master
 		 * These target types are all of type Integer/String/Buffer, and
 		 * therefore support implicit conversion before the store.
 		 *
 		 * Copy and/or convert the source object to a new target object
 		 */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		status =
 		    acpi_ex_store_object_to_object(source_desc, target_desc,
 						   &new_desc, walk_state);
@@ -537,7 +514,6 @@ acpi_ex_store_object_to_node(union acpi_operand_object *source_desc,
 			 * source_desc reference count is incremented by attach_object.
 			 *
 <<<<<<< HEAD
-<<<<<<< HEAD
 			 * Note: This may change the type of the node if an explicit
 			 * store has been performed such that the node/object type
 			 * has been changed.
@@ -545,8 +521,6 @@ acpi_ex_store_object_to_node(union acpi_operand_object *source_desc,
 			status = acpi_ns_attach_object(node, new_desc,
 						       new_desc->common.type);
 =======
-=======
->>>>>>> master
 			 * Note: This may change the type of the node if an explicit store
 			 * has been performed such that the node/object type has been
 			 * changed.
@@ -554,10 +528,7 @@ acpi_ex_store_object_to_node(union acpi_operand_object *source_desc,
 			status =
 			    acpi_ns_attach_object(node, new_desc,
 						  new_desc->common.type);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 			ACPI_DEBUG_PRINT((ACPI_DB_EXEC,
 					  "Store %s into %s via Convert/Attach\n",
@@ -568,7 +539,6 @@ acpi_ex_store_object_to_node(union acpi_operand_object *source_desc,
 		}
 		break;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	case ACPI_TYPE_BUFFER_FIELD:
 	case ACPI_TYPE_LOCAL_REGION_FIELD:
@@ -649,8 +619,6 @@ acpi_ex_store_direct_to_node(union acpi_operand_object *source_desc,
 	status = acpi_ns_attach_object(node, new_desc, new_desc->common.type);
 	acpi_ut_remove_reference(new_desc);
 =======
-=======
->>>>>>> master
 	default:
 
 		ACPI_DEBUG_PRINT((ACPI_DB_EXEC,
@@ -684,9 +652,6 @@ acpi_ex_store_direct_to_node(union acpi_operand_object *source_desc,
 		break;
 	}
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return_ACPI_STATUS(status);
 }

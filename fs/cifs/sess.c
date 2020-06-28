@@ -488,7 +488,6 @@ int build_ntlmssp_auth_blob(unsigned char *pbuffer,
 
 	sec_blob->NtChallengeResponse.BufferOffset = cpu_to_le32(tmp - pbuffer);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ses->user_name != NULL) {
 		rc = setup_ntlmv2_rsp(ses, nls_cp);
 		if (rc) {
@@ -511,8 +510,6 @@ int build_ntlmssp_auth_blob(unsigned char *pbuffer,
 		sec_blob->NtChallengeResponse.MaximumLength = 0;
 	}
 =======
-=======
->>>>>>> master
 	rc = setup_ntlmv2_rsp(ses, nls_cp);
 	if (rc) {
 		cifs_dbg(VFS, "Error %d during NTLMSSP authentication\n", rc);
@@ -526,10 +523,7 @@ int build_ntlmssp_auth_blob(unsigned char *pbuffer,
 			cpu_to_le16(ses->auth_key.len - CIFS_SESS_KEY_SIZE);
 	sec_blob->NtChallengeResponse.MaximumLength =
 			cpu_to_le16(ses->auth_key.len - CIFS_SESS_KEY_SIZE);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (ses->domainName == NULL) {
 		sec_blob->DomainName.BufferOffset = cpu_to_le32(tmp - pbuffer);

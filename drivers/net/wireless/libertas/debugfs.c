@@ -914,7 +914,6 @@ static ssize_t lbs_debugfs_write(struct file *f, const char __user *buf,
 	struct debug_data *d = f->private_data;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (cnt == 0)
 		return 0;
 
@@ -922,9 +921,6 @@ static ssize_t lbs_debugfs_write(struct file *f, const char __user *buf,
 =======
 	pdata = kmalloc(cnt, GFP_KERNEL);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	pdata = kmalloc(cnt, GFP_KERNEL);
->>>>>>> master
 	if (pdata == NULL)
 		return 0;
 
@@ -934,12 +930,9 @@ static ssize_t lbs_debugfs_write(struct file *f, const char __user *buf,
 		return 0;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	pdata[cnt] = '\0';
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	p0 = pdata;
 	for (i = 0; i < num_of_items; i++) {

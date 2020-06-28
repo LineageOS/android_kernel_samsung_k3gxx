@@ -318,12 +318,9 @@ SYSCALL_DEFINE2(timerfd_create, int, clockid, int, flags)
 	     clockid != CLOCK_REALTIME &&
 	     clockid != CLOCK_REALTIME_ALARM &&
 <<<<<<< HEAD
-<<<<<<< HEAD
 	     clockid != CLOCK_BOOTTIME &&
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	     clockid != CLOCK_BOOTTIME_ALARM))
 		return -EINVAL;
 

@@ -41,14 +41,10 @@ static bool ipv6_mapped_addr_any(const struct in6_addr *a)
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int __ip6_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 =======
 int ip6_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-int ip6_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
->>>>>>> master
 {
 	struct sockaddr_in6	*usin = (struct sockaddr_in6 *) uaddr;
 	struct inet_sock      	*inet = inet_sk(sk);
@@ -65,14 +61,10 @@ int ip6_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 		if (__ipv6_only_sock(sk))
 			return -EAFNOSUPPORT;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		err = __ip4_datagram_connect(sk, uaddr, addr_len);
 =======
 		err = ip4_datagram_connect(sk, uaddr, addr_len);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		err = ip4_datagram_connect(sk, uaddr, addr_len);
->>>>>>> master
 		goto ipv4_connected;
 	}
 
@@ -116,7 +108,6 @@ int ip6_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 		sin.sin_port = usin->sin6_port;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		err = __ip4_datagram_connect(sk,
 					     (struct sockaddr *) &sin,
 					     sizeof(sin));
@@ -125,11 +116,6 @@ int ip6_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 					   (struct sockaddr *) &sin,
 					   sizeof(sin));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		err = ip4_datagram_connect(sk,
-					   (struct sockaddr *) &sin,
-					   sizeof(sin));
->>>>>>> master
 
 ipv4_connected:
 		if (err)
@@ -191,13 +177,9 @@ ipv4_connected:
 	fl6.fl6_dport = inet->inet_dport;
 	fl6.fl6_sport = inet->inet_sport;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	fl6.flowi6_uid = sock_i_uid(sk);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	fl6.flowi6_uid = sock_i_uid(sk);
->>>>>>> master
 
 	if (!fl6.flowi6_oif && (addr_type&IPV6_ADDR_MULTICAST))
 		fl6.flowi6_oif = np->mcast_oif;
@@ -243,7 +225,6 @@ out:
 	return err;
 }
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 int ip6_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 {
@@ -256,8 +237,6 @@ int ip6_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 }
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 EXPORT_SYMBOL_GPL(ip6_datagram_connect);
 
 void ipv6_icmp_error(struct sock *sk, struct sk_buff *skb, int err,
@@ -373,14 +352,10 @@ void ipv6_local_rxpmtu(struct sock *sk, struct flowi6 *fl6, u32 mtu)
  *	Handle MSG_ERRQUEUE
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 int ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len, int *addr_len)
 =======
 int ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-int ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len)
->>>>>>> master
 {
 	struct ipv6_pinfo *np = inet6_sk(sk);
 	struct sock_exterr_skb *serr;
@@ -432,33 +407,24 @@ int ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len)
 			sin->sin6_scope_id = 0;
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 		*addr_len = sizeof(*sin);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	memcpy(&errhdr.ee, &serr->ee, sizeof(struct sock_extended_err));
 	sin = &errhdr.offender;
-<<<<<<< HEAD
 <<<<<<< HEAD
 	memset(sin, 0, sizeof(*sin));
 
 	if (serr->ee.ee_origin != SO_EE_ORIGIN_LOCAL) {
 		sin->sin6_family = AF_INET6;
 =======
-=======
->>>>>>> master
 	sin->sin6_family = AF_UNSPEC;
 	if (serr->ee.ee_origin != SO_EE_ORIGIN_LOCAL) {
 		sin->sin6_family = AF_INET6;
 		sin->sin6_flowinfo = 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (skb->protocol == htons(ETH_P_IPV6)) {
 			sin->sin6_addr = ipv6_hdr(skb)->saddr;
 			if (np->rxopt.all)
@@ -468,23 +434,17 @@ int ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len)
 						    IP6CB(skb)->iif);
 		} else {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			ipv6_addr_set_v4mapped(ip_hdr(skb)->saddr,
 					       &sin->sin6_addr);
 			if (inet_sk(sk)->cmsg_flags)
 =======
-=======
->>>>>>> master
 			struct inet_sock *inet = inet_sk(sk);
 
 			ipv6_addr_set_v4mapped(ip_hdr(skb)->saddr,
 					       &sin->sin6_addr);
 			sin->sin6_scope_id = 0;
 			if (inet->cmsg_flags)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 				ip_cmsg_recv(msg, skb);
 		}
 	}
@@ -518,15 +478,11 @@ EXPORT_SYMBOL_GPL(ipv6_recv_error);
  *	Handle IPV6_RECVPATHMTU
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 int ipv6_recv_rxpmtu(struct sock *sk, struct msghdr *msg, int len,
 		     int *addr_len)
 =======
 int ipv6_recv_rxpmtu(struct sock *sk, struct msghdr *msg, int len)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-int ipv6_recv_rxpmtu(struct sock *sk, struct msghdr *msg, int len)
->>>>>>> master
 {
 	struct ipv6_pinfo *np = inet6_sk(sk);
 	struct sk_buff *skb;
@@ -561,12 +517,9 @@ int ipv6_recv_rxpmtu(struct sock *sk, struct msghdr *msg, int len)
 		sin->sin6_scope_id = mtu_info.ip6m_addr.sin6_scope_id;
 		sin->sin6_addr = mtu_info.ip6m_addr.sin6_addr;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		*addr_len = sizeof(*sin);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	put_cmsg(msg, SOL_IPV6, IPV6_PATHMTU, sizeof(mtu_info), &mtu_info);

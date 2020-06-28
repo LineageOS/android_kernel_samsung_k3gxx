@@ -56,14 +56,11 @@ static __u32 vmbus_get_next_version(__u32 current_version)
 		return VERSION_WIN7;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	case (VERSION_WIN8_1):
 		return VERSION_WIN8;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	case (VERSION_WS2008):
 	default:
 		return VERSION_INVAL;
@@ -77,13 +74,9 @@ static int vmbus_negotiate_version(struct vmbus_channel_msginfo *msginfo,
 	struct vmbus_channel_initiate_contact *msg;
 	unsigned long flags;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	int t;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int t;
->>>>>>> master
 
 	init_completion(&msginfo->waitevent);
 
@@ -98,14 +91,11 @@ static int vmbus_negotiate_version(struct vmbus_channel_msginfo *msginfo,
 				 PAGE_SIZE));
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (version == VERSION_WIN8_1)
 		msg->target_vcpu = hv_context.vp_index[smp_processor_id()];
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/*
 	 * Add to list before we send the request since we may
 	 * receive the response before returning from this routine
@@ -128,11 +118,8 @@ static int vmbus_negotiate_version(struct vmbus_channel_msginfo *msginfo,
 
 	/* Wait for the connection response */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	wait_for_completion(&msginfo->waitevent);
 =======
-=======
->>>>>>> master
 	t =  wait_for_completion_timeout(&msginfo->waitevent, 5*HZ);
 	if (t == 0) {
 		spin_lock_irqsave(&vmbus_connection.channelmsg_lock,
@@ -142,10 +129,7 @@ static int vmbus_negotiate_version(struct vmbus_channel_msginfo *msginfo,
 					flags);
 		return -ETIMEDOUT;
 	}
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	spin_lock_irqsave(&vmbus_connection.channelmsg_lock, flags);
 	list_del(&msginfo->msglistentry);
@@ -343,7 +327,6 @@ static void process_chn_event(u32 relid)
 
 		do {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (read_state)
 				hv_begin_read(&channel->inbound);
 			channel->onchannel_callback(arg);
@@ -356,11 +339,6 @@ static void process_chn_event(u32 relid)
 			channel->onchannel_callback(arg);
 			bytes_to_read = hv_end_read(&channel->inbound);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			hv_begin_read(&channel->inbound);
-			channel->onchannel_callback(arg);
-			bytes_to_read = hv_end_read(&channel->inbound);
->>>>>>> master
 		} while (read_state && (bytes_to_read != 0));
 	} else {
 		pr_err("no channel callback for relid - %u\n", relid);
@@ -444,7 +422,6 @@ int vmbus_post_msg(void *buffer, size_t buflen)
 	 * times before giving up.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	while (retries < 10) {
 		ret = hv_post_message(conn_id, 1, buffer, buflen);
 
@@ -461,16 +438,11 @@ int vmbus_post_msg(void *buffer, size_t buflen)
 		}
 
 =======
-=======
->>>>>>> master
 	while (retries < 3) {
 		ret =  hv_post_message(conn_id, 1, buffer, buflen);
 		if (ret != HV_STATUS_INSUFFICIENT_BUFFERS)
 			return ret;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		retries++;
 		msleep(100);
 	}

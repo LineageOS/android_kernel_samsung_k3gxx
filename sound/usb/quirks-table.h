@@ -387,7 +387,6 @@ YAMAHA_DEVICE(0x105d, NULL),
 },
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	USB_DEVICE(0x0499, 0x1509),
 	.driver_info = (unsigned long) & (const struct snd_usb_audio_quirk) {
 		/* .vendor_name = "Yamaha", */
@@ -420,8 +419,6 @@ YAMAHA_DEVICE(0x105d, NULL),
 {
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	USB_DEVICE(0x0499, 0x150a),
 	.driver_info = (unsigned long) & (const struct snd_usb_audio_quirk) {
 		/* .vendor_name = "Yamaha", */
@@ -2780,7 +2777,6 @@ YAMAHA_DEVICE(0x7010, "UB99"),
 },
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* Steinberg devices */
 {
 	/* Steinberg MI2 */
@@ -2851,8 +2847,6 @@ YAMAHA_DEVICE(0x7010, "UB99"),
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /* TerraTec devices */
 {
 	USB_DEVICE_VENDOR_SPEC(0x0ccd, 0x0012),
@@ -3054,7 +3048,6 @@ YAMAHA_DEVICE(0x7010, "UB99"),
 },
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* QinHeng devices */
 {
 	USB_DEVICE(0x1a86, 0x752d),
@@ -3068,8 +3061,6 @@ YAMAHA_DEVICE(0x7010, "UB99"),
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /* KeithMcMillen Stringport */
 {
 	USB_DEVICE(0x1f38, 0x0001),

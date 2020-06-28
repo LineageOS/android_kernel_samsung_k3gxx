@@ -552,7 +552,6 @@ static bool dmi_matches(const struct dmi_system_id *dmi)
 		if (s == DMI_NONE)
 			break;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (dmi_ident[s]) {
 			if (!dmi->matches[i].exact_match &&
 			    strstr(dmi_ident[s], dmi->matches[i].substr))
@@ -567,11 +566,6 @@ static bool dmi_matches(const struct dmi_system_id *dmi)
 		    && strstr(dmi_ident[s], dmi->matches[i].substr))
 			continue;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (dmi_ident[s]
-		    && strstr(dmi_ident[s], dmi->matches[i].substr))
-			continue;
->>>>>>> master
 		/* No match */
 		return false;
 	}

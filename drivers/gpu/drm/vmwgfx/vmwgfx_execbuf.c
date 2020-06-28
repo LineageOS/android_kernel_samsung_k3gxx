@@ -835,7 +835,6 @@ static int vmw_cmd_dma(struct vmw_private *dev_priv,
 	} *cmd;
 	int ret;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	SVGA3dCmdSurfaceDMASuffix *suffix;
 	uint32_t bo_size;
 
@@ -853,17 +852,12 @@ static int vmw_cmd_dma(struct vmw_private *dev_priv,
 
 	cmd = container_of(header, struct vmw_dma_cmd, header);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-	cmd = container_of(header, struct vmw_dma_cmd, header);
->>>>>>> master
 	ret = vmw_translate_guest_ptr(dev_priv, sw_context,
 				      &cmd->dma.guest.ptr,
 				      &vmw_bo);
 	if (unlikely(ret != 0))
 		return ret;
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Make sure DMA doesn't cross BO boundaries. */
 	bo_size = vmw_bo->base.num_pages * PAGE_SIZE;
@@ -878,8 +872,6 @@ static int vmw_cmd_dma(struct vmw_private *dev_priv,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	ret = vmw_cmd_res_check(dev_priv, sw_context, vmw_res_surface,
 				user_surface_converter, &cmd->dma.host.sid,
 				NULL);

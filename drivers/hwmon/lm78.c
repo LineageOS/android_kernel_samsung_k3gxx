@@ -95,13 +95,10 @@ static inline u8 FAN_TO_REG(long rpm, int div)
 	if (rpm <= 0)
 		return 255;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (rpm > 1350000)
 		return 1;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return clamp_val((1350000 + rpm * div / 2) / (rpm * div), 1, 254);
 }
 
@@ -115,14 +112,10 @@ static inline int FAN_FROM_REG(u8 val, int div)
  * REG: 1C/bit, two's complement
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 static inline s8 TEMP_TO_REG(long val)
 =======
 static inline s8 TEMP_TO_REG(int val)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static inline s8 TEMP_TO_REG(int val)
->>>>>>> master
 {
 	int nval = clamp_val(val, -128000, 127000) ;
 	return nval < 0 ? (nval - 500) / 1000 : (nval + 500) / 1000;

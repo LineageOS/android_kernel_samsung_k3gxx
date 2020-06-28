@@ -2035,7 +2035,6 @@ static ssize_t target_core_alua_tg_pt_gp_store_attr_alua_access_state(
 		return -EINVAL;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!(dev->dev_flags & DF_CONFIGURED)) {
 		pr_err("Unable to set alua_access_state while device is"
 		       " not configured\n");
@@ -2043,8 +2042,6 @@ static ssize_t target_core_alua_tg_pt_gp_store_attr_alua_access_state(
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	ret = strict_strtoul(page, 0, &tmp);
 	if (ret < 0) {

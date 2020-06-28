@@ -109,14 +109,10 @@ static int __vlan_del(struct net_port_vlans *v, u16 vid)
 	clear_bit(vid, v->vlan_bitmap);
 	v->num_vlans--;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (bitmap_empty(v->vlan_bitmap, VLAN_N_VID)) {
 =======
 	if (bitmap_empty(v->vlan_bitmap, BR_VLAN_BITMAP_LEN)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (bitmap_empty(v->vlan_bitmap, BR_VLAN_BITMAP_LEN)) {
->>>>>>> master
 		if (v->port_idx)
 			rcu_assign_pointer(v->parent.port->vlan_info, NULL);
 		else
@@ -131,14 +127,10 @@ static void __vlan_flush(struct net_port_vlans *v)
 	smp_wmb();
 	v->pvid = 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	bitmap_zero(v->vlan_bitmap, VLAN_N_VID);
 =======
 	bitmap_zero(v->vlan_bitmap, BR_VLAN_BITMAP_LEN);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	bitmap_zero(v->vlan_bitmap, BR_VLAN_BITMAP_LEN);
->>>>>>> master
 	if (v->port_idx)
 		rcu_assign_pointer(v->parent.port->vlan_info, NULL);
 	else
@@ -219,14 +211,10 @@ bool br_allowed_ingress(struct net_bridge *br, struct net_port_vlans *v,
 	 */
 	if (!v)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		goto drop;
 =======
 		return false;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		return false;
->>>>>>> master
 
 	if (br_vlan_get_tag(skb, vid)) {
 		u16 pvid = br_get_pvid(v);
@@ -237,14 +225,10 @@ bool br_allowed_ingress(struct net_bridge *br, struct net_port_vlans *v,
 		 */
 		if (pvid == VLAN_N_VID)
 <<<<<<< HEAD
-<<<<<<< HEAD
 			goto drop;
 =======
 			return false;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			return false;
->>>>>>> master
 
 		/* PVID is set on this port.  Any untagged ingress
 		 * frame is considered to belong to this vlan.
@@ -257,15 +241,11 @@ bool br_allowed_ingress(struct net_bridge *br, struct net_port_vlans *v,
 	if (test_bit(*vid, v->vlan_bitmap))
 		return true;
 <<<<<<< HEAD
-<<<<<<< HEAD
 drop:
 	kfree_skb(skb);
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 	return false;
 }
 

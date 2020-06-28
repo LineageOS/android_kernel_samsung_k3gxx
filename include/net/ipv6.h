@@ -503,12 +503,9 @@ struct ip6_create_arg {
 	const struct in6_addr *src;
 	const struct in6_addr *dst;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int iif;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	u8 ecn;
 };
 
@@ -562,21 +559,16 @@ static inline u32 ipv6_addr_hash(const struct in6_addr *a)
 
 /* more secured version of ipv6_addr_hash() */
 <<<<<<< HEAD
-<<<<<<< HEAD
 static inline u32 __ipv6_addr_jhash(const struct in6_addr *a, const u32 initval)
 =======
 static inline u32 ipv6_addr_jhash(const struct in6_addr *a)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static inline u32 ipv6_addr_jhash(const struct in6_addr *a)
->>>>>>> master
 {
 	u32 v = (__force u32)a->s6_addr32[0] ^ (__force u32)a->s6_addr32[1];
 
 	return jhash_3words(v,
 			    (__force u32)a->s6_addr32[2],
 			    (__force u32)a->s6_addr32[3],
-<<<<<<< HEAD
 <<<<<<< HEAD
 			    initval);
 }
@@ -587,9 +579,6 @@ static inline u32 ipv6_addr_jhash(const struct in6_addr *a)
 =======
 			    ipv6_hash_secret);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			    ipv6_hash_secret);
->>>>>>> master
 }
 
 static inline bool ipv6_addr_loopback(const struct in6_addr *a)
@@ -702,15 +691,10 @@ static inline int ipv6_addr_diff(const struct in6_addr *a1, const struct in6_add
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 extern void ipv6_select_ident(struct frag_hdr *fhdr, struct rt6_info *rt);
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-extern void ipv6_select_ident(struct frag_hdr *fhdr, struct rt6_info *rt);
-
->>>>>>> master
 /*
  *	Header manipulation
  */
@@ -854,7 +838,6 @@ extern int			ip6_datagram_connect(struct sock *sk,
 						     struct sockaddr *addr, int addr_len);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 extern int 			ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len,
 						int *addr_len);
 extern int 			ipv6_recv_rxpmtu(struct sock *sk, struct msghdr *msg, int len,
@@ -863,10 +846,6 @@ extern int 			ipv6_recv_rxpmtu(struct sock *sk, struct msghdr *msg, int len,
 extern int 			ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len);
 extern int 			ipv6_recv_rxpmtu(struct sock *sk, struct msghdr *msg, int len);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-extern int 			ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len);
-extern int 			ipv6_recv_rxpmtu(struct sock *sk, struct msghdr *msg, int len);
->>>>>>> master
 extern void			ipv6_icmp_error(struct sock *sk, struct sk_buff *skb, int err, __be16 port,
 						u32 info, u8 *payload);
 extern void			ipv6_local_error(struct sock *sk, int err, struct flowi6 *fl6, u32 info);
@@ -889,12 +868,9 @@ extern int inet6_hash_connect(struct inet_timewait_death_row *death_row,
 extern const struct proto_ops inet6_stream_ops;
 extern const struct proto_ops inet6_dgram_ops;
 <<<<<<< HEAD
-<<<<<<< HEAD
 extern const struct proto_ops inet6_sockraw_ops;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 struct group_source_req;
 struct group_filter;

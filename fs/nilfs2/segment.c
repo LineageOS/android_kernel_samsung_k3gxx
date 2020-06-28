@@ -306,13 +306,9 @@ static void nilfs_transaction_lock(struct super_block *sb,
 	ti->ti_save = cur_ti;
 	ti->ti_magic = NILFS_TI_MAGIC;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	INIT_LIST_HEAD(&ti->ti_garbage);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	INIT_LIST_HEAD(&ti->ti_garbage);
->>>>>>> master
 	current->journal_info = ti;
 
 	for (;;) {
@@ -340,15 +336,10 @@ static void nilfs_transaction_unlock(struct super_block *sb)
 	up_write(&nilfs->ns_segctor_sem);
 	current->journal_info = ti->ti_save;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if (!list_empty(&ti->ti_garbage))
 		nilfs_dispose_list(nilfs, &ti->ti_garbage, 0);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (!list_empty(&ti->ti_garbage))
-		nilfs_dispose_list(nilfs, &ti->ti_garbage, 0);
->>>>>>> master
 }
 
 static void *nilfs_segctor_map_segsum_entry(struct nilfs_sc_info *sci,
@@ -681,14 +672,10 @@ static size_t nilfs_lookup_dirty_data_buffers(struct inode *inode,
 		bh = head = page_buffers(page);
 		do {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			if (!buffer_dirty(bh) || buffer_async_write(bh))
 =======
 			if (!buffer_dirty(bh))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			if (!buffer_dirty(bh))
->>>>>>> master
 				continue;
 			get_bh(bh);
 			list_add_tail(&bh->b_assoc_buffers, listp);
@@ -723,15 +710,11 @@ static void nilfs_lookup_dirty_node_buffers(struct inode *inode,
 			bh = head = page_buffers(pvec.pages[i]);
 			do {
 <<<<<<< HEAD
-<<<<<<< HEAD
 				if (buffer_dirty(bh) &&
 						!buffer_async_write(bh)) {
 =======
 				if (buffer_dirty(bh)) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				if (buffer_dirty(bh)) {
->>>>>>> master
 					get_bh(bh);
 					list_add_tail(&bh->b_assoc_buffers,
 						      listp);
@@ -778,7 +761,6 @@ static void nilfs_dispose_list(struct the_nilfs *nilfs,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static void nilfs_iput_work_func(struct work_struct *work)
 {
 	struct nilfs_sc_info *sci = container_of(work, struct nilfs_sc_info,
@@ -790,8 +772,6 @@ static void nilfs_iput_work_func(struct work_struct *work)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int nilfs_test_metadata_dirty(struct the_nilfs *nilfs,
 				     struct nilfs_root *root)
 {
@@ -1487,25 +1467,18 @@ static int nilfs_segctor_collect(struct nilfs_sc_info *sci,
 		nilfs_clear_logs(&sci->sc_segbufs);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 		err = nilfs_segctor_extend_segments(sci, nilfs, nadd);
 		if (unlikely(err))
 			return err;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (sci->sc_stage.flags & NILFS_CF_SUFREED) {
 			err = nilfs_sufile_cancel_freev(nilfs->ns_sufile,
 							sci->sc_freesegs,
 							sci->sc_nfreesegs,
 							NULL);
 			WARN_ON(err); /* do not happen */
-<<<<<<< HEAD
 <<<<<<< HEAD
 			sci->sc_stage.flags &= ~NILFS_CF_SUFREED;
 		}
@@ -1517,9 +1490,6 @@ static int nilfs_segctor_collect(struct nilfs_sc_info *sci,
 =======
 		}
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		}
->>>>>>> master
 		nadd = min_t(int, nadd << 1, SC_MAX_SEGDELTA);
 		sci->sc_stage = prev_stage;
 	}
@@ -1650,12 +1620,9 @@ static void nilfs_segctor_prepare_write(struct nilfs_sc_info *sci)
 		list_for_each_entry(bh, &segbuf->sb_segsum_buffers,
 				    b_assoc_buffers) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			set_buffer_async_write(bh);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			if (bh->b_page != bd_page) {
 				if (bd_page) {
 					lock_page(bd_page);
@@ -1670,12 +1637,9 @@ static void nilfs_segctor_prepare_write(struct nilfs_sc_info *sci)
 		list_for_each_entry(bh, &segbuf->sb_payload_buffers,
 				    b_assoc_buffers) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			set_buffer_async_write(bh);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			if (bh == segbuf->sb_super_root) {
 				if (bh->b_page != bd_page) {
 					lock_page(bd_page);
@@ -1762,12 +1726,9 @@ static void nilfs_abort_logs(struct list_head *logs, int err)
 		list_for_each_entry(bh, &segbuf->sb_segsum_buffers,
 				    b_assoc_buffers) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			clear_buffer_async_write(bh);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			if (bh->b_page != bd_page) {
 				if (bd_page)
 					end_page_writeback(bd_page);
@@ -1778,12 +1739,9 @@ static void nilfs_abort_logs(struct list_head *logs, int err)
 		list_for_each_entry(bh, &segbuf->sb_payload_buffers,
 				    b_assoc_buffers) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			clear_buffer_async_write(bh);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			if (bh == segbuf->sb_super_root) {
 				if (bh->b_page != bd_page) {
 					end_page_writeback(bd_page);
@@ -1854,12 +1812,9 @@ static void nilfs_segctor_complete_write(struct nilfs_sc_info *sci)
 			set_buffer_uptodate(bh);
 			clear_buffer_dirty(bh);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			clear_buffer_async_write(bh);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			if (bh->b_page != bd_page) {
 				if (bd_page)
 					end_page_writeback(bd_page);
@@ -1882,12 +1837,9 @@ static void nilfs_segctor_complete_write(struct nilfs_sc_info *sci)
 			set_buffer_uptodate(bh);
 			clear_buffer_dirty(bh);
 <<<<<<< HEAD
-<<<<<<< HEAD
 			clear_buffer_async_write(bh);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 			clear_buffer_delay(bh);
 			clear_buffer_nilfs_volatile(bh);
 			clear_buffer_nilfs_redirected(bh);
@@ -2003,7 +1955,6 @@ static void nilfs_segctor_drop_written_files(struct nilfs_sc_info *sci,
 					     struct the_nilfs *nilfs)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct nilfs_inode_info *ii, *n;
 	int during_mount = !(sci->sc_super->s_flags & MS_ACTIVE);
 	int defer_iput = false;
@@ -2011,10 +1962,6 @@ static void nilfs_segctor_drop_written_files(struct nilfs_sc_info *sci,
 	struct nilfs_transaction_info *ti = current->journal_info;
 	struct nilfs_inode_info *ii, *n;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct nilfs_transaction_info *ti = current->journal_info;
-	struct nilfs_inode_info *ii, *n;
->>>>>>> master
 
 	spin_lock(&nilfs->ns_inode_lock);
 	list_for_each_entry_safe(ii, n, &sci->sc_dirty_files, i_dirty) {
@@ -2025,7 +1972,6 @@ static void nilfs_segctor_drop_written_files(struct nilfs_sc_info *sci,
 		clear_bit(NILFS_I_BUSY, &ii->i_state);
 		brelse(ii->i_bh);
 		ii->i_bh = NULL;
-<<<<<<< HEAD
 <<<<<<< HEAD
 		list_del_init(&ii->i_dirty);
 		if (!ii->vfs_inode.i_nlink || during_mount) {
@@ -2050,11 +1996,6 @@ static void nilfs_segctor_drop_written_files(struct nilfs_sc_info *sci,
 	}
 	spin_unlock(&nilfs->ns_inode_lock);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		list_move_tail(&ii->i_dirty, &ti->ti_garbage);
-	}
-	spin_unlock(&nilfs->ns_inode_lock);
->>>>>>> master
 }
 
 /*
@@ -2722,13 +2663,10 @@ static struct nilfs_sc_info *nilfs_segctor_new(struct super_block *sb,
 	INIT_LIST_HEAD(&sci->sc_write_logs);
 	INIT_LIST_HEAD(&sci->sc_gc_inodes);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	INIT_LIST_HEAD(&sci->sc_iput_queue);
 	INIT_WORK(&sci->sc_iput_work, nilfs_iput_work_func);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	init_timer(&sci->sc_timer);
 
 	sci->sc_interval = HZ * NILFS_SC_DEFAULT_TIMEOUT;
@@ -2756,13 +2694,10 @@ static void nilfs_segctor_write_out(struct nilfs_sc_info *sci)
 		nilfs_transaction_unlock(sci->sc_super);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		flush_work(&sci->sc_iput_work);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	} while (ret && retrycount-- > 0);
 }
 
@@ -2788,14 +2723,11 @@ static void nilfs_segctor_destroy(struct nilfs_sc_info *sci)
 	spin_unlock(&sci->sc_state_lock);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (flush_work(&sci->sc_iput_work))
 		flag = true;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (flag || !nilfs_segctor_confirm(sci))
 		nilfs_segctor_write_out(sci);
 
@@ -2806,7 +2738,6 @@ static void nilfs_segctor_destroy(struct nilfs_sc_info *sci)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (!list_empty(&sci->sc_iput_queue)) {
 		nilfs_warning(sci->sc_super, __func__,
 			      "iput queue is not empty\n");
@@ -2815,8 +2746,6 @@ static void nilfs_segctor_destroy(struct nilfs_sc_info *sci)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	WARN_ON(!list_empty(&sci->sc_segbufs));
 	WARN_ON(!list_empty(&sci->sc_write_logs));
 

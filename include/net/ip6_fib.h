@@ -166,12 +166,9 @@ static inline void rt6_clean_expires(struct rt6_info *rt)
 {
 	rt->rt6i_flags &= ~RTF_EXPIRES;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	rt->dst.expires = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static inline void rt6_set_expires(struct rt6_info *rt, unsigned long expires)
@@ -308,14 +305,10 @@ extern void			inet6_rt_notify(int event, struct rt6_info *rt,
 
 extern void			fib6_run_gc(unsigned long expires,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					    struct net *net, bool force);
 =======
 					    struct net *net);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					    struct net *net);
->>>>>>> master
 
 extern void			fib6_gc_cleanup(void);
 

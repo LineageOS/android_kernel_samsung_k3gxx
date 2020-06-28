@@ -36,12 +36,9 @@ __ext2_get_block(struct inode *inode, pgoff_t pgoff, int create,
 
 	memset(&tmp, 0, sizeof(struct buffer_head));
 <<<<<<< HEAD
-<<<<<<< HEAD
 	tmp.b_size = 1 << inode->i_blkbits;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	rc = ext2_get_block(inode, pgoff, &tmp, create);
 	*result = tmp.b_blocknr;
 

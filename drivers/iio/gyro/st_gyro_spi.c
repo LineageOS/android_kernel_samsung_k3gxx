@@ -61,13 +61,9 @@ static const struct spi_device_id st_gyro_id_table[] = {
 	{ LSM330DLC_GYRO_DEV_NAME },
 	{ L3GD20_GYRO_DEV_NAME },
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	{ L3GD20H_GYRO_DEV_NAME },
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	{ L3GD20H_GYRO_DEV_NAME },
->>>>>>> master
 	{ L3G4IS_GYRO_DEV_NAME },
 	{ LSM330_GYRO_DEV_NAME },
 	{},

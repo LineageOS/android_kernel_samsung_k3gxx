@@ -429,12 +429,9 @@ static bool intel_crt_detect_ddc(struct drm_connector *connector)
 	struct edid *edid;
 	struct i2c_adapter *i2c;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	bool ret = false;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	BUG_ON(crt->base.type != INTEL_OUTPUT_ANALOG);
 
@@ -452,22 +449,16 @@ static bool intel_crt_detect_ddc(struct drm_connector *connector)
 		if (!is_digital) {
 			DRM_DEBUG_KMS("CRT detected via DDC:0x50 [EDID]\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 			ret = true;
 		} else {
 			DRM_DEBUG_KMS("CRT not detected via DDC:0x50 [EDID reports a digital panel]\n");
 		}
 =======
-=======
->>>>>>> master
 			return true;
 		}
 
 		DRM_DEBUG_KMS("CRT not detected via DDC:0x50 [EDID reports a digital panel]\n");
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	} else {
 		DRM_DEBUG_KMS("CRT not detected via DDC:0x50 [no valid EDID found]\n");
 	}
@@ -475,14 +466,10 @@ static bool intel_crt_detect_ddc(struct drm_connector *connector)
 	kfree(edid);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return ret;
 =======
 	return false;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return false;
->>>>>>> master
 }
 
 static enum drm_connector_status
@@ -731,14 +718,10 @@ static const struct drm_encoder_funcs intel_crt_enc_funcs = {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int intel_no_crt_dmi_callback(const struct dmi_system_id *id)
 =======
 static int __init intel_no_crt_dmi_callback(const struct dmi_system_id *id)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static int __init intel_no_crt_dmi_callback(const struct dmi_system_id *id)
->>>>>>> master
 {
 	DRM_INFO("Skipping CRT initialization for %s\n", id->ident);
 	return 1;
@@ -754,7 +737,6 @@ static const struct dmi_system_id intel_no_crt[] = {
 		},
 	},
 <<<<<<< HEAD
-<<<<<<< HEAD
 	{
 		.callback = intel_no_crt_dmi_callback,
 		.ident = "DELL XPS 8700",
@@ -765,8 +747,6 @@ static const struct dmi_system_id intel_no_crt[] = {
 	},
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	{ }
 };
 

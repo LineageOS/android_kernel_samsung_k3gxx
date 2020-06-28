@@ -105,12 +105,9 @@ pio:
 	if (!desc) {
 		/* DMA failed, fall back to PIO */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		tmio_mmc_enable_dma(host, false);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (ret >= 0)
 			ret = -EIO;
 		host->chan_rx = NULL;
@@ -124,13 +121,9 @@ pio:
 		dev_warn(&host->pdev->dev,
 			 "DMA failed: %d, falling back to PIO\n", ret);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		tmio_mmc_enable_dma(host, false);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		tmio_mmc_enable_dma(host, false);
->>>>>>> master
 	}
 
 	dev_dbg(&host->pdev->dev, "%s(): desc %p, cookie %d, sg[%d]\n", __func__,
@@ -200,12 +193,9 @@ pio:
 	if (!desc) {
 		/* DMA failed, fall back to PIO */
 <<<<<<< HEAD
-<<<<<<< HEAD
 		tmio_mmc_enable_dma(host, false);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (ret >= 0)
 			ret = -EIO;
 		host->chan_tx = NULL;
@@ -219,13 +209,9 @@ pio:
 		dev_warn(&host->pdev->dev,
 			 "DMA failed: %d, falling back to PIO\n", ret);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 		tmio_mmc_enable_dma(host, false);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		tmio_mmc_enable_dma(host, false);
->>>>>>> master
 	}
 
 	dev_dbg(&host->pdev->dev, "%s(): desc %p, cookie %d\n", __func__,

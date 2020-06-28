@@ -43,18 +43,12 @@
 #endif
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #ifdef CONFIG_SDP
 #include "ecryptfs_dek.h"
 #endif
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static int
 ecryptfs_decrypt_page_offset(struct ecryptfs_crypt_stat *crypt_stat,
 			     struct page *dst_page, int dst_offset,
@@ -451,20 +445,14 @@ static int encrypt_scatterlist(struct ecryptfs_crypt_stat *crypt_stat,
 		|| !(crypt_stat->flags & ECRYPTFS_STRUCT_INITIALIZED));
 	if (unlikely(ecryptfs_verbosity > 0)) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #ifndef CONFIG_SDP
 		ecryptfs_printk(KERN_DEBUG, "Key size [%zd]; key:\n",
 				crypt_stat->key_size);
 		ecryptfs_dump_hex(crypt_stat->key,
 				  crypt_stat->key_size);
 #endif
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	init_completion(&ecr.completion);
@@ -600,10 +588,7 @@ int ecryptfs_encrypt_page(struct page *page)
 		&(ecryptfs_inode_to_private(ecryptfs_inode)->crypt_stat);
 	BUG_ON(!(crypt_stat->flags & ECRYPTFS_ENCRYPTED));
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #ifdef CONFIG_SDP
 	if (!(crypt_stat->flags & ECRYPTFS_KEY_SET) ||
 			!(crypt_stat->flags & ECRYPTFS_KEY_VALID)) {
@@ -629,10 +614,7 @@ int ecryptfs_encrypt_page(struct page *page)
 	ecryptfs_dump_hex(crypt_stat->root_iv, ECRYPTFS_MAX_IV_BYTES);
 #endif
 #endif
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	enc_extent_page = alloc_page(GFP_USER);
 	if (!enc_extent_page) {
 		rc = -ENOMEM;
@@ -742,10 +724,7 @@ int ecryptfs_decrypt_page(struct page *page)
 		&(ecryptfs_inode_to_private(ecryptfs_inode)->crypt_stat);
 	BUG_ON(!(crypt_stat->flags & ECRYPTFS_ENCRYPTED));
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #ifdef CONFIG_SDP
 	if (!(crypt_stat->flags & ECRYPTFS_KEY_SET) ||
 			!(crypt_stat->flags & ECRYPTFS_KEY_VALID)) {
@@ -771,10 +750,7 @@ int ecryptfs_decrypt_page(struct page *page)
 	ecryptfs_dump_hex(crypt_stat->root_iv, ECRYPTFS_MAX_IV_BYTES);
 #endif
 #endif
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	enc_extent_page = alloc_page(GFP_USER);
 	if (!enc_extent_page) {
 		rc = -ENOMEM;
@@ -1113,19 +1089,13 @@ static void ecryptfs_copy_mount_wide_flags_to_inode_flags(
 			crypt_stat->flags |= ECRYPTFS_ENCFN_USE_FEK;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 
 #ifdef CONFIG_SDP
     if (mount_crypt_stat->flags & ECRYPTFS_MOUNT_SDP_ENABLED)
         crypt_stat->flags |= ECRYPTFS_DEK_SDP_ENABLED;
 #endif
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static int ecryptfs_copy_mount_wide_sigs_to_inode_sigs(
@@ -1176,17 +1146,11 @@ static void ecryptfs_set_default_crypt_stat_vals(
 	crypt_stat->file_version = ECRYPTFS_FILE_VERSION;
 	crypt_stat->mount_crypt_stat = mount_crypt_stat;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 #ifdef CONFIG_SDP
 	crypt_stat->engine_id = -1;
 #endif
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#ifdef CONFIG_SDP
-	crypt_stat->engine_id = -1;
-#endif
->>>>>>> master
 }
 
 /**
@@ -1280,11 +1244,8 @@ static struct ecryptfs_flag_map_elem ecryptfs_flag_map[] = {
 	{0x00000002, ECRYPTFS_ENCRYPTED},
 	{0x00000004, ECRYPTFS_METADATA_IN_XATTR},
 <<<<<<< HEAD
-<<<<<<< HEAD
 	{0x00000008, ECRYPTFS_ENCRYPT_FILENAMES},
 =======
-=======
->>>>>>> master
 #ifdef CONFIG_SDP
 	{0x00000008, ECRYPTFS_ENCRYPT_FILENAMES},
 	{0x00100000, ECRYPTFS_DEK_SDP_ENABLED},
@@ -1296,10 +1257,7 @@ static struct ecryptfs_flag_map_elem ecryptfs_flag_map[] = {
 #ifdef CONFIG_DLP
 	{0x00080000, ECRYPTFS_DLP_ENABLED},
 #endif
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 };
 
 /**
@@ -1616,10 +1574,7 @@ int ecryptfs_write_metadata(struct dentry *ecryptfs_dentry,
 		goto out;
 	}
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #ifdef CONFIG_SDP
 #if ECRYPTFS_DEK_DEBUG
 	ecryptfs_printk(KERN_INFO, "name is [%s], flag is %d\n",
@@ -1632,10 +1587,7 @@ int ecryptfs_write_metadata(struct dentry *ecryptfs_dentry,
 	}
 #endif
 #endif
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	virt_len = crypt_stat->metadata_size;
 	order = get_order(virt_len);
 	/* Released in this function */
@@ -1880,10 +1832,7 @@ int ecryptfs_read_metadata(struct dentry *ecryptfs_dentry)
 						ecryptfs_dentry,
 						ECRYPTFS_VALIDATE_HEADER_SIZE);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #ifdef CONFIG_SDP
 	if ((rc) && crypt_stat->flags & ECRYPTFS_DEK_IS_SENSITIVE)
 		/*
@@ -1892,10 +1841,7 @@ int ecryptfs_read_metadata(struct dentry *ecryptfs_dentry)
 		 */
 		goto out;
 #endif
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	if (rc) {
 		/* metadata is not in the file header, so try xattrs */
 		memset(page_virt, 0, PAGE_CACHE_SIZE);
@@ -1931,10 +1877,7 @@ int ecryptfs_read_metadata(struct dentry *ecryptfs_dentry)
 	}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #ifdef CONFIG_SDP
 #if ECRYPTFS_DEK_DEBUG
 	ecryptfs_printk(KERN_INFO, "name is [%s], flag is %d\n",
@@ -1953,10 +1896,7 @@ int ecryptfs_read_metadata(struct dentry *ecryptfs_dentry)
 #endif
 #endif
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 out:
 	if (page_virt) {
 		memset(page_virt, 0, PAGE_CACHE_SIZE);

@@ -98,15 +98,12 @@ int ieee80211_radiotap_iterator_init(
 	int max_length, const struct ieee80211_radiotap_vendor_namespaces *vns)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* check the radiotap header can actually be present */
 	if (max_length < sizeof(struct ieee80211_radiotap_header))
 		return -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* Linux only supports version 0 radiotap format */
 	if (radiotap_header->it_version)
 		return -EINVAL;
@@ -131,15 +128,12 @@ int ieee80211_radiotap_iterator_init(
 
 	if (iterator->_bitmap_shifter & (1<<IEEE80211_RADIOTAP_EXT)) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if ((unsigned long)iterator->_arg -
 		    (unsigned long)iterator->_rtheader + sizeof(uint32_t) >
 		    (unsigned long)iterator->_max_length)
 			return -EINVAL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		while (get_unaligned_le32(iterator->_arg) &
 					(1 << IEEE80211_RADIOTAP_EXT)) {
 			iterator->_arg += sizeof(uint32_t);
@@ -152,15 +146,11 @@ int ieee80211_radiotap_iterator_init(
 
 			if ((unsigned long)iterator->_arg -
 <<<<<<< HEAD
-<<<<<<< HEAD
 			    (unsigned long)iterator->_rtheader +
 			    sizeof(uint32_t) >
 =======
 			    (unsigned long)iterator->_rtheader >
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			    (unsigned long)iterator->_rtheader >
->>>>>>> master
 			    (unsigned long)iterator->_max_length)
 				return -EINVAL;
 		}

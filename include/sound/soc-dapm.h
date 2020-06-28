@@ -105,14 +105,11 @@ struct device;
 	.shift = wshift, .invert = winvert, .kcontrol_news = wcontrols, \
 	.num_kcontrols = 1}
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define SND_SOC_DAPM_DEMUX(wname, wreg, wshift, winvert, wcontrols) \
 {	.id = snd_soc_dapm_demux, .name = wname, .reg = wreg, .shift = wshift, \
 	.invert = winvert, .kcontrol_news = wcontrols, .num_kcontrols = 1}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /* Simplified versions of above macros, assuming wncontrols = ARRAY_SIZE(wcontrols) */
 #define SOC_PGA_ARRAY(wname, wreg, wshift, winvert,\
@@ -321,13 +318,10 @@ struct device;
 #define SND_SOC_DAPM_PRE_REG	0x10	/* before audio path setup */
 #define SND_SOC_DAPM_POST_REG	0x20	/* after audio path setup */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define SND_SOC_DAPM_WILL_PMU   0x40    /* called at start of sequence */
 #define SND_SOC_DAPM_WILL_PMD   0x80    /* called at start of sequence */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define SND_SOC_DAPM_PRE_POST_PMD \
 				(SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD)
 
@@ -349,12 +343,9 @@ struct snd_soc_dapm_context;
 struct regulator;
 struct snd_soc_dapm_widget_list;
 <<<<<<< HEAD
-<<<<<<< HEAD
 struct snd_soc_dapm_update;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 int dapm_reg_event(struct snd_soc_dapm_widget *w,
 		   struct snd_kcontrol *kcontrol, int event);
@@ -414,7 +405,6 @@ void snd_soc_dapm_shutdown(struct snd_soc_card *card);
 
 /* external DAPM widget events */
 <<<<<<< HEAD
-<<<<<<< HEAD
 int snd_soc_dapm_mixer_update_power(struct snd_soc_dapm_context *dapm,
 		struct snd_kcontrol *kcontrol, int connect,
 		struct snd_soc_dapm_update *update);
@@ -422,16 +412,11 @@ int snd_soc_dapm_mux_update_power(struct snd_soc_dapm_context *dapm,
 		struct snd_kcontrol *kcontrol, int mux, struct soc_enum *e,
 		struct snd_soc_dapm_update *update);
 =======
-=======
->>>>>>> master
 int snd_soc_dapm_mixer_update_power(struct snd_soc_dapm_widget *widget,
 		struct snd_kcontrol *kcontrol, int connect);
 int snd_soc_dapm_mux_update_power(struct snd_soc_dapm_widget *widget,
 				 struct snd_kcontrol *kcontrol, int mux, struct soc_enum *e);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /* dapm sys fs - used by the core */
 int snd_soc_dapm_sys_add(struct device *dev);
@@ -448,12 +433,9 @@ int snd_soc_dapm_get_pin_status(struct snd_soc_dapm_context *dapm,
 				const char *pin);
 int snd_soc_dapm_sync(struct snd_soc_dapm_context *dapm);
 <<<<<<< HEAD
-<<<<<<< HEAD
 int snd_soc_dapm_sync_unlocked(struct snd_soc_dapm_context *dapm);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 int snd_soc_dapm_force_enable_pin(struct snd_soc_dapm_context *dapm,
 				  const char *pin);
 int snd_soc_dapm_ignore_suspend(struct snd_soc_dapm_context *dapm,
@@ -469,13 +451,10 @@ int snd_soc_dapm_dai_get_connected_widgets(struct snd_soc_dai *dai, int stream,
 	struct snd_soc_dapm_widget_list **list);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 struct snd_soc_codec *snd_soc_dapm_kcontrol_codec(struct snd_kcontrol *kcontrol);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /* dapm widget types */
 enum snd_soc_dapm_type {
 	snd_soc_dapm_input = 0,		/* input pin */
@@ -484,12 +463,9 @@ enum snd_soc_dapm_type {
 	snd_soc_dapm_virt_mux,			/* virtual version of snd_soc_dapm_mux */
 	snd_soc_dapm_value_mux,			/* selects 1 analog signal from many inputs */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	snd_soc_dapm_demux,			/* connects the input to one of multiple outputs */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	snd_soc_dapm_mixer,			/* mixes several analog signals together */
 	snd_soc_dapm_mixer_named_ctl,		/* mixer with named controls */
 	snd_soc_dapm_pga,			/* programmable gain/attenuation (volume) */
@@ -541,13 +517,9 @@ struct snd_soc_dapm_route {
 struct snd_soc_dapm_path {
 	const char *name;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	const char *long_name;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	const char *long_name;
->>>>>>> master
 
 	/* source (input) and sink (output) widgets */
 	struct snd_soc_dapm_widget *source;
@@ -627,13 +599,9 @@ struct snd_soc_dapm_widget {
 
 struct snd_soc_dapm_update {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	struct snd_soc_dapm_widget *widget;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct snd_soc_dapm_widget *widget;
->>>>>>> master
 	struct snd_kcontrol *kcontrol;
 	int reg;
 	int mask;
@@ -641,15 +609,12 @@ struct snd_soc_dapm_update {
 };
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 struct snd_soc_dapm_wcache {
 	struct snd_soc_dapm_widget *widget;
 };
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /* DAPM context */
 struct snd_soc_dapm_context {
 	enum snd_soc_bias_level bias_level;
@@ -658,15 +623,10 @@ struct snd_soc_dapm_context {
 	unsigned int idle_bias_off:1; /* Use BIAS_OFF instead of STANDBY */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	struct snd_soc_dapm_update *update;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct snd_soc_dapm_update *update;
-
->>>>>>> master
 	void (*seq_notifier)(struct snd_soc_dapm_context *,
 			     enum snd_soc_dapm_type, int);
 
@@ -682,14 +642,11 @@ struct snd_soc_dapm_context {
 	int (*stream_event)(struct snd_soc_dapm_context *dapm, int event);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	struct snd_soc_dapm_wcache path_sink_cache;
 	struct snd_soc_dapm_wcache path_source_cache;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #ifdef CONFIG_DEBUG_FS
 	struct dentry *debugfs_dapm;
 #endif

@@ -780,12 +780,9 @@ const char * const vmstat_text[] = {
 #ifdef CONFIG_NUMA_BALANCING
 	"numa_pte_updates",
 <<<<<<< HEAD
-<<<<<<< HEAD
 	"numa_huge_pte_updates",
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	"numa_hint_faults",
 	"numa_hint_faults_local",
 	"numa_pages_migrated",

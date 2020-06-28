@@ -70,14 +70,10 @@ static int create_fd(struct fsnotify_group *group,
 	pr_debug("%s: group=%p event=%p\n", __func__, group, event);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	client_fd = get_unused_fd_flags(group->fanotify_data.f_flags);
 =======
 	client_fd = get_unused_fd();
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	client_fd = get_unused_fd();
->>>>>>> master
 	if (client_fd < 0)
 		return client_fd;
 
@@ -499,14 +495,10 @@ static int fanotify_find_path(int dfd, const char __user *filename,
 
 	/* you can only watch an inode if you have read permissions on it */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ret = inode_permission2(path->mnt, path->dentry->d_inode, MAY_READ);
 =======
 	ret = inode_permission(path->dentry->d_inode, MAY_READ);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret = inode_permission(path->dentry->d_inode, MAY_READ);
->>>>>>> master
 	if (ret)
 		path_put(path);
 out:
@@ -884,7 +876,6 @@ COMPAT_SYSCALL_DEFINE6(fanotify_mark,
 	return sys_fanotify_mark(fanotify_fd, flags,
 #ifdef __BIG_ENDIAN
 <<<<<<< HEAD
-<<<<<<< HEAD
 				((__u64)mask0 << 32) | mask1,
 #else
 				((__u64)mask1 << 32) | mask0,
@@ -893,11 +884,6 @@ COMPAT_SYSCALL_DEFINE6(fanotify_mark,
 #else
 				((__u64)mask0 << 32) | mask1,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				((__u64)mask1 << 32) | mask0,
-#else
-				((__u64)mask0 << 32) | mask1,
->>>>>>> master
 #endif
 				 dfd, pathname);
 }

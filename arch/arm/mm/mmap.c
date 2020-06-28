@@ -90,14 +90,10 @@ arch_get_unmapped_area(struct file *filp, unsigned long addr,
 		vma = find_vma(mm, addr);
 		if (TASK_SIZE - len >= addr &&
 <<<<<<< HEAD
-<<<<<<< HEAD
 		    (!vma || addr + len <= vm_start_gap(vma)))
 =======
 		    (!vma || addr + len <= vma->vm_start))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		    (!vma || addr + len <= vma->vm_start))
->>>>>>> master
 			return addr;
 	}
 
@@ -149,14 +145,10 @@ arch_get_unmapped_area_topdown(struct file *filp, const unsigned long addr0,
 		vma = find_vma(mm, addr);
 		if (TASK_SIZE - len >= addr &&
 <<<<<<< HEAD
-<<<<<<< HEAD
 				(!vma || addr + len <= vm_start_gap(vma)))
 =======
 				(!vma || addr + len <= vma->vm_start))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-				(!vma || addr + len <= vma->vm_start))
->>>>>>> master
 			return addr;
 	}
 
@@ -190,21 +182,15 @@ void arch_pick_mmap_layout(struct mm_struct *mm)
 	unsigned long random_factor = 0UL;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if ((current->flags & PF_RANDOMIZE) &&
 	    !(current->personality & ADDR_NO_RANDOMIZE))
 		random_factor = (get_random_int() & ((1 << mmap_rnd_bits) - 1)) << PAGE_SHIFT;
 =======
-=======
->>>>>>> master
 	/* 8 bits of randomness in 20 address space bits */
 	if ((current->flags & PF_RANDOMIZE) &&
 	    !(current->personality & ADDR_NO_RANDOMIZE))
 		random_factor = (get_random_int() % (1 << 8)) << PAGE_SHIFT;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	if (mmap_is_legacy()) {
 		mm->mmap_base = TASK_UNMAPPED_BASE + random_factor;
@@ -233,15 +219,12 @@ int valid_phys_addr_range(phys_addr_t addr, size_t size)
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * Do not allow /dev/mem mappings beyond the supported physical range.
  */
 int valid_mmap_phys_addr_range(unsigned long pfn, size_t size)
 {
 	return (pfn + (size >> PAGE_SHIFT)) <= (1 + (PHYS_MASK >> PAGE_SHIFT));
 =======
-=======
->>>>>>> master
  * We don't use supersection mappings for mmap() on /dev/mem, which
  * means that we can't map the memory area above the 4G barrier into
  * userspace.
@@ -249,10 +232,7 @@ int valid_mmap_phys_addr_range(unsigned long pfn, size_t size)
 int valid_mmap_phys_addr_range(unsigned long pfn, size_t size)
 {
 	return !(pfn + (size >> PAGE_SHIFT) > 0x00100000);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 #ifdef CONFIG_STRICT_DEVMEM

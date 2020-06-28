@@ -40,12 +40,9 @@
 #define ARIZONA_WAKE_CONTROL                     0x40
 #define ARIZONA_SEQUENCE_CONTROL                 0x41
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define ARIZONA_SPARE_TRIGGERS                   0x42
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define ARIZONA_SAMPLE_RATE_SEQUENCE_SELECT_1    0x61
 #define ARIZONA_SAMPLE_RATE_SEQUENCE_SELECT_2    0x62
 #define ARIZONA_SAMPLE_RATE_SEQUENCE_SELECT_3    0x63
@@ -71,12 +68,9 @@
 #define ARIZONA_HAPTICS_PHASE_3_DURATION         0x97
 #define ARIZONA_HAPTICS_STATUS                   0x98
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_COMFORT_NOISE_GENERATOR       0xA0
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define ARIZONA_CLOCK_32K_1                      0x100
 #define ARIZONA_SYSTEM_CLOCK_1                   0x101
 #define ARIZONA_SAMPLE_RATE_1                    0x102
@@ -91,17 +85,12 @@
 #define ARIZONA_ASYNC_SAMPLE_RATE_1_STATUS       0x11B
 #define ARIZONA_ASYNC_SAMPLE_RATE_2_STATUS       0x11C
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_DSP_CLOCK_1                   0x120
 #define CLEARWATER_DSP_CLOCK_2                   0x122
 =======
 #define CLEARWATER_DSP_CLOCK_1                       0x120
 #define CLEARWATER_DSP_CLOCK_2                       0x122
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_DSP_CLOCK_1                       0x120
-#define CLEARWATER_DSP_CLOCK_2                       0x122
->>>>>>> master
 #define ARIZONA_OUTPUT_SYSTEM_CLOCK              0x149
 #define ARIZONA_OUTPUT_ASYNC_CLOCK               0x14A
 #define ARIZONA_RATE_ESTIMATOR_1                 0x152
@@ -166,14 +155,10 @@
 #define ARIZONA_FLL3_GPIO_CLOCK                  0x1CA
 #define ARIZONA_MIC_CHARGE_PUMP_1                0x200
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_CP_MODE                       0x20B
 =======
 #define CLEARWATER_CP_MODE                              0x20B
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_CP_MODE                              0x20B
->>>>>>> master
 #define ARIZONA_LDO1_CONTROL_1                   0x210
 #define ARIZONA_LDO1_CONTROL_2                   0x212
 #define ARIZONA_LDO2_CONTROL_1                   0x213
@@ -190,30 +175,22 @@
 #define ARIZONA_DCS_HP1L_CONTROL                 0x232
 #define ARIZONA_DCS_HP1R_CONTROL                 0x238
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_EDRE_HP_STEREO_CONTROL        0x27E
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define ARIZONA_ACCESSORY_DETECT_MODE_1          0x293
 #define ARIZONA_HEADPHONE_DETECT_1               0x29B
 #define ARIZONA_HEADPHONE_DETECT_2               0x29C
 #define ARIZONA_HEADPHONE_DETECT_3               0x29D
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define ARIZONA_HP_DACVAL                        0x29F
 =======
 #define ARIZONA_HP_DACVAL			 0x29F
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define ARIZONA_HP_DACVAL			 0x29F
->>>>>>> master
 #define ARIZONA_MICD_CLAMP_CONTROL               0x2A2
 #define ARIZONA_MIC_DETECT_1                     0x2A3
 #define ARIZONA_MIC_DETECT_2                     0x2A4
 #define ARIZONA_MIC_DETECT_3                     0x2A5
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define ARIZONA_MIC_DETECT_LEVEL_1               0x2A6
 #define ARIZONA_MIC_DETECT_LEVEL_2               0x2A7
@@ -223,8 +200,6 @@
 #define ARIZONA_MIC_NOISE_MIX_CONTROL_1          0x2C3
 #define CLEARWATER_MICD_CLAMP_CONTROL            0x2C6
 =======
-=======
->>>>>>> master
 #define ARIZONA_MIC_DETECT_LEVEL_1		 0x2A6
 #define ARIZONA_MIC_DETECT_LEVEL_2		 0x2A7
 #define ARIZONA_MIC_DETECT_LEVEL_3		 0x2A8
@@ -232,10 +207,7 @@
 #define ARIZONA_MIC_DETECT_4                     0x2AB
 #define ARIZONA_MIC_NOISE_MIX_CONTROL_1          0x2C3
 #define CLEARWATER_MICD_CLAMP_CONTROL                0x2C6
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define ARIZONA_ISOLATION_CONTROL                0x2CB
 #define ARIZONA_JACK_DETECT_ANALOGUE             0x2D3
 #define ARIZONA_INPUT_ENABLES                    0x300
@@ -1011,7 +983,6 @@
 #define ARIZONA_DSP4AUX5MIX_INPUT_1_SOURCE       0xA30
 #define ARIZONA_DSP4AUX6MIX_INPUT_1_SOURCE       0xA38
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_DSP5LMIX_INPUT_1_SOURCE       0xA40
 #define CLEARWATER_DSP5LMIX_INPUT_1_VOLUME       0xA41
 #define CLEARWATER_DSP5LMIX_INPUT_2_SOURCE       0xA42
@@ -1035,8 +1006,6 @@
 #define CLEARWATER_DSP5AUX5MIX_INPUT_1_SOURCE    0xA70
 #define CLEARWATER_DSP5AUX6MIX_INPUT_1_SOURCE    0xA78
 =======
-=======
->>>>>>> master
 #define CLEARWATER_DSP5LMIX_INPUT_1_SOURCE          0xA40
 #define CLEARWATER_DSP5LMIX_INPUT_1_VOLUME          0xA41
 #define CLEARWATER_DSP5LMIX_INPUT_2_SOURCE          0xA42
@@ -1059,15 +1028,11 @@
 #define CLEARWATER_DSP5AUX4MIX_INPUT_1_SOURCE       0xA68
 #define CLEARWATER_DSP5AUX5MIX_INPUT_1_SOURCE       0xA70
 #define CLEARWATER_DSP5AUX6MIX_INPUT_1_SOURCE       0xA78
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define ARIZONA_ASRC1LMIX_INPUT_1_SOURCE         0xA80
 #define ARIZONA_ASRC1RMIX_INPUT_1_SOURCE         0xA88
 #define ARIZONA_ASRC2LMIX_INPUT_1_SOURCE         0xA90
 #define ARIZONA_ASRC2RMIX_INPUT_1_SOURCE         0xA98
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_ASRC1_1LMIX_INPUT_1_SOURCE    0xA80
 #define CLEARWATER_ASRC1_1RMIX_INPUT_1_SOURCE    0xA88
@@ -1078,8 +1043,6 @@
 #define CLEARWATER_ASRC2_2LMIX_INPUT_1_SOURCE    0xAB0
 #define CLEARWATER_ASRC2_2RMIX_INPUT_1_SOURCE    0xAB8
 =======
-=======
->>>>>>> master
 #define CLEARWATER_ASRC1_1LMIX_INPUT_1_SOURCE        0xA80
 #define CLEARWATER_ASRC1_1RMIX_INPUT_1_SOURCE        0xA88
 #define CLEARWATER_ASRC1_2LMIX_INPUT_1_SOURCE        0xA90
@@ -1088,10 +1051,7 @@
 #define CLEARWATER_ASRC2_1RMIX_INPUT_1_SOURCE        0xAA8
 #define CLEARWATER_ASRC2_2LMIX_INPUT_1_SOURCE        0xAB0
 #define CLEARWATER_ASRC2_2RMIX_INPUT_1_SOURCE        0xAB8
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define ARIZONA_ISRC1DEC1MIX_INPUT_1_SOURCE      0xB00
 #define ARIZONA_ISRC1DEC2MIX_INPUT_1_SOURCE      0xB08
 #define ARIZONA_ISRC1DEC3MIX_INPUT_1_SOURCE      0xB10
@@ -1126,7 +1086,6 @@
 #define ARIZONA_ISRC4DEC2MIX_INPUT_1_SOURCE      0xBC8
 #define ARIZONA_ISRC4INT1MIX_INPUT_1_SOURCE      0xBE0
 #define ARIZONA_ISRC4INT2MIX_INPUT_1_SOURCE      0xBE8
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_DSP6LMIX_INPUT_1_SOURCE       0xC00
 #define CLEARWATER_DSP6LMIX_INPUT_1_VOLUME       0xC01
@@ -1173,8 +1132,6 @@
 #define CLEARWATER_DSP7AUX5MIX_INPUT_1_SOURCE    0xC70
 #define CLEARWATER_DSP7AUX6MIX_INPUT_1_SOURCE    0xC78
 =======
-=======
->>>>>>> master
 #define CLEARWATER_DSP6LMIX_INPUT_1_SOURCE           0xC00
 #define CLEARWATER_DSP6LMIX_INPUT_1_VOLUME           0xC01
 #define CLEARWATER_DSP6LMIX_INPUT_2_SOURCE           0xC02
@@ -1219,10 +1176,7 @@
 #define CLEARWATER_DSP7AUX4MIX_INPUT_1_SOURCE        0xC68
 #define CLEARWATER_DSP7AUX5MIX_INPUT_1_SOURCE        0xC70
 #define CLEARWATER_DSP7AUX6MIX_INPUT_1_SOURCE        0xC78
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define ARIZONA_GPIO1_CTRL                       0xC00
 #define ARIZONA_GPIO2_CTRL                       0xC01
 #define ARIZONA_GPIO3_CTRL                       0xC02
@@ -1232,14 +1186,10 @@
 #define ARIZONA_GPIO_DEBOUNCE_CONFIG             0xC10
 #define ARIZONA_GP_SWITCH_1                      0xC18
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_GP_SWITCH_1                   0x2C8
 =======
 #define CLEARWATER_GP_SWITCH_1                       0x2C8
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_GP_SWITCH_1                       0x2C8
->>>>>>> master
 #define ARIZONA_MISC_PAD_CTRL_1                  0xC20
 #define ARIZONA_MISC_PAD_CTRL_2                  0xC21
 #define ARIZONA_MISC_PAD_CTRL_3                  0xC22
@@ -1398,24 +1348,18 @@
 #define ARIZONA_DRC2_CTRL4                       0xE8C
 #define ARIZONA_DRC2_CTRL5                       0xE8D
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_DRC2_CTRL1                    0xE88
 #define CLEARWATER_DRC2_CTRL2                    0xE89
 #define CLEARWATER_DRC2_CTRL3                    0xE8A
 #define CLEARWATER_DRC2_CTRL4                    0xE8B
 #define CLEARWATER_DRC2_CTRL5                    0xE8C
 =======
-=======
->>>>>>> master
 #define CLEARWATER_DRC2_CTRL1                        0xE88
 #define CLEARWATER_DRC2_CTRL2                        0xE89
 #define CLEARWATER_DRC2_CTRL3                        0xE8A
 #define CLEARWATER_DRC2_CTRL4                        0xE8B
 #define CLEARWATER_DRC2_CTRL5                        0xE8C
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define ARIZONA_HPLPF1_1                         0xEC0
 #define ARIZONA_HPLPF1_2                         0xEC1
 #define ARIZONA_HPLPF2_1                         0xEC4
@@ -1424,7 +1368,6 @@
 #define ARIZONA_HPLPF3_2                         0xEC9
 #define ARIZONA_HPLPF4_1                         0xECC
 #define ARIZONA_HPLPF4_2                         0xECD
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_ASRC2_ENABLE                  0xED0
 #define CLEARWATER_ASRC2_STATUS                  0xED1
@@ -1435,8 +1378,6 @@
 #define CLEARWATER_ASRC1_RATE1                   0xEE2
 #define CLEARWATER_ASRC1_RATE2                   0xEE3
 =======
-=======
->>>>>>> master
 #define CLEARWATER_ASRC2_ENABLE                      0xED0
 #define CLEARWATER_ASRC2_STATUS                      0xED1
 #define CLEARWATER_ASRC2_RATE1                       0xED2
@@ -1445,10 +1386,7 @@
 #define CLEARWATER_ASRC1_STATUS                      0xEE1
 #define CLEARWATER_ASRC1_RATE1                       0xEE2
 #define CLEARWATER_ASRC1_RATE2                       0xEE3
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define ARIZONA_ASRC_ENABLE                      0xEE0
 #define ARIZONA_ASRC_STATUS                      0xEE1
 #define ARIZONA_ASRC_RATE1                       0xEE2
@@ -1544,7 +1482,6 @@
 #define ARIZONA_DSP2_SCRATCH_3                   0x1243
 #define ARIZONA_DSP3_CONTROL_1                   0x1300
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_DAC_COMP_1                    0x1300
 #define ARIZONA_DSP3_CLOCKING_1                  0x1301
 #define CLEARWATER_DAC_COMP_2                    0x1302
@@ -1553,11 +1490,6 @@
 #define ARIZONA_DSP3_CLOCKING_1                  0x1301
 #define CLEARWATER_DAC_COMP_2                        0x1302
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_DAC_COMP_1                        0x1300
-#define ARIZONA_DSP3_CLOCKING_1                  0x1301
-#define CLEARWATER_DAC_COMP_2                        0x1302
->>>>>>> master
 #define ARIZONA_DSP3_STATUS_1                    0x1304
 #define ARIZONA_DSP3_STATUS_2                    0x1305
 #define ARIZONA_DSP3_STATUS_3                    0x1306
@@ -1586,7 +1518,6 @@
 #define ARIZONA_DSP3_SCRATCH_1                   0x1341
 #define ARIZONA_DSP3_SCRATCH_2                   0x1342
 #define ARIZONA_DSP3_SCRATCH_3                   0x1343
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFFICIENT_1L_1          0x1380
 #define CLEARWATER_FRF_COEFFICIENT_1L_2          0x1381
@@ -1637,8 +1568,6 @@
 #define CLEARWATER_FRF_COEFFICIENT_6R_3          0x1432
 #define CLEARWATER_FRF_COEFFICIENT_6R_4          0x1433
 =======
-=======
->>>>>>> master
 #define CLEARWATER_FRF_COEFFICIENT_1L_1              0x1380
 #define CLEARWATER_FRF_COEFFICIENT_1L_2              0x1381
 #define CLEARWATER_FRF_COEFFICIENT_1L_3              0x1382
@@ -1687,10 +1616,7 @@
 #define CLEARWATER_FRF_COEFFICIENT_6R_2              0x1431
 #define CLEARWATER_FRF_COEFFICIENT_6R_3              0x1432
 #define CLEARWATER_FRF_COEFFICIENT_6R_4              0x1433
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define ARIZONA_DSP4_CONTROL_1                   0x1400
 #define ARIZONA_DSP4_CLOCKING_1                  0x1401
 #define ARIZONA_DSP4_STATUS_1                    0x1404
@@ -1727,7 +1653,6 @@
 #define ARIZONA_FRF_COEFF_4                      0x1703
 #define ARIZONA_V2_DAC_COMP_1                    0x1704
 #define ARIZONA_V2_DAC_COMP_2                    0x1705
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_ADSP2_IRQ0                    0x1600
 #define CLEARWATER_ADSP2_IRQ1                    0x1601
@@ -2532,8 +2457,6 @@
 #define CLEARWATER_DSP7_SCRATCH_0_1              0x3FFE40
 #define CLEARWATER_DSP7_SCRATCH_2_3              0x3FFE42
 =======
-=======
->>>>>>> master
 #define CLEARWATER_ADSP2_IRQ0                        0x1600
 #define CLEARWATER_ADSP2_IRQ1                        0x1601
 #define CLEARWATER_ADSP2_IRQ2                        0x1602
@@ -3348,10 +3271,7 @@
 #define CLEARWATER_DSP7_SCRATCH_1                    0x3FFE41
 #define CLEARWATER_DSP7_SCRATCH_2                    0x3FFE42
 #define CLEARWATER_DSP7_SCRATCH_3                    0x3FFE43
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * Field Definitions.
@@ -3615,7 +3535,6 @@
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * R66 (0x42) - Spare Triggers
  */
 #define ARIZONA_WS_TRG8                          0x0080  /* WS_TRG8 */
@@ -3654,8 +3573,6 @@
 /*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  * R97 (0x61) - Sample Rate Sequence Select 1
  */
 #define ARIZONA_WSEQ_SAMPLE_RATE_DETECT_A_SEQ_ADDR_MASK 0x01FF  /* WSEQ_SAMPLE_RATE_DETECT_A_SEQ_ADDR - [8:0] */
@@ -3816,7 +3733,6 @@
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * R160 (0xA0) - Clearwater Comfort Noise Generator
  */
 #define CLEARWATER_NOISE_GEN_ENA                 0x0020  /* NOISE_GEN_ENA */
@@ -3830,8 +3746,6 @@
 /*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  * R256 (0x100) - Clock 32k 1
  */
 #define ARIZONA_CLK_32K_ENA                      0x0040  /* CLK_32K_ENA */
@@ -3948,7 +3862,6 @@
  * R109 (0x120) - DSP_Clock_1
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_DSP_CLK_FREQ_LEGACY           0x0700  /* DSP_CLK_FREQ_LEGACY - [10:8] */
 #define CLEARWATER_DSP_CLK_FREQ_LEGACY_MASK      0x0700  /* DSP_CLK_FREQ_LEGACY - [10:8] */
 #define CLEARWATER_DSP_CLK_FREQ_LEGACY_SHIFT          8  /* DSP_CLK_FREQ_LEGACY - [10:8] */
@@ -3962,8 +3875,6 @@
 #define CLEARWATER_DSP_CLK_SRC_SHIFT                  0  /* DSP_CLK_SRC - [3:0] */
 #define CLEARWATER_DSP_CLK_SRC_WIDTH                  4  /* DSP_CLK_SRC - [3:0] */
 =======
-=======
->>>>>>> master
 #define CLEARWATER_DSP_CLK_FREQ_LEGACY                           0x0700  /* DSP_CLK_FREQ_LEGACY - [10:8] */
 #define CLEARWATER_DSP_CLK_FREQ_LEGACY_MASK                      0x0700  /* DSP_CLK_FREQ_LEGACY - [10:8] */
 #define CLEARWATER_DSP_CLK_FREQ_LEGACY_SHIFT                          8  /* DSP_CLK_FREQ_LEGACY - [10:8] */
@@ -3976,15 +3887,11 @@
 #define CLEARWATER_DSP_CLK_SRC_MASK                              0x000F  /* DSP_CLK_SRC - [3:0] */
 #define CLEARWATER_DSP_CLK_SRC_SHIFT                                  0  /* DSP_CLK_SRC - [3:0] */
 #define CLEARWATER_DSP_CLK_SRC_WIDTH                                  4  /* DSP_CLK_SRC - [3:0] */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R110 (0x122) - DSP_Clock_2
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_DSP_CLK_FREQ_MASK             0x03FF  /* DSP_CLK_FREQ - [9:0] */
 #define CLEARWATER_DSP_CLK_FREQ_SHIFT                 0  /* DSP_CLK_FREQ - [9:0] */
@@ -3994,11 +3901,6 @@
 #define CLEARWATER_DSP_CLK_FREQ_SHIFT                                 0  /* DSP_CLK_FREQ - [9:0] */
 #define CLEARWATER_DSP_CLK_FREQ_WIDTH                                10  /* DSP_CLK_FREQ - [9:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_DSP_CLK_FREQ_MASK                             0x03FF  /* DSP_CLK_FREQ - [9:0] */
-#define CLEARWATER_DSP_CLK_FREQ_SHIFT                                 0  /* DSP_CLK_FREQ - [9:0] */
-#define CLEARWATER_DSP_CLK_FREQ_WIDTH                                10  /* DSP_CLK_FREQ - [9:0] */
->>>>>>> master
 
 /*
  * R329 (0x149) - Output system clock
@@ -4781,7 +4683,6 @@
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
  * R638 (0x27E) - Clearwater EDRE HP stereo control
  */
 #define ARIZONA_HP3_EDRE_STEREO                  0x0004  /* HP3_EDRE_STEREO */
@@ -4800,8 +4701,6 @@
 /*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
  * R659 (0x293) - Accessory Detect Mode 1
  */
 #define ARIZONA_ACCDET_SRC                       0x2000  /* ACCDET_SRC */
@@ -4845,7 +4744,6 @@
 #define ARIZONA_HP_IDAC_STEER_SHIFT                   2  /* HP_IDAC_STEER */
 #define ARIZONA_HP_IDAC_STEER_WIDTH                   1  /* HP_IDAC_STEER */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_HP_RATE_MASK                  0x0006  /* HP_RATE - [2:1] */
 #define CLEARWATER_HP_RATE_SHIFT                      1  /* HP_RATE - [2:1] */
 #define CLEARWATER_HP_RATE_WIDTH                      2  /* HP_RATE - [2:1] */
@@ -4854,11 +4752,6 @@
 #define CLEARWATER_HP_RATE_SHIFT                          1  /* HP_RATE - [2:1] */
 #define CLEARWATER_HP_RATE_WIDTH                          2  /* HP_RATE - [2:1] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_HP_RATE_MASK                      0x0006  /* HP_RATE - [2:1] */
-#define CLEARWATER_HP_RATE_SHIFT                          1  /* HP_RATE - [2:1] */
-#define CLEARWATER_HP_RATE_WIDTH                          2  /* HP_RATE - [2:1] */
->>>>>>> master
 #define VEGAS_HP_RATE_MASK                       0x0006  /* HP_RATE - [2:1] */
 #define VEGAS_HP_RATE_SHIFT                           1  /* HP_RATE - [2:1] */
 #define VEGAS_HP_RATE_WIDTH                           2  /* HP_RATE - [2:1] */
@@ -4882,13 +4775,9 @@
 #define ARIZONA_HP_LVL_SHIFT                          0  /* HP_LVL - [6:0] */
 #define ARIZONA_HP_LVL_WIDTH                          7  /* HP_LVL - [6:0] */
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 #define ARIZONA_HP_DONE_B                        0x8000  /* HP_DONE */
 #define ARIZONA_HP_DONE_B_MASK                   0x8000  /* HP_DONE */
 #define ARIZONA_HP_DONE_B_SHIFT                      15  /* HP_DONE */
@@ -4995,22 +4884,16 @@
  * R710 (0x2C6) - Micd Clamp control
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_MICD_CLAMP_OVD_MASK           0x0010  /* MICD_CLAMP_OVD */
 #define CLEARWATER_MICD_CLAMP_OVD_SHIFT               4  /* MICD_CLAMP_OVD */
 #define CLEARWATER_MICD_CLAMP_OVD_WIDTH               1  /* MICD_CLAMP_OVD */
 #define CLEARWATER_MICD_CLAMP_OVD                0x0010  /* MICD_CLAMP_OVD */
 =======
-=======
->>>>>>> master
 #define CLEARWATER_MICD_CLAMP_OVD_MASK               0x0010  /* MICD_CLAMP_OVD */
 #define CLEARWATER_MICD_CLAMP_OVD_SHIFT                   4  /* MICD_CLAMP_OVD */
 #define CLEARWATER_MICD_CLAMP_OVD_WIDTH                   1  /* MICD_CLAMP_OVD */
 #define CLEARWATER_MICD_CLAMP_OVD                      0x10  /* MICD_CLAMP_OVD */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R715 (0x2CB) - Isolation control
@@ -5158,7 +5041,6 @@
 #define ARIZONA_IN1_DMICL_DLY_SHIFT                   0  /* IN1_DMICL_DLY - [5:0] */
 #define ARIZONA_IN1_DMICL_DLY_WIDTH                   6  /* IN1_DMICL_DLY - [5:0] */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_IN1_OSR_MASK                  0x0700  /* IN1_OSR - [8:10] */
 #define CLEARWATER_IN1_OSR_SHIFT                      8  /* IN1_OSR - [8:10] */
 #define CLEARWATER_IN1_OSR_WIDTH                      3  /* IN1_OSR - [8:10] */
@@ -5167,11 +5049,6 @@
 #define CLEARWATER_IN1_OSR_SHIFT                          8  /* IN1_OSR - [8:10] */
 #define CLEARWATER_IN1_OSR_WIDTH                          3  /* IN1_OSR - [8:10] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_IN1_OSR_MASK                      0x0700  /* IN1_OSR - [8:10] */
-#define CLEARWATER_IN1_OSR_SHIFT                          8  /* IN1_OSR - [8:10] */
-#define CLEARWATER_IN1_OSR_WIDTH                          3  /* IN1_OSR - [8:10] */
->>>>>>> master
 
 /*
  * R788 (0x314) - IN1R Control
@@ -5261,7 +5138,6 @@
 #define ARIZONA_IN2_DMICL_DLY_SHIFT                   0  /* IN2_DMICL_DLY - [5:0] */
 #define ARIZONA_IN2_DMICL_DLY_WIDTH                   6  /* IN2_DMICL_DLY - [5:0] */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_IN2_OSR_MASK                  0x0700  /* IN2_OSR - [8:10] */
 #define CLEARWATER_IN2_OSR_SHIFT                      8  /* IN2_OSR - [8:10] */
 #define CLEARWATER_IN2_OSR_WIDTH                      3  /* IN2_OSR - [8:10] */
@@ -5270,11 +5146,6 @@
 #define CLEARWATER_IN2_OSR_SHIFT                          8  /* IN2_OSR - [8:10] */
 #define CLEARWATER_IN2_OSR_WIDTH                          3  /* IN2_OSR - [8:10] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_IN2_OSR_MASK                      0x0700  /* IN2_OSR - [8:10] */
-#define CLEARWATER_IN2_OSR_SHIFT                          8  /* IN2_OSR - [8:10] */
-#define CLEARWATER_IN2_OSR_WIDTH                          3  /* IN2_OSR - [8:10] */
->>>>>>> master
 
 /*
  * R796 (0x31C) - IN2R Control
@@ -5358,7 +5229,6 @@
 #define ARIZONA_IN3_DMICL_DLY_SHIFT                   0  /* IN3_DMICL_DLY - [5:0] */
 #define ARIZONA_IN3_DMICL_DLY_WIDTH                   6  /* IN3_DMICL_DLY - [5:0] */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_IN3_OSR_MASK                  0x0700  /* IN3_OSR - [8:10] */
 #define CLEARWATER_IN3_OSR_SHIFT                      8  /* IN3_OSR - [8:10] */
 #define CLEARWATER_IN3_OSR_WIDTH                      3  /* IN3_OSR - [8:10] */
@@ -5367,11 +5237,6 @@
 #define CLEARWATER_IN3_OSR_SHIFT                          8  /* IN3_OSR - [8:10] */
 #define CLEARWATER_IN3_OSR_WIDTH                          3  /* IN3_OSR - [8:10] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_IN3_OSR_MASK                      0x0700  /* IN3_OSR - [8:10] */
-#define CLEARWATER_IN3_OSR_SHIFT                          8  /* IN3_OSR - [8:10] */
-#define CLEARWATER_IN3_OSR_WIDTH                          3  /* IN3_OSR - [8:10] */
->>>>>>> master
 
 /*
  * R804 (0x324) - IN3R Control
@@ -5440,7 +5305,6 @@
 #define ARIZONA_IN4L_DMIC_DLY_SHIFT                   0  /* IN4L_DMIC_DLY - [5:0] */
 #define ARIZONA_IN4L_DMIC_DLY_WIDTH                   6  /* IN4L_DMIC_DLY - [5:0] */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_IN4_OSR_MASK                  0x0700  /* IN4_OSR - [8:10] */
 #define CLEARWATER_IN4_OSR_SHIFT                      8  /* IN4_OSR - [8:10] */
 #define CLEARWATER_IN4_OSR_WIDTH                      3  /* IN4_OSR - [8:10] */
@@ -5449,11 +5313,6 @@
 #define CLEARWATER_IN4_OSR_SHIFT                          8  /* IN4_OSR - [8:10] */
 #define CLEARWATER_IN4_OSR_WIDTH                          3  /* IN4_OSR - [8:10] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_IN4_OSR_MASK                      0x0700  /* IN4_OSR - [8:10] */
-#define CLEARWATER_IN4_OSR_SHIFT                          8  /* IN4_OSR - [8:10] */
-#define CLEARWATER_IN4_OSR_WIDTH                          3  /* IN4_OSR - [8:10] */
->>>>>>> master
 
 /*
  * R812 (0x32C) - IN4R Control
@@ -5519,7 +5378,6 @@
 #define ARIZONA_IN5L_DMIC_DLY_SHIFT                   0  /* IN5L_DMIC_DLY - [5:0] */
 #define ARIZONA_IN5L_DMIC_DLY_WIDTH                   6  /* IN5L_DMIC_DLY - [5:0] */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_IN5_OSR_MASK                  0x0700  /* IN5_OSR - [8:10] */
 #define CLEARWATER_IN5_OSR_SHIFT                      8  /* IN5_OSR - [8:10] */
 #define CLEARWATER_IN5_OSR_WIDTH                      3  /* IN5_OSR - [8:10] */
@@ -5528,11 +5386,6 @@
 #define CLEARWATER_IN5_OSR_SHIFT                          8  /* IN5_OSR - [8:10] */
 #define CLEARWATER_IN5_OSR_WIDTH                          3  /* IN5_OSR - [8:10] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_IN5_OSR_MASK                      0x0700  /* IN5_OSR - [8:10] */
-#define CLEARWATER_IN5_OSR_SHIFT                          8  /* IN5_OSR - [8:10] */
-#define CLEARWATER_IN5_OSR_WIDTH                          3  /* IN5_OSR - [8:10] */
->>>>>>> master
 
 /*
  * R820 (0x334) - IN5R Control
@@ -5598,7 +5451,6 @@
 #define ARIZONA_IN6L_DMIC_DLY_SHIFT                   0  /* IN6L_DMIC_DLY - [5:0] */
 #define ARIZONA_IN6L_DMIC_DLY_WIDTH                   6  /* IN6L_DMIC_DLY - [5:0] */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_IN6_OSR_MASK                  0x0700  /* IN6_OSR - [8:10] */
 #define CLEARWATER_IN6_OSR_SHIFT                      8  /* IN6_OSR - [8:10] */
 #define CLEARWATER_IN6_OSR_WIDTH                      3  /* IN6_OSR - [8:10] */
@@ -5607,11 +5459,6 @@
 #define CLEARWATER_IN6_OSR_SHIFT                          8  /* IN6_OSR - [8:10] */
 #define CLEARWATER_IN6_OSR_WIDTH                          3  /* IN6_OSR - [8:10] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_IN6_OSR_MASK                      0x0700  /* IN6_OSR - [8:10] */
-#define CLEARWATER_IN6_OSR_SHIFT                          8  /* IN6_OSR - [8:10] */
-#define CLEARWATER_IN6_OSR_WIDTH                          3  /* IN6_OSR - [8:10] */
->>>>>>> master
 
 /*
  * R828 (0x33C) - IN6R Control
@@ -6358,7 +6205,6 @@
 /* R486 (0x448) - EDRE_Enable
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_EDRE_OUT4L_THR3_ENA           0x0800  /* EDRE_OUT4L_THR3_ENA */
 #define CLEARWATER_EDRE_OUT4L_THR3_ENA_MASK      0x0800  /* EDRE_OUT4L_THR3_ENA */
 #define CLEARWATER_EDRE_OUT4L_THR3_ENA_SHIFT         11  /* EDRE_OUT4L_THR3_ENA */
@@ -6408,8 +6254,6 @@
 #define CLEARWATER_EDRE_OUT1R_THR1_ENA_SHIFT          0  /* EDRE_OUT1R_THR1_ENA */
 #define CLEARWATER_EDRE_OUT1R_THR1_ENA_WIDTH          1  /* EDRE_OUT1R_THR1_ENA */
 =======
-=======
->>>>>>> master
 #define CLEARWATER_EDRE_OUT4L_THR3_ENA                           0x0800  /* EDRE_OUT4L_THR3_ENA */
 #define CLEARWATER_EDRE_OUT4L_THR3_ENA_MASK                      0x0800  /* EDRE_OUT4L_THR3_ENA */
 #define CLEARWATER_EDRE_OUT4L_THR3_ENA_SHIFT                         11  /* EDRE_OUT4L_THR3_ENA */
@@ -6458,10 +6302,7 @@
 #define CLEARWATER_EDRE_OUT1R_THR1_ENA_MASK                      0x0001  /* EDRE_OUT1R_THR1_ENA */
 #define CLEARWATER_EDRE_OUT1R_THR1_ENA_SHIFT                          0  /* EDRE_OUT1R_THR1_ENA */
 #define CLEARWATER_EDRE_OUT1R_THR1_ENA_WIDTH                          1  /* EDRE_OUT1R_THR1_ENA */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R1104 (0x450) - DAC AEC Control 1
@@ -6581,7 +6422,6 @@
  * R539 (0x4A8) - HP_Test_Ctrl_5
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define ARIZONA_HP1L_TST_CINT                    0x4000  /* HP1L_TST_CINT */
 #define ARIZONA_HP1L_TST_CINT_MASK               0x4000  /* HP1L_TST_CINT */
 #define ARIZONA_HP1L_TST_CINT_SHIFT                  14  /* HP1L_TST_CINT */
@@ -6623,8 +6463,6 @@
 #define ARIZONA_HP1L_TST_IBIAS_SHIFT                  0  /* HP1L_TST_IBIAS - [1:0] */
 #define ARIZONA_HP1L_TST_IBIAS_WIDTH                  2  /* HP1L_TST_IBIAS - [1:0] */
 =======
-=======
->>>>>>> master
 #define ARIZONA_HP1L_TST_CINT                                 0x4000  /* HP1L_TST_CINT */
 #define ARIZONA_HP1L_TST_CINT_MASK                            0x4000  /* HP1L_TST_CINT */
 #define ARIZONA_HP1L_TST_CINT_SHIFT                               14  /* HP1L_TST_CINT */
@@ -6665,15 +6503,11 @@
 #define ARIZONA_HP1L_TST_IBIAS_MASK                           0x0003  /* HP1L_TST_IBIAS - [1:0] */
 #define ARIZONA_HP1L_TST_IBIAS_SHIFT                               0  /* HP1L_TST_IBIAS - [1:0] */
 #define ARIZONA_HP1L_TST_IBIAS_WIDTH                               2  /* HP1L_TST_IBIAS - [1:0] */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R540 (0x4A9) - HP_Test_Ctrl_6
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define ARIZONA_HP1R_TST_CINT                    0x4000  /* HP1R_TST_CINT */
 #define ARIZONA_HP1R_TST_CINT_MASK               0x4000  /* HP1R_TST_CINT */
@@ -6716,8 +6550,6 @@
 #define ARIZONA_HP1R_TST_IBIAS_SHIFT                  0  /* HP1R_TST_IBIAS - [1:0] */
 #define ARIZONA_HP1R_TST_IBIAS_WIDTH                  2  /* HP1R_TST_IBIAS - [1:0] */
 =======
-=======
->>>>>>> master
 #define ARIZONA_HP1R_TST_CINT                                 0x4000  /* HP1R_TST_CINT */
 #define ARIZONA_HP1R_TST_CINT_MASK                            0x4000  /* HP1R_TST_CINT */
 #define ARIZONA_HP1R_TST_CINT_SHIFT                               14  /* HP1R_TST_CINT */
@@ -6758,10 +6590,7 @@
 #define ARIZONA_HP1R_TST_IBIAS_MASK                           0x0003  /* HP1R_TST_IBIAS - [1:0] */
 #define ARIZONA_HP1R_TST_IBIAS_SHIFT                               0  /* HP1R_TST_IBIAS - [1:0] */
 #define ARIZONA_HP1R_TST_IBIAS_WIDTH                               2  /* HP1R_TST_IBIAS - [1:0] */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R1244 (0x4DC) - DAC comp 1
@@ -7813,7 +7642,6 @@
  * R1475 (0x5C5) - SPD1 TX Channel Status 3
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define ARIZONA_SPD1_ORGSAMP_MASK                0x0F00  /* SPD1_ORGSAMP */
 #define ARIZONA_SPD1_ORGSAMP_SHIFT                    8  /* SPD1_ORGSAMP */
 #define ARIZONA_SPD1_ORGSAMP_WIDTH                    4  /* SPD1_ORGSAMP */
@@ -7831,8 +7659,6 @@
 #define ARIZONA_SPD1_CLKACU_SHIFT                     2  /* SPD1_CLKACU */
 #define ARIZONA_SPD1_CLKACU_WIDTH                     0  /* SPD1_CLKACU */
 =======
-=======
->>>>>>> master
 #define ARIZONA_SPD1_ORGSAMP_MASK                 0x0F00  /* SPD1_ORGSAMP */
 #define ARIZONA_SPD1_ORGSAMP_SHIFT                     8  /* SPD1_ORGSAMP */
 #define ARIZONA_SPD1_ORGSAMP_WIDTH                     4  /* SPD1_ORGSAMP */
@@ -7849,10 +7675,7 @@
 #define ARIZONA_SPD1_CLKACU_MASK                  0x0003  /* SPD1_CLKACU */
 #define ARIZONA_SPD1_CLKACU_SHIFT                      2  /* SPD1_CLKACU */
 #define ARIZONA_SPD1_CLKACU_WIDTH                      0  /* SPD1_CLKACU */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R1507 (0x5E3) - SLIMbus Framer Ref Gear
@@ -8709,7 +8532,6 @@
  * R3339 (0xD0B) - Interrupt Status 4 Mask
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define ARIZONA_IM_ASRC_CFG_ERR_EINT1                 0x8000  /* IM_ASRC_CFG_ERR_EINT1 */
 #define ARIZONA_IM_ASRC_CFG_ERR_EINT1_MASK            0x8000  /* IM_ASRC_CFG_ERR_EINT1 */
 #define ARIZONA_IM_ASRC_CFG_ERR_EINT1_SHIFT               15  /* IM_ASRC_CFG_ERR_EINT1 */
@@ -8775,8 +8597,6 @@
 #define ARIZONA_IM_HP1L_DONE_EINT1_SHIFT                   0  /* IM_HP1L_DONE_EINT1 */
 #define ARIZONA_IM_HP1L_DONE_EINT1_WIDTH                   1  /* IM_HP1L_DONE_EINT1 */
 =======
-=======
->>>>>>> master
 #define ARIZONA_IM_ASRC_CFG_ERR_EINT1            0x8000  /* IM_ASRC_CFG_ERR_EINT1 */
 #define ARIZONA_IM_ASRC_CFG_ERR_EINT1_MASK       0x8000  /* IM_ASRC_CFG_ERR_EINT1 */
 #define ARIZONA_IM_ASRC_CFG_ERR_EINT1_SHIFT          15  /* IM_ASRC_CFG_ERR_EINT1 */
@@ -8841,10 +8661,7 @@
 #define ARIZONA_IM_HP1L_DONE_EINT1_MASK          0x0001  /* IM_HP1L_DONE_EINT1 */
 #define ARIZONA_IM_HP1L_DONE_EINT1_SHIFT              0  /* IM_HP1L_DONE_EINT1 */
 #define ARIZONA_IM_HP1L_DONE_EINT1_WIDTH              1  /* IM_HP1L_DONE_EINT1 */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R3339 (0xD0B) - Interrupt Status 4 Mask (Alternate layout)
@@ -9179,7 +8996,6 @@
  * are specified
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define ARIZONA_V2_AIF3_ERR_EINT2                     0x8000  /* AIF3_ERR_EINT2 */
 #define ARIZONA_V2_AIF3_ERR_EINT2_MASK                0x8000  /* AIF3_ERR_EINT2 */
 #define ARIZONA_V2_AIF3_ERR_EINT2_SHIFT                   15  /* AIF3_ERR_EINT2 */
@@ -9221,8 +9037,6 @@
 #define ARIZONA_V2_ISRC3_CFG_ERR_EINT2_SHIFT               6  /* ISRC3_CFG_ERR_EINT2 */
 #define ARIZONA_V2_ISRC3_CFG_ERR_EINT2_WIDTH               1  /* ISRC3_CFG_ERR_EINT2 */
 =======
-=======
->>>>>>> master
 #define ARIZONA_V2_AIF3_ERR_EINT2                  0x8000  /* AIF3_ERR_EINT2 */
 #define ARIZONA_V2_AIF3_ERR_EINT2_MASK             0x8000  /* AIF3_ERR_EINT2 */
 #define ARIZONA_V2_AIF3_ERR_EINT2_SHIFT                15  /* AIF3_ERR_EINT2 */
@@ -9263,10 +9077,7 @@
 #define ARIZONA_V2_ISRC3_CFG_ERR_EINT2_MASK        0x0040  /* ISRC3_CFG_ERR_EINT2 */
 #define ARIZONA_V2_ISRC3_CFG_ERR_EINT2_SHIFT            6  /* ISRC3_CFG_ERR_EINT2 */
 #define ARIZONA_V2_ISRC3_CFG_ERR_EINT2_WIDTH            1  /* ISRC3_CFG_ERR_EINT2 */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R3348 (0xD14) - IRQ2 Status 5
@@ -9475,7 +9286,6 @@
  * R3355 (0xD1B) - IRQ2 Status 4 Mask
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define ARIZONA_IM_ASRC_CFG_ERR_EINT2                 0x8000  /* IM_ASRC_CFG_ERR_EINT2 */
 #define ARIZONA_IM_ASRC_CFG_ERR_EINT2_MASK            0x8000  /* IM_ASRC_CFG_ERR_EINT2 */
 #define ARIZONA_IM_ASRC_CFG_ERR_EINT2_SHIFT               15  /* IM_ASRC_CFG_ERR_EINT2 */
@@ -9541,8 +9351,6 @@
 #define ARIZONA_IM_HP1L_DONE_EINT2_SHIFT                   0  /* IM_HP1L_DONE_EINT2 */
 #define ARIZONA_IM_HP1L_DONE_EINT2_WIDTH                   1  /* IM_HP1L_DONE_EINT2 */
 =======
-=======
->>>>>>> master
 #define ARIZONA_IM_ASRC_CFG_ERR_EINT2            0x8000  /* IM_ASRC_CFG_ERR_EINT2 */
 #define ARIZONA_IM_ASRC_CFG_ERR_EINT2_MASK       0x8000  /* IM_ASRC_CFG_ERR_EINT2 */
 #define ARIZONA_IM_ASRC_CFG_ERR_EINT2_SHIFT          15  /* IM_ASRC_CFG_ERR_EINT2 */
@@ -9607,10 +9415,7 @@
 #define ARIZONA_IM_HP1L_DONE_EINT2_MASK          0x0001  /* IM_HP1L_DONE_EINT2 */
 #define ARIZONA_IM_HP1L_DONE_EINT2_SHIFT              0  /* IM_HP1L_DONE_EINT2 */
 #define ARIZONA_IM_HP1L_DONE_EINT2_WIDTH              1  /* IM_HP1L_DONE_EINT2 */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R3355 (0xD1B) - IRQ2 Status 4 Mask (Alternate layout)
@@ -10003,7 +9808,6 @@
  * R3365 (0xD25) - Interrupt Raw Status 7
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define ARIZONA_SLIMBUS_SUBSYS_OVERCLOCKED_STS       0x8000  /* SLIMBUS_SUBSYS_OVERCLOCKED_STS */
 #define ARIZONA_SLIMBUS_SUBSYS_OVERCLOCKED_STS_MASK  0x8000  /* SLIMBUS_SUBSYS_OVERCLOCKED_STS */
 #define ARIZONA_SLIMBUS_SUBSYS_OVERCLOCKED_STS_SHIFT     15  /* SLIMBUS_SUBSYS_OVERCLOCKED_STS */
@@ -10049,8 +9853,6 @@
 #define ARIZONA_ISRC1_OVERCLOCKED_STS_SHIFT               0  /* ISRC1_OVERCLOCKED_STS */
 #define ARIZONA_ISRC1_OVERCLOCKED_STS_WIDTH               1  /* ISRC1_OVERCLOCKED_STS */
 =======
-=======
->>>>>>> master
 #define ARIZONA_SLIMBUS_SUBSYS_OVERCLOCKED_STS   0x8000  /* SLIMBUS_SUBSYS_OVERCLOCKED_STS */
 #define ARIZONA_SLIMBUS_SUBSYS_OVERCLOCKED_STS_MASK 0x8000  /* SLIMBUS_SUBSYS_OVERCLOCKED_STS */
 #define ARIZONA_SLIMBUS_SUBSYS_OVERCLOCKED_STS_SHIFT     15  /* SLIMBUS_SUBSYS_OVERCLOCKED_STS */
@@ -10095,10 +9897,7 @@
 #define ARIZONA_ISRC1_OVERCLOCKED_STS_MASK       0x0001  /* ISRC1_OVERCLOCKED_STS */
 #define ARIZONA_ISRC1_OVERCLOCKED_STS_SHIFT           0  /* ISRC1_OVERCLOCKED_STS */
 #define ARIZONA_ISRC1_OVERCLOCKED_STS_WIDTH           1  /* ISRC1_OVERCLOCKED_STS */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R3366 (0xD26) - Interrupt Raw Status 8
@@ -11390,7 +11189,6 @@
  * R3808 (0xED0) - ASRC2_ENABLE
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_ASRC2_IN2L_ENA                0x0008  /* ASRC2L_ENA */
 #define CLEARWATER_ASRC2_IN2L_ENA_MASK           0x0008  /* ASRC2L_ENA */
 #define CLEARWATER_ASRC2_IN2L_ENA_SHIFT               3  /* ASRC2L_ENA */
@@ -11408,8 +11206,6 @@
 #define CLEARWATER_ASRC2_IN1R_ENA_SHIFT               0  /* ASRC1R_ENA */
 #define CLEARWATER_ASRC2_IN1R_ENA_WIDTH               1  /* ASRC1R_ENA */
 =======
-=======
->>>>>>> master
 #define CLEARWATER_ASRC2_IN2L_ENA                       0x0008  /* ASRC2L_ENA */
 #define CLEARWATER_ASRC2_IN2L_ENA_MASK                  0x0008  /* ASRC2L_ENA */
 #define CLEARWATER_ASRC2_IN2L_ENA_SHIFT                      3  /* ASRC2L_ENA */
@@ -11426,15 +11222,11 @@
 #define CLEARWATER_ASRC2_IN1R_ENA_MASK                  0x0001  /* ASRC1R_ENA */
 #define CLEARWATER_ASRC2_IN1R_ENA_SHIFT                      0  /* ASRC1R_ENA */
 #define CLEARWATER_ASRC2_IN1R_ENA_WIDTH                      1  /* ASRC1R_ENA */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R3810 (0xED2) - ASRC2_RATE1
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_ASRC2_RATE1_MASK              0x7800  /* ASRC_RATE1 - [14:11] */
 #define CLEARWATER_ASRC2_RATE1_SHIFT                 11  /* ASRC_RATE1 - [14:11] */
@@ -11444,16 +11236,10 @@
 #define CLEARWATER_ASRC2_RATE1_SHIFT                     11  /* ASRC_RATE1 - [14:11] */
 #define CLEARWATER_ASRC2_RATE1_WIDTH                      4  /* ASRC_RATE1 - [14:11] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_ASRC2_RATE1_MASK                  0x7800  /* ASRC_RATE1 - [14:11] */
-#define CLEARWATER_ASRC2_RATE1_SHIFT                     11  /* ASRC_RATE1 - [14:11] */
-#define CLEARWATER_ASRC2_RATE1_WIDTH                      4  /* ASRC_RATE1 - [14:11] */
->>>>>>> master
 
 /*
  * R3811 (0xED3) - ASRC2_RATE2
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_ASRC2_RATE2_MASK              0x7800  /* ASRC_RATE2 - [14:11] */
 #define CLEARWATER_ASRC2_RATE2_SHIFT                 11  /* ASRC_RATE2 - [14:11] */
@@ -11463,16 +11249,10 @@
 #define CLEARWATER_ASRC2_RATE2_SHIFT                     11  /* ASRC_RATE2 - [14:11] */
 #define CLEARWATER_ASRC2_RATE2_WIDTH                      4  /* ASRC_RATE2 - [14:11] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_ASRC2_RATE2_MASK                  0x7800  /* ASRC_RATE2 - [14:11] */
-#define CLEARWATER_ASRC2_RATE2_SHIFT                     11  /* ASRC_RATE2 - [14:11] */
-#define CLEARWATER_ASRC2_RATE2_WIDTH                      4  /* ASRC_RATE2 - [14:11] */
->>>>>>> master
 
 /*
  * R3808 (0xEE0) - ASRC1_ENABLE
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_ASRC1_IN2L_ENA                0x0008  /* ASRC2L_ENA */
 #define CLEARWATER_ASRC1_IN2L_ENA_MASK           0x0008  /* ASRC2L_ENA */
@@ -11491,8 +11271,6 @@
 #define CLEARWATER_ASRC1_IN1R_ENA_SHIFT               0  /* ASRC1R_ENA */
 #define CLEARWATER_ASRC1_IN1R_ENA_WIDTH               1  /* ASRC1R_ENA */
 =======
-=======
->>>>>>> master
 #define CLEARWATER_ASRC1_IN2L_ENA                       0x0008  /* ASRC2L_ENA */
 #define CLEARWATER_ASRC1_IN2L_ENA_MASK                  0x0008  /* ASRC2L_ENA */
 #define CLEARWATER_ASRC1_IN2L_ENA_SHIFT                      3  /* ASRC2L_ENA */
@@ -11509,15 +11287,11 @@
 #define CLEARWATER_ASRC1_IN1R_ENA_MASK                  0x0001  /* ASRC1R_ENA */
 #define CLEARWATER_ASRC1_IN1R_ENA_SHIFT                      0  /* ASRC1R_ENA */
 #define CLEARWATER_ASRC1_IN1R_ENA_WIDTH                      1  /* ASRC1R_ENA */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R3810 (0xEE2) - ASRC1_RATE1
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_ASRC1_RATE1_MASK              0x7800  /* ASRC_RATE1 - [14:11] */
 #define CLEARWATER_ASRC1_RATE1_SHIFT                 11  /* ASRC_RATE1 - [14:11] */
@@ -11527,16 +11301,10 @@
 #define CLEARWATER_ASRC1_RATE1_SHIFT                     11  /* ASRC_RATE1 - [14:11] */
 #define CLEARWATER_ASRC1_RATE1_WIDTH                      4  /* ASRC_RATE1 - [14:11] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_ASRC1_RATE1_MASK                  0x7800  /* ASRC_RATE1 - [14:11] */
-#define CLEARWATER_ASRC1_RATE1_SHIFT                     11  /* ASRC_RATE1 - [14:11] */
-#define CLEARWATER_ASRC1_RATE1_WIDTH                      4  /* ASRC_RATE1 - [14:11] */
->>>>>>> master
 
 /*
  * R3811 (0xEE3) - ASRC1_RATE2
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_ASRC1_RATE2_MASK              0x7800  /* ASRC_RATE2 - [14:11] */
 #define CLEARWATER_ASRC1_RATE2_SHIFT                 11  /* ASRC_RATE2 - [14:11] */
@@ -11546,11 +11314,6 @@
 #define CLEARWATER_ASRC1_RATE2_SHIFT                     11  /* ASRC_RATE2 - [14:11] */
 #define CLEARWATER_ASRC1_RATE2_WIDTH                      4  /* ASRC_RATE2 - [14:11] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_ASRC1_RATE2_MASK                  0x7800  /* ASRC_RATE2 - [14:11] */
-#define CLEARWATER_ASRC1_RATE2_SHIFT                     11  /* ASRC_RATE2 - [14:11] */
-#define CLEARWATER_ASRC1_RATE2_WIDTH                      4  /* ASRC_RATE2 - [14:11] */
->>>>>>> master
 
 /*
  * R3808 (0xEE0) - ASRC_ENABLE
@@ -11915,7 +11678,6 @@
 * R1718 (0x1380) - FRF_Coefficient_1L_1
 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_1L_1_MASK           0xFFFF  /* FRF_COEFF_1L_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_1L_1_SHIFT               0  /* FRF_COEFF_1L_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_1L_1_WIDTH              16  /* FRF_COEFF_1L_1 - [15:0] */
@@ -11924,16 +11686,10 @@
 #define CLEARWATER_FRF_COEFF_1L_1_SHIFT                   0  /* FRF_COEFF_1L_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_1L_1_WIDTH                  16  /* FRF_COEFF_1L_1 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_1L_1_MASK               0xFFFF  /* FRF_COEFF_1L_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_1L_1_SHIFT                   0  /* FRF_COEFF_1L_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_1L_1_WIDTH                  16  /* FRF_COEFF_1L_1 - [15:0] */
->>>>>>> master
 
 /*
  * R1719 (0x1381) - FRF_Coefficient_1L_2
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_1L_2_MASK           0xFFFF  /* FRF_COEFF_1L_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_1L_2_SHIFT               0  /* FRF_COEFF_1L_2 - [15:0] */
@@ -11943,16 +11699,10 @@
 #define CLEARWATER_FRF_COEFF_1L_2_SHIFT                   0  /* FRF_COEFF_1L_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_1L_2_WIDTH                  16  /* FRF_COEFF_1L_2 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_1L_2_MASK               0xFFFF  /* FRF_COEFF_1L_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_1L_2_SHIFT                   0  /* FRF_COEFF_1L_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_1L_2_WIDTH                  16  /* FRF_COEFF_1L_2 - [15:0] */
->>>>>>> master
 
 /*
  * R1720 (0x1382) - FRF_Coefficient_1L_3
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_1L_3_MASK           0xFFFF  /* FRF_COEFF_1L_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_1L_3_SHIFT               0  /* FRF_COEFF_1L_3 - [15:0] */
@@ -11962,16 +11712,10 @@
 #define CLEARWATER_FRF_COEFF_1L_3_SHIFT                   0  /* FRF_COEFF_1L_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_1L_3_WIDTH                  16  /* FRF_COEFF_1L_3 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_1L_3_MASK               0xFFFF  /* FRF_COEFF_1L_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_1L_3_SHIFT                   0  /* FRF_COEFF_1L_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_1L_3_WIDTH                  16  /* FRF_COEFF_1L_3 - [15:0] */
->>>>>>> master
 
 /*
  * R1721 (0x1383) - FRF_Coefficient_1L_4
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_1L_4_MASK           0xFFFF  /* FRF_COEFF_1L_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_1L_4_SHIFT               0  /* FRF_COEFF_1L_4 - [15:0] */
@@ -11981,16 +11725,10 @@
 #define CLEARWATER_FRF_COEFF_1L_4_SHIFT                   0  /* FRF_COEFF_1L_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_1L_4_WIDTH                  16  /* FRF_COEFF_1L_4 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_1L_4_MASK               0xFFFF  /* FRF_COEFF_1L_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_1L_4_SHIFT                   0  /* FRF_COEFF_1L_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_1L_4_WIDTH                  16  /* FRF_COEFF_1L_4 - [15:0] */
->>>>>>> master
 
 /*
  * R1722 (0x1390) - FRF_Coefficient_1R_1
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_1R_1_MASK           0xFFFF  /* FRF_COEFF_1R_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_1R_1_SHIFT               0  /* FRF_COEFF_1R_1 - [15:0] */
@@ -12000,16 +11738,10 @@
 #define CLEARWATER_FRF_COEFF_1R_1_SHIFT                   0  /* FRF_COEFF_1R_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_1R_1_WIDTH                  16  /* FRF_COEFF_1R_1 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_1R_1_MASK               0xFFFF  /* FRF_COEFF_1R_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_1R_1_SHIFT                   0  /* FRF_COEFF_1R_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_1R_1_WIDTH                  16  /* FRF_COEFF_1R_1 - [15:0] */
->>>>>>> master
 
 /*
  * R1723 (0x1391) - FRF_Coefficient_1R_2
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_1R_2_MASK           0xFFFF  /* FRF_COEFF_1R_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_1R_2_SHIFT               0  /* FRF_COEFF_1R_2 - [15:0] */
@@ -12019,16 +11751,10 @@
 #define CLEARWATER_FRF_COEFF_1R_2_SHIFT                   0  /* FRF_COEFF_1R_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_1R_2_WIDTH                  16  /* FRF_COEFF_1R_2 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_1R_2_MASK               0xFFFF  /* FRF_COEFF_1R_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_1R_2_SHIFT                   0  /* FRF_COEFF_1R_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_1R_2_WIDTH                  16  /* FRF_COEFF_1R_2 - [15:0] */
->>>>>>> master
 
 /*
  * R1724 (0x1392) - FRF_Coefficient_1R_3
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_1R_3_MASK           0xFFFF  /* FRF_COEFF_1R_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_1R_3_SHIFT               0  /* FRF_COEFF_1R_3 - [15:0] */
@@ -12038,16 +11764,10 @@
 #define CLEARWATER_FRF_COEFF_1R_3_SHIFT                   0  /* FRF_COEFF_1R_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_1R_3_WIDTH                  16  /* FRF_COEFF_1R_3 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_1R_3_MASK               0xFFFF  /* FRF_COEFF_1R_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_1R_3_SHIFT                   0  /* FRF_COEFF_1R_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_1R_3_WIDTH                  16  /* FRF_COEFF_1R_3 - [15:0] */
->>>>>>> master
 
 /*
  * R1725 (0x1393) - FRF_Coefficient_1R_4
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_1R_4_MASK           0xFFFF  /* FRF_COEFF_1R_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_1R_4_SHIFT               0  /* FRF_COEFF_1R_4 - [15:0] */
@@ -12057,16 +11777,10 @@
 #define CLEARWATER_FRF_COEFF_1R_4_SHIFT                   0  /* FRF_COEFF_1R_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_1R_4_WIDTH                  16  /* FRF_COEFF_1R_4 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_1R_4_MASK               0xFFFF  /* FRF_COEFF_1R_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_1R_4_SHIFT                   0  /* FRF_COEFF_1R_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_1R_4_WIDTH                  16  /* FRF_COEFF_1R_4 - [15:0] */
->>>>>>> master
 
 /*
  * R1726 (0x13A0) - FRF_Coefficient_2L_1
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_2L_1_MASK           0xFFFF  /* FRF_COEFF_2L_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_2L_1_SHIFT               0  /* FRF_COEFF_2L_1 - [15:0] */
@@ -12076,16 +11790,10 @@
 #define CLEARWATER_FRF_COEFF_2L_1_SHIFT                   0  /* FRF_COEFF_2L_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_2L_1_WIDTH                  16  /* FRF_COEFF_2L_1 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_2L_1_MASK               0xFFFF  /* FRF_COEFF_2L_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_2L_1_SHIFT                   0  /* FRF_COEFF_2L_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_2L_1_WIDTH                  16  /* FRF_COEFF_2L_1 - [15:0] */
->>>>>>> master
 
 /*
  * R1727 (0x13A1) - FRF_Coefficient_2L_2
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_2L_2_MASK           0xFFFF  /* FRF_COEFF_2L_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_2L_2_SHIFT               0  /* FRF_COEFF_2L_2 - [15:0] */
@@ -12095,16 +11803,10 @@
 #define CLEARWATER_FRF_COEFF_2L_2_SHIFT                   0  /* FRF_COEFF_2L_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_2L_2_WIDTH                  16  /* FRF_COEFF_2L_2 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_2L_2_MASK               0xFFFF  /* FRF_COEFF_2L_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_2L_2_SHIFT                   0  /* FRF_COEFF_2L_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_2L_2_WIDTH                  16  /* FRF_COEFF_2L_2 - [15:0] */
->>>>>>> master
 
 /*
  * R1728 (0x13A2) - FRF_Coefficient_2L_3
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_2L_3_MASK           0xFFFF  /* FRF_COEFF_2L_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_2L_3_SHIFT               0  /* FRF_COEFF_2L_3 - [15:0] */
@@ -12114,16 +11816,10 @@
 #define CLEARWATER_FRF_COEFF_2L_3_SHIFT                   0  /* FRF_COEFF_2L_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_2L_3_WIDTH                  16  /* FRF_COEFF_2L_3 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_2L_3_MASK               0xFFFF  /* FRF_COEFF_2L_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_2L_3_SHIFT                   0  /* FRF_COEFF_2L_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_2L_3_WIDTH                  16  /* FRF_COEFF_2L_3 - [15:0] */
->>>>>>> master
 
 /*
  * R1729 (0x13A3) - FRF_Coefficient_2L_4
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_2L_4_MASK           0xFFFF  /* FRF_COEFF_2L_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_2L_4_SHIFT               0  /* FRF_COEFF_2L_4 - [15:0] */
@@ -12133,16 +11829,10 @@
 #define CLEARWATER_FRF_COEFF_2L_4_SHIFT                   0  /* FRF_COEFF_2L_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_2L_4_WIDTH                  16  /* FRF_COEFF_2L_4 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_2L_4_MASK               0xFFFF  /* FRF_COEFF_2L_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_2L_4_SHIFT                   0  /* FRF_COEFF_2L_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_2L_4_WIDTH                  16  /* FRF_COEFF_2L_4 - [15:0] */
->>>>>>> master
 
 /*
  * R1730 (0x13B0) - FRF_Coefficient_2R_1
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_2R_1_MASK           0xFFFF  /* FRF_COEFF_2R_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_2R_1_SHIFT               0  /* FRF_COEFF_2R_1 - [15:0] */
@@ -12152,16 +11842,10 @@
 #define CLEARWATER_FRF_COEFF_2R_1_SHIFT                   0  /* FRF_COEFF_2R_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_2R_1_WIDTH                  16  /* FRF_COEFF_2R_1 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_2R_1_MASK               0xFFFF  /* FRF_COEFF_2R_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_2R_1_SHIFT                   0  /* FRF_COEFF_2R_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_2R_1_WIDTH                  16  /* FRF_COEFF_2R_1 - [15:0] */
->>>>>>> master
 
 /*
  * R1731 (0x13B1) - FRF_Coefficient_2R_2
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_2R_2_MASK           0xFFFF  /* FRF_COEFF_2R_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_2R_2_SHIFT               0  /* FRF_COEFF_2R_2 - [15:0] */
@@ -12171,16 +11855,10 @@
 #define CLEARWATER_FRF_COEFF_2R_2_SHIFT                   0  /* FRF_COEFF_2R_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_2R_2_WIDTH                  16  /* FRF_COEFF_2R_2 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_2R_2_MASK               0xFFFF  /* FRF_COEFF_2R_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_2R_2_SHIFT                   0  /* FRF_COEFF_2R_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_2R_2_WIDTH                  16  /* FRF_COEFF_2R_2 - [15:0] */
->>>>>>> master
 
 /*
  * R1732 (0x13B2) - FRF_Coefficient_2R_3
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_2R_3_MASK           0xFFFF  /* FRF_COEFF_2R_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_2R_3_SHIFT               0  /* FRF_COEFF_2R_3 - [15:0] */
@@ -12190,16 +11868,10 @@
 #define CLEARWATER_FRF_COEFF_2R_3_SHIFT                   0  /* FRF_COEFF_2R_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_2R_3_WIDTH                  16  /* FRF_COEFF_2R_3 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_2R_3_MASK               0xFFFF  /* FRF_COEFF_2R_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_2R_3_SHIFT                   0  /* FRF_COEFF_2R_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_2R_3_WIDTH                  16  /* FRF_COEFF_2R_3 - [15:0] */
->>>>>>> master
 
 /*
  * R1733 (0x13B3) - FRF_Coefficient_2R_4
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_2R_4_MASK           0xFFFF  /* FRF_COEFF_2R_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_2R_4_SHIFT               0  /* FRF_COEFF_2R_4 - [15:0] */
@@ -12209,16 +11881,10 @@
 #define CLEARWATER_FRF_COEFF_2R_4_SHIFT                   0  /* FRF_COEFF_2R_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_2R_4_WIDTH                  16  /* FRF_COEFF_2R_4 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_2R_4_MASK               0xFFFF  /* FRF_COEFF_2R_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_2R_4_SHIFT                   0  /* FRF_COEFF_2R_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_2R_4_WIDTH                  16  /* FRF_COEFF_2R_4 - [15:0] */
->>>>>>> master
 
 /*
  * R1734 (0x13C0) - FRF_Coefficient_3L_1
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_3L_1_MASK           0xFFFF  /* FRF_COEFF_3L_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_3L_1_SHIFT               0  /* FRF_COEFF_3L_1 - [15:0] */
@@ -12228,16 +11894,10 @@
 #define CLEARWATER_FRF_COEFF_3L_1_SHIFT                   0  /* FRF_COEFF_3L_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_3L_1_WIDTH                  16  /* FRF_COEFF_3L_1 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_3L_1_MASK               0xFFFF  /* FRF_COEFF_3L_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_3L_1_SHIFT                   0  /* FRF_COEFF_3L_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_3L_1_WIDTH                  16  /* FRF_COEFF_3L_1 - [15:0] */
->>>>>>> master
 
 /*
  * R1735 (0x13C1) - FRF_Coefficient_3L_2
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_3L_2_MASK           0xFFFF  /* FRF_COEFF_3L_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_3L_2_SHIFT               0  /* FRF_COEFF_3L_2 - [15:0] */
@@ -12247,16 +11907,10 @@
 #define CLEARWATER_FRF_COEFF_3L_2_SHIFT                   0  /* FRF_COEFF_3L_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_3L_2_WIDTH                  16  /* FRF_COEFF_3L_2 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_3L_2_MASK               0xFFFF  /* FRF_COEFF_3L_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_3L_2_SHIFT                   0  /* FRF_COEFF_3L_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_3L_2_WIDTH                  16  /* FRF_COEFF_3L_2 - [15:0] */
->>>>>>> master
 
 /*
  * R1736 (0x13C2) - FRF_Coefficient_3L_3
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_3L_3_MASK           0xFFFF  /* FRF_COEFF_3L_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_3L_3_SHIFT               0  /* FRF_COEFF_3L_3 - [15:0] */
@@ -12266,16 +11920,10 @@
 #define CLEARWATER_FRF_COEFF_3L_3_SHIFT                   0  /* FRF_COEFF_3L_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_3L_3_WIDTH                  16  /* FRF_COEFF_3L_3 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_3L_3_MASK               0xFFFF  /* FRF_COEFF_3L_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_3L_3_SHIFT                   0  /* FRF_COEFF_3L_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_3L_3_WIDTH                  16  /* FRF_COEFF_3L_3 - [15:0] */
->>>>>>> master
 
 /*
  * R1737 (0x13C3) - FRF_Coefficient_3L_4
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_3L_4_MASK           0xFFFF  /* FRF_COEFF_3L_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_3L_4_SHIFT               0  /* FRF_COEFF_3L_4 - [15:0] */
@@ -12285,16 +11933,10 @@
 #define CLEARWATER_FRF_COEFF_3L_4_SHIFT                   0  /* FRF_COEFF_3L_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_3L_4_WIDTH                  16  /* FRF_COEFF_3L_4 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_3L_4_MASK               0xFFFF  /* FRF_COEFF_3L_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_3L_4_SHIFT                   0  /* FRF_COEFF_3L_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_3L_4_WIDTH                  16  /* FRF_COEFF_3L_4 - [15:0] */
->>>>>>> master
 
 /*
  * R1738 (0x13D0) - FRF_Coefficient_3R_1
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_3R_1_MASK           0xFFFF  /* FRF_COEFF_3R_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_3R_1_SHIFT               0  /* FRF_COEFF_3R_1 - [15:0] */
@@ -12304,16 +11946,10 @@
 #define CLEARWATER_FRF_COEFF_3R_1_SHIFT                   0  /* FRF_COEFF_3R_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_3R_1_WIDTH                  16  /* FRF_COEFF_3R_1 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_3R_1_MASK               0xFFFF  /* FRF_COEFF_3R_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_3R_1_SHIFT                   0  /* FRF_COEFF_3R_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_3R_1_WIDTH                  16  /* FRF_COEFF_3R_1 - [15:0] */
->>>>>>> master
 
 /*
  * R1739 (0x13D1) - FRF_Coefficient_3R_2
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_3R_2_MASK           0xFFFF  /* FRF_COEFF_3R_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_3R_2_SHIFT               0  /* FRF_COEFF_3R_2 - [15:0] */
@@ -12323,16 +11959,10 @@
 #define CLEARWATER_FRF_COEFF_3R_2_SHIFT                   0  /* FRF_COEFF_3R_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_3R_2_WIDTH                  16  /* FRF_COEFF_3R_2 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_3R_2_MASK               0xFFFF  /* FRF_COEFF_3R_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_3R_2_SHIFT                   0  /* FRF_COEFF_3R_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_3R_2_WIDTH                  16  /* FRF_COEFF_3R_2 - [15:0] */
->>>>>>> master
 
 /*
  * R1740 (0x13D2) - FRF_Coefficient_3R_3
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_3R_3_MASK           0xFFFF  /* FRF_COEFF_3R_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_3R_3_SHIFT               0  /* FRF_COEFF_3R_3 - [15:0] */
@@ -12342,16 +11972,10 @@
 #define CLEARWATER_FRF_COEFF_3R_3_SHIFT                   0  /* FRF_COEFF_3R_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_3R_3_WIDTH                  16  /* FRF_COEFF_3R_3 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_3R_3_MASK               0xFFFF  /* FRF_COEFF_3R_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_3R_3_SHIFT                   0  /* FRF_COEFF_3R_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_3R_3_WIDTH                  16  /* FRF_COEFF_3R_3 - [15:0] */
->>>>>>> master
 
 /*
  * R1741 (0x13D3) - FRF_Coefficient_3R_4
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_3R_4_MASK           0xFFFF  /* FRF_COEFF_3R_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_3R_4_SHIFT               0  /* FRF_COEFF_3R_4 - [15:0] */
@@ -12361,16 +11985,10 @@
 #define CLEARWATER_FRF_COEFF_3R_4_SHIFT                   0  /* FRF_COEFF_3R_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_3R_4_WIDTH                  16  /* FRF_COEFF_3R_4 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_3R_4_MASK               0xFFFF  /* FRF_COEFF_3R_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_3R_4_SHIFT                   0  /* FRF_COEFF_3R_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_3R_4_WIDTH                  16  /* FRF_COEFF_3R_4 - [15:0] */
->>>>>>> master
 
 /*
  * R1742 (0x13E0) - FRF_Coefficient_4L_1
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_4L_1_MASK           0xFFFF  /* FRF_COEFF_4L_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_4L_1_SHIFT               0  /* FRF_COEFF_4L_1 - [15:0] */
@@ -12380,16 +11998,10 @@
 #define CLEARWATER_FRF_COEFF_4L_1_SHIFT                   0  /* FRF_COEFF_4L_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_4L_1_WIDTH                  16  /* FRF_COEFF_4L_1 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_4L_1_MASK               0xFFFF  /* FRF_COEFF_4L_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_4L_1_SHIFT                   0  /* FRF_COEFF_4L_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_4L_1_WIDTH                  16  /* FRF_COEFF_4L_1 - [15:0] */
->>>>>>> master
 
 /*
  * R1743 (0x13E1) - FRF_Coefficient_4L_2
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_4L_2_MASK           0xFFFF  /* FRF_COEFF_4L_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_4L_2_SHIFT               0  /* FRF_COEFF_4L_2 - [15:0] */
@@ -12399,16 +12011,10 @@
 #define CLEARWATER_FRF_COEFF_4L_2_SHIFT                   0  /* FRF_COEFF_4L_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_4L_2_WIDTH                  16  /* FRF_COEFF_4L_2 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_4L_2_MASK               0xFFFF  /* FRF_COEFF_4L_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_4L_2_SHIFT                   0  /* FRF_COEFF_4L_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_4L_2_WIDTH                  16  /* FRF_COEFF_4L_2 - [15:0] */
->>>>>>> master
 
 /*
  * R1744 (0x13E2) - FRF_Coefficient_4L_3
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_4L_3_MASK           0xFFFF  /* FRF_COEFF_4L_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_4L_3_SHIFT               0  /* FRF_COEFF_4L_3 - [15:0] */
@@ -12418,16 +12024,10 @@
 #define CLEARWATER_FRF_COEFF_4L_3_SHIFT                   0  /* FRF_COEFF_4L_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_4L_3_WIDTH                  16  /* FRF_COEFF_4L_3 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_4L_3_MASK               0xFFFF  /* FRF_COEFF_4L_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_4L_3_SHIFT                   0  /* FRF_COEFF_4L_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_4L_3_WIDTH                  16  /* FRF_COEFF_4L_3 - [15:0] */
->>>>>>> master
 
 /*
  * R1745 (0x13E3) - FRF_Coefficient_4L_4
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_4L_4_MASK           0xFFFF  /* FRF_COEFF_4L_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_4L_4_SHIFT               0  /* FRF_COEFF_4L_4 - [15:0] */
@@ -12437,16 +12037,10 @@
 #define CLEARWATER_FRF_COEFF_4L_4_SHIFT                   0  /* FRF_COEFF_4L_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_4L_4_WIDTH                  16  /* FRF_COEFF_4L_4 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_4L_4_MASK               0xFFFF  /* FRF_COEFF_4L_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_4L_4_SHIFT                   0  /* FRF_COEFF_4L_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_4L_4_WIDTH                  16  /* FRF_COEFF_4L_4 - [15:0] */
->>>>>>> master
 
 /*
  * R1746 (0x13F0) - FRF_Coefficient_4R_1
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_4R_1_MASK           0xFFFF  /* FRF_COEFF_4R_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_4R_1_SHIFT               0  /* FRF_COEFF_4R_1 - [15:0] */
@@ -12456,16 +12050,10 @@
 #define CLEARWATER_FRF_COEFF_4R_1_SHIFT                   0  /* FRF_COEFF_4R_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_4R_1_WIDTH                  16  /* FRF_COEFF_4R_1 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_4R_1_MASK               0xFFFF  /* FRF_COEFF_4R_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_4R_1_SHIFT                   0  /* FRF_COEFF_4R_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_4R_1_WIDTH                  16  /* FRF_COEFF_4R_1 - [15:0] */
->>>>>>> master
 
 /*
  * R1747 (0x13F1) - FRF_Coefficient_4R_2
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_4R_2_MASK           0xFFFF  /* FRF_COEFF_4R_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_4R_2_SHIFT               0  /* FRF_COEFF_4R_2 - [15:0] */
@@ -12475,16 +12063,10 @@
 #define CLEARWATER_FRF_COEFF_4R_2_SHIFT                   0  /* FRF_COEFF_4R_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_4R_2_WIDTH                  16  /* FRF_COEFF_4R_2 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_4R_2_MASK               0xFFFF  /* FRF_COEFF_4R_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_4R_2_SHIFT                   0  /* FRF_COEFF_4R_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_4R_2_WIDTH                  16  /* FRF_COEFF_4R_2 - [15:0] */
->>>>>>> master
 
 /*
  * R1748 (0x13F2) - FRF_Coefficient_4R_3
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_4R_3_MASK           0xFFFF  /* FRF_COEFF_4R_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_4R_3_SHIFT               0  /* FRF_COEFF_4R_3 - [15:0] */
@@ -12494,16 +12076,10 @@
 #define CLEARWATER_FRF_COEFF_4R_3_SHIFT                   0  /* FRF_COEFF_4R_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_4R_3_WIDTH                  16  /* FRF_COEFF_4R_3 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_4R_3_MASK               0xFFFF  /* FRF_COEFF_4R_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_4R_3_SHIFT                   0  /* FRF_COEFF_4R_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_4R_3_WIDTH                  16  /* FRF_COEFF_4R_3 - [15:0] */
->>>>>>> master
 
 /*
  * R1749 (0x13F3) - FRF_Coefficient_4R_4
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_4R_4_MASK           0xFFFF  /* FRF_COEFF_4R_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_4R_4_SHIFT               0  /* FRF_COEFF_4R_4 - [15:0] */
@@ -12513,16 +12089,10 @@
 #define CLEARWATER_FRF_COEFF_4R_4_SHIFT                   0  /* FRF_COEFF_4R_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_4R_4_WIDTH                  16  /* FRF_COEFF_4R_4 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_4R_4_MASK               0xFFFF  /* FRF_COEFF_4R_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_4R_4_SHIFT                   0  /* FRF_COEFF_4R_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_4R_4_WIDTH                  16  /* FRF_COEFF_4R_4 - [15:0] */
->>>>>>> master
 
 /*
  * R1750 (0x1400) - FRF_Coefficient_5L_1
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_5L_1_MASK           0xFFFF  /* FRF_COEFF_5L_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_5L_1_SHIFT               0  /* FRF_COEFF_5L_1 - [15:0] */
@@ -12532,16 +12102,10 @@
 #define CLEARWATER_FRF_COEFF_5L_1_SHIFT                   0  /* FRF_COEFF_5L_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_5L_1_WIDTH                  16  /* FRF_COEFF_5L_1 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_5L_1_MASK               0xFFFF  /* FRF_COEFF_5L_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_5L_1_SHIFT                   0  /* FRF_COEFF_5L_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_5L_1_WIDTH                  16  /* FRF_COEFF_5L_1 - [15:0] */
->>>>>>> master
 
 /*
  * R1751 (0x1401) - FRF_Coefficient_5L_2
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_5L_2_MASK           0xFFFF  /* FRF_COEFF_5L_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_5L_2_SHIFT               0  /* FRF_COEFF_5L_2 - [15:0] */
@@ -12551,16 +12115,10 @@
 #define CLEARWATER_FRF_COEFF_5L_2_SHIFT                   0  /* FRF_COEFF_5L_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_5L_2_WIDTH                  16  /* FRF_COEFF_5L_2 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_5L_2_MASK               0xFFFF  /* FRF_COEFF_5L_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_5L_2_SHIFT                   0  /* FRF_COEFF_5L_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_5L_2_WIDTH                  16  /* FRF_COEFF_5L_2 - [15:0] */
->>>>>>> master
 
 /*
  * R1752 (0x1402) - FRF_Coefficient_5L_3
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_5L_3_MASK           0xFFFF  /* FRF_COEFF_5L_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_5L_3_SHIFT               0  /* FRF_COEFF_5L_3 - [15:0] */
@@ -12570,16 +12128,10 @@
 #define CLEARWATER_FRF_COEFF_5L_3_SHIFT                   0  /* FRF_COEFF_5L_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_5L_3_WIDTH                  16  /* FRF_COEFF_5L_3 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_5L_3_MASK               0xFFFF  /* FRF_COEFF_5L_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_5L_3_SHIFT                   0  /* FRF_COEFF_5L_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_5L_3_WIDTH                  16  /* FRF_COEFF_5L_3 - [15:0] */
->>>>>>> master
 
 /*
  * R1753 (0x1403) - FRF_Coefficient_5L_4
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_5L_4_MASK           0xFFFF  /* FRF_COEFF_5L_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_5L_4_SHIFT               0  /* FRF_COEFF_5L_4 - [15:0] */
@@ -12589,16 +12141,10 @@
 #define CLEARWATER_FRF_COEFF_5L_4_SHIFT                   0  /* FRF_COEFF_5L_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_5L_4_WIDTH                  16  /* FRF_COEFF_5L_4 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_5L_4_MASK               0xFFFF  /* FRF_COEFF_5L_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_5L_4_SHIFT                   0  /* FRF_COEFF_5L_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_5L_4_WIDTH                  16  /* FRF_COEFF_5L_4 - [15:0] */
->>>>>>> master
 
 /*
  * R1754 (0x1410) - FRF_Coefficient_5R_1
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_5R_1_MASK           0xFFFF  /* FRF_COEFF_5R_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_5R_1_SHIFT               0  /* FRF_COEFF_5R_1 - [15:0] */
@@ -12608,16 +12154,10 @@
 #define CLEARWATER_FRF_COEFF_5R_1_SHIFT                   0  /* FRF_COEFF_5R_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_5R_1_WIDTH                  16  /* FRF_COEFF_5R_1 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_5R_1_MASK               0xFFFF  /* FRF_COEFF_5R_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_5R_1_SHIFT                   0  /* FRF_COEFF_5R_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_5R_1_WIDTH                  16  /* FRF_COEFF_5R_1 - [15:0] */
->>>>>>> master
 
 /*
  * R1755 (0x1411) - FRF_Coefficient_5R_2
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_5R_2_MASK           0xFFFF  /* FRF_COEFF_5R_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_5R_2_SHIFT               0  /* FRF_COEFF_5R_2 - [15:0] */
@@ -12627,16 +12167,10 @@
 #define CLEARWATER_FRF_COEFF_5R_2_SHIFT                   0  /* FRF_COEFF_5R_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_5R_2_WIDTH                  16  /* FRF_COEFF_5R_2 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_5R_2_MASK               0xFFFF  /* FRF_COEFF_5R_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_5R_2_SHIFT                   0  /* FRF_COEFF_5R_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_5R_2_WIDTH                  16  /* FRF_COEFF_5R_2 - [15:0] */
->>>>>>> master
 
 /*
  * R1756 (0x1412) - FRF_Coefficient_5R_3
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_5R_3_MASK           0xFFFF  /* FRF_COEFF_5R_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_5R_3_SHIFT               0  /* FRF_COEFF_5R_3 - [15:0] */
@@ -12646,16 +12180,10 @@
 #define CLEARWATER_FRF_COEFF_5R_3_SHIFT                   0  /* FRF_COEFF_5R_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_5R_3_WIDTH                  16  /* FRF_COEFF_5R_3 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_5R_3_MASK               0xFFFF  /* FRF_COEFF_5R_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_5R_3_SHIFT                   0  /* FRF_COEFF_5R_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_5R_3_WIDTH                  16  /* FRF_COEFF_5R_3 - [15:0] */
->>>>>>> master
 
 /*
  * R1757 (0x1413) - FRF_Coefficient_5R_4
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_5R_4_MASK           0xFFFF  /* FRF_COEFF_5R_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_5R_4_SHIFT               0  /* FRF_COEFF_5R_4 - [15:0] */
@@ -12665,16 +12193,10 @@
 #define CLEARWATER_FRF_COEFF_5R_4_SHIFT                   0  /* FRF_COEFF_5R_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_5R_4_WIDTH                  16  /* FRF_COEFF_5R_4 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_5R_4_MASK               0xFFFF  /* FRF_COEFF_5R_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_5R_4_SHIFT                   0  /* FRF_COEFF_5R_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_5R_4_WIDTH                  16  /* FRF_COEFF_5R_4 - [15:0] */
->>>>>>> master
 
 /*
  * R1758 (0x1420) - FRF_Coefficient_6L_1
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_6L_1_MASK           0xFFFF  /* FRF_COEFF_6L_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_6L_1_SHIFT               0  /* FRF_COEFF_6L_1 - [15:0] */
@@ -12684,16 +12206,10 @@
 #define CLEARWATER_FRF_COEFF_6L_1_SHIFT                   0  /* FRF_COEFF_6L_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_6L_1_WIDTH                  16  /* FRF_COEFF_6L_1 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_6L_1_MASK               0xFFFF  /* FRF_COEFF_6L_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_6L_1_SHIFT                   0  /* FRF_COEFF_6L_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_6L_1_WIDTH                  16  /* FRF_COEFF_6L_1 - [15:0] */
->>>>>>> master
 
 /*
  * R1759 (0x1421) - FRF_Coefficient_6L_2
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_6L_2_MASK           0xFFFF  /* FRF_COEFF_6L_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_6L_2_SHIFT               0  /* FRF_COEFF_6L_2 - [15:0] */
@@ -12703,16 +12219,10 @@
 #define CLEARWATER_FRF_COEFF_6L_2_SHIFT                   0  /* FRF_COEFF_6L_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_6L_2_WIDTH                  16  /* FRF_COEFF_6L_2 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_6L_2_MASK               0xFFFF  /* FRF_COEFF_6L_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_6L_2_SHIFT                   0  /* FRF_COEFF_6L_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_6L_2_WIDTH                  16  /* FRF_COEFF_6L_2 - [15:0] */
->>>>>>> master
 
 /*
  * R1760 (0x1422) - FRF_Coefficient_6L_3
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_6L_3_MASK           0xFFFF  /* FRF_COEFF_6L_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_6L_3_SHIFT               0  /* FRF_COEFF_6L_3 - [15:0] */
@@ -12722,16 +12232,10 @@
 #define CLEARWATER_FRF_COEFF_6L_3_SHIFT                   0  /* FRF_COEFF_6L_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_6L_3_WIDTH                  16  /* FRF_COEFF_6L_3 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_6L_3_MASK               0xFFFF  /* FRF_COEFF_6L_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_6L_3_SHIFT                   0  /* FRF_COEFF_6L_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_6L_3_WIDTH                  16  /* FRF_COEFF_6L_3 - [15:0] */
->>>>>>> master
 
 /*
  * R1761 (0x1423) - FRF_Coefficient_6L_4
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_6L_4_MASK           0xFFFF  /* FRF_COEFF_6L_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_6L_4_SHIFT               0  /* FRF_COEFF_6L_4 - [15:0] */
@@ -12741,16 +12245,10 @@
 #define CLEARWATER_FRF_COEFF_6L_4_SHIFT                   0  /* FRF_COEFF_6L_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_6L_4_WIDTH                  16  /* FRF_COEFF_6L_4 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_6L_4_MASK               0xFFFF  /* FRF_COEFF_6L_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_6L_4_SHIFT                   0  /* FRF_COEFF_6L_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_6L_4_WIDTH                  16  /* FRF_COEFF_6L_4 - [15:0] */
->>>>>>> master
 
 /*
  * R1762 (0x1430) - FRF_Coefficient_6R_1
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_6R_1_MASK           0xFFFF  /* FRF_COEFF_6R_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_6R_1_SHIFT               0  /* FRF_COEFF_6R_1 - [15:0] */
@@ -12760,16 +12258,10 @@
 #define CLEARWATER_FRF_COEFF_6R_1_SHIFT                   0  /* FRF_COEFF_6R_1 - [15:0] */
 #define CLEARWATER_FRF_COEFF_6R_1_WIDTH                  16  /* FRF_COEFF_6R_1 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_6R_1_MASK               0xFFFF  /* FRF_COEFF_6R_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_6R_1_SHIFT                   0  /* FRF_COEFF_6R_1 - [15:0] */
-#define CLEARWATER_FRF_COEFF_6R_1_WIDTH                  16  /* FRF_COEFF_6R_1 - [15:0] */
->>>>>>> master
 
 /*
  * R1763 (0x1431) - FRF_Coefficient_6R_2
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_6R_2_MASK           0xFFFF  /* FRF_COEFF_6R_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_6R_2_SHIFT               0  /* FRF_COEFF_6R_2 - [15:0] */
@@ -12779,16 +12271,10 @@
 #define CLEARWATER_FRF_COEFF_6R_2_SHIFT                   0  /* FRF_COEFF_6R_2 - [15:0] */
 #define CLEARWATER_FRF_COEFF_6R_2_WIDTH                  16  /* FRF_COEFF_6R_2 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_6R_2_MASK               0xFFFF  /* FRF_COEFF_6R_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_6R_2_SHIFT                   0  /* FRF_COEFF_6R_2 - [15:0] */
-#define CLEARWATER_FRF_COEFF_6R_2_WIDTH                  16  /* FRF_COEFF_6R_2 - [15:0] */
->>>>>>> master
 
 /*
  * R1764 (0x1432) - FRF_Coefficient_6R_3
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_6R_3_MASK           0xFFFF  /* FRF_COEFF_6R_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_6R_3_SHIFT               0  /* FRF_COEFF_6R_3 - [15:0] */
@@ -12798,16 +12284,10 @@
 #define CLEARWATER_FRF_COEFF_6R_3_SHIFT                   0  /* FRF_COEFF_6R_3 - [15:0] */
 #define CLEARWATER_FRF_COEFF_6R_3_WIDTH                  16  /* FRF_COEFF_6R_3 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_6R_3_MASK               0xFFFF  /* FRF_COEFF_6R_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_6R_3_SHIFT                   0  /* FRF_COEFF_6R_3 - [15:0] */
-#define CLEARWATER_FRF_COEFF_6R_3_WIDTH                  16  /* FRF_COEFF_6R_3 - [15:0] */
->>>>>>> master
 
 /*
  * R1765 (0x1433) - FRF_Coefficient_6R_4
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FRF_COEFF_6R_4_MASK           0xFFFF  /* FRF_COEFF_6R_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_6R_4_SHIFT               0  /* FRF_COEFF_6R_4 - [15:0] */
@@ -12817,16 +12297,10 @@
 #define CLEARWATER_FRF_COEFF_6R_4_SHIFT                   0  /* FRF_COEFF_6R_4 - [15:0] */
 #define CLEARWATER_FRF_COEFF_6R_4_WIDTH                  16  /* FRF_COEFF_6R_4 - [15:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_FRF_COEFF_6R_4_MASK               0xFFFF  /* FRF_COEFF_6R_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_6R_4_SHIFT                   0  /* FRF_COEFF_6R_4 - [15:0] */
-#define CLEARWATER_FRF_COEFF_6R_4_WIDTH                  16  /* FRF_COEFF_6R_4 - [15:0] */
->>>>>>> master
 
 /*
  * R6144 (0x1800) - IRQ1 Status 1
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_DSP_SHARED_WR_COLL_EINT1      0x8000  /* DSP_SHARED_WR_COLL_EINT1 */
 #define CLEARWATER_DSP_SHARED_WR_COLL_EINT1_MASK 0x8000  /* DSP_SHARED_WR_COLL_EINT1 */
@@ -12849,8 +12323,6 @@
 #define CLEARWATER_BOOT_DONE_EINT1_SHIFT              7  /* BOOT_DONE_EINT1 */
 #define CLEARWATER_BOOT_DONE_EINT1_WIDTH              1  /* BOOT_DONE_EINT1 */
 =======
-=======
->>>>>>> master
 #define CLEARWATER_DSP_SHARED_WR_COLL_EINT1            0x8000  /* DSP_SHARED_WR_COLL_EINT1 */
 #define CLEARWATER_DSP_SHARED_WR_COLL_EINT1_MASK       0x8000  /* DSP_SHARED_WR_COLL_EINT1 */
 #define CLEARWATER_DSP_SHARED_WR_COLL_EINT1_SHIFT          15  /* DSP_SHARED_WR_COLL_EINT1 */
@@ -12871,15 +12343,11 @@
 #define CLEARWATER_BOOT_DONE_EINT1_MASK                0x0080  /* BOOT_DONE_EINT1 */
 #define CLEARWATER_BOOT_DONE_EINT1_SHIFT                    7  /* BOOT_DONE_EINT1 */
 #define CLEARWATER_BOOT_DONE_EINT1_WIDTH                    1  /* BOOT_DONE_EINT1 */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R6145 (0x1801) - IRQ1 Status 2
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_FLL3_LOCK_EINT1               0x0400  /* FLL3_LOCK_EINT1 */
 #define CLEARWATER_FLL3_LOCK_EINT1_MASK          0x0400  /* FLL3_LOCK_EINT1 */
@@ -12894,8 +12362,6 @@
 #define CLEARWATER_FLL1_LOCK_EINT1_SHIFT              8  /* FLL1_LOCK_EINT1 */
 #define CLEARWATER_FLL1_LOCK_EINT1_WIDTH              1  /* FLL1_LOCK_EINT1 */
 =======
-=======
->>>>>>> master
 #define CLEARWATER_FLL3_LOCK_EINT1                     0x0400  /* FLL3_LOCK_EINT1 */
 #define CLEARWATER_FLL3_LOCK_EINT1_MASK                0x0400  /* FLL3_LOCK_EINT1 */
 #define CLEARWATER_FLL3_LOCK_EINT1_SHIFT                   10  /* FLL3_LOCK_EINT1 */
@@ -12908,15 +12374,11 @@
 #define CLEARWATER_FLL1_LOCK_EINT1_MASK                0x0100  /* FLL1_LOCK_EINT1 */
 #define CLEARWATER_FLL1_LOCK_EINT1_SHIFT                    8  /* FLL1_LOCK_EINT1 */
 #define CLEARWATER_FLL1_LOCK_EINT1_WIDTH                    1  /* FLL1_LOCK_EINT1 */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R6149 (0x1805) - IRQ1 Status 6
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_MICDET_EINT1                  0x0100  /* MICDET_EINT1 */
 #define CLEARWATER_MICDET_EINT1_MASK             0x0100  /* MICDET_EINT1 */
@@ -12927,8 +12389,6 @@
 #define CLEARWATER_HPDET_EINT1_SHIFT                  0  /* HPDET_EINT1 */
 #define CLEARWATER_HPDET_EINT1_WIDTH                  1  /* HPDET_EINT1 */
 =======
-=======
->>>>>>> master
 #define CLEARWATER_MICDET_EINT1                        0x0100  /* MICDET_EINT1 */
 #define CLEARWATER_MICDET_EINT1_MASK                   0x0100  /* MICDET_EINT1 */
 #define CLEARWATER_MICDET_EINT1_SHIFT                       8  /* MICDET_EINT1 */
@@ -12937,15 +12397,11 @@
 #define CLEARWATER_HPDET_EINT1_MASK                    0x0001  /* HPDET_EINT1 */
 #define CLEARWATER_HPDET_EINT1_SHIFT                        0  /* HPDET_EINT1 */
 #define CLEARWATER_HPDET_EINT1_WIDTH                        1  /* HPDET_EINT1 */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R6150 (0x1806) - IRQ1 Status 7
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_MICD_CLAMP_FALL_EINT1         0x0020  /* MICD_CLAMP_FALL_EINT1 */
 #define CLEARWATER_MICD_CLAMP_FALL_EINT1_MASK    0x0020  /* MICD_CLAMP_FALL_EINT1 */
@@ -12972,8 +12428,6 @@
 #define CLEARWATER_JD1_RISE_EINT1_SHIFT               0  /* JD1_RISE_EINT1 */
 #define CLEARWATER_JD1_RISE_EINT1_WIDTH               1  /* JD1_RISE_EINT1 */
 =======
-=======
->>>>>>> master
 #define CLEARWATER_MICD_CLAMP_FALL_EINT1               0x0020  /* MICD_CLAMP_FALL_EINT1 */
 #define CLEARWATER_MICD_CLAMP_FALL_EINT1_MASK          0x0020  /* MICD_CLAMP_FALL_EINT1 */
 #define CLEARWATER_MICD_CLAMP_FALL_EINT1_SHIFT              5  /* MICD_CLAMP_FALL_EINT1 */
@@ -12998,15 +12452,11 @@
 #define CLEARWATER_JD1_RISE_EINT1_MASK                 0x0001  /* JD1_RISE_EINT1 */
 #define CLEARWATER_JD1_RISE_EINT1_SHIFT                     0  /* JD1_RISE_EINT1 */
 #define CLEARWATER_JD1_RISE_EINT1_WIDTH                     1  /* JD1_RISE_EINT1 */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R6152 (0x1808) - IRQ1 Status 9
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_ASRC2_IN2_LOCK_EINT1          0x0800  /* ASRC2_IN2_LOCK_EINT1 */
 #define CLEARWATER_ASRC2_IN2_LOCK_EINT1_MASK     0x0800  /* ASRC2_IN2_LOCK_EINT1 */
@@ -13033,8 +12483,6 @@
 #define CLEARWATER_DRC1_SIG_DET_EINT1_SHIFT           0  /* DRC1_SIG_DET_EINT1 */
 #define CLEARWATER_DRC1_SIG_DET_EINT1_WIDTH           1  /* DRC1_SIG_DET_EINT1 */
 =======
-=======
->>>>>>> master
 #define CLEARWATER_ASRC2_IN2_LOCK_EINT1                0x0800  /* ASRC2_IN2_LOCK_EINT1 */
 #define CLEARWATER_ASRC2_IN2_LOCK_EINT1_MASK           0x0800  /* ASRC2_IN2_LOCK_EINT1 */
 #define CLEARWATER_ASRC2_IN2_LOCK_EINT1_SHIFT              11  /* ASRC2_IN2_LOCK_EINT1 */
@@ -13059,15 +12507,11 @@
 #define CLEARWATER_DRC1_SIG_DET_EINT1_MASK             0x0001  /* DRC1_SIG_DET_EINT1 */
 #define CLEARWATER_DRC1_SIG_DET_EINT1_SHIFT                 0  /* DRC1_SIG_DET_EINT1 */
 #define CLEARWATER_DRC1_SIG_DET_EINT1_WIDTH                 1  /* DRC1_SIG_DET_EINT1 */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R6154 (0x180A) - IRQ1 Status 11
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_DSP_IRQ16_EINT1               0x8000  /* DSP_IRQ16_EINT1 */
 #define CLEARWATER_DSP_IRQ16_EINT1_MASK          0x8000  /* DSP_IRQ16_EINT1 */
@@ -13134,8 +12578,6 @@
 #define CLEARWATER_DSP_IRQ1_EINT1_SHIFT               0  /* DSP_IRQ1_EINT1 */
 #define CLEARWATER_DSP_IRQ1_EINT1_WIDTH               1  /* DSP_IRQ1_EINT1 */
 =======
-=======
->>>>>>> master
 #define CLEARWATER_DSP_IRQ16_EINT1                     0x8000  /* DSP_IRQ16_EINT1 */
 #define CLEARWATER_DSP_IRQ16_EINT1_MASK                0x8000  /* DSP_IRQ16_EINT1 */
 #define CLEARWATER_DSP_IRQ16_EINT1_SHIFT                   15  /* DSP_IRQ16_EINT1 */
@@ -13200,15 +12642,11 @@
 #define CLEARWATER_DSP_IRQ1_EINT1_MASK                 0x0001  /* DSP_IRQ1_EINT1 */
 #define CLEARWATER_DSP_IRQ1_EINT1_SHIFT                     0  /* DSP_IRQ1_EINT1 */
 #define CLEARWATER_DSP_IRQ1_EINT1_WIDTH                     1  /* DSP_IRQ1_EINT1 */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R6155 (0x180B) - IRQ1 Status 12
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_SPKOUTR_SC_EINT1              0x0080  /* SPKOUTR_SC_EINT1 */
 #define CLEARWATER_SPKOUTR_SC_EINT1_MASK         0x0080  /* SPKOUTR_SC_EINT1 */
@@ -13243,8 +12681,6 @@
 #define CLEARWATER_HP1L_SC_EINT1_SHIFT                0  /* HP1L_SC_EINT1 */
 #define CLEARWATER_HP1L_SC_EINT1_WIDTH                1  /* HP1L_SC_EINT1 */
 =======
-=======
->>>>>>> master
 #define CLEARWATER_SPKOUTR_SC_EINT1                    0x0080  /* SPKOUTR_SC_EINT1 */
 #define CLEARWATER_SPKOUTR_SC_EINT1_MASK               0x0080  /* SPKOUTR_SC_EINT1 */
 #define CLEARWATER_SPKOUTR_SC_EINT1_SHIFT                   7  /* SPKOUTR_SC_EINT1 */
@@ -13277,10 +12713,7 @@
 #define CLEARWATER_HP1L_SC_EINT1_MASK                  0x0001  /* HP1L_SC_EINT1 */
 #define CLEARWATER_HP1L_SC_EINT1_SHIFT                      0  /* HP1L_SC_EINT1 */
 #define CLEARWATER_HP1L_SC_EINT1_WIDTH                      1  /* HP1L_SC_EINT1 */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R6156 (0x180C) - IRQ1 Status 13
@@ -14860,7 +14293,6 @@
  * R6542 (0x198E) - IRQ2 Raw Status 15
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_SPK_OVERHEAT_WARN_STS2        0x0004  /* SPK_OVERHEAT_WARN_STS2 */
 #define CLEARWATER_SPK_OVERHEAT_WARN_STS2_MASK   0x0004  /* SPK_OVERHEAT_WARN_STS2 */
 #define CLEARWATER_SPK_OVERHEAT_WARN_STS2_SHIFT       2  /* SPK_OVERHEAT_WARN_STS2 */
@@ -14874,8 +14306,6 @@
 #define CLEARWATER_SPK_SHUTDOWN_STS2_SHIFT            0  /* SPK_SHUTDOWN_STS2 */
 #define CLEARWATER_SPK_SHUTDOWN_STS2_WIDTH            1  /* SPK_SHUTDOWN_STS2 */
 =======
-=======
->>>>>>> master
 #define CLEARWATER_SPK_OVERHEAT_WARN_STS2             0x0004  /* SPK_OVERHEAT_WARN_STS2 */
 #define CLEARWATER_SPK_OVERHEAT_WARN_STS2_MASK        0x0004  /* SPK_OVERHEAT_WARN_STS2 */
 #define CLEARWATER_SPK_OVERHEAT_WARN_STS2_SHIFT            2  /* SPK_OVERHEAT_WARN_STS2 */
@@ -14888,15 +14318,11 @@
 #define CLEARWATER_SPK_SHUTDOWN_STS2_MASK             0x0001  /* SPK_SHUTDOWN_STS2 */
 #define CLEARWATER_SPK_SHUTDOWN_STS2_SHIFT                 0  /* SPK_SHUTDOWN_STS2 */
 #define CLEARWATER_SPK_SHUTDOWN_STS2_WIDTH                 1  /* SPK_SHUTDOWN_STS2 */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R6662 (0x1A06) - Interrupt Debounce 7
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_MICD_CLAMP_DB                 0x0010  /* MICD_CLAMP_DB */
 #define CLEARWATER_MICD_CLAMP_DB_MASK            0x0010  /* MICD_CLAMP_DB */
@@ -14911,8 +14337,6 @@
 #define CLEARWATER_JD1_DB_SHIFT                       0  /* JD1_DB */
 #define CLEARWATER_JD1_DB_WIDTH                       1  /* JD1_DB */
 =======
-=======
->>>>>>> master
 #define CLEARWATER_MICD_CLAMP_DB                       0x0010  /* MICD_CLAMP_DB */
 #define CLEARWATER_MICD_CLAMP_DB_MASK                  0x0010  /* MICD_CLAMP_DB */
 #define CLEARWATER_MICD_CLAMP_DB_SHIFT                      4  /* MICD_CLAMP_DB */
@@ -14925,15 +14349,11 @@
 #define CLEARWATER_JD1_DB_MASK                         0x0001  /* JD1_DB */
 #define CLEARWATER_JD1_DB_SHIFT                             0  /* JD1_DB */
 #define CLEARWATER_JD1_DB_WIDTH                             1  /* JD1_DB */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R6670 (0x1A0E) - Interrupt Debounce 15
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_SPK_OVERHEAT_WARN_DB          0x0004  /* SPK_OVERHEAT_WARN_DB */
 #define CLEARWATER_SPK_OVERHEAT_WARN_DB_MASK     0x0004  /* SPK_OVERHEAT_WARN_DB */
@@ -14944,8 +14364,6 @@
 #define CLEARWATER_SPK_OVERHEAT_DB_SHIFT              1  /* SPK_OVERHEAT_DB */
 #define CLEARWATER_SPK_OVERHEAT_DB_WIDTH              1  /* SPK_OVERHEAT_DB */
 =======
-=======
->>>>>>> master
 #define CLEARWATER_SPK_OVERHEAT_WARN_DB                0x0004  /* SPK_OVERHEAT_WARN_DB */
 #define CLEARWATER_SPK_OVERHEAT_WARN_DB_MASK           0x0004  /* SPK_OVERHEAT_WARN_DB */
 #define CLEARWATER_SPK_OVERHEAT_WARN_DB_SHIFT               2  /* SPK_OVERHEAT_WARN_DB */
@@ -14954,15 +14372,11 @@
 #define CLEARWATER_SPK_OVERHEAT_DB_MASK                0x0002  /* SPK_OVERHEAT_DB */
 #define CLEARWATER_SPK_OVERHEAT_DB_SHIFT                    1  /* SPK_OVERHEAT_DB */
 #define CLEARWATER_SPK_OVERHEAT_DB_WIDTH                    1  /* SPK_OVERHEAT_DB */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 /*
  * R6848 (0x1AC0) - GPIO Debounce Config
  */
-<<<<<<< HEAD
 <<<<<<< HEAD
 #define CLEARWATER_GP_DBTIME_MASK                0x000F  /* GP_DBTIME - [3:0] */
 #define CLEARWATER_GP_DBTIME_SHIFT                    0  /* GP_DBTIME - [3:0] */
@@ -14972,11 +14386,6 @@
 #define CLEARWATER_GP_DBTIME_SHIFT                          0  /* GP_DBTIME - [3:0] */
 #define CLEARWATER_GP_DBTIME_WIDTH                          4  /* GP_DBTIME - [3:0] */
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define CLEARWATER_GP_DBTIME_MASK                      0x000F  /* GP_DBTIME - [3:0] */
-#define CLEARWATER_GP_DBTIME_SHIFT                          0  /* GP_DBTIME - [3:0] */
-#define CLEARWATER_GP_DBTIME_WIDTH                          4  /* GP_DBTIME - [3:0] */
->>>>>>> master
 
 /*
  * R13304 (0x33F8) - OTP HPDET Calibration 1
@@ -15002,7 +14411,6 @@
  * R13306 (0x33FA) - OTP HPDET Calibration 2
  */
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define CLEARWATER_OTP_HPDET_GRADIENT_1X         0xFF00  /* HP_GRADIENT_1X - [15:8] */
 #define CLEARWATER_OTP_HPDET_GRADIENT_1X_MASK    0xFF00  /* HP_GRADIENT_1X - [15:8] */
 #define CLEARWATER_OTP_HPDET_GRADIENT_1X_SHIFT        8  /* HP_GRADIENT_1X - [15:8] */
@@ -15012,8 +14420,6 @@
 #define CLEARWATER_OTP_HPDET_GRADIENT_0X_SHIFT        0  /* HP_GRADIENT_0X - [7:0] */
 #define CLEARWATER_OTP_HPDET_GRADIENT_0X_WIDTH        8  /* HP_GRADIENT_0X - [7:0] */
 =======
-=======
->>>>>>> master
 #define CLEARWATER_OTP_HPDET_GRADIENT_1X           0xFF00  /* HP_GRADIENT_1X - [15:8] */
 #define CLEARWATER_OTP_HPDET_GRADIENT_1X_MASK      0xFF00  /* HP_GRADIENT_1X - [15:8] */
 #define CLEARWATER_OTP_HPDET_GRADIENT_1X_SHIFT         16  /* HP_GRADIENT_1X - [15:8] */
@@ -15022,9 +14428,6 @@
 #define CLEARWATER_OTP_HPDET_GRADIENT_0X_MASK      0x00FF  /* HP_GRADIENT_0X - [7:0] */
 #define CLEARWATER_OTP_HPDET_GRADIENT_0X_SHIFT          0  /* HP_GRADIENT_0X - [7:0] */
 #define CLEARWATER_OTP_HPDET_GRADIENT_0X_WIDTH          8  /* HP_GRADIENT_0X - [7:0] */
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 #endif

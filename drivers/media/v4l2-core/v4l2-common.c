@@ -486,33 +486,24 @@ static unsigned int clamp_align(unsigned int x, unsigned int min,
 	unsigned int mask = ~((1 << align) - 1);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* Clamp to aligned min and max */
 	x = clamp(x, (min + ~mask) & mask, max & mask);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* Round to nearest aligned value */
 	if (align)
 		x = (x + (1 << (align - 1))) & mask;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	/* Clamp to aligned value of min and max */
 	if (x < min)
 		x = (min + ~mask) & mask;
 	else if (x > max)
 		x = max & mask;
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return x;
 }
 

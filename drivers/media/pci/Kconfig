@@ -1,5 +1,4 @@
 <<<<<<< HEAD
-<<<<<<< HEAD
 if PCI && MEDIA_SUPPORT
 
 menuconfig MEDIA_PCI_SUPPORT
@@ -9,11 +8,6 @@ menuconfig MEDIA_PCI_SUPPORT
 	bool "Media PCI Adapters"
 	depends on PCI && MEDIA_SUPPORT
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-menuconfig MEDIA_PCI_SUPPORT
-	bool "Media PCI Adapters"
-	depends on PCI && MEDIA_SUPPORT
->>>>>>> master
 	help
 	  Enable media drivers for PCI/PCIe bus.
 	  If you have such devices, say Y.
@@ -59,9 +53,6 @@ endif
 
 endif #MEDIA_PCI_SUPPORT
 <<<<<<< HEAD
-<<<<<<< HEAD
 endif #PCI
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master

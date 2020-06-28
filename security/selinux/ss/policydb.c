@@ -150,14 +150,10 @@ static struct policydb_compat_info policydb_compat[] = {
 	},
 	{
 <<<<<<< HEAD
-<<<<<<< HEAD
 		.version	= POLICYDB_VERSION_XPERMS_IOCTL,
 =======
 		.version	= POLICYDB_VERSION_IOCTL_OPERATIONS,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.version	= POLICYDB_VERSION_IOCTL_OPERATIONS,
->>>>>>> master
 		.sym_num	= SYM_NUM,
 		.ocon_num	= OCON_NUM,
 	},
@@ -1524,7 +1520,6 @@ static int type_read(struct policydb *p, struct hashtab *h, void *fp)
 	return 0;
 bad:
 <<<<<<< HEAD
-<<<<<<< HEAD
 #if !defined(SELINUX_ALWAYS_ENFORCE)
 	panic("SELinux:Failed to type read");
 #endif /*SELINUX_ALWAYS_ENFORCE*/
@@ -1533,11 +1528,6 @@ bad:
 	panic("SELinux:Failed to type read");
 #endif /*CONFIG_ALWAYS_ENFORCE*/
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#ifndef CONFIG_ALWAYS_ENFORCE
-	panic("SELinux:Failed to type read");
-#endif /*CONFIG_ALWAYS_ENFORCE*/
->>>>>>> master
 	type_destroy(key, typdatum, NULL);
 	return rc;
 }
@@ -2025,7 +2015,6 @@ static int filename_trans_read(struct policydb *p, void *fp)
 			goto out;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		rc = hashtab_insert(p->filename_trans, ft, otype);
 		if (rc) {
 			/*
@@ -2042,9 +2031,6 @@ static int filename_trans_read(struct policydb *p, void *fp)
 =======
 		hashtab_insert(p->filename_trans, ft, otype);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		hashtab_insert(p->filename_trans, ft, otype);
->>>>>>> master
 	}
 	hash_eval(p->filename_trans, "filenametr");
 	return 0;
@@ -2597,14 +2583,11 @@ out:
 	return rc;
 bad:
 <<<<<<< HEAD
-<<<<<<< HEAD
 #if !defined(SELINUX_ALWAYS_ENFORCE)
 	panic("SELinux:Failed to load policy");
 #endif /*SELINUX_ALWAYS_ENFORCE*/
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	policydb_destroy(p);
 	goto out;
 }
@@ -3383,22 +3366,16 @@ static int filename_write_helper(void *key, void *data, void *ptr)
 		return rc;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	buf[0] = cpu_to_le32(ft->stype);
 	buf[1] = cpu_to_le32(ft->ttype);
 	buf[2] = cpu_to_le32(ft->tclass);
 	buf[3] = cpu_to_le32(otype->otype);
 =======
-=======
->>>>>>> master
 	buf[0] = ft->stype;
 	buf[1] = ft->ttype;
 	buf[2] = ft->tclass;
 	buf[3] = otype->otype;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	rc = put_entry(buf, sizeof(u32), 4, fp);
 	if (rc)

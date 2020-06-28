@@ -207,17 +207,12 @@ static u32 cubic_root(u64 a)
 static inline void bictcp_update(struct bictcp *ca, u32 cwnd)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	u32 delta, bic_target, max_cnt;
 	u64 offs, t;
 =======
 	u64 offs;
 	u32 delta, t, bic_target, max_cnt;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	u64 offs;
-	u32 delta, t, bic_target, max_cnt;
->>>>>>> master
 
 	ca->ack_cnt++;	/* count the number of ACKs */
 
@@ -261,7 +256,6 @@ static inline void bictcp_update(struct bictcp *ca, u32 cwnd)
 	 */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	t = (s32)(tcp_time_stamp - ca->epoch_start);
 	t += msecs_to_jiffies(ca->delay_min >> 3);
 	/* change the unit from HZ to bictcp_HZ */
@@ -272,11 +266,6 @@ static inline void bictcp_update(struct bictcp *ca, u32 cwnd)
 	t = ((tcp_time_stamp + msecs_to_jiffies(ca->delay_min>>3)
 	      - ca->epoch_start) << BICTCP_HZ) / HZ;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	/* change the unit from HZ to bictcp_HZ */
-	t = ((tcp_time_stamp + msecs_to_jiffies(ca->delay_min>>3)
-	      - ca->epoch_start) << BICTCP_HZ) / HZ;
->>>>>>> master
 
 	if (t < ca->bic_K)		/* t - K */
 		offs = ca->bic_K - t;
@@ -431,14 +420,10 @@ static void bictcp_acked(struct sock *sk, u32 cnt, s32 rtt_us)
 		ratio += cnt;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ca->delayed_ack = clamp(ratio, 1U, ACK_RATIO_LIMIT);
 =======
 		ca->delayed_ack = min(ratio, ACK_RATIO_LIMIT);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		ca->delayed_ack = min(ratio, ACK_RATIO_LIMIT);
->>>>>>> master
 	}
 
 	/* Some calls are for duplicates without timetamps */
@@ -447,14 +432,10 @@ static void bictcp_acked(struct sock *sk, u32 cnt, s32 rtt_us)
 
 	/* Discard delay samples right after fast recovery */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ca->epoch_start && (s32)(tcp_time_stamp - ca->epoch_start) < HZ)
 =======
 	if ((s32)(tcp_time_stamp - ca->epoch_start) < HZ)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if ((s32)(tcp_time_stamp - ca->epoch_start) < HZ)
->>>>>>> master
 		return;
 
 	delay = (rtt_us << 3) / USEC_PER_MSEC;

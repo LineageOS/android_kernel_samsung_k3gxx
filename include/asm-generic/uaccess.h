@@ -229,20 +229,15 @@ extern int __put_user_bad(void) __attribute__((noreturn));
 	access_ok(VERIFY_READ, ptr, sizeof(*ptr)) ?		\
 		__get_user(x, ptr) :				\
 <<<<<<< HEAD
-<<<<<<< HEAD
 		((x) = (__typeof__(*(ptr)))0,-EFAULT);		\
 =======
 		-EFAULT;					\
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		-EFAULT;					\
->>>>>>> master
 })
 
 #ifndef __get_user_fn
 static inline int __get_user_fn(size_t size, const void __user *ptr, void *x)
 {
-<<<<<<< HEAD
 <<<<<<< HEAD
 	size_t n = __copy_from_user(x, ptr, size);
 	if (unlikely(n)) {
@@ -254,10 +249,6 @@ static inline int __get_user_fn(size_t size, const void __user *ptr, void *x)
 	size = __copy_from_user(x, ptr, size);
 	return size ? -EFAULT : size;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	size = __copy_from_user(x, ptr, size);
-	return size ? -EFAULT : size;
->>>>>>> master
 }
 
 #define __get_user_fn(sz, u, k)	__get_user_fn(sz, u, k)
@@ -278,7 +269,6 @@ static inline long copy_from_user(void *to,
 		const void __user * from, unsigned long n)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	unsigned long res = n;
 	might_sleep();
 	if (likely(access_ok(VERIFY_READ, from, n)))
@@ -287,17 +277,12 @@ static inline long copy_from_user(void *to,
 		memset(to + (n - res), 0, res);
 	return res;
 =======
-=======
->>>>>>> master
 	might_sleep();
 	if (access_ok(VERIFY_READ, from, n))
 		return __copy_from_user(to, from, n);
 	else
 		return n;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 static inline long copy_to_user(void __user *to,

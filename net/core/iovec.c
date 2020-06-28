@@ -40,14 +40,10 @@ int verify_iovec(struct msghdr *m, struct iovec *iov, struct sockaddr_storage *a
 	int size, ct, err;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (m->msg_name && m->msg_namelen) {
 =======
 	if (m->msg_namelen) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (m->msg_namelen) {
->>>>>>> master
 		if (mode == VERIFY_READ) {
 			void __user *namep;
 			namep = (void __user __force *) m->msg_name;
@@ -60,12 +56,9 @@ int verify_iovec(struct msghdr *m, struct iovec *iov, struct sockaddr_storage *a
 	} else {
 		m->msg_name = NULL;
 <<<<<<< HEAD
-<<<<<<< HEAD
 		m->msg_namelen = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	size = m->msg_iovlen * sizeof(struct iovec);
@@ -122,15 +115,12 @@ int memcpy_fromiovecend(unsigned char *kdata, const struct iovec *iov,
 			int offset, int len)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* No data? Done! */
 	if (len == 0)
 		return 0;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* Skip over the finished iovecs */
 	while (offset >= iov->iov_len) {
 		offset -= iov->iov_len;

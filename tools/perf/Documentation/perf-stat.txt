@@ -51,7 +51,6 @@ OPTIONS
 	scale/normalize counter values
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 -d::
 --detailed::
 	print more detailed statistics, can be specified up to 3 times
@@ -62,8 +61,6 @@ OPTIONS
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 -r::
 --repeat=<n>::
 	repeat command and print average + stddev (max: 100). 0 means forever.

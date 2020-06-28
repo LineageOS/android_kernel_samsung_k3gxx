@@ -44,14 +44,10 @@ int adis_update_scan_mode(struct iio_dev *indio_dev,
 
 	rx = adis->buffer;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	tx = rx + scan_count;
 =======
 	tx = rx + indio_dev->scan_bytes;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	tx = rx + indio_dev->scan_bytes;
->>>>>>> master
 
 	spi_message_init(&adis->msg);
 

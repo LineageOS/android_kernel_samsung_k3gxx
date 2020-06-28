@@ -1339,7 +1339,6 @@ static int read_symlink(struct send_ctx *sctx,
 	if (ret < 0)
 		goto out;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ret) {
 		/*
 		 * An empty symlink inode. Can happen in rare error paths when
@@ -1358,9 +1357,6 @@ static int read_symlink(struct send_ctx *sctx,
 =======
 	BUG_ON(ret);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	BUG_ON(ret);
->>>>>>> master
 
 	ei = btrfs_item_ptr(path->nodes[0], path->slots[0],
 			struct btrfs_file_extent_item);
@@ -1573,15 +1569,12 @@ static int lookup_dir_item_inode(struct btrfs_root *root,
 	}
 	btrfs_dir_item_key_to_cpu(path->nodes[0], di, &key);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (key.type == BTRFS_ROOT_ITEM_KEY) {
 		ret = -ENOENT;
 		goto out;
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	*found_inode = key.objectid;
 	*found_type = btrfs_dir_type(path->nodes[0], di);
 
@@ -2557,15 +2550,11 @@ static int did_create_dir(struct send_ctx *sctx, u64 dir)
 		btrfs_dir_item_key_to_cpu(eb, di, &di_key);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (di_key.type != BTRFS_ROOT_ITEM_KEY &&
 		    di_key.objectid < sctx->send_progress) {
 =======
 		if (di_key.objectid < sctx->send_progress) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		if (di_key.objectid < sctx->send_progress) {
->>>>>>> master
 			ret = 1;
 			goto out;
 		}
@@ -4664,17 +4653,12 @@ long btrfs_ioctl_send(struct file *mnt_file, void __user *arg_)
 
 	if (!access_ok(VERIFY_READ, arg->clone_sources,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			sizeof(*arg->clone_sources) *
 			arg->clone_sources_count)) {
 =======
 			sizeof(*arg->clone_sources *
 			arg->clone_sources_count))) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			sizeof(*arg->clone_sources *
-			arg->clone_sources_count))) {
->>>>>>> master
 		ret = -EFAULT;
 		goto out;
 	}

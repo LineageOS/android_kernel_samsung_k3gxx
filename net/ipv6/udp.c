@@ -371,7 +371,6 @@ int udpv6_recvmsg(struct kiocb *iocb, struct sock *sk,
 	int err;
 	int is_udplite = IS_UDPLITE(sk);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	bool checksum_valid = false;
 	int is_udp4;
 	bool slow;
@@ -382,8 +381,6 @@ int udpv6_recvmsg(struct kiocb *iocb, struct sock *sk,
 	if (np->rxpmtu && np->rxopt.bits.rxpmtu)
 		return ipv6_recv_rxpmtu(sk, msg, len, addr_len);
 =======
-=======
->>>>>>> master
 	int is_udp4;
 	bool slow;
 
@@ -395,10 +392,7 @@ int udpv6_recvmsg(struct kiocb *iocb, struct sock *sk,
 
 	if (np->rxpmtu && np->rxopt.bits.rxpmtu)
 		return ipv6_recv_rxpmtu(sk, msg, len);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 try_again:
 	skb = __skb_recv_datagram(sk, flags | (noblock ? MSG_DONTWAIT : 0),
@@ -423,7 +417,6 @@ try_again:
 
 	if (copied < ulen || UDP_SKB_CB(skb)->partial_cov) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		checksum_valid = !udp_lib_checksum_complete(skb);
 		if (!checksum_valid)
 			goto csum_copy_err;
@@ -431,17 +424,12 @@ try_again:
 
 	if (checksum_valid || skb_csum_unnecessary(skb))
 =======
-=======
->>>>>>> master
 		if (udp_lib_checksum_complete(skb))
 			goto csum_copy_err;
 	}
 
 	if (skb_csum_unnecessary(skb))
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		err = skb_copy_datagram_iovec(skb, sizeof(struct udphdr),
 					      msg->msg_iov, copied);
 	else {
@@ -496,14 +484,10 @@ try_again:
 						    IP6CB(skb)->iif);
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 		*addr_len = sizeof(*sin6);
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 	}
 	if (is_udp4) {
 		if (inet->cmsg_flags)
@@ -885,22 +869,16 @@ int __udp6_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
 		sock_put(sk);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		/* a return value > 0 means to resubmit the input */
 		if (ret > 0)
 			return ret;
 =======
-=======
->>>>>>> master
 		/* a return value > 0 means to resubmit the input, but
 		 * it wants the return to be -protocol, or 0
 		 */
 		if (ret > 0)
 			return -ret;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 		return 0;
 	}
@@ -1206,13 +1184,9 @@ do_udp_sendmsg:
 
 	fl6.flowi6_mark = sk->sk_mark;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	fl6.flowi6_uid = sock_i_uid(sk);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	fl6.flowi6_uid = sock_i_uid(sk);
->>>>>>> master
 
 	if (msg->msg_controllen) {
 		opt = &opt_space;

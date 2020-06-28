@@ -203,12 +203,9 @@ struct pde_opener {
 	struct completion *c;
 };
 <<<<<<< HEAD
-<<<<<<< HEAD
 extern const struct inode_operations proc_link_inode_operations;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 extern const struct inode_operations proc_pid_link_inode_operations;
 

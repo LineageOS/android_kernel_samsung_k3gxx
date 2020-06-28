@@ -144,7 +144,6 @@ static inline u32 __raw_readl(const volatile void __iomem *addr)
 extern void __iomem *__arm_ioremap_pfn_caller(unsigned long, unsigned long,
 	size_t, unsigned int, void *);
 <<<<<<< HEAD
-<<<<<<< HEAD
 extern void __iomem *__arm_ioremap_caller(phys_addr_t, size_t, unsigned int,
 	void *);
 
@@ -156,8 +155,6 @@ extern void __arm_iounmap(volatile void __iomem *addr);
 
 extern void __iomem * (*arch_ioremap_caller)(phys_addr_t, size_t,
 =======
-=======
->>>>>>> master
 extern void __iomem *__arm_ioremap_caller(unsigned long, size_t, unsigned int,
 	void *);
 
@@ -168,10 +165,7 @@ extern void __iounmap(volatile void __iomem *addr);
 extern void __arm_iounmap(volatile void __iomem *addr);
 
 extern void __iomem * (*arch_ioremap_caller)(unsigned long, size_t,
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	unsigned int, void *);
 extern void (*arch_iounmap)(volatile void __iomem *);
 

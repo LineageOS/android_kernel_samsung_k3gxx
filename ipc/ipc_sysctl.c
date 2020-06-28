@@ -63,14 +63,10 @@ static int proc_ipc_dointvec_minmax_orphans(ctl_table *table, int write,
 }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int proc_ipc_callback_dointvec_minmax(ctl_table *table, int write,
 =======
 static int proc_ipc_callback_dointvec(ctl_table *table, int write,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-static int proc_ipc_callback_dointvec(ctl_table *table, int write,
->>>>>>> master
 	void __user *buffer, size_t *lenp, loff_t *ppos)
 {
 	struct ctl_table ipc_table;
@@ -81,14 +77,10 @@ static int proc_ipc_callback_dointvec(ctl_table *table, int write,
 	ipc_table.data = get_ipc(table);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	rc = proc_dointvec_minmax(&ipc_table, write, buffer, lenp, ppos);
 =======
 	rc = proc_dointvec(&ipc_table, write, buffer, lenp, ppos);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	rc = proc_dointvec(&ipc_table, write, buffer, lenp, ppos);
->>>>>>> master
 
 	if (write && !rc && lenp_bef == *lenp)
 		/*
@@ -140,13 +132,9 @@ static int proc_ipcauto_dointvec_minmax(ctl_table *table, int write,
 {
 	struct ctl_table ipc_table;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	size_t lenp_bef = *lenp;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	size_t lenp_bef = *lenp;
->>>>>>> master
 	int oldval;
 	int rc;
 
@@ -157,14 +145,10 @@ static int proc_ipcauto_dointvec_minmax(ctl_table *table, int write,
 	rc = proc_dointvec_minmax(&ipc_table, write, buffer, lenp, ppos);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (write && !rc) {
 =======
 	if (write && !rc && lenp_bef == *lenp) {
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (write && !rc && lenp_bef == *lenp) {
->>>>>>> master
 		int newval = *((int *)(ipc_table.data));
 		/*
 		 * The file "auto_msgmni" has correctly been set.
@@ -184,32 +168,22 @@ static int proc_ipcauto_dointvec_minmax(ctl_table *table, int write,
 #define proc_ipc_dointvec_minmax   NULL
 #define proc_ipc_dointvec_minmax_orphans   NULL
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define proc_ipc_callback_dointvec_minmax  NULL
 =======
 #define proc_ipc_callback_dointvec NULL
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define proc_ipc_callback_dointvec NULL
->>>>>>> master
 #define proc_ipcauto_dointvec_minmax NULL
 #endif
 
 static int zero;
 static int one = 1;
 <<<<<<< HEAD
-<<<<<<< HEAD
 static int int_max = INT_MAX;
 =======
 #ifdef CONFIG_CHECKPOINT_RESTORE
 static int int_max = INT_MAX;
 #endif
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#ifdef CONFIG_CHECKPOINT_RESTORE
-static int int_max = INT_MAX;
-#endif
->>>>>>> master
 
 static struct ctl_table ipc_kern_table[] = {
 	{
@@ -248,16 +222,12 @@ static struct ctl_table ipc_kern_table[] = {
 		.maxlen		= sizeof (init_ipc_ns.msg_ctlmax),
 		.mode		= 0644,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		.proc_handler	= proc_ipc_dointvec_minmax,
 		.extra1		= &zero,
 		.extra2		= &int_max,
 =======
 		.proc_handler	= proc_ipc_dointvec,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.proc_handler	= proc_ipc_dointvec,
->>>>>>> master
 	},
 	{
 		.procname	= "msgmni",
@@ -265,16 +235,12 @@ static struct ctl_table ipc_kern_table[] = {
 		.maxlen		= sizeof (init_ipc_ns.msg_ctlmni),
 		.mode		= 0644,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		.proc_handler	= proc_ipc_callback_dointvec_minmax,
 		.extra1		= &zero,
 		.extra2		= &int_max,
 =======
 		.proc_handler	= proc_ipc_callback_dointvec,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.proc_handler	= proc_ipc_callback_dointvec,
->>>>>>> master
 	},
 	{
 		.procname	=  "msgmnb",
@@ -282,16 +248,12 @@ static struct ctl_table ipc_kern_table[] = {
 		.maxlen		= sizeof (init_ipc_ns.msg_ctlmnb),
 		.mode		= 0644,
 <<<<<<< HEAD
-<<<<<<< HEAD
 		.proc_handler	= proc_ipc_dointvec_minmax,
 		.extra1		= &zero,
 		.extra2		= &int_max,
 =======
 		.proc_handler	= proc_ipc_dointvec,
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		.proc_handler	= proc_ipc_dointvec,
->>>>>>> master
 	},
 	{
 		.procname	= "sem",

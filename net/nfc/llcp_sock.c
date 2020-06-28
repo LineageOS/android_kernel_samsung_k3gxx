@@ -572,14 +572,10 @@ static unsigned int llcp_sock_poll(struct file *file, struct socket *sock,
 		mask |= POLLHUP;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (sock_writeable(sk) && sk->sk_state == LLCP_CONNECTED)
 =======
 	if (sock_writeable(sk))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (sock_writeable(sk))
->>>>>>> master
 		mask |= POLLOUT | POLLWRNORM | POLLWRBAND;
 	else
 		set_bit(SOCK_ASYNC_NOSPACE, &sk->sk_socket->flags);
@@ -731,7 +727,6 @@ static int llcp_sock_connect(struct socket *sock, struct sockaddr *_addr,
 		goto sock_unlink;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	sk->sk_state = LLCP_CONNECTING;
 
 	ret = sock_wait_state(sk, LLCP_CONNECTED,
@@ -742,24 +737,15 @@ static int llcp_sock_connect(struct socket *sock, struct sockaddr *_addr,
 			      sock_sndtimeo(sk, flags & O_NONBLOCK));
 	if (ret)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ret = sock_wait_state(sk, LLCP_CONNECTED,
-			      sock_sndtimeo(sk, flags & O_NONBLOCK));
-	if (ret)
->>>>>>> master
 		goto sock_unlink;
 
 	release_sock(sk);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return ret;
 =======
 	return 0;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	return 0;
->>>>>>> master
 
 sock_unlink:
 	nfc_llcp_put_ssap(local, llcp_sock->ssap);
@@ -829,15 +815,10 @@ static int llcp_sock_recvmsg(struct kiocb *iocb, struct socket *sock,
 	pr_debug("%p %zu\n", sk, len);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	msg->msg_namelen = 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	msg->msg_namelen = 0;
-
->>>>>>> master
 	lock_sock(sk);
 
 	if (sk->sk_state == LLCP_CLOSED &&

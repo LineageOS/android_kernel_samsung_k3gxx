@@ -142,13 +142,9 @@ enum {
  * @ti_flags: Flags
  * @ti_count: Nest level
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
  * @ti_garbage:	List of inode to be put when releasing semaphore
 >>>>>>> 671a46baf1b... some performance improvements
-=======
- * @ti_garbage:	List of inode to be put when releasing semaphore
->>>>>>> master
  */
 struct nilfs_transaction_info {
 	u32			ti_magic;
@@ -158,13 +154,9 @@ struct nilfs_transaction_info {
 	unsigned short		ti_flags;
 	unsigned short		ti_count;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	struct list_head	ti_garbage;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	struct list_head	ti_garbage;
->>>>>>> master
 };
 
 /* ti_magic */

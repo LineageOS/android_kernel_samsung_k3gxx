@@ -102,28 +102,20 @@ static inline u64 get_jiffies_64(void)
 	(typecheck(unsigned long, a) && \
 	 typecheck(unsigned long, b) && \
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 ((long)((b) - (a)) < 0))
 =======
 	 ((long)(b) - (long)(a) < 0))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	 ((long)(b) - (long)(a) < 0))
->>>>>>> master
 #define time_before(a,b)	time_after(b,a)
 
 #define time_after_eq(a,b)	\
 	(typecheck(unsigned long, a) && \
 	 typecheck(unsigned long, b) && \
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 ((long)((a) - (b)) >= 0))
 =======
 	 ((long)(a) - (long)(b) >= 0))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	 ((long)(a) - (long)(b) >= 0))
->>>>>>> master
 #define time_before_eq(a,b)	time_after_eq(b,a)
 
 /*
@@ -147,28 +139,20 @@ static inline u64 get_jiffies_64(void)
 	(typecheck(__u64, a) &&	\
 	 typecheck(__u64, b) && \
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 ((__s64)((b) - (a)) < 0))
 =======
 	 ((__s64)(b) - (__s64)(a) < 0))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	 ((__s64)(b) - (__s64)(a) < 0))
->>>>>>> master
 #define time_before64(a,b)	time_after64(b,a)
 
 #define time_after_eq64(a,b)	\
 	(typecheck(__u64, a) && \
 	 typecheck(__u64, b) && \
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 ((__s64)((a) - (b)) >= 0))
 =======
 	 ((__s64)(a) - (__s64)(b) >= 0))
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	 ((__s64)(a) - (__s64)(b) >= 0))
->>>>>>> master
 #define time_before_eq64(a,b)	time_after_eq64(b,a)
 
 /*
@@ -287,23 +271,16 @@ extern unsigned long preset_lpj;
 #endif
 #define NSEC_JIFFIE_SC (SEC_JIFFIE_SC + 29)
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 #define USEC_JIFFIE_SC (SEC_JIFFIE_SC + 19)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define USEC_JIFFIE_SC (SEC_JIFFIE_SC + 19)
->>>>>>> master
 #define SEC_CONVERSION ((unsigned long)((((u64)NSEC_PER_SEC << SEC_JIFFIE_SC) +\
                                 TICK_NSEC -1) / (u64)TICK_NSEC))
 
 #define NSEC_CONVERSION ((unsigned long)((((u64)1 << NSEC_JIFFIE_SC) +\
                                         TICK_NSEC -1) / (u64)TICK_NSEC))
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 #define USEC_CONVERSION  \
                     ((unsigned long)((((u64)NSEC_PER_USEC << USEC_JIFFIE_SC) +\
                                         TICK_NSEC -1) / (u64)TICK_NSEC))
@@ -315,10 +292,7 @@ extern unsigned long preset_lpj;
  * off.
  */
 #define USEC_ROUND (u64)(((u64)1 << USEC_JIFFIE_SC) - 1)
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 /*
  * The maximum jiffie value is (MAX_INT >> 1).  Here we translate that
  * into seconds.  The 64-bit case will overflow if we are not careful,

@@ -482,7 +482,6 @@ store_pwm(struct device *dev, struct device_attribute *attr,
 		return err;
 	val = clamp_val(val, 0, 255);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	val = DIV_ROUND_CLOSEST(val, 0x11);
 
 	mutex_lock(&data->update_lock);
@@ -493,11 +492,6 @@ store_pwm(struct device *dev, struct device_attribute *attr,
 	mutex_lock(&data->update_lock);
 	data->pwm[nr] = val;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
-	mutex_lock(&data->update_lock);
-	data->pwm[nr] = val;
->>>>>>> master
 	w83l786ng_write_value(client, W83L786NG_REG_PWM[nr], val);
 	mutex_unlock(&data->update_lock);
 	return count;
@@ -525,14 +519,10 @@ store_pwm_enable(struct device *dev, struct device_attribute *attr,
 	reg = w83l786ng_read_value(client, W83L786NG_REG_FAN_CFG);
 	data->pwm_enable[nr] = val;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	reg &= ~(0x03 << W83L786NG_PWM_ENABLE_SHIFT[nr]);
 =======
 	reg &= ~(0x02 << W83L786NG_PWM_ENABLE_SHIFT[nr]);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	reg &= ~(0x02 << W83L786NG_PWM_ENABLE_SHIFT[nr]);
->>>>>>> master
 	reg |= (val - 1) << W83L786NG_PWM_ENABLE_SHIFT[nr];
 	w83l786ng_write_value(client, W83L786NG_REG_FAN_CFG, reg);
 	mutex_unlock(&data->update_lock);
@@ -799,7 +789,6 @@ static struct w83l786ng_data *w83l786ng_update_device(struct device *dev)
 			    ? 0 : 1;
 			data->pwm_enable[i] =
 <<<<<<< HEAD
-<<<<<<< HEAD
 			    ((pwmcfg >> W83L786NG_PWM_ENABLE_SHIFT[i]) & 3) + 1;
 			data->pwm[i] =
 			    (w83l786ng_read_value(client, W83L786NG_REG_PWM[i])
@@ -809,11 +798,6 @@ static struct w83l786ng_data *w83l786ng_update_device(struct device *dev)
 			data->pwm[i] = w83l786ng_read_value(client,
 			    W83L786NG_REG_PWM[i]);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			    ((pwmcfg >> W83L786NG_PWM_ENABLE_SHIFT[i]) & 2) + 1;
-			data->pwm[i] = w83l786ng_read_value(client,
-			    W83L786NG_REG_PWM[i]);
->>>>>>> master
 		}
 
 

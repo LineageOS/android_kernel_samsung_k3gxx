@@ -976,7 +976,6 @@ static int ieee80211_start_ap(struct wiphy *wiphy, struct net_device *dev,
 
 	err = ieee80211_assign_beacon(sdata, &params->beacon);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (err < 0) {
 		ieee80211_vif_release_channel(sdata);
 		return err;
@@ -985,10 +984,6 @@ static int ieee80211_start_ap(struct wiphy *wiphy, struct net_device *dev,
 	if (err < 0)
 		return err;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (err < 0)
-		return err;
->>>>>>> master
 	changed |= err;
 
 	err = drv_start_ap(sdata->local, sdata);
@@ -998,12 +993,9 @@ static int ieee80211_start_ap(struct wiphy *wiphy, struct net_device *dev,
 			kfree_rcu(old, rcu_head);
 		RCU_INIT_POINTER(sdata->u.ap.beacon, NULL);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ieee80211_vif_release_channel(sdata);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		return err;
 	}
 
@@ -1089,14 +1081,10 @@ static int ieee80211_stop_ap(struct wiphy *wiphy, struct net_device *dev)
 	/* free all potentially still buffered bcast frames */
 	local->total_ps_buffered -= skb_queue_len(&sdata->u.ap.ps.bc_buf);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ieee80211_purge_tx_queue(&local->hw, &sdata->u.ap.ps.bc_buf);
 =======
 	skb_queue_purge(&sdata->u.ap.ps.bc_buf);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	skb_queue_purge(&sdata->u.ap.ps.bc_buf);
->>>>>>> master
 
 	ieee80211_vif_copy_chanctx_to_vlans(sdata, true);
 	ieee80211_vif_release_channel(sdata);
@@ -2384,16 +2372,11 @@ static int ieee80211_set_power_mgmt(struct wiphy *wiphy, struct net_device *dev,
 	struct ieee80211_local *local = wdev_priv(dev->ieee80211_ptr);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (sdata->vif.type != NL80211_IFTYPE_STATION)
 =======
 	if (sdata->vif.type != NL80211_IFTYPE_STATION &&
 	    sdata->vif.type != NL80211_IFTYPE_MESH_POINT)
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (sdata->vif.type != NL80211_IFTYPE_STATION &&
-	    sdata->vif.type != NL80211_IFTYPE_MESH_POINT)
->>>>>>> master
 		return -EOPNOTSUPP;
 
 	if (!(local->hw.flags & IEEE80211_HW_SUPPORTS_PS))
@@ -2514,7 +2497,6 @@ static int ieee80211_start_roc_work(struct ieee80211_local *local,
 	INIT_LIST_HEAD(&roc->dependents);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/*
 	 * cookie is either the roc cookie (for normal roc)
 	 * or the SKB (for mgmt TX)
@@ -2535,8 +2517,6 @@ static int ieee80211_start_roc_work(struct ieee80211_local *local,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* if there's one pending or we're scanning, queue this one */
 	if (!list_empty(&local->roc_list) ||
 	    local->scanning || local->radar_detect_enabled)
@@ -2672,10 +2652,7 @@ static int ieee80211_start_roc_work(struct ieee80211_local *local,
 		list_add_tail(&roc->list, &local->roc_list);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> master
 	/*
 	 * cookie is either the roc cookie (for normal roc)
 	 * or the SKB (for mgmt TX)
@@ -2694,10 +2671,7 @@ static int ieee80211_start_roc_work(struct ieee80211_local *local,
 		*cookie = (unsigned long)txskb;
 	}
 
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	return 0;
 }
 
@@ -3385,14 +3359,10 @@ static int ieee80211_probe_client(struct wiphy *wiphy, struct net_device *dev,
 	}
 	band = chanctx_conf->def.chan->band;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	sta = sta_info_get_bss(sdata, peer);
 =======
 	sta = sta_info_get(sdata, peer);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	sta = sta_info_get(sdata, peer);
->>>>>>> master
 	if (sta) {
 		qos = test_sta_flag(sta, WLAN_STA_WME);
 	} else {

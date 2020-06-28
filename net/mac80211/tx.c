@@ -282,17 +282,11 @@ ieee80211_tx_h_check_assoc(struct ieee80211_tx_data *tx)
 		return TX_CONTINUE;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	if (tx->sdata->vif.type == NL80211_IFTYPE_MESH_POINT)
 		return TX_CONTINUE;
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	if (tx->sdata->vif.type == NL80211_IFTYPE_MESH_POINT)
-		return TX_CONTINUE;
-
->>>>>>> master
 	if (tx->flags & IEEE80211_TX_PS_BUFFERED)
 		return TX_CONTINUE;
 
@@ -348,14 +342,10 @@ static void purge_old_ps_buffers(struct ieee80211_local *local)
 		if (skb) {
 			purged++;
 <<<<<<< HEAD
-<<<<<<< HEAD
 			ieee80211_free_txskb(&local->hw, skb);
 =======
 			dev_kfree_skb(skb);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-			dev_kfree_skb(skb);
->>>>>>> master
 		}
 		total += skb_queue_len(&ps->bc_buf);
 	}
@@ -416,14 +406,11 @@ ieee80211_tx_h_multicast_ps_buf(struct ieee80211_tx_data *tx)
 		return TX_CONTINUE;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	if (ieee80211_is_probe_req(hdr->frame_control))
 		return TX_CONTINUE;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* no stations in PS mode */
 	if (!atomic_read(&ps->num_sta_ps))
 		return TX_CONTINUE;
@@ -444,14 +431,10 @@ ieee80211_tx_h_multicast_ps_buf(struct ieee80211_tx_data *tx)
 		ps_dbg(tx->sdata,
 		       "BC TX buffer full - dropping the oldest frame\n");
 <<<<<<< HEAD
-<<<<<<< HEAD
 		ieee80211_free_txskb(&tx->local->hw, skb_dequeue(&ps->bc_buf));
 =======
 		dev_kfree_skb(skb_dequeue(&ps->bc_buf));
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		dev_kfree_skb(skb_dequeue(&ps->bc_buf));
->>>>>>> master
 	} else
 		tx->local->total_ps_buffered++;
 
@@ -506,7 +489,6 @@ ieee80211_tx_h_unicast_ps_buf(struct ieee80211_tx_data *tx)
 		if (tx->local->total_ps_buffered >= TOTAL_MAX_TX_BUFFER)
 			purge_old_ps_buffers(tx->local);
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 		/* sync with ieee80211_sta_ps_deliver_wakeup */
 		spin_lock(&sta->ps_lock);
@@ -523,8 +505,6 @@ ieee80211_tx_h_unicast_ps_buf(struct ieee80211_tx_data *tx)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		if (skb_queue_len(&sta->ps_tx_buf[ac]) >= STA_MAX_TX_BUFFER) {
 			struct sk_buff *old = skb_dequeue(&sta->ps_tx_buf[ac]);
 			ps_dbg(tx->sdata,
@@ -539,12 +519,9 @@ ieee80211_tx_h_unicast_ps_buf(struct ieee80211_tx_data *tx)
 		info->flags |= IEEE80211_TX_INTFL_NEED_TXPROCESSING;
 		skb_queue_tail(&sta->ps_tx_buf[ac], tx->skb);
 <<<<<<< HEAD
-<<<<<<< HEAD
 		spin_unlock(&sta->ps_lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 		if (!timer_pending(&local->sta_cleanup))
 			mod_timer(&local->sta_cleanup,
@@ -573,13 +550,9 @@ ieee80211_tx_h_ps_buf(struct ieee80211_tx_data *tx)
 	if (unlikely(tx->flags & IEEE80211_TX_PS_BUFFERED))
 		return TX_CONTINUE;
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-
->>>>>>> master
 	if (tx->flags & IEEE80211_TX_UNICAST)
 		return ieee80211_tx_h_unicast_ps_buf(tx);
 	else
@@ -1169,15 +1142,11 @@ ieee80211_tx_prepare(struct ieee80211_sub_if_data *sdata,
 		if (!tx->sta && sdata->dev->ieee80211_ptr->use_4addr)
 			return TX_DROP;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	} else if (info->flags & (IEEE80211_TX_CTL_INJECTED |
 				  IEEE80211_TX_INTFL_NL80211_FRAME_TX) ||
 =======
 	} else if (info->flags & IEEE80211_TX_CTL_INJECTED ||
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	} else if (info->flags & IEEE80211_TX_CTL_INJECTED ||
->>>>>>> master
 		   tx->sdata->control_port_protocol == tx->skb->protocol) {
 		tx->sta = sta_info_get_bss(sdata, hdr->addr1);
 	}
@@ -2770,24 +2739,18 @@ ieee80211_get_buffered_bc(struct ieee80211_hw *hw,
 		}
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (sdata->vif.type == NL80211_IFTYPE_AP)
 			sdata = IEEE80211_DEV_TO_SUB_IF(skb->dev);
 		if (!ieee80211_tx_prepare(sdata, &tx, skb))
 			break;
 		ieee80211_free_txskb(hw, skb);
 =======
-=======
->>>>>>> master
 		if (sdata->vif.type == NL80211_IFTYPE_AP_VLAN)
 			sdata = IEEE80211_DEV_TO_SUB_IF(skb->dev);
 		if (!ieee80211_tx_prepare(sdata, &tx, skb))
 			break;
 		dev_kfree_skb_any(skb);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	}
 
 	info = IEEE80211_SKB_CB(skb);

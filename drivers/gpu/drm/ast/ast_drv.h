@@ -178,14 +178,10 @@ uint8_t ast_get_index_reg_mask(struct ast_private *ast,
 static inline void ast_open_key(struct ast_private *ast)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 	ast_set_index_reg(ast, AST_IO_CRTC_PORT, 0x80, 0xA8);
 =======
 	ast_set_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xA1, 0xFF, 0x04);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	ast_set_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xA1, 0xFF, 0x04);
->>>>>>> master
 }
 
 #define AST_VIDMEM_SIZE_8M    0x00800000
@@ -305,12 +301,9 @@ int ast_fbdev_init(struct drm_device *dev);
 void ast_fbdev_fini(struct drm_device *dev);
 void ast_fbdev_set_suspend(struct drm_device *dev, int state);
 <<<<<<< HEAD
-<<<<<<< HEAD
 void ast_fbdev_set_base(struct ast_private *ast, unsigned long gpu_addr);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 struct ast_bo {
 	struct ttm_buffer_object bo;

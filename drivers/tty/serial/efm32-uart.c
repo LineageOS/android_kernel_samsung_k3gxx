@@ -28,12 +28,9 @@
 #define UARTn_FRAME_DATABITS__MASK	0x000f
 #define UARTn_FRAME_DATABITS(n)		((n) - 3)
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define UARTn_FRAME_PARITY__MASK	0x0300
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 #define UARTn_FRAME_PARITY_NONE		0x0000
 #define UARTn_FRAME_PARITY_EVEN		0x0200
 #define UARTn_FRAME_PARITY_ODD		0x0300
@@ -586,7 +583,6 @@ static void efm32_uart_console_get_options(struct efm32_uart_port *efm_port,
 
 	frame = efm32_uart_read32(efm_port, UARTn_FRAME);
 <<<<<<< HEAD
-<<<<<<< HEAD
 	switch (frame & UARTn_FRAME_PARITY__MASK) {
 	case UARTn_FRAME_PARITY_ODD:
 		*parity = 'o';
@@ -598,18 +594,13 @@ static void efm32_uart_console_get_options(struct efm32_uart_port *efm_port,
 		*parity = 'n';
 	}
 =======
-=======
->>>>>>> master
 	if (frame & UARTn_FRAME_PARITY_ODD)
 		*parity = 'o';
 	else if (frame & UARTn_FRAME_PARITY_EVEN)
 		*parity = 'e';
 	else
 		*parity = 'n';
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	*bits = (frame & UARTn_FRAME_DATABITS__MASK) -
 			UARTn_FRAME_DATABITS(4) + 4;

@@ -28,7 +28,6 @@ extern int chgcurr_default_logic;
 /* default values */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #define ac_CHGCURR_DEFAULT 2100
 #define usb_CHGCURR_DEFAULT 1200
 #define wireless_CHGCURR_DEFAULT 900	
@@ -37,11 +36,6 @@ extern int chgcurr_default_logic;
 #define usb_CHGCURR_DEFAULT 0
 #define wireless_CHGCURR_DEFAULT 0	
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-#define ac_CHGCURR_DEFAULT 2100
-#define usb_CHGCURR_DEFAULT 1200
-#define wireless_CHGCURR_DEFAULT 900	
->>>>>>> master
 
 /* min values */
 

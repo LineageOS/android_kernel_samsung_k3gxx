@@ -52,14 +52,10 @@ obj-$(CONFIG_ARM_BIG_LITTLE_CPUFREQ)	+= arm_big_little.o
 obj-$(CONFIG_ARM_DT_BL_CPUFREQ)		+= arm_big_little_dt.o
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 obj-$(CONFIG_ARCH_DAVINCI)		+= davinci-cpufreq.o
 =======
 obj-$(CONFIG_ARCH_DAVINCI_DA850)	+= davinci-cpufreq.o
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-obj-$(CONFIG_ARCH_DAVINCI_DA850)	+= davinci-cpufreq.o
->>>>>>> master
 obj-$(CONFIG_UX500_SOC_DB8500)		+= dbx500-cpufreq.o
 obj-$(CONFIG_ARM_EXYNOS_CPUFREQ)	+= exynos-cpufreq.o
 obj-$(CONFIG_ARM_EXYNOS_MP_CPUFREQ)	+= exynos-mp-cpufreq.o

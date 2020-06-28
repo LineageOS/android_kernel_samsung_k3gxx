@@ -41,16 +41,11 @@ static ssize_t show_##name(struct device *dev,			\
 		struct device_attribute *attr, char *buf)	\
 {								\
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return sprintf(buf, "%d\n", topology_##name(dev->id));	\
 =======
 	unsigned int cpu = dev->id;				\
 	return sprintf(buf, "%d\n", topology_##name(cpu));	\
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	unsigned int cpu = dev->id;				\
-	return sprintf(buf, "%d\n", topology_##name(cpu));	\
->>>>>>> master
 }
 
 #if defined(topology_thread_cpumask) || defined(topology_core_cpumask) || \

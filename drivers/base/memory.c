@@ -153,13 +153,10 @@ static ssize_t show_mem_removable(struct device *dev,
 
 	for (i = 0; i < sections_per_block; i++) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 		if (!present_section_nr(mem->start_section_nr + i))
 			continue;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		pfn = section_nr_to_pfn(mem->start_section_nr + i);
 		ret &= is_mem_section_removable(pfn, PAGES_PER_SECTION);
 	}

@@ -520,14 +520,10 @@ extern struct hv_context hv_context;
 extern int hv_init(void);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 extern void hv_cleanup(bool crash);
 =======
 extern void hv_cleanup(void);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-extern void hv_cleanup(void);
->>>>>>> master
 
 extern int hv_post_message(union hv_connection_id connection_id,
 			 enum hv_message_type message_type,

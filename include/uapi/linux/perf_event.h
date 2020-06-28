@@ -426,7 +426,6 @@ struct perf_event_mmap_page {
 	 * Control data for the mmap() data buffer.
 	 *
 <<<<<<< HEAD
-<<<<<<< HEAD
 	 * User-space reading the @data_head value should issue an smp_rmb(),
 	 * after reading this value.
 	 *
@@ -437,8 +436,6 @@ struct perf_event_mmap_page {
 	 *
 	 * See perf_output_put_handle() for the data ordering.
 =======
-=======
->>>>>>> master
 	 * User-space reading the @data_head value should issue an rmb(), on
 	 * SMP capable platforms, after reading this value -- see
 	 * perf_event_wakeup().
@@ -446,10 +443,7 @@ struct perf_event_mmap_page {
 	 * When the mapping is PROT_WRITE the @data_tail value should be
 	 * written by userspace to reflect the last read data. In this case
 	 * the kernel will not over-write unread data.
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	 */
 	__u64   data_head;		/* head in the data section */
 	__u64	data_tail;		/* user-space written tail */

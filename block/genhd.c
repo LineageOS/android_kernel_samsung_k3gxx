@@ -35,22 +35,16 @@ struct kobject *block_depr;
 #define NR_EXT_DEVT		(1 << MINORBITS)
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /* For extended devt allocation.  ext_devt_lock prevents look up
  * results from going away underneath its user.
  */
 static DEFINE_SPINLOCK(ext_devt_lock);
 =======
-=======
->>>>>>> master
 /* For extended devt allocation.  ext_devt_mutex prevents look up
  * results from going away underneath its user.
  */
 static DEFINE_MUTEX(ext_devt_mutex);
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 static DEFINE_IDR(ext_devt_idr);
 
 static struct device_type disk_type;
@@ -440,7 +434,6 @@ int blk_alloc_devt(struct hd_struct *part, dev_t *devt)
 
 	/* allocate ext devt */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	idr_preload(GFP_KERNEL);
 
 	spin_lock_bh(&ext_devt_lock);
@@ -453,11 +446,6 @@ int blk_alloc_devt(struct hd_struct *part, dev_t *devt)
 	idx = idr_alloc(&ext_devt_idr, part, 0, NR_EXT_DEVT, GFP_KERNEL);
 	mutex_unlock(&ext_devt_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	mutex_lock(&ext_devt_mutex);
-	idx = idr_alloc(&ext_devt_idr, part, 0, NR_EXT_DEVT, GFP_KERNEL);
-	mutex_unlock(&ext_devt_mutex);
->>>>>>> master
 	if (idx < 0)
 		return idx == -ENOSPC ? -EBUSY : idx;
 
@@ -477,20 +465,14 @@ int blk_alloc_devt(struct hd_struct *part, dev_t *devt)
 void blk_free_devt(dev_t devt)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	might_sleep();
 
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	might_sleep();
-
->>>>>>> master
 	if (devt == MKDEV(0, 0))
 		return;
 
 	if (MAJOR(devt) == BLOCK_EXT_MAJOR) {
-<<<<<<< HEAD
 <<<<<<< HEAD
 		spin_lock_bh(&ext_devt_lock);
 		idr_remove(&ext_devt_idr, blk_mangle_minor(MINOR(devt)));
@@ -500,11 +482,6 @@ void blk_free_devt(dev_t devt)
 		idr_remove(&ext_devt_idr, blk_mangle_minor(MINOR(devt)));
 		mutex_unlock(&ext_devt_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		mutex_lock(&ext_devt_mutex);
-		idr_remove(&ext_devt_idr, blk_mangle_minor(MINOR(devt)));
-		mutex_unlock(&ext_devt_mutex);
->>>>>>> master
 	}
 }
 
@@ -728,13 +705,9 @@ void del_gendisk(struct gendisk *disk)
 	kobject_put(disk->part0.holder_dir);
 	kobject_put(disk->slave_dir);
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	disk->driverfs_dev = NULL;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	disk->driverfs_dev = NULL;
->>>>>>> master
 	if (!sysfs_deprecated)
 		sysfs_remove_link(block_depr, dev_name(disk_to_dev(disk)));
 	pm_runtime_set_memalloc_noio(disk_to_dev(disk), false);
@@ -746,13 +719,9 @@ void del_gendisk(struct gendisk *disk)
 
 	device_del(disk_to_dev(disk));
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 	blk_free_devt(disk_to_dev(disk)->devt);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	blk_free_devt(disk_to_dev(disk)->devt);
->>>>>>> master
 }
 EXPORT_SYMBOL(del_gendisk);
 
@@ -778,28 +747,20 @@ struct gendisk *get_gendisk(dev_t devt, int *partno)
 		struct hd_struct *part;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 		spin_lock_bh(&ext_devt_lock);
 =======
 		mutex_lock(&ext_devt_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		mutex_lock(&ext_devt_mutex);
->>>>>>> master
 		part = idr_find(&ext_devt_idr, blk_mangle_minor(MINOR(devt)));
 		if (part && get_disk(part_to_disk(part))) {
 			*partno = part->partno;
 			disk = part_to_disk(part);
 		}
 <<<<<<< HEAD
-<<<<<<< HEAD
 		spin_unlock_bh(&ext_devt_lock);
 =======
 		mutex_unlock(&ext_devt_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		mutex_unlock(&ext_devt_mutex);
->>>>>>> master
 	}
 
 	return disk;
@@ -1174,7 +1135,6 @@ int disk_expand_part_tbl(struct gendisk *disk, int partno)
 	struct disk_part_tbl *new_ptbl;
 	int len = old_ptbl ? old_ptbl->len : 0;
 <<<<<<< HEAD
-<<<<<<< HEAD
 	int i, target;
 	size_t size;
 
@@ -1190,11 +1150,6 @@ int disk_expand_part_tbl(struct gendisk *disk, int partno)
 	size_t size;
 	int i;
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	int target = partno + 1;
-	size_t size;
-	int i;
->>>>>>> master
 
 	/* disk_max_parts() is zero during initialization, ignore if so */
 	if (disk_max_parts(disk) && target > disk_max_parts(disk))
@@ -1222,12 +1177,9 @@ static void disk_release(struct device *dev)
 	struct gendisk *disk = dev_to_disk(dev);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	blk_free_devt(dev->devt);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	disk_release_events(disk);
 	kfree(disk->random);
 	disk_replace_part_tbl(disk, NULL);
@@ -1641,7 +1593,6 @@ static void __disk_unblock_events(struct gendisk *disk, bool check_now)
 	set_timer_slack(&ev->dwork.timer, intv / 4);
 	if (check_now)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		queue_delayed_work(system_freezable_power_efficient_wq,
 				&ev->dwork, 0);
 	else if (intv)
@@ -1652,11 +1603,6 @@ static void __disk_unblock_events(struct gendisk *disk, bool check_now)
 	else if (intv)
 		queue_delayed_work(system_freezable_wq, &ev->dwork, intv);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		queue_delayed_work(system_freezable_wq, &ev->dwork, 0);
-	else if (intv)
-		queue_delayed_work(system_freezable_wq, &ev->dwork, intv);
->>>>>>> master
 out_unlock:
 	spin_unlock_irqrestore(&ev->lock, flags);
 }
@@ -1700,15 +1646,11 @@ void disk_flush_events(struct gendisk *disk, unsigned int mask)
 	ev->clearing |= mask;
 	if (!ev->block)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		mod_delayed_work(system_freezable_power_efficient_wq,
 				&ev->dwork, 0);
 =======
 		mod_delayed_work(system_freezable_wq, &ev->dwork, 0);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		mod_delayed_work(system_freezable_wq, &ev->dwork, 0);
->>>>>>> master
 	spin_unlock_irq(&ev->lock);
 }
 
@@ -1805,15 +1747,11 @@ static void disk_check_events(struct disk_events *ev,
 	intv = disk_events_poll_jiffies(disk);
 	if (!ev->block && intv)
 <<<<<<< HEAD
-<<<<<<< HEAD
 		queue_delayed_work(system_freezable_power_efficient_wq,
 				&ev->dwork, intv);
 =======
 		queue_delayed_work(system_freezable_wq, &ev->dwork, intv);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-		queue_delayed_work(system_freezable_wq, &ev->dwork, intv);
->>>>>>> master
 
 	spin_unlock_irq(&ev->lock);
 

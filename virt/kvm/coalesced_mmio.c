@@ -155,7 +155,6 @@ int kvm_vm_ioctl_register_coalesced_mmio(struct kvm *kvm,
 	mutex_unlock(&kvm->slots_lock);
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	return 0;
 
 out_free_dev:
@@ -164,8 +163,6 @@ out_free_dev:
 
 	return ret;
 =======
-=======
->>>>>>> master
 	return ret;
 
 out_free_dev:
@@ -177,10 +174,7 @@ out_free_dev:
 		return -ENXIO;
 
 	return 0;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 }
 
 int kvm_vm_ioctl_unregister_coalesced_mmio(struct kvm *kvm,

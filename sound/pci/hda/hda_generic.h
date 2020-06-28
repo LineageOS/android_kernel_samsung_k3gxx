@@ -242,14 +242,11 @@ struct hda_gen_spec {
 	const struct badness_table *extra_out_badness;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	/* preferred pin/DAC pairs; an array of paired NIDs */
 	const hda_nid_t *preferred_dacs;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 	/* loopback mixing mode */
 	bool aamix_mode;
 

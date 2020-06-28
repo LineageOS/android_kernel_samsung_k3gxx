@@ -202,14 +202,10 @@ static int metag_internal_irq_set_affinity(struct irq_data *data,
 	 * pick the first cpu we find in 'cpumask'.
 	 */
 <<<<<<< HEAD
-<<<<<<< HEAD
 	cpu = cpumask_any_and(cpumask, cpu_online_mask);
 =======
 	cpu = cpumask_any(cpumask);
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-	cpu = cpumask_any(cpumask);
->>>>>>> master
 	thread = cpu_2_hwthread_id[cpu];
 
 	metag_out32(TBI_TRIG_VEC(TBID_SIGNUM_TR1(thread)),

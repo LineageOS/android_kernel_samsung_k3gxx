@@ -108,22 +108,16 @@ acpi_ut_add_address_range(acpi_adr_space_type space_id,
 
 	ACPI_DEBUG_PRINT((ACPI_DB_NAMES,
 <<<<<<< HEAD
-<<<<<<< HEAD
 			  "\nAdded [%4.4s] address range: 0x%8.8X%8.8X-0x%8.8X%8.8X\n",
 			  acpi_ut_get_node_name(range_info->region_node),
 			  ACPI_FORMAT_UINT64(address),
 			  ACPI_FORMAT_UINT64(range_info->end_address)));
 =======
-=======
->>>>>>> master
 			  "\nAdded [%4.4s] address range: 0x%p-0x%p\n",
 			  acpi_ut_get_node_name(range_info->region_node),
 			  ACPI_CAST_PTR(void, address),
 			  ACPI_CAST_PTR(void, range_info->end_address)));
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 	(void)acpi_ut_release_mutex(ACPI_MTX_NAMESPACE);
 	return_ACPI_STATUS(AE_OK);
@@ -174,7 +168,6 @@ acpi_ut_remove_address_range(acpi_adr_space_type space_id,
 
 			ACPI_DEBUG_PRINT((ACPI_DB_NAMES,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					  "\nRemoved [%4.4s] address range: 0x%8.8X%8.8X-0x%8.8X%8.8X\n",
 					  acpi_ut_get_node_name(range_info->
 								region_node),
@@ -183,8 +176,6 @@ acpi_ut_remove_address_range(acpi_adr_space_type space_id,
 					  ACPI_FORMAT_UINT64(range_info->
 							     end_address)));
 =======
-=======
->>>>>>> master
 					  "\nRemoved [%4.4s] address range: 0x%p-0x%p\n",
 					  acpi_ut_get_node_name(range_info->
 								region_node),
@@ -194,10 +185,7 @@ acpi_ut_remove_address_range(acpi_adr_space_type space_id,
 					  ACPI_CAST_PTR(void,
 							range_info->
 							end_address)));
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 
 			ACPI_FREE(range_info);
 			return_VOID;
@@ -274,7 +262,6 @@ acpi_ut_check_address_range(acpi_adr_space_type space_id,
 
 				ACPI_WARNING((AE_INFO,
 <<<<<<< HEAD
-<<<<<<< HEAD
 					      "0x%8.8X%8.8X-0x%8.8X%8.8X %s conflicts with Region %s %d",
 					      ACPI_FORMAT_UINT64(address),
 					      ACPI_FORMAT_UINT64(end_address),
@@ -283,11 +270,6 @@ acpi_ut_check_address_range(acpi_adr_space_type space_id,
 					      ACPI_CAST_PTR(void, address),
 					      ACPI_CAST_PTR(void, end_address),
 >>>>>>> 671a46baf1b... some performance improvements
-=======
-					      "0x%p-0x%p %s conflicts with Region %s %d",
-					      ACPI_CAST_PTR(void, address),
-					      ACPI_CAST_PTR(void, end_address),
->>>>>>> master
 					      acpi_ut_get_region_name(space_id),
 					      pathname, overlap_count));
 				ACPI_FREE(pathname);

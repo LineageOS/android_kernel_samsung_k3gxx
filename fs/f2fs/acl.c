@@ -224,24 +224,18 @@ static int f2fs_set_acl(struct inode *inode, int type, struct posix_acl *acl)
 		name_index = F2FS_XATTR_INDEX_POSIX_ACL_ACCESS;
 		if (acl) {
 <<<<<<< HEAD
-<<<<<<< HEAD
 			error = posix_acl_update_mode(inode, &inode->i_mode, &acl);
 			if (error)
 				return error;
 			set_acl_inode(fi, inode->i_mode);
 =======
-=======
->>>>>>> master
 			error = posix_acl_equiv_mode(acl, &inode->i_mode);
 			if (error < 0)
 				return error;
 			set_acl_inode(fi, inode->i_mode);
 			if (error == 0)
 				acl = NULL;
-<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
-=======
->>>>>>> master
 		}
 		break;
 

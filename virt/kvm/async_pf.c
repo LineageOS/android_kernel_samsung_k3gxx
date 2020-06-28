@@ -159,10 +159,14 @@ int kvm_setup_async_pf(struct kvm_vcpu *vcpu, gva_t gva, gfn_t gfn,
 	 * may as well sleep faulting in page
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	work = kmem_cache_zalloc(async_pf_cache, GFP_NOWAIT | __GFP_NOWARN);
 =======
 	work = kmem_cache_zalloc(async_pf_cache, GFP_NOWAIT);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	work = kmem_cache_zalloc(async_pf_cache, GFP_NOWAIT);
+>>>>>>> master
 	if (!work)
 		return 0;
 

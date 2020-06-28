@@ -343,6 +343,7 @@ int ttm_bo_move_memcpy(struct ttm_buffer_object *bo,
 		goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * Single TTM move. NOP.
 	 */
@@ -363,6 +364,8 @@ int ttm_bo_move_memcpy(struct ttm_buffer_object *bo,
 		if (ret)
 			goto out1;
 =======
+=======
+>>>>>>> master
 	if (old_iomap == NULL && new_iomap == NULL)
 		goto out2;
 	if (old_iomap == NULL && ttm == NULL)
@@ -376,7 +379,10 @@ int ttm_bo_move_memcpy(struct ttm_buffer_object *bo,
 			old_copy.mm_node = NULL;
 			goto out1;
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	add = 0;
@@ -403,15 +409,21 @@ int ttm_bo_move_memcpy(struct ttm_buffer_object *bo,
 		} else
 			ret = ttm_copy_io_page(new_iomap, old_iomap, page);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (ret)
 			goto out1;
 =======
+=======
+>>>>>>> master
 		if (ret) {
 			/* failing here, means keep old copy as-is */
 			old_copy.mm_node = NULL;
 			goto out1;
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 	mb();
 out2:
@@ -430,6 +442,7 @@ out1:
 out:
 	ttm_mem_reg_iounmap(bdev, &old_copy, old_iomap);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/*
 	 * On error, keep the mm node!
@@ -439,6 +452,9 @@ out:
 =======
 	ttm_bo_mem_put(bo, &old_copy);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ttm_bo_mem_put(bo, &old_copy);
+>>>>>>> master
 	return ret;
 }
 EXPORT_SYMBOL(ttm_bo_move_memcpy);

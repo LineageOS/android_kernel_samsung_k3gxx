@@ -246,6 +246,7 @@ static int stk1160_stop_streaming(struct stk1160 *dev)
 		return -ERESTARTSYS;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * Once URBs are cancelled, the URB complete handler
 	 * won't be running. This is required to safely release the
@@ -253,6 +254,8 @@ static int stk1160_stop_streaming(struct stk1160 *dev)
 	 */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	stk1160_cancel_isoc(dev);
 
 	/*
@@ -674,6 +677,7 @@ void stk1160_clear_queue(struct stk1160 *dev)
 				buf, buf->vb.v4l2_buf.index);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* It's important to release the current buffer */
 	if (dev->isoc_ctl.buf) {
@@ -688,6 +692,10 @@ void stk1160_clear_queue(struct stk1160 *dev)
 	/* It's important to clear current buffer */
 	dev->isoc_ctl.buf = NULL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	/* It's important to clear current buffer */
+	dev->isoc_ctl.buf = NULL;
+>>>>>>> master
 	spin_unlock_irqrestore(&dev->buf_lock, flags);
 }
 

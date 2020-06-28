@@ -37,10 +37,15 @@ struct files_stat_struct files_stat = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 DEFINE_STATIC_LGLOCK(files_lglock);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+DEFINE_STATIC_LGLOCK(files_lglock);
+
+>>>>>>> master
 /* SLAB cache for file structures */
 static struct kmem_cache *filp_cachep __read_mostly;
 
@@ -138,9 +143,13 @@ struct file *get_empty_filp(void)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	INIT_LIST_HEAD(&f->f_u.fu_list);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	INIT_LIST_HEAD(&f->f_u.fu_list);
+>>>>>>> master
 	atomic_long_set(&f->f_count, 1);
 	rwlock_init(&f->f_owner.lock);
 	spin_lock_init(&f->f_lock);
@@ -218,16 +227,22 @@ static void drop_file_write_access(struct file *file)
 	struct inode *inode = dentry->d_inode;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (special_file(inode->i_mode))
 		return;
 
 	put_write_access(inode);
 =======
+=======
+>>>>>>> master
 	put_write_access(inode);
 
 	if (special_file(inode->i_mode))
 		return;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (file_check_writeable(file) != 0)
 		return;
 	__mnt_drop_write(mnt);
@@ -279,6 +294,7 @@ static void __fput(struct file *file)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static LLIST_HEAD(delayed_fput_list);
 static void delayed_fput(struct work_struct *unused)
 {
@@ -289,6 +305,8 @@ static void delayed_fput(struct work_struct *unused)
 		next = llist_next(node);
 		__fput(llist_entry(node, struct file, f_u.fu_llist));
 =======
+=======
+>>>>>>> master
 static DEFINE_SPINLOCK(delayed_fput_lock);
 static LIST_HEAD(delayed_fput_list);
 static void delayed_fput(struct work_struct *unused)
@@ -301,7 +319,10 @@ static void delayed_fput(struct work_struct *unused)
 		struct file *f = list_first_entry(&head, struct file, f_u.fu_list);
 		list_del_init(&f->f_u.fu_list);
 		__fput(f);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 }
 
@@ -332,27 +353,39 @@ void fput(struct file *file)
 	if (atomic_long_dec_and_test(&file->f_count)) {
 		struct task_struct *task = current;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 		unsigned long flags;
 
 		file_sb_list_del(file);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		unsigned long flags;
+
+		file_sb_list_del(file);
+>>>>>>> master
 		if (likely(!in_interrupt() && !(task->flags & PF_KTHREAD))) {
 			init_task_work(&file->f_u.fu_rcuhead, ____fput);
 			if (!task_work_add(task, &file->f_u.fu_rcuhead, true))
 				return;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		if (llist_add(&file->f_u.fu_llist, &delayed_fput_list))
 			schedule_work(&delayed_fput_work);
 =======
+=======
+>>>>>>> master
 		spin_lock_irqsave(&delayed_fput_lock, flags);
 		list_add(&file->f_u.fu_list, &delayed_fput_list);
 		schedule_work(&delayed_fput_work);
 		spin_unlock_irqrestore(&delayed_fput_lock, flags);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 }
 
@@ -369,9 +402,13 @@ void __fput_sync(struct file *file)
 	if (atomic_long_dec_and_test(&file->f_count)) {
 		struct task_struct *task = current;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		file_sb_list_del(file);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		file_sb_list_del(file);
+>>>>>>> master
 		BUG_ON(!(task->flags & PF_KTHREAD));
 		__fput(file);
 	}
@@ -384,15 +421,22 @@ void put_filp(struct file *file)
 	if (atomic_long_dec_and_test(&file->f_count)) {
 		security_file_free(file);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		file_sb_list_del(file);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		file_sb_list_del(file);
+>>>>>>> master
 		file_free(file);
 	}
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 static inline int file_list_cpu(struct file *file)
 {
 #ifdef CONFIG_SMP
@@ -509,7 +553,10 @@ void mark_files_ro(struct super_block *sb)
 	lg_global_unlock(&files_lglock);
 }
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 void __init files_init(unsigned long mempages)
 { 
 	unsigned long n;
@@ -526,8 +573,12 @@ void __init files_init(unsigned long mempages)
 	files_stat.max_files = max_t(unsigned long, n, NR_FILE);
 	files_defer_init();
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	lg_lock_init(&files_lglock, "files_lglock");
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	lg_lock_init(&files_lglock, "files_lglock");
+>>>>>>> master
 	percpu_counter_init(&nr_files, 0);
 } 

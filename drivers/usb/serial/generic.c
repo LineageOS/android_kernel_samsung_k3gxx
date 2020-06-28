@@ -177,8 +177,11 @@ retry:
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	goto retry;	/* try sending off another urb */
 =======
+=======
+>>>>>>> master
 	/* Try sending off another urb, unless in irq context (in which case
 	 * there will be no free urb). */
 	if (!in_irq())
@@ -187,7 +190,10 @@ retry:
 	clear_bit_unlock(USB_SERIAL_WRITE_BUSY, &port->flags);
 
 	return 0;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /**
@@ -273,11 +279,15 @@ void usb_serial_generic_wait_until_sent(struct tty_struct *tty, long timeout)
 	 */
 	period = max_t(unsigned long, (10 * HZ / bps), 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (timeout)
 		period = min_t(unsigned long, period, timeout);
 =======
 	period = min_t(unsigned long, period, timeout);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	period = min_t(unsigned long, period, timeout);
+>>>>>>> master
 
 	dev_dbg(&port->dev, "%s - timeout = %u ms, period = %u ms\n",
 					__func__, jiffies_to_msecs(timeout),
@@ -288,10 +298,14 @@ void usb_serial_generic_wait_until_sent(struct tty_struct *tty, long timeout)
 		if (signal_pending(current))
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (timeout && time_after(jiffies, expire))
 =======
 		if (time_after(jiffies, expire))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (time_after(jiffies, expire))
+>>>>>>> master
 			break;
 	}
 }

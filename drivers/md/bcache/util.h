@@ -453,6 +453,7 @@ read_attribute(name ## _last_ ## frequency_units)
 })
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct bch_ratelimit {
 	/* Next time we want to do some work, in nanoseconds */
 	uint64_t		next;
@@ -466,22 +467,31 @@ struct bch_ratelimit {
 
 static inline void bch_ratelimit_reset(struct bch_ratelimit *d)
 =======
+=======
+>>>>>>> master
 struct ratelimit {
 	uint64_t		next;
 	unsigned		rate;
 };
 
 static inline void ratelimit_reset(struct ratelimit *d)
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 {
 	d->next = local_clock();
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 uint64_t bch_next_delay(struct bch_ratelimit *d, uint64_t done);
 =======
 unsigned bch_next_delay(struct ratelimit *d, uint64_t done);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+unsigned bch_next_delay(struct ratelimit *d, uint64_t done);
+>>>>>>> master
 
 #define __DIV_SAFE(n, d, zero)						\
 ({									\

@@ -315,9 +315,12 @@ gen7_render_ring_flush(struct intel_ring_buffer *ring,
 		flags |= PIPE_CONTROL_CONST_CACHE_INVALIDATE;
 		flags |= PIPE_CONTROL_STATE_CACHE_INVALIDATE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		flags |= PIPE_CONTROL_MEDIA_STATE_CLEAR;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		/*
 		 * TLB invalidate requires a post-sync write.
 		 */
@@ -325,10 +328,13 @@ gen7_render_ring_flush(struct intel_ring_buffer *ring,
 		flags |= PIPE_CONTROL_GLOBAL_GTT_IVB;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		flags |= PIPE_CONTROL_STALL_AT_SCOREBOARD;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		/* Workaround: we must issue a pipe_control with CS-stall bit
 		 * set before a pipe_control command that has the state cache
 		 * invalidate bit set. */
@@ -406,11 +412,14 @@ static int init_ring_common(struct intel_ring_buffer *ring)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Enforce ordering by reading HEAD register back */
 	I915_READ_HEAD(ring);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Initialize the ring. This must happen _after_ we've cleared the ring
 	 * registers with the above sequence (the readback of the HEAD registers
 	 * also enforces ordering), otherwise the hw might lose the new ring
@@ -923,6 +932,7 @@ void intel_ring_setup_status_page(struct intel_ring_buffer *ring)
 	I915_WRITE(mmio, (u32)ring->status_page.gfx_addr);
 	POSTING_READ(mmio);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* Flush the TLB for this page */
 	if (INTEL_INFO(dev)->gen >= 6) {
@@ -937,6 +947,8 @@ void intel_ring_setup_status_page(struct intel_ring_buffer *ring)
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static int
@@ -1478,12 +1490,17 @@ intel_ring_alloc_seqno(struct intel_ring_buffer *ring)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __intel_ring_prepare(struct intel_ring_buffer *ring,
 				int bytes)
 =======
 static int __intel_ring_begin(struct intel_ring_buffer *ring,
 			      int bytes)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int __intel_ring_begin(struct intel_ring_buffer *ring,
+			      int bytes)
+>>>>>>> master
 {
 	int ret;
 
@@ -1500,9 +1517,13 @@ static int __intel_ring_begin(struct intel_ring_buffer *ring,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ring->space -= bytes;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ring->space -= bytes;
+>>>>>>> master
 	return 0;
 }
 
@@ -1518,23 +1539,30 @@ int intel_ring_begin(struct intel_ring_buffer *ring,
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = __intel_ring_prepare(ring, num_dwords * sizeof(uint32_t));
 	if (ret)
 		return ret;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Preallocate the olr before touching the ring */
 	ret = intel_ring_alloc_seqno(ring);
 	if (ret)
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ring->space -= num_dwords * sizeof(uint32_t);
 	return 0;
 =======
 	return __intel_ring_begin(ring, num_dwords * sizeof(uint32_t));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return __intel_ring_begin(ring, num_dwords * sizeof(uint32_t));
+>>>>>>> master
 }
 
 void intel_ring_init_seqno(struct intel_ring_buffer *ring, u32 seqno)

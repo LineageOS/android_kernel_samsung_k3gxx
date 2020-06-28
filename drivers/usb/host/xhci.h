@@ -1,7 +1,10 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  * xHCI host controller driver
  *
@@ -93,6 +96,7 @@ struct xhci_cap_regs {
 /* bits 4:7, max number of Event Ring segments */
 #define HCS_ERST_MAX(p)		(((p) >> 4) & 0xf)
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* bits 21:25 Hi 5 bits of Scratchpad buffers SW must allocate for the HW */
 /* bit 26 Scratchpad restore - for save/restore HW state - not used yet */
 /* bits 27:31 Lo 5 bits of Scratchpad buffers SW must allocate for the HW */
@@ -102,6 +106,11 @@ struct xhci_cap_regs {
 /* bits 27:31 number of Scratchpad buffers SW must allocate for the HW */
 #define HCS_MAX_SCRATCHPAD(p)   (((p) >> 27) & 0x1f)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+/* bit 26 Scratchpad restore - for save/restore HW state - not used yet */
+/* bits 27:31 number of Scratchpad buffers SW must allocate for the HW */
+#define HCS_MAX_SCRATCHPAD(p)   (((p) >> 27) & 0x1f)
+>>>>>>> master
 
 /* HCSPARAMS3 - hcs_params3 - bitmasks */
 /* bits 0:7, Max U1 to U0 latency for the roothub ports */
@@ -290,9 +299,12 @@ struct xhci_op_regs {
 #define XDEV_U2		(0x2 << 5)
 #define XDEV_U3		(0x3 << 5)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define XDEV_INACTIVE	(0x6 << 5)
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #define XDEV_RESUME	(0xf << 5)
 /* true: port has power (see HCC_PPC) */
 #define PORT_POWER	(1 << 9)
@@ -1251,10 +1263,14 @@ union xhci_trb {
  * It must also be greater than 16.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define TRBS_PER_SEGMENT	256
 =======
 #define TRBS_PER_SEGMENT	64
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define TRBS_PER_SEGMENT	64
+>>>>>>> master
 /* Allow two commands + a link TRB, along with any reserved command TRBs */
 #define MAX_RSVD_CMD_TRBS	(TRBS_PER_SEGMENT - 3)
 #define TRB_SEGMENT_SIZE	(TRBS_PER_SEGMENT*16)
@@ -1278,10 +1294,13 @@ struct xhci_td {
 	union xhci_trb		*first_trb;
 	union xhci_trb		*last_trb;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* actual_length of the URB has already been set */
 	bool			urb_length_set;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 
 /* xHCI command default timeout value */
@@ -1513,9 +1532,12 @@ struct xhci_hcd {
 #define XHCI_STATE_DYING	(1 << 0)
 #define XHCI_STATE_HALTED	(1 << 1)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define XHCI_STATE_REMOVING	(1 << 2)
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Statistics */
 	int			error_bitmask;
 	unsigned int		quirks;
@@ -1850,9 +1872,12 @@ int xhci_cancel_cmd(struct xhci_hcd *xhci, struct xhci_command *command,
 void xhci_ring_ep_doorbell(struct xhci_hcd *xhci, unsigned int slot_id,
 		unsigned int ep_index, unsigned int stream_id);
 <<<<<<< HEAD
+<<<<<<< HEAD
 union xhci_trb *xhci_find_next_enqueue(struct xhci_ring *ring);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 /* xHCI roothub code */
 void xhci_set_link_state(struct xhci_hcd *xhci, __le32 __iomem **port_array,

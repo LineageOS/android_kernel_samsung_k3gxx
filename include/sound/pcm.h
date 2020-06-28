@@ -385,10 +385,14 @@ struct snd_pcm_substream {
 	size_t dma_max;
 	/* -- hardware operations -- */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct snd_pcm_ops *ops;
 =======
 	struct snd_pcm_ops *ops;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct snd_pcm_ops *ops;
+>>>>>>> master
 	/* -- runtime information -- */
 	struct snd_pcm_runtime *runtime;
         /* -- timer section -- */
@@ -876,11 +880,15 @@ int snd_pcm_format_set_silence(snd_pcm_format_t format, void *buf, unsigned int 
 snd_pcm_format_t snd_pcm_build_linear_format(int width, int unsigned, int big_endian);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void snd_pcm_set_ops(struct snd_pcm * pcm, int direction,
 		     const struct snd_pcm_ops *ops);
 =======
 void snd_pcm_set_ops(struct snd_pcm * pcm, int direction, struct snd_pcm_ops *ops);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+void snd_pcm_set_ops(struct snd_pcm * pcm, int direction, struct snd_pcm_ops *ops);
+>>>>>>> master
 void snd_pcm_set_sync(struct snd_pcm_substream *substream);
 int snd_pcm_lib_interleave_len(struct snd_pcm_substream *substream);
 int snd_pcm_lib_ioctl(struct snd_pcm_substream *substream,

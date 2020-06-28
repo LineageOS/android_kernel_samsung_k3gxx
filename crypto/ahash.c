@@ -65,6 +65,7 @@ static int hash_walk_new_entry(struct crypto_hash_walk *walk)
 
 	sg = walk->sg;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	walk->offset = sg->offset;
 	walk->pg = sg_page(walk->sg) + (walk->offset >> PAGE_SHIFT);
 	walk->offset = offset_in_page(walk->offset);
@@ -72,6 +73,10 @@ static int hash_walk_new_entry(struct crypto_hash_walk *walk)
 	walk->pg = sg_page(sg);
 	walk->offset = sg->offset;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	walk->pg = sg_page(sg);
+	walk->offset = sg->offset;
+>>>>>>> master
 	walk->entrylen = sg->length;
 
 	if (walk->entrylen > walk->total)
@@ -401,9 +406,12 @@ static int crypto_ahash_init_tfm(struct crypto_tfm *tfm)
 
 	hash->setkey = ahash_nosetkey;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hash->has_setkey = false;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	hash->export = ahash_no_export;
 	hash->import = ahash_no_import;
 
@@ -417,6 +425,7 @@ static int crypto_ahash_init_tfm(struct crypto_tfm *tfm)
 	hash->digest = alg->digest;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (alg->setkey) {
 		hash->setkey = alg->setkey;
 		hash->has_setkey = true;
@@ -425,6 +434,10 @@ static int crypto_ahash_init_tfm(struct crypto_tfm *tfm)
 	if (alg->setkey)
 		hash->setkey = alg->setkey;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (alg->setkey)
+		hash->setkey = alg->setkey;
+>>>>>>> master
 	if (alg->export)
 		hash->export = alg->export;
 	if (alg->import)
@@ -505,11 +518,15 @@ static int ahash_prepare_alg(struct ahash_alg *alg)
 
 	if (alg->halg.digestsize > PAGE_SIZE / 8 ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    alg->halg.statesize > PAGE_SIZE / 8 ||
 	    alg->halg.statesize == 0)
 =======
 	    alg->halg.statesize > PAGE_SIZE / 8)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	    alg->halg.statesize > PAGE_SIZE / 8)
+>>>>>>> master
 		return -EINVAL;
 
 	base->cra_type = &crypto_ahash_type;

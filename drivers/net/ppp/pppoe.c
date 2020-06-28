@@ -314,9 +314,13 @@ static void pppoe_flush_dev(struct net_device *dev)
 			    sk->sk_state & (PPPOX_CONNECTED | PPPOX_BOUND | PPPOX_ZOMBIE)) {
 				pppox_unbind_sock(sk);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 				sk->sk_state = PPPOX_ZOMBIE;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				sk->sk_state = PPPOX_ZOMBIE;
+>>>>>>> master
 				sk->sk_state_change(sk);
 				po->pppoe_dev = NULL;
 				dev_put(dev);
@@ -574,10 +578,14 @@ static int pppoe_release(struct socket *sock)
 	po = pppox_sk(sk);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (po->pppoe_dev) {
 =======
 	if (sk->sk_state & (PPPOX_CONNECTED | PPPOX_BOUND | PPPOX_ZOMBIE)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (sk->sk_state & (PPPOX_CONNECTED | PPPOX_BOUND | PPPOX_ZOMBIE)) {
+>>>>>>> master
 		dev_put(po->pppoe_dev);
 		po->pppoe_dev = NULL;
 	}
@@ -683,10 +691,14 @@ static int pppoe_connect(struct socket *sock, struct sockaddr *uservaddr,
 				   dev->hard_header_len);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		po->chan.mtu = dev->mtu - sizeof(struct pppoe_hdr) - 2;
 =======
 		po->chan.mtu = dev->mtu - sizeof(struct pppoe_hdr);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		po->chan.mtu = dev->mtu - sizeof(struct pppoe_hdr);
+>>>>>>> master
 		po->chan.private = sk;
 		po->chan.ops = &pppoe_chan_ops;
 
@@ -991,10 +1003,15 @@ static int pppoe_recvmsg(struct kiocb *iocb, struct socket *sock,
 		goto end;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	m->msg_namelen = 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	m->msg_namelen = 0;
+
+>>>>>>> master
 	if (skb) {
 		total_len = min_t(size_t, total_len, skb->len);
 		error = skb_copy_datagram_iovec(skb, 0, m->msg_iov, total_len);

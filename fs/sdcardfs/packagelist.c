@@ -3,18 +3,24 @@
  *
  * Copyright (c) 2013 Samsung Electronics Co. Ltd
 <<<<<<< HEAD
+<<<<<<< HEAD
  *   Authors: Daeho Jeong, Woojoong Lee, Seunghwan Hyun,
  *               Sunghwan Yun, Sungjong Seo
  *
  * This program has been developed as a stackable file system based on
  * the WrapFS which written by
 =======
+=======
+>>>>>>> master
  *   Authors: Daeho Jeong, Woojoong Lee, Seunghwan Hyun, 
  *               Sunghwan Yun, Sungjong Seo
  *                      
  * This program has been developed as a stackable file system based on
  * the WrapFS which written by 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  *
  * Copyright (c) 1998-2011 Erez Zadok
  * Copyright (c) 2009     Shrikar Archak
@@ -28,6 +34,7 @@
 
 #include "sdcardfs.h"
 #include <linux/hashtable.h>
+<<<<<<< HEAD
 <<<<<<< HEAD
 #include <linux/ctype.h>
 #include <linux/delay.h>
@@ -171,6 +178,8 @@ int check_caller_access_to_name(struct inode *parent_node, const struct qstr *na
 			|| qstr_case_eq(name, &q__android_secure)
 			|| qstr_case_eq(name, &q_android_secure)) {
 =======
+=======
+>>>>>>> master
 #include <linux/syscalls.h>
 #include <linux/kthread.h>
 #include <linux/inotify.h>
@@ -245,28 +254,38 @@ int check_caller_access_to_name(struct inode *parent_node, const char* name) {
 		if (!strcasecmp(name, "autorun.inf")
 			|| !strcasecmp(name, ".android_secure")
 			|| !strcasecmp(name, "android_secure")) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			return 0;
 		}
 	}
 
 	/* Root always has access; access for any other UIDs should always
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * be controlled through packages.list.
 	 */
 	if (current_fsuid() == 0)
 		return 1;
 =======
+=======
+>>>>>>> master
 	 * be controlled through packages.list. */
 	if (current_fsuid() == 0) {
 		return 1;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* No extra permissions to enforce */
 	return 1;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static struct hashtable_entry *alloc_hashtable_entry(const struct qstr *key,
 		appid_t value)
@@ -955,6 +974,8 @@ static void configfs_sdcardfs_exit(void)
 {
 	configfs_unregister_subsystem(&sdcardfs_packages.subsystem);
 =======
+=======
+>>>>>>> master
 /* This function is used when file opening. The open flags must be
  * checked before calling check_caller_access_to_name() */  
 int open_flags_to_access_mode(int open_flags) {
@@ -1184,7 +1205,10 @@ void packagelist_destroy(void *pkgl_id)
 	remove_all_hashentrys(pkgl_dat);
 	printk(KERN_INFO "sdcardfs: destroyed packagelist pkgld/%d\n", (int)pkgl_pid);
 	kfree(pkgl_dat);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 int packagelist_init(void)
@@ -1194,6 +1218,7 @@ int packagelist_init(void)
 					sizeof(struct hashtable_entry), 0, 0, NULL);
 	if (!hashtable_entry_cachep) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pr_err("sdcardfs: failed creating pkgl_hashtable entry slab cache\n");
 		return -ENOMEM;
 	}
@@ -1201,16 +1226,22 @@ int packagelist_init(void)
 	configfs_sdcardfs_init();
 	return 0;
 =======
+=======
+>>>>>>> master
 		printk(KERN_ERR "sdcardfs: failed creating pkgl_hashtable entry slab cache\n");
 		return -ENOMEM;
 	}
 
         return 0;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 void packagelist_exit(void)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	configfs_sdcardfs_exit();
 	packagelist_destroy();
@@ -1219,4 +1250,8 @@ void packagelist_exit(void)
 	if (hashtable_entry_cachep)
 		kmem_cache_destroy(hashtable_entry_cachep);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (hashtable_entry_cachep)
+		kmem_cache_destroy(hashtable_entry_cachep);
+>>>>>>> master
 }

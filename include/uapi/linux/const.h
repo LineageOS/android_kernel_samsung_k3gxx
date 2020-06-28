@@ -22,9 +22,12 @@
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define _BITUL(x)	(_AC(1,UL) << (x))
 #define _BITULL(x)	(_AC(1,ULL) << (x))
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #endif /* !(_LINUX_CONST_H) */

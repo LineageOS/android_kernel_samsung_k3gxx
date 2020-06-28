@@ -91,10 +91,14 @@ static int rt2x00mac_tx_rts_cts(struct rt2x00_dev *rt2x00dev,
 				  (struct ieee80211_rts *)(skb->data));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	retval = rt2x00queue_write_tx_frame(queue, skb, NULL, true);
 =======
 	retval = rt2x00queue_write_tx_frame(queue, skb, true);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	retval = rt2x00queue_write_tx_frame(queue, skb, true);
+>>>>>>> master
 	if (retval) {
 		dev_kfree_skb_any(skb);
 		rt2x00_warn(rt2x00dev, "Failed to send RTS/CTS frame\n");
@@ -156,10 +160,14 @@ void rt2x00mac_tx(struct ieee80211_hw *hw,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(rt2x00queue_write_tx_frame(queue, skb, control->sta, false)))
 =======
 	if (unlikely(rt2x00queue_write_tx_frame(queue, skb, false)))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (unlikely(rt2x00queue_write_tx_frame(queue, skb, false)))
+>>>>>>> master
 		goto exit_fail;
 
 	/*
@@ -498,10 +506,13 @@ int rt2x00mac_set_key(struct ieee80211_hw *hw, enum set_key_cmd cmd,
 	if (crypto.cipher == CIPHER_NONE)
 		return -EOPNOTSUPP;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (crypto.cipher == CIPHER_TKIP && rt2x00_is_usb(rt2x00dev))
 		return -EOPNOTSUPP;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	crypto.cmd = cmd;
 
@@ -637,7 +648,10 @@ void rt2x00mac_bss_info_changed(struct ieee80211_hw *hw,
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	 * Update the beacon. This is only required on USB devices. PCI
 	 * devices fetch beacons periodically.
 	 */
@@ -645,11 +659,15 @@ void rt2x00mac_bss_info_changed(struct ieee80211_hw *hw,
 		rt2x00queue_update_beacon(rt2x00dev, vif);
 
 	/*
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	 * Start/stop beaconing.
 	 */
 	if (changes & BSS_CHANGED_BEACON_ENABLED) {
 		if (!bss_conf->enable_beacon && intf->enable_beacon) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 			rt2x00dev->intf_beaconing--;
 			intf->enable_beacon = false;
@@ -664,6 +682,11 @@ void rt2x00mac_bss_info_changed(struct ieee80211_hw *hw,
 			rt2x00dev->intf_beaconing--;
 			intf->enable_beacon = false;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			rt2x00queue_clear_beacon(rt2x00dev, vif);
+			rt2x00dev->intf_beaconing--;
+			intf->enable_beacon = false;
+>>>>>>> master
 
 			if (rt2x00dev->intf_beaconing == 0) {
 				/*
@@ -675,6 +698,7 @@ void rt2x00mac_bss_info_changed(struct ieee80211_hw *hw,
 				mutex_unlock(&intf->beacon_skb_mutex);
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		} else if (bss_conf->enable_beacon && !intf->enable_beacon) {
 			rt2x00dev->intf_beaconing++;
 			intf->enable_beacon = true;
@@ -685,12 +709,17 @@ void rt2x00mac_bss_info_changed(struct ieee80211_hw *hw,
 			if (rt2x00_is_usb(rt2x00dev))
 				rt2x00queue_update_beacon(rt2x00dev, vif);
 =======
+=======
+>>>>>>> master
 
 
 		} else if (bss_conf->enable_beacon && !intf->enable_beacon) {
 			rt2x00dev->intf_beaconing++;
 			intf->enable_beacon = true;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 			if (rt2x00dev->intf_beaconing == 1) {
 				/*
@@ -794,11 +823,14 @@ void rt2x00mac_flush(struct ieee80211_hw *hw, u32 queues, bool drop)
 	struct data_queue *queue;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!test_bit(DEVICE_STATE_PRESENT, &rt2x00dev->flags))
 		return;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	tx_queue_for_each(rt2x00dev, queue)
 		rt2x00queue_flush_queue(queue, drop);
 }

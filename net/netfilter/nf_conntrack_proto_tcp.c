@@ -1044,6 +1044,7 @@ static int tcp_packet(struct nf_conn *ct,
 			return NF_ACCEPT;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* ESTABLISHED without SEEN_REPLY, i.e. mid-connection
 		 * pickup with loose=1. Avoid large ESTABLISHED timeout.
 		 */
@@ -1052,6 +1053,8 @@ static int tcp_packet(struct nf_conn *ct,
 			timeout = timeouts[TCP_CONNTRACK_UNACK];
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	} else if (!test_bit(IPS_ASSURED_BIT, &ct->status)
 		   && (old_state == TCP_CONNTRACK_SYN_RECV
 		       || old_state == TCP_CONNTRACK_ESTABLISHED)

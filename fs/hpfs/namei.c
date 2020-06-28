@@ -9,6 +9,7 @@
 #include "hpfs_fn.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void hpfs_update_directory_times(struct inode *dir)
 {
 	time_t t = get_seconds();
@@ -22,6 +23,8 @@ static void hpfs_update_directory_times(struct inode *dir)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int hpfs_mkdir(struct inode *dir, struct dentry *dentry, umode_t mode)
 {
 	const unsigned char *name = dentry->d_name.name;
@@ -114,9 +117,12 @@ static int hpfs_mkdir(struct inode *dir, struct dentry *dentry, umode_t mode)
 		hpfs_write_inode_nolock(result);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hpfs_update_directory_times(dir);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	d_instantiate(dentry, result);
 	hpfs_unlock(dir->i_sb);
 	return 0;
@@ -206,9 +212,12 @@ static int hpfs_create(struct inode *dir, struct dentry *dentry, umode_t mode, b
 		hpfs_write_inode_nolock(result);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hpfs_update_directory_times(dir);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	d_instantiate(dentry, result);
 	hpfs_unlock(dir->i_sb);
 	return 0;
@@ -285,9 +294,12 @@ static int hpfs_mknod(struct inode *dir, struct dentry *dentry, umode_t mode, de
 
 	hpfs_write_inode_nolock(result);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hpfs_update_directory_times(dir);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	d_instantiate(dentry, result);
 	brelse(bh);
 	hpfs_unlock(dir->i_sb);
@@ -367,9 +379,12 @@ static int hpfs_symlink(struct inode *dir, struct dentry *dentry, const char *sy
 
 	hpfs_write_inode_nolock(result);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hpfs_update_directory_times(dir);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	d_instantiate(dentry, result);
 	hpfs_unlock(dir->i_sb);
 	return 0;
@@ -454,10 +469,13 @@ out1:
 	hpfs_brelse4(&qbh);
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!err)
 		hpfs_update_directory_times(dir);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	hpfs_unlock(dir->i_sb);
 	return err;
 }
@@ -513,10 +531,13 @@ out1:
 	hpfs_brelse4(&qbh);
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!err)
 		hpfs_update_directory_times(dir);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	hpfs_unlock(dir->i_sb);
 	return err;
 }
@@ -636,10 +657,14 @@ static int hpfs_rename(struct inode *old_dir, struct dentry *old_dentry,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 end:
 =======
 	end:
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	end:
+>>>>>>> master
 	hpfs_i(i)->i_parent_dir = new_dir->i_ino;
 	if (S_ISDIR(i->i_mode)) {
 		inc_nlink(new_dir);
@@ -655,12 +680,15 @@ end:
 	}
 end1:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!err) {
 		hpfs_update_directory_times(old_dir);
 		hpfs_update_directory_times(new_dir);
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	hpfs_unlock(i->i_sb);
 	return err;
 }

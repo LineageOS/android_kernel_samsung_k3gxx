@@ -944,6 +944,7 @@ static int i7300_get_devices(struct mem_ctl_info *mci)
 	/* Attempt to 'get' the MCH register we want */
 	pdev = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	while ((pdev = pci_get_device(PCI_VENDOR_ID_INTEL,
 				      PCI_DEVICE_ID_INTEL_I7300_MCH_ERR,
 				      pdev))) {
@@ -959,6 +960,8 @@ static int i7300_get_devices(struct mem_ctl_info *mci)
 				pvt->pci_dev_16_2_fsb_err_regs =
 							pci_dev_get(pdev);
 =======
+=======
+>>>>>>> master
 	while (!pvt->pci_dev_16_1_fsb_addr_map ||
 	       !pvt->pci_dev_16_2_fsb_err_regs) {
 		pdev = pci_get_device(PCI_VENDOR_ID_INTEL,
@@ -982,11 +985,15 @@ static int i7300_get_devices(struct mem_ctl_info *mci)
 			break;
 		case 2:
 			pvt->pci_dev_16_2_fsb_err_regs = pdev;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			break;
 		}
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!pvt->pci_dev_16_1_fsb_addr_map ||
 	    !pvt->pci_dev_16_2_fsb_err_regs) {
@@ -1001,6 +1008,8 @@ static int i7300_get_devices(struct mem_ctl_info *mci)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	edac_dbg(1, "System Address, processor bus- PCI Bus ID: %s  %x:%x\n",
 		 pci_name(pvt->pci_dev_16_0_fsb_ctlr),
 		 pvt->pci_dev_16_0_fsb_ctlr->vendor,

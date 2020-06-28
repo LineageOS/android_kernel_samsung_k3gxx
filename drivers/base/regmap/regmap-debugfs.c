@@ -24,11 +24,16 @@ static struct dentry *regmap_debugfs_root;
 static size_t regmap_calc_reg_len(int max_val, char *buf, size_t buf_size)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return snprintf(NULL, 0, "%x", max_val);
 =======
 	snprintf(buf, buf_size, "%x", max_val);
 	return strlen(buf);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	snprintf(buf, buf_size, "%x", max_val);
+	return strlen(buf);
+>>>>>>> master
 }
 
 static ssize_t regmap_name_read_file(struct file *file,
@@ -424,10 +429,14 @@ static ssize_t regmap_access_read_file(struct file *file,
 		if (p >= *ppos) {
 			/* ...but not beyond it */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (buf_pos + tot_len + 1 >= count)
 =======
 			if (buf_pos >= count - 1 - tot_len)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			if (buf_pos >= count - 1 - tot_len)
+>>>>>>> master
 				break;
 
 			/* Format the register */
@@ -469,13 +478,17 @@ void regmap_debugfs_init(struct regmap *map, const char *name)
 	struct rb_node *next;
 	struct regmap_range_node *range_node;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const char *devname = "dummy";
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	INIT_LIST_HEAD(&map->debugfs_off_cache);
 	mutex_init(&map->cache_lock);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (map->dev)
 		devname = dev_name(map->dev);
@@ -487,13 +500,18 @@ void regmap_debugfs_init(struct regmap *map, const char *name)
 	} else {
 		name = devname;
 =======
+=======
+>>>>>>> master
 	if (name) {
 		map->debugfs_name = kasprintf(GFP_KERNEL, "%s-%s",
 					      dev_name(map->dev), name);
 		name = map->debugfs_name;
 	} else {
 		name = dev_name(map->dev);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	map->debugfs = debugfs_create_dir(name, regmap_debugfs_root);

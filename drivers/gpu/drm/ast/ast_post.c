@@ -54,10 +54,13 @@ ast_is_vga_enabled(struct drm_device *dev)
 	} else {
 		ch = ast_io_read8(ast, 0x43);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return !!(ch & 0x01);
 	}
 	return false;
 =======
+=======
+>>>>>>> master
 		if (ch) {
 			ast_open_key(ast);
 			ch = ast_get_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xb6, 0xff);
@@ -65,7 +68,10 @@ ast_is_vga_enabled(struct drm_device *dev)
 		}
 	}
 	return 0;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 #endif
 

@@ -154,10 +154,14 @@ static int wm8958_dsp2_fw(struct snd_soc_codec *codec, const char *name,
 			data32 &= 0xffffff;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			wm8994_bulk_write(wm8994->wm8994,
 =======
 			wm8994_bulk_write(codec->control_data,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			wm8994_bulk_write(codec->control_data,
+>>>>>>> master
 					  data32 & 0xffffff,
 					  block_len / 2,
 					  (void *)(data + 8));
@@ -464,10 +468,14 @@ static int wm8958_put_mbc_enum(struct snd_kcontrol *kcontrol,
 	struct wm8994_priv *wm8994 = snd_soc_codec_get_drvdata(codec);
 	struct wm8994 *control = wm8994->wm8994;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int value = ucontrol->value.enumerated.item[0];
 =======
 	int value = ucontrol->value.integer.value[0];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int value = ucontrol->value.integer.value[0];
+>>>>>>> master
 	int reg;
 
 	/* Don't allow on the fly reconfiguration */
@@ -558,10 +566,14 @@ static int wm8958_put_vss_enum(struct snd_kcontrol *kcontrol,
 	struct wm8994_priv *wm8994 = snd_soc_codec_get_drvdata(codec);
 	struct wm8994 *control = wm8994->wm8994;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int value = ucontrol->value.enumerated.item[0];
 =======
 	int value = ucontrol->value.integer.value[0];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int value = ucontrol->value.integer.value[0];
+>>>>>>> master
 	int reg;
 
 	/* Don't allow on the fly reconfiguration */
@@ -595,10 +607,14 @@ static int wm8958_put_vss_hpf_enum(struct snd_kcontrol *kcontrol,
 	struct wm8994_priv *wm8994 = snd_soc_codec_get_drvdata(codec);
 	struct wm8994 *control = wm8994->wm8994;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int value = ucontrol->value.enumerated.item[0];
 =======
 	int value = ucontrol->value.integer.value[0];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int value = ucontrol->value.integer.value[0];
+>>>>>>> master
 	int reg;
 
 	/* Don't allow on the fly reconfiguration */
@@ -766,10 +782,14 @@ static int wm8958_put_enh_eq_enum(struct snd_kcontrol *kcontrol,
 	struct wm8994_priv *wm8994 = snd_soc_codec_get_drvdata(codec);
 	struct wm8994 *control = wm8994->wm8994;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int value = ucontrol->value.enumerated.item[0];
 =======
 	int value = ucontrol->value.integer.value[0];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int value = ucontrol->value.integer.value[0];
+>>>>>>> master
 	int reg;
 
 	/* Don't allow on the fly reconfiguration */

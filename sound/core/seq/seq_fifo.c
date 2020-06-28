@@ -73,11 +73,14 @@ void snd_seq_fifo_delete(struct snd_seq_fifo **fifo)
 	*fifo = NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (f->pool)
 		snd_seq_pool_mark_closing(f->pool);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	snd_seq_fifo_clear(f);
 
 	/* wake up clients if any */
@@ -144,9 +147,12 @@ int snd_seq_fifo_event_in(struct snd_seq_fifo *f,
 	if (f->head == NULL)
 		f->head = cell;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cell->next = NULL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	f->cells++;
 	spin_unlock_irqrestore(&f->lock, flags);
 
@@ -227,10 +233,13 @@ void snd_seq_fifo_cell_putback(struct snd_seq_fifo *f,
 		cell->next = f->head;
 		f->head = cell;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!f->tail)
 			f->tail = cell;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		f->cells++;
 		spin_unlock_irqrestore(&f->lock, flags);
 	}
@@ -277,12 +286,15 @@ int snd_seq_fifo_resize(struct snd_seq_fifo *f, int poolsize)
 	spin_unlock_irqrestore(&f->lock, flags);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* close the old pool and wait until all users are gone */
 	snd_seq_pool_mark_closing(oldpool);
 	snd_use_lock_sync(&f->use_lock);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* release cells in old pool */
 	for (cell = oldhead; cell; cell = next) {
 		next = cell->next;

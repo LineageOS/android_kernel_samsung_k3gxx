@@ -34,11 +34,17 @@
 #include <linux/magic.h>
 #include "ecryptfs_kernel.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_SDP
 #include "ecryptfs_dek.h"
 #endif
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#ifdef CONFIG_SDP
+#include "ecryptfs_dek.h"
+#endif
+>>>>>>> master
 
 struct kmem_cache *ecryptfs_inode_info_cache;
 
@@ -67,12 +73,18 @@ static struct inode *ecryptfs_alloc_inode(struct super_block *sb)
 	atomic_set(&inode_info->lower_file_count, 0);
 	inode_info->lower_file = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 	// get userid from super block
 	inode_info->crypt_stat.engine_id = -1;
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	inode = &inode_info->vfs_inode;
 out:
 	return inode;
@@ -177,7 +189,10 @@ static int ecryptfs_show_options(struct seq_file *m, struct dentry *root)
 	mutex_unlock(&mount_crypt_stat->global_auth_tok_list_mutex);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 	seq_printf(m, ",userid=%d", mount_crypt_stat->userid);
 
@@ -194,7 +209,10 @@ static int ecryptfs_show_options(struct seq_file *m, struct dentry *root)
 		seq_printf(m, ",dlp_enabled");
 	}
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	seq_printf(m, ",ecryptfs_cipher=%s",
 		mount_crypt_stat->global_default_cipher_name);
 

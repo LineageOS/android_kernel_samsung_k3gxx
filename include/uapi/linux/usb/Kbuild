@@ -2,9 +2,12 @@
 header-y += audio.h
 header-y += cdc.h
 <<<<<<< HEAD
+<<<<<<< HEAD
 header-y += cdc-wdm.h
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 header-y += ch11.h
 header-y += ch9.h
 header-y += functionfs.h

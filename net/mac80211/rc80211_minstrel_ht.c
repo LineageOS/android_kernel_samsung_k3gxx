@@ -455,10 +455,14 @@ minstrel_aggr_check(struct ieee80211_sta *pubsta, struct sk_buff *skb)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ieee80211_start_tx_ba_session(pubsta, tid, 0);
 =======
 	ieee80211_start_tx_ba_session(pubsta, tid, 5000);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ieee80211_start_tx_ba_session(pubsta, tid, 5000);
+>>>>>>> master
 }
 
 static void
@@ -833,11 +837,14 @@ minstrel_ht_update_cck(struct minstrel_priv *mp, struct minstrel_ht_sta *mi,
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!(mp->hw->flags & IEEE80211_HW_SUPPORTS_HT_CCK_RATES))
 		return;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	mi->cck_supported = 0;
 	mi->cck_supported_short = 0;
 	for (i = 0; i < 4; i++) {

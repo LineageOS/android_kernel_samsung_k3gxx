@@ -458,7 +458,10 @@ snd_seq_oss_release(struct seq_oss_devinfo *dp)
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
  * Wait until the queue is empty (if we don't have nonblock)
  */
 void
@@ -476,7 +479,10 @@ snd_seq_oss_drain_write(struct seq_oss_devinfo *dp)
 
 
 /*
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  * reset sequencer devices
  */
 void

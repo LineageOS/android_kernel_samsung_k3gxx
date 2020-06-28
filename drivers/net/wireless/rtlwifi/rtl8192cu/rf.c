@@ -86,6 +86,7 @@ void rtl92cu_phy_rf6052_set_cck_txpower(struct ieee80211_hw *hw,
 		tx_agc[RF90_PATH_A] = 0x3f3f3f3f;
 		tx_agc[RF90_PATH_B] = 0x3f3f3f3f;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		for (idx1 = RF90_PATH_A; idx1 <= RF90_PATH_B; idx1++) {
 			tx_agc[idx1] = ppowerlevel[idx1] |
 			    (ppowerlevel[idx1] << 8) |
@@ -96,6 +97,8 @@ void rtl92cu_phy_rf6052_set_cck_txpower(struct ieee80211_hw *hw,
 				    rtlefuse->external_pa)
 					tx_agc[idx1] = 0x20;
 =======
+=======
+>>>>>>> master
 		if (turbo_scanoff) {
 			for (idx1 = RF90_PATH_A; idx1 <= RF90_PATH_B; idx1++) {
 				tx_agc[idx1] = ppowerlevel[idx1] |
@@ -107,7 +110,10 @@ void rtl92cu_phy_rf6052_set_cck_txpower(struct ieee80211_hw *hw,
 					    rtlefuse->external_pa)
 						tx_agc[idx1] = 0x20;
 				}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			}
 		}
 	} else {
@@ -120,10 +126,14 @@ void rtl92cu_phy_rf6052_set_cck_txpower(struct ieee80211_hw *hw,
 			tx_agc[RF90_PATH_A] = 0x00000000;
 			tx_agc[RF90_PATH_B] = 0x00000000;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		} else {
 =======
 		} else{
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		} else{
+>>>>>>> master
 			for (idx1 = RF90_PATH_A; idx1 <= RF90_PATH_B; idx1++) {
 				tx_agc[idx1] = ppowerlevel[idx1] |
 				    (ppowerlevel[idx1] << 8) |
@@ -390,6 +400,7 @@ static void _rtl92c_write_ofdm_power_reg(struct ieee80211_hw *hw,
 				regoffset = 0xc98;
 			for (i = 0; i < 3; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if (i != 2)
 					writeVal = (writeVal > 8) ?
 						   (writeVal - 8) : 0;
@@ -399,6 +410,9 @@ static void _rtl92c_write_ofdm_power_reg(struct ieee80211_hw *hw,
 =======
 				writeVal = (writeVal > 6) ? (writeVal - 6) : 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				writeVal = (writeVal > 6) ? (writeVal - 6) : 0;
+>>>>>>> master
 				rtl_write_byte(rtlpriv, (u32)(regoffset + i),
 					      (u8)writeVal);
 			}

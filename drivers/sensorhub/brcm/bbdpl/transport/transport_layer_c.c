@@ -23,18 +23,24 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "utils/bbd_utils.h"
 #include "bbd_internal.h"
 #include "bbd_packet_layer_c.h"
 #include "utils/crc8bits_c.h"
 #include "utils/stream_codec_c.h"
 =======
+=======
+>>>>>>> master
 #include "../utils/bbd_utils.h"
 #include "../bbd_internal.h"
 #include "bbd_packet_layer_c.h"
 #include "../utils/crc8bits_c.h"
 #include "../utils/stream_codec_c.h"
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #include "bbd_bridge_c.h"
 
 /*

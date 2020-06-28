@@ -85,10 +85,13 @@ static int		 ip6_dst_gc(struct dst_ops *ops);
 static int		ip6_pkt_discard(struct sk_buff *skb);
 static int		ip6_pkt_discard_out(struct sk_buff *skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int		ip6_pkt_prohibit(struct sk_buff *skb);
 static int		ip6_pkt_prohibit_out(struct sk_buff *skb);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static void		ip6_link_failure(struct sk_buff *skb);
 static void		ip6_rt_update_pmtu(struct dst_entry *dst, struct sock *sk,
 					   struct sk_buff *skb, u32 mtu);
@@ -113,10 +116,14 @@ static u32 *ipv6_cow_metrics(struct dst_entry *dst, unsigned long old)
 
 	if (!(rt->dst.flags & DST_HOST))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return dst_cow_metrics_generic(dst, old);
 =======
 		return NULL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return NULL;
+>>>>>>> master
 
 	peer = rt6_get_peer_create(rt);
 	if (peer) {
@@ -243,11 +250,17 @@ static const struct rt6_info ip6_null_entry_template = {
 #ifdef CONFIG_IPV6_MULTIPLE_TABLES
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int ip6_pkt_prohibit(struct sk_buff *skb);
 static int ip6_pkt_prohibit_out(struct sk_buff *skb);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int ip6_pkt_prohibit(struct sk_buff *skb);
+static int ip6_pkt_prohibit_out(struct sk_buff *skb);
+
+>>>>>>> master
 static const struct rt6_info ip6_prohibit_entry_template = {
 	.dst = {
 		.__refcnt	= ATOMIC_INIT(1),
@@ -486,6 +499,7 @@ out:
 
 #ifdef CONFIG_IPV6_ROUTER_PREF
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct __rt6_probe_work {
 	struct work_struct work;
 	struct in6_addr target;
@@ -506,6 +520,8 @@ static void rt6_probe_deferred(struct work_struct *w)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static void rt6_probe(struct rt6_info *rt)
 {
 	struct neighbour *neigh;
@@ -530,6 +546,7 @@ static void rt6_probe(struct rt6_info *rt)
 	if (!neigh ||
 	    time_after(jiffies, neigh->updated + rt->rt6i_idev->cnf.rtr_probe_interval)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct __rt6_probe_work *work;
 
 		work = kmalloc(sizeof(*work), GFP_ATOMIC);
@@ -548,6 +565,8 @@ static void rt6_probe(struct rt6_info *rt)
 			schedule_work(&work->work);
 		}
 =======
+=======
+>>>>>>> master
 		struct in6_addr mcaddr;
 		struct in6_addr *target;
 
@@ -559,7 +578,10 @@ static void rt6_probe(struct rt6_info *rt)
 		target = (struct in6_addr *)&rt->rt6i_gateway;
 		addrconf_addr_solict_mult(target, &mcaddr);
 		ndisc_send_ns(rt->dst.dev, NULL, target, &mcaddr, NULL);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	} else {
 out:
 		write_unlock(&neigh->lock);
@@ -757,6 +779,7 @@ int rt6_route_rcv(struct net_device *dev, u8 *opt, int len,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (rinfo->prefix_len == 0)
 		rt = rt6_get_dflt_router(gwaddr, dev);
 	else
@@ -765,6 +788,9 @@ int rt6_route_rcv(struct net_device *dev, u8 *opt, int len,
 =======
 	rt = rt6_get_route_info(dev, prefix, rinfo->prefix_len, gwaddr);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	rt = rt6_get_route_info(dev, prefix, rinfo->prefix_len, gwaddr);
+>>>>>>> master
 
 	if (rt && !lifetime) {
 		ip6_del_rt(rt);
@@ -907,9 +933,13 @@ static struct rt6_info *rt6_alloc_cow(struct rt6_info *ort,
 			    ipv6_addr_equal(&ort->rt6i_dst.addr, daddr))
 				rt->rt6i_flags |= RTF_ANYCAST;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			rt->rt6i_gateway = *daddr;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			rt->rt6i_gateway = *daddr;
+>>>>>>> master
 		}
 
 		rt->rt6i_flags |= RTF_CACHE;
@@ -1123,6 +1153,7 @@ static struct dst_entry *ip6_dst_check(struct dst_entry *dst, u32 cookie)
 		return NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!rt->rt6i_node || (rt->rt6i_node->fn_sernum != cookie))
 		return NULL;
 
@@ -1131,11 +1162,16 @@ static struct dst_entry *ip6_dst_check(struct dst_entry *dst, u32 cookie)
 
 	return dst;
 =======
+=======
+>>>>>>> master
 	if (rt->rt6i_node && (rt->rt6i_node->fn_sernum == cookie))
 		return dst;
 
 	return NULL;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static struct dst_entry *ip6_negative_advice(struct dst_entry *dst)
@@ -1185,17 +1221,23 @@ static void ip6_rt_update_pmtu(struct dst_entry *dst, struct sock *sk,
 
 		rt6->rt6i_flags |= RTF_MODIFIED;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (mtu < IPV6_MIN_MTU)
 			mtu = IPV6_MIN_MTU;
 
 =======
+=======
+>>>>>>> master
 		if (mtu < IPV6_MIN_MTU) {
 			u32 features = dst_metric(dst, RTAX_FEATURES);
 			mtu = IPV6_MIN_MTU;
 			features |= RTAX_FEATURE_ALLFRAG;
 			dst_metric_set(dst, RTAX_FEATURES, features);
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		dst_metric_set(dst, RTAX_MTU, mtu);
 		rt6_update_expires(rt6, net->ipv6.sysctl.ip6_rt_mtu_expires);
 	}
@@ -1287,10 +1329,14 @@ static unsigned int ip6_mtu(const struct dst_entry *dst)
 
 	if (mtu)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto out;
 =======
 		return mtu;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return mtu;
+>>>>>>> master
 
 	mtu = IPV6_MIN_MTU;
 
@@ -1301,11 +1347,15 @@ static unsigned int ip6_mtu(const struct dst_entry *dst)
 	rcu_read_unlock();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 out:
 	return min_t(unsigned int, mtu, IP6_MAX_MTU);
 =======
 	return mtu;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return mtu;
+>>>>>>> master
 }
 
 static struct dst_entry *icmp6_dst_gc_list;
@@ -1333,9 +1383,12 @@ struct dst_entry *icmp6_dst_alloc(struct net_device *dev,
 	rt->dst.output  = ip6_output;
 	atomic_set(&rt->dst.__refcnt, 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rt->rt6i_gateway  = fl6->daddr;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	rt->rt6i_dst.addr = fl6->daddr;
 	rt->rt6i_dst.plen = 128;
 	rt->rt6i_idev     = idev;
@@ -1399,9 +1452,13 @@ static void icmp6_clean_all(int (*func)(struct rt6_info *rt, void *arg),
 static int ip6_dst_gc(struct dst_ops *ops)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned long now = jiffies;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned long now = jiffies;
+>>>>>>> master
 	struct net *net = container_of(ops, struct net, ipv6.ip6_dst_ops);
 	int rt_min_interval = net->ipv6.sysctl.ip6_rt_gc_min_interval;
 	int rt_max_size = net->ipv6.sysctl.ip6_rt_max_size;
@@ -1412,20 +1469,29 @@ static int ip6_dst_gc(struct dst_ops *ops)
 
 	entries = dst_entries_get_fast(ops);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (time_after(rt_last_gc + rt_min_interval, jiffies) &&
 =======
 	if (time_after(rt_last_gc + rt_min_interval, now) &&
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (time_after(rt_last_gc + rt_min_interval, now) &&
+>>>>>>> master
 	    entries <= rt_max_size)
 		goto out;
 
 	net->ipv6.ip6_rt_gc_expire++;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	fib6_run_gc(net->ipv6.ip6_rt_gc_expire, net, entries > rt_max_size);
 =======
 	fib6_run_gc(net->ipv6.ip6_rt_gc_expire, net);
 	net->ipv6.ip6_rt_last_gc = now;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	fib6_run_gc(net->ipv6.ip6_rt_gc_expire, net);
+	net->ipv6.ip6_rt_last_gc = now;
+>>>>>>> master
 	entries = dst_entries_get_slow(ops);
 	if (entries < ops->gc_thresh)
 		net->ipv6.ip6_rt_gc_expire = rt_gc_timeout>>1;
@@ -1571,14 +1637,20 @@ int ip6_route_add(struct fib6_config *cfg)
 			}
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		rt->dst.output = ip6_pkt_discard_out;
 		rt->dst.input = ip6_pkt_discard;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		rt->dst.output = ip6_pkt_discard_out;
+		rt->dst.input = ip6_pkt_discard;
+>>>>>>> master
 		rt->rt6i_flags = RTF_REJECT|RTF_NONEXTHOP;
 		switch (cfg->fc_type) {
 		case RTN_BLACKHOLE:
 			rt->dst.error = -EINVAL;
+<<<<<<< HEAD
 <<<<<<< HEAD
 			rt->dst.output = dst_discard;
 			rt->dst.input = dst_discard;
@@ -1595,6 +1667,8 @@ int ip6_route_add(struct fib6_config *cfg)
 			rt->dst.output = ip6_pkt_discard_out;
 			rt->dst.input = ip6_pkt_discard;
 =======
+=======
+>>>>>>> master
 			break;
 		case RTN_PROHIBIT:
 			rt->dst.error = -EACCES;
@@ -1604,7 +1678,10 @@ int ip6_route_add(struct fib6_config *cfg)
 			break;
 		default:
 			rt->dst.error = -ENETUNREACH;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			break;
 		}
 		goto install_route;
@@ -1771,10 +1848,13 @@ static int ip6_route_del(struct fib6_config *cfg)
 			if (cfg->fc_metric && cfg->fc_metric != rt->rt6i_metric)
 				continue;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (cfg->fc_protocol && cfg->fc_protocol != rt->rt6i_protocol)
 				continue;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			dst_hold(&rt->dst);
 			read_unlock_bh(&table->tb6_lock);
 
@@ -1929,6 +2009,7 @@ static struct rt6_info *ip6_rt_copy(struct rt6_info *ort,
 		rt->dst.lastuse = jiffies;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (ort->rt6i_flags & RTF_GATEWAY)
 			rt->rt6i_gateway = ort->rt6i_gateway;
 		else
@@ -1936,12 +2017,17 @@ static struct rt6_info *ip6_rt_copy(struct rt6_info *ort,
 		rt->rt6i_flags = ort->rt6i_flags;
 		rt6_set_from(rt, ort);
 =======
+=======
+>>>>>>> master
 		rt->rt6i_gateway = ort->rt6i_gateway;
 		rt->rt6i_flags = ort->rt6i_flags;
 		if ((ort->rt6i_flags & (RTF_DEFAULT | RTF_ADDRCONF)) ==
 		    (RTF_DEFAULT | RTF_ADDRCONF))
 			rt6_set_from(rt, ort);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		rt->rt6i_metric = 0;
 
 #ifdef CONFIG_IPV6_SUBTREES
@@ -2172,10 +2258,15 @@ static int ip6_pkt_discard_out(struct sk_buff *skb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_IPV6_MULTIPLE_TABLES
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#ifdef CONFIG_IPV6_MULTIPLE_TABLES
+
+>>>>>>> master
 static int ip6_pkt_prohibit(struct sk_buff *skb)
 {
 	return ip6_pkt_drop(skb, ICMPV6_ADM_PROHIBITED, IPSTATS_MIB_INNOROUTES);
@@ -2188,10 +2279,15 @@ static int ip6_pkt_prohibit_out(struct sk_buff *skb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #endif
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#endif
+
+>>>>>>> master
 /*
  *	Allocate a dst for local (unicast / anycast) address.
  */
@@ -2202,18 +2298,24 @@ struct rt6_info *addrconf_dst_alloc(struct inet6_dev *idev,
 {
 	struct net *net = dev_net(idev->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct rt6_info *rt = ip6_dst_alloc(net, net->loopback_dev,
 					    DST_NOCOUNT, NULL);
 	if (!rt)
 		return ERR_PTR(-ENOMEM);
 =======
+=======
+>>>>>>> master
 	struct rt6_info *rt = ip6_dst_alloc(net, net->loopback_dev, 0, NULL);
 
 	if (!rt) {
 		net_warn_ratelimited("Maximum number of routes reached, consider increasing route/max_size\n");
 		return ERR_PTR(-ENOMEM);
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	in6_dev_hold(idev);
 
@@ -2229,9 +2331,12 @@ struct rt6_info *addrconf_dst_alloc(struct inet6_dev *idev,
 		rt->rt6i_flags |= RTF_LOCAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rt->rt6i_gateway  = *addr;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	rt->rt6i_dst.addr = *addr;
 	rt->rt6i_dst.plen = 128;
 	rt->rt6i_table = fib6_get_table(net, RT6_TABLE_LOCAL);
@@ -2658,12 +2763,16 @@ static int rt6_fill_node(struct net *net,
 #ifdef CONFIG_IPV6_MROUTE
 		if (ipv6_addr_is_multicast(&rt->rt6i_dst.addr)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			int err = ip6mr_get_route(net, skb, rtm, nowait,
 						  portid);
 
 =======
 			int err = ip6mr_get_route(net, skb, rtm, nowait);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			int err = ip6mr_get_route(net, skb, rtm, nowait);
+>>>>>>> master
 			if (err <= 0) {
 				if (!nowait) {
 					if (err == 0)
@@ -2981,10 +3090,14 @@ int ipv6_sysctl_rtcache_flush(ctl_table *ctl, int write,
 	delay = net->ipv6.sysctl.flush_delay;
 	proc_dointvec(ctl, write, buffer, lenp, ppos);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fib6_run_gc(delay <= 0 ? 0 : (unsigned long)delay, net, delay > 0);
 =======
 	fib6_run_gc(delay <= 0 ? ~0UL : (unsigned long)delay, net);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	fib6_run_gc(delay <= 0 ? ~0UL : (unsigned long)delay, net);
+>>>>>>> master
 	return 0;
 }
 

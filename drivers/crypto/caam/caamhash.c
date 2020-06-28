@@ -477,10 +477,14 @@ static int hash_digest_key(struct caam_hash_ctx *ctx, const u8 *key_in,
 	if (!ret) {
 		/* in progress */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		wait_for_completion(&result.completion);
 =======
 		wait_for_completion_interruptible(&result.completion);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		wait_for_completion_interruptible(&result.completion);
+>>>>>>> master
 		ret = result.err;
 #ifdef DEBUG
 		print_hex_dump(KERN_ERR, "digested key@"xstr(__LINE__)": ",
@@ -900,21 +904,29 @@ static int ahash_final_ctx(struct ahash_request *req)
 	u32 *sh_desc = ctx->sh_desc_fin, *desc;
 	dma_addr_t ptr = ctx->sh_desc_fin_dma;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int sec4_sg_bytes, sec4_sg_src_index;
 =======
 	int sec4_sg_bytes;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int sec4_sg_bytes;
+>>>>>>> master
 	int digestsize = crypto_ahash_digestsize(ahash);
 	struct ahash_edesc *edesc;
 	int ret = 0;
 	int sh_len;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sec4_sg_src_index = 1 + (buflen ? 1 : 0);
 	sec4_sg_bytes = sec4_sg_src_index * sizeof(struct sec4_sg_entry);
 =======
 	sec4_sg_bytes = (1 + (buflen ? 1 : 0)) * sizeof(struct sec4_sg_entry);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	sec4_sg_bytes = (1 + (buflen ? 1 : 0)) * sizeof(struct sec4_sg_entry);
+>>>>>>> master
 
 	/* allocate space for base edesc and hw desc commands, link tables */
 	edesc = kmalloc(sizeof(struct ahash_edesc) + DESC_JOB_IO_LEN +
@@ -942,10 +954,14 @@ static int ahash_final_ctx(struct ahash_request *req)
 						buf, state->buf_dma, buflen,
 						last_buflen);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	(edesc->sec4_sg + sec4_sg_src_index - 1)->len |= SEC4_SG_LEN_FIN;
 =======
 	(edesc->sec4_sg + sec4_sg_bytes - 1)->len |= SEC4_SG_LEN_FIN;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	(edesc->sec4_sg + sec4_sg_bytes - 1)->len |= SEC4_SG_LEN_FIN;
+>>>>>>> master
 
 	append_seq_in_ptr(desc, edesc->sec4_sg_dma, ctx->ctx_len + buflen,
 			  LDST_SGF);
@@ -1810,9 +1826,12 @@ caam_hash_alloc(struct device *ctrldev, struct caam_hash_template *template,
 		snprintf(alg->cra_driver_name, CRYPTO_MAX_ALG_NAME, "%s",
 			 template->driver_name);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		t_alg->ahash_alg.setkey = NULL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 	alg->cra_module = THIS_MODULE;
 	alg->cra_init = caam_hash_cra_init;

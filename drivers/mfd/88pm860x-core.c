@@ -1180,6 +1180,7 @@ static int pm860x_probe(struct i2c_client *client,
 		chip->companion = i2c_new_dummy(chip->client->adapter,
 						chip->companion_addr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!chip->companion) {
 			dev_err(&client->dev,
 				"Failed to allocate I2C companion device\n");
@@ -1187,6 +1188,8 @@ static int pm860x_probe(struct i2c_client *client,
 		}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		chip->regmap_companion = regmap_init_i2c(chip->companion,
 							&pm860x_regmap_config);
 		if (IS_ERR(chip->regmap_companion)) {
@@ -1194,9 +1197,12 @@ static int pm860x_probe(struct i2c_client *client,
 			dev_err(&chip->companion->dev,
 				"Failed to allocate register map: %d\n", ret);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			i2c_unregister_device(chip->companion);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			return ret;
 		}
 		i2c_set_clientdata(chip->companion, chip);

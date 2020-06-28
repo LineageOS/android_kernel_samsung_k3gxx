@@ -62,9 +62,12 @@ MODULE_AUTHOR("Ville Nuorvala");
 MODULE_DESCRIPTION("IPv6 tunneling device");
 MODULE_LICENSE("GPL");
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS_RTNL_LINK("ip6tnl");
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 MODULE_ALIAS_NETDEV("ip6tnl0");
 
 #ifdef IP6_TNL_DEBUG
@@ -107,6 +110,7 @@ struct ip6_tnl_net {
 static struct net_device_stats *ip6_get_stats(struct net_device *dev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct pcpu_tstats tmp, sum = { 0 };
 	int i;
 
@@ -127,6 +131,8 @@ static struct net_device_stats *ip6_get_stats(struct net_device *dev)
 		sum.tx_packets += tmp.tx_packets;
 		sum.tx_bytes   += tmp.tx_bytes;
 =======
+=======
+>>>>>>> master
 	struct pcpu_tstats sum = { 0 };
 	int i;
 
@@ -137,7 +143,10 @@ static struct net_device_stats *ip6_get_stats(struct net_device *dev)
 		sum.rx_bytes   += tstats->rx_bytes;
 		sum.tx_packets += tstats->tx_packets;
 		sum.tx_bytes   += tstats->tx_bytes;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 	dev->stats.rx_packets = sum.rx_packets;
 	dev->stats.rx_bytes   = sum.rx_bytes;
@@ -291,23 +300,33 @@ static int ip6_tnl_create2(struct net_device *dev)
 
 	t = netdev_priv(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	dev->rtnl_link_ops = &ip6_link_ops;
 =======
+=======
+>>>>>>> master
 	err = ip6_tnl_dev_init(dev);
 	if (err < 0)
 		goto out;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	err = register_netdevice(dev);
 	if (err < 0)
 		goto out;
 
 	strcpy(t->parms.name, dev->name);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	dev->rtnl_link_ops = &ip6_link_ops;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	dev->rtnl_link_ops = &ip6_link_ops;
+>>>>>>> master
 
 	dev_hold(dev);
 	ip6_tnl_link(ip6n, t);
@@ -431,6 +450,7 @@ ip6_tnl_dev_uninit(struct net_device *dev)
 __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct ipv6hdr *ipv6h = (const struct ipv6hdr *)raw;
 	unsigned int nhoff = raw - skb->data;
 	unsigned int off = nhoff + sizeof(*ipv6h);
@@ -445,6 +465,8 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
 
 		hdr = (struct ipv6_opt_hdr *)(skb->data + off);
 =======
+=======
+>>>>>>> master
 	const struct ipv6hdr *ipv6h = (const struct ipv6hdr *) raw;
 	__u8 nexthdr = ipv6h->nexthdr;
 	__u16 off = sizeof (*ipv6h);
@@ -457,7 +479,10 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
 			break;
 
 		hdr = (struct ipv6_opt_hdr *) (raw + off);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		if (nexthdr == NEXTHDR_FRAGMENT) {
 			struct frag_hdr *frag_hdr = (struct frag_hdr *) hdr;
 			if (frag_hdr->frag_off)
@@ -468,6 +493,7 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
 		} else {
 			optlen = ipv6_optlen(hdr);
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 		/* cache hdr->nexthdr, since pskb_may_pull() might
 		 * invalidate hdr
@@ -484,10 +510,15 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
 		if (nexthdr == NEXTHDR_DEST) {
 			__u16 i = off + 2;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (nexthdr == NEXTHDR_DEST) {
+			__u16 i = off + 2;
+>>>>>>> master
 			while (1) {
 				struct ipv6_tlv_tnl_enc_lim *tel;
 
 				/* No more room for encapsulation limit */
+<<<<<<< HEAD
 <<<<<<< HEAD
 				if (i + sizeof(*tel) > optlen)
 					break;
@@ -498,6 +529,8 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
 				    tel->length == 1)
 					return i + off - nhoff;
 =======
+=======
+>>>>>>> master
 				if (i + sizeof (*tel) > off + optlen)
 					break;
 
@@ -506,7 +539,10 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
 				if (tel->type == IPV6_TLV_TNL_ENCAP_LIMIT &&
 				    tel->length == 1)
 					return i;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				/* else jump to next option */
 				if (tel->type)
 					i += tel->length + 2;
@@ -515,10 +551,14 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
 			}
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		nexthdr = next;
 =======
 		nexthdr = hdr->nexthdr;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		nexthdr = hdr->nexthdr;
+>>>>>>> master
 		off += optlen;
 	}
 	return 0;
@@ -904,6 +944,7 @@ static int ip6_tnl_rcv(struct sk_buff *skb, __u16 protocol,
 
 		tstats = this_cpu_ptr(t->dev->tstats);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		u64_stats_update_begin(&tstats->syncp);
 		tstats->rx_packets++;
 		tstats->rx_bytes += skb->len;
@@ -912,6 +953,10 @@ static int ip6_tnl_rcv(struct sk_buff *skb, __u16 protocol,
 		tstats->rx_packets++;
 		tstats->rx_bytes += skb->len;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		tstats->rx_packets++;
+		tstats->rx_bytes += skb->len;
+>>>>>>> master
 
 		netif_rx(skb);
 
@@ -1039,14 +1084,18 @@ static int ip6_tnl_xmit2(struct sk_buff *skb,
 	struct dst_entry *dst = NULL, *ndst = NULL;
 	struct net_device *tdev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool use_cache = false;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	int mtu;
 	unsigned int max_headroom = sizeof(struct ipv6hdr);
 	u8 proto;
 	int err = -1;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!(t->parms.flags &
 		     (IP6_TNL_F_USE_ORIG_TCLASS | IP6_TNL_F_USE_ORIG_FWMARK))) {
@@ -1060,6 +1109,9 @@ static int ip6_tnl_xmit2(struct sk_buff *skb,
 =======
 	if (!fl6->flowi6_mark)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!fl6->flowi6_mark)
+>>>>>>> master
 		dst = ip6_tnl_dst_check(t);
 	if (!dst) {
 		ndst = ip6_route_output(net, NULL, fl6);
@@ -1117,10 +1169,14 @@ static int ip6_tnl_xmit2(struct sk_buff *skb,
 	}
 	skb_dst_drop(skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!use_cache) {
 =======
 	if (fl6->flowi6_mark) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (fl6->flowi6_mark) {
+>>>>>>> master
 		skb_dst_set(skb, dst);
 		ndst = NULL;
 	} else {
@@ -1539,9 +1595,12 @@ ip6_tnl_change_mtu(struct net_device *dev, int new_mtu)
 
 static const struct net_device_ops ip6_tnl_netdev_ops = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_init	= ip6_tnl_dev_init,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	.ndo_uninit	= ip6_tnl_dev_uninit,
 	.ndo_start_xmit = ip6_tnl_xmit,
 	.ndo_do_ioctl	= ip6_tnl_ioctl,
@@ -1624,21 +1683,32 @@ static int __net_init ip6_fb_tnl_dev_init(struct net_device *dev)
 	struct net *net = dev_net(dev);
 	struct ip6_tnl_net *ip6n = net_generic(net, ip6_tnl_net_id);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	int err = ip6_tnl_dev_init_gen(dev);
 
 	if (err)
 		return err;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	t->parms.proto = IPPROTO_IPV6;
 	dev_hold(dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ip6_tnl_link_config(t);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ip6_tnl_link_config(t);
+
+>>>>>>> master
 	rcu_assign_pointer(ip6n->tnls_wc[0], t);
 	return 0;
 }
@@ -1648,10 +1718,14 @@ static int ip6_tnl_validate(struct nlattr *tb[], struct nlattr *data[])
 	u8 proto;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!data || !data[IFLA_IPTUN_PROTO])
 =======
 	if (!data)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!data)
+>>>>>>> master
 		return 0;
 
 	proto = nla_get_u8(data[IFLA_IPTUN_PROTO]);
@@ -1738,6 +1812,7 @@ static int ip6_tnl_changelink(struct net_device *dev, struct nlattr *tb[],
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void ip6_tnl_dellink(struct net_device *dev, struct list_head *head)
 {
 	struct net *net = dev_net(dev);
@@ -1749,6 +1824,8 @@ static void ip6_tnl_dellink(struct net_device *dev, struct list_head *head)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static size_t ip6_tnl_get_size(const struct net_device *dev)
 {
 	return
@@ -1779,6 +1856,7 @@ static int ip6_tnl_fill_info(struct sk_buff *skb, const struct net_device *dev)
 	if (nla_put_u32(skb, IFLA_IPTUN_LINK, parm->link) ||
 	    nla_put(skb, IFLA_IPTUN_LOCAL, sizeof(struct in6_addr),
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    &parm->laddr) ||
 	    nla_put(skb, IFLA_IPTUN_REMOTE, sizeof(struct in6_addr),
 		    &parm->raddr) ||
@@ -1787,6 +1865,11 @@ static int ip6_tnl_fill_info(struct sk_buff *skb, const struct net_device *dev)
 	    nla_put(skb, IFLA_IPTUN_REMOTE, sizeof(struct in6_addr),
 		    &parm->laddr) ||
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		    &parm->raddr) ||
+	    nla_put(skb, IFLA_IPTUN_REMOTE, sizeof(struct in6_addr),
+		    &parm->laddr) ||
+>>>>>>> master
 	    nla_put_u8(skb, IFLA_IPTUN_TTL, parm->hop_limit) ||
 	    nla_put_u8(skb, IFLA_IPTUN_ENCAP_LIMIT, parm->encap_limit) ||
 	    nla_put_be32(skb, IFLA_IPTUN_FLOWINFO, parm->flowinfo) ||
@@ -1820,9 +1903,12 @@ static struct rtnl_link_ops ip6_link_ops __read_mostly = {
 	.newlink	= ip6_tnl_newlink,
 	.changelink	= ip6_tnl_changelink,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.dellink	= ip6_tnl_dellink,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	.get_size	= ip6_tnl_get_size,
 	.fill_info	= ip6_tnl_fill_info,
 };
@@ -1875,9 +1961,12 @@ static int __net_init ip6_tnl_init_net(struct net *net)
 		goto err_alloc_dev;
 	dev_net_set(ip6n->fb_tnl_dev, net);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ip6n->fb_tnl_dev->rtnl_link_ops = &ip6_link_ops;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	err = ip6_fb_tnl_dev_init(ip6n->fb_tnl_dev);
 	if (err < 0)

@@ -32,10 +32,14 @@ UNUSUAL_DEV(  0x04b4, 0x6831, 0x0000, 0x9999,
 		USB_SC_CYP_ATACB, USB_PR_DEVICE, NULL, 0),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 UNUSUAL_DEV( 0x14cd, 0x6116, 0x0160, 0x0160,
 =======
 UNUSUAL_DEV( 0x14cd, 0x6116, 0x0000, 0x0219,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+UNUSUAL_DEV( 0x14cd, 0x6116, 0x0000, 0x0219,
+>>>>>>> master
 		"Super Top",
 		"USB 2.0  SATA BRIDGE",
 		USB_SC_CYP_ATACB, USB_PR_DEVICE, NULL, 0),

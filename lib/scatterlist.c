@@ -530,11 +530,15 @@ void sg_miter_stop(struct sg_mapping_iter *miter)
 		miter->__remaining -= miter->consumed;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if ((miter->__flags & SG_MITER_TO_SG) &&
 		    !PageSlab(miter->page))
 =======
 		if (miter->__flags & SG_MITER_TO_SG)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (miter->__flags & SG_MITER_TO_SG)
+>>>>>>> master
 			flush_kernel_dcache_page(miter->page);
 
 		if (miter->__flags & SG_MITER_ATOMIC) {

@@ -160,10 +160,13 @@ __kvm_vcpu_return:
 	set_hstr vmexit
 	set_hdcr vmexit
 <<<<<<< HEAD
+<<<<<<< HEAD
 	set_hcptr vmexit, (HCPTR_TTA | HCPTR_TCP(10) | HCPTR_TCP(11)), after_vfp_restore
 
 #ifdef CONFIG_VFPv3
 =======
+=======
+>>>>>>> master
 	set_hcptr vmexit, (HCPTR_TTA | HCPTR_TCP(10) | HCPTR_TCP(11))
 
 #ifdef CONFIG_VFPv3
@@ -171,7 +174,10 @@ __kvm_vcpu_return:
 	tst	r2, #(HCPTR_TCP(10) | HCPTR_TCP(11))
 	bne	after_vfp_restore
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	@ Switch VFP/NEON hardware state to the host's
 	add	r7, vcpu, #VCPU_VFP_GUEST
 	store_vfp_state r7
@@ -184,10 +190,13 @@ after_vfp_restore:
 	pop	{r2}
 	VFPFMXR FPEXC, r2
 <<<<<<< HEAD
+<<<<<<< HEAD
 #else
 after_vfp_restore:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #endif
 
 	@ Reset Hyp-role
@@ -470,10 +479,14 @@ switch_to_guest_vfp:
 
 	@ NEON/VFP used.  Turn on VFP access.
 <<<<<<< HEAD
+<<<<<<< HEAD
 	set_hcptr vmtrap, (HCPTR_TCP(10) | HCPTR_TCP(11))
 =======
 	set_hcptr vmexit, (HCPTR_TCP(10) | HCPTR_TCP(11))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	set_hcptr vmexit, (HCPTR_TCP(10) | HCPTR_TCP(11))
+>>>>>>> master
 
 	@ Switch VFP/NEON hardware state to the guest's
 	add	r7, r0, #VCPU_VFP_HOST

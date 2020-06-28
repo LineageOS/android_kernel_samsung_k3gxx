@@ -33,6 +33,7 @@
 	};
 	cpus {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		#address-cells = <0>;
 		#size-cells = <0>;
 
@@ -43,6 +44,10 @@
 		cpu@0 {
 			compatible = "arm,arm926ejs";
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		cpu@0 {
+			compatible = "arm,arm926ejs";
+>>>>>>> master
 		};
 	};
 
@@ -350,6 +355,7 @@
 				};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				i2c_gpio0 {
 					pinctrl_i2c_gpio0: i2c_gpio0-0 {
 						atmel,pins =
@@ -360,6 +366,8 @@
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				pioA: gpio@fffff400 {
 					compatible = "atmel,at91rm9200-gpio";
 					reg = <0xfffff400 0x200>;
@@ -613,10 +621,13 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_i2c_gpio0>;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		status = "disabled";
 	};
 };

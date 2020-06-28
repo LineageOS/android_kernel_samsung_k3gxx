@@ -102,10 +102,14 @@ static int setup_cpunode_map(void)
 	dir1 = opendir(PATH_SYS_NODE);
 	if (!dir1)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return 0;
 =======
 		return -1;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return -1;
+>>>>>>> master
 
 	while ((dent1 = readdir(dir1)) != NULL) {
 		if (dent1->d_type != DT_DIR ||

@@ -30,10 +30,14 @@ static ssize_t show_companion(struct device *dev,
 	char			*ptr = buf;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ehci = hcd_to_ehci(dev_get_drvdata(dev));
 =======
 	ehci = hcd_to_ehci(bus_to_hcd(dev_get_drvdata(dev)));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ehci = hcd_to_ehci(bus_to_hcd(dev_get_drvdata(dev)));
+>>>>>>> master
 	nports = HCS_N_PORTS(ehci->hcs_params);
 
 	for (index = 0; index < nports; ++index) {
@@ -59,10 +63,14 @@ static ssize_t store_companion(struct device *dev,
 	int			portnum, new_owner;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ehci = hcd_to_ehci(dev_get_drvdata(dev));
 =======
 	ehci = hcd_to_ehci(bus_to_hcd(dev_get_drvdata(dev)));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ehci = hcd_to_ehci(bus_to_hcd(dev_get_drvdata(dev)));
+>>>>>>> master
 	new_owner = PORT_OWNER;		/* Owned by companion */
 	if (sscanf(buf, "%d", &portnum) != 1)
 		return -EINVAL;
@@ -94,10 +102,14 @@ static ssize_t show_uframe_periodic_max(struct device *dev,
 	int			n;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ehci = hcd_to_ehci(dev_get_drvdata(dev));
 =======
 	ehci = hcd_to_ehci(bus_to_hcd(dev_get_drvdata(dev)));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ehci = hcd_to_ehci(bus_to_hcd(dev_get_drvdata(dev)));
+>>>>>>> master
 	n = scnprintf(buf, PAGE_SIZE, "%d\n", ehci->uframe_periodic_max);
 	return n;
 }
@@ -115,10 +127,14 @@ static ssize_t store_uframe_periodic_max(struct device *dev,
 	ssize_t			ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ehci = hcd_to_ehci(dev_get_drvdata(dev));
 =======
 	ehci = hcd_to_ehci(bus_to_hcd(dev_get_drvdata(dev)));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ehci = hcd_to_ehci(bus_to_hcd(dev_get_drvdata(dev)));
+>>>>>>> master
 	if (kstrtouint(buf, 0, &uframe_periodic_max) < 0)
 		return -EINVAL;
 

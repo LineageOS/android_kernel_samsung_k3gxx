@@ -109,10 +109,14 @@ static int pcpu_alloc_pages(struct pcpu_chunk *chunk,
 {
 	const gfp_t gfp = GFP_KERNEL | __GFP_HIGHMEM | __GFP_COLD;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int cpu, tcpu;
 =======
 	unsigned int cpu;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned int cpu;
+>>>>>>> master
 	int i;
 
 	for_each_possible_cpu(cpu) {
@@ -120,6 +124,7 @@ static int pcpu_alloc_pages(struct pcpu_chunk *chunk,
 			struct page **pagep = &pages[pcpu_page_idx(cpu, i)];
 
 			*pagep = alloc_pages_node(cpu_to_node(cpu), gfp, 0);
+<<<<<<< HEAD
 <<<<<<< HEAD
 			if (!*pagep)
 				goto err;
@@ -139,6 +144,8 @@ err:
 	}
 	return -ENOMEM;
 =======
+=======
+>>>>>>> master
 			if (!*pagep) {
 				pcpu_free_pages(chunk, pages, populated,
 						page_start, page_end);
@@ -147,7 +154,10 @@ err:
 		}
 	}
 	return 0;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /**
@@ -288,9 +298,12 @@ err:
 				   page_end - page_start);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pcpu_post_unmap_tlb_flush(chunk, page_start, page_end);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return err;
 }
 

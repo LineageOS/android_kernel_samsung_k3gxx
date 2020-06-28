@@ -43,6 +43,7 @@ struct btree_node {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Locks a block using the btree node validator.
  */
@@ -51,6 +52,8 @@ int bn_read_lock(struct dm_btree_info *info, dm_block_t b,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 void inc_children(struct dm_transaction_manager *tm, struct btree_node *n,
 		  struct dm_btree_value_type *vt);
 
@@ -142,6 +145,7 @@ int lower_bound(struct btree_node *n, uint64_t key);
 extern struct dm_block_validator btree_node_validator;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Value type for upper levels of multi-level btrees.
  */
@@ -150,4 +154,6 @@ extern void init_le64_type(struct dm_transaction_manager *tm,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #endif	/* DM_BTREE_INTERNAL_H */

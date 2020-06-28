@@ -56,9 +56,12 @@
 #include <net/ip6_route.h>
 #include <net/ip6_tunnel.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <net/gre.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 
 static bool log_ecn_error = true;
@@ -364,14 +367,18 @@ static void ip6gre_tunnel_uninit(struct net_device *dev)
 
 	ip6gre_tunnel_unlink(ign, netdev_priv(dev));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ip6_tnl_dst_reset(netdev_priv(dev));
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	dev_put(dev);
 }
 
 
 static void ip6gre_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
+<<<<<<< HEAD
 <<<<<<< HEAD
 		       u8 type, u8 code, int offset, __be32 info)
 {
@@ -405,6 +412,8 @@ static void ip6gre_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
 	t = ip6gre_tunnel_lookup(skb->dev, &ipv6h->daddr, &ipv6h->saddr,
 				 key, greh->protocol);
 =======
+=======
+>>>>>>> master
 		u8 type, u8 code, int offset, __be32 info)
 {
 	const struct ipv6hdr *ipv6h = (const struct ipv6hdr *)skb->data;
@@ -434,7 +443,10 @@ static void ip6gre_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
 				flags & GRE_KEY ?
 				*(((__be32 *)p) + (grehlen / 4) - 1) : 0,
 				p[1]);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (t == NULL)
 		return;
 
@@ -458,10 +470,14 @@ static void ip6gre_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
 			teli = ip6_tnl_parse_tlv_enc_lim(skb, skb->data);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (teli && teli == be32_to_cpu(info) - 2) {
 =======
 		if (teli && teli == info - 2) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (teli && teli == info - 2) {
+>>>>>>> master
 			tel = (struct ipv6_tlv_tnl_enc_lim *) &skb->data[teli];
 			if (tel->encap_limit == 0) {
 				net_warn_ratelimited("%s: Too small encapsulation limit or routing loop in tunnel!\n",
@@ -474,10 +490,14 @@ static void ip6gre_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
 		break;
 	case ICMPV6_PKT_TOOBIG:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mtu = be32_to_cpu(info) - offset;
 =======
 		mtu = info - offset;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		mtu = info - offset;
+>>>>>>> master
 		if (mtu < IPV6_MIN_MTU)
 			mtu = IPV6_MIN_MTU;
 		t->dev->mtu = mtu;
@@ -563,18 +583,24 @@ static int ip6gre_rcv(struct sk_buff *skb)
 		skb->protocol = gre_proto;
 		/* WCCP version 1 and 2 protocol decoding.
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 * - Change protocol to IPv6
 		 * - When dealing with WCCPv2, Skip extra 4 bytes in GRE header
 		 */
 		if (flags == 0 && gre_proto == htons(ETH_P_WCCP)) {
 			skb->protocol = htons(ETH_P_IPV6);
 =======
+=======
+>>>>>>> master
 		 * - Change protocol to IP
 		 * - When dealing with WCCPv2, Skip extra 4 bytes in GRE header
 		 */
 		if (flags == 0 && gre_proto == htons(ETH_P_WCCP)) {
 			skb->protocol = htons(ETH_P_IP);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			if ((*(h + offset) & 0xF0) != 0x40)
 				offset += 4;
 		}
@@ -679,10 +705,14 @@ static netdev_tx_t ip6gre_xmit2(struct sk_buff *skb,
 	struct net_device *tdev;    /* Device to other host */
 	struct ipv6hdr  *ipv6h;     /* Our new IP header */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int max_headroom = 0; /* The extra header space needed */
 =======
 	unsigned int max_headroom;  /* The extra header space needed */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned int max_headroom;  /* The extra header space needed */
+>>>>>>> master
 	int    gre_hlen;
 	struct ipv6_tel_txoption opt;
 	int    mtu;
@@ -756,10 +786,14 @@ static netdev_tx_t ip6gre_xmit2(struct sk_buff *skb,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	max_headroom += LL_RESERVED_SPACE(tdev) + gre_hlen + dst->header_len;
 =======
 	max_headroom = LL_RESERVED_SPACE(tdev) + gre_hlen + dst->header_len;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	max_headroom = LL_RESERVED_SPACE(tdev) + gre_hlen + dst->header_len;
+>>>>>>> master
 
 	if (skb_headroom(skb) < max_headroom || skb_shared(skb) ||
 	    (skb_cloned(skb) && !skb_clone_writable(skb, 0))) {
@@ -854,10 +888,14 @@ static inline int ip6gre_xmit_ipv4(struct sk_buff *skb, struct net_device *dev)
 
 	memcpy(&fl6, &t->fl.u.ip6, sizeof(fl6));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fl6.flowi6_proto = IPPROTO_GRE;
 =======
 	fl6.flowi6_proto = IPPROTO_IPIP;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	fl6.flowi6_proto = IPPROTO_IPIP;
+>>>>>>> master
 
 	dsfield = ipv4_get_dsfield(iph);
 
@@ -908,10 +946,14 @@ static inline int ip6gre_xmit_ipv6(struct sk_buff *skb, struct net_device *dev)
 
 	memcpy(&fl6, &t->fl.u.ip6, sizeof(fl6));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fl6.flowi6_proto = IPPROTO_GRE;
 =======
 	fl6.flowi6_proto = IPPROTO_IPV6;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	fl6.flowi6_proto = IPPROTO_IPV6;
+>>>>>>> master
 
 	dsfield = ipv6_get_dsfield(ipv6h);
 	if (t->parms.flags & IP6_TNL_F_USE_ORIG_TCLASS)
@@ -964,9 +1006,13 @@ static int ip6gre_xmit_other(struct sk_buff *skb, struct net_device *dev)
 
 	memcpy(&fl6, &t->fl.u.ip6, sizeof(fl6));
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	fl6.flowi6_proto = skb->protocol;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	fl6.flowi6_proto = skb->protocol;
+>>>>>>> master
 
 	err = ip6gre_xmit2(skb, dev, 0, &fl6, encap_limit, &mtu);
 
@@ -1040,10 +1086,15 @@ static void ip6gre_tnl_link_config(struct ip6_tnl *t, int set_mtu)
 		dev->flags &= ~IFF_POINTOPOINT;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	dev->iflink = p->link;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	dev->iflink = p->link;
+
+>>>>>>> master
 	/* Precalculate GRE options length */
 	if (t->parms.o_flags&(GRE_CSUM|GRE_KEY|GRE_SEQ)) {
 		if (t->parms.o_flags&GRE_CSUM)
@@ -1348,10 +1399,13 @@ static int ip6gre_tunnel_init(struct net_device *dev)
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev->iflink = tunnel->parms.link;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 }
 
@@ -1368,9 +1422,13 @@ static void ip6gre_fb_tunnel_init(struct net_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+>>>>>>> master
 static struct inet6_protocol ip6gre_protocol __read_mostly = {
 	.handler     = ip6gre_rcv,
 	.err_handler = ip6gre_err,
@@ -1547,10 +1605,13 @@ static int ip6gre_tap_init(struct net_device *dev)
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev->iflink = tunnel->parms.link;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 }
 
@@ -1633,6 +1694,7 @@ static int ip6gre_changelink(struct net_device *dev, struct nlattr *tb[],
 	} else {
 		t = nt;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	}
 
 	ip6gre_tunnel_unlink(ign, t);
@@ -1651,6 +1713,8 @@ static void ip6gre_dellink(struct net_device *dev, struct list_head *head)
 }
 
 =======
+=======
+>>>>>>> master
 
 		ip6gre_tunnel_unlink(ign, t);
 		ip6gre_tnl_change(t, &p, !tb[IFLA_MTU]);
@@ -1661,7 +1725,10 @@ static void ip6gre_dellink(struct net_device *dev, struct list_head *head)
 	return 0;
 }
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static size_t ip6gre_get_size(const struct net_device *dev)
 {
 	return
@@ -1740,9 +1807,12 @@ static struct rtnl_link_ops ip6gre_link_ops __read_mostly = {
 	.newlink	= ip6gre_newlink,
 	.changelink	= ip6gre_changelink,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.dellink	= ip6gre_dellink,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	.get_size	= ip6gre_get_size,
 	.fill_info	= ip6gre_fill_info,
 };

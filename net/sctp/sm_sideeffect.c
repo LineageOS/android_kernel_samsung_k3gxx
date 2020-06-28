@@ -252,6 +252,7 @@ void sctp_generate_t3_rtx_event(unsigned long peer)
 	struct sctp_transport *transport = (struct sctp_transport *) peer;
 	struct sctp_association *asoc = transport->asoc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct sock *sk = asoc->base.sk;
 	struct net *net = sock_net(sk);
 
@@ -260,13 +261,18 @@ void sctp_generate_t3_rtx_event(unsigned long peer)
 	sctp_bh_lock_sock(sk);
 	if (sock_owned_by_user(sk)) {
 =======
+=======
+>>>>>>> master
 	struct net *net = sock_net(asoc->base.sk);
 
 	/* Check whether a task is in the sock.  */
 
 	sctp_bh_lock_sock(asoc->base.sk);
 	if (sock_owned_by_user(asoc->base.sk)) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		SCTP_DEBUG_PRINTK("%s:Sock is busy.\n", __func__);
 
 		/* Try again later.  */
@@ -290,16 +296,22 @@ void sctp_generate_t3_rtx_event(unsigned long peer)
 
 	if (error)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		sk->sk_err = -error;
 
 out_unlock:
 	sctp_bh_unlock_sock(sk);
 =======
+=======
+>>>>>>> master
 		asoc->base.sk->sk_err = -error;
 
 out_unlock:
 	sctp_bh_unlock_sock(asoc->base.sk);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	sctp_transport_put(transport);
 }
 
@@ -310,6 +322,7 @@ static void sctp_generate_timeout_event(struct sctp_association *asoc,
 					sctp_event_timeout_t timeout_type)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct sock *sk = asoc->base.sk;
 	struct net *net = sock_net(sk);
 	int error = 0;
@@ -317,12 +330,17 @@ static void sctp_generate_timeout_event(struct sctp_association *asoc,
 	sctp_bh_lock_sock(sk);
 	if (sock_owned_by_user(sk)) {
 =======
+=======
+>>>>>>> master
 	struct net *net = sock_net(asoc->base.sk);
 	int error = 0;
 
 	sctp_bh_lock_sock(asoc->base.sk);
 	if (sock_owned_by_user(asoc->base.sk)) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		SCTP_DEBUG_PRINTK("%s:Sock is busy: timer %d\n",
 				  __func__,
 				  timeout_type);
@@ -347,16 +365,22 @@ static void sctp_generate_timeout_event(struct sctp_association *asoc,
 
 	if (error)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		sk->sk_err = -error;
 
 out_unlock:
 	sctp_bh_unlock_sock(sk);
 =======
+=======
+>>>>>>> master
 		asoc->base.sk->sk_err = -error;
 
 out_unlock:
 	sctp_bh_unlock_sock(asoc->base.sk);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	sctp_association_put(asoc);
 }
 
@@ -407,17 +431,23 @@ void sctp_generate_heartbeat_event(unsigned long data)
 	struct sctp_transport *transport = (struct sctp_transport *) data;
 	struct sctp_association *asoc = transport->asoc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct sock *sk = asoc->base.sk;
 	struct net *net = sock_net(sk);
 
 	sctp_bh_lock_sock(sk);
 	if (sock_owned_by_user(sk)) {
 =======
+=======
+>>>>>>> master
 	struct net *net = sock_net(asoc->base.sk);
 
 	sctp_bh_lock_sock(asoc->base.sk);
 	if (sock_owned_by_user(asoc->base.sk)) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		SCTP_DEBUG_PRINTK("%s:Sock is busy.\n", __func__);
 
 		/* Try again later.  */
@@ -439,16 +469,22 @@ void sctp_generate_heartbeat_event(unsigned long data)
 
 	 if (error)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 sk->sk_err = -error;
 
 out_unlock:
 	sctp_bh_unlock_sock(sk);
 =======
+=======
+>>>>>>> master
 		 asoc->base.sk->sk_err = -error;
 
 out_unlock:
 	sctp_bh_unlock_sock(asoc->base.sk);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	sctp_transport_put(transport);
 }
 
@@ -460,17 +496,23 @@ void sctp_generate_proto_unreach_event(unsigned long data)
 	struct sctp_transport *transport = (struct sctp_transport *) data;
 	struct sctp_association *asoc = transport->asoc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct sock *sk = asoc->base.sk;
 	struct net *net = sock_net(sk);
 	
 	sctp_bh_lock_sock(sk);
 	if (sock_owned_by_user(sk)) {
 =======
+=======
+>>>>>>> master
 	struct net *net = sock_net(asoc->base.sk);
 	
 	sctp_bh_lock_sock(asoc->base.sk);
 	if (sock_owned_by_user(asoc->base.sk)) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		SCTP_DEBUG_PRINTK("%s:Sock is busy.\n", __func__);
 
 		/* Try again later.  */
@@ -492,10 +534,14 @@ void sctp_generate_proto_unreach_event(unsigned long data)
 
 out_unlock:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sctp_bh_unlock_sock(sk);
 =======
 	sctp_bh_unlock_sock(asoc->base.sk);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	sctp_bh_unlock_sock(asoc->base.sk);
+>>>>>>> master
 	sctp_association_put(asoc);
 }
 

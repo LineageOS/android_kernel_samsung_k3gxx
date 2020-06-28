@@ -13,9 +13,12 @@
 
 #include <linux/device.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/err.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #include <linux/errno.h>
 #include <linux/module.h>
 #include <linux/io.h>
@@ -47,6 +50,7 @@ static int of_gpiochip_find_and_xlate(struct gpio_chip *gc, void *data)
 
 	ret = gc->of_xlate(gc, &gg_data->gpiospec, gg_data->flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret < 0) {
 		/* We've found the gpio chip, but the translation failed.
 		 * Return true to stop looking and return the translation
@@ -59,6 +63,10 @@ static int of_gpiochip_find_and_xlate(struct gpio_chip *gc, void *data)
 	if (ret < 0)
 		return false;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (ret < 0)
+		return false;
+>>>>>>> master
 
 	gg_data->out_gpio = ret + gc->base;
 	return true;

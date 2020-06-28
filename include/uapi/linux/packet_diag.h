@@ -64,10 +64,14 @@ struct packet_diag_mclist {
 	__u16	pdmc_type;
 	__u16	pdmc_alen;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__u8	pdmc_addr[32]; /* MAX_ADDR_LEN */
 =======
 	__u8	pdmc_addr[MAX_ADDR_LEN];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	__u8	pdmc_addr[MAX_ADDR_LEN];
+>>>>>>> master
 };
 
 struct packet_diag_ring {

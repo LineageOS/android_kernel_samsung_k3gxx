@@ -3224,6 +3224,7 @@ enum {
 	CXT_PINCFG_LEMOTE_A1004,
 	CXT_PINCFG_LEMOTE_A1205,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	CXT_PINCFG_COMPAQ_CQ60,
 	CXT_FIXUP_STEREO_DMIC,
 	CXT_FIXUP_INC_MIC_BOOST,
@@ -3232,6 +3233,10 @@ enum {
 	CXT_FIXUP_STEREO_DMIC,
 	CXT_FIXUP_INC_MIC_BOOST,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	CXT_FIXUP_STEREO_DMIC,
+	CXT_FIXUP_INC_MIC_BOOST,
+>>>>>>> master
 };
 
 static void cxt_fixup_stereo_dmic(struct hda_codec *codec,
@@ -3303,6 +3308,7 @@ static const struct hda_fixup cxt_fixups[] = {
 		.v.pins = cxt_pincfg_lemote,
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	[CXT_PINCFG_COMPAQ_CQ60] = {
 		.type = HDA_FIXUP_PINS,
 		.v.pins = (const struct hda_pintbl[]) {
@@ -3314,6 +3320,8 @@ static const struct hda_fixup cxt_fixups[] = {
 	},
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	[CXT_FIXUP_STEREO_DMIC] = {
 		.type = HDA_FIXUP_FUNC,
 		.v.func = cxt_fixup_stereo_dmic,
@@ -3322,6 +3330,7 @@ static const struct hda_fixup cxt_fixups[] = {
 		.type = HDA_FIXUP_FUNC,
 		.v.func = cxt5066_increase_mic_boost,
 	},
+<<<<<<< HEAD
 <<<<<<< HEAD
 	[CXT_FIXUP_GPIO1] = {
 		.type = HDA_FIXUP_VERBS,
@@ -3341,6 +3350,11 @@ static const struct snd_pci_quirk cxt5051_fixups[] = {
 
 static const struct snd_pci_quirk cxt5051_fixups[] = {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+};
+
+static const struct snd_pci_quirk cxt5051_fixups[] = {
+>>>>>>> master
 	SND_PCI_QUIRK(0x17aa, 0x20f2, "Lenovo X200", CXT_PINCFG_LENOVO_X200),
 	{}
 };
@@ -3348,9 +3362,12 @@ static const struct snd_pci_quirk cxt5051_fixups[] = {
 static const struct snd_pci_quirk cxt5066_fixups[] = {
 	SND_PCI_QUIRK(0x1025, 0x0543, "Acer Aspire One 522", CXT_FIXUP_STEREO_DMIC),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SND_PCI_QUIRK(0x1025, 0x054c, "Acer Aspire 3830TG", CXT_FIXUP_GPIO1),
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	SND_PCI_QUIRK(0x17aa, 0x20f2, "Lenovo T400", CXT_PINCFG_LENOVO_TP410),
 	SND_PCI_QUIRK(0x17aa, 0x215e, "Lenovo T410", CXT_PINCFG_LENOVO_TP410),
 	SND_PCI_QUIRK(0x17aa, 0x215f, "Lenovo T510", CXT_PINCFG_LENOVO_TP410),
@@ -3508,6 +3525,7 @@ static const struct hda_codec_preset snd_hda_preset_conexant[] = {
 	{ .id = 0x14f150b9, .name = "CX20665",
 	  .patch = patch_conexant_auto },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ .id = 0x14f150f1, .name = "CX20721",
 	  .patch = patch_conexant_auto },
 	{ .id = 0x14f150f2, .name = "CX20722",
@@ -3518,6 +3536,8 @@ static const struct hda_codec_preset snd_hda_preset_conexant[] = {
 	  .patch = patch_conexant_auto },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ .id = 0x14f1510f, .name = "CX20751/2",
 	  .patch = patch_conexant_auto },
 	{ .id = 0x14f15110, .name = "CX20751/2",
@@ -3531,10 +3551,13 @@ static const struct hda_codec_preset snd_hda_preset_conexant[] = {
 	{ .id = 0x14f15115, .name = "CX20757",
 	  .patch = patch_conexant_auto },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ .id = 0x14f151d7, .name = "CX20952",
 	  .patch = patch_conexant_auto },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{} /* terminator */
 };
 
@@ -3556,12 +3579,15 @@ MODULE_ALIAS("snd-hda-codec-id:14f150ac");
 MODULE_ALIAS("snd-hda-codec-id:14f150b8");
 MODULE_ALIAS("snd-hda-codec-id:14f150b9");
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS("snd-hda-codec-id:14f150f1");
 MODULE_ALIAS("snd-hda-codec-id:14f150f2");
 MODULE_ALIAS("snd-hda-codec-id:14f150f3");
 MODULE_ALIAS("snd-hda-codec-id:14f150f4");
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 MODULE_ALIAS("snd-hda-codec-id:14f1510f");
 MODULE_ALIAS("snd-hda-codec-id:14f15110");
 MODULE_ALIAS("snd-hda-codec-id:14f15111");
@@ -3569,9 +3595,12 @@ MODULE_ALIAS("snd-hda-codec-id:14f15113");
 MODULE_ALIAS("snd-hda-codec-id:14f15114");
 MODULE_ALIAS("snd-hda-codec-id:14f15115");
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS("snd-hda-codec-id:14f151d7");
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Conexant HD-audio codec");

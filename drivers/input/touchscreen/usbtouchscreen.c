@@ -107,9 +107,12 @@ struct usbtouch_usb {
 	unsigned char *data;
 	dma_addr_t data_dma;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int data_size;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	unsigned char *buffer;
 	int buf_len;
 	struct urb *irq;
@@ -151,18 +154,24 @@ enum {
 #define USB_DEVICE_HID_CLASS(vend, prod) \
 	.match_flags = USB_DEVICE_ID_MATCH_INT_CLASS \
 <<<<<<< HEAD
+<<<<<<< HEAD
 		| USB_DEVICE_ID_MATCH_DEVICE, \
 	.idVendor = (vend), \
 	.idProduct = (prod), \
 	.bInterfaceClass = USB_INTERFACE_CLASS_HID
 =======
+=======
+>>>>>>> master
 		| USB_DEVICE_ID_MATCH_INT_PROTOCOL \
 		| USB_DEVICE_ID_MATCH_DEVICE, \
 	.idVendor = (vend), \
 	.idProduct = (prod), \
 	.bInterfaceClass = USB_INTERFACE_CLASS_HID, \
 	.bInterfaceProtocol = USB_INTERFACE_PROTOCOL_MOUSE
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 static const struct usb_device_id usbtouch_devices[] = {
 #ifdef CONFIG_TOUCHSCREEN_USB_EGALAX
@@ -639,11 +648,14 @@ static int dmc_tsc10_init(struct usbtouch_usb *usbtouch)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* TSC-25 data sheet specifies a delay after the RESET command */
 	msleep(150);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* set coordinate output rate */
 	buf[0] = buf[1] = 0xFF;
 	ret = usb_control_msg(dev, usb_rcvctrlpipe (dev, 0),
@@ -1541,10 +1553,14 @@ static void usbtouch_free_buffers(struct usb_device *udev,
 				  struct usbtouch_usb *usbtouch)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	usb_free_coherent(udev, usbtouch->data_size,
 =======
 	usb_free_coherent(udev, usbtouch->type->rept_size,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	usb_free_coherent(udev, usbtouch->type->rept_size,
+>>>>>>> master
 			  usbtouch->data, usbtouch->data_dma);
 	kfree(usbtouch->buffer);
 }
@@ -1590,6 +1606,7 @@ static int usbtouch_probe(struct usb_interface *intf,
 		type->process_pkt = usbtouch_process_pkt;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	usbtouch->data_size = type->rept_size;
 	if (type->get_pkt_len) {
 		/*
@@ -1607,6 +1624,9 @@ static int usbtouch_probe(struct usb_interface *intf,
 =======
 	usbtouch->data = usb_alloc_coherent(udev, type->rept_size,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	usbtouch->data = usb_alloc_coherent(udev, type->rept_size,
+>>>>>>> master
 					    GFP_KERNEL, &usbtouch->data_dma);
 	if (!usbtouch->data)
 		goto out_free;
@@ -1667,19 +1687,27 @@ static int usbtouch_probe(struct usb_interface *intf,
 		usb_fill_int_urb(usbtouch->irq, udev,
 			 usb_rcvintpipe(udev, endpoint->bEndpointAddress),
 <<<<<<< HEAD
-			 usbtouch->data, usbtouch->data_size,
-=======
-			 usbtouch->data, type->rept_size,
->>>>>>> 671a46baf1b... some performance improvements
-			 usbtouch_irq, usbtouch, endpoint->bInterval);
-	else
-		usb_fill_bulk_urb(usbtouch->irq, udev,
-			 usb_rcvbulkpipe(udev, endpoint->bEndpointAddress),
 <<<<<<< HEAD
 			 usbtouch->data, usbtouch->data_size,
 =======
 			 usbtouch->data, type->rept_size,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			 usbtouch->data, type->rept_size,
+>>>>>>> master
+			 usbtouch_irq, usbtouch, endpoint->bInterval);
+	else
+		usb_fill_bulk_urb(usbtouch->irq, udev,
+			 usb_rcvbulkpipe(udev, endpoint->bEndpointAddress),
+<<<<<<< HEAD
+<<<<<<< HEAD
+			 usbtouch->data, usbtouch->data_size,
+=======
+			 usbtouch->data, type->rept_size,
+>>>>>>> 671a46baf1b... some performance improvements
+=======
+			 usbtouch->data, type->rept_size,
+>>>>>>> master
 			 usbtouch_irq, usbtouch);
 
 	usbtouch->irq->dev = udev;

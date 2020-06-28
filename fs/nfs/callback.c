@@ -129,10 +129,14 @@ nfs41_callback_svc(void *vrqstp)
 			continue;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		prepare_to_wait(&serv->sv_cb_waitq, &wq, TASK_UNINTERRUPTIBLE);
 =======
 		prepare_to_wait(&serv->sv_cb_waitq, &wq, TASK_INTERRUPTIBLE);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		prepare_to_wait(&serv->sv_cb_waitq, &wq, TASK_INTERRUPTIBLE);
+>>>>>>> master
 		spin_lock_bh(&serv->sv_cb_lock);
 		if (!list_empty(&serv->sv_cb_list)) {
 			req = list_first_entry(&serv->sv_cb_list,
@@ -140,15 +144,19 @@ nfs41_callback_svc(void *vrqstp)
 			list_del(&req->rq_bc_list);
 			spin_unlock_bh(&serv->sv_cb_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			finish_wait(&serv->sv_cb_waitq, &wq);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			dprintk("Invoking bc_svc_process()\n");
 			error = bc_svc_process(serv, req, rqstp);
 			dprintk("bc_svc_process() returned w/ error code= %d\n",
 				error);
 		} else {
 			spin_unlock_bh(&serv->sv_cb_lock);
+<<<<<<< HEAD
 <<<<<<< HEAD
 			/* schedule_timeout to game the hung task watchdog */
 			schedule_timeout(60 * HZ);
@@ -159,6 +167,11 @@ nfs41_callback_svc(void *vrqstp)
 		}
 		finish_wait(&serv->sv_cb_waitq, &wq);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			schedule();
+		}
+		finish_wait(&serv->sv_cb_waitq, &wq);
+>>>>>>> master
 	}
 	return 0;
 }
@@ -316,9 +329,12 @@ err_socks:
 	svc_rpcb_cleanup(serv, net);
 err_bind:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nn->cb_users[minorversion]--;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	dprintk("NFS: Couldn't create callback socket: err = %d; "
 			"net = %p\n", ret, net);
 	return ret;

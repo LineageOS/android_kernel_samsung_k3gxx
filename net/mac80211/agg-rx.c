@@ -291,10 +291,14 @@ void ieee80211_process_addba_request(struct ieee80211_local *local,
 
 	/* prepare A-MPDU MLME for Rx aggregation */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tid_agg_rx = kzalloc(sizeof(*tid_agg_rx), GFP_KERNEL);
 =======
 	tid_agg_rx = kmalloc(sizeof(struct tid_ampdu_rx), GFP_KERNEL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	tid_agg_rx = kmalloc(sizeof(struct tid_ampdu_rx), GFP_KERNEL);
+>>>>>>> master
 	if (!tid_agg_rx)
 		goto end;
 

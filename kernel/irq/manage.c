@@ -151,10 +151,14 @@ int irq_do_set_affinity(struct irq_data *data, const struct cpumask *mask,
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = chip->irq_set_affinity(data, mask, force);
 =======
 	ret = chip->irq_set_affinity(data, mask, false);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ret = chip->irq_set_affinity(data, mask, false);
+>>>>>>> master
 	switch (ret) {
 	case IRQ_SET_MASK_OK:
 		cpumask_copy(data->affinity, mask);
@@ -167,11 +171,15 @@ int irq_do_set_affinity(struct irq_data *data, const struct cpumask *mask,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int irq_set_affinity_locked(struct irq_data *data, const struct cpumask *mask,
 			    bool force)
 =======
 int __irq_set_affinity_locked(struct irq_data *data, const struct cpumask *mask)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+int __irq_set_affinity_locked(struct irq_data *data, const struct cpumask *mask)
+>>>>>>> master
 {
 	struct irq_chip *chip = irq_data_get_irq_chip(data);
 	struct irq_desc *desc = irq_data_to_desc(data);
@@ -182,10 +190,14 @@ int __irq_set_affinity_locked(struct irq_data *data, const struct cpumask *mask)
 
 	if (irq_can_move_pcntxt(data)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = irq_do_set_affinity(data, mask, force);
 =======
 		ret = irq_do_set_affinity(data, mask, false);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		ret = irq_do_set_affinity(data, mask, false);
+>>>>>>> master
 	} else {
 		irqd_set_move_pending(data);
 		irq_copy_pending(desc, mask);
@@ -201,8 +213,11 @@ int __irq_set_affinity_locked(struct irq_data *data, const struct cpumask *mask)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int __irq_set_affinity(unsigned int irq, const struct cpumask *mask, bool force)
 =======
+=======
+>>>>>>> master
 /**
  *	irq_set_affinity - Set the irq affinity of a given irq
  *	@irq:		Interrupt to set affinity
@@ -210,7 +225,10 @@ int __irq_set_affinity(unsigned int irq, const struct cpumask *mask, bool force)
  *
  */
 int irq_set_affinity(unsigned int irq, const struct cpumask *mask)
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 {
 	struct irq_desc *desc = irq_to_desc(irq);
 	unsigned long flags;
@@ -221,10 +239,14 @@ int irq_set_affinity(unsigned int irq, const struct cpumask *mask)
 
 	raw_spin_lock_irqsave(&desc->lock, flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = irq_set_affinity_locked(irq_desc_get_irq_data(desc), mask, force);
 =======
 	ret =  __irq_set_affinity_locked(irq_desc_get_irq_data(desc), mask);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ret =  __irq_set_affinity_locked(irq_desc_get_irq_data(desc), mask);
+>>>>>>> master
 	raw_spin_unlock_irqrestore(&desc->lock, flags);
 	return ret;
 }
@@ -824,11 +846,16 @@ static irqreturn_t irq_thread_fn(struct irq_desc *desc,
 static void wake_threads_waitq(struct irq_desc *desc)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (atomic_dec_and_test(&desc->threads_active))
 =======
 	if (atomic_dec_and_test(&desc->threads_active) &&
 	    waitqueue_active(&desc->wait_for_threads))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (atomic_dec_and_test(&desc->threads_active) &&
+	    waitqueue_active(&desc->wait_for_threads))
+>>>>>>> master
 		wake_up(&desc->wait_for_threads);
 }
 
@@ -893,12 +920,17 @@ static int irq_thread(void *data)
 
 		action_ret = handler_fn(desc, action);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (action_ret == IRQ_HANDLED)
 			atomic_inc(&desc->threads_handled);
 =======
 		if (!noirqdebug)
 			note_interrupt(action->irq, desc, action_ret);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (!noirqdebug)
+			note_interrupt(action->irq, desc, action_ret);
+>>>>>>> master
 
 		wake_threads_waitq(desc);
 	}
@@ -1266,9 +1298,12 @@ static struct irqaction *__free_irq(unsigned int irq, void *dev_id)
 		return NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	chip_bus_lock(desc);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	raw_spin_lock_irqsave(&desc->lock, flags);
 
 	/*
@@ -1283,10 +1318,14 @@ static struct irqaction *__free_irq(unsigned int irq, void *dev_id)
 			WARN(1, "Trying to free already-free IRQ %d\n", irq);
 			raw_spin_unlock_irqrestore(&desc->lock, flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			chip_bus_sync_unlock(desc);
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+>>>>>>> master
 			return NULL;
 		}
 
@@ -1310,9 +1349,12 @@ static struct irqaction *__free_irq(unsigned int irq, void *dev_id)
 
 	raw_spin_unlock_irqrestore(&desc->lock, flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	chip_bus_sync_unlock(desc);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	unregister_handler_proc(irq, action);
 
@@ -1387,12 +1429,18 @@ void free_irq(unsigned int irq, void *dev_id)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kfree(__free_irq(irq, dev_id));
 =======
 	chip_bus_lock(desc);
 	kfree(__free_irq(irq, dev_id));
 	chip_bus_sync_unlock(desc);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	chip_bus_lock(desc);
+	kfree(__free_irq(irq, dev_id));
+	chip_bus_sync_unlock(desc);
+>>>>>>> master
 }
 EXPORT_SYMBOL(free_irq);
 

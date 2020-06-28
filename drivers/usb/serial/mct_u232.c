@@ -378,6 +378,7 @@ static void mct_u232_msr_to_state(struct usb_serial_port *port,
 static int mct_u232_port_probe(struct usb_serial_port *port)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct usb_serial *serial = port->serial;
 	struct mct_u232_private *priv;
 
@@ -391,16 +392,24 @@ static int mct_u232_port_probe(struct usb_serial_port *port)
 	struct mct_u232_private *priv;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct mct_u232_private *priv;
+
+>>>>>>> master
 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
 	if (!priv)
 		return -ENOMEM;
 
 	/* Use second interrupt-in endpoint for reading. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	priv->read_urb = serial->port[1]->interrupt_in_urb;
 =======
 	priv->read_urb = port->serial->port[1]->interrupt_in_urb;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	priv->read_urb = port->serial->port[1]->interrupt_in_urb;
+>>>>>>> master
 	priv->read_urb->context = port;
 
 	spin_lock_init(&priv->lock);

@@ -15,6 +15,7 @@ efivarfs is typically mounted like this,
 
 	mount -t efivarfs none /sys/firmware/efi/efivars
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 Due to the presence of numerous firmware bugs where removing non-standard
 UEFI variables causes the system firmware to fail to POST, efivarfs
@@ -24,3 +25,5 @@ but it does prevent this kind of failure from being accomplished
 accidentally.
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master

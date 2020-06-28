@@ -484,14 +484,18 @@ hv_get_ringbuffer_availbytes(struct hv_ring_buffer_info *rbi,
  * 1 . 1  (Windows 7)
  * 2 . 4  (Windows 8)
 <<<<<<< HEAD
+<<<<<<< HEAD
  * 3 . 0  (Windows 8 R2)
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  */
 
 #define VERSION_WS2008  ((0 << 16) | (13))
 #define VERSION_WIN7    ((1 << 16) | (1))
 #define VERSION_WIN8    ((2 << 16) | (4))
+<<<<<<< HEAD
 <<<<<<< HEAD
 #define VERSION_WIN8_1    ((3 << 16) | (0))
 
@@ -500,11 +504,16 @@ hv_get_ringbuffer_availbytes(struct hv_ring_buffer_info *rbi,
 
 #define VERSION_CURRENT VERSION_WIN8_1
 =======
+=======
+>>>>>>> master
 
 #define VERSION_INVAL -1
 
 #define VERSION_CURRENT VERSION_WIN8
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 /* Make maximum size of pipe payload of 16K */
 #define MAX_PIPE_DATA_PAYLOAD		(sizeof(u8) * 16384)
@@ -908,10 +917,14 @@ struct vmbus_channel_initiate_contact {
 	struct vmbus_channel_message_header header;
 	u32 vmbus_version_requested;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 target_vcpu; /* The VCPU the host should respond to */
 =======
 	u32 padding2;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u32 padding2;
+>>>>>>> master
 	u64 interrupt_page;
 	u64 monitor_page1;
 	u64 monitor_page2;

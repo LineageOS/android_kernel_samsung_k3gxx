@@ -200,10 +200,14 @@ static void dmm_txn_append(struct dmm_txn *txn, struct pat_area *area,
 		struct page **pages, uint32_t npages, uint32_t roll)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma_addr_t pat_pa = 0, data_pa = 0;
 =======
 	dma_addr_t pat_pa = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	dma_addr_t pat_pa = 0;
+>>>>>>> master
 	uint32_t *data;
 	struct pat *pat;
 	struct refill_engine *engine = txn->engine_handle;
@@ -228,12 +232,16 @@ static void dmm_txn_append(struct dmm_txn *txn, struct pat_area *area,
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	data = alloc_dma(txn, 4*i, &data_pa);
 	/* FIXME: what if data_pa is more than 32-bit ? */
 	pat->data_pa = data_pa;
 =======
 	data = alloc_dma(txn, 4*i, &pat->data_pa);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	data = alloc_dma(txn, 4*i, &pat->data_pa);
+>>>>>>> master
 
 	while (i--) {
 		int n = i + roll;

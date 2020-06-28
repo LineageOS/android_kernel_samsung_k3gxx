@@ -273,10 +273,14 @@ xfs_readlink_bmap(
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		memcpy(link + offset, cur_chunk, byte_cnt);
 =======
 		memcpy(link + offset, bp->b_addr, byte_cnt);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		memcpy(link + offset, bp->b_addr, byte_cnt);
+>>>>>>> master
 
 		pathlen -= byte_cnt;
 		offset += byte_cnt;

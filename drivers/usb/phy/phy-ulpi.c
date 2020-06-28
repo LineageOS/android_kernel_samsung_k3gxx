@@ -48,10 +48,13 @@ static struct ulpi_info ulpi_ids[] = {
 	ULPI_INFO(ULPI_ID(0x04cc, 0x1504), "NXP ISP1504"),
 	ULPI_INFO(ULPI_ID(0x0424, 0x0006), "SMSC USB331x"),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ULPI_INFO(ULPI_ID(0x0424, 0x0007), "SMSC USB3320"),
 	ULPI_INFO(ULPI_ID(0x0451, 0x1507), "TI TUSB1210"),
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 
 static int ulpi_set_otg_flags(struct usb_phy *phy)

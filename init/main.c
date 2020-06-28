@@ -75,9 +75,12 @@
 #include <linux/blkdev.h>
 #include <linux/elevator.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/random.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 #include <asm/io.h>
 #include <asm/bugs.h>
@@ -674,12 +677,15 @@ asmlinkage void __init start_kernel(void)
 		efi_enter_virtual_mode();
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_X86_ESPFIX64
 	/* Should be run before the first non-init thread is created */
 	init_espfix_bsp();
 #endif
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	thread_info_cache_init();
 	cred_init();
 	fork_init(totalram_pages);
@@ -853,9 +859,12 @@ static void __init do_basic_setup(void)
 	usermodehelper_enable();
 	do_initcalls();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	random_int_secret_init();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static void __init do_pre_smp_initcalls(void)

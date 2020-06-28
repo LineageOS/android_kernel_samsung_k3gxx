@@ -1385,6 +1385,7 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Function to update ctime/mtime for a given device path.
  * Mainly used for ctime/mtime based probe like libblkid.
@@ -1403,6 +1404,8 @@ static void update_dev_time(char *path_name)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int btrfs_rm_dev_item(struct btrfs_root *root,
 			     struct btrfs_device *device)
 {
@@ -1632,6 +1635,7 @@ int btrfs_rm_device(struct btrfs_root *root, char *device_path)
 		fs_devices = root->fs_info->fs_devices;
 		while (fs_devices) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (fs_devices->seed == cur_devices) {
 				fs_devices->seed = cur_devices->seed;
 				break;
@@ -1639,12 +1643,17 @@ int btrfs_rm_device(struct btrfs_root *root, char *device_path)
 			fs_devices = fs_devices->seed;
 		}
 =======
+=======
+>>>>>>> master
 			if (fs_devices->seed == cur_devices)
 				break;
 			fs_devices = fs_devices->seed;
 		}
 		fs_devices->seed = cur_devices->seed;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		cur_devices->seed = NULL;
 		lock_chunks(root);
 		__btrfs_close_devices(cur_devices);
@@ -1671,6 +1680,7 @@ int btrfs_rm_device(struct btrfs_root *root, char *device_path)
 	ret = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (bdev) {
 		/* Notify udev that device has changed */
 		btrfs_kobject_uevent(bdev, KOBJ_CHANGE);
@@ -1680,11 +1690,16 @@ int btrfs_rm_device(struct btrfs_root *root, char *device_path)
 	}
 
 =======
+=======
+>>>>>>> master
 	/* Notify udev that device has changed */
 	if (bdev)
 		btrfs_kobject_uevent(bdev, KOBJ_CHANGE);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 error_brelse:
 	brelse(bh);
 	if (bdev)
@@ -1857,9 +1872,13 @@ static int btrfs_prepare_sprout(struct btrfs_root *root)
 	fs_devices->num_devices = 0;
 	fs_devices->open_devices = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	fs_devices->total_devices = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	fs_devices->total_devices = 0;
+>>>>>>> master
 	fs_devices->seed = seed_devices;
 
 	generate_random_uuid(fs_devices->fsid);
@@ -2132,10 +2151,13 @@ int btrfs_init_new_device(struct btrfs_root *root, char *device_path)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Update ctime/mtime for libblkid */
 	update_dev_time(device_path);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return ret;
 
 error_trans:
@@ -4296,9 +4318,12 @@ int btrfs_num_copies(struct btrfs_fs_info *fs_info, u64 logical, u64 len)
 			    "%Lu-%Lu\n", logical, logical+len, em->start,
 			    em->start + em->len);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		free_extent_map(em);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return 1;
 	}
 
@@ -4481,9 +4506,12 @@ static int __btrfs_map_block(struct btrfs_fs_info *fs_info, int rw,
 			   "found %Lu-%Lu\n", logical, em->start,
 			   em->start + em->len);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		free_extent_map(em);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return -EINVAL;
 	}
 

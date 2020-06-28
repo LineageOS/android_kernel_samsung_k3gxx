@@ -18,12 +18,15 @@ struct uid_gid_map {	/* 64 bytes -- 1 cache line */
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define USERNS_SETGROUPS_ALLOWED 1UL
 
 #define USERNS_INIT_FLAGS USERNS_SETGROUPS_ALLOWED
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 struct user_namespace {
 	struct uid_gid_map	uid_map;
 	struct uid_gid_map	gid_map;
@@ -35,9 +38,12 @@ struct user_namespace {
 	kgid_t			group;
 	unsigned int		proc_inum;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long		flags;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	bool			may_mount_sysfs;
 	bool			may_mount_proc;
 };
@@ -71,10 +77,13 @@ extern ssize_t proc_uid_map_write(struct file *, const char __user *, size_t, lo
 extern ssize_t proc_gid_map_write(struct file *, const char __user *, size_t, loff_t *);
 extern ssize_t proc_projid_map_write(struct file *, const char __user *, size_t, loff_t *);
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern ssize_t proc_setgroups_write(struct file *, const char __user *, size_t, loff_t *);
 extern int proc_setgroups_show(struct seq_file *m, void *v);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 extern bool userns_may_setgroups(const struct user_namespace *ns);
 #else
 

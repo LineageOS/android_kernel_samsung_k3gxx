@@ -582,12 +582,17 @@ static void do_nbd_request(struct request_queue *q)
 
 		if (unlikely(!nbd->sock)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dev_err_ratelimited(disk_to_dev(nbd->disk),
 					    "Attempted send on closed socket\n");
 =======
 			dev_err(disk_to_dev(nbd->disk),
 				"Attempted send on closed socket\n");
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			dev_err(disk_to_dev(nbd->disk),
+				"Attempted send on closed socket\n");
+>>>>>>> master
 			req->errors++;
 			nbd_end_request(req);
 			spin_lock_irq(q->queue_lock);
@@ -821,12 +826,18 @@ static int __init nbd_init(void)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	nbd_dev = kcalloc(nbds_max, sizeof(*nbd_dev), GFP_KERNEL);
 	if (!nbd_dev)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	part_shift = 0;
 	if (max_part > 0) {
 		part_shift = fls(max_part);
@@ -849,12 +860,15 @@ static int __init nbd_init(void)
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nbd_dev = kcalloc(nbds_max, sizeof(*nbd_dev), GFP_KERNEL);
 	if (!nbd_dev)
 		return -ENOMEM;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	for (i = 0; i < nbds_max; i++) {
 		struct gendisk *disk = alloc_disk(1 << part_shift);
 		if (!disk)

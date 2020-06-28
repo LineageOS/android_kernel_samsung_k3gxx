@@ -36,9 +36,12 @@
 #include <linux/blkdev.h>
 #include <linux/compat.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/personality.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 #include <asm/kmap_types.h>
 #include <asm/uaccess.h>
@@ -158,11 +161,14 @@ static int aio_setup_ring(struct kioctx *ctx)
 	int nr_pages;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (current->personality & READ_IMPLIES_EXEC)
 		return -EPERM;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Compensate for the ring buffer's head/tail overlap entry */
 	nr_events += 2;	/* 1 is required, 2 for good luck */
 
@@ -321,9 +327,13 @@ static void free_ioctx(struct kioctx *ctx)
 		avail = (head <= ctx->tail ? ctx->tail : ctx->nr_events) - head;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		atomic_sub(avail, &ctx->reqs_active);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		atomic_sub(avail, &ctx->reqs_active);
+>>>>>>> master
 		head += avail;
 		head %= ctx->nr_events;
 	}
@@ -437,6 +447,7 @@ static void kill_ioctx_rcu(struct rcu_head *head)
  *	the rapid destruction of the kioctx.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void kill_ioctx(struct mm_struct *mm, struct kioctx *ctx)
 {
 	if (!atomic_xchg(&ctx->dead, 1)) {
@@ -444,11 +455,16 @@ static void kill_ioctx(struct mm_struct *mm, struct kioctx *ctx)
 		hlist_del_rcu(&ctx->list);
 		spin_unlock(&mm->ioctx_lock);
 =======
+=======
+>>>>>>> master
 static void kill_ioctx(struct kioctx *ctx)
 {
 	if (!atomic_xchg(&ctx->dead, 1)) {
 		hlist_del_rcu(&ctx->list);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		/*
 		 * It'd be more correct to do this in free_ioctx(), after all
@@ -517,10 +533,14 @@ void exit_aio(struct mm_struct *mm)
 		ctx->mmap_size = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		kill_ioctx(mm, ctx);
 =======
 		kill_ioctx(ctx);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		kill_ioctx(ctx);
+>>>>>>> master
 	}
 }
 
@@ -703,9 +723,12 @@ put_rq:
 	/* everything turned out well, dispose of the aiocb. */
 	aio_put_req(iocb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_dec(&ctx->reqs_active);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/*
 	 * We have to order our ring_info tail store above and test
@@ -746,10 +769,13 @@ static long aio_read_events_ring(struct kioctx *ctx,
 		goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	head %= ctx->nr_events;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	while (ret < nr) {
 		long avail;
 		struct io_event *ev;
@@ -789,10 +815,15 @@ static long aio_read_events_ring(struct kioctx *ctx,
 
 	pr_debug("%li  h%u t%u\n", ret, head, ctx->tail);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	atomic_sub(ret, &ctx->reqs_active);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	atomic_sub(ret, &ctx->reqs_active);
+>>>>>>> master
 out:
 	mutex_unlock(&ctx->ring_lock);
 
@@ -891,10 +922,14 @@ SYSCALL_DEFINE2(io_setup, unsigned, nr_events, aio_context_t __user *, ctxp)
 		ret = put_user(ioctx->user_id, ctxp);
 		if (ret)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			kill_ioctx(current->mm, ioctx);
 =======
 			kill_ioctx(ioctx);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			kill_ioctx(ioctx);
+>>>>>>> master
 		put_ioctx(ioctx);
 	}
 
@@ -913,10 +948,14 @@ SYSCALL_DEFINE1(io_destroy, aio_context_t, ctx)
 	struct kioctx *ioctx = lookup_ioctx(ctx);
 	if (likely(NULL != ioctx)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		kill_ioctx(current->mm, ioctx);
 =======
 		kill_ioctx(ioctx);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		kill_ioctx(ioctx);
+>>>>>>> master
 		put_ioctx(ioctx);
 		return 0;
 	}

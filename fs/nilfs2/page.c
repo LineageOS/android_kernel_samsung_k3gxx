@@ -95,9 +95,12 @@ void nilfs_forget_buffer(struct buffer_head *bh)
 	clear_buffer_nilfs_checked(bh);
 	clear_buffer_nilfs_redirected(bh);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	clear_buffer_async_write(bh);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	clear_buffer_dirty(bh);
 	if (nilfs_page_buffers_clean(page))
 		__nilfs_clear_page_dirty(page);
@@ -434,9 +437,12 @@ void nilfs_clear_dirty_page(struct page *page, bool silent)
 					(u64)bh->b_blocknr, bh->b_size);
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 			clear_buffer_async_write(bh);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			clear_buffer_dirty(bh);
 			clear_buffer_nilfs_volatile(bh);
 			clear_buffer_nilfs_checked(bh);

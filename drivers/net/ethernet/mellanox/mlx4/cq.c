@@ -58,6 +58,7 @@ void mlx4_cq_completion(struct mlx4_dev *dev, u32 cqn)
 	struct mlx4_cq *cq;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rcu_read_lock();
 	cq = radix_tree_lookup(&mlx4_priv(dev)->cq_table.tree,
 			       cqn & (dev->caps.num_cqs - 1));
@@ -67,17 +68,24 @@ void mlx4_cq_completion(struct mlx4_dev *dev, u32 cqn)
 	cq = radix_tree_lookup(&mlx4_priv(dev)->cq_table.tree,
 			       cqn & (dev->caps.num_cqs - 1));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	cq = radix_tree_lookup(&mlx4_priv(dev)->cq_table.tree,
+			       cqn & (dev->caps.num_cqs - 1));
+>>>>>>> master
 	if (!cq) {
 		mlx4_dbg(dev, "Completion event for bogus CQ %08x\n", cqn);
 		return;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Acessing the CQ outside of rcu_read_lock is safe, because
 	 * the CQ is freed only after interrupt handling is completed.
 	 */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	++cq->arm_sn;
 
 	cq->comp(cq);
@@ -88,6 +96,7 @@ void mlx4_cq_event(struct mlx4_dev *dev, u32 cqn, int event_type)
 	struct mlx4_cq_table *cq_table = &mlx4_priv(dev)->cq_table;
 	struct mlx4_cq *cq;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	rcu_read_lock();
 	cq = radix_tree_lookup(&cq_table->tree, cqn & (dev->caps.num_cqs - 1));
@@ -103,6 +112,8 @@ void mlx4_cq_event(struct mlx4_dev *dev, u32 cqn, int event_type)
 	 */
 	cq->event(cq, event_type);
 =======
+=======
+>>>>>>> master
 	spin_lock(&cq_table->lock);
 
 	cq = radix_tree_lookup(&cq_table->tree, cqn & (dev->caps.num_cqs - 1));
@@ -120,7 +131,10 @@ void mlx4_cq_event(struct mlx4_dev *dev, u32 cqn, int event_type)
 
 	if (atomic_dec_and_test(&cq->refcount))
 		complete(&cq->free);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static int mlx4_SW2HW_CQ(struct mlx4_dev *dev, struct mlx4_cmd_mailbox *mailbox,
@@ -292,6 +306,7 @@ int mlx4_cq_alloc(struct mlx4_dev *dev, int nent,
 		return err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock(&cq_table->lock);
 	err = radix_tree_insert(&cq_table->tree, cq->cqn, cq);
 	spin_unlock(&cq_table->lock);
@@ -300,6 +315,11 @@ int mlx4_cq_alloc(struct mlx4_dev *dev, int nent,
 	err = radix_tree_insert(&cq_table->tree, cq->cqn, cq);
 	spin_unlock_irq(&cq_table->lock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	spin_lock_irq(&cq_table->lock);
+	err = radix_tree_insert(&cq_table->tree, cq->cqn, cq);
+	spin_unlock_irq(&cq_table->lock);
+>>>>>>> master
 	if (err)
 		goto err_icm;
 
@@ -340,6 +360,7 @@ int mlx4_cq_alloc(struct mlx4_dev *dev, int nent,
 
 err_radix:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock(&cq_table->lock);
 	radix_tree_delete(&cq_table->tree, cq->cqn);
 	spin_unlock(&cq_table->lock);
@@ -348,6 +369,11 @@ err_radix:
 	radix_tree_delete(&cq_table->tree, cq->cqn);
 	spin_unlock_irq(&cq_table->lock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	spin_lock_irq(&cq_table->lock);
+	radix_tree_delete(&cq_table->tree, cq->cqn);
+	spin_unlock_irq(&cq_table->lock);
+>>>>>>> master
 
 err_icm:
 	mlx4_cq_free_icm(dev, cq->cqn);
@@ -367,6 +393,7 @@ void mlx4_cq_free(struct mlx4_dev *dev, struct mlx4_cq *cq)
 		mlx4_warn(dev, "HW2SW_CQ failed (%d) for CQN %06x\n", err, cq->cqn);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock(&cq_table->lock);
 	radix_tree_delete(&cq_table->tree, cq->cqn);
 	spin_unlock(&cq_table->lock);
@@ -374,13 +401,18 @@ void mlx4_cq_free(struct mlx4_dev *dev, struct mlx4_cq *cq)
 	synchronize_irq(priv->eq_table.eq[cq->vector].irq);
 
 =======
+=======
+>>>>>>> master
 	synchronize_irq(priv->eq_table.eq[cq->vector].irq);
 
 	spin_lock_irq(&cq_table->lock);
 	radix_tree_delete(&cq_table->tree, cq->cqn);
 	spin_unlock_irq(&cq_table->lock);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (atomic_dec_and_test(&cq->refcount))
 		complete(&cq->free);
 	wait_for_completion(&cq->free);

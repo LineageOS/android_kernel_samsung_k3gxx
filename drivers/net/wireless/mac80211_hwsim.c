@@ -1932,9 +1932,12 @@ static int hwsim_tx_info_frame_received_nl(struct sk_buff *skb_2,
 	   !info->attrs[HWSIM_ATTR_FLAGS] ||
 	   !info->attrs[HWSIM_ATTR_COOKIE] ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 	   !info->attrs[HWSIM_ATTR_SIGNAL] ||
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	   !info->attrs[HWSIM_ATTR_TX_INFO])
 		goto out;
 

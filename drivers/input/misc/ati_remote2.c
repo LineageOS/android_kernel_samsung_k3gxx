@@ -818,6 +818,7 @@ static int ati_remote2_probe(struct usb_interface *interface, const struct usb_d
 	ar2->udev = udev;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Sanity check, first interface must have an endpoint */
 	if (alt->desc.bNumEndpoints < 1 || !alt->endpoint) {
 		dev_err(&interface->dev,
@@ -850,6 +851,8 @@ static int ati_remote2_probe(struct usb_interface *interface, const struct usb_d
 		goto fail2;
 	}
 =======
+=======
+>>>>>>> master
 	ar2->intf[0] = interface;
 	ar2->ep[0] = &alt->endpoint[0].desc;
 
@@ -858,16 +861,23 @@ static int ati_remote2_probe(struct usb_interface *interface, const struct usb_d
 	if (r)
 		goto fail1;
 	alt = ar2->intf[1]->cur_altsetting;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ar2->ep[1] = &alt->endpoint[0].desc;
 
 	r = ati_remote2_urb_init(ar2);
 	if (r)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto fail3;
 =======
 		goto fail2;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		goto fail2;
+>>>>>>> master
 
 	ar2->channel_mask = channel_mask;
 	ar2->mode_mask = mode_mask;
@@ -875,10 +885,14 @@ static int ati_remote2_probe(struct usb_interface *interface, const struct usb_d
 	r = ati_remote2_setup(ar2, ar2->channel_mask);
 	if (r)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto fail3;
 =======
 		goto fail2;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		goto fail2;
+>>>>>>> master
 
 	usb_make_path(udev, ar2->phys, sizeof(ar2->phys));
 	strlcat(ar2->phys, "/input0", sizeof(ar2->phys));
@@ -888,18 +902,24 @@ static int ati_remote2_probe(struct usb_interface *interface, const struct usb_d
 	r = sysfs_create_group(&udev->dev.kobj, &ati_remote2_attr_group);
 	if (r)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto fail3;
 
 	r = ati_remote2_input_init(ar2);
 	if (r)
 		goto fail4;
 =======
+=======
+>>>>>>> master
 		goto fail2;
 
 	r = ati_remote2_input_init(ar2);
 	if (r)
 		goto fail3;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	usb_set_intfdata(interface, ar2);
 
@@ -908,17 +928,23 @@ static int ati_remote2_probe(struct usb_interface *interface, const struct usb_d
 	return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
  fail4:
 	sysfs_remove_group(&udev->dev.kobj, &ati_remote2_attr_group);
  fail3:
 	ati_remote2_urb_cleanup(ar2);
  fail2:
 =======
+=======
+>>>>>>> master
  fail3:
 	sysfs_remove_group(&udev->dev.kobj, &ati_remote2_attr_group);
  fail2:
 	ati_remote2_urb_cleanup(ar2);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	usb_driver_release_interface(&ati_remote2_driver, ar2->intf[1]);
  fail1:
 	kfree(ar2);

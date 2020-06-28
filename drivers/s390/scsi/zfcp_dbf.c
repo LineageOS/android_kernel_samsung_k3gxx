@@ -4,10 +4,14 @@
  * Debug traces for zfcp.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright IBM Corp. 2002, 2016
 =======
  * Copyright IBM Corp. 2002, 2010
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ * Copyright IBM Corp. 2002, 2010
+>>>>>>> master
  */
 
 #define KMSG_COMPONENT "zfcp"
@@ -63,10 +67,14 @@ void zfcp_dbf_pl_write(struct zfcp_dbf *dbf, void *data, u16 length, char *area,
  * @req: request for which a response was received
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 void zfcp_dbf_hba_fsf_res(char *tag, int level, struct zfcp_fsf_req *req)
 =======
 void zfcp_dbf_hba_fsf_res(char *tag, struct zfcp_fsf_req *req)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+void zfcp_dbf_hba_fsf_res(char *tag, struct zfcp_fsf_req *req)
+>>>>>>> master
 {
 	struct zfcp_dbf *dbf = req->adapter->dbf;
 	struct fsf_qtcb_prefix *q_pref = &req->qtcb->prefix;
@@ -87,10 +95,13 @@ void zfcp_dbf_hba_fsf_res(char *tag, struct zfcp_fsf_req *req)
 	rec->u.res.prot_status = q_pref->prot_status;
 	rec->u.res.fsf_status = q_head->fsf_status;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rec->u.res.port_handle = q_head->port_handle;
 	rec->u.res.lun_handle = q_head->lun_handle;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	memcpy(rec->u.res.prot_status_qual, &q_pref->prot_status_qual,
 	       FSF_PROT_STATUS_QUAL_SIZE);
@@ -104,10 +115,14 @@ void zfcp_dbf_hba_fsf_res(char *tag, struct zfcp_fsf_req *req)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	debug_event(dbf->hba, level, rec, sizeof(*rec));
 =======
 	debug_event(dbf->hba, 1, rec, sizeof(*rec));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	debug_event(dbf->hba, 1, rec, sizeof(*rec));
+>>>>>>> master
 	spin_unlock_irqrestore(&dbf->hba_lock, flags);
 }
 
@@ -252,11 +267,15 @@ static void zfcp_dbf_set_common(struct zfcp_dbf_rec *rec,
 		rec->lun_status = atomic_read(&sdev_to_zfcp(sdev)->status);
 		rec->lun = zfcp_scsi_dev_lun(sdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else
 		rec->lun = ZFCP_DBF_INVALID_LUN;
 =======
 	}
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	}
+>>>>>>> master
 }
 
 /**
@@ -302,6 +321,7 @@ void zfcp_dbf_rec_trig(char *tag, struct zfcp_adapter *adapter,
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * zfcp_dbf_rec_run_lvl - trace event related to running recovery
  * @level: trace level to be used for event
  * @tag: identifier for event
@@ -309,12 +329,17 @@ void zfcp_dbf_rec_trig(char *tag, struct zfcp_adapter *adapter,
  */
 void zfcp_dbf_rec_run_lvl(int level, char *tag, struct zfcp_erp_action *erp)
 =======
+=======
+>>>>>>> master
  * zfcp_dbf_rec_run - trace event related to running recovery
  * @tag: identifier for event
  * @erp: erp_action running
  */
 void zfcp_dbf_rec_run(char *tag, struct zfcp_erp_action *erp)
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 {
 	struct zfcp_dbf *dbf = erp->adapter->dbf;
 	struct zfcp_dbf_rec *rec = &dbf->rec_buf;
@@ -340,6 +365,7 @@ void zfcp_dbf_rec_run(char *tag, struct zfcp_erp_action *erp)
 	else
 		rec->u.run.rec_count = atomic_read(&erp->adapter->erp_counter);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	debug_event(dbf->rec, level, rec, sizeof(*rec));
 	spin_unlock_irqrestore(&dbf->rec_lock, flags);
@@ -385,11 +411,14 @@ void zfcp_dbf_rec_run_wka(char *tag, struct zfcp_fc_wka_port *wka_port,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	debug_event(dbf->rec, 1, rec, sizeof(*rec));
 	spin_unlock_irqrestore(&dbf->rec_lock, flags);
 }
 
 static inline
+<<<<<<< HEAD
 <<<<<<< HEAD
 void zfcp_dbf_san(char *tag, struct zfcp_dbf *dbf,
 		  char *paytag, struct scatterlist *sg, u8 id, u16 len,
@@ -398,15 +427,22 @@ void zfcp_dbf_san(char *tag, struct zfcp_dbf *dbf,
 void zfcp_dbf_san(char *tag, struct zfcp_dbf *dbf, void *data, u8 id, u16 len,
 		  u64 req_id, u32 d_id)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+void zfcp_dbf_san(char *tag, struct zfcp_dbf *dbf, void *data, u8 id, u16 len,
+		  u64 req_id, u32 d_id)
+>>>>>>> master
 {
 	struct zfcp_dbf_san *rec = &dbf->san_buf;
 	u16 rec_len;
 	unsigned long flags;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct zfcp_dbf_pay *payload = &dbf->pay_buf;
 	u16 pay_sum = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	spin_lock_irqsave(&dbf->san_lock, flags);
 	memset(rec, 0, sizeof(*rec));
@@ -414,6 +450,7 @@ void zfcp_dbf_san(char *tag, struct zfcp_dbf *dbf, void *data, u8 id, u16 len,
 	rec->id = id;
 	rec->fsf_req_id = req_id;
 	rec->d_id = d_id;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	memcpy(rec->tag, tag, ZFCP_DBF_TAG_LEN);
 	rec->pl_len = len; /* full length even if we cap pay below */
@@ -451,11 +488,16 @@ void zfcp_dbf_san(char *tag, struct zfcp_dbf *dbf, void *data, u8 id, u16 len,
 
 out:
 =======
+=======
+>>>>>>> master
 	rec_len = min(len, (u16)ZFCP_DBF_SAN_MAX_PAYLOAD);
 	memcpy(rec->payload, data, rec_len);
 	memcpy(rec->tag, tag, ZFCP_DBF_TAG_LEN);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	debug_event(dbf->san, 1, rec, sizeof(*rec));
 	spin_unlock_irqrestore(&dbf->san_lock, flags);
 }
@@ -472,6 +514,7 @@ void zfcp_dbf_san_req(char *tag, struct zfcp_fsf_req *fsf, u32 d_id)
 	struct zfcp_fsf_ct_els *ct_els = fsf->data;
 	u16 length;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	length = (u16)zfcp_qdio_real_bytes(ct_els->req);
 	zfcp_dbf_san(tag, dbf, "san_req", ct_els->req, ZFCP_DBF_SAN_REQ,
@@ -534,6 +577,11 @@ static u16 zfcp_dbf_san_res_cap_len_if_gpn_ft(char *tag,
 	zfcp_dbf_san(tag, dbf, sg_virt(ct_els->req), ZFCP_DBF_SAN_REQ, length,
 		     fsf->req_id, d_id);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	length = (u16)(ct_els->req->length + FC_CT_HDR_LEN);
+	zfcp_dbf_san(tag, dbf, sg_virt(ct_els->req), ZFCP_DBF_SAN_REQ, length,
+		     fsf->req_id, d_id);
+>>>>>>> master
 }
 
 /**
@@ -548,6 +596,7 @@ void zfcp_dbf_san_res(char *tag, struct zfcp_fsf_req *fsf)
 	u16 length;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	length = (u16)zfcp_qdio_real_bytes(ct_els->resp);
 	zfcp_dbf_san(tag, dbf, "san_res", ct_els->resp, ZFCP_DBF_SAN_RES,
 		     length, fsf->req_id, ct_els->d_id,
@@ -557,6 +606,11 @@ void zfcp_dbf_san_res(char *tag, struct zfcp_fsf_req *fsf)
 	zfcp_dbf_san(tag, dbf, sg_virt(ct_els->resp), ZFCP_DBF_SAN_RES, length,
 		     fsf->req_id, 0);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	length = (u16)(ct_els->resp->length + FC_CT_HDR_LEN);
+	zfcp_dbf_san(tag, dbf, sg_virt(ct_els->resp), ZFCP_DBF_SAN_RES, length,
+		     fsf->req_id, 0);
+>>>>>>> master
 }
 
 /**
@@ -571,6 +625,7 @@ void zfcp_dbf_san_in_els(char *tag, struct zfcp_fsf_req *fsf)
 		(struct fsf_status_read_buffer *) fsf->data;
 	u16 length;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct scatterlist sg;
 
 	length = (u16)(srb->length -
@@ -579,12 +634,17 @@ void zfcp_dbf_san_in_els(char *tag, struct zfcp_fsf_req *fsf)
 	zfcp_dbf_san(tag, dbf, "san_els", &sg, ZFCP_DBF_SAN_ELS, length,
 		     fsf->req_id, ntoh24(srb->d_id), length);
 =======
+=======
+>>>>>>> master
 
 	length = (u16)(srb->length -
 			offsetof(struct fsf_status_read_buffer, payload));
 	zfcp_dbf_san(tag, dbf, srb->payload.data, ZFCP_DBF_SAN_ELS, length,
 		     fsf->req_id, ntoh24(srb->d_id));
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /**
@@ -594,11 +654,15 @@ void zfcp_dbf_san_in_els(char *tag, struct zfcp_fsf_req *fsf)
  * @fsf: pointer to struct zfcp_fsf_req
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 void zfcp_dbf_scsi(char *tag, int level, struct scsi_cmnd *sc,
 		   struct zfcp_fsf_req *fsf)
 =======
 void zfcp_dbf_scsi(char *tag, struct scsi_cmnd *sc, struct zfcp_fsf_req *fsf)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+void zfcp_dbf_scsi(char *tag, struct scsi_cmnd *sc, struct zfcp_fsf_req *fsf)
+>>>>>>> master
 {
 	struct zfcp_adapter *adapter =
 		(struct zfcp_adapter *) sc->device->host->hostdata[0];
@@ -626,6 +690,7 @@ void zfcp_dbf_scsi(char *tag, struct scsi_cmnd *sc, struct zfcp_fsf_req *fsf)
 	if (fsf) {
 		rec->fsf_req_id = fsf->req_id;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rec->pl_len = FCP_RESP_WITH_EXT;
 		fcp_rsp = (struct fcp_resp_with_ext *)
 				&(fsf->qtcb->bottom.io.fcp_rsp);
@@ -634,10 +699,15 @@ void zfcp_dbf_scsi(char *tag, struct scsi_cmnd *sc, struct zfcp_fsf_req *fsf)
 		fcp_rsp = (struct fcp_resp_with_ext *)
 				&(fsf->qtcb->bottom.io.fcp_rsp);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		fcp_rsp = (struct fcp_resp_with_ext *)
+				&(fsf->qtcb->bottom.io.fcp_rsp);
+>>>>>>> master
 		memcpy(&rec->fcp_rsp, fcp_rsp, FCP_RESP_WITH_EXT);
 		if (fcp_rsp->resp.fr_flags & FCP_RSP_LEN_VAL) {
 			fcp_rsp_info = (struct fcp_resp_rsp_info *) &fcp_rsp[1];
 			rec->fcp_rsp_info = fcp_rsp_info->rsp_code;
+<<<<<<< HEAD
 <<<<<<< HEAD
 			rec->pl_len += be32_to_cpu(fcp_rsp->ext.fr_rsp_len);
 		}
@@ -661,6 +731,8 @@ void zfcp_dbf_scsi(char *tag, struct scsi_cmnd *sc, struct zfcp_fsf_req *fsf)
 
 	debug_event(dbf->scsi, level, rec, sizeof(*rec));
 =======
+=======
+>>>>>>> master
 		}
 		if (fcp_rsp->resp.fr_flags & FCP_SNS_LEN_VAL) {
 			rec->pl_len = min((u16)SCSI_SENSE_BUFFERSIZE,
@@ -671,7 +743,10 @@ void zfcp_dbf_scsi(char *tag, struct scsi_cmnd *sc, struct zfcp_fsf_req *fsf)
 	}
 
 	debug_event(dbf->scsi, 1, rec, sizeof(*rec));
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	spin_unlock_irqrestore(&dbf->scsi_lock, flags);
 }
 

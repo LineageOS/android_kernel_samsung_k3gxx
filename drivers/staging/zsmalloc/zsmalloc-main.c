@@ -431,6 +431,7 @@ static struct page *get_next_page(struct page *page)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Encode <page, obj_idx> as a single handle value.
  * On hardware platforms with physical memory starting at 0x0 the pfn
@@ -440,6 +441,9 @@ static struct page *get_next_page(struct page *page)
 =======
 /* Encode <page, obj_idx> as a single handle value */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+/* Encode <page, obj_idx> as a single handle value */
+>>>>>>> master
 static void *obj_location_to_handle(struct page *page, unsigned long obj_idx)
 {
 	unsigned long handle;
@@ -451,14 +455,19 @@ static void *obj_location_to_handle(struct page *page, unsigned long obj_idx)
 
 	handle = page_to_pfn(page) << OBJ_INDEX_BITS;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	handle |= ((obj_idx + 1) & OBJ_INDEX_MASK);
 =======
 	handle |= (obj_idx & OBJ_INDEX_MASK);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	handle |= (obj_idx & OBJ_INDEX_MASK);
+>>>>>>> master
 
 	return (void *)handle;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /*
  * Decode <page, obj_idx> pair from the given object handle. We adjust the
@@ -468,15 +477,22 @@ static void *obj_location_to_handle(struct page *page, unsigned long obj_idx)
 =======
 /* Decode <page, obj_idx> pair from the given object handle */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+/* Decode <page, obj_idx> pair from the given object handle */
+>>>>>>> master
 static void obj_handle_to_location(unsigned long handle, struct page **page,
 				unsigned long *obj_idx)
 {
 	*page = pfn_to_page(handle >> OBJ_INDEX_BITS);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	*obj_idx = (handle & OBJ_INDEX_MASK) - 1;
 =======
 	*obj_idx = handle & OBJ_INDEX_MASK;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	*obj_idx = handle & OBJ_INDEX_MASK;
+>>>>>>> master
 }
 
 static unsigned long obj_idx_to_offset(struct page *page,

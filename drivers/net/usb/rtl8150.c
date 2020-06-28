@@ -157,6 +157,7 @@ static const char driver_name [] = "rtl8150";
 static int get_registers(rtl8150_t * dev, u16 indx, u16 size, void *data)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	void *buf;
 	int ret;
 
@@ -188,6 +189,8 @@ static int set_registers(rtl8150_t * dev, u16 indx, u16 size, const void *data)
 	kfree(buf);
 	return ret;
 =======
+=======
+>>>>>>> master
 	return usb_control_msg(dev->udev, usb_rcvctrlpipe(dev->udev, 0),
 			       RTL8150_REQ_GET_REGS, RTL8150_REQT_READ,
 			       indx, 0, data, size, 500);
@@ -198,7 +201,10 @@ static int set_registers(rtl8150_t * dev, u16 indx, u16 size, void *data)
 	return usb_control_msg(dev->udev, usb_sndctrlpipe(dev->udev, 0),
 			       RTL8150_REQ_SET_REGS, RTL8150_REQT_WRITE,
 			       indx, 0, data, size, 500);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static void async_set_reg_cb(struct urb *urb)

@@ -524,6 +524,7 @@ void iwl_mvm_bt_rssi_event(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
 	mutex_lock(&mvm->mutex);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * Rssi update while not associated - can happen since the statistics
 	 * are handled asynchronously
@@ -533,6 +534,10 @@ void iwl_mvm_bt_rssi_event(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
 	/* Rssi update while not associated ?! */
 	if (WARN_ON_ONCE(mvmvif->ap_sta_id == IWL_MVM_STATION_COUNT))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	/* Rssi update while not associated ?! */
+	if (WARN_ON_ONCE(mvmvif->ap_sta_id == IWL_MVM_STATION_COUNT))
+>>>>>>> master
 		goto out_unlock;
 
 	/* No open connection - reports should be disabled */

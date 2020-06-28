@@ -936,6 +936,7 @@ static void pcmuio_detach(struct comedi_device *dev)
 	int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (devpriv) {
 		for (i = 0; i < MAX_ASICS; ++i) {
 			if (devpriv->asics[i].irq)
@@ -944,13 +945,18 @@ static void pcmuio_detach(struct comedi_device *dev)
 		kfree(devpriv->sprivs);
 	}
 =======
+=======
+>>>>>>> master
 	for (i = 0; i < MAX_ASICS; ++i) {
 		if (devpriv->asics[i].irq)
 			free_irq(devpriv->asics[i].irq, dev);
 	}
 	if (devpriv && devpriv->sprivs)
 		kfree(devpriv->sprivs);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	comedi_legacy_detach(dev);
 }
 

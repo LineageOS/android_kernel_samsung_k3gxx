@@ -1,6 +1,9 @@
 i386
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 alpha
 arc
 arm64
@@ -30,5 +33,8 @@ um
 unicore32
 x86
 xtensa
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 x86_64

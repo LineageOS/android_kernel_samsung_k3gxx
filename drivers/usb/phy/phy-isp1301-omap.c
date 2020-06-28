@@ -1300,10 +1300,14 @@ isp1301_set_host(struct usb_otg *otg, struct usb_bus *host)
 	return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #elif !IS_ENABLED(CONFIG_USB_OMAP)
 =======
 #elif	!defined(CONFIG_USB_GADGET_OMAP)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#elif	!defined(CONFIG_USB_GADGET_OMAP)
+>>>>>>> master
 	// FIXME update its refcount
 	otg->host = host;
 

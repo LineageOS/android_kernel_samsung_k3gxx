@@ -30,6 +30,7 @@
 #define SIZE_MAX	(~(size_t)0)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define U8_MAX		((u8)~0U)
 #define S8_MAX		((s8)(U8_MAX>>1))
 #define S8_MIN		((s8)(-S8_MAX - 1))
@@ -45,6 +46,8 @@
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #define STACK_MAGIC	0xdeadbeef
 
 #define REPEAT_BYTE(x)	((~0ul / 0xff) * (x))
@@ -561,10 +564,14 @@ do {							\
 #define do_trace_printk(fmt, args...)					\
 do {									\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	static const char *trace_printk_fmt __used			\
 =======
 	static const char *trace_printk_fmt				\
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	static const char *trace_printk_fmt				\
+>>>>>>> master
 		__attribute__((section("__trace_printk_fmt"))) =	\
 		__builtin_constant_p(fmt) ? fmt : NULL;			\
 									\
@@ -612,10 +619,14 @@ extern int __trace_puts(unsigned long ip, const char *str, int size);
 
 #define trace_puts(str) ({						\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	static const char *trace_printk_fmt __used			\
 =======
 	static const char *trace_printk_fmt				\
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	static const char *trace_printk_fmt				\
+>>>>>>> master
 		__attribute__((section("__trace_printk_fmt"))) =	\
 		__builtin_constant_p(str) ? str : NULL;			\
 									\
@@ -636,10 +647,14 @@ extern void trace_dump_stack(int skip);
 do {									\
 	if (__builtin_constant_p(fmt)) {				\
 <<<<<<< HEAD
+<<<<<<< HEAD
 		static const char *trace_printk_fmt __used		\
 =======
 		static const char *trace_printk_fmt			\
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		static const char *trace_printk_fmt			\
+>>>>>>> master
 		  __attribute__((section("__trace_printk_fmt"))) =	\
 			__builtin_constant_p(fmt) ? fmt : NULL;		\
 									\

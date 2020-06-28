@@ -1183,15 +1183,20 @@ svc_process_common(struct svc_rqst *rqstp, struct kvec *argv, struct kvec *resv)
 
 		/* Encode reply */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (*statp == rpc_drop_reply ||
 		    rqstp->rq_dropme) {
 =======
 		if (rqstp->rq_dropme) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (rqstp->rq_dropme) {
+>>>>>>> master
 			if (procp->pc_release)
 				procp->pc_release(rqstp, NULL, rqstp->rq_resp);
 			goto dropit;
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (*statp == rpc_autherr_badcred) {
 			if (procp->pc_release)
@@ -1200,6 +1205,8 @@ svc_process_common(struct svc_rqst *rqstp, struct kvec *argv, struct kvec *resv)
 		}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		if (*statp == rpc_success &&
 		    (xdr = procp->pc_encode) &&
 		    !xdr(rqstp, resv->iov_base+resv->iov_len, rqstp->rq_resp)) {

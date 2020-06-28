@@ -177,9 +177,12 @@ static void rtl_process_pwdb(struct ieee80211_hw *hw, struct rtl_stats *pstatus)
 	struct ieee80211_sta *sta = NULL;
 	long undec_sm_pwdb;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	long undec_sm_cck;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	rcu_read_lock();
 	if (rtlpriv->mac80211.opmode != NL80211_IFTYPE_STATION)
@@ -190,6 +193,7 @@ static void rtl_process_pwdb(struct ieee80211_hw *hw, struct rtl_stats *pstatus)
 		drv_priv = (struct rtl_sta_info *) sta->drv_priv;
 		undec_sm_pwdb = drv_priv->rssi_stat.undec_sm_pwdb;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		undec_sm_cck = drv_priv->rssi_stat.undec_sm_cck;
 	} else {
 		undec_sm_pwdb = rtlpriv->dm.undec_sm_pwdb;
@@ -198,15 +202,22 @@ static void rtl_process_pwdb(struct ieee80211_hw *hw, struct rtl_stats *pstatus)
 	} else {
 		undec_sm_pwdb = rtlpriv->dm.undec_sm_pwdb;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	} else {
+		undec_sm_pwdb = rtlpriv->dm.undec_sm_pwdb;
+>>>>>>> master
 	}
 
 	if (undec_sm_pwdb < 0)
 		undec_sm_pwdb = pstatus->rx_pwdb_all;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (undec_sm_cck < 0)
 		undec_sm_cck = pstatus->rx_pwdb_all;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (pstatus->rx_pwdb_all > (u32) undec_sm_pwdb) {
 		undec_sm_pwdb = (((undec_sm_pwdb) *
 		      (RX_SMOOTH_FACTOR - 1)) +
@@ -216,6 +227,7 @@ static void rtl_process_pwdb(struct ieee80211_hw *hw, struct rtl_stats *pstatus)
 		undec_sm_pwdb = (((undec_sm_pwdb) * (RX_SMOOTH_FACTOR - 1)) +
 		     (pstatus->rx_pwdb_all)) / (RX_SMOOTH_FACTOR);
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (pstatus->rx_pwdb_all > (u32) undec_sm_cck) {
 		undec_sm_cck = (((undec_sm_pwdb) *
@@ -228,6 +240,8 @@ static void rtl_process_pwdb(struct ieee80211_hw *hw, struct rtl_stats *pstatus)
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (sta) {
 		drv_priv->rssi_stat.undec_sm_pwdb = undec_sm_pwdb;

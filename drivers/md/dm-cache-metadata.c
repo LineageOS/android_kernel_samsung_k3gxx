@@ -89,11 +89,14 @@ struct cache_disk_superblock {
 
 struct dm_cache_metadata {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_t ref_count;
 	struct list_head list;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	struct block_device *bdev;
 	struct dm_block_manager *bm;
 	struct dm_space_map *metadata_sm;
@@ -391,6 +394,7 @@ static int __open_metadata(struct dm_cache_metadata *cmd)
 	disk_super = dm_block_data(sblock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Verify the data block size hasn't changed */
 	if (le32_to_cpu(disk_super->data_block_size) != cmd->data_block_size) {
 		DMERR("changing the data block size (from %u to %llu) is not supported",
@@ -402,6 +406,8 @@ static int __open_metadata(struct dm_cache_metadata *cmd)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	r = __check_incompat_features(disk_super, cmd);
 	if (r < 0)
 		goto bad;
@@ -530,6 +536,7 @@ static int __begin_transaction_flags(struct dm_cache_metadata *cmd,
 	update_flags(disk_super, mutator);
 	read_superblock_fields(cmd, disk_super);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dm_bm_unlock(sblock);
 
 	return dm_bm_flush(cmd->bm);
@@ -537,6 +544,10 @@ static int __begin_transaction_flags(struct dm_cache_metadata *cmd,
 
 	return dm_bm_flush_and_unlock(cmd->bm, sblock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	return dm_bm_flush_and_unlock(cmd->bm, sblock);
+>>>>>>> master
 }
 
 static int __begin_transaction(struct dm_cache_metadata *cmd)
@@ -649,16 +660,22 @@ static void unpack_value(__le64 value_le, dm_oblock_t *block, unsigned *flags)
 /*----------------------------------------------------------------*/
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct dm_cache_metadata *metadata_open(struct block_device *bdev,
 					       sector_t data_block_size,
 					       bool may_format_device,
 					       size_t policy_hint_size)
 =======
+=======
+>>>>>>> master
 struct dm_cache_metadata *dm_cache_metadata_open(struct block_device *bdev,
 						 sector_t data_block_size,
 						 bool may_format_device,
 						 size_t policy_hint_size)
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 {
 	int r;
 	struct dm_cache_metadata *cmd;
@@ -666,6 +683,7 @@ struct dm_cache_metadata *dm_cache_metadata_open(struct block_device *bdev,
 	cmd = kzalloc(sizeof(*cmd), GFP_KERNEL);
 	if (!cmd) {
 		DMERR("could not allocate metadata struct");
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return ERR_PTR(-ENOMEM);
 	}
@@ -676,6 +694,11 @@ struct dm_cache_metadata *dm_cache_metadata_open(struct block_device *bdev,
 	}
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return NULL;
+	}
+
+>>>>>>> master
 	init_rwsem(&cmd->root_lock);
 	cmd->bdev = bdev;
 	cmd->data_block_size = data_block_size;
@@ -698,6 +721,7 @@ struct dm_cache_metadata *dm_cache_metadata_open(struct block_device *bdev,
 	return cmd;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /*
  * We keep a little list of ref counted metadata objects to prevent two
@@ -790,11 +814,16 @@ void dm_cache_metadata_close(struct dm_cache_metadata *cmd)
 		kfree(cmd);
 	}
 =======
+=======
+>>>>>>> master
 void dm_cache_metadata_close(struct dm_cache_metadata *cmd)
 {
 	__destroy_persistent_data_objects(cmd);
 	kfree(cmd);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 int dm_cache_resize(struct dm_cache_metadata *cmd, dm_cblock_t new_cache_size)

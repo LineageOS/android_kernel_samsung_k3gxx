@@ -244,10 +244,14 @@ static ssize_t set_temp_min(struct device *dev,
 	if (i2c_smbus_write_byte_data(client,
 					MAX1668_REG_LIML_WR(index),
 <<<<<<< HEAD
+<<<<<<< HEAD
 					data->temp_min[index]))
 =======
 					data->temp_max[index]))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+					data->temp_max[index]))
+>>>>>>> master
 		count = -EIO;
 	mutex_unlock(&data->update_lock);
 

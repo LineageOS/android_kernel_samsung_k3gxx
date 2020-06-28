@@ -835,6 +835,7 @@ copy_one_pte(struct mm_struct *dst_mm, struct mm_struct *src_mm,
 			swp_entry_t entry = pte_to_swp_entry(pte);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (likely(!non_swap_entry(entry))) {
 				if (swap_duplicate(entry) < 0)
 					return entry.val;
@@ -850,6 +851,8 @@ copy_one_pte(struct mm_struct *dst_mm, struct mm_struct *src_mm,
 				rss[MM_SWAPENTS]++;
 			} else if (is_migration_entry(entry)) {
 =======
+=======
+>>>>>>> master
 			if (swap_duplicate(entry) < 0)
 				return entry.val;
 
@@ -864,7 +867,10 @@ copy_one_pte(struct mm_struct *dst_mm, struct mm_struct *src_mm,
 			if (likely(!non_swap_entry(entry)))
 				rss[MM_SWAPENTS]++;
 			else if (is_migration_entry(entry)) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				page = migration_entry_to_page(entry);
 
 				if (PageAnon(page)) {
@@ -1707,14 +1713,20 @@ no_page_table:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 static inline int stack_guard_page(struct vm_area_struct *vma, unsigned long addr)
 {
 	return stack_guard_page_start(vma, addr) ||
 	       stack_guard_page_end(vma, addr+PAGE_SIZE);
 }
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /**
  * __get_user_pages() - pin user pages in memory
  * @tsk:	task_struct of target task
@@ -1883,13 +1895,19 @@ long __get_user_pages(struct task_struct *tsk, struct mm_struct *mm,
 				unsigned int fault_flags = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 				/* For mlock, just skip the stack guard page. */
 				if (foll_flags & FOLL_MLOCK) {
 					if (stack_guard_page(vma, start))
 						goto next_page;
 				}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				if (foll_flags & FOLL_WRITE)
 					fault_flags |= FAULT_FLAG_WRITE;
 				if (nonblocking)
@@ -1913,11 +1931,15 @@ long __get_user_pages(struct task_struct *tsk, struct mm_struct *mm,
 							return -EFAULT;
 					}
 <<<<<<< HEAD
+<<<<<<< HEAD
 					if (ret & (VM_FAULT_SIGBUS |
 						   VM_FAULT_SIGSEGV))
 =======
 					if (ret & VM_FAULT_SIGBUS)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+					if (ret & VM_FAULT_SIGBUS)
+>>>>>>> master
 						return i ? i : -EFAULT;
 					BUG();
 				}
@@ -2011,9 +2033,12 @@ int fixup_user_fault(struct task_struct *tsk, struct mm_struct *mm,
 {
 	struct vm_area_struct *vma;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vm_flags_t vm_flags;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	int ret;
 
 	vma = find_extend_vma(mm, address);
@@ -2021,12 +2046,15 @@ int fixup_user_fault(struct task_struct *tsk, struct mm_struct *mm,
 		return -EFAULT;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vm_flags = (fault_flags & FAULT_FLAG_WRITE) ? VM_WRITE : VM_READ;
 	if (!(vm_flags & vma->vm_flags))
 		return -EFAULT;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ret = handle_mm_fault(mm, vma, address, fault_flags);
 	if (ret & VM_FAULT_ERROR) {
 		if (ret & VM_FAULT_OOM)
@@ -2034,10 +2062,14 @@ int fixup_user_fault(struct task_struct *tsk, struct mm_struct *mm,
 		if (ret & (VM_FAULT_HWPOISON | VM_FAULT_HWPOISON_LARGE))
 			return -EHWPOISON;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (ret & (VM_FAULT_SIGBUS | VM_FAULT_SIGSEGV))
 =======
 		if (ret & VM_FAULT_SIGBUS)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (ret & VM_FAULT_SIGBUS)
+>>>>>>> master
 			return -EFAULT;
 		BUG();
 	}
@@ -3289,7 +3321,10 @@ out_release:
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
  * This is like a special single-page "expand_{down|up}wards()",
  * except we must first make sure that 'address{-|+}PAGE_SIZE'
  * doesn't hit another vma.
@@ -3324,7 +3359,10 @@ static inline int check_stack_guard_page(struct vm_area_struct *vma, unsigned lo
 }
 
 /*
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  * We enter with non-exclusive mmap_sem (to exclude vma changes,
  * but allow concurrent faults), and pte mapped but not yet locked.
  * We return with mmap_sem still held, but pte unmapped and unlocked.
@@ -3344,12 +3382,18 @@ static int do_anonymous_page(struct mm_struct *mm, struct vm_area_struct *vma,
 		return VM_FAULT_SIGBUS;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	/* Check if we need to add a guard page to the stack */
 	if (check_stack_guard_page(vma, address) < 0)
 		return VM_FAULT_SIGBUS;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Use the zero-page for reads */
 	if (!(flags & FAULT_FLAG_WRITE)) {
 		entry = pte_mkspecial(pfn_pte(my_zero_pfn(address),
@@ -3663,19 +3707,27 @@ static int do_nonlinear_fault(struct mm_struct *mm, struct vm_area_struct *vma,
 
 int numa_migrate_prep(struct page *page, struct vm_area_struct *vma,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				unsigned long addr, int page_nid)
 =======
 				unsigned long addr, int current_nid)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				unsigned long addr, int current_nid)
+>>>>>>> master
 {
 	get_page(page);
 
 	count_vm_numa_event(NUMA_HINT_FAULTS);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (page_nid == numa_node_id())
 =======
 	if (current_nid == numa_node_id())
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (current_nid == numa_node_id())
+>>>>>>> master
 		count_vm_numa_event(NUMA_HINT_FAULTS_LOCAL);
 
 	return mpol_misplaced(page, vma, addr);
@@ -3687,10 +3739,14 @@ int do_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 	struct page *page = NULL;
 	spinlock_t *ptl;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int page_nid = -1;
 =======
 	int current_nid = -1;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int current_nid = -1;
+>>>>>>> master
 	int target_nid;
 	bool migrated = false;
 
@@ -3721,11 +3777,14 @@ int do_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	page_nid = page_to_nid(page);
 	target_nid = numa_migrate_prep(page, vma, addr, page_nid);
 	pte_unmap_unlock(ptep, ptl);
 	if (target_nid == -1) {
 =======
+=======
+>>>>>>> master
 	current_nid = page_to_nid(page);
 	target_nid = numa_migrate_prep(page, vma, addr, current_nid);
 	pte_unmap_unlock(ptep, ptl);
@@ -3735,7 +3794,10 @@ int do_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 		 * being replaced regardless of where the page is located.
 		 */
 		current_nid = numa_node_id();
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		put_page(page);
 		goto out;
 	}
@@ -3744,18 +3806,24 @@ int do_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 	migrated = migrate_misplaced_page(page, target_nid);
 	if (migrated)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		page_nid = target_nid;
 
 out:
 	if (page_nid != -1)
 		task_numa_fault(page_nid, 1, migrated);
 =======
+=======
+>>>>>>> master
 		current_nid = target_nid;
 
 out:
 	if (current_nid != -1)
 		task_numa_fault(current_nid, 1, migrated);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 }
 
@@ -3771,9 +3839,13 @@ static int do_pmd_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 	spinlock_t *ptl;
 	bool numa = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int local_nid = numa_node_id();
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int local_nid = numa_node_id();
+>>>>>>> master
 
 	spin_lock(&mm->page_table_lock);
 	pmd = *pmdp;
@@ -3797,6 +3869,7 @@ static int do_pmd_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 		pte_t pteval = *pte;
 		struct page *page;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		int page_nid = -1;
 		int target_nid;
 		bool migrated = false;
@@ -3806,6 +3879,11 @@ static int do_pmd_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 		int target_nid;
 		bool migrated;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		int curr_nid = local_nid;
+		int target_nid;
+		bool migrated;
+>>>>>>> master
 		if (!pte_present(pteval))
 			continue;
 		if (!pte_numa(pteval))
@@ -3828,6 +3906,7 @@ static int do_pmd_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 			continue;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		page_nid = page_to_nid(page);
 		target_nid = numa_migrate_prep(page, vma, addr, page_nid);
 		pte_unmap_unlock(pte, ptl);
@@ -3842,6 +3921,8 @@ static int do_pmd_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 		if (page_nid != -1)
 			task_numa_fault(page_nid, 1, migrated);
 =======
+=======
+>>>>>>> master
 		/*
 		 * Note that the NUMA fault is later accounted to either
 		 * the node that is currently running or where the page is
@@ -3861,7 +3942,10 @@ static int do_pmd_numa_page(struct mm_struct *mm, struct vm_area_struct *vma,
 		if (migrated)
 			curr_nid = target_nid;
 		task_numa_fault(curr_nid, 1, migrated);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		pte = pte_offset_map_lock(mm, pmdp, addr, &ptl);
 	}
@@ -3949,12 +4033,17 @@ unlock:
  * By the time we get here, we already hold the mm semaphore
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __handle_mm_fault(struct mm_struct *mm, struct vm_area_struct *vma,
 			     unsigned long address, unsigned int flags)
 =======
 int handle_mm_fault(struct mm_struct *mm, struct vm_area_struct *vma,
 		unsigned long address, unsigned int flags)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+int handle_mm_fault(struct mm_struct *mm, struct vm_area_struct *vma,
+		unsigned long address, unsigned int flags)
+>>>>>>> master
 {
 	pgd_t *pgd;
 	pud_t *pud;
@@ -3962,7 +4051,10 @@ int handle_mm_fault(struct mm_struct *mm, struct vm_area_struct *vma,
 	pte_t *pte;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	__set_current_state(TASK_RUNNING);
 
 	count_vm_event(PGFAULT);
@@ -3971,7 +4063,10 @@ int handle_mm_fault(struct mm_struct *mm, struct vm_area_struct *vma,
 	/* do counter updates before entering really critical section. */
 	check_sync_rss_stat(current);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (unlikely(is_vm_hugetlb_page(vma)))
 		return hugetlb_fault(mm, vma, address, flags);
 
@@ -4039,6 +4134,7 @@ retry:
 	    unlikely(__pte_alloc(mm, vma, pmd, address)))
 		return VM_FAULT_OOM;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * If a huge pmd materialized under us just retry later.  Use
 	 * pmd_trans_unstable() instead of pmd_trans_huge() to ensure the pmd
@@ -4055,6 +4151,10 @@ retry:
 	/* if an huge pmd materialized from under us just retry later */
 	if (unlikely(pmd_trans_huge(*pmd)))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	/* if an huge pmd materialized from under us just retry later */
+	if (unlikely(pmd_trans_huge(*pmd)))
+>>>>>>> master
 		return 0;
 	/*
 	 * A regular pmd is established and it can't morph into a huge pmd
@@ -4067,6 +4167,7 @@ retry:
 	return handle_pte_fault(mm, vma, address, pte, pmd, flags);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 int handle_mm_fault(struct mm_struct *mm, struct vm_area_struct *vma,
 		    unsigned long address, unsigned int flags)
@@ -4107,6 +4208,8 @@ int handle_mm_fault(struct mm_struct *mm, struct vm_area_struct *vma,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #ifndef __PAGETABLE_PUD_FOLDED
 /*
  * Allocate page upper directory.
@@ -4317,10 +4420,14 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	maddr = ioremap_prot(phys_addr, PAGE_ALIGN(len + offset), prot);
 =======
 	maddr = ioremap_prot(phys_addr, PAGE_SIZE, prot);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	maddr = ioremap_prot(phys_addr, PAGE_SIZE, prot);
+>>>>>>> master
 	if (write)
 		memcpy_toio(maddr + offset, buf, len);
 	else
@@ -4330,9 +4437,12 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
 	return len;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(generic_access_phys);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #endif
 
 /*

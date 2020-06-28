@@ -161,11 +161,14 @@ int selinux_xfrm_state_pol_flow_match(struct xfrm_state *x, struct xfrm_policy *
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int selinux_xfrm_skb_sid_ingress(struct sk_buff *skb,
 					u32 *sid, int ckall)
 {
 	struct sec_path *sp = skb->sp;
 =======
+=======
+>>>>>>> master
 /*
  * LSM hook implementation that checks and/or returns the xfrm sid for the
  * incoming packet.
@@ -174,7 +177,10 @@ static int selinux_xfrm_skb_sid_ingress(struct sk_buff *skb,
 int selinux_xfrm_decode_session(struct sk_buff *skb, u32 *sid, int ckall)
 {
 	struct sec_path *sp;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #ifdef CONFIG_TIMA_RKP_RO_CRED
 	int rc;
 	if ((rc = security_integrity_current()))
@@ -184,12 +190,18 @@ int selinux_xfrm_decode_session(struct sk_buff *skb, u32 *sid, int ckall)
 	*sid = SECSID_NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	if (skb == NULL)
 		return 0;
 
 	sp = skb->sp;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (sp) {
 		int i, sid_set = 0;
 
@@ -213,6 +225,7 @@ int selinux_xfrm_decode_session(struct sk_buff *skb, u32 *sid, int ckall)
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static u32 selinux_xfrm_skb_sid_egress(struct sk_buff *skb)
 {
@@ -255,6 +268,8 @@ int selinux_xfrm_skb_sid(struct sk_buff *skb, u32 *sid)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  * Security blob allocation for xfrm_policy and xfrm_state
  * CTX does not have a meaningful value on input

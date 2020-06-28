@@ -792,9 +792,12 @@ static int virtio_pci_restore(struct device *dev)
 	struct virtio_pci_device *vp_dev = pci_get_drvdata(pci_dev);
 	struct virtio_driver *drv;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned status = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	int ret;
 
 	drv = container_of(vp_dev->vdev.dev.driver,
@@ -805,6 +808,7 @@ static int virtio_pci_restore(struct device *dev)
 		return ret;
 
 	pci_set_master(pci_dev);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* We always start by resetting the device, in case a previous
 	 * driver messed it up. */
@@ -841,6 +845,8 @@ static int virtio_pci_restore(struct device *dev)
 	status |= VIRTIO_CONFIG_S_DRIVER_OK;
 	vp_set_status(&vp_dev->vdev, status);
 =======
+=======
+>>>>>>> master
 	vp_finalize_features(&vp_dev->vdev);
 
 	if (drv && drv->restore)
@@ -849,7 +855,10 @@ static int virtio_pci_restore(struct device *dev)
 	/* Finally, tell the device we're all set */
 	if (!ret)
 		vp_set_status(&vp_dev->vdev, vp_dev->saved_status);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return ret;
 }

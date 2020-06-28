@@ -35,6 +35,7 @@
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * This is just a best-effort to tell userspace that this request
  * caused the error.
 =======
@@ -42,6 +43,11 @@
  * be -EFAULT.  The error will be returned from the ioctl(2) call.  It's
  * just a best-effort to tell userspace that this request caused the error.
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ * This call is void because we are already reporting an error that may
+ * be -EFAULT.  The error will be returned from the ioctl(2) call.  It's
+ * just a best-effort to tell userspace that this request caused the error.
+>>>>>>> master
  */
 static inline void o2info_set_request_error(struct ocfs2_info_request *kreq,
 					struct ocfs2_info_request __user *req)
@@ -151,17 +157,23 @@ int ocfs2_info_handle_blocksize(struct inode *inode,
 				struct ocfs2_info_request __user *req)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct ocfs2_info_blocksize oib;
 
 	if (o2info_from_user(oib, req))
 		return -EFAULT;
 =======
+=======
+>>>>>>> master
 	int status = -EFAULT;
 	struct ocfs2_info_blocksize oib;
 
 	if (o2info_from_user(oib, req))
 		goto bail;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	oib.ib_blocksize = inode->i_sb->s_blocksize;
 
@@ -169,10 +181,13 @@ int ocfs2_info_handle_blocksize(struct inode *inode,
 
 	if (o2info_to_user(oib, req))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EFAULT;
 
 	return 0;
 =======
+=======
+>>>>>>> master
 		goto bail;
 
 	status = 0;
@@ -181,25 +196,36 @@ bail:
 		o2info_set_request_error(&oib.ib_req, req);
 
 	return status;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 int ocfs2_info_handle_clustersize(struct inode *inode,
 				  struct ocfs2_info_request __user *req)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int status = -EFAULT;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int status = -EFAULT;
+>>>>>>> master
 	struct ocfs2_info_clustersize oic;
 	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
 
 	if (o2info_from_user(oic, req))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EFAULT;
 =======
 		goto bail;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		goto bail;
+>>>>>>> master
 
 	oic.ic_clustersize = osb->s_clustersize;
 
@@ -207,10 +233,13 @@ int ocfs2_info_handle_clustersize(struct inode *inode,
 
 	if (o2info_to_user(oic, req))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EFAULT;
 
 	return 0;
 =======
+=======
+>>>>>>> master
 		goto bail;
 
 	status = 0;
@@ -219,25 +248,36 @@ bail:
 		o2info_set_request_error(&oic.ic_req, req);
 
 	return status;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 int ocfs2_info_handle_maxslots(struct inode *inode,
 			       struct ocfs2_info_request __user *req)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int status = -EFAULT;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int status = -EFAULT;
+>>>>>>> master
 	struct ocfs2_info_maxslots oim;
 	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
 
 	if (o2info_from_user(oim, req))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EFAULT;
 =======
 		goto bail;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		goto bail;
+>>>>>>> master
 
 	oim.im_max_slots = osb->max_slots;
 
@@ -245,10 +285,13 @@ int ocfs2_info_handle_maxslots(struct inode *inode,
 
 	if (o2info_to_user(oim, req))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EFAULT;
 
 	return 0;
 =======
+=======
+>>>>>>> master
 		goto bail;
 
 	status = 0;
@@ -257,25 +300,36 @@ bail:
 		o2info_set_request_error(&oim.im_req, req);
 
 	return status;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 int ocfs2_info_handle_label(struct inode *inode,
 			    struct ocfs2_info_request __user *req)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int status = -EFAULT;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int status = -EFAULT;
+>>>>>>> master
 	struct ocfs2_info_label oil;
 	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
 
 	if (o2info_from_user(oil, req))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EFAULT;
 =======
 		goto bail;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		goto bail;
+>>>>>>> master
 
 	memcpy(oil.il_label, osb->vol_label, OCFS2_MAX_VOL_LABEL_LEN);
 
@@ -283,10 +337,13 @@ int ocfs2_info_handle_label(struct inode *inode,
 
 	if (o2info_to_user(oil, req))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EFAULT;
 
 	return 0;
 =======
+=======
+>>>>>>> master
 		goto bail;
 
 	status = 0;
@@ -295,25 +352,36 @@ bail:
 		o2info_set_request_error(&oil.il_req, req);
 
 	return status;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 int ocfs2_info_handle_uuid(struct inode *inode,
 			   struct ocfs2_info_request __user *req)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int status = -EFAULT;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int status = -EFAULT;
+>>>>>>> master
 	struct ocfs2_info_uuid oiu;
 	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
 
 	if (o2info_from_user(oiu, req))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EFAULT;
 =======
 		goto bail;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		goto bail;
+>>>>>>> master
 
 	memcpy(oiu.iu_uuid_str, osb->uuid_str, OCFS2_TEXT_UUID_LEN + 1);
 
@@ -321,10 +389,13 @@ int ocfs2_info_handle_uuid(struct inode *inode,
 
 	if (o2info_to_user(oiu, req))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EFAULT;
 
 	return 0;
 =======
+=======
+>>>>>>> master
 		goto bail;
 
 	status = 0;
@@ -333,25 +404,36 @@ bail:
 		o2info_set_request_error(&oiu.iu_req, req);
 
 	return status;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 int ocfs2_info_handle_fs_features(struct inode *inode,
 				  struct ocfs2_info_request __user *req)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int status = -EFAULT;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int status = -EFAULT;
+>>>>>>> master
 	struct ocfs2_info_fs_features oif;
 	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
 
 	if (o2info_from_user(oif, req))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EFAULT;
 =======
 		goto bail;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		goto bail;
+>>>>>>> master
 
 	oif.if_compat_features = osb->s_feature_compat;
 	oif.if_incompat_features = osb->s_feature_incompat;
@@ -361,10 +443,13 @@ int ocfs2_info_handle_fs_features(struct inode *inode,
 
 	if (o2info_to_user(oif, req))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EFAULT;
 
 	return 0;
 =======
+=======
+>>>>>>> master
 		goto bail;
 
 	status = 0;
@@ -373,25 +458,36 @@ bail:
 		o2info_set_request_error(&oif.if_req, req);
 
 	return status;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 int ocfs2_info_handle_journal_size(struct inode *inode,
 				   struct ocfs2_info_request __user *req)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int status = -EFAULT;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int status = -EFAULT;
+>>>>>>> master
 	struct ocfs2_info_journal_size oij;
 	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
 
 	if (o2info_from_user(oij, req))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EFAULT;
 =======
 		goto bail;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		goto bail;
+>>>>>>> master
 
 	oij.ij_journal_size = osb->journal->j_inode->i_size;
 
@@ -399,10 +495,13 @@ int ocfs2_info_handle_journal_size(struct inode *inode,
 
 	if (o2info_to_user(oij, req))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EFAULT;
 
 	return 0;
 =======
+=======
+>>>>>>> master
 		goto bail;
 
 	status = 0;
@@ -411,7 +510,10 @@ bail:
 		o2info_set_request_error(&oij.ij_req, req);
 
 	return status;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 int ocfs2_info_scan_inode_alloc(struct ocfs2_super *osb,
@@ -468,10 +570,14 @@ int ocfs2_info_handle_freeinode(struct inode *inode,
 	u64 blkno = -1;
 	char namebuf[40];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int status, type = INODE_ALLOC_SYSTEM_INODE;
 =======
 	int status = -EFAULT, type = INODE_ALLOC_SYSTEM_INODE;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int status = -EFAULT, type = INODE_ALLOC_SYSTEM_INODE;
+>>>>>>> master
 	struct ocfs2_info_freeinode *oifi = NULL;
 	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
 	struct inode *inode_alloc = NULL;
@@ -484,6 +590,7 @@ int ocfs2_info_handle_freeinode(struct inode *inode,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (o2info_from_user(*oifi, req)) {
 		status = -EFAULT;
 		goto out_free;
@@ -492,6 +599,10 @@ int ocfs2_info_handle_freeinode(struct inode *inode,
 	if (o2info_from_user(*oifi, req))
 		goto bail;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (o2info_from_user(*oifi, req))
+		goto bail;
+>>>>>>> master
 
 	oifi->ifi_slotnum = osb->max_slots;
 
@@ -529,6 +640,7 @@ int ocfs2_info_handle_freeinode(struct inode *inode,
 	o2info_set_request_filled(&oifi->ifi_req);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (o2info_to_user(*oifi, req)) {
 		status = -EFAULT;
 		goto out_free;
@@ -537,16 +649,24 @@ int ocfs2_info_handle_freeinode(struct inode *inode,
 	if (o2info_to_user(*oifi, req))
 		goto bail;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (o2info_to_user(*oifi, req))
+		goto bail;
+>>>>>>> master
 
 	status = 0;
 bail:
 	if (status)
 		o2info_set_request_error(&oifi->ifi_req, req);
 <<<<<<< HEAD
+<<<<<<< HEAD
 out_free:
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+>>>>>>> master
 	kfree(oifi);
 out_err:
 	return status;
@@ -774,10 +894,14 @@ int ocfs2_info_handle_freefrag(struct inode *inode,
 	u64 blkno = -1;
 	char namebuf[40];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int status, type = GLOBAL_BITMAP_SYSTEM_INODE;
 =======
 	int status = -EFAULT, type = GLOBAL_BITMAP_SYSTEM_INODE;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int status = -EFAULT, type = GLOBAL_BITMAP_SYSTEM_INODE;
+>>>>>>> master
 
 	struct ocfs2_info_freefrag *oiff;
 	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
@@ -791,6 +915,7 @@ int ocfs2_info_handle_freefrag(struct inode *inode,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (o2info_from_user(*oiff, req)) {
 		status = -EFAULT;
 		goto out_free;
@@ -799,6 +924,10 @@ int ocfs2_info_handle_freefrag(struct inode *inode,
 	if (o2info_from_user(*oiff, req))
 		goto bail;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (o2info_from_user(*oiff, req))
+		goto bail;
+>>>>>>> master
 	/*
 	 * chunksize from userspace should be power of 2.
 	 */
@@ -838,10 +967,14 @@ int ocfs2_info_handle_freefrag(struct inode *inode,
 	if (o2info_to_user(*oiff, req)) {
 		status = -EFAULT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto out_free;
 =======
 		goto bail;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		goto bail;
+>>>>>>> master
 	}
 
 	status = 0;
@@ -849,10 +982,14 @@ bail:
 	if (status)
 		o2info_set_request_error(&oiff->iff_req, req);
 <<<<<<< HEAD
+<<<<<<< HEAD
 out_free:
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+>>>>>>> master
 	kfree(oiff);
 out_err:
 	return status;
@@ -862,26 +999,35 @@ int ocfs2_info_handle_unknown(struct inode *inode,
 			      struct ocfs2_info_request __user *req)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct ocfs2_info_request oir;
 
 	if (o2info_from_user(oir, req))
 		return -EFAULT;
 =======
+=======
+>>>>>>> master
 	int status = -EFAULT;
 	struct ocfs2_info_request oir;
 
 	if (o2info_from_user(oir, req))
 		goto bail;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	o2info_clear_request_filled(&oir);
 
 	if (o2info_to_user(oir, req))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EFAULT;
 
 	return 0;
 =======
+=======
+>>>>>>> master
 		goto bail;
 
 	status = 0;
@@ -890,7 +1036,10 @@ bail:
 		o2info_set_request_error(&oir, req);
 
 	return status;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /*

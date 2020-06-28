@@ -3938,6 +3938,7 @@ static void ar9003_hw_quick_drop_apply(struct ath_hw *ah, u16 freq)
 	s32 t[3], f[3] = {5180, 5500, 5785};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!(pBase->miscConfiguration & BIT(4)))
 		return;
 
@@ -3953,6 +3954,8 @@ static void ar9003_hw_quick_drop_apply(struct ath_hw *ah, u16 freq)
 		REG_RMW_FIELD(ah, AR_PHY_AGC, AR_PHY_AGC_QUICK_DROP, quick_drop);
 	}
 =======
+=======
+>>>>>>> master
 	if (!(pBase->miscConfiguration & BIT(1)))
 		return;
 
@@ -3965,7 +3968,10 @@ static void ar9003_hw_quick_drop_apply(struct ath_hw *ah, u16 freq)
 		quick_drop = ar9003_hw_power_interpolate(freq, f, t, 3);
 	}
 	REG_RMW_FIELD(ah, AR_PHY_AGC, AR_PHY_AGC_QUICK_DROP, quick_drop);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static void ar9003_hw_txend_to_xpa_off_apply(struct ath_hw *ah, bool is2ghz)
@@ -4006,10 +4012,14 @@ static void ar9003_hw_xlna_bias_strength_apply(struct ath_hw *ah, bool is2ghz)
 	u8 bias;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!(eep->baseEepHeader.miscConfiguration & 0x40))
 =======
 	if (!(eep->baseEepHeader.featureEnable & 0x40))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!(eep->baseEepHeader.featureEnable & 0x40))
+>>>>>>> master
 		return;
 
 	if (!AR_SREV_9300(ah))

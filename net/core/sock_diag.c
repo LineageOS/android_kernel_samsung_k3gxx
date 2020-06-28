@@ -50,10 +50,14 @@ int sock_diag_put_meminfo(struct sock *sk, struct sk_buff *skb, int attrtype)
 EXPORT_SYMBOL_GPL(sock_diag_put_meminfo);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int sock_diag_put_filterinfo(bool may_report_filterinfo, struct sock *sk,
 =======
 int sock_diag_put_filterinfo(struct user_namespace *user_ns, struct sock *sk,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+int sock_diag_put_filterinfo(struct user_namespace *user_ns, struct sock *sk,
+>>>>>>> master
 			     struct sk_buff *skb, int attrtype)
 {
 	struct nlattr *attr;
@@ -62,10 +66,14 @@ int sock_diag_put_filterinfo(struct user_namespace *user_ns, struct sock *sk,
 	int err = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!may_report_filterinfo) {
 =======
 	if (!ns_capable(user_ns, CAP_NET_ADMIN)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!ns_capable(user_ns, CAP_NET_ADMIN)) {
+>>>>>>> master
 		nla_reserve(skb, attrtype, 0);
 		return 0;
 	}
@@ -144,10 +152,14 @@ void sock_diag_unregister(const struct sock_diag_handler *hnld)
 EXPORT_SYMBOL_GPL(sock_diag_unregister);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __sock_diag_cmd(struct sk_buff *skb, struct nlmsghdr *nlh)
 =======
 static int __sock_diag_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int __sock_diag_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
+>>>>>>> master
 {
 	int err;
 	struct sock_diag_req *req = nlmsg_data(nlh);
@@ -168,6 +180,7 @@ static int __sock_diag_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
 	if (hndl == NULL)
 		err = -ENOENT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	else if (nlh->nlmsg_type == SOCK_DIAG_BY_FAMILY)
 		err = hndl->dump(skb, nlh);
 	else if (nlh->nlmsg_type == SOCK_DESTROY_BACKPORT && hndl->destroy)
@@ -178,6 +191,10 @@ static int __sock_diag_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
 	else
 		err = hndl->dump(skb, nlh);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	else
+		err = hndl->dump(skb, nlh);
+>>>>>>> master
 	mutex_unlock(&sock_diag_table_mutex);
 
 	return err;
@@ -204,11 +221,15 @@ static int sock_diag_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
 		return ret;
 	case SOCK_DIAG_BY_FAMILY:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case SOCK_DESTROY_BACKPORT:
 		return __sock_diag_cmd(skb, nlh);
 =======
 		return __sock_diag_rcv_msg(skb, nlh);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return __sock_diag_rcv_msg(skb, nlh);
+>>>>>>> master
 	default:
 		return -EINVAL;
 	}
@@ -224,6 +245,7 @@ static void sock_diag_rcv(struct sk_buff *skb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int sock_diag_destroy(struct sock *sk, int err)
 {
 	if (!ns_capable(sock_net(sk)->user_ns, CAP_NET_ADMIN))
@@ -238,6 +260,8 @@ EXPORT_SYMBOL_GPL(sock_diag_destroy);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int __net_init diag_net_init(struct net *net)
 {
 	struct netlink_kernel_cfg cfg = {

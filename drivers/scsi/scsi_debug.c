@@ -3505,9 +3505,12 @@ static void __exit scsi_debug_exit(void)
 	root_device_unregister(pseudo_primary);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vfree(map_storep);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (dif_storep)
 		vfree(dif_storep);
 

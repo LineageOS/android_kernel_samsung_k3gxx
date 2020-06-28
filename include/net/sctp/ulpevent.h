@@ -144,6 +144,7 @@ static inline int sctp_ulpevent_type_enabled(__u16 sn_type,
 					     struct sctp_event_subscribe *mask)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int offset = sn_type - SCTP_SN_TYPE_BASE;
 	char *amask = (char *) mask;
 
@@ -154,6 +155,10 @@ static inline int sctp_ulpevent_type_enabled(__u16 sn_type,
 	char *amask = (char *) mask;
 	return amask[sn_type - SCTP_SN_TYPE_BASE];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	char *amask = (char *) mask;
+	return amask[sn_type - SCTP_SN_TYPE_BASE];
+>>>>>>> master
 }
 
 /* Given an event subscription, is this event enabled? */

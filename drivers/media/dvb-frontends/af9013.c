@@ -25,11 +25,14 @@
 #include "af9013_priv.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Max transfer size done by I2C transfer functions */
 #define MAX_XFER_SIZE  64
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 struct af9013_state {
 	struct i2c_adapter *i2c;
 	struct dvb_frontend fe;
@@ -57,23 +60,32 @@ static int af9013_wr_regs_i2c(struct af9013_state *priv, u8 mbox, u16 reg,
 {
 	int ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 buf[MAX_XFER_SIZE];
 =======
 	u8 buf[3+len];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u8 buf[3+len];
+>>>>>>> master
 	struct i2c_msg msg[1] = {
 		{
 			.addr = priv->config.i2c_addr,
 			.flags = 0,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			.len = 3 + len,
 =======
 			.len = sizeof(buf),
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			.len = sizeof(buf),
+>>>>>>> master
 			.buf = buf,
 		}
 	};
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (3 + len > sizeof(buf)) {
 		dev_warn(&priv->i2c->dev,
@@ -84,6 +96,8 @@ static int af9013_wr_regs_i2c(struct af9013_state *priv, u8 mbox, u16 reg,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	buf[0] = (reg >> 8) & 0xff;
 	buf[1] = (reg >> 0) & 0xff;
 	buf[2] = mbox;
@@ -621,12 +635,15 @@ static int af9013_set_frontend(struct dvb_frontend *fe)
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Return an error if can't find bandwidth or the right clock */
 		if (i == ARRAY_SIZE(coeff_lut))
 			return -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		ret = af9013_wr_regs(state, 0xae00, coeff_lut[i].val,
 			sizeof(coeff_lut[i].val));
 	}

@@ -361,6 +361,7 @@ static int ext4_valid_extent(struct inode *inode, struct ext4_extent *ext)
 	ext4_fsblk_t block = ext4_ext_pblock(ext);
 	int len = ext4_ext_get_actual_len(ext);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ext4_lblk_t lblock = le32_to_cpu(ext->ee_block);
 
 	/*
@@ -373,6 +374,10 @@ static int ext4_valid_extent(struct inode *inode, struct ext4_extent *ext)
 
 	if (len == 0)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	if (len == 0)
+>>>>>>> master
 		return 0;
 	return ext4_data_block_valid(EXT4_SB(inode->i_sb), block, len);
 }
@@ -399,6 +404,7 @@ static int ext4_valid_extent_entries(struct inode *inode,
 		/* leaf entries */
 		struct ext4_extent *ext = EXT_FIRST_EXTENT(eh);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct ext4_super_block *es = EXT4_SB(inode->i_sb)->s_es;
 		ext4_fsblk_t pblock = 0;
 		ext4_lblk_t lblock = 0;
@@ -420,12 +426,17 @@ static int ext4_valid_extent_entries(struct inode *inode,
 			entries--;
 			prev = lblock + len - 1;
 =======
+=======
+>>>>>>> master
 		while (entries) {
 			if (!ext4_valid_extent(inode, ext))
 				return 0;
 			ext++;
 			entries--;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		}
 	} else {
 		struct ext4_extent_idx *ext_idx = EXT_FIRST_INDEX(eh);
@@ -514,12 +525,15 @@ static int __ext4_ext_check(const char *function, unsigned int line,
 		goto corrupted;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(depth > 32)) {
 		error_msg = "too large eh_depth";
 		goto corrupted;
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Verify checksum on non-root extent tree nodes */
 	if (ext_depth(inode) != depth &&
 	    !ext4_extent_block_csum_verify(inode, eh)) {
@@ -1792,11 +1806,15 @@ static void ext4_ext_try_to_merge_up(handle_t *handle,
 	brelse(path[1].p_bh);
 	ext4_free_blocks(handle, inode, NULL, blk, 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 EXT4_FREE_BLOCKS_METADATA | EXT4_FREE_BLOCKS_FORGET |
 			 EXT4_FREE_BLOCKS_RESERVE);
 =======
 			 EXT4_FREE_BLOCKS_METADATA | EXT4_FREE_BLOCKS_FORGET);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			 EXT4_FREE_BLOCKS_METADATA | EXT4_FREE_BLOCKS_FORGET);
+>>>>>>> master
 }
 
 /*
@@ -1847,11 +1865,16 @@ static unsigned int ext4_ext_check_overlap(struct ext4_sb_info *sbi,
 	if (!path[depth].p_ext)
 		goto out;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	b2 = EXT4_LBLK_CMASK(sbi, le32_to_cpu(path[depth].p_ext->ee_block));
 =======
 	b2 = le32_to_cpu(path[depth].p_ext->ee_block);
 	b2 &= ~(sbi->s_cluster_ratio - 1);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	b2 = le32_to_cpu(path[depth].p_ext->ee_block);
+	b2 &= ~(sbi->s_cluster_ratio - 1);
+>>>>>>> master
 
 	/*
 	 * get the next allocated block if the extent in the path
@@ -1862,10 +1885,14 @@ static unsigned int ext4_ext_check_overlap(struct ext4_sb_info *sbi,
 		if (b2 == EXT_MAX_BLOCKS)
 			goto out;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		b2 = EXT4_LBLK_CMASK(sbi, b2);
 =======
 		b2 &= ~(sbi->s_cluster_ratio - 1);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		b2 &= ~(sbi->s_cluster_ratio - 1);
+>>>>>>> master
 	}
 
 	/* check for wrap through zero on extent logical start block*/
@@ -2527,10 +2554,14 @@ static int ext4_remove_blocks(handle_t *handle, struct inode *inode,
 		 * the cluster.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (EXT4_PBLK_COFF(sbi, pblk) &&
 =======
 		if (pblk & (sbi->s_cluster_ratio - 1) &&
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (pblk & (sbi->s_cluster_ratio - 1) &&
+>>>>>>> master
 		    (ee_len == num))
 			*partial_cluster = EXT4_B2C(sbi, pblk);
 		else
@@ -2599,6 +2630,7 @@ ext4_ext_rm_leaf(handle_t *handle, struct inode *inode,
 	ex_ee_len = ext4_ext_get_actual_len(ex);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * If we're starting with an extent other than the last one in the
 	 * node, we need to see if it shares a cluster with the extent to
@@ -2622,6 +2654,8 @@ ext4_ext_rm_leaf(handle_t *handle, struct inode *inode,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	trace_ext4_ext_rm_leaf(inode, start, ex, *partial_cluster);
 
 	while (ex >= EXT_FIRST_EXTENT(eh) &&
@@ -3786,10 +3820,14 @@ int ext4_find_delalloc_cluster(struct inode *inode, ext4_lblk_t lblk)
 	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
 	ext4_lblk_t lblk_start, lblk_end;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	lblk_start = EXT4_LBLK_CMASK(sbi, lblk);
 =======
 	lblk_start = lblk & (~(sbi->s_cluster_ratio - 1));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	lblk_start = lblk & (~(sbi->s_cluster_ratio - 1));
+>>>>>>> master
 	lblk_end = lblk_start + sbi->s_cluster_ratio - 1;
 
 	return ext4_find_delalloc_range(inode, lblk_start, lblk_end);
@@ -3849,6 +3887,7 @@ get_reserved_cluster_alloc(struct inode *inode, ext4_lblk_t lblk_start,
 
 	/* Check towards left side */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	c_offset = EXT4_LBLK_COFF(sbi, lblk_start);
 	if (c_offset) {
 		lblk_from = EXT4_LBLK_CMASK(sbi, lblk_start);
@@ -3857,6 +3896,11 @@ get_reserved_cluster_alloc(struct inode *inode, ext4_lblk_t lblk_start,
 	if (c_offset) {
 		lblk_from = lblk_start & (~(sbi->s_cluster_ratio - 1));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	c_offset = lblk_start & (sbi->s_cluster_ratio - 1);
+	if (c_offset) {
+		lblk_from = lblk_start & (~(sbi->s_cluster_ratio - 1));
+>>>>>>> master
 		lblk_to = lblk_from + c_offset - 1;
 
 		if (ext4_find_delalloc_range(inode, lblk_from, lblk_to))
@@ -3865,10 +3909,14 @@ get_reserved_cluster_alloc(struct inode *inode, ext4_lblk_t lblk_start,
 
 	/* Now check towards right. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	c_offset = EXT4_LBLK_COFF(sbi, lblk_start + num_blks);
 =======
 	c_offset = (lblk_start + num_blks) & (sbi->s_cluster_ratio - 1);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	c_offset = (lblk_start + num_blks) & (sbi->s_cluster_ratio - 1);
+>>>>>>> master
 	if (allocated_clusters && c_offset) {
 		lblk_from = lblk_start + num_blks;
 		lblk_to = lblk_from + (sbi->s_cluster_ratio - c_offset) - 1;
@@ -4077,10 +4125,14 @@ static int get_implied_cluster_alloc(struct super_block *sb,
 {
 	struct ext4_sb_info *sbi = EXT4_SB(sb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ext4_lblk_t c_offset = EXT4_LBLK_COFF(sbi, map->m_lblk);
 =======
 	ext4_lblk_t c_offset = map->m_lblk & (sbi->s_cluster_ratio-1);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ext4_lblk_t c_offset = map->m_lblk & (sbi->s_cluster_ratio-1);
+>>>>>>> master
 	ext4_lblk_t ex_cluster_start, ex_cluster_end;
 	ext4_lblk_t rr_cluster_start;
 	ext4_lblk_t ee_block = le32_to_cpu(ex->ee_block);
@@ -4099,11 +4151,16 @@ static int get_implied_cluster_alloc(struct super_block *sb,
 		if (rr_cluster_start == ex_cluster_end)
 			ee_start += ee_len - 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		map->m_pblk = EXT4_PBLK_CMASK(sbi, ee_start) + c_offset;
 =======
 		map->m_pblk = (ee_start & ~(sbi->s_cluster_ratio - 1)) +
 			c_offset;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		map->m_pblk = (ee_start & ~(sbi->s_cluster_ratio - 1)) +
+			c_offset;
+>>>>>>> master
 		map->m_len = min(map->m_len,
 				 (unsigned) sbi->s_cluster_ratio - c_offset);
 		/*
@@ -4167,10 +4224,14 @@ int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
 	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
 	ext4_fsblk_t newblock = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int free_on_err = 0, err = 0, depth, ret;
 =======
 	int free_on_err = 0, err = 0, depth;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int free_on_err = 0, err = 0, depth;
+>>>>>>> master
 	unsigned int allocated = 0, offset = 0;
 	unsigned int allocated_clusters = 0;
 	struct ext4_allocation_request ar;
@@ -4232,6 +4293,7 @@ int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
 				goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ret = ext4_ext_handle_uninitialized_extents(
 				handle, inode, map, path, flags,
 				allocated, newblock);
@@ -4244,6 +4306,11 @@ int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
 				handle, inode, map, path, flags,
 				allocated, newblock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			allocated = ext4_ext_handle_uninitialized_extents(
+				handle, inode, map, path, flags,
+				allocated, newblock);
+>>>>>>> master
 			goto out3;
 		}
 	}
@@ -4272,10 +4339,14 @@ int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
 	map->m_flags &= ~EXT4_MAP_FROM_CLUSTER;
 	newex.ee_block = cpu_to_le32(map->m_lblk);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cluster_offset = EXT4_LBLK_COFF(sbi, map->m_lblk);
 =======
 	cluster_offset = map->m_lblk & (sbi->s_cluster_ratio-1);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	cluster_offset = map->m_lblk & (sbi->s_cluster_ratio-1);
+>>>>>>> master
 
 	/*
 	 * If we are doing bigalloc, check to see if the extent returned
@@ -4344,10 +4415,14 @@ int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
 	 * work correctly.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	offset = EXT4_LBLK_COFF(sbi, map->m_lblk);
 =======
 	offset = map->m_lblk & (sbi->s_cluster_ratio - 1);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	offset = map->m_lblk & (sbi->s_cluster_ratio - 1);
+>>>>>>> master
 	ar.len = EXT4_NUM_B2C(sbi, offset+allocated);
 	ar.goal -= offset;
 	ar.logical -= offset;

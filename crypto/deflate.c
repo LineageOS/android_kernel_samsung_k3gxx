@@ -223,7 +223,11 @@ MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Deflate Compression Algorithm for IPCOMP");
 MODULE_AUTHOR("James Morris <jmorris@intercode.com.au>");
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("deflate");
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+>>>>>>> master

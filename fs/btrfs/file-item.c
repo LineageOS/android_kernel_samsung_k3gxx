@@ -404,10 +404,14 @@ int btrfs_lookup_csums_range(struct btrfs_root *root, u64 start, u64 end,
 fail:
 	while (ret < 0 && !list_empty(&tmplist)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		sums = list_entry(tmplist.next, struct btrfs_ordered_sum, list);
 =======
 		sums = list_entry(&tmplist, struct btrfs_ordered_sum, list);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		sums = list_entry(&tmplist, struct btrfs_ordered_sum, list);
+>>>>>>> master
 		list_del(&sums->list);
 		kfree(sums);
 	}
@@ -759,10 +763,14 @@ again:
 			if (ret != 0)
 				goto insert;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			slot = path->slots[0];
 =======
 			slot = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			slot = 0;
+>>>>>>> master
 		}
 		btrfs_item_key_to_cpu(path->nodes[0], &found_key, slot);
 		if (found_key.objectid != BTRFS_EXTENT_CSUM_OBJECTID ||

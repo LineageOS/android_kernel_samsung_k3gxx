@@ -1023,9 +1023,12 @@ static int __init usb_init(void)
 		return 0;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	usb_init_pool_max();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	retval = usb_debugfs_init();
 	if (retval)

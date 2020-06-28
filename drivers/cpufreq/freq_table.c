@@ -57,6 +57,7 @@ int cpufreq_frequency_table_verify(struct cpufreq_policy *policy,
 				   struct cpufreq_frequency_table *table)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int next_larger = ~0, freq, i = 0;
 	bool found = false;
 =======
@@ -64,6 +65,11 @@ int cpufreq_frequency_table_verify(struct cpufreq_policy *policy,
 	unsigned int i;
 	unsigned int count = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned int next_larger = ~0;
+	unsigned int i;
+	unsigned int count = 0;
+>>>>>>> master
 
 	pr_debug("request for verification of policy (%u - %u kHz) for cpu %u\n",
 					policy->min, policy->max, policy->cpu);
@@ -71,6 +77,7 @@ int cpufreq_frequency_table_verify(struct cpufreq_policy *policy,
 	cpufreq_verify_within_limits(policy, policy->cpuinfo.min_freq,
 				     policy->cpuinfo.max_freq);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	for (; freq = table[i].frequency, freq != CPUFREQ_TABLE_END; i++) {
 		if (freq == CPUFREQ_ENTRY_INVALID)
@@ -90,6 +97,8 @@ int cpufreq_frequency_table_verify(struct cpufreq_policy *policy,
 				policy->cpuinfo.max_freq);
 	}
 =======
+=======
+>>>>>>> master
 	for (i = 0; (table[i].frequency != CPUFREQ_TABLE_END); i++) {
 		unsigned int freq = table[i].frequency;
 		if (freq == CPUFREQ_ENTRY_INVALID)
@@ -105,7 +114,10 @@ int cpufreq_frequency_table_verify(struct cpufreq_policy *policy,
 
 	cpufreq_verify_within_limits(policy, policy->cpuinfo.min_freq,
 				     policy->cpuinfo.max_freq);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	pr_debug("verification lead to (%u - %u kHz) for cpu %u\n",
 				policy->min, policy->max, policy->cpu);
@@ -115,9 +127,13 @@ int cpufreq_frequency_table_verify(struct cpufreq_policy *policy,
 EXPORT_SYMBOL_GPL(cpufreq_frequency_table_verify);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+>>>>>>> master
 int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
 				   struct cpufreq_frequency_table *table,
 				   unsigned int target_freq,
@@ -133,10 +149,14 @@ int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
 		.frequency = 0,
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int i, diff;
 =======
 	unsigned int i;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned int i;
+>>>>>>> master
 
 	pr_debug("request for target %u kHz (relation: %u) for cpu %u\n",
 					target_freq, relation, policy->cpu);
@@ -147,9 +167,12 @@ int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
 		break;
 	case CPUFREQ_RELATION_L:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case CPUFREQ_RELATION_C:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		optimal.frequency = ~0;
 		break;
 	}
@@ -158,6 +181,7 @@ int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
 		unsigned int freq = table[i].frequency;
 		if (freq == CPUFREQ_ENTRY_INVALID)
 			continue;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (freq < policy->min || freq > policy->max)
 			continue;
@@ -169,12 +193,17 @@ int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
 		case CPUFREQ_RELATION_H:
 			if (freq < target_freq) {
 =======
+=======
+>>>>>>> master
 		if ((freq < policy->min) || (freq > policy->max))
 			continue;
 		switch (relation) {
 		case CPUFREQ_RELATION_H:
 			if (freq <= target_freq) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				if (freq >= optimal.frequency) {
 					optimal.frequency = freq;
 					optimal.index = i;
@@ -188,10 +217,14 @@ int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
 			break;
 		case CPUFREQ_RELATION_L:
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (freq > target_freq) {
 =======
 			if (freq >= target_freq) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			if (freq >= target_freq) {
+>>>>>>> master
 				if (freq <= optimal.frequency) {
 					optimal.frequency = freq;
 					optimal.index = i;
@@ -204,6 +237,7 @@ int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
 			}
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		case CPUFREQ_RELATION_C:
 			diff = abs(freq - target_freq);
 			if (diff < optimal.frequency ||
@@ -215,6 +249,8 @@ int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
 			break;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		}
 	}
 	if (optimal.index > i) {

@@ -112,6 +112,7 @@ kvp_work_func(struct work_struct *dummy)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void poll_channel(struct vmbus_channel *channel)
 {
 	unsigned long flags;
@@ -123,6 +124,8 @@ static void poll_channel(struct vmbus_channel *channel)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int kvp_handle_handshake(struct hv_kvp_msg *msg)
 {
 	int ret = 1;
@@ -152,10 +155,14 @@ static int kvp_handle_handshake(struct hv_kvp_msg *msg)
 		kvp_transaction.active = false;
 		if (kvp_transaction.kvp_context)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			poll_channel(kvp_transaction.kvp_context);
 =======
 			hv_kvp_onchannelcallback(kvp_transaction.kvp_context);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			hv_kvp_onchannelcallback(kvp_transaction.kvp_context);
+>>>>>>> master
 	}
 	return ret;
 }
@@ -569,9 +576,12 @@ response_done:
 	vmbus_sendpacket(channel, recv_buffer, buf_len, req_id,
 				VM_PKT_DATA_INBAND, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	poll_channel(channel);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 }
 
@@ -606,10 +616,14 @@ void hv_kvp_onchannelcallback(void *context)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vmbus_recvpacket(channel, recv_buffer, PAGE_SIZE * 4, &recvlen,
 =======
 	vmbus_recvpacket(channel, recv_buffer, PAGE_SIZE * 2, &recvlen,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	vmbus_recvpacket(channel, recv_buffer, PAGE_SIZE * 2, &recvlen,
+>>>>>>> master
 			 &requestid);
 
 	if (recvlen > 0) {

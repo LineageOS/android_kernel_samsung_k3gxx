@@ -936,6 +936,7 @@ xfs_qm_dqiter_bufs(
 			break;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * A corrupt buffer might not have a verifier attached, so
 		 * make sure we have the correct one attached before writeback
@@ -944,6 +945,8 @@ xfs_qm_dqiter_bufs(
 		bp->b_ops = &xfs_dquot_buf_ops;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		xfs_qm_reset_dqcounts(mp, bp, firstid, type);
 		xfs_buf_delwri_queue(bp, buffer_list);
 		xfs_buf_relse(bp);
@@ -1028,10 +1031,14 @@ xfs_qm_dqiterate(
 					       XFS_FSB_TO_DADDR(mp, rablkno),
 					       mp->m_quotainfo->qi_dqchunklen,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					       &xfs_dquot_buf_ops);
 =======
 					       NULL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+					       NULL);
+>>>>>>> master
 					rablkno++;
 				}
 			}

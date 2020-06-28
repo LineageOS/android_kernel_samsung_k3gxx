@@ -127,12 +127,15 @@ static int mc13783_write(struct snd_soc_codec *codec,
 	ret = mc13xxx_reg_write(priv->mc13xxx, reg, value);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* include errata fix for spi audio problems */
 	if (reg == MC13783_AUDIO_CODEC || reg == MC13783_AUDIO_DAC)
 		ret = mc13xxx_reg_write(priv->mc13xxx, reg, value);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	mc13xxx_unlock(priv->mc13xxx);
 
 	return ret;
@@ -608,10 +611,14 @@ static int mc13783_probe(struct snd_soc_codec *codec)
 	else
 		mc13xxx_reg_rmw(priv->mc13xxx, MC13783_AUDIO_CODEC,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				AUDIO_SSI_SEL, AUDIO_SSI_SEL);
 =======
 				0, AUDIO_SSI_SEL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				0, AUDIO_SSI_SEL);
+>>>>>>> master
 
 	if (priv->dac_ssi_port == MC13783_SSI1_PORT)
 		mc13xxx_reg_rmw(priv->mc13xxx, MC13783_AUDIO_DAC,
@@ -619,10 +626,14 @@ static int mc13783_probe(struct snd_soc_codec *codec)
 	else
 		mc13xxx_reg_rmw(priv->mc13xxx, MC13783_AUDIO_DAC,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				AUDIO_SSI_SEL, AUDIO_SSI_SEL);
 =======
 				0, AUDIO_SSI_SEL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				0, AUDIO_SSI_SEL);
+>>>>>>> master
 
 	mc13xxx_unlock(priv->mc13xxx);
 

@@ -48,10 +48,14 @@ static int handle_cmd(struct sk_buff *skb, struct genl_info *info)
 	u16 cmd;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if ((req_userhdr->cmd & 0xC000) && (!netlink_capable(skb, CAP_NET_ADMIN)))
 =======
 	if ((req_userhdr->cmd & 0xC000) && (!capable(CAP_NET_ADMIN)))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if ((req_userhdr->cmd & 0xC000) && (!capable(CAP_NET_ADMIN)))
+>>>>>>> master
 		cmd = TIPC_CMD_NOT_NET_ADMIN;
 	else
 		cmd = req_userhdr->cmd;

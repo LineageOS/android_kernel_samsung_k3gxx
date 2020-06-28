@@ -460,10 +460,14 @@ static int lowpan_header_create(struct sk_buff *skb,
 		} else {
 			/* compress nothing */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			memcpy(hc06_ptr, hdr, 4);
 =======
 			memcpy(hc06_ptr, &hdr, 4);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			memcpy(hc06_ptr, &hdr, 4);
+>>>>>>> master
 			/* replace the top byte with new ECN | DSCP format */
 			*hc06_ptr = tmp;
 			hc06_ptr += 4;
@@ -867,10 +871,14 @@ lowpan_process_data(struct sk_buff *skb)
 	 * ECN + DSCP (1 byte), Flow Label is elided
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case 2: /* 10b */
 =======
 	case 1: /* 10b */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	case 1: /* 10b */
+>>>>>>> master
 		if (lowpan_fetch_skb_u8(skb, &tmp))
 			goto drop;
 
@@ -884,10 +892,14 @@ lowpan_process_data(struct sk_buff *skb)
 	 * ECN + 2-bit Pad + Flow Label (3 bytes), DSCP is elided
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case 1: /* 01b */
 =======
 	case 2: /* 01b */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	case 2: /* 01b */
+>>>>>>> master
 		if (lowpan_fetch_skb_u8(skb, &tmp))
 			goto drop;
 
@@ -1186,6 +1198,7 @@ static struct header_ops lowpan_header_ops = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct lock_class_key lowpan_tx_busylock;
 static struct lock_class_key lowpan_netdev_xmit_lock_key;
 
@@ -1210,6 +1223,9 @@ static const struct net_device_ops lowpan_netdev_ops = {
 =======
 static const struct net_device_ops lowpan_netdev_ops = {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static const struct net_device_ops lowpan_netdev_ops = {
+>>>>>>> master
 	.ndo_start_xmit		= lowpan_xmit,
 	.ndo_set_mac_address	= lowpan_set_address,
 };

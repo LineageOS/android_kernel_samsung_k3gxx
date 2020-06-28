@@ -17,6 +17,7 @@
 
 	cpus {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		#address-cells = <1>;
 		#size-cells = <0>;
 		cpu@0 {
@@ -27,6 +28,10 @@
 		cpu@0 {
 			compatible = "arm,cortex-a8";
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		cpu@0 {
+			compatible = "arm,cortex-a8";
+>>>>>>> master
 		};
 	};
 

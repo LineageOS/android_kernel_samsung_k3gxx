@@ -68,6 +68,7 @@ static int tegra20_spdif_hw_params(struct snd_pcm_substream *substream,
 	struct device *dev = dai->dev;
 	struct tegra20_spdif *spdif = snd_soc_dai_get_drvdata(dai);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int mask = 0, val = 0;
 	int ret, spdifclock;
 
@@ -78,6 +79,8 @@ static int tegra20_spdif_hw_params(struct snd_pcm_substream *substream,
 		val |= TEGRA20_SPDIF_CTRL_PACK |
 		       TEGRA20_SPDIF_CTRL_BIT_MODE_16BIT;
 =======
+=======
+>>>>>>> master
 	unsigned int mask, val;
 	int ret, spdifclock;
 
@@ -87,7 +90,10 @@ static int tegra20_spdif_hw_params(struct snd_pcm_substream *substream,
 	case SNDRV_PCM_FORMAT_S16_LE:
 		val = TEGRA20_SPDIF_CTRL_PACK |
 		      TEGRA20_SPDIF_CTRL_BIT_MODE_16BIT;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		break;
 	default:
 		return -EINVAL;

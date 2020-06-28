@@ -201,9 +201,12 @@ struct fw_device {
 	unsigned bc_implemented:2;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	work_func_t workfn;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	struct delayed_work work;
 	struct fw_attribute_group attribute_group;
 };

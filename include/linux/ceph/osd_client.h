@@ -139,9 +139,12 @@ struct ceph_osd_request {
 	void             *r_request_pgid;
 	__le32           *r_request_attempts;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool              r_paused;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	struct ceph_eversion *r_request_reassert_version;
 
 	int               r_result;
@@ -150,9 +153,13 @@ struct ceph_osd_request {
 	int               r_got_reply;
 	int		  r_linger;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int		  r_completed;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int		  r_completed;
+>>>>>>> master
 
 	struct ceph_osd_client *r_osdc;
 	struct kref       r_kref;
@@ -344,10 +351,13 @@ extern int ceph_osdc_wait_request(struct ceph_osd_client *osdc,
 extern void ceph_osdc_sync(struct ceph_osd_client *osdc);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern void ceph_osdc_flush_notifies(struct ceph_osd_client *osdc);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 extern int ceph_osdc_readpages(struct ceph_osd_client *osdc,
 			       struct ceph_vino vino,
 			       struct ceph_file_layout *layout,

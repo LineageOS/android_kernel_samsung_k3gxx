@@ -204,6 +204,7 @@ static int iio_trigger_attach_poll_func(struct iio_trigger *trig,
 	/* Prevent the module from being removed whilst attached to a trigger */
 	__module_get(pf->indio_dev->info->driver_module);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* Get irq number */
 	pf->irq = iio_trigger_get_irq(trig);
@@ -234,6 +235,8 @@ out_put_module:
 	module_put(pf->indio_dev->info->driver_module);
 	return ret;
 =======
+=======
+>>>>>>> master
 	pf->irq = iio_trigger_get_irq(trig);
 	ret = request_threaded_irq(pf->irq, pf->h, pf->thread,
 				   pf->type, pf->name,
@@ -250,7 +253,10 @@ out_put_module:
 	}
 
 	return ret;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static int iio_trigger_detach_poll_func(struct iio_trigger *trig,

@@ -406,10 +406,13 @@ struct ohci_hcd {
 #define	OHCI_QUIRK_AMD_PLL	0x200			/* AMD PLL quirk*/
 #define	OHCI_QUIRK_AMD_PREFETCH	0x400			/* pre-fetch for ISO transfer */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define	OHCI_QUIRK_GLOBAL_SUSPEND	0x800		/* must suspend ports */
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	// there are also chip quirks/bugs in init logic
 
 	struct work_struct	nec_work;	/* Worker for NEC quirk */

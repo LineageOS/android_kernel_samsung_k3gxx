@@ -177,10 +177,14 @@ acpi_ex_system_memory_space_handler(u32 function,
 			ACPI_ERROR((AE_INFO,
 				    "Could not map memory at 0x%8.8X%8.8X, size %u",
 <<<<<<< HEAD
+<<<<<<< HEAD
 				    ACPI_FORMAT_UINT64(address),
 =======
 				    ACPI_FORMAT_NATIVE_UINT(address),
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				    ACPI_FORMAT_NATIVE_UINT(address),
+>>>>>>> master
 				    (u32) map_length));
 			mem_info->mapped_length = 0;
 			return_ACPI_STATUS(AE_NO_MEMORY);
@@ -202,11 +206,16 @@ acpi_ex_system_memory_space_handler(u32 function,
 	ACPI_DEBUG_PRINT((ACPI_DB_INFO,
 			  "System-Memory (width %u) R/W %u Address=%8.8X%8.8X\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			  bit_width, function, ACPI_FORMAT_UINT64(address)));
 =======
 			  bit_width, function,
 			  ACPI_FORMAT_NATIVE_UINT(address)));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			  bit_width, function,
+			  ACPI_FORMAT_NATIVE_UINT(address)));
+>>>>>>> master
 
 	/*
 	 * Perform the memory read or write
@@ -309,11 +318,16 @@ acpi_ex_system_io_space_handler(u32 function,
 	ACPI_DEBUG_PRINT((ACPI_DB_INFO,
 			  "System-IO (width %u) R/W %u Address=%8.8X%8.8X\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			  bit_width, function, ACPI_FORMAT_UINT64(address)));
 =======
 			  bit_width, function,
 			  ACPI_FORMAT_NATIVE_UINT(address)));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			  bit_width, function,
+			  ACPI_FORMAT_NATIVE_UINT(address)));
+>>>>>>> master
 
 	/* Decode the function parameter */
 

@@ -166,6 +166,7 @@ acpi_status acpi_enable_subsystem(u32 flags)
 	 * Global Lock and the Firmware Waking Vector
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!(flags & ACPI_NO_FACS_INIT)) {
 		status = acpi_tb_initialize_facs();
 		if (ACPI_FAILURE(status)) {
@@ -173,11 +174,16 @@ acpi_status acpi_enable_subsystem(u32 flags)
 			return_ACPI_STATUS(status);
 		}
 =======
+=======
+>>>>>>> master
 	status = acpi_tb_initialize_facs();
 	if (ACPI_FAILURE(status)) {
 		ACPI_WARNING((AE_INFO, "Could not map the FACS table"));
 		return_ACPI_STATUS(status);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 #endif				/* !ACPI_REDUCED_HARDWARE */
 

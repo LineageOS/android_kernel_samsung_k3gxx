@@ -182,6 +182,7 @@ struct __name##_back_ring {						\
     (&((_r)->sring->ring[((_idx) & (RING_SIZE(_r) - 1))].req))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Get a local copy of a request.
  *
@@ -198,6 +199,8 @@ struct __name##_back_ring {						\
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #define RING_GET_RESPONSE(_r, _idx)					\
     (&((_r)->sring->ring[((_idx) & (RING_SIZE(_r) - 1))].rsp))
 

@@ -295,6 +295,7 @@ static int output_switch_put(struct snd_kcontrol *ctl,
 				      data->output_sel == 1 ? GPIO_HP_REAR : 0,
 				      GPIO_HP_REAR);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		oxygen_write8_masked(chip, OXYGEN_PLAY_ROUTING,
 				     data->output_sel == 0 ?
 				     OXYGEN_PLAY_MUTE01 :
@@ -307,6 +308,8 @@ static int output_switch_put(struct snd_kcontrol *ctl,
 				     OXYGEN_PLAY_MUTE67);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 	mutex_unlock(&chip->mutex);
 	return changed;
@@ -610,10 +613,14 @@ struct oxygen_model model_xonar_dg = {
 	.device_config = PLAYBACK_0_TO_I2S |
 			 PLAYBACK_1_TO_SPDIF |
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 CAPTURE_0_FROM_I2S_1 |
 =======
 			 CAPTURE_0_FROM_I2S_2 |
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			 CAPTURE_0_FROM_I2S_2 |
+>>>>>>> master
 			 CAPTURE_1_FROM_SPDIF,
 	.dac_channels_pcm = 6,
 	.dac_channels_mixer = 0,

@@ -1010,6 +1010,7 @@ done:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void i915_error_wake_up(struct drm_i915_private *dev_priv,
 			       bool reset_completed)
 {
@@ -1040,6 +1041,8 @@ static void i915_error_wake_up(struct drm_i915_private *dev_priv,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /**
  * i915_error_work_func - do process context error handling work
  * @work: work struct
@@ -1055,17 +1058,23 @@ static void i915_error_work_func(struct work_struct *work)
 						    gpu_error);
 	struct drm_device *dev = dev_priv->dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	char *error_event[] = { "ERROR=1", NULL };
 	char *reset_event[] = { "RESET=1", NULL };
 	char *reset_done_event[] = { "ERROR=0", NULL };
 	int ret;
 =======
+=======
+>>>>>>> master
 	struct intel_ring_buffer *ring;
 	char *error_event[] = { "ERROR=1", NULL };
 	char *reset_event[] = { "RESET=1", NULL };
 	char *reset_done_event[] = { "ERROR=0", NULL };
 	int i, ret;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	kobject_uevent_env(&dev->primary->kdev.kobj, KOBJ_CHANGE, error_event);
 
@@ -1085,6 +1094,7 @@ static void i915_error_work_func(struct work_struct *work)
 				   reset_event);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * All state reset _must_ be completed before we update the
 		 * reset counter, for otherwise waiters might miss the reset
@@ -1099,6 +1109,10 @@ static void i915_error_work_func(struct work_struct *work)
 		ret = i915_reset(dev);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		ret = i915_reset(dev);
+
+>>>>>>> master
 		if (ret == 0) {
 			/*
 			 * After all the gem state is reset, increment the reset
@@ -1120,19 +1134,25 @@ static void i915_error_work_func(struct work_struct *work)
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * Note: The wake_up also serves as a memory barrier so that
 		 * waiters see the update value of the reset counter atomic_t.
 		 */
 		i915_error_wake_up(dev_priv, true);
 =======
+=======
+>>>>>>> master
 		for_each_ring(ring, dev_priv, i)
 			wake_up_all(&ring->irq_queue);
 
 		intel_display_handle_reset(dev);
 
 		wake_up_all(&dev_priv->gpu_error.reset_queue);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 }
 
@@ -1769,10 +1789,15 @@ void i915_handle_error(struct drm_device *dev, bool wedged)
 {
 	struct drm_i915_private *dev_priv = dev->dev_private;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct intel_ring_buffer *ring;
 	int i;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct intel_ring_buffer *ring;
+	int i;
+>>>>>>> master
 
 	i915_capture_error_state(dev);
 	i915_report_and_clear_eir(dev);
@@ -1782,6 +1807,7 @@ void i915_handle_error(struct drm_device *dev, bool wedged)
 				&dev_priv->gpu_error.reset_counter);
 
 		/*
+<<<<<<< HEAD
 <<<<<<< HEAD
 		 * Wakeup waiting processes so that the reset work function
 		 * i915_error_work_func doesn't deadlock trying to grab various
@@ -1806,6 +1832,8 @@ void i915_handle_error(struct drm_device *dev, bool wedged)
 	 */
 	schedule_work(&dev_priv->gpu_error.work);
 =======
+=======
+>>>>>>> master
 		 * Wakeup waiting processes so that the reset work item
 		 * doesn't deadlock trying to grab various locks.
 		 */
@@ -1814,7 +1842,10 @@ void i915_handle_error(struct drm_device *dev, bool wedged)
 	}
 
 	queue_work(dev_priv->wq, &dev_priv->gpu_error.work);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static void __always_unused i915_pageflip_stall_check(struct drm_device *dev, int pipe)

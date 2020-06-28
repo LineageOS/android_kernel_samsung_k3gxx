@@ -209,12 +209,17 @@ static void do_usb_entry(void *symval,
 				range_lo);
 			sprintf(alias + strlen(alias),
 <<<<<<< HEAD
+<<<<<<< HEAD
 				range_hi > 0xA ? "A-%X]" : "%X]",
 				range_hi);
 =======
 				range_hi > 0xA ? "a-%X]" : "%X]",
 				range_lo);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				range_hi > 0xA ? "a-%X]" : "%X]",
+				range_lo);
+>>>>>>> master
 		}
 	}
 	if (bcdDevice_initial_digits < (sizeof(bcdDevice_lo) * 2 - 1))

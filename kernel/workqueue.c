@@ -276,6 +276,7 @@ static bool wq_disable_numa;
 module_param_named(disable_numa, wq_disable_numa, bool, 0444);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* see the comment above the definition of WQ_POWER_EFFICIENT */
 #ifdef CONFIG_WQ_POWER_EFFICIENT_DEFAULT
 static bool wq_power_efficient = true;
@@ -287,6 +288,8 @@ module_param_named(power_efficient, wq_power_efficient, bool, 0444);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static bool wq_numa_enabled;		/* unbound NUMA affinity enabled */
 
 /* buf for wq_update_unbound_numa_attrs(), protected by CPU hotplug exclusion */
@@ -311,11 +314,14 @@ static DEFINE_HASHTABLE(unbound_pool_hash, UNBOUND_POOL_HASH_ORDER);
 static struct workqueue_attrs *unbound_std_wq_attrs[NR_STD_WORKER_POOLS];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* I: attributes used when instantiating ordered pools on demand */
 static struct workqueue_attrs *ordered_wq_attrs[NR_STD_WORKER_POOLS];
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 struct workqueue_struct *system_wq __read_mostly;
 EXPORT_SYMBOL(system_wq);
 struct workqueue_struct *system_highpri_wq __read_mostly;
@@ -327,12 +333,15 @@ EXPORT_SYMBOL_GPL(system_unbound_wq);
 struct workqueue_struct *system_freezable_wq __read_mostly;
 EXPORT_SYMBOL_GPL(system_freezable_wq);
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct workqueue_struct *system_power_efficient_wq __read_mostly;
 EXPORT_SYMBOL_GPL(system_power_efficient_wq);
 struct workqueue_struct *system_freezable_power_efficient_wq __read_mostly;
 EXPORT_SYMBOL_GPL(system_freezable_power_efficient_wq);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 static int worker_thread(void *__worker);
 static void copy_workqueue_attrs(struct workqueue_attrs *to,
@@ -632,6 +641,7 @@ static void set_work_pool_and_clear_pending(struct work_struct *work,
 	smp_wmb();
 	set_work_data(work, (unsigned long)pool_id << WORK_OFFQ_POOL_SHIFT, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * The following mb guarantees that previous clear of a PENDING bit
 	 * will not be reordered with any speculative LOADS or STORES from
@@ -663,6 +673,8 @@ static void set_work_pool_and_clear_pending(struct work_struct *work,
 	smp_mb();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static void clear_work_data(struct work_struct *work)
@@ -1881,6 +1893,7 @@ static void destroy_worker(struct worker *worker)
 		pool->nr_idle--;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * Once WORKER_DIE is set, the kworker may destroy itself at any
 	 * point.  Pin to ensure the task stays until we're done with it.
@@ -1889,6 +1902,8 @@ static void destroy_worker(struct worker *worker)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	list_del_init(&worker->entry);
 	worker->flags |= WORKER_DIE;
 
@@ -1898,9 +1913,12 @@ static void destroy_worker(struct worker *worker)
 
 	kthread_stop(worker->task);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	put_task_struct(worker->task);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	kfree(worker);
 
 	spin_lock_irq(&pool->lock);
@@ -1945,6 +1963,7 @@ static void send_mayday(struct work_struct *work)
 	/* mayday mayday mayday */
 	if (list_empty(&pwq->mayday_node)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * If @pwq is for an unbound wq, its base ref may be put at
 		 * any time due to an attribute change.  Pin @pwq until the
@@ -1953,6 +1972,8 @@ static void send_mayday(struct work_struct *work)
 		get_pwq(pwq);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		list_add_tail(&pwq->mayday_node, &wq->maydays);
 		wake_up_process(wq->rescuer->task);
 	}
@@ -2001,25 +2022,35 @@ static void pool_mayday_timeout(unsigned long __pool)
  * multiple times.  Does GFP_KERNEL allocations.  Called only from
  * manager.
 <<<<<<< HEAD
+<<<<<<< HEAD
  */
 static void maybe_create_worker(struct worker_pool *pool)
 =======
+=======
+>>>>>>> master
  *
  * RETURNS:
  * %false if no action was taken and pool->lock stayed locked, %true
  * otherwise.
  */
 static bool maybe_create_worker(struct worker_pool *pool)
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 __releases(&pool->lock)
 __acquires(&pool->lock)
 {
 	if (!need_to_create_worker(pool))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return;
 =======
 		return false;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return false;
+>>>>>>> master
 restart:
 	spin_unlock_irq(&pool->lock);
 
@@ -2037,10 +2068,14 @@ restart:
 			if (WARN_ON_ONCE(need_to_create_worker(pool)))
 				goto restart;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return;
 =======
 			return true;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			return true;
+>>>>>>> master
 		}
 
 		if (!need_to_create_worker(pool))
@@ -2058,10 +2093,14 @@ restart:
 	if (need_to_create_worker(pool))
 		goto restart;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return;
 =======
 	return true;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return true;
+>>>>>>> master
 }
 
 /**
@@ -2075,10 +2114,13 @@ restart:
  * spin_lock_irq(pool->lock) which may be released and regrabbed
  * multiple times.  Called only from manager.
 <<<<<<< HEAD
+<<<<<<< HEAD
  */
 static void maybe_destroy_workers(struct worker_pool *pool)
 {
 =======
+=======
+>>>>>>> master
  *
  * RETURNS:
  * %false if no action was taken and pool->lock stayed locked, %true
@@ -2088,7 +2130,10 @@ static bool maybe_destroy_workers(struct worker_pool *pool)
 {
 	bool ret = false;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	while (too_many_workers(pool)) {
 		struct worker *worker;
 		unsigned long expires;
@@ -2103,13 +2148,19 @@ static bool maybe_destroy_workers(struct worker_pool *pool)
 
 		destroy_worker(worker);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	}
 =======
+=======
+>>>>>>> master
 		ret = true;
 	}
 
 	return ret;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /**
@@ -2130,6 +2181,7 @@ static bool maybe_destroy_workers(struct worker_pool *pool)
  *
  * RETURNS:
 <<<<<<< HEAD
+<<<<<<< HEAD
  * %false if the pool doesn't need management and the caller can safely
  * start processing works, %true if management function was performed and
  * the conditions that the caller verified before calling the function may
@@ -2138,14 +2190,22 @@ static bool maybe_destroy_workers(struct worker_pool *pool)
  * spin_lock_irq(pool->lock) which may be released and regrabbed
  * multiple times.  Does GFP_KERNEL allocations.
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ * spin_lock_irq(pool->lock) which may be released and regrabbed
+ * multiple times.  Does GFP_KERNEL allocations.
+>>>>>>> master
  */
 static bool manage_workers(struct worker *worker)
 {
 	struct worker_pool *pool = worker->pool;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	bool ret = false;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	bool ret = false;
+>>>>>>> master
 
 	/*
 	 * Managership is governed by two mutexes - manager_arb and
@@ -2170,10 +2230,14 @@ static bool manage_workers(struct worker *worker)
 	 */
 	if (!mutex_trylock(&pool->manager_arb))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return false;
 =======
 		return ret;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return ret;
+>>>>>>> master
 
 	/*
 	 * With manager arbitration won, manager_mutex would be free in
@@ -2184,9 +2248,13 @@ static bool manage_workers(struct worker *worker)
 		mutex_lock(&pool->manager_mutex);
 		spin_lock_irq(&pool->lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		ret = true;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		ret = true;
+>>>>>>> master
 	}
 
 	pool->flags &= ~POOL_MANAGE_WORKERS;
@@ -2196,6 +2264,7 @@ static bool manage_workers(struct worker *worker)
 	 * on return.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	maybe_destroy_workers(pool);
 	maybe_create_worker(pool);
 
@@ -2203,13 +2272,18 @@ static bool manage_workers(struct worker *worker)
 	mutex_unlock(&pool->manager_arb);
 	return true;
 =======
+=======
+>>>>>>> master
 	ret |= maybe_destroy_workers(pool);
 	ret |= maybe_create_worker(pool);
 
 	mutex_unlock(&pool->manager_mutex);
 	mutex_unlock(&pool->manager_arb);
 	return ret;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /**
@@ -2328,6 +2402,7 @@ __acquires(&pool->lock)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * The following prevents a kworker from hogging CPU on !PREEMPT
 	 * kernels, where a requeueing work item waiting for something to
@@ -2339,6 +2414,8 @@ __acquires(&pool->lock)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	spin_lock_irq(&pool->lock);
 
 	/* clear cpu intensive status */
@@ -2489,9 +2566,12 @@ static int rescuer_thread(void *__rescuer)
 	struct workqueue_struct *wq = rescuer->rescue_wq;
 	struct list_head *scheduled = &rescuer->scheduled;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool should_stop;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	set_user_nice(current, RESCUER_NICE_LEVEL);
 
@@ -2504,6 +2584,7 @@ repeat:
 	set_current_state(TASK_INTERRUPTIBLE);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * By the time the rescuer is requested to stop, the workqueue
 	 * shouldn't have any work pending, but @wq->maydays may still have
@@ -2514,12 +2595,17 @@ repeat:
 	 */
 	should_stop = kthread_should_stop();
 =======
+=======
+>>>>>>> master
 	if (kthread_should_stop()) {
 		__set_current_state(TASK_RUNNING);
 		rescuer->task->flags &= ~PF_WQ_WORKER;
 		return 0;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* see whether any pwq is asking for help */
 	spin_lock_irq(&wq_mayday_lock);
@@ -2552,6 +2638,7 @@ repeat:
 
 		/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 * Put the reference grabbed by send_mayday().  @pool won't
 		 * go away while we're holding its lock.
 		 */
@@ -2560,6 +2647,8 @@ repeat:
 		/*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		 * Leave this pool.  If keep_working() is %true, notify a
 		 * regular worker; otherwise, we end up with 0 concurrency
 		 * and stalling the execution.
@@ -2575,6 +2664,7 @@ repeat:
 	spin_unlock_irq(&wq_mayday_lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (should_stop) {
 		__set_current_state(TASK_RUNNING);
 		rescuer->task->flags &= ~PF_WQ_WORKER;
@@ -2583,6 +2673,8 @@ repeat:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* rescuers should never participate in concurrency management */
 	WARN_ON_ONCE(!(rescuer->flags & WORKER_NOT_RUNNING));
 	schedule();
@@ -3018,6 +3110,7 @@ bool flush_work(struct work_struct *work)
 EXPORT_SYMBOL_GPL(flush_work);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct cwt_wait {
 	wait_queue_t		wait;
 	struct work_struct	*work;
@@ -3039,12 +3132,17 @@ static bool __cancel_work_timer(struct work_struct *work, bool is_dwork)
 static bool __cancel_work_timer(struct work_struct *work, bool is_dwork)
 {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static bool __cancel_work_timer(struct work_struct *work, bool is_dwork)
+{
+>>>>>>> master
 	unsigned long flags;
 	int ret;
 
 	do {
 		ret = try_to_grab_pending(work, is_dwork, &flags);
 		/*
+<<<<<<< HEAD
 <<<<<<< HEAD
 		 * If someone else is already canceling, wait for it to
 		 * finish.  flush_work() doesn't work for PREEMPT_NONE
@@ -3075,12 +3173,17 @@ static bool __cancel_work_timer(struct work_struct *work, bool is_dwork)
 			finish_wait(&cancel_waitq, &cwait.wait);
 		}
 =======
+=======
+>>>>>>> master
 		 * If someone else is canceling, wait for the same event it
 		 * would be waiting for before retrying.
 		 */
 		if (unlikely(ret == -ENOENT))
 			flush_work(work);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	} while (unlikely(ret < 0));
 
 	/* tell other tasks trying to grab @work to back off */
@@ -3089,6 +3192,7 @@ static bool __cancel_work_timer(struct work_struct *work, bool is_dwork)
 
 	flush_work(work);
 	clear_work_data(work);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	/*
@@ -3102,6 +3206,8 @@ static bool __cancel_work_timer(struct work_struct *work, bool is_dwork)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return ret;
 }
 
@@ -3543,10 +3649,14 @@ int workqueue_sysfs_register(struct workqueue_struct *wq)
 	 * workqueues.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (WARN_ON(wq->flags & __WQ_ORDERED_EXPLICIT))
 =======
 	if (WARN_ON(wq->flags & __WQ_ORDERED))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (WARN_ON(wq->flags & __WQ_ORDERED))
+>>>>>>> master
 		return -EINVAL;
 
 	wq->wq_dev = wq_dev = kzalloc(sizeof(*wq_dev), GFP_KERNEL);
@@ -3585,9 +3695,12 @@ int workqueue_sysfs_register(struct workqueue_struct *wq)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_set_uevent_suppress(&wq_dev->dev, false);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	kobject_uevent(&wq_dev->dev.kobj, KOBJ_ADD);
 	return 0;
 }
@@ -4115,6 +4228,7 @@ int apply_workqueue_attrs(struct workqueue_struct *wq,
 
 	/* creating multiple pwqs breaks ordering guarantee */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!list_empty(&wq->pwqs)) {
 		if (WARN_ON(wq->flags & __WQ_ORDERED_EXPLICIT))
 			return -EINVAL;
@@ -4125,6 +4239,10 @@ int apply_workqueue_attrs(struct workqueue_struct *wq,
 	if (WARN_ON((wq->flags & __WQ_ORDERED) && !list_empty(&wq->pwqs)))
 		return -EINVAL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (WARN_ON((wq->flags & __WQ_ORDERED) && !list_empty(&wq->pwqs)))
+		return -EINVAL;
+>>>>>>> master
 
 	pwq_tbl = kzalloc(wq_numa_tbl_len * sizeof(pwq_tbl[0]), GFP_KERNEL);
 	new_attrs = alloc_workqueue_attrs(GFP_KERNEL);
@@ -4291,11 +4409,15 @@ static void wq_update_unbound_numa(struct workqueue_struct *wq, int cpu,
 		pr_warning("workqueue: allocation failed while updating NUMA affinity of \"%s\"\n",
 			   wq->name);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mutex_lock(&wq->mutex);
 		goto use_dfl_pwq;
 =======
 		goto out_unlock;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		goto out_unlock;
+>>>>>>> master
 	}
 
 	/*
@@ -4322,10 +4444,14 @@ static int alloc_and_link_pwqs(struct workqueue_struct *wq)
 {
 	bool highpri = wq->flags & WQ_HIGHPRI;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int cpu, ret;
 =======
 	int cpu;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int cpu;
+>>>>>>> master
 
 	if (!(wq->flags & WQ_UNBOUND)) {
 		wq->cpu_pwqs = alloc_percpu(struct pool_workqueue);
@@ -4346,6 +4472,7 @@ static int alloc_and_link_pwqs(struct workqueue_struct *wq)
 		}
 		return 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (wq->flags & __WQ_ORDERED) {
 		ret = apply_workqueue_attrs(wq, ordered_wq_attrs[highpri]);
 		/* there should only be single pwq for ordering guarantee */
@@ -4355,6 +4482,8 @@ static int alloc_and_link_pwqs(struct workqueue_struct *wq)
 		return ret;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	} else {
 		return apply_workqueue_attrs(wq, unbound_std_wq_attrs[highpri]);
 	}
@@ -4384,6 +4513,7 @@ struct workqueue_struct *__alloc_workqueue_key(const char *fmt,
 	struct pool_workqueue *pwq;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * Unbound && max_active == 1 used to imply ordered, which is no
 	 * longer the case on NUMA machines due to per-node pools.  While
@@ -4400,6 +4530,8 @@ struct workqueue_struct *__alloc_workqueue_key(const char *fmt,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* allocate wq and format name */
 	if (flags & WQ_UNBOUND)
 		tbl_size = wq_numa_tbl_len * sizeof(wq->numa_pwq_tbl[0]);
@@ -4589,10 +4721,14 @@ void workqueue_set_max_active(struct workqueue_struct *wq, int max_active)
 
 	/* disallow meddling with max_active for ordered workqueues */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (WARN_ON(wq->flags & __WQ_ORDERED_EXPLICIT))
 =======
 	if (WARN_ON(wq->flags & __WQ_ORDERED))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (WARN_ON(wq->flags & __WQ_ORDERED))
+>>>>>>> master
 		return;
 
 	max_active = wq_clamp_max_active(max_active, wq->flags, wq->name);
@@ -4600,9 +4736,12 @@ void workqueue_set_max_active(struct workqueue_struct *wq, int max_active)
 	mutex_lock(&wq->mutex);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	wq->flags &= ~__WQ_ORDERED;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	wq->saved_max_active = max_active;
 
 	for_each_pwq(pwq, wq)
@@ -5228,10 +5367,14 @@ static void __init wq_numa_init(void)
 
 	for_each_node(node)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		BUG_ON(!zalloc_cpumask_var_node(&tbl[node], GFP_KERNEL,
 =======
 		BUG_ON(!alloc_cpumask_var_node(&tbl[node], GFP_KERNEL,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		BUG_ON(!alloc_cpumask_var_node(&tbl[node], GFP_KERNEL,
+>>>>>>> master
 				node_online(node) ? node : NUMA_NO_NODE));
 
 	for_each_possible_cpu(cpu) {
@@ -5296,16 +5439,21 @@ static int __init init_workqueues(void)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* create default unbound and ordered wq attrs */
 =======
 	/* create default unbound wq attrs */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	/* create default unbound wq attrs */
+>>>>>>> master
 	for (i = 0; i < NR_STD_WORKER_POOLS; i++) {
 		struct workqueue_attrs *attrs;
 
 		BUG_ON(!(attrs = alloc_workqueue_attrs(GFP_KERNEL)));
 		attrs->nice = std_nice[i];
 		unbound_std_wq_attrs[i] = attrs;
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 		/*
@@ -5319,6 +5467,8 @@ static int __init init_workqueues(void)
 		ordered_wq_attrs[i] = attrs;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	system_wq = alloc_workqueue("events", 0, 0);
@@ -5328,6 +5478,7 @@ static int __init init_workqueues(void)
 					    WQ_UNBOUND_MAX_ACTIVE);
 	system_freezable_wq = alloc_workqueue("events_freezable",
 					      WQ_FREEZABLE, 0);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	system_power_efficient_wq = alloc_workqueue("events_power_efficient",
 					      WQ_POWER_EFFICIENT, 0);
@@ -5342,6 +5493,10 @@ static int __init init_workqueues(void)
 	BUG_ON(!system_wq || !system_highpri_wq || !system_long_wq ||
 	       !system_unbound_wq || !system_freezable_wq);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	BUG_ON(!system_wq || !system_highpri_wq || !system_long_wq ||
+	       !system_unbound_wq || !system_freezable_wq);
+>>>>>>> master
 	return 0;
 }
 early_initcall(init_workqueues);

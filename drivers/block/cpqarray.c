@@ -1194,9 +1194,12 @@ out_passthru:
 
 		if (!arg) return -EINVAL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		memset(&pciinfo, 0, sizeof(pciinfo));
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		pciinfo.bus = host->pci_dev->bus->number;
 		pciinfo.dev_fn = host->pci_dev->devfn;
 		pciinfo.board_id = host->board_id;

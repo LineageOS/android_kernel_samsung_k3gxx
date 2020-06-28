@@ -17,11 +17,14 @@
 #define CLEAR_MNT_SHARED(m) ((m)->mnt.mnt_flags &= ~MNT_SHARED)
 #define IS_MNT_UNBINDABLE(m) ((m)->mnt.mnt_flags & MNT_UNBINDABLE)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define IS_MNT_MARKED(m) ((m)->mnt.mnt_flags & MNT_MARKED)
 #define SET_MNT_MARK(m) ((m)->mnt.mnt_flags |= MNT_MARKED)
 #define CLEAR_MNT_MARK(m) ((m)->mnt.mnt_flags &= ~MNT_MARKED)
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 #define CL_EXPIRE    		0x01
 #define CL_SLAVE     		0x02
@@ -43,9 +46,12 @@ int propagate_mnt(struct mount *, struct mountpoint *, struct mount *,
 int propagate_umount(struct list_head *);
 int propagate_mount_busy(struct mount *, int);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void propagate_remount(struct mount *);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 void mnt_release_group_id(struct mount *);
 int get_dominating_id(struct mount *mnt, const struct path *root);
 unsigned int mnt_get_count(struct mount *mnt);

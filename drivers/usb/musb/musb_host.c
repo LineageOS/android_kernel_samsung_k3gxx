@@ -582,6 +582,7 @@ musb_rx_reinit(struct musb *musb, struct musb_qh *qh, struct musb_hw_ep *ep)
 
 	/* scrub all previous state, clearing toggle */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	}
 	csr = musb_readw(ep->regs, MUSB_RXCSR);
 	if (csr & MUSB_RXCSR_RXPKTRDY)
@@ -590,6 +591,8 @@ musb_rx_reinit(struct musb *musb, struct musb_qh *qh, struct musb_hw_ep *ep)
 
 	musb_h_flush_rxfifo(ep, MUSB_RXCSR_CLRDATATOG);
 =======
+=======
+>>>>>>> master
 	} else {
 		csr = musb_readw(ep->regs, MUSB_RXCSR);
 		if (csr & MUSB_RXCSR_RXPKTRDY)
@@ -598,7 +601,10 @@ musb_rx_reinit(struct musb *musb, struct musb_qh *qh, struct musb_hw_ep *ep)
 
 		musb_h_flush_rxfifo(ep, MUSB_RXCSR_CLRDATATOG);
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* target addr and (for multipoint) hub addr/port */
 	if (musb->is_multipoint) {
@@ -959,6 +965,7 @@ static void musb_bulk_nak_timeout(struct musb *musb, struct musb_hw_ep *ep,
 		dma = is_dma_capable() ? ep->rx_channel : NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * Need to stop the transaction by clearing REQPKT first
 		 * then the NAK Timeout bit ref MUSBMHDRC USB 2.0 HIGH-SPEED
@@ -973,6 +980,11 @@ static void musb_bulk_nak_timeout(struct musb *musb, struct musb_hw_ep *ep,
 		rx_csr = musb_readw(epio, MUSB_RXCSR);
 		rx_csr |= MUSB_RXCSR_H_WZC_BITS;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		/* clear nak timeout bit */
+		rx_csr = musb_readw(epio, MUSB_RXCSR);
+		rx_csr |= MUSB_RXCSR_H_WZC_BITS;
+>>>>>>> master
 		rx_csr &= ~MUSB_RXCSR_DATAERROR;
 		musb_writew(epio, MUSB_RXCSR, rx_csr);
 

@@ -8046,12 +8046,17 @@ int saa7134_board_init2(struct saa7134_dev *dev)
 	} /* switch() */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* initialize tuner (don't do this when resuming) */
 	if (!dev->insuspend && TUNER_ABSENT != dev->tuner_type) {
 =======
 	/* initialize tuner */
 	if (TUNER_ABSENT != dev->tuner_type) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	/* initialize tuner */
+	if (TUNER_ABSENT != dev->tuner_type) {
+>>>>>>> master
 		int has_demod = (dev->tda9887_conf & TDA9887_PRESENT);
 
 		/* Note: radio tuner address is always filled in,

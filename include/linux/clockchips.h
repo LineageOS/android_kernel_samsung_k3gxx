@@ -31,9 +31,12 @@ enum clock_event_nofitiers {
 
 struct clock_event_device;
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct module;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 /* Clock event mode commands */
 enum clock_event_mode {
@@ -88,9 +91,12 @@ enum clock_event_mode {
  * @cpumask:		cpumask to indicate for which CPUs this device works
  * @list:		list head for the management code
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @owner:		module reference
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  */
 struct clock_event_device {
 	void			(*event_handler)(struct clock_event_device *);
@@ -121,9 +127,12 @@ struct clock_event_device {
 	const struct cpumask	*cpumask;
 	struct list_head	list;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct module		*owner;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 } ____cacheline_aligned;
 
 /*
@@ -163,9 +172,13 @@ extern void clockevents_exchange_device(struct clock_event_device *old,
 extern void clockevents_set_mode(struct clock_event_device *dev,
 				 enum clock_event_mode mode);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 extern int clockevents_register_notifier(struct notifier_block *nb);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+extern int clockevents_register_notifier(struct notifier_block *nb);
+>>>>>>> master
 extern int clockevents_program_event(struct clock_event_device *dev,
 				     ktime_t expires, bool force);
 

@@ -437,9 +437,13 @@ config CPU_32v5
 config CPU_32v6
 	bool
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	select CPU_USE_DOMAINS if CPU_V6 && MMU
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	select CPU_USE_DOMAINS if CPU_V6 && MMU
+>>>>>>> master
 	select TLS_REG_EMUL if !CPU_32v6K && !MMU
 
 config CPU_32v6K
@@ -665,10 +669,14 @@ config ARM_VIRT_EXT
 config SWP_EMULATE
 	bool "Emulate SWP/SWPB instructions"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on CPU_V7
 =======
 	depends on !CPU_USE_DOMAINS && CPU_V7
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	depends on !CPU_USE_DOMAINS && CPU_V7
+>>>>>>> master
 	default y if SMP
 	select HAVE_PROC_CPU if PROC_FS
 	help
@@ -797,9 +805,12 @@ config NEED_KUSER_HELPERS
 config KUSER_HELPERS
 	bool "Enable kuser helpers in vector page" if !NEED_KUSER_HELPERS
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on MMU
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	default y
 	help
 	  Warning: disabling this option may break user programs.
@@ -811,16 +822,20 @@ config KUSER_HELPERS
 	  run on ARMv4 through to ARMv7 without modification.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	  See Documentation/arm/kernel_user_helpers.txt for details.
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	  However, the fixed address nature of these helpers can be used
 	  by ROP (return orientated programming) authors when creating
 	  exploits.
 
 	  If all of the binaries and libraries which run on your platform
 	  are built specifically for your platform, and make no use of
+<<<<<<< HEAD
 <<<<<<< HEAD
 	  these helpers, then you can turn this option off to hinder
 	  such exploits. However, in that case, if a binary or library
@@ -831,6 +846,11 @@ config KUSER_HELPERS
 	  when such an binary or library is run, it will receive a SIGILL
 	  signal, which will terminate the program.
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	  these helpers, then you can turn this option off.  However,
+	  when such an binary or library is run, it will receive a SIGILL
+	  signal, which will terminate the program.
+>>>>>>> master
 
 	  Say N here only if you are absolutely certain that you do not
 	  need these helpers; otherwise, the safe option is to say Y.

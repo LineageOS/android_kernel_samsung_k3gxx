@@ -3927,6 +3927,7 @@ _scsih_setup_direct_io(struct MPT2SAS_ADAPTER *ioc, struct scsi_cmnd *scmd,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline bool ata_12_16_cmd(struct scsi_cmnd *scmd)
 {
 	return (scmd->cmnd[0] == ATA_12 || scmd->cmnd[0] == ATA_16);
@@ -3934,6 +3935,8 @@ static inline bool ata_12_16_cmd(struct scsi_cmnd *scmd)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /**
  * _scsih_qcmd - main scsi request entry point
  * @scmd: pointer to scsi command object
@@ -3957,6 +3960,7 @@ _scsih_qcmd_lck(struct scsi_cmnd *scmd, void (*done)(struct scsi_cmnd *))
 	u16 smid;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/**
 	* Lock the device for any subsequent command until
 	* command is done.
@@ -3966,6 +3970,8 @@ _scsih_qcmd_lck(struct scsi_cmnd *scmd, void (*done)(struct scsi_cmnd *))
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	scmd->scsi_done = done;
 	sas_device_priv_data = scmd->device->hostdata;
 	if (!sas_device_priv_data || !sas_device_priv_data->sas_target) {
@@ -4473,11 +4479,14 @@ _scsih_io_done(struct MPT2SAS_ADAPTER *ioc, u16 smid, u8 msix_index, u32 reply)
 		return 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ata_12_16_cmd(scmd))
 		scsi_internal_device_unblock(scmd->device, SDEV_RUNNING);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	mpi_request = mpt2sas_base_get_msg_frame(ioc, smid);
 
 	if (mpi_reply == NULL) {
@@ -8199,9 +8208,13 @@ _scsih_suspend(struct pci_dev *pdev, pm_message_t state)
 	mpt2sas_base_free_resources(ioc);
 	pci_save_state(pdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	pci_disable_device(pdev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	pci_disable_device(pdev);
+>>>>>>> master
 	pci_set_power_state(pdev, device_state);
 	return 0;
 }

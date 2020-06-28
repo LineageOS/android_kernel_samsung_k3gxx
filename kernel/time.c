@@ -196,12 +196,15 @@ SYSCALL_DEFINE2(settimeofday, struct timeval __user *, tv,
 		if (copy_from_user(&user_tv, tv, sizeof(*tv)))
 			return -EFAULT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		if (!timeval_valid(&user_tv))
 			return -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		new_ts.tv_sec = user_tv.tv_sec;
 		new_ts.tv_nsec = user_tv.tv_usec * NSEC_PER_USEC;
 	}
@@ -504,12 +507,15 @@ EXPORT_SYMBOL(usecs_to_jiffies);
  * resolution values don't fall on second boundries.  I.e. the line:
  * nsec -= nsec % TICK_NSEC; is NOT a correct resolution rounding.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Note that due to the small error in the multiplier here, this
  * rounding is incorrect for sufficiently large values of tv_nsec, but
  * well formed timespecs should have tv_nsec < NSEC_PER_SEC, so we're
  * OK.
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  *
  * Rather, we just shift the bits off the right.
  *
@@ -517,17 +523,23 @@ EXPORT_SYMBOL(usecs_to_jiffies);
  * value to a scaled second value.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static unsigned long
 __timespec_to_jiffies(unsigned long sec, long nsec)
 {
 	nsec = nsec + TICK_NSEC - 1;
 =======
+=======
+>>>>>>> master
 unsigned long
 timespec_to_jiffies(const struct timespec *value)
 {
 	unsigned long sec = value->tv_sec;
 	long nsec = value->tv_nsec + TICK_NSEC - 1;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (sec >= MAX_SEC_IN_JIFFIES){
 		sec = MAX_SEC_IN_JIFFIES;
@@ -539,6 +551,7 @@ timespec_to_jiffies(const struct timespec *value)
 
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 unsigned long
 timespec_to_jiffies(const struct timespec *value)
@@ -548,6 +561,8 @@ timespec_to_jiffies(const struct timespec *value)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 EXPORT_SYMBOL(timespec_to_jiffies);
 
 void
@@ -565,6 +580,7 @@ jiffies_to_timespec(const unsigned long jiffies, struct timespec *value)
 EXPORT_SYMBOL(jiffies_to_timespec);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * We could use a similar algorithm to timespec_to_jiffies (with a
  * different multiplier for usec instead of nsec). But this has a
@@ -581,6 +597,8 @@ EXPORT_SYMBOL(jiffies_to_timespec);
  * At the cost of one additional multiplication by a constant, just
  * use the timespec implementation.
 =======
+=======
+>>>>>>> master
 /* Same for "timeval"
  *
  * Well, almost.  The problem here is that the real system resolution is
@@ -592,15 +610,21 @@ EXPORT_SYMBOL(jiffies_to_timespec);
  * microsecond part.  Thus the USEC_ROUND, the bits to be shifted off.
  * Instruction wise, this should cost only an additional add with carry
  * instruction above the way it was done above.
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  */
 unsigned long
 timeval_to_jiffies(const struct timeval *value)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return __timespec_to_jiffies(value->tv_sec,
 				     value->tv_usec * NSEC_PER_USEC);
 =======
+=======
+>>>>>>> master
 	unsigned long sec = value->tv_sec;
 	long usec = value->tv_usec;
 
@@ -611,7 +635,10 @@ timeval_to_jiffies(const struct timeval *value)
 	return (((u64)sec * SEC_CONVERSION) +
 		(((u64)usec * USEC_CONVERSION + USEC_ROUND) >>
 		 (USEC_JIFFIE_SC - SEC_JIFFIE_SC))) >> SEC_JIFFIE_SC;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 EXPORT_SYMBOL(timeval_to_jiffies);
 

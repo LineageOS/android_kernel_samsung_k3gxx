@@ -112,6 +112,7 @@ bool ip6_frag_match(struct inet_frag_queue *q, void *a)
 		fq->user == arg->user &&
 		ipv6_addr_equal(&fq->saddr, arg->src) &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ipv6_addr_equal(&fq->daddr, arg->dst) &&
 		(arg->iif == fq->iif ||
 		 !(ipv6_addr_type(arg->dst) & (IPV6_ADDR_MULTICAST |
@@ -119,6 +120,9 @@ bool ip6_frag_match(struct inet_frag_queue *q, void *a)
 =======
 		ipv6_addr_equal(&fq->daddr, arg->dst);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		ipv6_addr_equal(&fq->daddr, arg->dst);
+>>>>>>> master
 }
 EXPORT_SYMBOL(ip6_frag_match);
 
@@ -188,10 +192,14 @@ static void ip6_frag_expire(unsigned long data)
 static __inline__ struct frag_queue *
 fq_find(struct net *net, __be32 id, const struct in6_addr *src,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct in6_addr *dst, int iif, u8 ecn)
 =======
 	const struct in6_addr *dst, u8 ecn)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	const struct in6_addr *dst, u8 ecn)
+>>>>>>> master
 {
 	struct inet_frag_queue *q;
 	struct ip6_create_arg arg;
@@ -202,9 +210,12 @@ fq_find(struct net *net, __be32 id, const struct in6_addr *src,
 	arg.src = src;
 	arg.dst = dst;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	arg.iif = iif;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	arg.ecn = ecn;
 
 	read_lock(&ip6_frags.lock);
@@ -506,9 +517,12 @@ static int ip6_frag_reasm(struct frag_queue *fq, struct sk_buff *prev,
 	ipv6_change_dsfield(ipv6_hdr(head), 0xff, ecn);
 	IP6CB(head)->nhoff = nhoff;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	IP6CB(head)->flags |= IP6SKB_FRAGMENTED;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* Yes, and fold redundant checksum back. 8) */
 	if (head->ip_summed == CHECKSUM_COMPLETE)
@@ -544,11 +558,14 @@ static int ipv6_frag_rcv(struct sk_buff *skb)
 	int evicted;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (IP6CB(skb)->flags & IP6SKB_FRAGMENTED)
 		goto fail_hdr;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	IP6_INC_STATS_BH(net, ip6_dst_idev(skb_dst(skb)), IPSTATS_MIB_REASMREQDS);
 
 	/* Jumbo payload inhibits frag. header */
@@ -570,6 +587,7 @@ static int ipv6_frag_rcv(struct sk_buff *skb)
 
 		IP6CB(skb)->nhoff = (u8 *)fhdr - skb_network_header(skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		IP6CB(skb)->flags |= IP6SKB_FRAGMENTED;
 		return 1;
 	}
@@ -582,6 +600,11 @@ static int ipv6_frag_rcv(struct sk_buff *skb)
 	}
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return 1;
+	}
+
+>>>>>>> master
 	evicted = inet_frag_evictor(&net->ipv6.frags, &ip6_frags, false);
 	if (evicted)
 		IP6_ADD_STATS_BH(net, ip6_dst_idev(skb_dst(skb)),
@@ -589,10 +612,14 @@ static int ipv6_frag_rcv(struct sk_buff *skb)
 
 	fq = fq_find(net, fhdr->identification, &hdr->saddr, &hdr->daddr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		     skb->dev ? skb->dev->ifindex : 0, ip6_frag_ecn(hdr));
 =======
 		     ip6_frag_ecn(hdr));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		     ip6_frag_ecn(hdr));
+>>>>>>> master
 	if (fq != NULL) {
 		int ret;
 
@@ -606,9 +633,12 @@ static int ipv6_frag_rcv(struct sk_buff *skb)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 fail_mem:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	IP6_INC_STATS_BH(net, ip6_dst_idev(skb_dst(skb)), IPSTATS_MIB_REASMFAILS);
 	kfree_skb(skb);
 	return -1;

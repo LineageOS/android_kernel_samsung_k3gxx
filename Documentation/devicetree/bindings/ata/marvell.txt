@@ -2,10 +2,14 @@
 
 Required Properties:
 <<<<<<< HEAD
+<<<<<<< HEAD
 - compatibility : "marvell,orion-sata" or "marvell,armada-370-sata"
 =======
 - compatibility : "marvell,orion-sata"
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+- compatibility : "marvell,orion-sata"
+>>>>>>> master
 - reg           : Address range of controller
 - interrupts    : Interrupt controller is using
 - nr-ports      : Number of SATA ports in use.

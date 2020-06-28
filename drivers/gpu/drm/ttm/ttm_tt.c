@@ -171,10 +171,14 @@ void ttm_tt_destroy(struct ttm_tt *ttm)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ttm->state == tt_unbound) {
 =======
 	if (likely(ttm->pages != NULL)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (likely(ttm->pages != NULL)) {
+>>>>>>> master
 		ttm->bdev->driver->ttm_tt_unpopulate(ttm);
 	}
 

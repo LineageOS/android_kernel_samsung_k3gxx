@@ -701,10 +701,14 @@ void lguest_arch_setup_regs(struct lg_cpu *cpu, unsigned long start)
 	 * running the Guest.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	regs->eflags = X86_EFLAGS_IF | X86_EFLAGS_FIXED;
 =======
 	regs->eflags = X86_EFLAGS_IF | X86_EFLAGS_BIT1;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	regs->eflags = X86_EFLAGS_IF | X86_EFLAGS_BIT1;
+>>>>>>> master
 
 	/*
 	 * The "Extended Instruction Pointer" register says where the Guest is

@@ -74,10 +74,14 @@ static inline int is_mounted(struct vfsmount *mnt)
 {
 	/* neither detached nor internal? */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return !IS_ERR_OR_NULL(real_mount(mnt)->mnt_ns);
 =======
 	return !IS_ERR_OR_NULL(real_mount(mnt));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return !IS_ERR_OR_NULL(real_mount(mnt));
+>>>>>>> master
 }
 
 extern struct mount *__lookup_mnt(struct vfsmount *, struct dentry *, int);

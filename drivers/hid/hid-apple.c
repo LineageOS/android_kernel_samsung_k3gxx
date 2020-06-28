@@ -47,6 +47,7 @@ MODULE_PARM_DESC(iso_layout, "Enable/Disable hardcoded ISO-layout of the keyboar
 		"(0 = disabled, [1] = enabled)");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static unsigned int swap_opt_cmd = 0;
 module_param(swap_opt_cmd, uint, 0644);
 MODULE_PARM_DESC(swap_opt_cmd, "Swap the Option (\"Alt\") and Command (\"Flag\") keys. "
@@ -55,6 +56,8 @@ MODULE_PARM_DESC(swap_opt_cmd, "Swap the Option (\"Alt\") and Command (\"Flag\")
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 struct apple_sc {
 	unsigned long quirks;
 	unsigned int fn_on;
@@ -160,6 +163,7 @@ static const struct apple_key_translation apple_iso_keyboard[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct apple_key_translation swapped_option_cmd_keys[] = {
 	{ KEY_LEFTALT,	KEY_LEFTMETA },
 	{ KEY_LEFTMETA,	KEY_LEFTALT },
@@ -170,6 +174,8 @@ static const struct apple_key_translation swapped_option_cmd_keys[] = {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static const struct apple_key_translation *apple_find_translation(
 		const struct apple_key_translation *table, u16 from)
 {
@@ -263,6 +269,7 @@ static int hidinput_apple_event(struct hid_device *hid, struct input_dev *input,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (swap_opt_cmd) {
 		trans = apple_find_translation(swapped_option_cmd_keys, usage->code);
 		if (trans) {
@@ -273,6 +280,8 @@ static int hidinput_apple_event(struct hid_device *hid, struct input_dev *input,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 }
 

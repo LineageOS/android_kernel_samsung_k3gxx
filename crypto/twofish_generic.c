@@ -212,8 +212,12 @@ module_exit(twofish_mod_fini);
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION ("Twofish Cipher Algorithm");
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("twofish");
 MODULE_ALIAS_CRYPTO("twofish-generic");
 =======
 MODULE_ALIAS("twofish");
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+MODULE_ALIAS("twofish");
+>>>>>>> master

@@ -1380,6 +1380,7 @@ static void __exit ifx_spi_exit(void)
 {
 	/* unregister */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spi_unregister_driver((void *)&ifx_spi_driver);
 	tty_unregister_driver(tty_drv);
 	put_tty_driver(tty_drv);
@@ -1388,6 +1389,11 @@ static void __exit ifx_spi_exit(void)
 	put_tty_driver(tty_drv);
 	spi_unregister_driver((void *)&ifx_spi_driver);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	tty_unregister_driver(tty_drv);
+	put_tty_driver(tty_drv);
+	spi_unregister_driver((void *)&ifx_spi_driver);
+>>>>>>> master
 	unregister_reboot_notifier(&ifx_modem_reboot_notifier_block);
 }
 

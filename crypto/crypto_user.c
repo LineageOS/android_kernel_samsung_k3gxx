@@ -362,10 +362,14 @@ static struct crypto_alg *crypto_user_aead_alg(const char *name, u32 type,
 		if (err != -EAGAIN)
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (fatal_signal_pending(current)) {
 =======
 		if (signal_pending(current)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (signal_pending(current)) {
+>>>>>>> master
 			err = -EINTR;
 			break;
 		}
@@ -482,9 +486,12 @@ static int crypto_user_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
 			return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		down_read(&crypto_alg_sem);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		list_for_each_entry(alg, &crypto_alg_list, cra_list)
 			dump_alloc += CRYPTO_REPORT_MAXSIZE;
 
@@ -495,6 +502,7 @@ static int crypto_user_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
 				.min_dump_alloc = dump_alloc,
 			};
 <<<<<<< HEAD
+<<<<<<< HEAD
 			err = netlink_dump_start(crypto_nlsk, skb, nlh, &c);
 		}
 		up_read(&crypto_alg_sem);
@@ -504,6 +512,10 @@ static int crypto_user_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
 			return netlink_dump_start(crypto_nlsk, skb, nlh, &c);
 		}
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			return netlink_dump_start(crypto_nlsk, skb, nlh, &c);
+		}
+>>>>>>> master
 	}
 
 	err = nlmsg_parse(nlh, crypto_msg_min[type], attrs, CRYPTOCFGA_MAX,

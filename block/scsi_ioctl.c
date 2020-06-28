@@ -176,11 +176,14 @@ static void blk_set_cmd_filter_defaults(struct blk_cmd_filter *filter)
 	__set_bit(WRITE_LONG, filter->write_ok);
 	__set_bit(WRITE_LONG_2, filter->write_ok);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__set_bit(WRITE_SAME, filter->write_ok);
 	__set_bit(WRITE_SAME_16, filter->write_ok);
 	__set_bit(WRITE_SAME_32, filter->write_ok);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	__set_bit(ERASE, filter->write_ok);
 	__set_bit(GPCMD_MODE_SELECT_10, filter->write_ok);
 	__set_bit(MODE_SELECT, filter->write_ok);
@@ -513,10 +516,14 @@ int sg_scsi_ioctl(struct request_queue *q, struct gendisk *disk, fmode_t mode,
 	if (bytes && blk_rq_map_kern(q, rq, buffer, bytes, __GFP_WAIT)) {
 		err = DRIVER_ERROR << 24;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto error;
 =======
 		goto out;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		goto out;
+>>>>>>> master
 	}
 
 	memset(sense, 0, sizeof(sense));
@@ -527,9 +534,13 @@ int sg_scsi_ioctl(struct request_queue *q, struct gendisk *disk, fmode_t mode,
 	blk_execute_rq(q, disk, rq, 0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 out:
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+out:
+>>>>>>> master
 	err = rq->errors & 0xff;	/* only 8 bit SCSI status */
 	if (err) {
 		if (rq->sense_len && rq->sense) {

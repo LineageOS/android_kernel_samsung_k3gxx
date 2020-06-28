@@ -58,11 +58,14 @@ static inline void syscall_get_arguments(struct task_struct *task,
 					 unsigned long *args)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (n == 0)
 		return;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (i + n > SYSCALL_MAX_ARGS) {
 		unsigned long *args_bad = args + SYSCALL_MAX_ARGS - i;
 		unsigned int n_bad = n + i - SYSCALL_MAX_ARGS;
@@ -88,11 +91,14 @@ static inline void syscall_set_arguments(struct task_struct *task,
 					 const unsigned long *args)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (n == 0)
 		return;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (i + n > SYSCALL_MAX_ARGS) {
 		pr_warning("%s called with max args %d, handling only %d\n",
 			   __func__, i + n, SYSCALL_MAX_ARGS);

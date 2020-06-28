@@ -399,10 +399,14 @@ static int xemaclite_send_data(struct net_local *drvdata, u8 *data,
  * Return:	Total number of bytes received
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static u16 xemaclite_recv_data(struct net_local *drvdata, u8 *data, int maxlen)
 =======
 static u16 xemaclite_recv_data(struct net_local *drvdata, u8 *data)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static u16 xemaclite_recv_data(struct net_local *drvdata, u8 *data)
+>>>>>>> master
 {
 	void __iomem *addr;
 	u16 length, proto_type;
@@ -443,10 +447,14 @@ static u16 xemaclite_recv_data(struct net_local *drvdata, u8 *data)
 	/* Check if received ethernet frame is a raw ethernet frame
 	 * or an IP packet or an ARP packet */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (proto_type > ETH_DATA_LEN) {
 =======
 	if (proto_type > (ETH_FRAME_LEN + ETH_FCS_LEN)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (proto_type > (ETH_FRAME_LEN + ETH_FCS_LEN)) {
+>>>>>>> master
 
 		if (proto_type == ETH_P_IP) {
 			length = ((ntohl(in_be32(addr +
@@ -455,9 +463,12 @@ static u16 xemaclite_recv_data(struct net_local *drvdata, u8 *data)
 					XEL_HEADER_SHIFT) &
 					XEL_RPLR_LENGTH_MASK);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			length = min_t(u16, length, ETH_DATA_LEN);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			length += ETH_HLEN + ETH_FCS_LEN;
 
 		} else if (proto_type == ETH_P_ARP)
@@ -471,11 +482,14 @@ static u16 xemaclite_recv_data(struct net_local *drvdata, u8 *data)
 		length = proto_type + ETH_HLEN + ETH_FCS_LEN;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (WARN_ON(length > maxlen))
 		length = maxlen;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Read from the EmacLite device */
 	xemaclite_aligned_read((u32 __force *) (addr + XEL_RXBUFF_OFFSET),
 				data, length);
@@ -651,10 +665,14 @@ static void xemaclite_rx_handler(struct net_device *dev)
 	skb_reserve(skb, 2);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	len = xemaclite_recv_data(lp, (u8 *) skb->data, len);
 =======
 	len = xemaclite_recv_data(lp, (u8 *) skb->data);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	len = xemaclite_recv_data(lp, (u8 *) skb->data);
+>>>>>>> master
 
 	if (!len) {
 		dev->stats.rx_errors++;

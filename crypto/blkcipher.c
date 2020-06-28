@@ -491,9 +491,12 @@ static int crypto_init_blkcipher_ops_async(struct crypto_tfm *tfm)
 	crt->base = __crypto_ablkcipher_cast(tfm);
 	crt->ivsize = alg->ivsize;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	crt->has_setkey = alg->max_keysize;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return 0;
 }

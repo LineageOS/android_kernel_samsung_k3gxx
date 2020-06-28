@@ -1341,15 +1341,21 @@ static int x25_recvmsg(struct kiocb *iocb, struct socket *sock,
 		sx25->sx25_family = AF_X25;
 		sx25->sx25_addr   = x25->dest_addr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		msg->msg_namelen = sizeof(*sx25);
 	}
 
 =======
+=======
+>>>>>>> master
 	}
 
 	msg->msg_namelen = sizeof(struct sockaddr_x25);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	x25_check_rbuf(sk);
 	rc = copied;
 out_free_dgram:

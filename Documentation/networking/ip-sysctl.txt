@@ -498,6 +498,7 @@ tcp_timestamps - BOOLEAN
 	Enable timestamps as defined in RFC1323.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 tcp_min_tso_segs - INTEGER
 	Minimal number of segments per TSO frame.
 	Since linux-3.12, TCP does an automatic sizing of TSO frames,
@@ -509,6 +510,8 @@ tcp_min_tso_segs - INTEGER
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 tcp_tso_win_divisor - INTEGER
 	This allows control over what percentage of the congestion window
 	can be consumed by a single TSO frame.
@@ -594,11 +597,17 @@ tcp_limit_output_bytes - INTEGER
 	tcp_limit_output_bytes limits the number of bytes on qdisc
 	or device to reduce artificial RTT/cwnd and reduce bufferbloat.
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	Note: For GSO/TSO enabled flows, we try to have at least two
 	packets in flight. Reducing tcp_limit_output_bytes might also
 	reduce the size of individual GSO packet (64KB being the max)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	Note: For GSO/TSO enabled flows, we try to have at least two
+	packets in flight. Reducing tcp_limit_output_bytes might also
+	reduce the size of individual GSO packet (64KB being the max)
+>>>>>>> master
 	Default: 131072
 
 tcp_challenge_ack_limit - INTEGER

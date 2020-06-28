@@ -818,10 +818,15 @@ void aer_isr(struct work_struct *work)
 		aer_isr_one_error(p_device, &e_src);
 	mutex_unlock(&rpc->rpc_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	wake_up(&rpc->wait_release);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	wake_up(&rpc->wait_release);
+>>>>>>> master
 }
 
 /**

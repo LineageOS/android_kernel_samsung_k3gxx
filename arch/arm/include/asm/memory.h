@@ -99,22 +99,32 @@
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifndef PHYS_OFFSET
 #define PHYS_OFFSET 		UL(CONFIG_DRAM_BASE)
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #ifndef END_MEM
 #define END_MEM     		(UL(CONFIG_DRAM_BASE) + CONFIG_DRAM_SIZE)
 #endif
 
 #ifndef PAGE_OFFSET
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define PAGE_OFFSET		PLAT_PHYS_OFFSET
 =======
 #define PAGE_OFFSET		(PHYS_OFFSET)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define PAGE_OFFSET		(PHYS_OFFSET)
+>>>>>>> master
 #endif
 
 /*
@@ -122,10 +132,14 @@
  */
 #define MODULES_END		(END_MEM)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MODULES_VADDR		PAGE_OFFSET
 =======
 #define MODULES_VADDR		(PHYS_OFFSET)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define MODULES_VADDR		(PHYS_OFFSET)
+>>>>>>> master
 
 #define XIP_VIRT_ADDR(physaddr)  (physaddr)
 
@@ -153,6 +167,7 @@
 #define phys_to_page(phys)	(pfn_to_page(__phys_to_pfn(phys)))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * PLAT_PHYS_OFFSET is the offset (from zero) of the start of physical
  * memory.  This is used for XIP and NoMMU kernels, or by kernels which
@@ -165,6 +180,8 @@
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #ifndef __ASSEMBLY__
 
 /*
@@ -208,6 +225,7 @@ static inline unsigned long __phys_to_virt(unsigned long x)
 }
 #else
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 #define PHYS_OFFSET	PLAT_PHYS_OFFSET
 
@@ -218,6 +236,8 @@ static inline unsigned long __phys_to_virt(unsigned long x)
 #endif
 
 =======
+=======
+>>>>>>> master
 #define __virt_to_phys(x)	((x) - PAGE_OFFSET + PHYS_OFFSET)
 #define __phys_to_virt(x)	((x) - PHYS_OFFSET + PAGE_OFFSET)
 #endif
@@ -234,7 +254,10 @@ static inline unsigned long __phys_to_virt(unsigned long x)
 
 #ifndef __ASSEMBLY__
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  * PFNs are used to describe any physical page; this means
  * PFN 0 == physical address 0.
@@ -244,10 +267,14 @@ static inline unsigned long __phys_to_virt(unsigned long x)
  * of RAM in the mem_map as well.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define PHYS_PFN_OFFSET	((unsigned long)(PHYS_OFFSET >> PAGE_SHIFT))
 =======
 #define PHYS_PFN_OFFSET	(PHYS_OFFSET >> PAGE_SHIFT)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define PHYS_PFN_OFFSET	(PHYS_OFFSET >> PAGE_SHIFT)
+>>>>>>> master
 
 /*
  * These are *only* valid on the kernel direct mapped RAM memory.
@@ -316,11 +343,15 @@ static inline __deprecated void *bus_to_virt(unsigned long x)
 
 #define virt_to_page(kaddr)	pfn_to_page(__pa(kaddr) >> PAGE_SHIFT)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define virt_addr_valid(kaddr)	(((unsigned long)(kaddr) >= PAGE_OFFSET && (unsigned long)(kaddr) < (unsigned long)high_memory) \
 					&& pfn_valid(__pa(kaddr) >> PAGE_SHIFT) )
 =======
 #define virt_addr_valid(kaddr)	((unsigned long)(kaddr) >= PAGE_OFFSET && (unsigned long)(kaddr) < (unsigned long)high_memory)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define virt_addr_valid(kaddr)	((unsigned long)(kaddr) >= PAGE_OFFSET && (unsigned long)(kaddr) < (unsigned long)high_memory)
+>>>>>>> master
 
 #endif
 

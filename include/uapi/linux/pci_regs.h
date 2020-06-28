@@ -614,9 +614,13 @@
 #define PCI_ERR_UNCOR_STATUS	4	/* Uncorrectable Error Status */
 #define  PCI_ERR_UNC_TRAIN	0x00000001	/* Training */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define  PCI_ERR_UNC_DLP	0x00000010	/* Data Link Protocol */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define  PCI_ERR_UNC_DLP	0x00000010	/* Data Link Protocol */
+>>>>>>> master
 #define  PCI_ERR_UNC_SURPDN	0x00000020	/* Surprise Down */
 #define  PCI_ERR_UNC_POISON_TLP	0x00001000	/* Poisoned TLP */
 #define  PCI_ERR_UNC_FCP	0x00002000	/* Flow Control Protocol */

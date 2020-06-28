@@ -32,9 +32,12 @@ enum {
 	NFS_DELEGATION_REFERENCED,
 	NFS_DELEGATION_RETURNING,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	NFS_DELEGATION_REVOKED,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 
 int nfs_inode_set_delegation(struct inode *inode, struct rpc_cred *cred, struct nfs_openres *res);

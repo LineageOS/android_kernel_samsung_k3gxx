@@ -206,9 +206,13 @@ static int snd_usb_create_stream(struct snd_usb_audio *chip, int ctrlif, int int
 		usb_set_interface(dev, interface, 0); /* reset the current interface */
 		usb_driver_claim_interface(&usb_audio_driver, iface, (void *)-1L);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		return -EINVAL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return -EINVAL;
+>>>>>>> master
 	}
 
 	return 0;

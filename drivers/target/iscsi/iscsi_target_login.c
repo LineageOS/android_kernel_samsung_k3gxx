@@ -85,9 +85,12 @@ static struct iscsi_login *iscsi_login_init_conn(struct iscsi_conn *conn)
 	init_completion(&conn->rx_half_close_comp);
 	init_completion(&conn->tx_half_close_comp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	init_completion(&conn->rx_login_comp);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	spin_lock_init(&conn->cmd_lock);
 	spin_lock_init(&conn->conn_usage_lock);
 	spin_lock_init(&conn->immed_queue_lock);
@@ -255,6 +258,7 @@ static void iscsi_login_set_conn_values(
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static __printf(2, 3) int iscsi_change_param_sprintf(
 	struct iscsi_conn *conn,
 	const char *fmt, ...)
@@ -279,6 +283,8 @@ static __printf(2, 3) int iscsi_change_param_sprintf(
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  *	This is the leading connection of a new session,
  *	or session reinstatement.
@@ -369,9 +375,13 @@ static int iscsi_login_zero_tsih_s2(
 	struct iscsi_node_attrib *na;
 	struct iscsi_session *sess = conn->sess;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned char buf[32];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned char buf[32];
+>>>>>>> master
 	bool iser = false;
 
 	sess->tpg = conn->tpg;
@@ -413,9 +423,12 @@ static int iscsi_login_zero_tsih_s2(
 	 * In our case, we have already located the struct iscsi_tiqn at this point.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (iscsi_change_param_sprintf(conn, "TargetPortalGroupTag=%hu", sess->tpg->tpgt))
 		return -1;
 =======
+=======
+>>>>>>> master
 	memset(buf, 0, 32);
 	sprintf(buf, "TargetPortalGroupTag=%hu", ISCSI_TPG_S(sess)->tpgt);
 	if (iscsi_change_param_value(buf, conn->param_list, 0) < 0) {
@@ -423,7 +436,10 @@ static int iscsi_login_zero_tsih_s2(
 				ISCSI_LOGIN_STATUS_NO_RESOURCES);
 		return -1;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/*
 	 * Workaround for Initiators that have broken connection recovery logic.
@@ -431,9 +447,12 @@ static int iscsi_login_zero_tsih_s2(
 	 * "We would really like to get rid of this." Linux-iSCSI.org team
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (iscsi_change_param_sprintf(conn, "ErrorRecoveryLevel=%d", na->default_erl))
 		return -1;
 =======
+=======
+>>>>>>> master
 	memset(buf, 0, 32);
 	sprintf(buf, "ErrorRecoveryLevel=%d", na->default_erl);
 	if (iscsi_change_param_value(buf, conn->param_list, 0) < 0) {
@@ -441,7 +460,10 @@ static int iscsi_login_zero_tsih_s2(
 				ISCSI_LOGIN_STATUS_NO_RESOURCES);
 		return -1;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (iscsi_login_disable_FIM_keys(conn->param_list, conn) < 0)
 		return -1;
@@ -454,17 +476,23 @@ static int iscsi_login_zero_tsih_s2(
 		int rc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (iscsi_change_param_sprintf(conn, "RDMAExtensions=Yes"))
 			return -1;
 
 =======
+=======
+>>>>>>> master
 		sprintf(buf, "RDMAExtensions=Yes");
 		if (iscsi_change_param_value(buf, conn->param_list, 0) < 0) {
 			iscsit_tx_login_rsp(conn, ISCSI_STATUS_CLS_TARGET_ERR,
 				ISCSI_LOGIN_STATUS_NO_RESOURCES);
 			return -1;
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		/*
 		 * Make MaxRecvDataSegmentLength PAGE_SIZE aligned for
 		 * Immediate Data + Unsolicitied Data-OUT if necessary..
@@ -495,16 +523,22 @@ static int iscsi_login_zero_tsih_s2(
 			" to PAGE_SIZE\n", mrdsl);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (iscsi_change_param_sprintf(conn, "MaxRecvDataSegmentLength=%lu\n", mrdsl))
 			return -1;
 =======
+=======
+>>>>>>> master
 		sprintf(buf, "MaxRecvDataSegmentLength=%lu\n", mrdsl);
 		if (iscsi_change_param_value(buf, conn->param_list, 0) < 0) {
 			iscsit_tx_login_rsp(conn, ISCSI_STATUS_CLS_TARGET_ERR,
 				ISCSI_LOGIN_STATUS_NO_RESOURCES);
 			return -1;
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	return 0;
@@ -647,9 +681,12 @@ static int iscsi_login_non_zero_tsih_s2(
 	 * In our case, we have already located the struct iscsi_tiqn at this point.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (iscsi_change_param_sprintf(conn, "TargetPortalGroupTag=%hu", sess->tpg->tpgt))
 		return -1;
 =======
+=======
+>>>>>>> master
 	memset(buf, 0, 32);
 	sprintf(buf, "TargetPortalGroupTag=%hu", ISCSI_TPG_S(sess)->tpgt);
 	if (iscsi_change_param_value(buf, conn->param_list, 0) < 0) {
@@ -657,7 +694,10 @@ static int iscsi_login_non_zero_tsih_s2(
 				ISCSI_LOGIN_STATUS_NO_RESOURCES);
 		return -1;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return iscsi_login_disable_FIM_keys(conn->param_list, conn);
 }
@@ -743,6 +783,7 @@ static void iscsi_post_login_start_timers(struct iscsi_conn *conn)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int iscsit_start_kthreads(struct iscsi_conn *conn)
 {
 	int ret = 0;
@@ -793,6 +834,9 @@ void iscsi_post_login_handler(
 =======
 static int iscsi_post_login_handler(
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int iscsi_post_login_handler(
+>>>>>>> master
 	struct iscsi_np *np,
 	struct iscsi_conn *conn,
 	u8 zero_tsih)
@@ -803,9 +847,13 @@ static int iscsi_post_login_handler(
 	struct iscsi_portal_group *tpg = ISCSI_TPG_S(sess);
 	struct se_portal_group *se_tpg = &tpg->tpg_se_tpg;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct iscsi_thread_set *ts;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct iscsi_thread_set *ts;
+>>>>>>> master
 
 	iscsit_inc_conn_usage_count(conn);
 
@@ -821,9 +869,13 @@ static int iscsi_post_login_handler(
 	 * SCSI Initiator -> SCSI Target Port Mapping
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ts = iscsi_get_thread_set();
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ts = iscsi_get_thread_set();
+>>>>>>> master
 	if (!zero_tsih) {
 		iscsi_set_session_parameters(sess->sess_ops,
 				conn->param_list, 0);
@@ -852,10 +904,15 @@ static int iscsi_post_login_handler(
 
 		iscsi_post_login_start_timers(conn);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 		iscsi_activate_thread_set(conn, ts);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+		iscsi_activate_thread_set(conn, ts);
+>>>>>>> master
 		/*
 		 * Determine CPU mask to ensure connection's RX and TX kthreads
 		 * are scheduled on the same CPU.
@@ -863,6 +920,7 @@ static int iscsi_post_login_handler(
 		iscsit_thread_get_cpumask(conn);
 		conn->conn_rx_reset_cpumask = 1;
 		conn->conn_tx_reset_cpumask = 1;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		/*
 		 * Wakeup the sleeping iscsi_target_rx_thread() now that
@@ -875,6 +933,10 @@ static int iscsi_post_login_handler(
 
 		iscsit_dec_conn_usage_count(conn);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+		iscsit_dec_conn_usage_count(conn);
+>>>>>>> master
 		if (stop_timer) {
 			spin_lock_bh(&se_tpg->session_lock);
 			iscsit_stop_time2retain_timer(sess);
@@ -882,10 +944,14 @@ static int iscsi_post_login_handler(
 		}
 		iscsit_dec_session_usage_count(sess);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return;
 =======
 		return 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return 0;
+>>>>>>> master
 	}
 
 	iscsi_set_session_parameters(sess->sess_ops, conn->param_list, 1);
@@ -928,9 +994,13 @@ static int iscsi_post_login_handler(
 
 	iscsi_post_login_start_timers(conn);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	iscsi_activate_thread_set(conn, ts);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	iscsi_activate_thread_set(conn, ts);
+>>>>>>> master
 	/*
 	 * Determine CPU mask to ensure connection's RX and TX kthreads
 	 * are scheduled on the same CPU.
@@ -939,6 +1009,7 @@ static int iscsi_post_login_handler(
 	conn->conn_rx_reset_cpumask = 1;
 	conn->conn_tx_reset_cpumask = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * Wakeup the sleeping iscsi_target_rx_thread() now that
 	 * iscsi_conn is in TARG_CONN_STATE_LOGGED_IN state.
@@ -946,11 +1017,16 @@ static int iscsi_post_login_handler(
 	complete(&conn->rx_login_comp);
 	iscsit_dec_conn_usage_count(conn);
 =======
+=======
+>>>>>>> master
 
 	iscsit_dec_conn_usage_count(conn);
 
 	return 0;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static void iscsi_handle_login_thread_timeout(unsigned long data)
@@ -1128,9 +1204,12 @@ int iscsi_target_setup_login_socket(
 
 	np->np_transport = t;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	np->enabled = true;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 }
 
@@ -1311,19 +1390,25 @@ static int __iscsi_target_login_thread(struct iscsi_np *np)
 			spin_unlock_bh(&np->np_thread_lock);
 			complete(&np->np_restart_comp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			iscsit_put_transport(conn->conn_transport);
 			kfree(conn);
 			conn = NULL;
 			if (ret == -ENODEV)
 				goto out;
 =======
+=======
+>>>>>>> master
 			if (ret == -ENODEV) {
 				iscsit_put_transport(conn->conn_transport);
 				kfree(conn);
 				conn = NULL;
 				goto out;
 			}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			/* Get another socket */
 			return 1;
 		}
@@ -1439,10 +1524,13 @@ static int __iscsi_target_login_thread(struct iscsi_np *np)
 		goto new_sess_out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	iscsi_stop_login_thread_timer(np);
 
 	iscsi_post_login_handler(np, conn, zero_tsih);
 =======
+=======
+>>>>>>> master
 	if (!conn->sess) {
 		pr_err("struct iscsi_conn session pointer is NULL!\n");
 		goto new_sess_out;
@@ -1457,7 +1545,10 @@ static int __iscsi_target_login_thread(struct iscsi_np *np)
 
 	if (ret < 0)
 		goto new_sess_out;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	iscsit_deaccess_np(np, tpg);
 	tpg = NULL;
@@ -1523,11 +1614,14 @@ old_sess_out:
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (conn->conn_transport->iscsit_wait_conn)
 		conn->conn_transport->iscsit_wait_conn(conn);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (conn->conn_transport->iscsit_free_conn)
 		conn->conn_transport->iscsit_free_conn(conn);
 

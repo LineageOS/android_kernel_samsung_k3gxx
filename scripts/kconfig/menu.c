@@ -526,10 +526,14 @@ static void get_prompt_str(struct gstr *r, struct property *prop,
 	int i, j;
 	struct menu *submenu[8], *menu, *location = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct jump_key *jump = NULL;
 =======
 	struct jump_key *jump;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct jump_key *jump;
+>>>>>>> master
 
 	str_printf(r, _("Prompt: %s\n"), _(prop->text));
 	menu = prop->menu->parent;
@@ -568,10 +572,14 @@ static void get_prompt_str(struct gstr *r, struct property *prop,
 		for (j = 4; --i >= 0; j += 2) {
 			menu = submenu[i];
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (jump && menu == location)
 =======
 			if (head && location && menu == location)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			if (head && location && menu == location)
+>>>>>>> master
 				jump->offset = r->len - 1;
 			str_printf(r, "%*c-> %s", j, ' ',
 				   _(menu_get_prompt(menu)));

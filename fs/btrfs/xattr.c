@@ -28,9 +28,12 @@
 #include "xattr.h"
 #include "disk-io.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "locking.h"
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 
 ssize_t __btrfs_getxattr(struct inode *inode, const char *name,
@@ -94,10 +97,14 @@ static int do_setxattr(struct btrfs_trans_handle *trans,
 		       const void *value, size_t size, int flags)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct btrfs_dir_item *di = NULL;
 =======
 	struct btrfs_dir_item *di;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct btrfs_dir_item *di;
+>>>>>>> master
 	struct btrfs_root *root = BTRFS_I(inode)->root;
 	struct btrfs_path *path;
 	size_t name_len = strlen(name);
@@ -109,6 +116,7 @@ static int do_setxattr(struct btrfs_trans_handle *trans,
 	path = btrfs_alloc_path();
 	if (!path)
 		return -ENOMEM;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	path->skip_release_on_error = 1;
 
@@ -233,6 +241,8 @@ static int do_setxattr(struct btrfs_trans_handle *trans,
 		 * filled it.
 		 */
 =======
+=======
+>>>>>>> master
 
 	if (flags & XATTR_REPLACE) {
 		di = btrfs_lookup_xattr(trans, root, path, btrfs_ino(inode), name,
@@ -311,7 +321,10 @@ again:
 			btrfs_release_path(path);
 			goto again;
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 out:
 	btrfs_free_path(path);

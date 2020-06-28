@@ -779,12 +779,17 @@ static int callforward_do_filter(const union nf_inet_addr *src,
 			if (!afinfo->route(&init_net, (struct dst_entry **)&rt2,
 					   flowi6_to_flowi(&fl2), false)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if (ipv6_addr_equal(rt6_nexthop(rt1),
 						    rt6_nexthop(rt2)) &&
 =======
 				if (!memcmp(&rt1->rt6i_gateway, &rt2->rt6i_gateway,
 					    sizeof(rt1->rt6i_gateway)) &&
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				if (!memcmp(&rt1->rt6i_gateway, &rt2->rt6i_gateway,
+					    sizeof(rt1->rt6i_gateway)) &&
+>>>>>>> master
 				    rt1->dst.dev == rt2->dst.dev)
 					ret = 1;
 				dst_release(&rt2->dst);

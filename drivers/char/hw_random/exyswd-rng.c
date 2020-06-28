@@ -27,6 +27,7 @@
 #define HWRNG_RET_INVALID_FLAG_ERROR	3
 #define HWRNG_RET_TEST_ERROR		4
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define HWRNG_RET_START_UP_TEST_DONE	5
 
 #define EXYRNG_MAX_FAILURES		25
@@ -34,20 +35,29 @@
 #define EXYRNG_RETRY_MAX_COUNT		1000
 #define EXYRNG_START_UP_TEST_MAX_RETRY	2
 =======
+=======
+>>>>>>> master
 
 #define EXYRNG_MAX_FAILURES		25
 #define EXYRNG_START_UP_SIZE		4096
 #define EXYRNG_RETRY_MAX_COUNT		1000
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 uint32_t hwrng_read_flag;
 static struct hwrng rng;
 
 spinlock_t hwrandom_lock;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static size_t test_failures;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static size_t test_failures;
+>>>>>>> master
 #if defined(CONFIG_EXYRNG_FAIL_POLICY_DISABLE)
 static int hwrng_disabled;
 #endif
@@ -79,6 +89,7 @@ static int exynos_swd_startup_test(void)
 	uint32_t start_up_size;
 	uint32_t retry_cnt;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint32_t test_cnt;
 	int ret = HWRNG_RET_OK;
 
@@ -87,16 +98,22 @@ static int exynos_swd_startup_test(void)
 	retry_cnt = 0;
 	test_cnt = 1;
 =======
+=======
+>>>>>>> master
 	int ret = 0;
 
 	start_up_size = EXYRNG_START_UP_SIZE;
 	retry_cnt = 0;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	while (start_up_size) {
 		ret = exynos_smc(SMC_CMD_RANDOM, HWRNG_GET_DATA, 1, 0);
 		if (ret == HWRNG_RET_RETRY_ERROR) {
 			if (retry_cnt++ > EXYRNG_RETRY_MAX_COUNT) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 				printk("[ExyRNG] exceed retry in start-up test\n");
 				break;
@@ -104,12 +121,17 @@ static int exynos_swd_startup_test(void)
 				printk("[ExyRNG] exceed retry in test\n");
 				return -EFAULT;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				printk("[ExyRNG] exceed retry in test\n");
+				return -EFAULT;
+>>>>>>> master
 			}
 			usleep_range(50, 100);
 			continue;
 		}
 
 		if (ret == HWRNG_RET_TEST_ERROR) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 #ifndef CONFIG_EXYRNG_USE_CRYPTOMANAGER
 			if (test_cnt < EXYRNG_START_UP_TEST_MAX_RETRY) {
@@ -123,10 +145,13 @@ static int exynos_swd_startup_test(void)
 #endif
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			exynos_swd_test_fail();
 			return -EFAULT;
 		}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		/* start-up test is performed already */
 		if (ret == HWRNG_RET_START_UP_TEST_DONE) {
@@ -150,6 +175,8 @@ static int exynos_swd_startup_test(void)
 
 	return ret;
 =======
+=======
+>>>>>>> master
 		if (ret != HWRNG_RET_OK) {
 			return -EFAULT;
 			exyrng_debug("[ExyRNG] failed to get random\n");
@@ -160,7 +187,10 @@ static int exynos_swd_startup_test(void)
 	}
 
 	return 0;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static int exynos_swd_read(struct hwrng *rng, void *data, size_t max, bool wait)
@@ -171,10 +201,14 @@ static int exynos_swd_read(struct hwrng *rng, void *data, size_t max, bool wait)
 	unsigned long flag;
 	uint32_t retry_cnt;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret = HWRNG_RET_OK;
 =======
 	int32_t ret;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int32_t ret;
+>>>>>>> master
 
 	register u32 reg0 __asm__("r0");
 	register u32 reg1 __asm__("r1");
@@ -191,6 +225,7 @@ static int exynos_swd_read(struct hwrng *rng, void *data, size_t max, bool wait)
 	reg2 = 0;
 	reg3 = 0;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	retry_cnt = 0;
 	do {
@@ -218,6 +253,8 @@ static int exynos_swd_read(struct hwrng *rng, void *data, size_t max, bool wait)
 		return -EFAULT;
 	}
 =======
+=======
+>>>>>>> master
 	spin_lock_irqsave(&hwrandom_lock, flag);
 	ret = exynos_smc(SMC_CMD_RANDOM, HWRNG_INIT, 0, 0);
 	if (ret != HWRNG_RET_OK) {
@@ -227,7 +264,10 @@ static int exynos_swd_read(struct hwrng *rng, void *data, size_t max, bool wait)
 	}
 	hwrng_read_flag = 1;
 	spin_unlock_irqrestore(&hwrandom_lock, flag);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (start_up_test) {
 		ret = exynos_swd_startup_test();
@@ -236,10 +276,14 @@ static int exynos_swd_read(struct hwrng *rng, void *data, size_t max, bool wait)
 
 		start_up_test = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		printk("[ExyRNG] passed the start-up test\n");
 =======
 		exyrng_debug("[ExyRNG] passed the start-up test\n");
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		exyrng_debug("[ExyRNG] passed the start-up test\n");
+>>>>>>> master
 	}
 
 	retry_cnt = 0;
@@ -251,16 +295,22 @@ static int exynos_swd_read(struct hwrng *rng, void *data, size_t max, bool wait)
 			: "+r"(reg0), "+r"(reg1), "+r"(reg2), "+r"(reg3)
 		);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		r_data[0] = (uint32_t)reg2;
 		r_data[1] = (uint32_t)reg3;
 =======
 		r_data[0] = reg2;
 		r_data[1] = reg3;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		r_data[0] = reg2;
+		r_data[1] = reg3;
+>>>>>>> master
 		spin_unlock_irqrestore(&hwrandom_lock, flag);
 
 		if (ret == HWRNG_RET_RETRY_ERROR) {
 			if (retry_cnt++ > EXYRNG_RETRY_MAX_COUNT) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 				ret = -EFAULT;
 				printk("[ExyRNG] exceed retry in read\n");
@@ -268,6 +318,10 @@ static int exynos_swd_read(struct hwrng *rng, void *data, size_t max, bool wait)
 				printk("[ExyRNG] exceed retry in read\n");
 				ret = -EFAULT;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				printk("[ExyRNG] exceed retry in read\n");
+				ret = -EFAULT;
+>>>>>>> master
 				goto out;
 			}
 			usleep_range(50, 100);
@@ -276,7 +330,10 @@ static int exynos_swd_read(struct hwrng *rng, void *data, size_t max, bool wait)
 
 		if (ret == HWRNG_RET_TEST_ERROR) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 			if (++test_failures > EXYRNG_MAX_FAILURES) {
 #if defined(CONFIG_EXYRNG_FIPS_COMPLIANCE)
 				exynos_swd_test_fail();
@@ -284,7 +341,10 @@ static int exynos_swd_read(struct hwrng *rng, void *data, size_t max, bool wait)
 				test_failures = 0;
 #endif
 			}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			exyrng_debug("[ExyRNG] failed to continuous test\n");
 			ret = -EAGAIN;
 			goto out;
@@ -306,6 +366,7 @@ static int exynos_swd_read(struct hwrng *rng, void *data, size_t max, bool wait)
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	retry_cnt = 0;
 	do {
 		spin_lock_irqsave(&hwrandom_lock, flag);
@@ -323,11 +384,16 @@ out:
 		usleep_range(50, 100);
 	} while(1);
 =======
+=======
+>>>>>>> master
 	spin_lock_irqsave(&hwrandom_lock, flag);
 	hwrng_read_flag = 0;
 	exynos_smc(SMC_CMD_RANDOM, HWRNG_EXIT, 0, 0);
 	spin_unlock_irqrestore(&hwrandom_lock, flag);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return ret;
 }
@@ -335,10 +401,13 @@ out:
 static int exyswd_rng_probe(struct platform_device *pdev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	rng.name = "exyswd_rng";
 	rng.read = exynos_swd_read;
 
@@ -347,6 +416,7 @@ static int exyswd_rng_probe(struct platform_device *pdev)
 	start_up_test = 1;
 #endif
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ret = hwrng_register(&rng);
 	if (ret)
@@ -358,6 +428,9 @@ static int exyswd_rng_probe(struct platform_device *pdev)
 =======
 	return hwrng_register(&rng);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return hwrng_register(&rng);
+>>>>>>> master
 }
 
 static int exyswd_rng_remove(struct platform_device *pdev)
@@ -422,6 +495,7 @@ static int __init exyswd_rng_init(void)
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = platform_driver_register(&exyswd_rng_driver);
 	if (ret) {
 		platform_device_unregister(&exyswd_rng_device);
@@ -434,6 +508,9 @@ static int __init exyswd_rng_init(void)
 =======
 	return platform_driver_register(&exyswd_rng_driver);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return platform_driver_register(&exyswd_rng_driver);
+>>>>>>> master
 }
 
 static void __exit exyswd_rng_exit(void)
@@ -449,6 +526,9 @@ MODULE_DESCRIPTION("EXYNOS H/W Random Number Generator driver");
 MODULE_AUTHOR("Sehee Kim <sehi.kim@samsung.com>");
 MODULE_LICENSE("GPL");
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master

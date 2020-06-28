@@ -815,14 +815,20 @@ static int tca_action_flush(struct net *net, struct nlattr *nla,
 
 	err = a->ops->walk(skb, &dcb, RTM_DELACTION, a);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (err <= 0)
 		goto out_module_put;
 =======
+=======
+>>>>>>> master
 	if (err < 0)
 		goto out_module_put;
 	if (err == 0)
 		goto noflush_out;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	nla_nest_end(skb, nest);
 
@@ -841,9 +847,13 @@ out_module_put:
 	module_put(a->ops->owner);
 err_out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 noflush_out:
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+noflush_out:
+>>>>>>> master
 	kfree_skb(skb);
 	kfree(a);
 	return err;
@@ -998,10 +1008,14 @@ static int tc_ctl_action(struct sk_buff *skb, struct nlmsghdr *n)
 	int ret = 0, ovr = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if ((n->nlmsg_type != RTM_GETACTION) && !netlink_capable(skb, CAP_NET_ADMIN))
 =======
 	if ((n->nlmsg_type != RTM_GETACTION) && !capable(CAP_NET_ADMIN))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if ((n->nlmsg_type != RTM_GETACTION) && !capable(CAP_NET_ADMIN))
+>>>>>>> master
 		return -EPERM;
 
 	ret = nlmsg_parse(n, sizeof(struct tcamsg), tca, TCA_ACT_MAX, NULL);

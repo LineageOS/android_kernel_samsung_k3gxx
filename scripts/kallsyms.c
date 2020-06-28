@@ -56,9 +56,12 @@ static unsigned int table_size, table_cnt;
 static int all_symbols = 0;
 static char symbol_prefix_char = '\0';
 <<<<<<< HEAD
+<<<<<<< HEAD
 static unsigned long long kernel_start_addr = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 int token_profit[0x10000];
 
@@ -70,6 +73,7 @@ unsigned char best_table_len[256];
 static void usage(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fprintf(stderr, "Usage: kallsyms [--all-symbols] "
 			"[--symbol-prefix=<prefix char>] "
 			"[--page-offset=<CONFIG_PAGE_OFFSET>] "
@@ -77,6 +81,9 @@ static void usage(void)
 =======
 	fprintf(stderr, "Usage: kallsyms [--all-symbols] [--symbol-prefix=<prefix char>] < in.map > out.S\n");
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	fprintf(stderr, "Usage: kallsyms [--all-symbols] [--symbol-prefix=<prefix char>] < in.map > out.S\n");
+>>>>>>> master
 	exit(1);
 }
 
@@ -206,11 +213,14 @@ static int symbol_valid(struct sym_entry *s)
 	int offset = 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (s->addr < kernel_start_addr)
 		return 0;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* skip prefix char */
 	if (symbol_prefix_char && *(s->sym + 1) == symbol_prefix_char)
 		offset++;
@@ -664,11 +674,14 @@ int main(int argc, char **argv)
 					p++;
 				symbol_prefix_char = *p;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			} else if (strncmp(argv[i], "--page-offset=", 14) == 0) {
 				const char *p = &argv[i][14];
 				kernel_start_addr = strtoull(p, NULL, 16);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			} else
 				usage();
 		}

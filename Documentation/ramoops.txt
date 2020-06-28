@@ -15,6 +15,7 @@ survive after a restart.
 1. Ramoops concepts
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Ramoops uses a predefined memory area to store the dump. The start and size
 and type of the memory area are set using three variables:
   * "mem_address" for the start
@@ -29,12 +30,17 @@ depends on atomic operations. At least on ARM, pgprot_noncached causes the
 memory to be mapped strongly ordered, and atomic operations on strongly ordered
 memory are implementation defined, and won't work on many ARMs such as omaps.
 =======
+=======
+>>>>>>> master
 Ramoops uses a predefined memory area to store the dump. The start and size of
 the memory area are set using two variables:
   * "mem_address" for the start
   * "mem_size" for the size. The memory size will be rounded down to a
   power of two.
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 The memory area is divided into "record_size" chunks (also rounded down to
 power of two) and each oops/panic writes a "record_size" chunk of
@@ -72,9 +78,12 @@ static struct ramoops_platform_data ramoops_data = {
         .mem_size               = <...>,
         .mem_address            = <...>,
 <<<<<<< HEAD
+<<<<<<< HEAD
         .mem_type               = <...>,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
         .record_size            = <...>,
         .dump_oops              = <...>,
         .ecc                    = <...>,

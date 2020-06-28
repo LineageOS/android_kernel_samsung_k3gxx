@@ -372,10 +372,13 @@ fec_enet_start_xmit(struct sk_buff *skb, struct net_device *ndev)
 		bdp = fec_enet_get_nextdesc(bdp, fep->bufdesc_ex);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	skb_tx_timestamp(skb);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	fep->cur_tx = bdp;
 
 	if (fep->cur_tx == fep->dirty_tx)
@@ -385,10 +388,15 @@ fec_enet_start_xmit(struct sk_buff *skb, struct net_device *ndev)
 	writel(0, fep->hwp + FEC_X_DES_ACTIVE);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	skb_tx_timestamp(skb);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	skb_tx_timestamp(skb);
+
+>>>>>>> master
 	return NETDEV_TX_OK;
 }
 

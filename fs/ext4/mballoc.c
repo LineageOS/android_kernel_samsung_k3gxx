@@ -669,10 +669,14 @@ static void ext4_mb_mark_free_simple(struct super_block *sb,
 	ext4_grpblk_t max;
 	ext4_grpblk_t chunk;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int border;
 =======
 	unsigned short border;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned short border;
+>>>>>>> master
 
 	BUG_ON(len > EXT4_CLUSTERS_PER_GROUP(sb));
 
@@ -823,10 +827,14 @@ static void mb_regenerate_buddy(struct ext4_buddy *e4b)
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int ext4_mb_init_cache(struct page *page, char *incore, gfp_t gfp)
 =======
 static int ext4_mb_init_cache(struct page *page, char *incore)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int ext4_mb_init_cache(struct page *page, char *incore)
+>>>>>>> master
 {
 	ext4_group_t ngroups;
 	int blocksize;
@@ -860,10 +868,14 @@ static int ext4_mb_init_cache(struct page *page, char *incore)
 	if (groups_per_page > 1) {
 		i = sizeof(struct buffer_head *) * groups_per_page;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		bh = kzalloc(i, gfp);
 =======
 		bh = kzalloc(i, GFP_NOFS);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		bh = kzalloc(i, GFP_NOFS);
+>>>>>>> master
 		if (bh == NULL) {
 			err = -ENOMEM;
 			goto out;
@@ -989,10 +1001,14 @@ out:
  */
 static int ext4_mb_get_buddy_page_lock(struct super_block *sb,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ext4_group_t group, struct ext4_buddy *e4b, gfp_t gfp)
 =======
 		ext4_group_t group, struct ext4_buddy *e4b)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		ext4_group_t group, struct ext4_buddy *e4b)
+>>>>>>> master
 {
 	struct inode *inode = EXT4_SB(sb)->s_buddy_cache;
 	int block, pnum, poff;
@@ -1012,10 +1028,14 @@ static int ext4_mb_get_buddy_page_lock(struct super_block *sb,
 	pnum = block / blocks_per_page;
 	poff = block % blocks_per_page;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	page = find_or_create_page(inode->i_mapping, pnum, gfp);
 =======
 	page = find_or_create_page(inode->i_mapping, pnum, GFP_NOFS);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	page = find_or_create_page(inode->i_mapping, pnum, GFP_NOFS);
+>>>>>>> master
 	if (!page)
 		return -EIO;
 	BUG_ON(page->mapping != inode->i_mapping);
@@ -1030,10 +1050,14 @@ static int ext4_mb_get_buddy_page_lock(struct super_block *sb,
 	block++;
 	pnum = block / blocks_per_page;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	page = find_or_create_page(inode->i_mapping, pnum, gfp);
 =======
 	page = find_or_create_page(inode->i_mapping, pnum, GFP_NOFS);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	page = find_or_create_page(inode->i_mapping, pnum, GFP_NOFS);
+>>>>>>> master
 	if (!page)
 		return -EIO;
 	BUG_ON(page->mapping != inode->i_mapping);
@@ -1060,10 +1084,14 @@ static void ext4_mb_put_buddy_page_lock(struct ext4_buddy *e4b)
  */
 static noinline_for_stack
 <<<<<<< HEAD
+<<<<<<< HEAD
 int ext4_mb_init_group(struct super_block *sb, ext4_group_t group, gfp_t gfp)
 =======
 int ext4_mb_init_group(struct super_block *sb, ext4_group_t group)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+int ext4_mb_init_group(struct super_block *sb, ext4_group_t group)
+>>>>>>> master
 {
 
 	struct ext4_group_info *this_grp;
@@ -1082,10 +1110,14 @@ int ext4_mb_init_group(struct super_block *sb, ext4_group_t group)
 	 * would have pinned buddy page to page cache.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = ext4_mb_get_buddy_page_lock(sb, group, &e4b, gfp);
 =======
 	ret = ext4_mb_get_buddy_page_lock(sb, group, &e4b);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ret = ext4_mb_get_buddy_page_lock(sb, group, &e4b);
+>>>>>>> master
 	if (ret || !EXT4_MB_GRP_NEED_INIT(this_grp)) {
 		/*
 		 * somebody initialized the group
@@ -1096,10 +1128,14 @@ int ext4_mb_init_group(struct super_block *sb, ext4_group_t group)
 
 	page = e4b.bd_bitmap_page;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = ext4_mb_init_cache(page, NULL, gfp);
 =======
 	ret = ext4_mb_init_cache(page, NULL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ret = ext4_mb_init_cache(page, NULL);
+>>>>>>> master
 	if (ret)
 		goto err;
 	if (!PageUptodate(page)) {
@@ -1120,10 +1156,14 @@ int ext4_mb_init_group(struct super_block *sb, ext4_group_t group)
 	/* init buddy cache */
 	page = e4b.bd_buddy_page;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = ext4_mb_init_cache(page, e4b.bd_bitmap, gfp);
 =======
 	ret = ext4_mb_init_cache(page, e4b.bd_bitmap);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ret = ext4_mb_init_cache(page, e4b.bd_bitmap);
+>>>>>>> master
 	if (ret)
 		goto err;
 	if (!PageUptodate(page)) {
@@ -1143,12 +1183,17 @@ err:
  */
 static noinline_for_stack int
 <<<<<<< HEAD
+<<<<<<< HEAD
 ext4_mb_load_buddy_gfp(struct super_block *sb, ext4_group_t group,
 		       struct ext4_buddy *e4b, gfp_t gfp)
 =======
 ext4_mb_load_buddy(struct super_block *sb, ext4_group_t group,
 					struct ext4_buddy *e4b)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ext4_mb_load_buddy(struct super_block *sb, ext4_group_t group,
+					struct ext4_buddy *e4b)
+>>>>>>> master
 {
 	int blocks_per_page;
 	int block;
@@ -1179,10 +1224,14 @@ ext4_mb_load_buddy(struct super_block *sb, ext4_group_t group,
 		 * to make a good selection
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = ext4_mb_init_group(sb, group, gfp);
 =======
 		ret = ext4_mb_init_group(sb, group);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		ret = ext4_mb_init_group(sb, group);
+>>>>>>> master
 		if (ret)
 			return ret;
 	}
@@ -1211,18 +1260,24 @@ ext4_mb_load_buddy(struct super_block *sb, ext4_group_t group,
 			 */
 			page_cache_release(page);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		page = find_or_create_page(inode->i_mapping, pnum, gfp);
 		if (page) {
 			BUG_ON(page->mapping != inode->i_mapping);
 			if (!PageUptodate(page)) {
 				ret = ext4_mb_init_cache(page, NULL, gfp);
 =======
+=======
+>>>>>>> master
 		page = find_or_create_page(inode->i_mapping, pnum, GFP_NOFS);
 		if (page) {
 			BUG_ON(page->mapping != inode->i_mapping);
 			if (!PageUptodate(page)) {
 				ret = ext4_mb_init_cache(page, NULL);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				if (ret) {
 					unlock_page(page);
 					goto err;
@@ -1250,6 +1305,7 @@ ext4_mb_load_buddy(struct super_block *sb, ext4_group_t group,
 		if (page)
 			page_cache_release(page);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		page = find_or_create_page(inode->i_mapping, pnum, gfp);
 		if (page) {
 			BUG_ON(page->mapping != inode->i_mapping);
@@ -1257,12 +1313,17 @@ ext4_mb_load_buddy(struct super_block *sb, ext4_group_t group,
 				ret = ext4_mb_init_cache(page, e4b->bd_bitmap,
 							 gfp);
 =======
+=======
+>>>>>>> master
 		page = find_or_create_page(inode->i_mapping, pnum, GFP_NOFS);
 		if (page) {
 			BUG_ON(page->mapping != inode->i_mapping);
 			if (!PageUptodate(page)) {
 				ret = ext4_mb_init_cache(page, e4b->bd_bitmap);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				if (ret) {
 					unlock_page(page);
 					goto err;
@@ -1297,6 +1358,7 @@ err:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int ext4_mb_load_buddy(struct super_block *sb, ext4_group_t group,
 			      struct ext4_buddy *e4b)
 {
@@ -1305,6 +1367,8 @@ static int ext4_mb_load_buddy(struct super_block *sb, ext4_group_t group,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static void ext4_mb_unload_buddy(struct ext4_buddy *e4b)
 {
 	if (e4b->bd_bitmap_page)
@@ -1318,9 +1382,12 @@ static int mb_find_order_for_block(struct ext4_buddy *e4b, int block)
 {
 	int order = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int bb_incr = 1 << (e4b->bd_blkbits - 1);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	void *bb;
 
 	BUG_ON(e4b->bd_bitmap == e4b->bd_buddy);
@@ -1334,11 +1401,15 @@ static int mb_find_order_for_block(struct ext4_buddy *e4b, int block)
 			return order;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		bb += bb_incr;
 		bb_incr >>= 1;
 =======
 		bb += 1 << (e4b->bd_blkbits - order);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		bb += 1 << (e4b->bd_blkbits - order);
+>>>>>>> master
 		order++;
 	}
 	return 0;
@@ -2095,10 +2166,14 @@ static int ext4_mb_good_group(struct ext4_allocation_context *ac,
 	/* We only do this if the grp has never been initialized */
 	if (unlikely(EXT4_MB_GRP_NEED_INIT(grp))) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		int ret = ext4_mb_init_group(ac->ac_sb, group, GFP_NOFS);
 =======
 		int ret = ext4_mb_init_group(ac->ac_sb, group);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		int ret = ext4_mb_init_group(ac->ac_sb, group);
+>>>>>>> master
 		if (ret)
 			return 0;
 	}
@@ -2321,10 +2396,14 @@ static int ext4_mb_seq_groups_show(struct seq_file *seq, void *v)
 	struct sg {
 		struct ext4_group_info info;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ext4_grpblk_t counters[EXT4_MAX_BLOCK_LOG_SIZE + 2];
 =======
 		ext4_grpblk_t counters[16];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		ext4_grpblk_t counters[16];
+>>>>>>> master
 	} sg;
 
 	group--;
@@ -2626,10 +2705,14 @@ int ext4_mb_init(struct super_block *sb)
 	struct ext4_sb_info *sbi = EXT4_SB(sb);
 	unsigned i, j;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned offset, offset_incr;
 =======
 	unsigned offset;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned offset;
+>>>>>>> master
 	unsigned max;
 	int ret;
 
@@ -2659,19 +2742,26 @@ int ext4_mb_init(struct super_block *sb)
 	i = 1;
 	offset = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	offset_incr = 1 << (sb->s_blocksize_bits - 1);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	max = sb->s_blocksize << 2;
 	do {
 		sbi->s_mb_offsets[i] = offset;
 		sbi->s_mb_maxs[i] = max;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		offset += offset_incr;
 		offset_incr = offset_incr >> 1;
 =======
 		offset += 1 << (sb->s_blocksize_bits - i);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		offset += 1 << (sb->s_blocksize_bits - i);
+>>>>>>> master
 		max = max >> 1;
 		i++;
 	} while (i <= sb->s_blocksize_bits + 1);
@@ -2997,10 +3087,14 @@ ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac,
 			   "fs metadata", block, block+len);
 		/* File system mounted not to panic on error
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 * Fix the bitmap and return EUCLEAN
 =======
 		 * Fix the bitmap and repeat the block allocation
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		 * Fix the bitmap and repeat the block allocation
+>>>>>>> master
 		 * We leak some of the blocks here.
 		 */
 		ext4_lock_group(sb, ac->ac_b_ex.fe_group);
@@ -3010,10 +3104,14 @@ ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac,
 		err = ext4_handle_dirty_metadata(handle, NULL, bitmap_bh);
 		if (!err)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			err = -EUCLEAN;
 =======
 			err = -EAGAIN;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			err = -EAGAIN;
+>>>>>>> master
 		goto out_err;
 	}
 
@@ -3185,6 +3283,7 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
 		size -= start + size - ar->lright;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * Trim allocation request for filesystems with artificially small
 	 * groups.
@@ -3194,6 +3293,8 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	end = start + size;
 
 	/* check we don't cross already preallocated blocks */
@@ -3261,10 +3362,14 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
 	BUG_ON(start + size <= ac->ac_o_ex.fe_logical &&
 			start > ac->ac_o_ex.fe_logical);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	BUG_ON(size <= 0 || size > EXT4_BLOCKS_PER_GROUP(ac->ac_sb));
 =======
 	BUG_ON(size <= 0 || size > EXT4_CLUSTERS_PER_GROUP(ac->ac_sb));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	BUG_ON(size <= 0 || size > EXT4_CLUSTERS_PER_GROUP(ac->ac_sb));
+>>>>>>> master
 
 	/* now prepare goal request */
 
@@ -3594,11 +3699,14 @@ static void ext4_mb_pa_callback(struct rcu_head *head)
 	struct ext4_prealloc_space *pa;
 	pa = container_of(head, struct ext4_prealloc_space, u.pa_rcu);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	BUG_ON(atomic_read(&pa->pa_count));
 	BUG_ON(pa->pa_deleted == 0);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	kmem_cache_free(ext4_pspace_cachep, pa);
 }
 
@@ -3613,6 +3721,7 @@ static void ext4_mb_put_pa(struct ext4_allocation_context *ac,
 	ext4_fsblk_t grp_blk;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* in this short window concurrent discard can set pa_deleted */
 	spin_lock(&pa->pa_lock);
 	if (!atomic_dec_and_test(&pa->pa_count) || pa->pa_free != 0) {
@@ -3621,12 +3730,17 @@ static void ext4_mb_put_pa(struct ext4_allocation_context *ac,
 	}
 
 =======
+=======
+>>>>>>> master
 	if (!atomic_dec_and_test(&pa->pa_count) || pa->pa_free != 0)
 		return;
 
 	/* in this short window concurrent discard can set pa_deleted */
 	spin_lock(&pa->pa_lock);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (pa->pa_deleted == 1) {
 		spin_unlock(&pa->pa_lock);
 		return;
@@ -4289,10 +4403,14 @@ ext4_mb_initialize_context(struct ext4_allocation_context *ac,
 
 	/* set up allocation goals */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ac->ac_b_ex.fe_logical = EXT4_LBLK_CMASK(sbi, ar->logical);
 =======
 	ac->ac_b_ex.fe_logical = ar->logical & ~(sbi->s_cluster_ratio - 1);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ac->ac_b_ex.fe_logical = ar->logical & ~(sbi->s_cluster_ratio - 1);
+>>>>>>> master
 	ac->ac_status = AC_STATUS_CONTINUE;
 	ac->ac_sb = sb;
 	ac->ac_inode = ar->inode;
@@ -4610,8 +4728,11 @@ repeat:
 	if (likely(ac->ac_status == AC_STATUS_FOUND)) {
 		*errp = ext4_mb_mark_diskspace_used(ac, handle, reserv_clstrs);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (*errp) {
 =======
+=======
+>>>>>>> master
 		if (*errp == -EAGAIN) {
 			/*
 			 * drop the reference that we took
@@ -4624,7 +4745,10 @@ repeat:
 			ac->ac_status = AC_STATUS_CONTINUE;
 			goto repeat;
 		} else if (*errp) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			ext4_discard_allocated_blocks(ac);
 			goto errout;
 		} else {
@@ -4776,9 +4900,12 @@ void ext4_free_blocks(handle_t *handle, struct inode *inode,
 	ext4_group_t block_group;
 	struct ext4_sb_info *sbi;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct ext4_inode_info *ei = EXT4_I(inode);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	struct ext4_buddy e4b;
 	unsigned int count_clusters;
 	int err = 0;
@@ -4838,10 +4965,14 @@ void ext4_free_blocks(handle_t *handle, struct inode *inode,
 	 * requested to avoid doing so.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	overflow = EXT4_PBLK_COFF(sbi, block);
 =======
 	overflow = block & (sbi->s_cluster_ratio - 1);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	overflow = block & (sbi->s_cluster_ratio - 1);
+>>>>>>> master
 	if (overflow) {
 		if (flags & EXT4_FREE_BLOCKS_NOFREE_FIRST_CLUSTER) {
 			overflow = sbi->s_cluster_ratio - overflow;
@@ -4856,10 +4987,14 @@ void ext4_free_blocks(handle_t *handle, struct inode *inode,
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	overflow = EXT4_LBLK_COFF(sbi, count);
 =======
 	overflow = count & (sbi->s_cluster_ratio - 1);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	overflow = count & (sbi->s_cluster_ratio - 1);
+>>>>>>> master
 	if (overflow) {
 		if (flags & EXT4_FREE_BLOCKS_NOFREE_LAST_CLUSTER) {
 			if (count > overflow)
@@ -4932,12 +5067,16 @@ do_more:
 	trace_ext4_mballoc_free(sb, inode, block_group, bit, count_clusters);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* __GFP_NOFAIL: retry infinitely, ignore TIF_MEMDIE and memcg limit. */
 	err = ext4_mb_load_buddy_gfp(sb, block_group, &e4b,
 				     GFP_NOFS|__GFP_NOFAIL);
 =======
 	err = ext4_mb_load_buddy(sb, block_group, &e4b);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	err = ext4_mb_load_buddy(sb, block_group, &e4b);
+>>>>>>> master
 	if (err)
 		goto error_return;
 
@@ -4947,6 +5086,7 @@ do_more:
 		 * blocks being freed are metadata. these blocks shouldn't
 		 * be used until this transaction is committed
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 *
 		 * We use __GFP_NOFAIL because ext4_free_blocks() is not allowed
 		 * to fail.
@@ -4954,6 +5094,8 @@ do_more:
 		new_entry = kmem_cache_alloc(ext4_free_data_cachep,
 				GFP_NOFS|__GFP_NOFAIL);
 =======
+=======
+>>>>>>> master
 		 */
 	retry:
 		new_entry = kmem_cache_alloc(ext4_free_data_cachep, GFP_NOFS);
@@ -4966,7 +5108,10 @@ do_more:
 			congestion_wait(BLK_RW_ASYNC, HZ/50);
 			goto retry;
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		new_entry->efd_start_cluster = bit;
 		new_entry->efd_group = block_group;
 		new_entry->efd_count = count_clusters;
@@ -4988,12 +5133,17 @@ do_more:
 					 " with %d", block_group, bit, count,
 					 err);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		} else
 			EXT4_MB_GRP_CLEAR_TRIMMED(e4b.bd_info);
 =======
 		}
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		}
+
+>>>>>>> master
 
 		ext4_lock_group(sb, block_group);
 		mb_clear_bits(bitmap_bh->b_data, bit, count_clusters);
@@ -5006,9 +5156,13 @@ do_more:
 	ext4_group_desc_csum_set(sb, block_group, gdp);
 	ext4_unlock_group(sb, block_group);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	percpu_counter_add(&sbi->s_freeclusters_counter, count_clusters);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	percpu_counter_add(&sbi->s_freeclusters_counter, count_clusters);
+>>>>>>> master
 
 	if (sbi->s_log_groups_per_flex) {
 		ext4_group_t flex_group = ext4_flex_group(sbi, block_group);
@@ -5016,6 +5170,7 @@ do_more:
 			     &sbi->s_flex_groups[flex_group].free_clusters);
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (flags & EXT4_FREE_BLOCKS_RESERVE && ei->i_reserved_data_blocks) {
 		percpu_counter_add(&sbi->s_dirtyclusters_counter,
@@ -5036,12 +5191,17 @@ do_more:
 	ext4_mb_unload_buddy(&e4b);
 
 =======
+=======
+>>>>>>> master
 	ext4_mb_unload_buddy(&e4b);
 
 	if (!(flags & EXT4_FREE_BLOCKS_NO_QUOT_UPDATE))
 		dquot_free_block(inode, EXT4_C2B(sbi, count_clusters));
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* We dirtied the bitmap block */
 	BUFFER_TRACE(bitmap_bh, "dirtied bitmap block");
 	err = ext4_handle_dirty_metadata(handle, NULL, bitmap_bh);
@@ -5381,10 +5541,14 @@ int ext4_trim_fs(struct super_block *sb, struct fstrim_range *range)
 		/* We only do this if the grp has never been initialized */
 		if (unlikely(EXT4_MB_GRP_NEED_INIT(grp))) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ret = ext4_mb_init_group(sb, group, GFP_NOFS);
 =======
 			ret = ext4_mb_init_group(sb, group);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			ret = ext4_mb_init_group(sb, group);
+>>>>>>> master
 			if (ret)
 				break;
 		}

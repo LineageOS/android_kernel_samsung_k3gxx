@@ -22,34 +22,46 @@
 #include "cxd2820r_priv.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Max transfer size done by I2C transfer functions */
 #define MAX_XFER_SIZE  64
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /* write multiple registers */
 static int cxd2820r_wr_regs_i2c(struct cxd2820r_priv *priv, u8 i2c, u8 reg,
 	u8 *val, int len)
 {
 	int ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 buf[MAX_XFER_SIZE];
 =======
 	u8 buf[len+1];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u8 buf[len+1];
+>>>>>>> master
 	struct i2c_msg msg[1] = {
 		{
 			.addr = i2c,
 			.flags = 0,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			.len = len + 1,
 =======
 			.len = sizeof(buf),
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			.len = sizeof(buf),
+>>>>>>> master
 			.buf = buf,
 		}
 	};
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (1 + len > sizeof(buf)) {
 		dev_warn(&priv->i2c->dev,
@@ -60,6 +72,8 @@ static int cxd2820r_wr_regs_i2c(struct cxd2820r_priv *priv, u8 i2c, u8 reg,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	buf[0] = reg;
 	memcpy(&buf[1], val, len);
 
@@ -80,10 +94,14 @@ static int cxd2820r_rd_regs_i2c(struct cxd2820r_priv *priv, u8 i2c, u8 reg,
 {
 	int ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 buf[MAX_XFER_SIZE];
 =======
 	u8 buf[len];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u8 buf[len];
+>>>>>>> master
 	struct i2c_msg msg[2] = {
 		{
 			.addr = i2c,
@@ -94,14 +112,19 @@ static int cxd2820r_rd_regs_i2c(struct cxd2820r_priv *priv, u8 i2c, u8 reg,
 			.addr = i2c,
 			.flags = I2C_M_RD,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			.len = len,
 =======
 			.len = sizeof(buf),
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			.len = sizeof(buf),
+>>>>>>> master
 			.buf = buf,
 		}
 	};
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (len > sizeof(buf)) {
 		dev_warn(&priv->i2c->dev,
@@ -112,6 +135,8 @@ static int cxd2820r_rd_regs_i2c(struct cxd2820r_priv *priv, u8 i2c, u8 reg,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ret = i2c_transfer(priv->i2c, msg, 2);
 	if (ret == 2) {
 		memcpy(val, buf, len);

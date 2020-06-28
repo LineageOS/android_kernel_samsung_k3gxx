@@ -665,6 +665,7 @@ static struct dmi_system_id __initdata i8k_dmi_table[] = {
 		},
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{
 		.ident = "Dell XPS421",
 		.matches = {
@@ -674,6 +675,8 @@ static struct dmi_system_id __initdata i8k_dmi_table[] = {
 	},
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
         { }
 };
 

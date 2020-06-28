@@ -299,9 +299,12 @@ struct irq_desc *irq_to_desc(unsigned int irq)
 	return (irq < NR_IRQS) ? irq_desc + irq : NULL;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL(irq_to_desc);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 static void free_desc(unsigned int irq)
 {

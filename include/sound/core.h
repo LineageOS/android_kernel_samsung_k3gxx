@@ -28,9 +28,12 @@
 #include <linux/pm.h>			/* pm_message_t */
 #include <linux/stringify.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/printk.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 /* number of supported soundcards */
 #ifdef CONFIG_SND_DYNAMIC_MINORS
@@ -383,6 +386,7 @@ void __snd_printk(unsigned int level, const char *file, int line,
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Suppress high rates of output when CONFIG_SND_DEBUG is enabled.
  */
 #define snd_printd_ratelimit() printk_ratelimit()
@@ -390,6 +394,8 @@ void __snd_printk(unsigned int level, const char *file, int line,
 /**
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  * snd_BUG_ON - debugging check macro
  * @cond: condition to evaluate
  *
@@ -413,10 +419,13 @@ static inline void _snd_printd(int level, const char *format, ...) {}
 })
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline bool snd_printd_ratelimit(void) { return false; }
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #endif /* CONFIG_SND_DEBUG */
 
 #ifdef CONFIG_SND_DEBUG_VERBOSE

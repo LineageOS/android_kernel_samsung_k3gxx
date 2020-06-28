@@ -248,9 +248,13 @@ extern void set_current_blocked(sigset_t *);
 extern void __set_current_blocked(const sigset_t *);
 extern int show_unhandled_signals;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 extern int sigsuspend(sigset_t *);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+extern int sigsuspend(sigset_t *);
+>>>>>>> master
 
 struct sigaction {
 #ifndef __ARCH_HAS_IRIX_SIGACTION
@@ -438,6 +442,7 @@ int restore_altstack(const stack_t __user *);
 int __save_altstack(stack_t __user *, unsigned long);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define save_altstack_ex(uss, sp) do { \
 	stack_t __user *__uss = uss; \
 	struct task_struct *t = current; \
@@ -448,6 +453,8 @@ int __save_altstack(stack_t __user *, unsigned long);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #ifdef CONFIG_PROC_FS
 struct seq_file;
 extern void render_sigset_t(struct seq_file *, const char *, sigset_t *);

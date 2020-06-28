@@ -780,10 +780,14 @@ static int catc_probe(struct usb_interface *intf, const struct usb_device_id *id
 	struct catc *catc;
 	u8 broadcast[6];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int pktsz, ret;
 =======
 	int i, pktsz;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int i, pktsz;
+>>>>>>> master
 
 	if (usb_set_interface(usbdev,
 			intf->altsetting->desc.bInterfaceNumber, 1)) {
@@ -819,16 +823,22 @@ static int catc_probe(struct usb_interface *intf, const struct usb_device_id *id
 	    (!catc->rx_urb) || (!catc->irq_urb)) {
 		dev_err(&intf->dev, "No free urbs available.\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = -ENOMEM;
 		goto fail_free;
 =======
+=======
+>>>>>>> master
 		usb_free_urb(catc->ctrl_urb);
 		usb_free_urb(catc->tx_urb);
 		usb_free_urb(catc->rx_urb);
 		usb_free_urb(catc->irq_urb);
 		free_netdev(netdev);
 		return -ENOMEM;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	/* The F5U011 has the same vendor/product as the netmate but a device version of 0x130 */
@@ -857,6 +867,7 @@ static int catc_probe(struct usb_interface *intf, const struct usb_device_id *id
 
 	if (!catc->is_f5u011) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		u32 *buf;
 		int i;
 
@@ -876,6 +887,8 @@ static int catc_probe(struct usb_interface *intf, const struct usb_device_id *id
 	  
 		switch (*buf) {
 =======
+=======
+>>>>>>> master
 		dev_dbg(dev, "Checking memory size\n");
 
 		i = 0x12345678;
@@ -885,7 +898,10 @@ static int catc_probe(struct usb_interface *intf, const struct usb_device_id *id
 		catc_read_mem(catc, 0x7a80, &i, 4);
 	  
 		switch (i) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		case 0x12345678:
 			catc_set_reg(catc, TxBufCount, 8);
 			catc_set_reg(catc, RxBufCount, 32);
@@ -901,10 +917,13 @@ static int catc_probe(struct usb_interface *intf, const struct usb_device_id *id
 			break;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		kfree(buf);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	  
 		dev_dbg(dev, "Getting MAC from SEEROM.\n");
 	  
@@ -952,6 +971,7 @@ static int catc_probe(struct usb_interface *intf, const struct usb_device_id *id
 
 	SET_NETDEV_DEV(netdev, &intf->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = register_netdev(netdev);
 	if (ret)
 		goto fail_clear_intfdata;
@@ -968,6 +988,8 @@ fail_free:
 	free_netdev(netdev);
 	return ret;
 =======
+=======
+>>>>>>> master
 	if (register_netdev(netdev) != 0) {
 		usb_set_intfdata(intf, NULL);
 		usb_free_urb(catc->ctrl_urb);
@@ -978,7 +1000,10 @@ fail_free:
 		return -EIO;
 	}
 	return 0;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static void catc_disconnect(struct usb_interface *intf)

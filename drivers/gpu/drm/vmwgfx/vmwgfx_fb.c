@@ -148,10 +148,14 @@ static int vmw_fb_check_var(struct fb_var_screeninfo *var,
 
 	if (!vmw_kms_validate_mode_vram(vmw_priv,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					var->xres * var->bits_per_pixel/8,
 =======
 					info->fix.line_length,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+					info->fix.line_length,
+>>>>>>> master
 					var->yoffset + var->yres)) {
 		DRM_ERROR("Requested geom can not fit in framebuffer\n");
 		return -EINVAL;
@@ -167,10 +171,13 @@ static int vmw_fb_set_par(struct fb_info *info)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	info->fix.line_length = info->var.xres * info->var.bits_per_pixel/8;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ret = vmw_kms_write_svga(vmw_priv, info->var.xres, info->var.yres,
 				 info->fix.line_length,
 				 par->bpp, par->depth);

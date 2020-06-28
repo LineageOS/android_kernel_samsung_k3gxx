@@ -35,11 +35,16 @@ static ssize_t ieee80211_if_read(
 
 	read_lock(&dev_base_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = (*format)(sdata, buf, sizeof(buf));
 =======
 	if (sdata->dev->reg_state == NETREG_REGISTERED)
 		ret = (*format)(sdata, buf, sizeof(buf));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (sdata->dev->reg_state == NETREG_REGISTERED)
+		ret = (*format)(sdata, buf, sizeof(buf));
+>>>>>>> master
 	read_unlock(&dev_base_lock);
 
 	if (ret >= 0)
@@ -67,11 +72,16 @@ static ssize_t ieee80211_if_write(
 	ret = -ENODEV;
 	rtnl_lock();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = (*write)(sdata, buf, count);
 =======
 	if (sdata->dev->reg_state == NETREG_REGISTERED)
 		ret = (*write)(sdata, buf, count);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (sdata->dev->reg_state == NETREG_REGISTERED)
+		ret = (*write)(sdata, buf, count);
+>>>>>>> master
 	rtnl_unlock();
 
 	return ret;
@@ -708,9 +718,12 @@ void ieee80211_debugfs_remove_netdev(struct ieee80211_sub_if_data *sdata)
 	debugfs_remove_recursive(sdata->vif.debugfs_dir);
 	sdata->vif.debugfs_dir = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sdata->debugfs.subdir_stations = NULL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 void ieee80211_debugfs_rename_netdev(struct ieee80211_sub_if_data *sdata)

@@ -520,10 +520,14 @@ static void icmp6_send(struct sk_buff *skb, u8 type, u8 code, __u32 info)
 			      MSG_DONTWAIT, np->dontfrag);
 	if (err) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ICMP6_INC_STATS(net, idev, ICMP6_MIB_OUTERRORS);
 =======
 		ICMP6_INC_STATS_BH(net, idev, ICMP6_MIB_OUTERRORS);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		ICMP6_INC_STATS_BH(net, idev, ICMP6_MIB_OUTERRORS);
+>>>>>>> master
 		ip6_flush_pending_frames(sk);
 	} else {
 		err = icmpv6_push_pending_frames(sk, &fl6, &tmp_hdr,
@@ -951,6 +955,7 @@ static const struct icmp6_err {
 		.fatal	= 1,
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{	/* POLICY_FAIL */
 		.err	= EACCES,
 		.fatal	= 1,
@@ -961,6 +966,8 @@ static const struct icmp6_err {
 	},
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 
 int icmpv6_err_convert(u8 type, u8 code, int *err)
@@ -973,10 +980,14 @@ int icmpv6_err_convert(u8 type, u8 code, int *err)
 	case ICMPV6_DEST_UNREACH:
 		fatal = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (code < ARRAY_SIZE(tab_unreach)) {
 =======
 		if (code <= ICMPV6_PORT_UNREACH) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (code <= ICMPV6_PORT_UNREACH) {
+>>>>>>> master
 			*err  = tab_unreach[code].err;
 			fatal = tab_unreach[code].fatal;
 		}

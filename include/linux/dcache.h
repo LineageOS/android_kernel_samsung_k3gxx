@@ -121,6 +121,7 @@ struct dentry {
 
 	struct list_head d_lru;		/* LRU list */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct list_head d_child;	/* child of parent list */
 	struct list_head d_subdirs;	/* our children */
 	/*
@@ -131,6 +132,8 @@ struct dentry {
 	 	struct rcu_head d_rcu;
 	} d_u;
 =======
+=======
+>>>>>>> master
 	/*
 	 * d_child and d_rcu can share memory
 	 */
@@ -140,7 +143,10 @@ struct dentry {
 	} d_u;
 	struct list_head d_subdirs;	/* our children */
 	struct hlist_node d_alias;	/* inode alias list */
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 
 /*
@@ -171,9 +177,12 @@ struct dentry_operations {
 	struct vfsmount *(*d_automount)(struct path *);
 	int (*d_manage)(struct dentry *, bool);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	void (*d_canonical_path)(const struct path *, struct path *);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 } ____cacheline_aligned;
 
 /*
@@ -427,6 +436,7 @@ static inline bool d_mountpoint(struct dentry *dentry)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline bool d_is_su(const struct dentry *dentry)
 {
 	return dentry &&
@@ -436,6 +446,8 @@ static inline bool d_is_su(const struct dentry *dentry)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 extern int sysctl_vfs_cache_pressure;
 
 #endif	/* __LINUX_DCACHE_H */

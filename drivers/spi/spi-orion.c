@@ -404,10 +404,15 @@ static int orion_spi_probe(struct platform_device *pdev)
 	unsigned long tclk_hz;
 	int status = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	const u32 *iprop;
 	int size;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	const u32 *iprop;
+	int size;
+>>>>>>> master
 
 	master = spi_alloc_master(&pdev->dev, sizeof *spi);
 	if (master == NULL) {
@@ -419,16 +424,22 @@ static int orion_spi_probe(struct platform_device *pdev)
 		master->bus_num = pdev->id;
 	if (pdev->dev.of_node) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		u32 cell_index;
 		if (!of_property_read_u32(pdev->dev.of_node, "cell-index",
 					  &cell_index))
 			master->bus_num = cell_index;
 =======
+=======
+>>>>>>> master
 		iprop = of_get_property(pdev->dev.of_node, "cell-index",
 					&size);
 		if (iprop && size == sizeof(*iprop))
 			master->bus_num = *iprop;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	/* we support only mode 0, and no options */

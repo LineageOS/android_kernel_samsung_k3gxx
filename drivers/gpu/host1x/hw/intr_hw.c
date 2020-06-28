@@ -49,10 +49,14 @@ static irqreturn_t syncpt_thresh_isr(int irq, void *dev_id)
 	int i, id;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	for (i = 0; i < DIV_ROUND_UP(host->info->nb_pts, 32); i++) {
 =======
 	for (i = 0; i <= BIT_WORD(host->info->nb_pts); i++) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	for (i = 0; i <= BIT_WORD(host->info->nb_pts); i++) {
+>>>>>>> master
 		reg = host1x_sync_readl(host,
 			HOST1X_SYNC_SYNCPT_THRESH_CPU0_INT_STATUS(i));
 		for_each_set_bit(id, &reg, BITS_PER_LONG) {
@@ -70,10 +74,14 @@ static void _host1x_intr_disable_all_syncpt_intrs(struct host1x *host)
 	u32 i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	for (i = 0; i < DIV_ROUND_UP(host->info->nb_pts, 32); ++i) {
 =======
 	for (i = 0; i <= BIT_WORD(host->info->nb_pts); ++i) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	for (i = 0; i <= BIT_WORD(host->info->nb_pts); ++i) {
+>>>>>>> master
 		host1x_sync_writel(host, 0xffffffffu,
 			HOST1X_SYNC_SYNCPT_THRESH_INT_DISABLE(i));
 		host1x_sync_writel(host, 0xffffffffu,

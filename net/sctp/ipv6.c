@@ -190,10 +190,14 @@ SCTP_STATIC void sctp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
 	case NDISC_REDIRECT:
 		sctp_icmp_redirect(sk, transport, skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto out_unlock;
 =======
 		break;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		break;
+>>>>>>> master
 	default:
 		break;
 	}
@@ -215,13 +219,18 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Based on tcp_v6_xmit() in tcp_ipv6.c. */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+/* Based on tcp_v6_xmit() in tcp_ipv6.c. */
+>>>>>>> master
 static int sctp_v6_xmit(struct sk_buff *skb, struct sctp_transport *transport)
 {
 	struct sock *sk = skb->sk;
 	struct ipv6_pinfo *np = inet6_sk(sk);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct flowi6 *fl6 = &transport->fl.u.ip6;
 
@@ -231,6 +240,8 @@ static int sctp_v6_xmit(struct sk_buff *skb, struct sctp_transport *transport)
 
 	IP6_ECN_flow_xmit(sk, fl6->flowlabel);
 =======
+=======
+>>>>>>> master
 	struct flowi6 fl6;
 
 	memset(&fl6, 0, sizeof(fl6));
@@ -260,11 +271,15 @@ static int sctp_v6_xmit(struct sk_buff *skb, struct sctp_transport *transport)
 			  &fl6.saddr, &fl6.daddr);
 
 	SCTP_INC_STATS(sock_net(sk), SCTP_MIB_OUTSCTPPACKS);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (!(transport->param_flags & SPP_PMTUD_ENABLE))
 		skb->local_df = 1;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	SCTP_INC_STATS(sock_net(sk), SCTP_MIB_OUTSCTPPACKS);
 
@@ -272,6 +287,9 @@ static int sctp_v6_xmit(struct sk_buff *skb, struct sctp_transport *transport)
 =======
 	return ip6_xmit(sk, skb, &fl6, np->opt, np->tclass);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return ip6_xmit(sk, skb, &fl6, np->opt, np->tclass);
+>>>>>>> master
 }
 
 /* Returns the dst cache entry for the given source and destination ip
@@ -285,17 +303,23 @@ static void sctp_v6_get_dst(struct sctp_transport *t, union sctp_addr *saddr,
 	struct flowi6 *fl6 = &fl->u.ip6;
 	struct sctp_bind_addr *bp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct ipv6_pinfo *np = inet6_sk(sk);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	struct sctp_sockaddr_entry *laddr;
 	union sctp_addr *baddr = NULL;
 	union sctp_addr *daddr = &t->ipaddr;
 	union sctp_addr dst_saddr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct in6_addr *final_p, final;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	__u8 matchlen = 0;
 	__u8 bmatchlen;
 	sctp_scope_t scope;
@@ -319,11 +343,15 @@ static void sctp_v6_get_dst(struct sctp_transport *t, union sctp_addr *saddr,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	final_p = fl6_update_dst(fl6, np->opt, &final);
 	dst = ip6_dst_lookup_flow(sk, fl6, final_p, false);
 =======
 	dst = ip6_dst_lookup_flow(sk, fl6, NULL, false);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	dst = ip6_dst_lookup_flow(sk, fl6, NULL, false);
+>>>>>>> master
 	if (!asoc || saddr)
 		goto out;
 
@@ -376,6 +404,7 @@ static void sctp_v6_get_dst(struct sctp_transport *t, union sctp_addr *saddr,
 	}
 	rcu_read_unlock();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (baddr) {
 		fl6->saddr = baddr->v6.sin6_addr;
@@ -383,11 +412,16 @@ static void sctp_v6_get_dst(struct sctp_transport *t, union sctp_addr *saddr,
 		final_p = fl6_update_dst(fl6, np->opt, &final);
 		dst = ip6_dst_lookup_flow(sk, fl6, final_p, false);
 =======
+=======
+>>>>>>> master
 	if (baddr) {
 		fl6->saddr = baddr->v6.sin6_addr;
 		fl6->fl6_sport = baddr->v6.sin6_port;
 		dst = ip6_dst_lookup_flow(sk, fl6, NULL, false);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 out:
@@ -554,12 +588,16 @@ static void sctp_v6_to_addr(union sctp_addr *addr, struct in6_addr *saddr,
 	addr->sa.sa_family = AF_INET6;
 	addr->v6.sin6_port = port;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	addr->v6.sin6_flowinfo = 0;
 	addr->v6.sin6_addr = *saddr;
 	addr->v6.sin6_scope_id = 0;
 =======
 	addr->v6.sin6_addr = *saddr;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	addr->v6.sin6_addr = *saddr;
+>>>>>>> master
 }
 
 /* Compare addresses exactly.
@@ -588,10 +626,13 @@ static int sctp_v6_cmp_addr(const union sctp_addr *addr1,
 		return 0;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (addr1->v6.sin6_port != addr2->v6.sin6_port)
 		return 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (!ipv6_addr_equal(&addr1->v6.sin6_addr, &addr2->v6.sin6_addr))
 		return 0;
 	/* If this is a linklocal address, compare the scope_id. */
@@ -712,9 +753,12 @@ static struct sock *sctp_v6_create_accept_sk(struct sock *sk,
 	struct ipv6_pinfo *newnp, *np = inet6_sk(sk);
 	struct sctp6_sock *newsctp6sk;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct ipv6_txoptions *opt;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	newsk = sk_alloc(sock_net(sk), PF_INET6, GFP_KERNEL, sk->sk_prot);
 	if (!newsk)
@@ -735,6 +779,7 @@ static struct sock *sctp_v6_create_accept_sk(struct sock *sk,
 	memcpy(newnp, np, sizeof(struct ipv6_pinfo));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rcu_read_lock();
 	opt = rcu_dereference(np->opt);
 	if (opt)
@@ -744,6 +789,8 @@ static struct sock *sctp_v6_create_accept_sk(struct sock *sk,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Initialize sk's sport, dport, rcv_saddr and daddr for getsockname()
 	 * and getpeername().
 	 */

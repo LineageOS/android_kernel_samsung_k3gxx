@@ -4449,10 +4449,14 @@ int qeth_snmp_command(struct qeth_card *card, char __user *udata)
 	struct qeth_ipa_cmd *cmd;
 	struct qeth_snmp_ureq *ureq;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int req_len;
 =======
 	int req_len;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int req_len;
+>>>>>>> master
 	struct qeth_arp_query_info qinfo = {0, };
 	int rc = 0;
 
@@ -4469,12 +4473,15 @@ int qeth_snmp_command(struct qeth_card *card, char __user *udata)
 	if (copy_from_user(&req_len, udata + sizeof(int), sizeof(int)))
 		return -EFAULT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (req_len > (QETH_BUFSIZE - IPA_PDU_HEADER_SIZE -
 		       sizeof(struct qeth_ipacmd_hdr) -
 		       sizeof(struct qeth_ipacmd_setadpparms_hdr)))
 		return -EINVAL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ureq = memdup_user(udata, req_len + sizeof(struct qeth_snmp_ureq_hdr));
 	if (IS_ERR(ureq)) {
 		QETH_CARD_TEXT(card, 2, "snmpnome");

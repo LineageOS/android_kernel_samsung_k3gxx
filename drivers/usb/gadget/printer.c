@@ -976,6 +976,7 @@ unknown:
 	}
 	/* host either stalls (value < 0) or reports success */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (value >= 0) {
 		req->length = value;
 		req->zero = value < wLength;
@@ -987,6 +988,8 @@ unknown:
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return value;
 }
 

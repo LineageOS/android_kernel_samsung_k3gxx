@@ -182,9 +182,12 @@ static void rt2x00lib_bc_buffer_iter(void *data, u8 *mac,
 				     struct ieee80211_vif *vif)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct ieee80211_tx_control control = {};
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	struct rt2x00_dev *rt2x00dev = data;
 	struct sk_buff *skb;
 
@@ -200,10 +203,14 @@ static void rt2x00lib_bc_buffer_iter(void *data, u8 *mac,
 	skb = ieee80211_get_buffered_bc(rt2x00dev->hw, vif);
 	while (skb) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rt2x00mac_tx(rt2x00dev->hw, &control, skb);
 =======
 		rt2x00mac_tx(rt2x00dev->hw, NULL, skb);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		rt2x00mac_tx(rt2x00dev->hw, NULL, skb);
+>>>>>>> master
 		skb = ieee80211_get_buffered_bc(rt2x00dev->hw, vif);
 	}
 }
@@ -1136,6 +1143,7 @@ static void rt2x00lib_uninitialize(struct rt2x00_dev *rt2x00dev)
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * Stop rfkill polling.
 	 */
 	if (test_bit(REQUIRE_DELAYED_RFKILL, &rt2x00dev->cap_flags))
@@ -1145,6 +1153,11 @@ static void rt2x00lib_uninitialize(struct rt2x00_dev *rt2x00dev)
 	 */
 	rt2x00rfkill_unregister(rt2x00dev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	 * Unregister extra components.
+	 */
+	rt2x00rfkill_unregister(rt2x00dev);
+>>>>>>> master
 
 	/*
 	 * Allow the HW to uninitialize.
@@ -1183,6 +1196,7 @@ static int rt2x00lib_initialize(struct rt2x00_dev *rt2x00dev)
 	set_bit(DEVICE_STATE_INITIALIZED, &rt2x00dev->flags);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * Start rfkill polling.
 	 */
@@ -1191,6 +1205,8 @@ static int rt2x00lib_initialize(struct rt2x00_dev *rt2x00dev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 }
 
@@ -1387,6 +1403,7 @@ int rt2x00lib_probe_dev(struct rt2x00_dev *rt2x00dev)
 	rt2x00leds_register(rt2x00dev);
 	rt2x00debug_register(rt2x00dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/*
 	 * Start rfkill polling.
@@ -1396,6 +1413,9 @@ int rt2x00lib_probe_dev(struct rt2x00_dev *rt2x00dev)
 =======
 	rt2x00rfkill_register(rt2x00dev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	rt2x00rfkill_register(rt2x00dev);
+>>>>>>> master
 
 	return 0;
 
@@ -1412,6 +1432,7 @@ void rt2x00lib_remove_dev(struct rt2x00_dev *rt2x00dev)
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * Stop rfkill polling.
 	 */
 	if (!test_bit(REQUIRE_DELAYED_RFKILL, &rt2x00dev->cap_flags))
@@ -1420,6 +1441,8 @@ void rt2x00lib_remove_dev(struct rt2x00_dev *rt2x00dev)
 	/*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	 * Disable radio.
 	 */
 	rt2x00lib_disable_radio(rt2x00dev);

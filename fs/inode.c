@@ -169,11 +169,17 @@ int inode_init_always(struct super_block *sb, struct inode *inode)
 	mapping->backing_dev_info = &default_backing_dev_info;
 	mapping->writeback_index = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_SDP
 	mapping->userid = 0;
 #endif
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#ifdef CONFIG_SDP
+	mapping->userid = 0;
+#endif
+>>>>>>> master
 
 	/*
 	 * If the block_device provides a backing_dev_info for client
@@ -1606,19 +1612,27 @@ int should_remove_suid(struct dentry *dentry)
 EXPORT_SYMBOL(should_remove_suid);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __remove_suid(struct vfsmount *mnt, struct dentry *dentry, int kill)
 =======
 static int __remove_suid(struct dentry *dentry, int kill)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int __remove_suid(struct dentry *dentry, int kill)
+>>>>>>> master
 {
 	struct iattr newattrs;
 
 	newattrs.ia_valid = ATTR_FORCE | kill;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return notify_change2(mnt, dentry, &newattrs);
 =======
 	return notify_change(dentry, &newattrs);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return notify_change(dentry, &newattrs);
+>>>>>>> master
 }
 
 int file_remove_suid(struct file *file)
@@ -1642,6 +1656,7 @@ int file_remove_suid(struct file *file)
 		error = security_inode_killpriv(dentry);
 	if (!error && killsuid)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		error = __remove_suid(file->f_path.mnt, dentry, killsuid);
 	if (!error)
 		inode_has_no_xattr(inode);
@@ -1650,6 +1665,11 @@ int file_remove_suid(struct file *file)
 	if (!error && (inode->i_sb->s_flags & MS_NOSEC))
 		inode->i_flags |= S_NOSEC;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		error = __remove_suid(dentry, killsuid);
+	if (!error && (inode->i_sb->s_flags & MS_NOSEC))
+		inode->i_flags |= S_NOSEC;
+>>>>>>> master
 
 	return error;
 }

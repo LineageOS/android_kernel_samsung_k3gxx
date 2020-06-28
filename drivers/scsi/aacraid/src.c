@@ -360,6 +360,7 @@ static int aac_src_check_health(struct aac_dev *dev)
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 *	Check to see if the board panic'd.
 	 */
 	if (unlikely(status & KERNEL_PANIC))
@@ -378,6 +379,8 @@ static int aac_src_check_health(struct aac_dev *dev)
 		goto err_out;
 
 =======
+=======
+>>>>>>> master
 	 *	Check to see if the board failed any self tests.
 	 */
 	if (unlikely(status & SELF_TEST_FAILED))
@@ -388,7 +391,10 @@ static int aac_src_check_health(struct aac_dev *dev)
 	 */
 	if (unlikely(status & KERNEL_PANIC))
 		return (status >> 16) & 0xFF;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/*
 	 *	Wait for the adapter to be up and running.
 	 */
@@ -399,6 +405,7 @@ static int aac_src_check_health(struct aac_dev *dev)
 	 */
 	return 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 err_out:
 	return -1;
@@ -407,6 +414,8 @@ err_blink:
 	return (status > 16) & 0xFF;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /**

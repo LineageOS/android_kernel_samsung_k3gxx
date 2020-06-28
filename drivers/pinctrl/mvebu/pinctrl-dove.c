@@ -324,10 +324,14 @@ static int dove_twsi_ctrl_set(struct mvebu_mpp_ctrl *ctrl,
 
 	gcfg1 &= ~DOVE_TWSI_ENABLE_OPTION1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	gcfg2 &= ~(DOVE_TWSI_ENABLE_OPTION2 | DOVE_TWSI_ENABLE_OPTION3);
 =======
 	gcfg2 &= ~(DOVE_TWSI_ENABLE_OPTION2 | DOVE_TWSI_ENABLE_OPTION2);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	gcfg2 &= ~(DOVE_TWSI_ENABLE_OPTION2 | DOVE_TWSI_ENABLE_OPTION2);
+>>>>>>> master
 
 	switch (config) {
 	case 1:

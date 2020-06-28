@@ -501,6 +501,7 @@ static void chsc_process_sei_nt0(struct chsc_sei_nt0_area *sei_area)
 static void chsc_process_event_information(struct chsc_sei *sei, u64 ntsm)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	static int ntsm_unsupported;
 
 	while (true) {
@@ -510,17 +511,23 @@ static void chsc_process_event_information(struct chsc_sei *sei, u64 ntsm)
 		if (!ntsm_unsupported)
 			sei->ntsm = ntsm;
 =======
+=======
+>>>>>>> master
 	do {
 		memset(sei, 0, sizeof(*sei));
 		sei->request.length = 0x0010;
 		sei->request.code = 0x000e;
 		sei->ntsm = ntsm;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		if (chsc(sei))
 			break;
 
 		if (sei->response.code != 0x0001) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 			CIO_CRW_EVENT(2, "chsc: sei failed (rc=%04x, ntsm=%llx)\n",
 				      sei->response.code, sei->ntsm);
@@ -534,6 +541,10 @@ static void chsc_process_event_information(struct chsc_sei *sei, u64 ntsm)
 			CIO_CRW_EVENT(2, "chsc: sei failed (rc=%04x)\n",
 				      sei->response.code);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			CIO_CRW_EVENT(2, "chsc: sei failed (rc=%04x)\n",
+				      sei->response.code);
+>>>>>>> master
 			break;
 		}
 
@@ -550,6 +561,7 @@ static void chsc_process_event_information(struct chsc_sei *sei, u64 ntsm)
 			break;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		if (!(sei->u.nt0_area.flags & 0x80))
 			break;
@@ -557,6 +569,9 @@ static void chsc_process_event_information(struct chsc_sei *sei, u64 ntsm)
 =======
 	} while (sei->u.nt0_area.flags & 0x80);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	} while (sei->u.nt0_area.flags & 0x80);
+>>>>>>> master
 }
 
 /*

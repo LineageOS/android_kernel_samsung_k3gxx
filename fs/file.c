@@ -39,10 +39,14 @@ static void *alloc_fdmem(size_t size)
 	 */
 	if (size <= (PAGE_SIZE << PAGE_ALLOC_COSTLY_ORDER)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		void *data = kmalloc(size, GFP_KERNEL|__GFP_NOWARN|__GFP_NORETRY);
 =======
 		void *data = kmalloc(size, GFP_KERNEL|__GFP_NOWARN);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		void *data = kmalloc(size, GFP_KERNEL|__GFP_NOWARN);
+>>>>>>> master
 		if (data != NULL)
 			return data;
 	}

@@ -27,9 +27,12 @@
 #include <linux/fs.h>
 #include <linux/buffer_head.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/workqueue.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #include <linux/nilfs2_fs.h>
 #include "nilfs.h"
 
@@ -97,10 +100,13 @@ struct nilfs_segsum_pointer {
  * @sc_dirty_files: List of files to be written
  * @sc_gc_inodes: List of GC inodes having blocks to be written
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @sc_iput_queue: list of inodes for which iput should be done
  * @sc_iput_work: work struct to defer iput call
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  * @sc_freesegs: array of segment numbers to be freed
  * @sc_nfreesegs: number of segments on @sc_freesegs
  * @sc_dsync_inode: inode whose data pages are written for a sync operation
@@ -145,10 +151,13 @@ struct nilfs_sc_info {
 	struct list_head	sc_dirty_files;
 	struct list_head	sc_gc_inodes;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct list_head	sc_iput_queue;
 	struct work_struct	sc_iput_work;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	__u64		       *sc_freesegs;
 	size_t			sc_nfreesegs;

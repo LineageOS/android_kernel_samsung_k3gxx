@@ -896,10 +896,14 @@ static int lookup_existing_device(struct device *dev, void *data)
 		fw_notice(card, "rediscovered device %s\n", dev_name(dev));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		old->workfn = fw_device_update;
 =======
 		PREPARE_DELAYED_WORK(&old->work, fw_device_update);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		PREPARE_DELAYED_WORK(&old->work, fw_device_update);
+>>>>>>> master
 		fw_schedule_device_work(old, 0);
 
 		if (current_node == card->root_node)
@@ -1059,10 +1063,14 @@ static void fw_device_init(struct work_struct *work)
 			   FW_DEVICE_INITIALIZING,
 			   FW_DEVICE_RUNNING) == FW_DEVICE_GONE) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		device->workfn = fw_device_shutdown;
 =======
 		PREPARE_DELAYED_WORK(&device->work, fw_device_shutdown);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		PREPARE_DELAYED_WORK(&device->work, fw_device_shutdown);
+>>>>>>> master
 		fw_schedule_device_work(device, SHUTDOWN_DELAY);
 	} else {
 		fw_notice(card, "created device %s: GUID %08x%08x, S%d00\n",
@@ -1184,16 +1192,21 @@ static void fw_device_refresh(struct work_struct *work)
  gone:
 	atomic_set(&device->state, FW_DEVICE_GONE);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	device->workfn = fw_device_shutdown;
 =======
 	PREPARE_DELAYED_WORK(&device->work, fw_device_shutdown);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	PREPARE_DELAYED_WORK(&device->work, fw_device_shutdown);
+>>>>>>> master
 	fw_schedule_device_work(device, SHUTDOWN_DELAY);
  out:
 	if (node_id == card->root_node->node_id)
 		fw_schedule_bm_work(card, 0);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void fw_device_workfn(struct work_struct *work)
 {
@@ -1204,6 +1217,8 @@ static void fw_device_workfn(struct work_struct *work)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 void fw_node_event(struct fw_card *card, struct fw_node *node, int event)
 {
 	struct fw_device *device;
@@ -1254,11 +1269,15 @@ void fw_node_event(struct fw_card *card, struct fw_node *node, int event)
 		 * first config rom scan half a second after bus reset.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		device->workfn = fw_device_init;
 		INIT_DELAYED_WORK(&device->work, fw_device_workfn);
 =======
 		INIT_DELAYED_WORK(&device->work, fw_device_init);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		INIT_DELAYED_WORK(&device->work, fw_device_init);
+>>>>>>> master
 		fw_schedule_device_work(device, INITIAL_DELAY);
 		break;
 
@@ -1275,10 +1294,14 @@ void fw_node_event(struct fw_card *card, struct fw_node *node, int event)
 			    FW_DEVICE_RUNNING,
 			    FW_DEVICE_INITIALIZING) == FW_DEVICE_RUNNING) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			device->workfn = fw_device_refresh;
 =======
 			PREPARE_DELAYED_WORK(&device->work, fw_device_refresh);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			PREPARE_DELAYED_WORK(&device->work, fw_device_refresh);
+>>>>>>> master
 			fw_schedule_device_work(device,
 				device->is_local ? 0 : INITIAL_DELAY);
 		}
@@ -1294,10 +1317,14 @@ void fw_node_event(struct fw_card *card, struct fw_node *node, int event)
 		device->generation = card->generation;
 		if (atomic_read(&device->state) == FW_DEVICE_RUNNING) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			device->workfn = fw_device_update;
 =======
 			PREPARE_DELAYED_WORK(&device->work, fw_device_update);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			PREPARE_DELAYED_WORK(&device->work, fw_device_update);
+>>>>>>> master
 			fw_schedule_device_work(device, 0);
 		}
 		break;
@@ -1323,10 +1350,14 @@ void fw_node_event(struct fw_card *card, struct fw_node *node, int event)
 		if (atomic_xchg(&device->state,
 				FW_DEVICE_GONE) == FW_DEVICE_RUNNING) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			device->workfn = fw_device_shutdown;
 =======
 			PREPARE_DELAYED_WORK(&device->work, fw_device_shutdown);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			PREPARE_DELAYED_WORK(&device->work, fw_device_shutdown);
+>>>>>>> master
 			fw_schedule_device_work(device,
 				list_empty(&card->link) ? 0 : SHUTDOWN_DELAY);
 		}

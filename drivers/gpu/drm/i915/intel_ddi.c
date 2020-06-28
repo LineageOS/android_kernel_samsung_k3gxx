@@ -1194,16 +1194,20 @@ void intel_ddi_setup_hw_pll_state(struct drm_device *dev)
 	struct intel_crtc *intel_crtc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_priv->ddi_plls.spll_refcount = 0;
 	dev_priv->ddi_plls.wrpll1_refcount = 0;
 	dev_priv->ddi_plls.wrpll2_refcount = 0;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	for_each_pipe(pipe) {
 		intel_crtc =
 			to_intel_crtc(dev_priv->pipe_to_crtc_mapping[pipe]);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (!intel_crtc->active) {
 			intel_crtc->ddi_pll_sel = PORT_CLK_SEL_NONE;
@@ -1213,6 +1217,10 @@ void intel_ddi_setup_hw_pll_state(struct drm_device *dev)
 		if (!intel_crtc->active)
 			continue;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (!intel_crtc->active)
+			continue;
+>>>>>>> master
 
 		intel_crtc->ddi_pll_sel = intel_ddi_get_crtc_pll(dev_priv,
 								 pipe);

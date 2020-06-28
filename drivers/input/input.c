@@ -262,6 +262,7 @@ static int input_handle_abs_event(struct input_dev *dev,
 
 static int input_get_disposition(struct input_dev *dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			  unsigned int type, unsigned int code, int *pval)
 {
 	int disposition = INPUT_IGNORE_EVENT;
@@ -271,6 +272,11 @@ static int input_get_disposition(struct input_dev *dev,
 {
 	int disposition = INPUT_IGNORE_EVENT;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			  unsigned int type, unsigned int code, int value)
+{
+	int disposition = INPUT_IGNORE_EVENT;
+>>>>>>> master
 
 	switch (type) {
 
@@ -369,9 +375,12 @@ static int input_get_disposition(struct input_dev *dev,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	*pval = value;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return disposition;
 }
 
@@ -381,10 +390,14 @@ static void input_handle_event(struct input_dev *dev,
 	int disposition;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	disposition = input_get_disposition(dev, type, code, &value);
 =======
 	disposition = input_get_disposition(dev, type, code, value);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	disposition = input_get_disposition(dev, type, code, value);
+>>>>>>> master
 
 	if ((disposition & INPUT_PASS_TO_DEVICE) && dev->event)
 		dev->event(dev, type, code, value);
@@ -2303,12 +2316,15 @@ void input_set_capability(struct input_dev *dev, unsigned int type, unsigned int
 
 	case EV_ABS:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		input_alloc_absinfo(dev);
 		if (!dev->absinfo)
 			return;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		__set_bit(code, dev->absbit);
 		break;
 

@@ -189,6 +189,7 @@ static unsigned long writeout_period_time = 0;
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /**
  * zone_dirtyable_memory - number of dirtyable pages in a zone
  * @zone: the zone
@@ -211,6 +212,8 @@ static unsigned long zone_dirtyable_memory(struct zone *zone)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static unsigned long highmem_dirtyable_memory(unsigned long total)
 {
 #ifdef CONFIG_HIGHMEM
@@ -219,16 +222,22 @@ static unsigned long highmem_dirtyable_memory(unsigned long total)
 
 	for_each_node_state(node, N_HIGH_MEMORY) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct zone *z = &NODE_DATA(node)->node_zones[ZONE_HIGHMEM];
 
 		x += zone_dirtyable_memory(z);
 =======
+=======
+>>>>>>> master
 		struct zone *z =
 			&NODE_DATA(node)->node_zones[ZONE_HIGHMEM];
 
 		x += zone_page_state(z, NR_FREE_PAGES) +
 		     zone_reclaimable_pages(z) - z->dirty_balance_reserve;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 	/*
 	 * Unreclaimable memory (kernel memory or anonymous memory
@@ -265,6 +274,7 @@ static unsigned long global_dirtyable_memory(void)
 	unsigned long x;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	x = global_page_state(NR_FREE_PAGES);
 	x -= min(x, dirty_balance_reserve);
 
@@ -276,6 +286,11 @@ static unsigned long global_dirtyable_memory(void)
 	x -= min(x, dirty_balance_reserve);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	x = global_page_state(NR_FREE_PAGES) + global_reclaimable_pages();
+	x -= min(x, dirty_balance_reserve);
+
+>>>>>>> master
 	if (!vm_highmem_is_dirtyable)
 		x -= highmem_dirtyable_memory(x);
 
@@ -335,7 +350,10 @@ void global_dirty_limits(unsigned long *pbackground, unsigned long *pdirty)
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
  * zone_dirtyable_memory - number of dirtyable pages in a zone
  * @zone: the zone
  *
@@ -362,7 +380,10 @@ static unsigned long zone_dirtyable_memory(struct zone *zone)
 }
 
 /**
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  * zone_dirty_limit - maximum number of dirty pages allowed in a zone
  * @zone: the zone
  *
@@ -847,6 +868,7 @@ static void bdi_update_write_bandwidth(struct backing_dev_info *bdi,
 	 * write_bandwidth = ---------------------------------------------------
 	 *                                          period
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 *
 	 * @written may have decreased due to account_page_redirty().
 	 * Avoid underflowing @bw calculation.
@@ -856,6 +878,10 @@ static void bdi_update_write_bandwidth(struct backing_dev_info *bdi,
 	 */
 	bw = written - bdi->written_stamp;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	 */
+	bw = written - bdi->written_stamp;
+>>>>>>> master
 	bw *= HZ;
 	if (unlikely(elapsed > period)) {
 		do_div(bw, elapsed);
@@ -920,10 +946,14 @@ static void global_update_bandwidth(unsigned long thresh,
 {
 	static DEFINE_SPINLOCK(dirty_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	static unsigned long update_time = INITIAL_JIFFIES;
 =======
 	static unsigned long update_time;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	static unsigned long update_time;
+>>>>>>> master
 
 	/*
 	 * check locklessly first to optimize away locking for the most time
@@ -1165,18 +1195,24 @@ static unsigned long dirty_poll_interval(unsigned long dirty,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static unsigned long bdi_max_pause(struct backing_dev_info *bdi,
 				   unsigned long bdi_dirty)
 {
 	unsigned long bw = bdi->avg_write_bandwidth;
 	unsigned long t;
 =======
+=======
+>>>>>>> master
 static long bdi_max_pause(struct backing_dev_info *bdi,
 			  unsigned long bdi_dirty)
 {
 	long bw = bdi->avg_write_bandwidth;
 	long t;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/*
 	 * Limit pause time for small memory systems. If sleeping for too long
@@ -1189,10 +1225,14 @@ static long bdi_max_pause(struct backing_dev_info *bdi,
 	t++;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return min_t(unsigned long, t, MAX_PAUSE);
 =======
 	return min_t(long, t, MAX_PAUSE);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return min_t(long, t, MAX_PAUSE);
+>>>>>>> master
 }
 
 static long bdi_min_pause(struct backing_dev_info *bdi,
@@ -2104,18 +2144,25 @@ int __set_page_dirty_nobuffers(struct page *page)
 		struct address_space *mapping = page_mapping(page);
 		struct address_space *mapping2;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		unsigned long flags;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		if (!mapping)
 			return 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		spin_lock_irqsave(&mapping->tree_lock, flags);
 =======
 		spin_lock_irq(&mapping->tree_lock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		spin_lock_irq(&mapping->tree_lock);
+>>>>>>> master
 		mapping2 = page_mapping(page);
 		if (mapping2) { /* Race with truncate? */
 			BUG_ON(mapping2 != mapping);
@@ -2125,10 +2172,14 @@ int __set_page_dirty_nobuffers(struct page *page)
 				page_index(page), PAGECACHE_TAG_DIRTY);
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		spin_unlock_irqrestore(&mapping->tree_lock, flags);
 =======
 		spin_unlock_irq(&mapping->tree_lock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		spin_unlock_irq(&mapping->tree_lock);
+>>>>>>> master
 		if (mapping->host) {
 			/* !PageAnon && !swapper_space */
 			__mark_inode_dirty(mapping->host, I_DIRTY_PAGES);

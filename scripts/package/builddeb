@@ -63,10 +63,14 @@ create_package() {
 
 	# Create the package
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dpkg-gencontrol -isp $forcearch -Vkernel:debarch="${debarch:-$(dpkg --print-architecture)}" -p$pname -P"$pdir"
 =======
 	dpkg-gencontrol -isp $forcearch -p$pname -P"$pdir"
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	dpkg-gencontrol -isp $forcearch -p$pname -P"$pdir"
+>>>>>>> master
 	dpkg --build "$pdir" ..
 }
 
@@ -257,14 +261,19 @@ mkdir -p "$destdir"
 ln -sf "/usr/src/linux-headers-$version" "$kernel_headers_dir/lib/modules/$version/build"
 rm -f "$objtree/debian/hdrsrcfiles" "$objtree/debian/hdrobjfiles"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 arch=$(dpkg --print-architecture)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+arch=$(dpkg --print-architecture)
+>>>>>>> master
 
 cat <<EOF >> debian/control
 
 Package: $kernel_headers_packagename
 Provides: linux-headers, linux-headers-2.6
+<<<<<<< HEAD
 <<<<<<< HEAD
 Architecture: any
 Description: Linux kernel headers for $KERNELRELEASE on \${kernel:debarch}
@@ -274,6 +283,11 @@ Architecture: $arch
 Description: Linux kernel headers for $KERNELRELEASE on $arch
  This package provides kernel header files for $KERNELRELEASE on $arch
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+Architecture: $arch
+Description: Linux kernel headers for $KERNELRELEASE on $arch
+ This package provides kernel header files for $KERNELRELEASE on $arch
+>>>>>>> master
  .
  This is useful for people who need to build external modules
 EOF

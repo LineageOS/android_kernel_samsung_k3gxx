@@ -27,9 +27,12 @@
 #include <linux/uaccess.h>
 #include <linux/ioport.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/cred.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #include <net/addrconf.h>
 
 #include <asm/page.h>		/* for PAGE_SIZE */
@@ -1123,6 +1126,7 @@ char *pointer(const char *fmt, char *buf, char *end, void *ptr,
 			return string(buf, end, "pK-error", spec);
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		switch (kptr_restrict) {
 		case 0:
@@ -1155,12 +1159,17 @@ char *pointer(const char *fmt, char *buf, char *end, void *ptr,
 		break;
 
 =======
+=======
+>>>>>>> master
 		if (!((kptr_restrict == 0) ||
 		      (kptr_restrict == 1 &&
 		       has_capability_noaudit(current, CAP_SYSLOG))))
 			ptr = NULL;
 		break;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	case 'N':
 		switch (fmt[1]) {
 		case 'F':

@@ -287,13 +287,19 @@ static int pl061_probe(struct amba_device *adev, const struct amba_id *id)
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	chip->domain = irq_domain_add_simple(adev->dev.of_node, PL061_GPIO_NR,
 					     irq_base, &pl061_domain_ops, chip);
 	if (!chip->domain)
 		return -ENODEV;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	spin_lock_init(&chip->lock);
 
 	chip->gc.request = pl061_gpio_request;
@@ -324,6 +330,7 @@ static int pl061_probe(struct amba_device *adev, const struct amba_id *id)
 	irq_set_handler_data(irq, chip);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	chip->domain = irq_domain_add_simple(adev->dev.of_node, PL061_GPIO_NR,
 					     irq_base, &pl061_domain_ops, chip);
 	if (!chip->domain)
@@ -331,6 +338,8 @@ static int pl061_probe(struct amba_device *adev, const struct amba_id *id)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	for (i = 0; i < PL061_GPIO_NR; i++) {
 		if (pdata) {
 			if (pdata->directions & (1 << i))

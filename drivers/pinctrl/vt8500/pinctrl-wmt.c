@@ -277,6 +277,7 @@ static int wmt_pctl_dt_node_to_map_pull(struct wmt_pinctrl_data *data,
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	switch (pull) {
 	case 0:
 		configs[0] = PIN_CONFIG_BIAS_DISABLE;
@@ -294,6 +295,9 @@ static int wmt_pctl_dt_node_to_map_pull(struct wmt_pinctrl_data *data,
 =======
 	configs[0] = pull;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	configs[0] = pull;
+>>>>>>> master
 
 	map->type = PIN_MAP_TYPE_CONFIGS_PIN;
 	map->data.configs.group_or_pin = data->groups[group];

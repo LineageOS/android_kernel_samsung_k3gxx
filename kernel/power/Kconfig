@@ -284,6 +284,7 @@ config PM_GENERIC_DOMAINS
 	depends on PM
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 config WQ_POWER_EFFICIENT_DEFAULT
 	bool "Enable workqueue power-efficient mode by default"
 	depends on PM
@@ -306,6 +307,8 @@ config WQ_POWER_EFFICIENT_DEFAULT
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 config PM_GENERIC_DOMAINS_SLEEP
 	def_bool y
 	depends on PM_SLEEP && PM_GENERIC_DOMAINS

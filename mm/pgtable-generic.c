@@ -87,6 +87,7 @@ pte_t ptep_clear_flush(struct vm_area_struct *vma, unsigned long address,
 		       pte_t *ptep)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct mm_struct *mm = (vma)->vm_mm;
 	pte_t pte;
 	pte = ptep_get_and_clear(mm, address, ptep);
@@ -96,6 +97,11 @@ pte_t ptep_clear_flush(struct vm_area_struct *vma, unsigned long address,
 	pte = ptep_get_and_clear((vma)->vm_mm, address, ptep);
 	if (pte_accessible(pte))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	pte_t pte;
+	pte = ptep_get_and_clear((vma)->vm_mm, address, ptep);
+	if (pte_accessible(pte))
+>>>>>>> master
 		flush_tlb_page(vma, address);
 	return pte;
 }
@@ -174,11 +180,14 @@ void pmdp_invalidate(struct vm_area_struct *vma, unsigned long address,
 		     pmd_t *pmdp)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pmd_t entry = *pmdp;
 	if (pmd_numa(entry))
 		entry = pmd_mknonnuma(entry);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	set_pmd_at(vma->vm_mm, address, pmdp, pmd_mknotpresent(*pmdp));
 	flush_tlb_range(vma, address, address + HPAGE_PMD_SIZE);
 }

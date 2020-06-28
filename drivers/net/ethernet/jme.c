@@ -3291,9 +3291,13 @@ jme_resume(struct device *dev)
 	jme_phy_calibration(jme);
 	jme_phy_setEA(jme);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	jme_start_irq(jme);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	jme_start_irq(jme);
+>>>>>>> master
 	netif_device_attach(netdev);
 
 	atomic_inc(&jme->link_changing);
@@ -3301,10 +3305,13 @@ jme_resume(struct device *dev)
 	jme_reset_link(jme);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	jme_start_irq(jme);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 }
 

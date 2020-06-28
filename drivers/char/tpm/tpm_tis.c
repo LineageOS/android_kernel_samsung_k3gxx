@@ -76,12 +76,15 @@ enum tis_defaults {
 #define	TPM_RID(l)			(0x0F04 | ((l) << 12))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct priv_data {
 	bool irq_tested;
 };
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static LIST_HEAD(tis_chips);
 static DEFINE_MUTEX(tis_lock);
 
@@ -346,6 +349,7 @@ out_err:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void disable_interrupts(struct tpm_chip *chip)
 {
 	u32 intmask;
@@ -363,16 +367,22 @@ static void disable_interrupts(struct tpm_chip *chip)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  * If interrupts are used (signaled by an irq set in the vendor structure)
  * tpm.c can skip polling for the data to be available as the interrupt is
  * waited for here
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int tpm_tis_send_main(struct tpm_chip *chip, u8 *buf, size_t len)
 =======
 static int tpm_tis_send(struct tpm_chip *chip, u8 *buf, size_t len)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int tpm_tis_send(struct tpm_chip *chip, u8 *buf, size_t len)
+>>>>>>> master
 {
 	int rc;
 	u32 ordinal;
@@ -402,6 +412,7 @@ out_err:
 	return rc;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static int tpm_tis_send(struct tpm_chip *chip, u8 *buf, size_t len)
 {
@@ -459,6 +470,8 @@ static bool tpm_tis_update_timeouts(struct tpm_chip *chip,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  * Early probing for iTPM with STS_DATA_EXPECT flaw.
  * Try sending command without itpm flag set and if that
@@ -562,9 +575,12 @@ static struct tpm_vendor_specific tpm_tis = {
 	.send = tpm_tis_send,
 	.cancel = tpm_tis_ready,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.update_timeouts = tpm_tis_update_timeouts,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	.req_complete_mask = TPM_STS_DATA_AVAIL | TPM_STS_VALID,
 	.req_complete_val = TPM_STS_DATA_AVAIL | TPM_STS_VALID,
 	.req_canceled = tpm_tis_req_canceled,
@@ -606,9 +622,12 @@ static irqreturn_t tis_int_handler(int dummy, void *dev_id)
 		return IRQ_NONE;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	((struct priv_data *)chip->vendor.priv)->irq_tested = true;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (interrupt & TPM_INTF_DATA_AVAIL_INT)
 		wake_up_interruptible(&chip->vendor.read_queue);
 	if (interrupt & TPM_INTF_LOCALITY_CHANGE_INT)
@@ -639,6 +658,7 @@ static int tpm_tis_init(struct device *dev, resource_size_t start,
 	int rc, i, irq_s, irq_e, probe;
 	struct tpm_chip *chip;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct priv_data *priv;
 
 	priv = devm_kzalloc(dev, sizeof(struct priv_data), GFP_KERNEL);
@@ -652,6 +672,11 @@ static int tpm_tis_init(struct device *dev, resource_size_t start,
 	if (!(chip = tpm_register_hardware(dev, &tpm_tis)))
 		return -ENODEV;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	if (!(chip = tpm_register_hardware(dev, &tpm_tis)))
+		return -ENODEV;
+>>>>>>> master
 
 	chip->vendor.iobase = ioremap(start, len);
 	if (!chip->vendor.iobase) {
@@ -721,7 +746,10 @@ static int tpm_tis_init(struct device *dev, resource_size_t start,
 		dev_dbg(dev, "\tData Avail Int Support\n");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	/* get the timeouts before testing for irqs */
 	if (tpm_get_timeouts(chip)) {
 		dev_err(dev, "Could not get TPM timeouts and durations\n");
@@ -735,7 +763,10 @@ static int tpm_tis_init(struct device *dev, resource_size_t start,
 		goto out_err;
 	}
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* INTERRUPT Setup */
 	init_waitqueue_head(&chip->vendor.read_queue);
 	init_waitqueue_head(&chip->vendor.int_queue);
@@ -838,6 +869,7 @@ static int tpm_tis_init(struct device *dev, resource_size_t start,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (tpm_get_timeouts(chip)) {
 		dev_err(dev, "Could not get TPM timeouts and durations\n");
 		rc = -ENODEV;
@@ -852,6 +884,8 @@ static int tpm_tis_init(struct device *dev, resource_size_t start,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	INIT_LIST_HEAD(&chip->vendor.list);
 	mutex_lock(&tis_lock);
 	list_add(&chip->vendor.list, &tis_chips);

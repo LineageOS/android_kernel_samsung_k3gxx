@@ -3,6 +3,7 @@
 #
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ifeq ($(CONFIG_SECURITY_SELINUX_DEFAULT_PERMISSIVE),y)
 EXTRA_CFLAGS += -DSELINUX_DEFAULT_PERMISSIVE=true
 endif
@@ -22,11 +23,16 @@ endif
 ifeq ($(CONFIG_SECURITY_SELINUX_PRETEND_ENFORCE),y)
 EXTRA_CFLAGS += -DSELINUX_PRETEND_ENFORCE=true
 =======
+=======
+>>>>>>> master
 ifeq ($(TARGET_BUILD_VARIANT), user)
 ifeq ($(SEC_BUILD_OPTION_PRODUCT_SHIP),true)
 EXTRA_CFLAGS += -DCONFIG_ALWAYS_ENFORCE=true
 endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 endif
 
 obj-$(CONFIG_SECURITY_SELINUX) := selinux.o

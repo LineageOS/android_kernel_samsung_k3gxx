@@ -128,6 +128,7 @@ static int omap_rng_probe(struct platform_device *pdev)
 
 	pm_runtime_enable(&pdev->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = pm_runtime_get_sync(&pdev->dev);
 	if (ret < 0) {
 		dev_err(&pdev->dev, "Failed to runtime_get device: %d\n", ret);
@@ -137,6 +138,9 @@ static int omap_rng_probe(struct platform_device *pdev)
 =======
 	pm_runtime_get_sync(&pdev->dev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	pm_runtime_get_sync(&pdev->dev);
+>>>>>>> master
 
 	ret = hwrng_register(&omap_rng_ops);
 	if (ret)
@@ -192,6 +196,7 @@ static int omap_rng_resume(struct device *dev)
 {
 	struct omap_rng_private_data *priv = dev_get_drvdata(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 
 	ret = pm_runtime_get_sync(dev);
@@ -205,6 +210,10 @@ static int omap_rng_resume(struct device *dev)
 
 	pm_runtime_get_sync(dev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	pm_runtime_get_sync(dev);
+>>>>>>> master
 	omap_rng_write_reg(priv, RNG_MASK_REG, 0x1);
 
 	return 0;

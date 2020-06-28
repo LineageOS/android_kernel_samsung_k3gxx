@@ -56,6 +56,7 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Limit the number of BSS entries stored in mac80211. Each one is
  * a bit over 4k at most, so this limits to roughly 4-5M of memory.
@@ -73,6 +74,9 @@ MODULE_PARM_DESC(bss_entries_limit,
 =======
 #define IEEE80211_SCAN_RESULT_EXPIRE	(6 * HZ)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define IEEE80211_SCAN_RESULT_EXPIRE	(6 * HZ)
+>>>>>>> master
 
 static void bss_free(struct cfg80211_internal_bss *bss)
 {
@@ -153,12 +157,15 @@ static bool __cfg80211_unlink_bss(struct cfg80211_registered_device *dev,
 	list_del_init(&bss->list);
 	rb_erase(&bss->rbn, &dev->bss_tree);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev->bss_entries--;
 	WARN_ONCE((dev->bss_entries == 0) ^ list_empty(&dev->bss_list),
 		  "rdev bss entries[%d]/list[empty:%d] corruption\n",
 		  dev->bss_entries, list_empty(&dev->bss_list));
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	bss_ref_put(dev, bss);
 	return true;
 }
@@ -278,16 +285,22 @@ void __cfg80211_sched_scan_results(struct work_struct *wk)
 			    sched_scan_results_wk);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_lock(&rdev->sched_scan_mtx);
 
 	request = rdev->sched_scan_req;
 
 =======
+=======
+>>>>>>> master
 	request = rdev->sched_scan_req;
 
 	mutex_lock(&rdev->sched_scan_mtx);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* we don't have sched_scan_req anymore if the scan is stopping */
 	if (request) {
 		if (request->flags & NL80211_SCAN_FLAG_FLUSH) {
@@ -370,6 +383,7 @@ void cfg80211_bss_expire(struct cfg80211_registered_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static bool cfg80211_bss_expire_oldest(struct cfg80211_registered_device *rdev)
 {
 	struct cfg80211_internal_bss *bss, *oldest = NULL;
@@ -406,6 +420,8 @@ static bool cfg80211_bss_expire_oldest(struct cfg80211_registered_device *rdev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 const u8 *cfg80211_find_ie(u8 eid, const u8 *ies, int len)
 {
 	while (len > 2 && ies[0] != eid) {
@@ -709,9 +725,12 @@ static bool cfg80211_combine_bsses(struct cfg80211_registered_device *dev,
 	int i, ssidlen;
 	u8 fold = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 n_entries = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	ies = rcu_access_pointer(new->pub.beacon_ies);
 	if (WARN_ON(!ies))
@@ -736,6 +755,7 @@ static bool cfg80211_combine_bsses(struct cfg80211_registered_device *dev,
 
 	list_for_each_entry(bss, &dev->bss_list, list) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * we're iterating all the entries anyway, so take the
 		 * opportunity to validate the list length accounting
@@ -744,6 +764,8 @@ static bool cfg80211_combine_bsses(struct cfg80211_registered_device *dev,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		if (!ether_addr_equal(bss->pub.bssid, new->pub.bssid))
 			continue;
 		if (bss->pub.channel != new->pub.channel)
@@ -774,12 +796,15 @@ static bool cfg80211_combine_bsses(struct cfg80211_registered_device *dev,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WARN_ONCE(n_entries != dev->bss_entries,
 		  "rdev bss entries[%d]/list[len:%d] corruption\n",
 		  dev->bss_entries, n_entries);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return true;
 }
 
@@ -925,6 +950,7 @@ cfg80211_bss_update(struct cfg80211_registered_device *dev,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (dev->bss_entries >= bss_entries_limit &&
 		    !cfg80211_bss_expire_oldest(dev)) {
 			kfree(new);
@@ -936,6 +962,9 @@ cfg80211_bss_update(struct cfg80211_registered_device *dev,
 =======
 		list_add_tail(&new->list, &dev->bss_list);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		list_add_tail(&new->list, &dev->bss_list);
+>>>>>>> master
 		rb_insert_bss(dev, new);
 		found = new;
 	}

@@ -67,6 +67,7 @@ struct dm_snapshot {
 	atomic_t pending_exceptions_count;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Protected by "lock" */
 	sector_t exception_start_sequence;
 
@@ -81,6 +82,8 @@ struct dm_snapshot {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	mempool_t *pending_pool;
 
 	struct dm_exception_table pending;
@@ -189,6 +192,7 @@ struct dm_snap_pending_exception {
 	int started;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* There was copying error. */
 	int copy_error;
 
@@ -199,6 +203,8 @@ struct dm_snap_pending_exception {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/*
 	 * For writing a complete chunk, bypassing the copy.
 	 */
@@ -752,10 +758,14 @@ static int calc_max_buckets(void)
 static int init_hash_tables(struct dm_snapshot *s)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sector_t hash_size, cow_dev_size, max_buckets;
 =======
 	sector_t hash_size, cow_dev_size, origin_dev_size, max_buckets;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	sector_t hash_size, cow_dev_size, origin_dev_size, max_buckets;
+>>>>>>> master
 
 	/*
 	 * Calculate based on the size of the original volume or
@@ -763,15 +773,21 @@ static int init_hash_tables(struct dm_snapshot *s)
 	 */
 	cow_dev_size = get_dev_size(s->cow->bdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	max_buckets = calc_max_buckets();
 
 	hash_size = cow_dev_size >> s->store->chunk_shift;
 =======
+=======
+>>>>>>> master
 	origin_dev_size = get_dev_size(s->origin->bdev);
 	max_buckets = calc_max_buckets();
 
 	hash_size = min(origin_dev_size, cow_dev_size) >> s->store->chunk_shift;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	hash_size = min(hash_size, max_buckets);
 
 	if (hash_size < 64)
@@ -1132,11 +1148,14 @@ static int snapshot_ctr(struct dm_target *ti, unsigned int argc, char **argv)
 	s->active = 0;
 	atomic_set(&s->pending_exceptions_count, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	s->exception_start_sequence = 0;
 	s->exception_complete_sequence = 0;
 	INIT_LIST_HEAD(&s->out_of_order_list);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	init_rwsem(&s->lock);
 	INIT_LIST_HEAD(&s->list);
 	spin_lock_init(&s->pe_lock);
@@ -1409,6 +1428,7 @@ static void __invalidate_snapshot(struct dm_snapshot *s, int err)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void pending_complete(void *context, int success)
 {
 	struct dm_snap_pending_exception *pe = context;
@@ -1416,6 +1436,10 @@ static void pending_complete(void *context, int success)
 static void pending_complete(struct dm_snap_pending_exception *pe, int success)
 {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static void pending_complete(struct dm_snap_pending_exception *pe, int success)
+{
+>>>>>>> master
 	struct dm_exception *e;
 	struct dm_snapshot *s = pe->snap;
 	struct bio *origin_bios = NULL;
@@ -1466,10 +1490,15 @@ out:
 		full_bio->bi_private = pe->full_bio_private;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	free_pending_exception(pe);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	free_pending_exception(pe);
+
+>>>>>>> master
 	increment_pending_exceptions_done_count();
 
 	up_write(&s->lock);
@@ -1487,6 +1516,7 @@ out:
 
 	retry_origin_bios(s, origin_bios);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	free_pending_exception(pe);
 }
@@ -1499,6 +1529,8 @@ static void complete_exception(struct dm_snap_pending_exception *pe)
 	s->store->type->commit_exception(s->store, &pe->e, !pe->copy_error,
 					 pending_complete, pe);
 =======
+=======
+>>>>>>> master
 }
 
 static void commit_callback(void *context, int success)
@@ -1506,7 +1538,10 @@ static void commit_callback(void *context, int success)
 	struct dm_snap_pending_exception *pe = context;
 
 	pending_complete(pe, success);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /*
@@ -1518,6 +1553,7 @@ static void copy_callback(int read_err, unsigned long write_err, void *context)
 	struct dm_snap_pending_exception *pe = context;
 	struct dm_snapshot *s = pe->snap;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	pe->copy_error = read_err || write_err;
 
@@ -1546,6 +1582,8 @@ static void copy_callback(int read_err, unsigned long write_err, void *context)
 		list_add(&pe->out_of_order_entry, lh);
 	}
 =======
+=======
+>>>>>>> master
 	if (read_err || write_err)
 		pending_complete(pe, 0);
 
@@ -1553,7 +1591,10 @@ static void copy_callback(int read_err, unsigned long write_err, void *context)
 		/* Update the metadata if we are persistent */
 		s->store->type->commit_exception(s->store, &pe->e,
 						 commit_callback, pe);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /*
@@ -1649,10 +1690,13 @@ __find_pending_exception(struct dm_snapshot *s,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pe->exception_sequence = s->exception_start_sequence++;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	dm_insert_exception(&s->pending, &pe->e);
 
 	return pe;
@@ -2293,10 +2337,14 @@ static struct target_type origin_target = {
 static struct target_type snapshot_target = {
 	.name    = "snapshot",
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.version = {1, 12, 0},
 =======
 	.version = {1, 11, 1},
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	.version = {1, 11, 1},
+>>>>>>> master
 	.module  = THIS_MODULE,
 	.ctr     = snapshot_ctr,
 	.dtr     = snapshot_dtr,

@@ -139,10 +139,13 @@ struct ceph_mdsmap *ceph_mdsmap_decode(void **p, void *end)
 					kcalloc(num_export_targets, sizeof(u32),
 						GFP_NOFS);
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if (m->m_info[mds].export_targets == NULL)
 					goto badmem;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				for (j = 0; j < num_export_targets; j++)
 					m->m_info[mds].export_targets[j] =
 					       ceph_decode_32(&pexport_targets);
@@ -176,10 +179,14 @@ bad:
 		       start, end - start, true);
 	ceph_mdsmap_destroy(m);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return ERR_PTR(err);
 =======
 	return ERR_PTR(-EINVAL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return ERR_PTR(-EINVAL);
+>>>>>>> master
 }
 
 void ceph_mdsmap_destroy(struct ceph_mdsmap *m)

@@ -46,9 +46,12 @@
 #define LOOP_CTRL_MINOR		237
 #define VHOST_NET_MINOR		238
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define UHID_MINOR		239
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #define MISC_DYNAMIC_MINOR	255
 
 struct device;

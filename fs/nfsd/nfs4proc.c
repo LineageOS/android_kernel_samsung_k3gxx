@@ -577,7 +577,10 @@ nfsd4_create(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
 	switch (create->cr_type) {
 	case NF4LNK:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 		/* ugh! we have to null-terminate the linktext, or
 		 * vfs_symlink() will choke.  it is always safe to
 		 * null-terminate by brute force, since at worst we
@@ -587,7 +590,10 @@ nfsd4_create(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
 		 */
 		create->cr_linkname[create->cr_linklen] = 0;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		status = nfsd_symlink(rqstp, &cstate->current_fh,
 				      create->cr_name, create->cr_namelen,
 				      create->cr_linkname, create->cr_linklen,
@@ -1204,11 +1210,15 @@ static bool need_wrongsec_check(struct svc_rqst *rqstp)
 	if (argp->opcnt == resp->opcnt)
 		return false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (next->opnum == OP_ILLEGAL)
 		return false;
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+>>>>>>> master
 	nextd = OPDESC(next);
 	/*
 	 * Rest of 2.6.3.1.1: certain operations will return WRONGSEC
@@ -1316,6 +1326,7 @@ nfsd4_proc_compound(struct svc_rqst *rqstp,
 		if (opdesc->op_flags & OP_MODIFIES_SOMETHING) {
 			plen = opdesc->op_rsize_bop(rqstp, op);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			/*
 			 * If there's still another operation, make sure
 			 * we'll have space to at least encode an error:
@@ -1324,6 +1335,8 @@ nfsd4_proc_compound(struct svc_rqst *rqstp,
 				plen += COMPOUND_ERR_SLACK_SPACE;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			op->status = nfsd4_check_resp_size(resp, plen);
 		}
 
@@ -1489,11 +1502,15 @@ static inline u32 nfsd4_setattr_rsize(struct svc_rqst *rqstp, struct nfsd4_op *o
 static inline u32 nfsd4_setclientid_rsize(struct svc_rqst *rqstp, struct nfsd4_op *op)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return (op_encode_hdr_size + 2 + XDR_QUADLEN(NFS4_VERIFIER_SIZE)) *
 								sizeof(__be32);
 =======
 	return (op_encode_hdr_size + 2 + 1024) * sizeof(__be32);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return (op_encode_hdr_size + 2 + 1024) * sizeof(__be32);
+>>>>>>> master
 }
 
 static inline u32 nfsd4_write_rsize(struct svc_rqst *rqstp, struct nfsd4_op *op)

@@ -573,6 +573,7 @@ static const struct dmi_system_id video_vendor_dmi_table[] = {
 		},
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{
 		/*
 		 * Note no video_set_backlight_video_vendor, we must use the
@@ -586,6 +587,8 @@ static const struct dmi_system_id video_vendor_dmi_table[] = {
 	},
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{}
 };
 
@@ -1864,6 +1867,7 @@ static int acer_wmi_enable_lm(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define ACER_WMID_ACCEL_HID	"BST0001"
 
 static acpi_status __init acer_wmi_get_handle_cb(acpi_handle ah, u32 level,
@@ -1883,12 +1887,17 @@ static acpi_status __init acer_wmi_get_handle_cb(acpi_handle ah, u32 level,
 
 	return AE_CTRL_TERMINATE;
 =======
+=======
+>>>>>>> master
 static acpi_status __init acer_wmi_get_handle_cb(acpi_handle ah, u32 level,
 						void *ctx, void **retval)
 {
 	*(acpi_handle *)retval = ah;
 	return AE_OK;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static int __init acer_wmi_get_handle(const char *name, const char *prop,
@@ -1903,11 +1912,16 @@ static int __init acer_wmi_get_handle(const char *name, const char *prop,
 	status = acpi_get_devices(prop, acer_wmi_get_handle_cb,
 					(void *)name, &handle);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ACPI_SUCCESS(status) && handle) {
 =======
 
 	if (ACPI_SUCCESS(status)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	if (ACPI_SUCCESS(status)) {
+>>>>>>> master
 		*ah = handle;
 		return 0;
 	} else {
@@ -1920,10 +1934,14 @@ static int __init acer_wmi_accel_setup(void)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = acer_wmi_get_handle("SENR", ACER_WMID_ACCEL_HID, &gsensor_handle);
 =======
 	err = acer_wmi_get_handle("SENR", "BST0001", &gsensor_handle);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	err = acer_wmi_get_handle("SENR", "BST0001", &gsensor_handle);
+>>>>>>> master
 	if (err)
 		return err;
 
@@ -2295,17 +2313,23 @@ static int __init acer_wmi_init(void)
 		if (err)
 			return err;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		err = acer_wmi_accel_setup();
 		if (err && err != -ENODEV)
 			pr_warn("Cannot enable accelerometer\n");
 	}
 
 =======
+=======
+>>>>>>> master
 	}
 
 	acer_wmi_accel_setup();
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	err = platform_driver_register(&acer_platform_driver);
 	if (err) {
 		pr_err("Unable to register platform driver\n");

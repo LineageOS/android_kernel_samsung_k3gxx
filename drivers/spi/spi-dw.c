@@ -395,11 +395,17 @@ static void pump_transfers(unsigned long data)
 	spi = message->spi;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (unlikely(!chip->clk_div))
 		chip->clk_div = dws->max_freq / chip->speed_hz;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (unlikely(!chip->clk_div))
+		chip->clk_div = dws->max_freq / chip->speed_hz;
+
+>>>>>>> master
 	if (message->state == ERROR_STATE) {
 		message->status = -EIO;
 		goto early_exit;
@@ -442,10 +448,14 @@ static void pump_transfers(unsigned long data)
 		speed = chip->speed_hz;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if ((transfer->speed_hz != speed) || (!chip->clk_div)) {
 =======
 		if (transfer->speed_hz != speed) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (transfer->speed_hz != speed) {
+>>>>>>> master
 			speed = transfer->speed_hz;
 			if (speed > dws->max_freq) {
 				printk(KERN_ERR "MRST SPI0: unsupported"
@@ -685,9 +695,13 @@ static int dw_spi_setup(struct spi_device *spi)
 		return -EINVAL;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	chip->speed_hz = spi->max_speed_hz;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	chip->speed_hz = spi->max_speed_hz;
+>>>>>>> master
 
 	chip->tmode = 0; /* Tx & Rx */
 	/* Default SPI mode is SCPOL = 0, SCPH = 0 */

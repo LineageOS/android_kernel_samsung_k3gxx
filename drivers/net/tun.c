@@ -1111,9 +1111,12 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
 	size_t len = total_len, align = NET_SKB_PAD, linear;
 	struct virtio_net_hdr gso = { 0 };
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int good_linear;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	int offset = 0;
 	int copylen;
 	bool zerocopy = false;
@@ -1122,6 +1125,7 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
 
 	if (!(tun->flags & TUN_NO_PI)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (len < sizeof(pi))
 			return -EINVAL;
 		len -= sizeof(pi);
@@ -1129,6 +1133,10 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
 		if ((len -= sizeof(pi)) > total_len)
 			return -EINVAL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if ((len -= sizeof(pi)) > total_len)
+			return -EINVAL;
+>>>>>>> master
 
 		if (memcpy_fromiovecend((void *)&pi, iv, 0, sizeof(pi)))
 			return -EFAULT;
@@ -1136,6 +1144,7 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
 	}
 
 	if (tun->flags & TUN_VNET_HDR) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		int vnet_hdr_sz = ACCESS_ONCE(tun->vnet_hdr_sz);
 
@@ -1146,6 +1155,10 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
 		if ((len -= tun->vnet_hdr_sz) > total_len)
 			return -EINVAL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if ((len -= tun->vnet_hdr_sz) > total_len)
+			return -EINVAL;
+>>>>>>> master
 
 		if (memcpy_fromiovecend((void *)&gso, iv, offset, sizeof(gso)))
 			return -EFAULT;
@@ -1157,10 +1170,14 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
 		if (gso.hdr_len > len)
 			return -EINVAL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		offset += vnet_hdr_sz;
 =======
 		offset += tun->vnet_hdr_sz;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		offset += tun->vnet_hdr_sz;
+>>>>>>> master
 	}
 
 	if ((tun->flags & TUN_TYPE_MASK) == TUN_TAP_DEV) {
@@ -1171,10 +1188,13 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	good_linear = SKB_MAX_HEAD(align);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (msg_control) {
 		/* There are 256 bytes to be copied in skb, so there is
 		 * enough room for skb expand head in case it is used.
@@ -1182,10 +1202,13 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
 		 */
 		copylen = gso.hdr_len ? gso.hdr_len : GOODCOPY_LEN;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (copylen > good_linear)
 			copylen = good_linear;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		linear = copylen;
 		if (iov_pages(iv, offset + copylen, count) <= MAX_SKB_FRAGS)
 			zerocopy = true;
@@ -1194,6 +1217,7 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
 	if (!zerocopy) {
 		copylen = len;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (gso.hdr_len > good_linear)
 			linear = good_linear;
 		else
@@ -1201,6 +1225,9 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
 =======
 		linear = gso.hdr_len;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		linear = gso.hdr_len;
+>>>>>>> master
 	}
 
 	skb = tun_alloc_skb(tfile, align, copylen, linear, noblock);
@@ -1405,22 +1432,29 @@ static ssize_t tun_put_user(struct tun_struct *tun,
 	struct tun_pi pi = { 0, skb->protocol };
 	ssize_t total = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int vnet_hdr_sz = 0;
 
 	if (tun->flags & TUN_VNET_HDR)
 		vnet_hdr_sz = ACCESS_ONCE(tun->vnet_hdr_sz);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (!(tun->flags & TUN_NO_PI)) {
 		if ((len -= sizeof(pi)) < 0)
 			return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (len < skb->len + vnet_hdr_sz) {
 =======
 		if (len < skb->len) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (len < skb->len) {
+>>>>>>> master
 			/* Packet will be striped */
 			pi.flags |= TUN_PKT_STRIP;
 		}
@@ -1431,6 +1465,7 @@ static ssize_t tun_put_user(struct tun_struct *tun,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (vnet_hdr_sz) {
 		struct virtio_net_hdr gso = { 0 }; /* no info leak */
 		if ((len -= vnet_hdr_sz) < 0)
@@ -1439,6 +1474,11 @@ static ssize_t tun_put_user(struct tun_struct *tun,
 		struct virtio_net_hdr gso = { 0 }; /* no info leak */
 		if ((len -= tun->vnet_hdr_sz) < 0)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (tun->flags & TUN_VNET_HDR) {
+		struct virtio_net_hdr gso = { 0 }; /* no info leak */
+		if ((len -= tun->vnet_hdr_sz) < 0)
+>>>>>>> master
 			return -EINVAL;
 
 		if (skb_is_gso(skb)) {
@@ -1482,10 +1522,14 @@ static ssize_t tun_put_user(struct tun_struct *tun,
 					       sizeof(gso))))
 			return -EFAULT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		total += vnet_hdr_sz;
 =======
 		total += tun->vnet_hdr_sz;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		total += tun->vnet_hdr_sz;
+>>>>>>> master
 	}
 
 
@@ -1573,10 +1617,13 @@ static ssize_t tun_chr_aio_read(struct kiocb *iocb, const struct iovec *iv,
 			  file->f_flags & O_NONBLOCK);
 	ret = min_t(ssize_t, ret, len);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret > 0)
 		iocb->ki_pos = ret;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 out:
 	tun_put(tun);
 	return ret;
@@ -1876,18 +1923,24 @@ static int tun_set_iff(struct net *net, struct file *file, struct ifreq *ifr)
 		err = tun_attach(tun, file);
 		if (err < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			goto err_free_flow;
 
 		err = register_netdevice(tun->dev);
 		if (err < 0)
 			goto err_detach;
 =======
+=======
+>>>>>>> master
 			goto err_free_dev;
 
 		err = register_netdevice(tun->dev);
 		if (err < 0)
 			goto err_free_dev;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		if (device_create_file(&tun->dev->dev, &dev_attr_tun_flags) ||
 		    device_create_file(&tun->dev->dev, &dev_attr_owner) ||
@@ -1939,6 +1992,7 @@ static int tun_set_iff(struct net *net, struct file *file, struct ifreq *ifr)
 	return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 err_detach:
 	tun_detach_all(dev);
 err_free_flow:
@@ -1948,6 +2002,9 @@ err_free_dev:
 =======
  err_free_dev:
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ err_free_dev:
+>>>>>>> master
 	free_netdev(dev);
 	return err;
 }

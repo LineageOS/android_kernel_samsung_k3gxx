@@ -683,15 +683,19 @@ struct psched_ratecfg {
 	u32	mult;
 	u16	overhead;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8	linklayer;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	u8	shift;
 };
 
 static inline u64 psched_l2t_ns(const struct psched_ratecfg *r,
 				unsigned int len)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	len += r->overhead;
 
@@ -702,6 +706,9 @@ static inline u64 psched_l2t_ns(const struct psched_ratecfg *r,
 =======
 	return ((u64)(len + r->overhead) * r->mult) >> r->shift;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return ((u64)(len + r->overhead) * r->mult) >> r->shift;
+>>>>>>> master
 }
 
 extern void psched_ratecfg_precompute(struct psched_ratecfg *r, const struct tc_ratespec *conf);
@@ -713,9 +720,12 @@ static inline void psched_ratecfg_getrate(struct tc_ratespec *res,
 	res->rate = r->rate_bps >> 3;
 	res->overhead = r->overhead;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	res->linklayer = (r->linklayer & TC_LINKLAYER_MASK);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 #endif

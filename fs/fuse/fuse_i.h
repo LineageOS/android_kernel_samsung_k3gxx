@@ -116,10 +116,13 @@ enum {
 	/** Advise readdirplus  */
 	FUSE_I_ADVISE_RDPLUS,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/** An operation changing file size is in progress  */
 	FUSE_I_SIZE_UNSTABLE,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 
 struct fuse_conn;
@@ -352,11 +355,14 @@ struct fuse_req {
 	struct inode *inode;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/** Path used for completing d_canonical_path */
 	struct path *canonical_path;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/** AIO control block */
 	struct fuse_io_priv *io;
 

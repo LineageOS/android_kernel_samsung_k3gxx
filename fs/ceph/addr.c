@@ -214,6 +214,7 @@ static int readpage_nounlock(struct file *filp, struct page *page)
 		SetPageError(page);
 		goto out;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else {
 		if (err < PAGE_CACHE_SIZE) {
 		/* zero fill remainder of page */
@@ -226,6 +227,11 @@ static int readpage_nounlock(struct file *filp, struct page *page)
 		/* zero fill remainder of page */
 		zero_user_segment(page, err, PAGE_CACHE_SIZE);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	} else if (err < PAGE_CACHE_SIZE) {
+		/* zero fill remainder of page */
+		zero_user_segment(page, err, PAGE_CACHE_SIZE);
+>>>>>>> master
 	}
 	SetPageUptodate(page);
 

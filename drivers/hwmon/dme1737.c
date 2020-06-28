@@ -248,12 +248,17 @@ struct dme1737_data {
 	u8  pwm_freq[6];
 	u8  pwm_rr[2];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	s8  zone_low[3];
 	s8  zone_abs[3];
 =======
 	u8  zone_low[3];
 	u8  zone_abs[3];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u8  zone_low[3];
+	u8  zone_abs[3];
+>>>>>>> master
 	u8  zone_hyst[2];
 	u32 alarms;
 };
@@ -283,10 +288,14 @@ static inline int IN_FROM_REG(int reg, int nominal, int res)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int IN_TO_REG(long val, int nominal)
 =======
 static inline int IN_TO_REG(int val, int nominal)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static inline int IN_TO_REG(int val, int nominal)
+>>>>>>> master
 {
 	return clamp_val((val * 192 + nominal / 2) / nominal, 0, 255);
 }
@@ -303,10 +312,14 @@ static inline int TEMP_FROM_REG(int reg, int res)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int TEMP_TO_REG(long val)
 =======
 static inline int TEMP_TO_REG(int val)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static inline int TEMP_TO_REG(int val)
+>>>>>>> master
 {
 	return clamp_val((val < 0 ? val - 500 : val + 500) / 1000, -128, 127);
 }
@@ -322,10 +335,14 @@ static inline int TEMP_RANGE_FROM_REG(int reg)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int TEMP_RANGE_TO_REG(long val, int reg)
 =======
 static int TEMP_RANGE_TO_REG(int val, int reg)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int TEMP_RANGE_TO_REG(int val, int reg)
+>>>>>>> master
 {
 	int i;
 
@@ -349,10 +366,14 @@ static inline int TEMP_HYST_FROM_REG(int reg, int ix)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int TEMP_HYST_TO_REG(long val, int ix, int reg)
 =======
 static inline int TEMP_HYST_TO_REG(int val, int ix, int reg)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static inline int TEMP_HYST_TO_REG(int val, int ix, int reg)
+>>>>>>> master
 {
 	int hyst = clamp_val((val + 500) / 1000, 0, 15);
 
@@ -369,10 +390,14 @@ static inline int FAN_FROM_REG(int reg, int tpc)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int FAN_TO_REG(long val, int tpc)
 =======
 static inline int FAN_TO_REG(int val, int tpc)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static inline int FAN_TO_REG(int val, int tpc)
+>>>>>>> master
 {
 	if (tpc) {
 		return clamp_val(val / tpc, 0, 0xffff);
@@ -405,10 +430,14 @@ static inline int FAN_TYPE_FROM_REG(int reg)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int FAN_TYPE_TO_REG(long val, int reg)
 =======
 static inline int FAN_TYPE_TO_REG(int val, int reg)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static inline int FAN_TYPE_TO_REG(int val, int reg)
+>>>>>>> master
 {
 	int edge = (val == 4) ? 3 : val;
 
@@ -432,10 +461,14 @@ static int FAN_MAX_FROM_REG(int reg)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int FAN_MAX_TO_REG(long val)
 =======
 static int FAN_MAX_TO_REG(int val)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int FAN_MAX_TO_REG(int val)
+>>>>>>> master
 {
 	int i;
 
@@ -494,10 +527,14 @@ static inline int PWM_ACZ_FROM_REG(int reg)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int PWM_ACZ_TO_REG(long val, int reg)
 =======
 static inline int PWM_ACZ_TO_REG(int val, int reg)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static inline int PWM_ACZ_TO_REG(int val, int reg)
+>>>>>>> master
 {
 	int acz = (val == 4) ? 2 : val - 1;
 
@@ -514,10 +551,14 @@ static inline int PWM_FREQ_FROM_REG(int reg)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int PWM_FREQ_TO_REG(long val, int reg)
 =======
 static int PWM_FREQ_TO_REG(int val, int reg)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int PWM_FREQ_TO_REG(int val, int reg)
+>>>>>>> master
 {
 	int i;
 
@@ -552,10 +593,14 @@ static inline int PWM_RR_FROM_REG(int reg, int ix)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int PWM_RR_TO_REG(long val, int ix, int reg)
 =======
 static int PWM_RR_TO_REG(int val, int ix, int reg)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int PWM_RR_TO_REG(int val, int ix, int reg)
+>>>>>>> master
 {
 	int i;
 
@@ -574,10 +619,14 @@ static inline int PWM_RR_EN_FROM_REG(int reg, int ix)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int PWM_RR_EN_TO_REG(long val, int ix, int reg)
 =======
 static inline int PWM_RR_EN_TO_REG(int val, int ix, int reg)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static inline int PWM_RR_EN_TO_REG(int val, int ix, int reg)
+>>>>>>> master
 {
 	int en = (ix == 1) ? 0x80 : 0x08;
 
@@ -1531,6 +1580,7 @@ static ssize_t set_vrm(struct device *dev, struct device_attribute *attr,
 {
 	struct dme1737_data *data = dev_get_drvdata(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long val;
 	int err;
 
@@ -1542,6 +1592,8 @@ static ssize_t set_vrm(struct device *dev, struct device_attribute *attr,
 		return -EINVAL;
 
 =======
+=======
+>>>>>>> master
 	long val;
 	int err;
 
@@ -1549,7 +1601,10 @@ static ssize_t set_vrm(struct device *dev, struct device_attribute *attr,
 	if (err)
 		return err;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	data->vrm = val;
 	return count;
 }

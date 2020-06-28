@@ -33,6 +33,7 @@ struct route_info {
 #define RT6_LOOKUP_F_SRCPREF_COA	0x00000020
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* We do not (yet ?) support IPv6 jumbograms (RFC 2675)
  * Unlike IPv4, hdr->seg_len doesn't include the IPv6 header
  */
@@ -40,6 +41,8 @@ struct route_info {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  * rt6_srcprefs2flags() and rt6_flags2srcprefs() translate
  * between IPV6_ADDR_PREFERENCES socket option values
@@ -203,16 +206,22 @@ static inline int ip6_skb_dst_mtu(struct sk_buff *skb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline struct in6_addr *rt6_nexthop(struct rt6_info *rt)
 {
 	return &rt->rt6i_gateway;
 =======
+=======
+>>>>>>> master
 static inline struct in6_addr *rt6_nexthop(struct rt6_info *rt, struct in6_addr *dest)
 {
 	if (rt->rt6i_flags & RTF_GATEWAY)
 		return &rt->rt6i_gateway;
 	return dest;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 #endif

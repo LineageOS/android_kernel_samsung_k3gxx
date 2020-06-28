@@ -305,9 +305,12 @@ enum {
 	MV5_PHY_CTL		= 0x0C,
 	SATA_IFCFG		= 0x050,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	LP_PHY_CTL		= 0x058,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	MV_M2_PREAMP_MASK	= 0x7e0,
 
@@ -436,9 +439,12 @@ enum {
 	MV_HP_FLAG_SOC		= (1 << 11),	/* SystemOnChip, no PCI */
 	MV_HP_QUIRK_LED_BLINK_EN = (1 << 12),	/* is led blinking enabled? */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	MV_HP_FIX_LP_PHY_CTL	= (1 << 13),	/* fix speed in LP_PHY_CTL ? */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* Port private flags (pp_flags) */
 	MV_PP_FLAG_EDMA_EN	= (1 << 0),	/* is EDMA engine enabled? */
@@ -1362,9 +1368,12 @@ static int mv_scr_write(struct ata_link *link, unsigned int sc_reg_in, u32 val)
 	if (ofs != 0xffffffffU) {
 		void __iomem *addr = mv_ap_base(link->ap) + ofs;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct mv_host_priv *hpriv = link->ap->host->private_data;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		if (sc_reg_in == SCR_CONTROL) {
 			/*
 			 * Workaround for 88SX60x1 FEr SATA#26:
@@ -1382,6 +1391,7 @@ static int mv_scr_write(struct ata_link *link, unsigned int sc_reg_in, u32 val)
 			if ((val & 0xf) == 1 || (readl(addr) & 0xf) == 1)
 				val |= 0xf000;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 			if (hpriv->hp_flags & MV_HP_FIX_LP_PHY_CTL) {
 				void __iomem *lp_phy_addr =
@@ -1396,6 +1406,8 @@ static int mv_scr_write(struct ata_link *link, unsigned int sc_reg_in, u32 val)
 			}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		}
 		writelfl(val, addr);
 		return 0;
@@ -4110,11 +4122,14 @@ static int mv_platform_probe(struct platform_device *pdev)
 	hpriv->base = devm_ioremap(&pdev->dev, res->start,
 				   resource_size(res));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!hpriv->base)
 		return -ENOMEM;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	hpriv->base -= SATAHC0_REG_BASE;
 
 #if defined(CONFIG_HAVE_CLK)
@@ -4145,6 +4160,7 @@ static int mv_platform_probe(struct platform_device *pdev)
 		goto err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * To allow disk hotplug on Armada 370/XP SoCs, the PHY speed must be
 	 * updated in the LP_PHY_CTL register.
@@ -4156,6 +4172,8 @@ static int mv_platform_probe(struct platform_device *pdev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* initialize adapter */
 	rc = mv_init_host(host);
 	if (rc)
@@ -4262,9 +4280,12 @@ static int mv_platform_resume(struct platform_device *pdev)
 #ifdef CONFIG_OF
 static struct of_device_id mv_sata_dt_ids[] = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ .compatible = "marvell,armada-370-sata", },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ .compatible = "marvell,orion-sata", },
 	{},
 };

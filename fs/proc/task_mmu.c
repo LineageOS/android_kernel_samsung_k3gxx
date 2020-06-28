@@ -221,10 +221,14 @@ static void *m_start(struct seq_file *m, loff_t *pos)
 		return ERR_PTR(-ESRCH);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mm = mm_access(priv->task, PTRACE_MODE_READ_FSCREDS);
 =======
 	mm = mm_access(priv->task, PTRACE_MODE_READ);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	mm = mm_access(priv->task, PTRACE_MODE_READ);
+>>>>>>> master
 	if (!mm || IS_ERR(mm))
 		return mm;
 	down_read(&mm->mmap_sem);
@@ -334,14 +338,20 @@ show_map_vma(struct seq_file *m, struct vm_area_struct *vma, int is_pid)
 	/* We don't show the stack guard page in /proc/maps */
 	start = vma->vm_start;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	end = vma->vm_end;
 =======
+=======
+>>>>>>> master
 	if (stack_guard_page_start(vma, start))
 		start += PAGE_SIZE;
 	end = vma->vm_end;
 	if (stack_guard_page_end(vma, end))
 		end -= PAGE_SIZE;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	seq_printf(m, "%08lx-%08lx %c%c%c%c %08llx %02x:%02x %lu %n",
 			start,
@@ -1199,10 +1209,14 @@ static ssize_t pagemap_read(struct file *file, char __user *buf,
 		goto out_task;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mm = mm_access(task, PTRACE_MODE_READ_FSCREDS);
 =======
 	mm = mm_access(task, PTRACE_MODE_READ);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	mm = mm_access(task, PTRACE_MODE_READ);
+>>>>>>> master
 	ret = PTR_ERR(mm);
 	if (!mm || IS_ERR(mm))
 		goto out_free;
@@ -1271,11 +1285,15 @@ out:
 static int pagemap_open(struct inode *inode, struct file *file)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* do not disclose physical addresses to unprivileged
 	   userspace (closes a rowhammer attack vector) */
 =======
 	/* do not disclose physical addresses: attack vector */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	/* do not disclose physical addresses: attack vector */
+>>>>>>> master
 	if (!capable(CAP_SYS_ADMIN))
 		return -EPERM;
 	return 0;

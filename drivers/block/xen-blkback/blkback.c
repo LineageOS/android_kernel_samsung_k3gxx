@@ -650,10 +650,13 @@ static int dispatch_discard_io(struct xen_blkif *blkif,
 	struct phys_req preq;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xen_blkif_get(blkif);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	preq.sector_number = req->u.discard.sector_number;
 	preq.nr_sects      = req->u.discard.nr_sectors;
 
@@ -667,9 +670,13 @@ static int dispatch_discard_io(struct xen_blkif *blkif,
 	blkif->st_ds_req++;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	xen_blkif_get(blkif);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	xen_blkif_get(blkif);
+>>>>>>> master
 	secure = (blkif->vbd.discard_secure &&
 		 (req->u.discard.flag & BLKIF_DISCARD_SECURE)) ?
 		 BLKDEV_DISCARD_SECURE : 0;

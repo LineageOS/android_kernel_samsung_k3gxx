@@ -463,10 +463,13 @@ il3945_is_network_packet(struct il_priv *il, struct ieee80211_hdr *header)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define SMALL_PACKET_SIZE 256
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static void
 il3945_pass_packet_to_mac80211(struct il_priv *il, struct il_rx_buf *rxb,
 			       struct ieee80211_rx_status *stats)
@@ -476,6 +479,7 @@ il3945_pass_packet_to_mac80211(struct il_priv *il, struct il_rx_buf *rxb,
 	struct il3945_rx_frame_hdr *rx_hdr = IL_RX_HDR(pkt);
 	struct il3945_rx_frame_end *rx_end = IL_RX_END(pkt);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 len = le16_to_cpu(rx_hdr->len);
 	struct sk_buff *skb;
 	__le16 fc = hdr->frame_control;
@@ -484,6 +488,8 @@ il3945_pass_packet_to_mac80211(struct il_priv *il, struct il_rx_buf *rxb,
 	/* We received data from the HW, so stop the watchdog */
 	if (unlikely(len + IL39_RX_FRAME_SIZE > fraglen)) {
 =======
+=======
+>>>>>>> master
 	u16 len = le16_to_cpu(rx_hdr->len);
 	struct sk_buff *skb;
 	__le16 fc = hdr->frame_control;
@@ -492,7 +498,10 @@ il3945_pass_packet_to_mac80211(struct il_priv *il, struct il_rx_buf *rxb,
 	if (unlikely
 	    (len + IL39_RX_FRAME_SIZE >
 	     PAGE_SIZE << il->hw_params.rx_page_order)) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		D_DROP("Corruption detected!\n");
 		return;
 	}
@@ -504,16 +513,21 @@ il3945_pass_packet_to_mac80211(struct il_priv *il, struct il_rx_buf *rxb,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	skb = dev_alloc_skb(SMALL_PACKET_SIZE);
 =======
 	skb = dev_alloc_skb(128);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	skb = dev_alloc_skb(128);
+>>>>>>> master
 	if (!skb) {
 		IL_ERR("dev_alloc_skb failed\n");
 		return;
 	}
 
 	if (!il3945_mod_params.sw_crypto)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		il_set_decrypted_flag(il, (struct ieee80211_hdr *)pkt,
 				      le32_to_cpu(rx_end->status), stats);
@@ -531,6 +545,8 @@ il3945_pass_packet_to_mac80211(struct il_priv *il, struct il_rx_buf *rxb,
 		rxb->page = NULL;
 	}
 =======
+=======
+>>>>>>> master
 		il_set_decrypted_flag(il, (struct ieee80211_hdr *)rxb_addr(rxb),
 				      le32_to_cpu(rx_end->status), stats);
 
@@ -538,16 +554,24 @@ il3945_pass_packet_to_mac80211(struct il_priv *il, struct il_rx_buf *rxb,
 			(void *)rx_hdr->payload - (void *)pkt, len,
 			len);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	il_update_stats(il, false, fc, len);
 	memcpy(IEEE80211_SKB_RXCB(skb), stats, sizeof(*stats));
 
 	ieee80211_rx(il->hw, skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	il->alloc_rxb_page--;
 	rxb->page = NULL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	il->alloc_rxb_page--;
+	rxb->page = NULL;
+>>>>>>> master
 }
 
 #define IL_DELAY_NEXT_SCAN_AFTER_ASSOC (HZ*6)

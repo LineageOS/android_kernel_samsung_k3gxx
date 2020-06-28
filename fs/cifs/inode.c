@@ -491,6 +491,7 @@ static int cifs_sfu_mode(struct cifs_fattr *fattr, const unsigned char *path,
 	tcon = tlink_tcon(tlink);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (tcon->ses->server->ops->query_all_EAs == NULL) {
 		cifs_put_tlink(tlink);
 		return -EOPNOTSUPP;
@@ -501,11 +502,16 @@ static int cifs_sfu_mode(struct cifs_fattr *fattr, const unsigned char *path,
 			cifs_sb->local_nls,
 			cifs_sb->mnt_cifs_flags & CIFS_MOUNT_MAP_SPECIAL_CHR);
 =======
+=======
+>>>>>>> master
 	rc = CIFSSMBQAllEAs(xid, tcon, path, "SETFILEBITS",
 			    ea_value, 4 /* size of buf */, cifs_sb->local_nls,
 			    cifs_sb->mnt_cifs_flags &
 				CIFS_MOUNT_MAP_SPECIAL_CHR);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	cifs_put_tlink(tlink);
 	if (rc < 0)
 		return (int)rc;
@@ -840,10 +846,14 @@ inode_has_hashed_dentries(struct inode *inode)
 
 	spin_lock(&inode->i_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hlist_for_each_entry(dentry, &inode->i_dentry, d_u.d_alias) {
 =======
 	hlist_for_each_entry(dentry, &inode->i_dentry, d_alias) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	hlist_for_each_entry(dentry, &inode->i_dentry, d_alias) {
+>>>>>>> master
 		if (!d_unhashed(dentry) || IS_ROOT(dentry)) {
 			spin_unlock(&inode->i_lock);
 			return true;
@@ -907,6 +917,7 @@ struct inode *cifs_root_iget(struct super_block *sb)
 	long rc;
 	struct cifs_tcon *tcon = cifs_sb_master_tcon(cifs_sb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	char *path = NULL;
 	int len;
 
@@ -931,13 +942,18 @@ struct inode *cifs_root_iget(struct super_block *sb)
 	else
 		rc = cifs_get_inode_info(&inode, path, NULL, sb, xid, NULL);
 =======
+=======
+>>>>>>> master
 
 	xid = get_xid();
 	if (tcon->unix_ext)
 		rc = cifs_get_inode_info_unix(&inode, "", sb, xid);
 	else
 		rc = cifs_get_inode_info(&inode, "", NULL, sb, xid, NULL);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (!inode) {
 		inode = ERR_PTR(rc);
@@ -966,9 +982,12 @@ struct inode *cifs_root_iget(struct super_block *sb)
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kfree(path);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* can not call macro free_xid here since in a void func
 	 * TODO: This is no longer true
 	 */
@@ -1682,6 +1701,7 @@ unlink_target:
 	/* Try unlinking the target dentry if it's not negative */
 	if (target_dentry->d_inode && (rc == -EACCES || rc == -EEXIST)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (S_ISDIR(target_dentry->d_inode->i_mode))
 			tmprc = cifs_rmdir(target_dir, target_dentry);
 		else
@@ -1689,12 +1709,16 @@ unlink_target:
 =======
 		tmprc = cifs_unlink(target_dir, target_dentry);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		tmprc = cifs_unlink(target_dir, target_dentry);
+>>>>>>> master
 		if (tmprc)
 			goto cifs_rename_exit;
 		rc = cifs_do_rename(xid, source_dentry, from_name,
 				    target_dentry, to_name);
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* force revalidate to go get info when needed */
 	CIFS_I(source_dir)->time = CIFS_I(target_dir)->time = 0;
@@ -1704,6 +1728,8 @@ unlink_target:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 cifs_rename_exit:
 	kfree(info_buf_source);
 	kfree(from_name);

@@ -64,9 +64,12 @@ struct gpio_bank {
 	struct clk *dbck;
 	u32 mod_usage;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 irq_usage;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	u32 dbck_enable_mask;
 	bool dbck_enabled;
 	struct device *dev;
@@ -91,11 +94,14 @@ struct gpio_bank {
 #define GPIO_MOD_CTRL_BIT	BIT(0)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define BANK_USED(bank) (bank->mod_usage || bank->irq_usage)
 #define LINE_USED(line, offset) (line & (1 << offset))
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int irq_to_gpio(struct gpio_bank *bank, unsigned int gpio_irq)
 {
 	return bank->chip.base + gpio_irq;
@@ -431,6 +437,7 @@ static int _set_gpio_triggering(struct gpio_bank *bank, int gpio,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void _enable_gpio_module(struct gpio_bank *bank, unsigned offset)
 {
 	if (bank->regs->pinctrl) {
@@ -486,12 +493,15 @@ static int gpio_is_input(struct gpio_bank *bank, int mask)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int gpio_irq_type(struct irq_data *d, unsigned type)
 {
 	struct gpio_bank *bank = irq_data_get_irq_chip_data(d);
 	unsigned gpio = 0;
 	int retval;
 	unsigned long flags;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	unsigned offset;
 
@@ -502,6 +512,11 @@ static int gpio_irq_type(struct irq_data *d, unsigned type)
 	if (WARN_ON(!bank->mod_usage))
 		return -EINVAL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	if (WARN_ON(!bank->mod_usage))
+		return -EINVAL;
+>>>>>>> master
 
 #ifdef CONFIG_ARCH_OMAP1
 	if (d->irq > IH_MPUIO_BASE)
@@ -520,6 +535,7 @@ static int gpio_irq_type(struct irq_data *d, unsigned type)
 
 	spin_lock_irqsave(&bank->lock, flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	offset = GPIO_INDEX(bank, gpio);
 	retval = _set_gpio_triggering(bank, offset, type);
 	if (!LINE_USED(bank->mod_usage, offset)) {
@@ -534,6 +550,9 @@ static int gpio_irq_type(struct irq_data *d, unsigned type)
 =======
 	retval = _set_gpio_triggering(bank, GPIO_INDEX(bank, gpio), type);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	retval = _set_gpio_triggering(bank, GPIO_INDEX(bank, gpio), type);
+>>>>>>> master
 	spin_unlock_irqrestore(&bank->lock, flags);
 
 	if (type & (IRQ_TYPE_LEVEL_LOW | IRQ_TYPE_LEVEL_HIGH))
@@ -691,14 +710,19 @@ static int omap_gpio_request(struct gpio_chip *chip, unsigned offset)
 	 * enable the bank module.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!BANK_USED(bank))
 =======
 	if (!bank->mod_usage)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!bank->mod_usage)
+>>>>>>> master
 		pm_runtime_get_sync(bank->dev);
 
 	spin_lock_irqsave(&bank->lock, flags);
 	/* Set trigger to none. You need to enable the desired trigger with
+<<<<<<< HEAD
 <<<<<<< HEAD
 	 * request_irq() or set_irq_type(). Only do this if the IRQ line has
 	 * not already been requested.
@@ -709,6 +733,8 @@ static int omap_gpio_request(struct gpio_chip *chip, unsigned offset)
 	}
 	bank->mod_usage |= 1 << offset;
 =======
+=======
+>>>>>>> master
 	 * request_irq() or set_irq_type().
 	 */
 	_set_gpio_triggering(bank, offset, IRQ_TYPE_NONE);
@@ -733,7 +759,10 @@ static int omap_gpio_request(struct gpio_chip *chip, unsigned offset)
 
 	bank->mod_usage |= 1 << offset;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	spin_unlock_irqrestore(&bank->lock, flags);
 
 	return 0;
@@ -743,12 +772,15 @@ static void omap_gpio_free(struct gpio_chip *chip, unsigned offset)
 {
 	struct gpio_bank *bank = container_of(chip, struct gpio_bank, chip);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long flags;
 
 	spin_lock_irqsave(&bank->lock, flags);
 	bank->mod_usage &= ~(1 << offset);
 	_disable_gpio_module(bank, offset);
 =======
+=======
+>>>>>>> master
 	void __iomem *base = bank->base;
 	unsigned long flags;
 
@@ -774,7 +806,10 @@ static void omap_gpio_free(struct gpio_chip *chip, unsigned offset)
 		bank->context.ctrl = ctrl;
 	}
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	_reset_gpio(bank, bank->chip.base + offset);
 	spin_unlock_irqrestore(&bank->lock, flags);
 
@@ -783,10 +818,14 @@ static void omap_gpio_free(struct gpio_chip *chip, unsigned offset)
 	 * disable the bank module.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!BANK_USED(bank))
 =======
 	if (!bank->mod_usage)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!bank->mod_usage)
+>>>>>>> master
 		pm_runtime_put(bank->dev);
 }
 
@@ -877,6 +916,7 @@ static void gpio_irq_shutdown(struct irq_data *d)
 	unsigned int gpio = irq_to_gpio(bank, d->hwirq);
 	unsigned long flags;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned offset = GPIO_INDEX(bank, gpio);
 
 	spin_lock_irqsave(&bank->lock, flags);
@@ -897,6 +937,12 @@ static void gpio_irq_shutdown(struct irq_data *d)
 	_reset_gpio(bank, gpio);
 	spin_unlock_irqrestore(&bank->lock, flags);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	spin_lock_irqsave(&bank->lock, flags);
+	_reset_gpio(bank, gpio);
+	spin_unlock_irqrestore(&bank->lock, flags);
+>>>>>>> master
 }
 
 static void gpio_ack_irq(struct irq_data *d)
@@ -1029,7 +1075,10 @@ static int gpio_input(struct gpio_chip *chip, unsigned offset)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 static int gpio_is_input(struct gpio_bank *bank, int mask)
 {
 	void __iomem *reg = bank->base + bank->regs->direction;
@@ -1037,7 +1086,10 @@ static int gpio_is_input(struct gpio_bank *bank, int mask)
 	return __raw_readl(reg) & mask;
 }
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int gpio_get(struct gpio_chip *chip, unsigned offset)
 {
 	struct gpio_bank *bank;
@@ -1057,6 +1109,7 @@ static int gpio_output(struct gpio_chip *chip, unsigned offset, int value)
 	struct gpio_bank *bank;
 	unsigned long flags;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int retval = 0;
 
 	bank = container_of(chip, struct gpio_bank, chip);
@@ -1074,6 +1127,8 @@ exit:
 	spin_unlock_irqrestore(&bank->lock, flags);
 	return retval;
 =======
+=======
+>>>>>>> master
 
 	bank = container_of(chip, struct gpio_bank, chip);
 	spin_lock_irqsave(&bank->lock, flags);
@@ -1081,7 +1136,10 @@ exit:
 	_set_gpio_direction(bank, offset, 0);
 	spin_unlock_irqrestore(&bank->lock, flags);
 	return 0;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static int gpio_debounce(struct gpio_chip *chip, unsigned offset,
@@ -1554,10 +1612,14 @@ void omap2_gpio_prepare_for_idle(int pwr_mode)
 
 	list_for_each_entry(bank, &omap_gpio_list, node) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!BANK_USED(bank) || !bank->loses_context)
 =======
 		if (!bank->mod_usage || !bank->loses_context)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (!bank->mod_usage || !bank->loses_context)
+>>>>>>> master
 			continue;
 
 		bank->power_mode = pwr_mode;
@@ -1572,10 +1634,14 @@ void omap2_gpio_resume_after_idle(void)
 
 	list_for_each_entry(bank, &omap_gpio_list, node) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!BANK_USED(bank) || !bank->loses_context)
 =======
 		if (!bank->mod_usage || !bank->loses_context)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (!bank->mod_usage || !bank->loses_context)
+>>>>>>> master
 			continue;
 
 		pm_runtime_get_sync(bank->dev);

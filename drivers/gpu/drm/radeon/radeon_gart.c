@@ -252,6 +252,7 @@ void radeon_gart_unbind(struct radeon_device *rdev, unsigned offset,
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (rdev->gart.ptr) {
 		mb();
 		radeon_gart_tlb_flush(rdev);
@@ -260,6 +261,10 @@ void radeon_gart_unbind(struct radeon_device *rdev, unsigned offset,
 	mb();
 	radeon_gart_tlb_flush(rdev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	mb();
+	radeon_gart_tlb_flush(rdev);
+>>>>>>> master
 }
 
 /**
@@ -302,6 +307,7 @@ int radeon_gart_bind(struct radeon_device *rdev, unsigned offset,
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (rdev->gart.ptr) {
 		mb();
 		radeon_gart_tlb_flush(rdev);
@@ -310,6 +316,10 @@ int radeon_gart_bind(struct radeon_device *rdev, unsigned offset,
 	mb();
 	radeon_gart_tlb_flush(rdev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	mb();
+	radeon_gart_tlb_flush(rdev);
+>>>>>>> master
 	return 0;
 }
 
@@ -1172,10 +1182,13 @@ int radeon_vm_bo_update_pte(struct radeon_device *rdev,
 
 	r = radeon_ib_get(rdev, ridx, &ib, NULL, ndw * 4);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (r)
 		return r;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ib.length_dw = 0;
 
 	r = radeon_vm_update_pdes(rdev, vm, &ib, bo_va->soffset, bo_va->eoffset);

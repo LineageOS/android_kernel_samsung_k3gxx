@@ -544,10 +544,14 @@
 			reg = <0x10800000 0x1000>;
 			interrupts = <0 33 0>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			clocks = <&clock 346>;
 =======
 			clocks = <&clock 271>;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			clocks = <&clock 271>;
+>>>>>>> master
 			clock-names = "apb_pclk";
 			#dma-cells = <1>;
 			#dma-channels = <8>;

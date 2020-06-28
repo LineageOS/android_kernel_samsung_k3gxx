@@ -308,6 +308,7 @@ static void vhost_zerocopy_callback(struct ubuf_info *ubuf, bool success)
 	int cnt = atomic_read(&ubufs->kref.refcount);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* set len to mark this desc buffers done DMA */
 	vq->heads[ubuf->desc].len = success ?
 		VHOST_DMA_DONE_LEN : VHOST_DMA_FAILED_LEN;
@@ -315,6 +316,8 @@ static void vhost_zerocopy_callback(struct ubuf_info *ubuf, bool success)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/*
 	 * Trigger polling thread if guest stopped submitting new buffers:
 	 * in this case, the refcount after decrement will eventually reach 1
@@ -326,12 +329,18 @@ static void vhost_zerocopy_callback(struct ubuf_info *ubuf, bool success)
 	if (cnt <= 2 || !(cnt % 16))
 		vhost_poll_queue(&vq->poll);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	/* set len to mark this desc buffers done DMA */
 	vq->heads[ubuf->desc].len = success ?
 		VHOST_DMA_DONE_LEN : VHOST_DMA_FAILED_LEN;
 	vhost_net_ubuf_put(ubufs);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /* Expects to be always run from workqueue - which acts as
@@ -524,6 +533,7 @@ static int get_rx_bufs(struct vhost_virtqueue *vq,
 			goto err;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		r = vhost_get_vq_desc(vq->dev, vq, vq->iov + seg,
 				      ARRAY_SIZE(vq->iov) - seg, &out,
 				      &in, log, log_num);
@@ -536,6 +546,11 @@ static int get_rx_bufs(struct vhost_virtqueue *vq,
 				      ARRAY_SIZE(vq->iov) - seg, &out,
 				      &in, log, log_num);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		d = vhost_get_vq_desc(vq->dev, vq, vq->iov + seg,
+				      ARRAY_SIZE(vq->iov) - seg, &out,
+				      &in, log, log_num);
+>>>>>>> master
 		if (d == vq->num) {
 			r = 0;
 			goto err;
@@ -561,6 +576,7 @@ static int get_rx_bufs(struct vhost_virtqueue *vq,
 	if (unlikely(log))
 		*log_num = nlogs;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* Detect overrun */
 	if (unlikely(datalen > 0)) {
@@ -569,6 +585,8 @@ static int get_rx_bufs(struct vhost_virtqueue *vq,
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return headcount;
 err:
 	vhost_discard_vq_desc(vq, headcount);
@@ -625,6 +643,7 @@ static void handle_rx(struct vhost_net *net)
 		if (unlikely(headcount < 0))
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* On overrun, truncate and discard */
 		if (unlikely(headcount > UIO_MAXIOV)) {
 			msg.msg_iovlen = 1;
@@ -635,6 +654,8 @@ static void handle_rx(struct vhost_net *net)
 		}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		/* OK, now we need to know about added descriptors. */
 		if (!headcount) {
 			if (unlikely(vhost_enable_notify(&net->dev, vq))) {

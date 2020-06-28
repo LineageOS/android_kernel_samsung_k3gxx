@@ -181,10 +181,14 @@ static int s5h1420_send_master_cmd (struct dvb_frontend* fe,
 
 	dprintk("enter %s\n", __func__);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (cmd->msg_len > sizeof(cmd->msg))
 =======
 	if (cmd->msg_len > 8)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (cmd->msg_len > 8)
+>>>>>>> master
 		return -EINVAL;
 
 	/* setup for DISEQC */
@@ -841,6 +845,7 @@ static int s5h1420_tuner_i2c_tuner_xfer(struct i2c_adapter *i2c_adap, struct i2c
 {
 	struct s5h1420_state *state = i2c_get_adapdata(i2c_adap);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct i2c_msg m[3];
 	u8 tx_open[2] = { CON_1, state->CON_1_val | 1 }; /* repeater stops once there was a stop condition */
 
@@ -856,6 +861,11 @@ static int s5h1420_tuner_i2c_tuner_xfer(struct i2c_adapter *i2c_adap, struct i2c
 	u8 tx_open[2] = { CON_1, state->CON_1_val | 1 }; /* repeater stops once there was a stop condition */
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct i2c_msg m[1 + num];
+	u8 tx_open[2] = { CON_1, state->CON_1_val | 1 }; /* repeater stops once there was a stop condition */
+
+>>>>>>> master
 	memset(m, 0, sizeof(struct i2c_msg) * (1 + num));
 
 	m[0].addr = state->config->demod_address;
@@ -865,10 +875,14 @@ static int s5h1420_tuner_i2c_tuner_xfer(struct i2c_adapter *i2c_adap, struct i2c
 	memcpy(&m[1], msg, sizeof(struct i2c_msg) * num);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return i2c_transfer(state->i2c, m, 1 + num) == 1 + num ? num : -EIO;
 =======
 	return i2c_transfer(state->i2c, m, 1+num) == 1 + num ? num : -EIO;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return i2c_transfer(state->i2c, m, 1+num) == 1 + num ? num : -EIO;
+>>>>>>> master
 }
 
 static struct i2c_algorithm s5h1420_tuner_i2c_algo = {

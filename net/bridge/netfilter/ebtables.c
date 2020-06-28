@@ -1045,15 +1045,21 @@ static int do_replace_finish(struct net *net, struct ebt_replace *repl,
 	   copy_to_user(repl->counters, counterstmp,
 	   repl->num_counters * sizeof(struct ebt_counter))) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Silent error, can't fail, new table is already in place */
 		net_warn_ratelimited("ebtables: counters copy to user failed while replacing table\n");
 	}
 =======
+=======
+>>>>>>> master
 		ret = -EFAULT;
 	}
 	else
 		ret = 0;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* decrease module count and free resources */
 	EBT_ENTRY_ITERATE(table->entries, table->entries_size,

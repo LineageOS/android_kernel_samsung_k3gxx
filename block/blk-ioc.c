@@ -145,11 +145,15 @@ void put_io_context(struct io_context *ioc)
 		spin_lock_irqsave(&ioc->lock, flags);
 		if (!hlist_empty(&ioc->icq_list))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			queue_work(system_power_efficient_wq,
 					&ioc->release_work);
 =======
 			schedule_work(&ioc->release_work);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			schedule_work(&ioc->release_work);
+>>>>>>> master
 		else
 			free_ioc = true;
 		spin_unlock_irqrestore(&ioc->lock, flags);

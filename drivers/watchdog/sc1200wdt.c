@@ -410,6 +410,7 @@ static int __init sc1200wdt_init(void)
 	/* now that the user has specified an IO port and we haven't detected
 	 * any devices, disable pnp support */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (isapnp)
 		pnp_unregister_driver(&scl200wdt_pnp_driver);
 	isapnp = 0;
@@ -417,6 +418,10 @@ static int __init sc1200wdt_init(void)
 	isapnp = 0;
 	pnp_unregister_driver(&scl200wdt_pnp_driver);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	isapnp = 0;
+	pnp_unregister_driver(&scl200wdt_pnp_driver);
+>>>>>>> master
 #endif
 
 	if (!request_region(io, io_len, SC1200_MODULE_NAME)) {

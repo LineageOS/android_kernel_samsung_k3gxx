@@ -241,6 +241,7 @@ struct name_list {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct nfs4_dir_ctx {
 	struct dir_context ctx;
 	struct list_head names;
@@ -248,15 +249,21 @@ struct nfs4_dir_ctx {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int
 nfsd4_build_namelist(void *arg, const char *name, int namlen,
 		loff_t offset, u64 ino, unsigned int d_type)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct nfs4_dir_ctx *ctx = arg;
 =======
 	struct list_head *names = arg;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct list_head *names = arg;
+>>>>>>> master
 	struct name_list *entry;
 
 	if (namlen != HEXDIR_LEN - 1)
@@ -267,10 +274,14 @@ nfsd4_build_namelist(void *arg, const char *name, int namlen,
 	memcpy(entry->name, name, HEXDIR_LEN - 1);
 	entry->name[HEXDIR_LEN - 1] = '\0';
 <<<<<<< HEAD
+<<<<<<< HEAD
 	list_add(&entry->list, &ctx->names);
 =======
 	list_add(&entry->list, names);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	list_add(&entry->list, names);
+>>>>>>> master
 	return 0;
 }
 
@@ -280,10 +291,14 @@ nfsd4_list_rec_dir(recdir_func *f, struct nfsd_net *nn)
 	const struct cred *original_cred;
 	struct dentry *dir = nn->rec_file->f_path.dentry;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct nfs4_dir_ctx ctx;
 =======
 	LIST_HEAD(names);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	LIST_HEAD(names);
+>>>>>>> master
 	int status;
 
 	status = nfs4_save_creds(&original_cred);
@@ -297,6 +312,7 @@ nfsd4_list_rec_dir(recdir_func *f, struct nfsd_net *nn)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	INIT_LIST_HEAD(&ctx.names);	
 	ctx.ctx.actor = nfsd4_build_namelist;
 	status = iterate_dir(nn->rec_file, &ctx.ctx);
@@ -305,12 +321,17 @@ nfsd4_list_rec_dir(recdir_func *f, struct nfsd_net *nn)
 		struct name_list *entry;
 		entry = list_entry(ctx.names.next, struct name_list, list);
 =======
+=======
+>>>>>>> master
 	status = vfs_readdir(nn->rec_file, nfsd4_build_namelist, &names);
 	mutex_lock_nested(&dir->d_inode->i_mutex, I_MUTEX_PARENT);
 	while (!list_empty(&names)) {
 		struct name_list *entry;
 		entry = list_entry(names.next, struct name_list, list);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		if (!status) {
 			struct dentry *dentry;
 			dentry = lookup_one_len(entry->name, dir, HEXDIR_LEN-1);

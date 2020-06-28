@@ -22,6 +22,7 @@
 #define WMFW_MAX_COEFF_DESCR_NAME 256
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define WMFW_CTL_FLAG_SYS         0x8000
 #define WMFW_CTL_FLAG_VOLATILE    0x0004
 #define WMFW_CTL_FLAG_WRITEABLE   0x0002
@@ -29,6 +30,8 @@
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 struct wmfw_header {
 	char magic[4];
 	__le32 len;
@@ -76,10 +79,14 @@ struct wmfw_adsp1_id_hdr {
 	__be32 zm;
 	__be32 dm;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__be32 n_algs;
 =======
 	__be32 algs;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	__be32 algs;
+>>>>>>> master
 } __packed;
 
 struct wmfw_adsp2_id_hdr {
@@ -88,10 +95,14 @@ struct wmfw_adsp2_id_hdr {
 	__be32 xm;
 	__be32 ym;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__be32 n_algs;
 =======
 	__be32 algs;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	__be32 algs;
+>>>>>>> master
 } __packed;
 
 struct wmfw_alg_hdr {
@@ -113,10 +124,14 @@ struct wmfw_adsp2_alg_hdr {
 } __packed;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct wmfw_adsp_alg_data {
 =======
 struct wmfw_adsp2_alg_data {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+struct wmfw_adsp2_alg_data {
+>>>>>>> master
 	__le32 id;
 	u8 name[WMFW_MAX_ALG_NAME];
 	u8 descr[WMFW_MAX_ALG_DESCR_NAME];
@@ -124,6 +139,7 @@ struct wmfw_adsp2_alg_data {
 	u8 data[];
 } __packed;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 struct wmfw_adsp_coeff_data {
 	struct {
@@ -136,6 +152,8 @@ struct wmfw_adsp_coeff_data {
 	__le16 ctl_type;
 	__le16 flags;
 =======
+=======
+>>>>>>> master
 struct wmfw_adsp2_coeff_data_hdr {
 	union {
 		__le32 type;
@@ -148,7 +166,10 @@ struct wmfw_adsp2_coeff_data {
 	u8 name[WMFW_MAX_COEFF_NAME];
 	u8 descr[WMFW_MAX_COEFF_DESCR_NAME];
 	__le32 type;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	__le32 len;
 	u8 data[];
 } __packed;

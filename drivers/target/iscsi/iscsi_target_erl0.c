@@ -867,6 +867,7 @@ void iscsit_connection_reinstatement_rcfr(struct iscsi_conn *conn)
 	spin_unlock_bh(&conn->state_lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (conn->tx_thread && conn->tx_thread_active)
 		send_sig(SIGINT, conn->tx_thread, 1);
 	if (conn->rx_thread && conn->rx_thread_active)
@@ -874,6 +875,9 @@ void iscsit_connection_reinstatement_rcfr(struct iscsi_conn *conn)
 =======
 	iscsi_thread_set_force_reinstatement(conn);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	iscsi_thread_set_force_reinstatement(conn);
+>>>>>>> master
 
 sleep:
 	wait_for_completion(&conn->conn_wait_rcfr_comp);
@@ -899,16 +903,22 @@ void iscsit_cause_connection_reinstatement(struct iscsi_conn *conn, int sleep)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (conn->tx_thread && conn->tx_thread_active)
 		send_sig(SIGINT, conn->tx_thread, 1);
 	if (conn->rx_thread && conn->rx_thread_active)
 		send_sig(SIGINT, conn->rx_thread, 1);
 =======
+=======
+>>>>>>> master
 	if (iscsi_thread_set_force_reinstatement(conn) < 0) {
 		spin_unlock_bh(&conn->state_lock);
 		return;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	atomic_set(&conn->connection_reinstatement, 1);
 	if (!sleep) {

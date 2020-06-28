@@ -54,6 +54,7 @@ nf_ct_ext_create(struct nf_ct_ext **ext, enum nf_ct_ext_id id,
 	rcu_read_lock();
 	t = rcu_dereference(nf_ct_ext_types[id]);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!t) {
 		rcu_read_unlock();
 		return NULL;
@@ -62,6 +63,9 @@ nf_ct_ext_create(struct nf_ct_ext **ext, enum nf_ct_ext_id id,
 =======
 	BUG_ON(t == NULL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	BUG_ON(t == NULL);
+>>>>>>> master
 	off = ALIGN(sizeof(struct nf_ct_ext), t->align);
 	len = off + t->len + var_alloc_len;
 	alloc_size = t->alloc_size + var_alloc_len;
@@ -97,6 +101,7 @@ void *__nf_ct_ext_add_length(struct nf_conn *ct, enum nf_ct_ext_id id,
 	rcu_read_lock();
 	t = rcu_dereference(nf_ct_ext_types[id]);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!t) {
 		rcu_read_unlock();
 		return NULL;
@@ -104,6 +109,9 @@ void *__nf_ct_ext_add_length(struct nf_conn *ct, enum nf_ct_ext_id id,
 =======
 	BUG_ON(t == NULL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	BUG_ON(t == NULL);
+>>>>>>> master
 
 	newoff = ALIGN(old->len, t->align);
 	newlen = newoff + t->len + var_alloc_len;
@@ -202,9 +210,13 @@ void nf_ct_extend_unregister(struct nf_ct_ext_type *type)
 	update_alloc_size(type);
 	mutex_unlock(&nf_ct_ext_type_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	synchronize_rcu();
 =======
 	rcu_barrier(); /* Wait for completion of call_rcu()'s */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	rcu_barrier(); /* Wait for completion of call_rcu()'s */
+>>>>>>> master
 }
 EXPORT_SYMBOL_GPL(nf_ct_extend_unregister);

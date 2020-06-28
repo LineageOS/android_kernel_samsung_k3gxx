@@ -436,10 +436,14 @@ static inline int cgw_register_filter(struct cgw_job *gwj)
 	return can_rx_register(gwj->src.dev, gwj->ccgw.filter.can_id,
 			       gwj->ccgw.filter.can_mask, can_can_gw_rcv,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			       gwj, "gw", NULL);
 =======
 			       gwj, "gw");
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			       gwj, "gw");
+>>>>>>> master
 }
 
 static inline void cgw_unregister_filter(struct cgw_job *gwj)
@@ -789,10 +793,14 @@ static int cgw_create_job(struct sk_buff *skb,  struct nlmsghdr *nlh)
 	int err = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!netlink_capable(skb, CAP_NET_ADMIN))
 =======
 	if (!capable(CAP_NET_ADMIN))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!capable(CAP_NET_ADMIN))
+>>>>>>> master
 		return -EPERM;
 
 	if (nlmsg_len(nlh) < sizeof(*r))
@@ -885,10 +893,14 @@ static int cgw_remove_job(struct sk_buff *skb,  struct nlmsghdr *nlh)
 	int err = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!netlink_capable(skb, CAP_NET_ADMIN))
 =======
 	if (!capable(CAP_NET_ADMIN))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!capable(CAP_NET_ADMIN))
+>>>>>>> master
 		return -EPERM;
 
 	if (nlmsg_len(nlh) < sizeof(*r))

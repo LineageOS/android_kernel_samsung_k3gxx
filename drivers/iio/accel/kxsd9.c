@@ -82,10 +82,14 @@ static int kxsd9_write_scale(struct iio_dev *indio_dev, int micro)
 	mutex_lock(&st->buf_lock);
 	ret = spi_w8r8(st->us, KXSD9_READ(KXSD9_REG_CTRL_C));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret < 0)
 =======
 	if (ret)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (ret)
+>>>>>>> master
 		goto error_ret;
 	st->tx[0] = KXSD9_WRITE(KXSD9_REG_CTRL_C);
 	st->tx[1] = (ret & ~KXSD9_FS_MASK) | i;
@@ -117,6 +121,7 @@ static int kxsd9_read(struct iio_dev *indio_dev, u8 address)
 	st->tx[0] = KXSD9_READ(address);
 	ret = spi_sync_transfer(st->us, xfers, ARRAY_SIZE(xfers));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!ret)
 		ret = (((u16)(st->rx[0])) << 8) | (st->rx[1] & 0xF0);
 	mutex_unlock(&st->buf_lock);
@@ -126,6 +131,11 @@ static int kxsd9_read(struct iio_dev *indio_dev, u8 address)
 		return ret;
 	return (((u16)(st->rx[0])) << 8) | (st->rx[1] & 0xF0);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (ret)
+		return ret;
+	return (((u16)(st->rx[0])) << 8) | (st->rx[1] & 0xF0);
+>>>>>>> master
 }
 
 static IIO_CONST_ATTR(accel_scale_available,
@@ -171,6 +181,7 @@ static int kxsd9_read_raw(struct iio_dev *indio_dev,
 			goto error_ret;
 		*val = ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = IIO_VAL_INT;
 		break;
 	case IIO_CHAN_INFO_SCALE:
@@ -179,12 +190,17 @@ static int kxsd9_read_raw(struct iio_dev *indio_dev,
 			goto error_ret;
 		*val = 0;
 =======
+=======
+>>>>>>> master
 		break;
 	case IIO_CHAN_INFO_SCALE:
 		ret = spi_w8r8(st->us, KXSD9_READ(KXSD9_REG_CTRL_C));
 		if (ret)
 			goto error_ret;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		*val2 = kxsd9_micro_scales[ret & KXSD9_FS_MASK];
 		ret = IIO_VAL_INT_PLUS_MICRO;
 		break;

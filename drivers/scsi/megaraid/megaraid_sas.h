@@ -301,10 +301,13 @@ enum MR_EVT_ARGS {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 #define SGE_BUFFER_SIZE	4096
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  * define constants for device list query options
  */
@@ -1301,9 +1304,13 @@ struct megasas_instance {
 	dma_addr_t reply_queue_h;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned long base_addr;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned long base_addr;
+>>>>>>> master
 	struct megasas_register_set __iomem *reg_set;
 
 	struct megasas_pd_list          pd_list[MEGASAS_MAX_PD];
@@ -1410,10 +1417,14 @@ struct megasas_instance_template {
 
 #define MEGASAS_IS_LOGICAL(scp)						\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	((scp->device->channel < MEGASAS_MAX_PD_CHANNELS) ? 0 : 1)
 =======
 	(scp->device->channel < MEGASAS_MAX_PD_CHANNELS) ? 0 : 1
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	(scp->device->channel < MEGASAS_MAX_PD_CHANNELS) ? 0 : 1
+>>>>>>> master
 
 #define MEGASAS_DEV_INDEX(inst, scp)					\
 	((scp->device->channel % 2) * MEGASAS_MAX_DEV_PER_CHANNEL) + 	\

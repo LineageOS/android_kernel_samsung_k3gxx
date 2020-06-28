@@ -762,10 +762,14 @@ u64 CARDqGetNextTBTT(u64 qwTSF, u16 wBeaconInterval)
     uBeaconInterval = wBeaconInterval * 1024;
     // Next TBTT = ((local_current_TSF / beacon_interval) + 1 ) * beacon_interval
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uLowNextTBTT = ((qwTSF & 0xffffffffULL) >> 10) << 10;
 =======
 	uLowNextTBTT = ((qwTSF & 0xffffffffU) >> 10) << 10;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	uLowNextTBTT = ((qwTSF & 0xffffffffU) >> 10) << 10;
+>>>>>>> master
 	uLowRemain = (uLowNextTBTT) % uBeaconInterval;
 	uHighRemain = ((0x80000000 % uBeaconInterval) * 2 * (u32)(qwTSF >> 32))
 		% uBeaconInterval;

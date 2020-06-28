@@ -1256,16 +1256,23 @@ void ath_tx_aggr_sleep(struct ieee80211_sta *sta, struct ath_softc *sc,
 	     tidno < IEEE80211_NUM_TIDS; tidno++, tid++) {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		if (!tid->sched)
 			continue;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (!tid->sched)
+			continue;
+
+>>>>>>> master
 		ac = tid->ac;
 		txq = ac->txq;
 
 		ath_txq_lock(sc, txq);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (!tid->sched) {
 			ath_txq_unlock(sc, txq);
@@ -1274,6 +1281,8 @@ void ath_tx_aggr_sleep(struct ieee80211_sta *sta, struct ath_softc *sc,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		buffered = !skb_queue_empty(&tid->buf_q);
 
 		tid->sched = false;
@@ -2399,9 +2408,12 @@ void ath_tx_node_init(struct ath_softc *sc, struct ath_node *an)
 	     acno < IEEE80211_NUM_ACS; acno++, ac++) {
 		ac->sched    = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ac->clear_ps_filter = true;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		ac->txq = sc->tx.txq_map[acno];
 		INIT_LIST_HEAD(&ac->tid_q);
 	}

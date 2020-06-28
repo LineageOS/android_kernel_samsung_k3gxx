@@ -1076,9 +1076,13 @@ static void ftl_add_mtd(struct mtd_blktrans_ops *tr, struct mtd_info *mtd)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ftl_freepart(partition);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ftl_freepart(partition);
+>>>>>>> master
 	kfree(partition);
 }
 

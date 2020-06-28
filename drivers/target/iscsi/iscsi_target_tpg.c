@@ -139,10 +139,14 @@ struct iscsi_portal_group *iscsit_get_tpg_from_np(
 
 		spin_lock(&tpg->tpg_state_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (tpg->tpg_state != TPG_STATE_ACTIVE) {
 =======
 		if (tpg->tpg_state == TPG_STATE_FREE) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (tpg->tpg_state == TPG_STATE_FREE) {
+>>>>>>> master
 			spin_unlock(&tpg->tpg_state_lock);
 			continue;
 		}
@@ -180,11 +184,15 @@ void iscsit_put_tpg(struct iscsi_portal_group *tpg)
 static void iscsit_clear_tpg_np_login_thread(
 	struct iscsi_tpg_np *tpg_np,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct iscsi_portal_group *tpg,
 	bool shutdown)
 =======
 	struct iscsi_portal_group *tpg)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct iscsi_portal_group *tpg)
+>>>>>>> master
 {
 	if (!tpg_np->tpg_np) {
 		pr_err("struct iscsi_tpg_np->tpg_np is NULL!\n");
@@ -192,10 +200,13 @@ static void iscsit_clear_tpg_np_login_thread(
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (shutdown)
 		tpg_np->tpg_np->enabled = false;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	iscsit_reset_np_thread(tpg_np->tpg_np, tpg_np, tpg);
 }
 
@@ -212,10 +223,14 @@ void iscsit_clear_tpg_np_login_threads(
 		}
 		spin_unlock(&tpg->tpg_np_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		iscsit_clear_tpg_np_login_thread(tpg_np, tpg, false);
 =======
 		iscsit_clear_tpg_np_login_thread(tpg_np, tpg);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		iscsit_clear_tpg_np_login_thread(tpg_np, tpg);
+>>>>>>> master
 		spin_lock(&tpg->tpg_np_lock);
 	}
 	spin_unlock(&tpg->tpg_np_lock);
@@ -272,9 +287,13 @@ err_out:
 		tpg->param_list = NULL;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	kfree(tpg);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	kfree(tpg);
+>>>>>>> master
 	return -ENOMEM;
 }
 
@@ -542,10 +561,14 @@ static int iscsit_tpg_release_np(
 	struct iscsi_np *np)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	iscsit_clear_tpg_np_login_thread(tpg_np, tpg, true);
 =======
 	iscsit_clear_tpg_np_login_thread(tpg_np, tpg);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	iscsit_clear_tpg_np_login_thread(tpg_np, tpg);
+>>>>>>> master
 
 	pr_debug("CORE[%s] - Removed Network Portal: %s:%hu,%hu on %s\n",
 		tpg->tpg_tiqn->tiqn, np->np_ip, np->np_port, tpg->tpgt,

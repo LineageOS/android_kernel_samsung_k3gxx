@@ -11,6 +11,7 @@
 #include <net/secure_seq.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_IPV6) || IS_ENABLED(CONFIG_INET)
 #define NET_SECRET_SIZE (MD5_MESSAGE_BYTES / 4)
 
@@ -33,13 +34,18 @@ static void net_secret_init(void)
 }
 #endif
 =======
+=======
+>>>>>>> master
 static u32 net_secret[MD5_MESSAGE_BYTES / 4] ____cacheline_aligned;
 
 void net_secret_init(void)
 {
 	get_random_bytes(net_secret, sizeof(net_secret));
 }
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 #ifdef CONFIG_INET
 static u32 seq_scale(u32 seq)
@@ -67,9 +73,12 @@ __u32 secure_tcpv6_sequence_number(const __be32 *saddr, const __be32 *daddr,
 	u32 i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	net_secret_init();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	memcpy(hash, saddr, 16);
 	for (i = 0; i < 4; i++)
 		secret[i] = net_secret[i] + (__force u32)daddr[i];
@@ -92,9 +101,12 @@ u32 secure_ipv6_port_ephemeral(const __be32 *saddr, const __be32 *daddr,
 	u32 i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	net_secret_init();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	memcpy(hash, saddr, 16);
 	for (i = 0; i < 4; i++)
 		secret[i] = net_secret[i] + (__force u32) daddr[i];
@@ -111,7 +123,10 @@ EXPORT_SYMBOL(secure_ipv6_port_ephemeral);
 
 #ifdef CONFIG_INET
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 __u32 secure_ip_id(__be32 daddr)
 {
 	u32 hash[MD5_DIGEST_WORDS];
@@ -135,7 +150,10 @@ __u32 secure_ipv6_id(const __be32 daddr[4])
 
 	return hash[0];
 }
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 __u32 secure_tcp_sequence_number(__be32 saddr, __be32 daddr,
 				 __be16 sport, __be16 dport)
@@ -143,9 +161,12 @@ __u32 secure_tcp_sequence_number(__be32 saddr, __be32 daddr,
 	u32 hash[MD5_DIGEST_WORDS];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	net_secret_init();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	hash[0] = (__force u32)saddr;
 	hash[1] = (__force u32)daddr;
 	hash[2] = ((__force u16)sport << 16) + (__force u16)dport;
@@ -161,9 +182,12 @@ u32 secure_ipv4_port_ephemeral(__be32 saddr, __be32 daddr, __be16 dport)
 	u32 hash[MD5_DIGEST_WORDS];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	net_secret_init();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	hash[0] = (__force u32)saddr;
 	hash[1] = (__force u32)daddr;
 	hash[2] = (__force u32)dport ^ net_secret[14];
@@ -184,9 +208,12 @@ u64 secure_dccp_sequence_number(__be32 saddr, __be32 daddr,
 	u64 seq;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	net_secret_init();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	hash[0] = (__force u32)saddr;
 	hash[1] = (__force u32)daddr;
 	hash[2] = ((__force u16)sport << 16) + (__force u16)dport;
@@ -212,9 +239,12 @@ u64 secure_dccpv6_sequence_number(__be32 *saddr, __be32 *daddr,
 	u32 i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	net_secret_init();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	memcpy(hash, saddr, 16);
 	for (i = 0; i < 4; i++)
 		secret[i] = net_secret[i] + daddr[i];

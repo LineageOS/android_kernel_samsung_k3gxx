@@ -29,11 +29,15 @@ struct serio {
 	struct serio_device_id id;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Protects critical sections from port's interrupt handler */
 	spinlock_t lock;
 =======
 	spinlock_t lock;		/* protects critical sections from port's interrupt handler */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	spinlock_t lock;		/* protects critical sections from port's interrupt handler */
+>>>>>>> master
 
 	int (*write)(struct serio *, unsigned char);
 	int (*open)(struct serio *);
@@ -42,6 +46,7 @@ struct serio {
 	void (*stop)(struct serio *);
 
 	struct serio *parent;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Entry in parent->children list */
 	struct list_head child_node;
@@ -57,17 +62,23 @@ struct serio {
 	/* Protects serio->drv so attributes can pin current driver */
 	struct mutex drv_mutex;
 =======
+=======
+>>>>>>> master
 	struct list_head child_node;	/* Entry in parent->children list */
 	struct list_head children;
 	unsigned int depth;		/* level of nesting in serio hierarchy */
 
 	struct serio_driver *drv;	/* accessed from interrupt, must be protected by serio->lock and serio->sem */
 	struct mutex drv_mutex;		/* protects serio->drv so attributes can pin driver */
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	struct device dev;
 
 	struct list_head node;
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	/*
@@ -77,6 +88,8 @@ struct serio {
 	struct mutex *ps2_cmd_mutex;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 #define to_serio_port(d)	container_of(d, struct serio, dev)
 

@@ -2403,10 +2403,13 @@ static noinline int run_clustered_refs(struct btrfs_trans_handle *trans,
 				WARN_ON(1);
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		} else {
 			list_del_init(&locked_ref->cluster);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		}
 		spin_unlock(&delayed_refs->lock);
 
@@ -2430,9 +2433,13 @@ static noinline int run_clustered_refs(struct btrfs_trans_handle *trans,
 		 */
 		if (btrfs_delayed_ref_is_head(ref)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			list_del_init(&locked_ref->cluster);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			list_del_init(&locked_ref->cluster);
+>>>>>>> master
 			btrfs_delayed_ref_unlock(locked_ref);
 			locked_ref = NULL;
 		}
@@ -5285,11 +5292,15 @@ void btrfs_prepare_extent_commit(struct btrfs_trans_handle *trans,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int unpin_extent_range(struct btrfs_root *root, u64 start, u64 end,
 			      const bool return_free_space)
 =======
 static int unpin_extent_range(struct btrfs_root *root, u64 start, u64 end)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int unpin_extent_range(struct btrfs_root *root, u64 start, u64 end)
+>>>>>>> master
 {
 	struct btrfs_fs_info *fs_info = root->fs_info;
 	struct btrfs_block_group_cache *cache = NULL;
@@ -5314,11 +5325,15 @@ static int unpin_extent_range(struct btrfs_root *root, u64 start, u64 end)
 		if (start < cache->last_byte_to_unpin) {
 			len = min(len, cache->last_byte_to_unpin - start);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (return_free_space)
 				btrfs_add_free_space(cache, start, len);
 =======
 			btrfs_add_free_space(cache, start, len);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			btrfs_add_free_space(cache, start, len);
+>>>>>>> master
 		}
 
 		start += len;
@@ -5382,10 +5397,14 @@ int btrfs_finish_extent_commit(struct btrfs_trans_handle *trans,
 
 		clear_extent_dirty(unpin, start, end, GFP_NOFS);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		unpin_extent_range(root, start, end, true);
 =======
 		unpin_extent_range(root, start, end);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		unpin_extent_range(root, start, end);
+>>>>>>> master
 		cond_resched();
 	}
 
@@ -6383,19 +6402,25 @@ static int __btrfs_free_reserved_extent(struct btrfs_root *root,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (pin)
 		pin_down_extent(root, cache, start, len, 1);
 	else {
 		if (btrfs_test_opt(root, DISCARD))
 			ret = btrfs_discard_extent(root, start, len, NULL);
 =======
+=======
+>>>>>>> master
 	if (btrfs_test_opt(root, DISCARD))
 		ret = btrfs_discard_extent(root, start, len, NULL);
 
 	if (pin)
 		pin_down_extent(root, cache, start, len, 1);
 	else {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		btrfs_add_free_space(cache, start, len);
 		btrfs_update_reserved_bytes(cache, len, RESERVE_FREE);
 	}
@@ -7521,10 +7546,14 @@ out:
 	if (root_dropped == false)
 		btrfs_add_dead_root(root);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (err && err != -EAGAIN)
 =======
 	if (err)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (err)
+>>>>>>> master
 		btrfs_std_error(root->fs_info, err);
 	return err;
 }
@@ -8598,10 +8627,14 @@ out:
 int btrfs_error_unpin_extent_range(struct btrfs_root *root, u64 start, u64 end)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return unpin_extent_range(root, start, end, false);
 =======
 	return unpin_extent_range(root, start, end);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return unpin_extent_range(root, start, end);
+>>>>>>> master
 }
 
 int btrfs_error_discard_extent(struct btrfs_root *root, u64 bytenr,

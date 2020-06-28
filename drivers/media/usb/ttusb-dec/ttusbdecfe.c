@@ -157,11 +157,14 @@ static int ttusbdecfe_dvbs_diseqc_send_master_cmd(struct dvb_frontend* fe, struc
 		   0x00, 0x00 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (cmd->msg_len > sizeof(b) - 4)
 		return -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	memcpy(&b[4], cmd->msg, cmd->msg_len);
 
 	state->config->send_command(fe, 0x72,

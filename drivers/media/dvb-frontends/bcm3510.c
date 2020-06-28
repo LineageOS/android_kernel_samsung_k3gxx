@@ -45,11 +45,14 @@
 #include "bcm3510_priv.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Max transfer size done by bcm3510_do_hab_cmd() function */
 #define MAX_XFER_SIZE	128
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 struct bcm3510_state {
 
 	struct i2c_adapter* i2c;
@@ -208,6 +211,7 @@ static int bcm3510_hab_send_request(struct bcm3510_state *st, u8 *buf, int len)
 static int bcm3510_do_hab_cmd(struct bcm3510_state *st, u8 cmd, u8 msgid, u8 *obuf, u8 olen, u8 *ibuf, u8 ilen)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 ob[MAX_XFER_SIZE], ib[MAX_XFER_SIZE];
 	int ret = 0;
 
@@ -226,6 +230,11 @@ static int bcm3510_do_hab_cmd(struct bcm3510_state *st, u8 cmd, u8 msgid, u8 *ob
 	int ret = 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u8 ob[olen+2],ib[ilen+2];
+	int ret = 0;
+
+>>>>>>> master
 	ob[0] = cmd;
 	ob[1] = msgid;
 	memcpy(&ob[2],obuf,olen);

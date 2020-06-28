@@ -736,10 +736,14 @@ int cifs_closedir(struct inode *inode, struct file *file)
 	cifs_dbg(FYI, "Freeing private data in close dir\n");
 	spin_lock(&cifs_file_list_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (server->ops->dir_needs_close(cfile)) {
 =======
 	if (!cfile->srch_inf.endOfSearch && !cfile->invalidHandle) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!cfile->srch_inf.endOfSearch && !cfile->invalidHandle) {
+>>>>>>> master
 		cfile->invalidHandle = true;
 		spin_unlock(&cifs_file_list_lock);
 		if (server->ops->close_dir)
@@ -1794,9 +1798,12 @@ refind_writable:
 			spin_lock(&cifs_file_list_lock);
 			++refind;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			inv_file = NULL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			goto refind_writable;
 		}
 	}
@@ -2362,10 +2369,14 @@ cifs_iovec_write(struct file *file, const struct iovec *iov,
 {
 	unsigned long nr_pages, i;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	size_t bytes, copied, len, cur_len;
 =======
 	size_t copied, len, cur_len;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	size_t copied, len, cur_len;
+>>>>>>> master
 	ssize_t total_written = 0;
 	loff_t offset;
 	struct iov_iter it;
@@ -2421,6 +2432,7 @@ cifs_iovec_write(struct file *file, const struct iovec *iov,
 		save_len = cur_len;
 		for (i = 0; i < nr_pages; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			bytes = min_t(const size_t, cur_len, PAGE_SIZE);
 			copied = iov_iter_copy_from_user(wdata->pages[i], &it,
 							 0, bytes);
@@ -2461,6 +2473,8 @@ cifs_iovec_write(struct file *file, const struct iovec *iov,
 			put_page(wdata->pages[nr_pages - 1]);
 
 =======
+=======
+>>>>>>> master
 			copied = min_t(const size_t, cur_len, PAGE_SIZE);
 			copied = iov_iter_copy_from_user(wdata->pages[i], &it,
 							 0, copied);
@@ -2469,7 +2483,10 @@ cifs_iovec_write(struct file *file, const struct iovec *iov,
 		}
 		cur_len = save_len - cur_len;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		wdata->sync_mode = WB_SYNC_ALL;
 		wdata->nr_pages = nr_pages;
 		wdata->offset = (__u64)offset;
@@ -2833,10 +2850,14 @@ cifs_uncached_read_into_pages(struct TCP_Server_Info *server,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return total_read > 0 && result != -EAGAIN ? total_read : result;
 =======
 	return total_read > 0 ? total_read : result;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return total_read > 0 ? total_read : result;
+>>>>>>> master
 }
 
 static ssize_t
@@ -3260,10 +3281,14 @@ cifs_readpages_read_into_pages(struct TCP_Server_Info *server,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return total_read > 0 && result != -EAGAIN ? total_read : result;
 =======
 	return total_read > 0 ? total_read : result;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return total_read > 0 ? total_read : result;
+>>>>>>> master
 }
 
 static int cifs_readpages(struct file *file, struct address_space *mapping,

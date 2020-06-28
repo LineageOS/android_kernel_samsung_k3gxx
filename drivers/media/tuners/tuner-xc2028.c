@@ -25,11 +25,14 @@
 #include "dvb_frontend.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Max transfer size done by I2C transfer functions */
 #define MAX_XFER_SIZE  80
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /* Registers (Write-only) */
 #define XREG_INIT         0x00
 #define XREG_RF_FREQ      0x02
@@ -293,6 +296,7 @@ static void free_firmware(struct xc2028_data *priv)
 	tuner_dbg("%s called\n", __func__);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* free allocated f/w string */
 	if (priv->fname != firmware_name)
 		kfree(priv->fname);
@@ -303,6 +307,8 @@ static void free_firmware(struct xc2028_data *priv)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (!priv->firm)
 		return;
 
@@ -314,11 +320,17 @@ static void free_firmware(struct xc2028_data *priv)
 	priv->firm = NULL;
 	priv->firm_size = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	priv->state = XC2028_NO_FIRMWARE;
 
 	memset(&priv->cur_fw, 0, sizeof(priv->cur_fw));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	priv->state = XC2028_NO_FIRMWARE;
+
+	memset(&priv->cur_fw, 0, sizeof(priv->cur_fw));
+>>>>>>> master
 }
 
 static int load_all_firmwares(struct dvb_frontend *fe,
@@ -568,6 +580,7 @@ static int load_firmware(struct dvb_frontend *fe, unsigned int type,
 	struct xc2028_data *priv = fe->tuner_priv;
 	int                pos, rc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned char      *p, *endp, buf[MAX_XFER_SIZE];
 
 	if (priv->ctrl.max_len > sizeof(buf))
@@ -575,6 +588,9 @@ static int load_firmware(struct dvb_frontend *fe, unsigned int type,
 =======
 	unsigned char      *p, *endp, buf[priv->ctrl.max_len];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned char      *p, *endp, buf[priv->ctrl.max_len];
+>>>>>>> master
 
 	tuner_dbg("%s called\n", __func__);
 
@@ -912,6 +928,7 @@ read_not_reliable:
 
 fail:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	free_firmware(priv);
 	priv->state = XC2028_SLEEP;
 
@@ -920,6 +937,11 @@ fail:
 
 	memset(&priv->cur_fw, 0, sizeof(priv->cur_fw));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	priv->state = XC2028_SLEEP;
+
+	memset(&priv->cur_fw, 0, sizeof(priv->cur_fw));
+>>>>>>> master
 	if (retry_count < 8) {
 		msleep(50);
 		retry_count++;
@@ -1342,15 +1364,21 @@ static int xc2028_dvb_release(struct dvb_frontend *fe)
 
 	/* only perform final cleanup if this is the last instance */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (hybrid_tuner_report_instance_count(priv) == 1)
 		free_firmware(priv);
 =======
+=======
+>>>>>>> master
 	if (hybrid_tuner_report_instance_count(priv) == 1) {
 		free_firmware(priv);
 		kfree(priv->ctrl.fname);
 		priv->ctrl.fname = NULL;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (priv)
 		hybrid_tuner_release_state(priv);
@@ -1414,9 +1442,12 @@ static int xc2028_set_config(struct dvb_frontend *fe, void *priv_cfg)
 	/*
 	 * Copy the config data.
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 */
 	memcpy(&priv->ctrl, p, sizeof(priv->ctrl));
 =======
+=======
+>>>>>>> master
 	 * For the firmware name, keep a local copy of the string,
 	 * in order to avoid troubles during device release.
 	 */
@@ -1427,7 +1458,10 @@ static int xc2028_set_config(struct dvb_frontend *fe, void *priv_cfg)
 		if (priv->ctrl.fname == NULL)
 			rc = -ENOMEM;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/*
 	 * If firmware name changed, frees firmware. As free_firmware will
@@ -1443,6 +1477,7 @@ static int xc2028_set_config(struct dvb_frontend *fe, void *priv_cfg)
 	if (priv->state == XC2028_NO_FIRMWARE) {
 		if (!firmware_name[0])
 <<<<<<< HEAD
+<<<<<<< HEAD
 			priv->fname = kstrdup(p->fname, GFP_KERNEL);
 		else
 			priv->fname = firmware_name;
@@ -1453,11 +1488,16 @@ static int xc2028_set_config(struct dvb_frontend *fe, void *priv_cfg)
 		}
 
 =======
+=======
+>>>>>>> master
 			priv->fname = priv->ctrl.fname;
 		else
 			priv->fname = firmware_name;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		rc = request_firmware_nowait(THIS_MODULE, 1,
 					     priv->fname,
 					     priv->i2c_props.adap->dev.parent,
@@ -1471,9 +1511,12 @@ static int xc2028_set_config(struct dvb_frontend *fe, void *priv_cfg)
 			priv->state = XC2028_WAITING_FIRMWARE;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 unlock:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	mutex_unlock(&priv->lock);
 
 	return rc;

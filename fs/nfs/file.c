@@ -420,10 +420,14 @@ static int nfs_write_end(struct file *file, struct address_space *mapping,
 	if (!PageUptodate(page)) {
 		unsigned pglen = nfs_page_length(page);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		unsigned end = offset + copied;
 =======
 		unsigned end = offset + len;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		unsigned end = offset + len;
+>>>>>>> master
 
 		if (pglen == 0) {
 			zero_user_segments(page, 0, offset,

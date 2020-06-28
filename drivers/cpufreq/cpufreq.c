@@ -49,9 +49,12 @@ static DEFINE_PER_CPU(char[CPUFREQ_NAME_LEN], cpufreq_cpu_governor);
 #endif
 static DEFINE_RWLOCK(cpufreq_driver_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DEFINE_MUTEX(cpufreq_governor_lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 /*
  * cpu_policy_rwsem is a per CPU reader-writer semaphore designed to cure
@@ -458,6 +461,7 @@ static ssize_t show_cpuinfo_cur_freq(struct cpufreq_policy *policy,
 {
 	unsigned int cur_freq = __cpufreq_get(policy->cpu);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (cur_freq)
 		return sprintf(buf, "%u\n", cur_freq);
@@ -468,6 +472,11 @@ static ssize_t show_cpuinfo_cur_freq(struct cpufreq_policy *policy,
 		return sprintf(buf, "<unknown>");
 	return sprintf(buf, "%u\n", cur_freq);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!cur_freq)
+		return sprintf(buf, "<unknown>");
+	return sprintf(buf, "%u\n", cur_freq);
+>>>>>>> master
 }
 
 
@@ -1593,6 +1602,7 @@ static int __cpufreq_governor(struct cpufreq_policy *policy,
 	pr_debug("__cpufreq_governor for CPU %u, event %u\n",
 						policy->cpu, event);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	mutex_lock(&cpufreq_governor_lock);
 	if ((!policy->governor_enabled && (event == CPUFREQ_GOV_STOP)) ||
@@ -1610,6 +1620,8 @@ static int __cpufreq_governor(struct cpufreq_policy *policy,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ret = policy->governor->governor(policy, event);
 
 	if (!ret) {
@@ -1617,6 +1629,7 @@ static int __cpufreq_governor(struct cpufreq_policy *policy,
 			policy->governor->initialized++;
 		else if (event == CPUFREQ_GOV_POLICY_EXIT)
 			policy->governor->initialized--;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	} else {
 		/* Restore original values */
@@ -1628,6 +1641,8 @@ static int __cpufreq_governor(struct cpufreq_policy *policy,
 		mutex_unlock(&cpufreq_governor_lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	/* we keep one module reference alive for

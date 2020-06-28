@@ -21,9 +21,12 @@
 
 #include <linux/bitops.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/delay.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #include <linux/errno.h>
 #include <linux/fs.h>
 #include <linux/init.h>
@@ -96,6 +99,7 @@ static inline void ath79_wdt_enable(void)
 {
 	ath79_wdt_keepalive();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/*
 	 * Updating the TIMER register requires a few microseconds
@@ -107,6 +111,8 @@ static inline void ath79_wdt_enable(void)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ath79_wdt_wr(WDOG_REG_CTRL, WDOG_CTRL_ACTION_FCR);
 	/* flush write */
 	ath79_wdt_rr(WDOG_REG_CTRL);

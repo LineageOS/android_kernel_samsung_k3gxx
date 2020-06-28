@@ -69,9 +69,12 @@ static struct ft_tport *ft_tport_create(struct fc_lport *lport)
 	if (tport) {
 		tport->tpg = tpg;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		tpg->tport = tport;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return tport;
 	}
 

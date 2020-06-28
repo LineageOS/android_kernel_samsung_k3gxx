@@ -338,10 +338,14 @@ static int uhid_event_from_user(const char __user *buffer, size_t len,
 			struct uhid_create_req_compat *compat;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			compat = kzalloc(sizeof(*compat), GFP_KERNEL);
 =======
 			compat = kmalloc(sizeof(*compat), GFP_KERNEL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			compat = kmalloc(sizeof(*compat), GFP_KERNEL);
+>>>>>>> master
 			if (!compat)
 				return -ENOMEM;
 
@@ -670,10 +674,14 @@ static const struct file_operations uhid_fops = {
 static struct miscdevice uhid_misc = {
 	.fops		= &uhid_fops,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.minor		= UHID_MINOR,
 =======
 	.minor		= MISC_DYNAMIC_MINOR,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	.minor		= MISC_DYNAMIC_MINOR,
+>>>>>>> master
 	.name		= UHID_NAME,
 };
 
@@ -693,7 +701,10 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("David Herrmann <dh.herrmann@gmail.com>");
 MODULE_DESCRIPTION("User-space I/O driver support for HID subsystem");
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS_MISCDEV(UHID_MINOR);
 MODULE_ALIAS("devname:" UHID_NAME);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master

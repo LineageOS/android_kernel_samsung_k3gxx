@@ -921,12 +921,17 @@ void bio_copy_data(struct bio *dst, struct bio *src)
 		dst_p = kmap_atomic(dst_bv->bv_page);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		memcpy(dst_p + dst_offset,
 		       src_p + src_offset,
 =======
 		memcpy(dst_p + dst_bv->bv_offset,
 		       src_p + src_bv->bv_offset,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		memcpy(dst_p + dst_bv->bv_offset,
+		       src_p + src_bv->bv_offset,
+>>>>>>> master
 		       bytes);
 
 		kunmap_atomic(dst_p);

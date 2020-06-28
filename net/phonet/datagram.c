@@ -140,11 +140,17 @@ static int pn_recvmsg(struct kiocb *iocb, struct sock *sk,
 		goto out_nofree;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (addr_len)
 		*addr_len = sizeof(sa);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (addr_len)
+		*addr_len = sizeof(sa);
+
+>>>>>>> master
 	skb = skb_recv_datagram(sk, flags, noblock, &rval);
 	if (skb == NULL)
 		goto out_nofree;
@@ -166,6 +172,7 @@ static int pn_recvmsg(struct kiocb *iocb, struct sock *sk,
 	rval = (flags & MSG_TRUNC) ? skb->len : copylen;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (msg->msg_name != NULL) {
 		memcpy(msg->msg_name, &sa, sizeof(sa));
 		*addr_len = sizeof(sa);
@@ -174,6 +181,10 @@ static int pn_recvmsg(struct kiocb *iocb, struct sock *sk,
 	if (msg->msg_name != NULL)
 		memcpy(msg->msg_name, &sa, sizeof(struct sockaddr_pn));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (msg->msg_name != NULL)
+		memcpy(msg->msg_name, &sa, sizeof(struct sockaddr_pn));
+>>>>>>> master
 
 out:
 	skb_free_datagram(sk, skb);

@@ -75,11 +75,14 @@ nfnl_cthelper_parse_tuple(struct nf_conntrack_tuple *tuple,
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Not all fields are initialized so first zero the tuple */
 	memset(tuple, 0, sizeof(struct nf_conntrack_tuple));
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	tuple->src.l3num = ntohs(nla_get_be16(tb[NFCTH_TUPLE_L3PROTONUM]));
 	tuple->dst.protonum = nla_get_u8(tb[NFCTH_TUPLE_L4PROTONUM]);
 
@@ -90,10 +93,14 @@ static int
 nfnl_cthelper_from_nlattr(struct nlattr *attr, struct nf_conn *ct)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct nf_conn_help *help = nfct_help(ct);
 =======
 	const struct nf_conn_help *help = nfct_help(ct);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	const struct nf_conn_help *help = nfct_help(ct);
+>>>>>>> master
 
 	if (attr == NULL)
 		return -EINVAL;
@@ -102,10 +109,14 @@ nfnl_cthelper_from_nlattr(struct nlattr *attr, struct nf_conn *ct)
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memcpy(help->data, nla_data(attr), help->helper->data_len);
 =======
 	memcpy(&help->data, nla_data(attr), help->helper->data_len);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	memcpy(&help->data, nla_data(attr), help->helper->data_len);
+>>>>>>> master
 	return 0;
 }
 

@@ -5,10 +5,14 @@
  * device driver
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright IBM Corp. 2009, 2017
 =======
  * Copyright IBM Corp. 2009
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ * Copyright IBM Corp. 2009
+>>>>>>> master
  */
 
 #ifndef ZFCP_FC_H
@@ -296,12 +300,15 @@ void zfcp_fc_eval_fcp_rsp(struct fcp_resp_with_ext *fcp_rsp,
 		     fcp_rsp->resp.fr_status == SAM_STAT_GOOD)
 			set_host_byte(scsi, DID_ERROR);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (unlikely(rsp_flags & FCP_RESID_OVER)) {
 		/* FCP_DL was not sufficient for SCSI data length */
 		if (fcp_rsp->resp.fr_status == SAM_STAT_GOOD)
 			set_host_byte(scsi, DID_ERROR);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 }
 

@@ -1113,10 +1113,14 @@ nv50_disp_intr_unk20_2(struct nv50_disp_priv *priv, int head)
 		if (outp.location == 0 && outp.type == DCB_OUTPUT_DP) {
 			u32 soff = (ffs(outp.or) - 1) * 0x08;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			u32 ctrl = nv_rd32(priv, 0x610794 + soff);
 =======
 			u32 ctrl = nv_rd32(priv, 0x610798 + soff);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			u32 ctrl = nv_rd32(priv, 0x610798 + soff);
+>>>>>>> master
 			u32 datarate;
 
 			switch ((ctrl & 0x000f0000) >> 16) {

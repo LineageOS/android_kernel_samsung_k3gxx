@@ -415,16 +415,22 @@ i2c_davinci_xfer_msg(struct i2c_adapter *adap, struct i2c_msg *msg, int stop)
 		if (msg->flags & I2C_M_IGNORE_NAK)
 			return msg->len;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		w = davinci_i2c_read_reg(dev, DAVINCI_I2C_MDR_REG);
 		w |= DAVINCI_I2C_MDR_STP;
 		davinci_i2c_write_reg(dev, DAVINCI_I2C_MDR_REG, w);
 =======
+=======
+>>>>>>> master
 		if (stop) {
 			w = davinci_i2c_read_reg(dev, DAVINCI_I2C_MDR_REG);
 			w |= DAVINCI_I2C_MDR_STP;
 			davinci_i2c_write_reg(dev, DAVINCI_I2C_MDR_REG, w);
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return -EREMOTEIO;
 	}
 	return -EIO;

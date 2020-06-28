@@ -119,6 +119,7 @@ static int func_prolog_dec(struct trace_array *tr,
 
 	local_save_flags(*flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * Slight chance to get a false positive on tracing_cpu,
 	 * although I'm starting to think there isn't a chance.
@@ -129,6 +130,10 @@ static int func_prolog_dec(struct trace_array *tr,
 	/* slight chance to get a false positive on tracing_cpu */
 	if (!irqs_disabled_flags(*flags))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	/* slight chance to get a false positive on tracing_cpu */
+	if (!irqs_disabled_flags(*flags))
+>>>>>>> master
 		return 0;
 
 	*data = per_cpu_ptr(tr->trace_buffer.data, cpu);

@@ -270,10 +270,14 @@ static void rionet_outb_msg_event(struct rio_mport *mport, void *dev_id, int mbo
 	struct rionet_private *rnet = netdev_priv(ndev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock(&rnet->tx_lock);
 =======
 	spin_lock(&rnet->lock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	spin_lock(&rnet->lock);
+>>>>>>> master
 
 	if (netif_msg_intr(rnet))
 		printk(KERN_INFO
@@ -293,10 +297,14 @@ static void rionet_outb_msg_event(struct rio_mport *mport, void *dev_id, int mbo
 		netif_wake_queue(ndev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_unlock(&rnet->tx_lock);
 =======
 	spin_unlock(&rnet->lock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	spin_unlock(&rnet->lock);
+>>>>>>> master
 }
 
 static int rionet_open(struct net_device *ndev)

@@ -972,10 +972,15 @@ static struct crypto_alg des_algs[2] = { {
 } };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 MODULE_ALIAS("des3_ede");
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+MODULE_ALIAS("des3_ede");
+
+>>>>>>> master
 static int __init des_generic_mod_init(void)
 {
 	return crypto_register_algs(des_algs, ARRAY_SIZE(des_algs));
@@ -993,6 +998,7 @@ MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("DES & Triple DES EDE Cipher Algorithms");
 MODULE_AUTHOR("Dag Arne Osvik <da@osvik.no>");
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("des");
 MODULE_ALIAS_CRYPTO("des-generic");
 MODULE_ALIAS_CRYPTO("des3_ede");
@@ -1000,3 +1006,6 @@ MODULE_ALIAS_CRYPTO("des3_ede-generic");
 =======
 MODULE_ALIAS("des");
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+MODULE_ALIAS("des");
+>>>>>>> master

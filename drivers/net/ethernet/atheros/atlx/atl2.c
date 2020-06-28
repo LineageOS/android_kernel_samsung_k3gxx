@@ -1414,10 +1414,14 @@ static int atl2_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	err = -EIO;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	netdev->hw_features = NETIF_F_HW_VLAN_CTAG_RX;
 =======
 	netdev->hw_features = NETIF_F_SG | NETIF_F_HW_VLAN_CTAG_RX;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	netdev->hw_features = NETIF_F_SG | NETIF_F_HW_VLAN_CTAG_RX;
+>>>>>>> master
 	netdev->features |= (NETIF_F_HW_VLAN_CTAG_TX | NETIF_F_HW_VLAN_CTAG_RX);
 
 	/* Init PHY as early as possible due to power saving issue  */

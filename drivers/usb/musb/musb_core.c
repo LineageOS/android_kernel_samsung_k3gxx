@@ -134,10 +134,14 @@ static inline struct musb *dev_to_musb(struct device *dev)
 
 #ifndef CONFIG_BLACKFIN
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int musb_ulpi_read(struct usb_phy *phy, u32 reg)
 =======
 static int musb_ulpi_read(struct usb_phy *phy, u32 offset)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int musb_ulpi_read(struct usb_phy *phy, u32 offset)
+>>>>>>> master
 {
 	void __iomem *addr = phy->io_priv;
 	int	i = 0;
@@ -157,10 +161,14 @@ static int musb_ulpi_read(struct usb_phy *phy, u32 offset)
 	 */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	musb_writeb(addr, MUSB_ULPI_REG_ADDR, (u8)reg);
 =======
 	musb_writeb(addr, MUSB_ULPI_REG_ADDR, (u8)offset);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	musb_writeb(addr, MUSB_ULPI_REG_ADDR, (u8)offset);
+>>>>>>> master
 	musb_writeb(addr, MUSB_ULPI_REG_CONTROL,
 			MUSB_ULPI_REG_REQ | MUSB_ULPI_RDN_WR);
 
@@ -186,10 +194,14 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int musb_ulpi_write(struct usb_phy *phy, u32 val, u32 reg)
 =======
 static int musb_ulpi_write(struct usb_phy *phy, u32 offset, u32 data)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int musb_ulpi_write(struct usb_phy *phy, u32 offset, u32 data)
+>>>>>>> master
 {
 	void __iomem *addr = phy->io_priv;
 	int	i = 0;
@@ -205,12 +217,17 @@ static int musb_ulpi_write(struct usb_phy *phy, u32 offset, u32 data)
 	musb_writeb(addr, MUSB_POWER, power);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	musb_writeb(addr, MUSB_ULPI_REG_ADDR, (u8)reg);
 	musb_writeb(addr, MUSB_ULPI_REG_DATA, (u8)val);
 =======
 	musb_writeb(addr, MUSB_ULPI_REG_ADDR, (u8)offset);
 	musb_writeb(addr, MUSB_ULPI_REG_DATA, (u8)data);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	musb_writeb(addr, MUSB_ULPI_REG_ADDR, (u8)offset);
+	musb_writeb(addr, MUSB_ULPI_REG_DATA, (u8)data);
+>>>>>>> master
 	musb_writeb(addr, MUSB_ULPI_REG_CONTROL, MUSB_ULPI_REG_REQ);
 
 	while (!(musb_readb(addr, MUSB_ULPI_REG_CONTROL)
@@ -458,9 +475,13 @@ static irqreturn_t musb_stage0_irq(struct musb *musb, u8 int_usb,
 				u8 devctl)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct usb_otg *otg = musb->xceiv->otg;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct usb_otg *otg = musb->xceiv->otg;
+>>>>>>> master
 	irqreturn_t handled = IRQ_NONE;
 
 	dev_dbg(musb->controller, "<== DevCtl=%02x, int_usb=0x%x\n", devctl,
@@ -676,10 +697,14 @@ static irqreturn_t musb_stage0_irq(struct musb *musb, u8 int_usb,
 		case OTG_STATE_B_PERIPHERAL:
 			musb_g_suspend(musb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			musb->is_active = musb->g.b_hnp_enable;
 =======
 			musb->is_active = otg->gadget->b_hnp_enable;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			musb->is_active = otg->gadget->b_hnp_enable;
+>>>>>>> master
 			if (musb->is_active) {
 				musb->xceiv->state = OTG_STATE_B_WAIT_ACON;
 				dev_dbg(musb->controller, "HNP: Setting timer for b_ase0_brst\n");
@@ -696,10 +721,14 @@ static irqreturn_t musb_stage0_irq(struct musb *musb, u8 int_usb,
 		case OTG_STATE_A_HOST:
 			musb->xceiv->state = OTG_STATE_A_SUSPEND;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			musb->is_active = musb_to_hcd(musb)->self.b_hnp_enable;
 =======
 			musb->is_active = otg->host->b_hnp_enable;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			musb->is_active = otg->host->b_hnp_enable;
+>>>>>>> master
 			break;
 		case OTG_STATE_B_HOST:
 			/* Transition to B_PERIPHERAL, see 6.8.2.6 p 44 */

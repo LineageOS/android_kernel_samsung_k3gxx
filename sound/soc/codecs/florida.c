@@ -150,7 +150,10 @@ static const struct reg_default florida_sysclk_revd_patch[] = {
 
 static const struct reg_default florida_sysclk_reve_patch[] = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	{ 0x325C, 0xE410 },
 	{ 0x325D, 0x3066 },
 	{ 0x325E, 0xE410 },
@@ -167,7 +170,10 @@ static const struct reg_default florida_sysclk_reve_patch[] = {
 	{ 0x326B, 0x3078 },
 	{ 0x326C, 0xE414 },
 	{ 0x326D, 0x3080 },
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ 0x3270, 0xE410 },
 	{ 0x3271, 0x3078 },
 	{ 0x3272, 0xE410 },
@@ -244,6 +250,7 @@ static int florida_adsp_power_ev(struct snd_soc_dapm_widget *w,
 	return arizona_adsp_power_ev(w, kcontrol, event);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static const struct reg_sequence florida_no_dre_left_enable[] = {
 	{ 0x3024, 0xE410 },
@@ -515,15 +522,21 @@ static int florida_put_dre(struct snd_kcontrol *kcontrol,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static DECLARE_TLV_DB_SCALE(ana_tlv, 0, 100, 0);
 static DECLARE_TLV_DB_SCALE(eq_tlv, -1200, 100, 0);
 static DECLARE_TLV_DB_SCALE(digital_tlv, -6400, 50, 0);
 static DECLARE_TLV_DB_SCALE(vol_limit_tlv, -600, 50, 116);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DECLARE_TLV_DB_SCALE(noise_tlv, -13200, 600, 0);
 =======
 static DECLARE_TLV_DB_SCALE(noise_tlv, 0, 600, 0);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static DECLARE_TLV_DB_SCALE(noise_tlv, 0, 600, 0);
+>>>>>>> master
 static DECLARE_TLV_DB_SCALE(ng_tlv, -10200, 600, 0);
 
 #define FLORIDA_NG_SRC(name, base) \
@@ -703,16 +716,22 @@ ARIZONA_MIXER_CONTROLS("LHPF3", ARIZONA_HPLP3MIX_INPUT_1_SOURCE),
 ARIZONA_MIXER_CONTROLS("LHPF4", ARIZONA_HPLP4MIX_INPUT_1_SOURCE),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ARIZONA_LHPF_CONTROL("LHPF1 Coefficients", ARIZONA_HPLPF1_2),
 ARIZONA_LHPF_CONTROL("LHPF2 Coefficients", ARIZONA_HPLPF2_2),
 ARIZONA_LHPF_CONTROL("LHPF3 Coefficients", ARIZONA_HPLPF3_2),
 ARIZONA_LHPF_CONTROL("LHPF4 Coefficients", ARIZONA_HPLPF4_2),
 =======
+=======
+>>>>>>> master
 SND_SOC_BYTES("LHPF1 Coefficients", ARIZONA_HPLPF1_2, 1),
 SND_SOC_BYTES("LHPF2 Coefficients", ARIZONA_HPLPF2_2, 1),
 SND_SOC_BYTES("LHPF3 Coefficients", ARIZONA_HPLPF3_2, 1),
 SND_SOC_BYTES("LHPF4 Coefficients", ARIZONA_HPLPF4_2, 1),
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 SOC_ENUM("LHPF1 Mode", arizona_lhpf1_mode),
 SOC_ENUM("LHPF2 Mode", arizona_lhpf2_mode),
@@ -1417,22 +1436,29 @@ SND_SOC_DAPM_AIF_IN("AIF3RX2", NULL, 0,
 
 SND_SOC_DAPM_PGA_E("OUT1L", SND_SOC_NOPM,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		   ARIZONA_OUT1L_ENA_SHIFT, 0, NULL, 0, florida_hp_ev,
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD |
 		   SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU),
 SND_SOC_DAPM_PGA_E("OUT1R", SND_SOC_NOPM,
 		   ARIZONA_OUT1R_ENA_SHIFT, 0, NULL, 0, florida_hp_ev,
 =======
+=======
+>>>>>>> master
 		   ARIZONA_OUT1L_ENA_SHIFT, 0, NULL, 0, arizona_hp_ev,
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD |
 		   SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU),
 SND_SOC_DAPM_PGA_E("OUT1R", SND_SOC_NOPM,
 		   ARIZONA_OUT1R_ENA_SHIFT, 0, NULL, 0, arizona_hp_ev,
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD |
 		   SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU),
 SND_SOC_DAPM_PGA_E("OUT2L", ARIZONA_OUTPUT_ENABLES_1,
 		   ARIZONA_OUT2L_ENA_SHIFT, 0, NULL, 0, arizona_out_ev,
+<<<<<<< HEAD
 <<<<<<< HEAD
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD |
 		   SND_SOC_DAPM_POST_PMU),
@@ -1449,6 +1475,8 @@ SND_SOC_DAPM_PGA_E("OUT3R", ARIZONA_OUTPUT_ENABLES_1,
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD |
 		   SND_SOC_DAPM_POST_PMU),
 =======
+=======
+>>>>>>> master
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMU),
 SND_SOC_DAPM_PGA_E("OUT2R", ARIZONA_OUTPUT_ENABLES_1,
 		   ARIZONA_OUT2R_ENA_SHIFT, 0, NULL, 0, arizona_out_ev,
@@ -1459,7 +1487,10 @@ SND_SOC_DAPM_PGA_E("OUT3L", ARIZONA_OUTPUT_ENABLES_1,
 SND_SOC_DAPM_PGA_E("OUT3R", ARIZONA_OUTPUT_ENABLES_1,
 		   ARIZONA_OUT3R_ENA_SHIFT, 0, NULL, 0, arizona_out_ev,
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMU),
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 SND_SOC_DAPM_PGA_E("OUT5L", ARIZONA_OUTPUT_ENABLES_1,
 		   ARIZONA_OUT5L_ENA_SHIFT, 0, NULL, 0, arizona_out_ev,
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMU),
@@ -2173,10 +2204,14 @@ static struct snd_soc_dai_driver florida_dai[] = {
 			.stream_name = "Voice Control CPU",
 			.channels_min = 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			.channels_max = 2,
 =======
 			.channels_max = 1,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			.channels_max = 1,
+>>>>>>> master
 			.rates = FLORIDA_RATES,
 			.formats = FLORIDA_FORMATS,
 		},
@@ -2188,10 +2223,14 @@ static struct snd_soc_dai_driver florida_dai[] = {
 			.stream_name = "Voice Control DSP",
 			.channels_min = 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			.channels_max = 2,
 =======
 			.channels_max = 1,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			.channels_max = 1,
+>>>>>>> master
 			.rates = FLORIDA_RATES,
 			.formats = FLORIDA_FORMATS,
 		},
@@ -2455,6 +2494,7 @@ static int florida_codec_probe(struct snd_soc_codec *codec)
 	struct florida_priv *priv = snd_soc_codec_get_drvdata(codec);
 	struct arizona *arizona = priv->core.arizona;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i, ret;
 
 	for (i = 0; i < FLORIDA_NUM_ADSP; i++)
@@ -2462,6 +2502,9 @@ static int florida_codec_probe(struct snd_soc_codec *codec)
 =======
 	int ret;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int ret;
+>>>>>>> master
 
 	codec->control_data = priv->core.arizona->regmap;
 	priv->core.arizona->dapm = &codec->dapm;
@@ -2520,12 +2563,15 @@ static int florida_codec_remove(struct snd_soc_codec *codec)
 	struct florida_priv *priv = snd_soc_codec_get_drvdata(codec);
 	struct arizona *arizona = priv->core.arizona;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i;
 
 	for (i = 0; i < FLORIDA_NUM_ADSP; i++)
 		wm_adsp_cleanup_debugfs(&priv->core.adsp[i]);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	irq_set_irq_wake(arizona->irq, 0);
 	arizona_free_irq(arizona, ARIZONA_IRQ_DSP_IRQ1, priv);

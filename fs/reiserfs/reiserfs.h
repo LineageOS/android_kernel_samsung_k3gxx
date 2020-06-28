@@ -1955,10 +1955,15 @@ struct treepath var = {.path_length = ILLEGAL_PATH_ELEMENT_OFFSET, .reada = 0,}
 
 // reiserfs version 2 has max offset 60 bits. Version 1 - 32 bit offset
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define U32_MAX (~(__u32)0)
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define U32_MAX (~(__u32)0)
+
+>>>>>>> master
 static inline loff_t max_reiserfs_offset(struct inode *inode)
 {
 	if (get_inode_item_key_version(inode) == KEY_FORMAT_3_5)

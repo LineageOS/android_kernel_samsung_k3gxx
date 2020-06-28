@@ -497,6 +497,7 @@ EXPORT_SYMBOL(mmc_start_bkops);
 static void mmc_wait_data_done(struct mmc_request *mrq)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     struct mmc_context_info *context_info = &mrq->host->context_info;
 	unsigned long flags;
 
@@ -504,12 +505,17 @@ static void mmc_wait_data_done(struct mmc_request *mrq)
 	context_info->is_done_rcv = true;
 	wake_up_interruptible(&context_info->wait);
 =======
+=======
+>>>>>>> master
 	unsigned long flags;
 
 	spin_lock_irqsave(&mrq->host->context_info.lock, flags);
 	mrq->host->context_info.is_done_rcv = true;
 	wake_up_interruptible(&mrq->host->context_info.wait);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	spin_unlock_irqrestore(&mrq->host->context_info.lock, flags);
 }
 
@@ -1148,18 +1154,24 @@ void mmc_set_data_timeout(struct mmc_data *data, const struct mmc_card *card)
 	 * Some cards require longer data read timeout than indicated in CSD.
 	 * Address this by setting the read timeout to a "reasonably high"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * value. For the cards tested, 600ms has proven enough. If necessary,
 	 * this value can be increased if other problematic cards require this.
 	 */
 	if (mmc_card_long_read_time(card) && data->flags & MMC_DATA_READ) {
 		data->timeout_ns = 600000000;
 =======
+=======
+>>>>>>> master
 	 * value. For the cards tested, 300ms has proven enough. If necessary,
 	 * this value can be increased if other problematic cards require this.
 	 */
 	if (mmc_card_long_read_time(card) && data->flags & MMC_DATA_READ) {
 		data->timeout_ns = 300000000;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		data->timeout_clks = 0;
 	}
 

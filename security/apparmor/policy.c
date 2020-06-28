@@ -1003,6 +1003,7 @@ static int audit_policy(int op, gfp_t gfp, const char *name, const char *info,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool policy_view_capable(void)
 {
 	struct user_namespace *user_ns = current_user_ns();
@@ -1021,6 +1022,8 @@ bool policy_admin_capable(void)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /**
  * aa_may_manage_policy - can the current task manage policy
  * @op: the policy manipulation operation being done
@@ -1036,10 +1039,14 @@ bool aa_may_manage_policy(int op)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!policy_admin_capable()) {
 =======
 	if (!capable(CAP_MAC_ADMIN)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!capable(CAP_MAC_ADMIN)) {
+>>>>>>> master
 		audit_policy(op, GFP_KERNEL, NULL, "not policy admin", -EACCES);
 		return 0;
 	}

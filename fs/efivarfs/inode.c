@@ -16,11 +16,15 @@
 
 struct inode *efivarfs_get_inode(struct super_block *sb,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				const struct inode *dir, int mode,
 				dev_t dev, bool is_removable)
 =======
 				const struct inode *dir, int mode, dev_t dev)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				const struct inode *dir, int mode, dev_t dev)
+>>>>>>> master
 {
 	struct inode *inode = new_inode(sb);
 
@@ -29,9 +33,12 @@ struct inode *efivarfs_get_inode(struct super_block *sb,
 		inode->i_mode = mode;
 		inode->i_atime = inode->i_mtime = inode->i_ctime = CURRENT_TIME;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		inode->i_flags = is_removable ? 0 : S_IMMUTABLE;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		switch (mode & S_IFMT) {
 		case S_IFREG:
 			inode->i_fop = &efivarfs_file_operations;
@@ -112,6 +119,7 @@ static int efivarfs_create(struct inode *dir, struct dentry *dentry,
 			  umode_t mode, bool excl)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct inode *inode = NULL;
 	struct efivar_entry *var;
 	int namelen, i = 0, err = 0;
@@ -121,16 +129,24 @@ static int efivarfs_create(struct inode *dir, struct dentry *dentry,
 	struct efivar_entry *var;
 	int namelen, i = 0, err = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct inode *inode;
+	struct efivar_entry *var;
+	int namelen, i = 0, err = 0;
+>>>>>>> master
 
 	if (!efivarfs_valid_name(dentry->d_name.name, dentry->d_name.len))
 		return -EINVAL;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var = kzalloc(sizeof(struct efivar_entry), GFP_KERNEL);
 	if (!var)
 		return -ENOMEM;
 
 =======
+=======
+>>>>>>> master
 	inode = efivarfs_get_inode(dir->i_sb, dir, mode, 0);
 	if (!inode)
 		return -ENOMEM;
@@ -141,13 +157,17 @@ static int efivarfs_create(struct inode *dir, struct dentry *dentry,
 		goto out;
 	}
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* length of the variable name itself: remove GUID and separator */
 	namelen = dentry->d_name.len - EFI_VARIABLE_GUID_LEN - 1;
 
 	efivarfs_hex_to_guid(dentry->d_name.name + namelen + 1,
 			&var->var.VendorGuid);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (efivar_variable_is_removable(var->var.VendorGuid,
 					 dentry->d_name.name, namelen))
@@ -161,6 +181,8 @@ static int efivarfs_create(struct inode *dir, struct dentry *dentry,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	for (i = 0; i < namelen; i++)
 		var->var.VariableName[i] = dentry->d_name.name[i];
 
@@ -175,11 +197,15 @@ out:
 	if (err) {
 		kfree(var);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (inode)
 			iput(inode);
 =======
 		iput(inode);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		iput(inode);
+>>>>>>> master
 	}
 	return err;
 }

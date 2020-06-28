@@ -271,6 +271,7 @@ process_start:
 	} while (true);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock_irqsave(&adapter->main_proc_lock, flags);
 	if ((adapter->int_status) || IS_CARD_RX_RCVD(adapter)) {
 		spin_unlock_irqrestore(&adapter->main_proc_lock, flags);
@@ -278,11 +279,16 @@ process_start:
 	}
 
 =======
+=======
+>>>>>>> master
 	if ((adapter->int_status) || IS_CARD_RX_RCVD(adapter))
 		goto process_start;
 
 	spin_lock_irqsave(&adapter->main_proc_lock, flags);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	adapter->mwifiex_processing = false;
 	spin_unlock_irqrestore(&adapter->main_proc_lock, flags);
 
@@ -373,7 +379,10 @@ static void mwifiex_fw_dpc(const struct firmware *firmware, void *context)
 		goto err_add_intf;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 
 	/* Create AP interface by default */
 	if (!mwifiex_add_virtual_intf(adapter->wiphy, "uap%d",
@@ -388,7 +397,10 @@ static void mwifiex_fw_dpc(const struct firmware *firmware, void *context)
 		dev_err(adapter->dev, "cannot create default P2P interface\n");
 		goto err_add_intf;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	rtnl_unlock();
 
 	mwifiex_drv_get_driver_version(adapter, fmt, sizeof(fmt) - 1);
@@ -526,9 +538,12 @@ mwifiex_hard_start_xmit(struct sk_buff *skb, struct net_device *dev)
 
 	tx_info = MWIFIEX_SKB_TXCB(skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memset(tx_info, 0, sizeof(*tx_info));
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	tx_info->bss_num = priv->bss_num;
 	tx_info->bss_type = priv->bss_type;
 
@@ -590,6 +605,7 @@ static void mwifiex_set_multicast_list(struct net_device *dev)
 	} else {
 		mcast_list.mode = MWIFIEX_MULTICAST_MODE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mcast_list.num_multicast_addr =
 			mwifiex_copy_mcast_addr(&mcast_list, dev);
 =======
@@ -597,6 +613,11 @@ static void mwifiex_set_multicast_list(struct net_device *dev)
 			mcast_list.num_multicast_addr =
 				mwifiex_copy_mcast_addr(&mcast_list, dev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (netdev_mc_count(dev))
+			mcast_list.num_multicast_addr =
+				mwifiex_copy_mcast_addr(&mcast_list, dev);
+>>>>>>> master
 	}
 	mwifiex_request_set_multicast_list(priv, &mcast_list);
 }

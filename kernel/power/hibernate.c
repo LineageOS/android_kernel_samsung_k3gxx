@@ -492,6 +492,7 @@ int hibernation_restore(int platform_mode)
 	if (!error) {
 		error = resume_target_kernel(platform_mode);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * The above should either succeed and jump to the new kernel,
 		 * or return with an error. Otherwise things are just
@@ -504,6 +505,10 @@ int hibernation_restore(int platform_mode)
 		dpm_resume_end(PMSG_RECOVER);
 	}
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		dpm_resume_end(PMSG_RECOVER);
+	}
+>>>>>>> master
 	pm_restore_gfp_mask();
 	ftrace_start();
 	resume_console();

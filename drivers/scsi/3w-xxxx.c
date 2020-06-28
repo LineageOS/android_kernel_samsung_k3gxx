@@ -1284,7 +1284,10 @@ static int tw_initialize_device_extension(TW_Device_Extension *tw_dev)
 } /* End tw_initialize_device_extension() */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 static int tw_map_scsi_sg_data(struct pci_dev *pdev, struct scsi_cmnd *cmd)
 {
 	int use_sg;
@@ -1311,7 +1314,10 @@ static void tw_unmap_scsi_data(struct pci_dev *pdev, struct scsi_cmnd *cmd)
 		scsi_dma_unmap(cmd);
 } /* End tw_unmap_scsi_data() */
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /* This function will reset a device extension */
 static int tw_reset_device_extension(TW_Device_Extension *tw_dev)
 {
@@ -1335,12 +1341,17 @@ static int tw_reset_device_extension(TW_Device_Extension *tw_dev)
 			if (srb != NULL) {
 				srb->result = (DID_RESET << 16);
 <<<<<<< HEAD
+<<<<<<< HEAD
 				scsi_dma_unmap(srb);
 				srb->scsi_done(srb);
 =======
 				tw_dev->srb[i]->scsi_done(tw_dev->srb[i]);
 				tw_unmap_scsi_data(tw_dev->tw_pci_dev, tw_dev->srb[i]);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				tw_dev->srb[i]->scsi_done(tw_dev->srb[i]);
+				tw_unmap_scsi_data(tw_dev->tw_pci_dev, tw_dev->srb[i]);
+>>>>>>> master
 			}
 		}
 	}
@@ -1788,12 +1799,17 @@ static int tw_scsiop_read_write(TW_Device_Extension *tw_dev, int request_id)
 	command_packet->byte6.block_count = num_sectors;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	use_sg = scsi_dma_map(srb);
 	if (use_sg <= 0)
 =======
 	use_sg = tw_map_scsi_sg_data(tw_dev->tw_pci_dev, tw_dev->srb[request_id]);
 	if (!use_sg)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	use_sg = tw_map_scsi_sg_data(tw_dev->tw_pci_dev, tw_dev->srb[request_id]);
+	if (!use_sg)
+>>>>>>> master
 		return 1;
 
 	scsi_for_each_sg(tw_dev->srb[request_id], sg, use_sg, i) {
@@ -1981,11 +1997,17 @@ static int tw_scsi_queue_lck(struct scsi_cmnd *SCpnt, void (*done)(struct scsi_c
 	tw_dev->srb[request_id] = SCpnt;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Initialize phase to zero */
 	SCpnt->SCp.phase = TW_PHASE_INITIAL;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	/* Initialize phase to zero */
+	SCpnt->SCp.phase = TW_PHASE_INITIAL;
+
+>>>>>>> master
 	switch (*command) {
 		case READ_10:
 		case READ_6:
@@ -2213,19 +2235,25 @@ static irqreturn_t tw_interrupt(int irq, void *dev_instance)
 				/* Now complete the io */
 				if ((error != TW_ISR_DONT_COMPLETE)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 					scsi_dma_unmap(tw_dev->srb[request_id]);
 					tw_dev->srb[request_id]->scsi_done(tw_dev->srb[request_id]);
 					tw_dev->state[request_id] = TW_S_COMPLETED;
 					tw_state_request_finish(tw_dev, request_id);
 					tw_dev->posted_request_count--;
 =======
+=======
+>>>>>>> master
 					tw_dev->state[request_id] = TW_S_COMPLETED;
 					tw_state_request_finish(tw_dev, request_id);
 					tw_dev->posted_request_count--;
 					tw_dev->srb[request_id]->scsi_done(tw_dev->srb[request_id]);
 					
 					tw_unmap_scsi_data(tw_dev->tw_pci_dev, tw_dev->srb[request_id]);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				}
 			}
 				
@@ -2302,11 +2330,15 @@ static struct scsi_host_template driver_template = {
 	.use_clustering		= ENABLE_CLUSTERING,
 	.shost_attrs		= tw_host_attrs,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.emulated		= 1,
 	.no_write_same		= 1,
 =======
 	.emulated		= 1
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	.emulated		= 1
+>>>>>>> master
 };
 
 /* This function will probe and initialize a card */

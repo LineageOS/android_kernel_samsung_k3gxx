@@ -162,6 +162,7 @@ static inline void unix_set_secdata(struct scm_cookie *scm, struct sk_buff *skb)
 static inline unsigned int unix_hash_fold(__wsum n)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int hash = (__force unsigned int)csum_fold(n);
 
 =======
@@ -169,6 +170,11 @@ static inline unsigned int unix_hash_fold(__wsum n)
 
 	hash ^= hash>>16;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned int hash = (__force unsigned int)n;
+
+	hash ^= hash>>16;
+>>>>>>> master
 	hash ^= hash>>8;
 	return hash&(UNIX_HASH_SIZE-1);
 }
@@ -650,6 +656,7 @@ static int unix_seqpacket_recvmsg(struct kiocb *, struct socket *,
 				  struct msghdr *, size_t, int);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int unix_set_peek_off(struct sock *sk, int val)
 {
 	struct unix_sock *u = unix_sk(sk);
@@ -662,6 +669,8 @@ static int unix_set_peek_off(struct sock *sk, int val)
 
 	return 0;
 =======
+=======
+>>>>>>> master
 static void unix_set_peek_off(struct sock *sk, int val)
 {
 	struct unix_sock *u = unix_sk(sk);
@@ -669,7 +678,10 @@ static void unix_set_peek_off(struct sock *sk, int val)
 	mutex_lock(&u->readlock);
 	sk->sk_peek_off = val;
 	mutex_unlock(&u->readlock);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 
@@ -849,12 +861,16 @@ static int unix_autobind(struct socket *sock)
 	unsigned int retries = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = mutex_lock_interruptible(&u->readlock);
 	if (err)
 		return err;
 =======
 	mutex_lock(&u->readlock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	mutex_lock(&u->readlock);
+>>>>>>> master
 
 	err = 0;
 	if (u->addr)
@@ -999,9 +1015,12 @@ static int unix_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
 	struct unix_address *addr;
 	struct hlist_head *list;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct path path = { NULL, NULL };
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	err = -EINVAL;
 	if (sunaddr->sun_family != AF_UNIX)
@@ -1017,6 +1036,7 @@ static int unix_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
 		goto out;
 	addr_len = err;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (sun_path[0]) {
 		umode_t mode = S_IFSOCK |
@@ -1035,6 +1055,9 @@ static int unix_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
 =======
 	mutex_lock(&u->readlock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	mutex_lock(&u->readlock);
+>>>>>>> master
 
 	err = -EINVAL;
 	if (u->addr)
@@ -1052,7 +1075,10 @@ static int unix_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
 
 	if (sun_path[0]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 		struct path path;
 		umode_t mode = S_IFSOCK |
 		       (SOCK_INODE(sock)->i_mode & ~current_umask());
@@ -1063,7 +1089,10 @@ static int unix_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
 			unix_release_addr(addr);
 			goto out_up;
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		addr->hash = UNIX_HASH_SIZE;
 		hash = path.dentry->d_inode->i_ino & (UNIX_HASH_SIZE-1);
 		spin_lock(&unix_table_lock);
@@ -1091,11 +1120,14 @@ out_unlock:
 out_up:
 	mutex_unlock(&u->readlock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 out_put:
 	if (err)
 		path_put(&path);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 out:
 	return err;
 }
@@ -1419,6 +1451,7 @@ static int unix_socketpair(struct socket *socka, struct socket *sockb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void unix_sock_inherit_flags(const struct socket *old,
 				    struct socket *new)
 {
@@ -1430,6 +1463,8 @@ static void unix_sock_inherit_flags(const struct socket *old,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int unix_accept(struct socket *sock, struct socket *newsock, int flags)
 {
 	struct sock *sk = sock->sk;
@@ -1465,9 +1500,12 @@ static int unix_accept(struct socket *sock, struct socket *newsock, int flags)
 	unix_state_lock(tsk);
 	newsock->state = SS_CONNECTED;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unix_sock_inherit_flags(sock, newsock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	sock_graft(tsk, newsock);
 	unix_state_unlock(tsk);
 	return 0;
@@ -1983,9 +2021,13 @@ static void unix_copy_addr(struct msghdr *msg, struct sock *sk)
 	struct unix_sock *u = unix_sk(sk);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	msg->msg_namelen = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	msg->msg_namelen = 0;
+>>>>>>> master
 	if (u->addr) {
 		msg->msg_namelen = u->addr->len;
 		memcpy(msg->msg_name, u->addr->name, u->addr->len);
@@ -2010,6 +2052,7 @@ static int unix_dgram_recvmsg(struct kiocb *iocb, struct socket *sock,
 		goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = mutex_lock_interruptible(&u->readlock);
 	if (unlikely(err)) {
 		/* recvmsg() in non blocking mode is supposed to return -EAGAIN
@@ -2017,12 +2060,17 @@ static int unix_dgram_recvmsg(struct kiocb *iocb, struct socket *sock,
 		 */
 		err = noblock ? -EAGAIN : -ERESTARTSYS;
 =======
+=======
+>>>>>>> master
 	msg->msg_namelen = 0;
 
 	err = mutex_lock_interruptible(&u->readlock);
 	if (err) {
 		err = sock_intr_errno(sock_rcvtimeo(sk, noblock));
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		goto out;
 	}
 
@@ -2125,12 +2173,15 @@ static long unix_stream_data_wait(struct sock *sk, long timeo,
 		timeo = freezable_schedule_timeout(timeo);
 		unix_state_lock(sk);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		if (sock_flag(sk, SOCK_DEAD))
 			break;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		clear_bit(SOCK_ASYNC_WAITDATA, &sk->sk_socket->flags);
 	}
 
@@ -2150,9 +2201,12 @@ static int unix_stream_recvmsg(struct kiocb *iocb, struct socket *sock,
 	struct sockaddr_un *sunaddr = msg->msg_name;
 	int copied = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int noblock = flags & MSG_DONTWAIT;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	int check_creds = 0;
 	int target;
 	int err = 0;
@@ -2169,12 +2223,18 @@ static int unix_stream_recvmsg(struct kiocb *iocb, struct socket *sock,
 
 	target = sock_rcvlowat(sk, flags&MSG_WAITALL, size);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	timeo = sock_rcvtimeo(sk, noblock);
 =======
 	timeo = sock_rcvtimeo(sk, flags&MSG_DONTWAIT);
 
 	msg->msg_namelen = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	timeo = sock_rcvtimeo(sk, flags&MSG_DONTWAIT);
+
+	msg->msg_namelen = 0;
+>>>>>>> master
 
 	/* Lock the socket to prevent queue disordering
 	 * while sleeps in memcpy_tomsg
@@ -2186,14 +2246,20 @@ static int unix_stream_recvmsg(struct kiocb *iocb, struct socket *sock,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_lock(&u->readlock);
 =======
+=======
+>>>>>>> master
 	err = mutex_lock_interruptible(&u->readlock);
 	if (err) {
 		err = sock_intr_errno(timeo);
 		goto out;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	do {
 		int chunk;
@@ -2201,12 +2267,15 @@ static int unix_stream_recvmsg(struct kiocb *iocb, struct socket *sock,
 
 		unix_state_lock(sk);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (sock_flag(sk, SOCK_DEAD)) {
 			err = -ECONNRESET;
 			goto unlock;
 		}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		last = skb = skb_peek(&sk->sk_receive_queue);
 again:
 		if (skb == NULL) {
@@ -2233,19 +2302,27 @@ again:
 			timeo = unix_stream_data_wait(sk, timeo, last);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (signal_pending(current)) {
 =======
 			if (signal_pending(current)
 			    ||  mutex_lock_interruptible(&u->readlock)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			if (signal_pending(current)
+			    ||  mutex_lock_interruptible(&u->readlock)) {
+>>>>>>> master
 				err = sock_intr_errno(timeo);
 				goto out;
 			}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			mutex_lock(&u->readlock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			continue;
  unlock:
 			unix_state_unlock(sk);
@@ -2314,6 +2391,7 @@ again:
 				siocb->scm->fp = scm_fp_dup(UNIXCB(skb).fp);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (skip) {
 				sk_peek_offset_fwd(sk, chunk);
 				skip -= chunk;
@@ -2332,6 +2410,10 @@ again:
 			sk_peek_offset_fwd(sk, chunk);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			sk_peek_offset_fwd(sk, chunk);
+
+>>>>>>> master
 			break;
 		}
 	} while (size);

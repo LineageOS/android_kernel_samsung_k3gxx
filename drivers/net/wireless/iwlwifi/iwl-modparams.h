@@ -80,6 +80,7 @@ enum iwl_power_level {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 enum iwl_disable_11n {
 	IWL_DISABLE_HT_ALL	 = BIT(0),
 	IWL_DISABLE_HT_TXAGG	 = BIT(1),
@@ -91,6 +92,11 @@ enum iwl_disable_11n {
 #define IWL_DISABLE_HT_TXAGG	BIT(1)
 #define IWL_DISABLE_HT_RXAGG	BIT(2)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define IWL_DISABLE_HT_ALL	BIT(0)
+#define IWL_DISABLE_HT_TXAGG	BIT(1)
+#define IWL_DISABLE_HT_RXAGG	BIT(2)
+>>>>>>> master
 
 /**
  * struct iwl_mod_params
@@ -100,10 +106,14 @@ enum iwl_disable_11n {
  * @sw_crypto: using hardware encryption, default = 0
  * @disable_11n: disable 11n capabilities, default = 0,
 <<<<<<< HEAD
+<<<<<<< HEAD
  *	use IWL_[DIS,EN]ABLE_HT_* constants
 =======
  *	use IWL_DISABLE_HT_* constants
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ *	use IWL_DISABLE_HT_* constants
+>>>>>>> master
  * @amsdu_size_8K: enable 8K amsdu size, default = 0
  * @restart_fw: restart firmware, default = 1
  * @plcp_check: enable plcp health check, default = true

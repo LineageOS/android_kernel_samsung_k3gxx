@@ -44,10 +44,14 @@ static DECLARE_TLV_DB_SCALE(ana_tlv, 0, 100, 0);
 static DECLARE_TLV_DB_SCALE(eq_tlv, -1200, 100, 0);
 static DECLARE_TLV_DB_SCALE(digital_tlv, -6400, 50, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DECLARE_TLV_DB_SCALE(noise_tlv, -13200, 600, 0);
 =======
 static DECLARE_TLV_DB_SCALE(noise_tlv, 0, 600, 0);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static DECLARE_TLV_DB_SCALE(noise_tlv, 0, 600, 0);
+>>>>>>> master
 static DECLARE_TLV_DB_SCALE(ng_tlv, -10200, 600, 0);
 
 static const struct wm_adsp_region wm5102_dsp1_regions[] = {
@@ -730,10 +734,14 @@ static int wm5102_out_comp_switch_put(struct snd_kcontrol *kcontrol,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const char * const wm5102_osr_text[] = {
 =======
 static const char *wm5102_osr_text[] = {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static const char *wm5102_osr_text[] = {
+>>>>>>> master
 	"Low power", "Normal", "High performance",
 };
 
@@ -870,16 +878,22 @@ ARIZONA_MIXER_CONTROLS("LHPF3", ARIZONA_HPLP3MIX_INPUT_1_SOURCE),
 ARIZONA_MIXER_CONTROLS("LHPF4", ARIZONA_HPLP4MIX_INPUT_1_SOURCE),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ARIZONA_LHPF_CONTROL("LHPF1 Coefficients", ARIZONA_HPLPF1_2),
 ARIZONA_LHPF_CONTROL("LHPF2 Coefficients", ARIZONA_HPLPF2_2),
 ARIZONA_LHPF_CONTROL("LHPF3 Coefficients", ARIZONA_HPLPF3_2),
 ARIZONA_LHPF_CONTROL("LHPF4 Coefficients", ARIZONA_HPLPF4_2),
 =======
+=======
+>>>>>>> master
 SND_SOC_BYTES("LHPF1 Coefficients", ARIZONA_HPLPF1_2, 1),
 SND_SOC_BYTES("LHPF2 Coefficients", ARIZONA_HPLPF2_2, 1),
 SND_SOC_BYTES("LHPF3 Coefficients", ARIZONA_HPLPF3_2, 1),
 SND_SOC_BYTES("LHPF4 Coefficients", ARIZONA_HPLPF4_2, 1),
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 ARIZONA_MIXER_CONTROLS("DSP1L", ARIZONA_DSP1LMIX_INPUT_1_SOURCE),
 ARIZONA_MIXER_CONTROLS("DSP1R", ARIZONA_DSP1RMIX_INPUT_1_SOURCE),
@@ -1105,10 +1119,14 @@ static const struct snd_kcontrol_new wm5102_dsp_output_mux =
 	SOC_DAPM_ENUM_VIRT("DSP Virtual Output Mux", wm5102_dsp_output_enum);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const char * const wm5102_aec_loopback_texts[] = {
 =======
 static const char *wm5102_aec_loopback_texts[] = {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static const char *wm5102_aec_loopback_texts[] = {
+>>>>>>> master
 	"HPOUT1L", "HPOUT1R", "HPOUT2L", "HPOUT2R", "EPOUT",
 	"SPKOUTL", "SPKOUTR", "SPKDAT1L", "SPKDAT1R",
 };
@@ -1360,12 +1378,17 @@ SND_SOC_DAPM_AIF_IN("SLIMRX8", NULL, 0,
 ARIZONA_DSP_WIDGETS(DSP1, "DSP1"),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 SND_SOC_DAPM_VIRT_MUX("DSP Virtual Output Mux", SND_SOC_NOPM, 0, 0,
 		      &wm5102_dsp_output_mux),
 =======
 SND_SOC_DAPM_VIRT_MUX_E("DSP Virtual Output Mux", SND_SOC_NOPM, 0, 0,
 			&wm5102_dsp_output_mux, 0, 0),
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+SND_SOC_DAPM_VIRT_MUX_E("DSP Virtual Output Mux", SND_SOC_NOPM, 0, 0,
+			&wm5102_dsp_output_mux, 0, 0),
+>>>>>>> master
 
 SND_SOC_DAPM_VALUE_MUX("AEC Loopback", ARIZONA_DAC_AEC_CONTROL_1,
 		       ARIZONA_AEC_LOOPBACK_ENA_SHIFT, 0,
@@ -1373,6 +1396,7 @@ SND_SOC_DAPM_VALUE_MUX("AEC Loopback", ARIZONA_DAC_AEC_CONTROL_1,
 
 SND_SOC_DAPM_PGA_E("OUT1L", SND_SOC_NOPM,
 		   ARIZONA_OUT1L_ENA_SHIFT, 0, NULL, 0, arizona_hp_ev,
+<<<<<<< HEAD
 <<<<<<< HEAD
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD |
 		   SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU),
@@ -1393,6 +1417,8 @@ SND_SOC_DAPM_PGA_E("OUT3L", ARIZONA_OUTPUT_ENABLES_1,
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD |
 		   SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU),
 =======
+=======
+>>>>>>> master
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMU),
 SND_SOC_DAPM_PGA_E("OUT1R", SND_SOC_NOPM,
 		   ARIZONA_OUT1R_ENA_SHIFT, 0, NULL, 0, arizona_hp_ev,
@@ -1406,7 +1432,10 @@ SND_SOC_DAPM_PGA_E("OUT2R", ARIZONA_OUTPUT_ENABLES_1,
 SND_SOC_DAPM_PGA_E("OUT3L", ARIZONA_OUTPUT_ENABLES_1,
 		   ARIZONA_OUT3L_ENA_SHIFT, 0, NULL, 0, arizona_out_ev,
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMU),
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 SND_SOC_DAPM_PGA_E("OUT5L", ARIZONA_OUTPUT_ENABLES_1,
 		   ARIZONA_OUT5L_ENA_SHIFT, 0, NULL, 0, arizona_out_ev,
 		   SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMU),
@@ -1963,10 +1992,13 @@ static int wm5102_codec_probe(struct snd_soc_codec *codec)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	wm_adsp_init_debugfs(&priv->core.adsp[0], codec);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	codec->control_data = priv->core.arizona->regmap;
 
 	ret = snd_soc_codec_set_cache_io(codec, 32, 16, SND_SOC_REGMAP);
@@ -2016,10 +2048,13 @@ static int wm5102_codec_remove(struct snd_soc_codec *codec)
 	struct arizona *arizona = priv->core.arizona;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	wm_adsp_cleanup_debugfs(&priv->core.adsp[0]);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	irq_set_irq_wake(arizona->irq, 0);
 	arizona_free_irq(arizona, ARIZONA_IRQ_DSP_IRQ1, priv);
 	regmap_update_bits(arizona->regmap, ARIZONA_IRQ2_STATUS_3_MASK,
@@ -2040,9 +2075,13 @@ static unsigned int wm5102_digital_vu[] = {
 	ARIZONA_DAC_DIGITAL_VOLUME_2R,
 	ARIZONA_DAC_DIGITAL_VOLUME_3L,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ARIZONA_DAC_DIGITAL_VOLUME_3R,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ARIZONA_DAC_DIGITAL_VOLUME_3R,
+>>>>>>> master
 	ARIZONA_DAC_DIGITAL_VOLUME_4L,
 	ARIZONA_DAC_DIGITAL_VOLUME_4R,
 	ARIZONA_DAC_DIGITAL_VOLUME_5L,

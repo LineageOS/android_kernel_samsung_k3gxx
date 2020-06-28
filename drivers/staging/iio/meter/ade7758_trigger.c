@@ -86,10 +86,14 @@ int ade7758_probe_trigger(struct iio_dev *indio_dev)
 
 	/* select default trigger */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	indio_dev->trig = iio_trigger_get(st->trig);
 =======
 	indio_dev->trig = st->trig;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	indio_dev->trig = st->trig;
+>>>>>>> master
 	if (ret)
 		goto error_free_irq;
 

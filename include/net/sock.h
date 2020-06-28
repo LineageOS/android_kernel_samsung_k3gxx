@@ -241,9 +241,12 @@ struct cg_proto;
   *	@sk_forward_alloc: space allocated forward
   *	@sk_allocation: allocation mode
 <<<<<<< HEAD
+<<<<<<< HEAD
   *	@sk_pacing_rate: Pacing rate (if supported by transport/packet scheduler)
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
   *	@sk_sndbuf: size of send buffer in bytes
   *	@sk_flags: %SO_LINGER (l_onoff), %SO_BROADCAST, %SO_KEEPALIVE,
   *		   %SO_OOBINLINE settings, %SO_TIMESTAMPING settings
@@ -371,9 +374,12 @@ struct sock {
 	int			sk_wmem_queued;
 	gfp_t			sk_allocation;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32			sk_pacing_rate; /* bytes per second */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	netdev_features_t	sk_route_caps;
 	netdev_features_t	sk_route_nocaps;
 	int			sk_gso_type;
@@ -410,9 +416,12 @@ struct sock {
 #endif
 	__u32			sk_mark;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kuid_t			sk_uid;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	u32			sk_classid;
 	struct cg_proto		*sk_cgrp;
 	uid_t			knox_uid;
@@ -696,10 +705,13 @@ enum sock_flags {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define SK_FLAGS_TIMESTAMP ((1UL << SOCK_TIMESTAMP) | (1UL << SOCK_TIMESTAMPING_RX_SOFTWARE))
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static inline void sock_copy_flags(struct sock *nsk, struct sock *osk)
 {
 	nsk->sk_flags = osk->sk_flags;
@@ -811,6 +823,7 @@ static inline __must_check int sk_add_backlog(struct sock *sk, struct sk_buff *s
 		return -ENOBUFS;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * If the skb was allocated from pfmemalloc reserves, only
 	 * allow SOCK_MEMALLOC sockets to use it as this socket is
@@ -821,6 +834,8 @@ static inline __must_check int sk_add_backlog(struct sock *sk, struct sk_buff *s
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	__sk_add_backlog(sk, skb);
 	sk->sk_backlog.len += skb->truesize;
 	return 0;
@@ -972,9 +987,13 @@ struct proto {
 
 	void		(*release_cb)(struct sock *sk);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	void		(*mtu_reduced)(struct sock *sk);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	void		(*mtu_reduced)(struct sock *sk);
+>>>>>>> master
 
 	/* Keeping track of sk's, looking them up, and port selection methods. */
 	void			(*hash)(struct sock *sk);
@@ -1041,9 +1060,12 @@ struct proto {
 	struct cg_proto		*(*proto_cgroup)(struct mem_cgroup *memcg);
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int			(*diag_destroy)(struct sock *sk, int err);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 
 /*
@@ -1395,10 +1417,14 @@ static inline struct inode *SOCK_INODE(struct socket *socket)
  */
 extern int __sk_mem_schedule(struct sock *sk, int size, int kind);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void __sk_mem_reclaim(struct sock *sk, int amount);
 =======
 extern void __sk_mem_reclaim(struct sock *sk);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+extern void __sk_mem_reclaim(struct sock *sk);
+>>>>>>> master
 
 #define SK_MEM_QUANTUM ((int)PAGE_SIZE)
 #define SK_MEM_QUANTUM_SHIFT ilog2(SK_MEM_QUANTUM)
@@ -1440,10 +1466,14 @@ static inline void sk_mem_reclaim(struct sock *sk)
 		return;
 	if (sk->sk_forward_alloc >= SK_MEM_QUANTUM)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__sk_mem_reclaim(sk, sk->sk_forward_alloc);
 =======
 		__sk_mem_reclaim(sk);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		__sk_mem_reclaim(sk);
+>>>>>>> master
 }
 
 static inline void sk_mem_reclaim_partial(struct sock *sk)
@@ -1452,10 +1482,14 @@ static inline void sk_mem_reclaim_partial(struct sock *sk)
 		return;
 	if (sk->sk_forward_alloc > SK_MEM_QUANTUM)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__sk_mem_reclaim(sk, sk->sk_forward_alloc - 1);
 =======
 		__sk_mem_reclaim(sk);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		__sk_mem_reclaim(sk);
+>>>>>>> master
 }
 
 static inline void sk_mem_charge(struct sock *sk, int size)
@@ -1471,6 +1505,7 @@ static inline void sk_mem_uncharge(struct sock *sk, int size)
 		return;
 	sk->sk_forward_alloc += size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* Avoid a possible overflow.
 	 * TCP send queues can make this happen, if sk_mem_reclaim()
@@ -1483,6 +1518,8 @@ static inline void sk_mem_uncharge(struct sock *sk, int size)
 		__sk_mem_reclaim(sk, 1 << 20);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static inline void sk_wmem_free_skb(struct sock *sk, struct sk_buff *skb)
@@ -1509,6 +1546,7 @@ static inline void sk_wmem_free_skb(struct sock *sk, struct sk_buff *skb)
 #define sock_owned_by_user(sk)	((sk)->sk_lock.owned)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline void sock_release_ownership(struct sock *sk)
 {
 	sk->sk_lock.owned = 0;
@@ -1516,6 +1554,8 @@ static inline void sock_release_ownership(struct sock *sk)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  * Macro so as to not evaluate some arguments when
  * lockdep is not enabled.
@@ -1781,9 +1821,12 @@ static inline void sock_graft(struct sock *sk, struct socket *parent)
 	parent->sk = sk;
 	sk_set_socket(sk, parent);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sk->sk_uid = SOCK_INODE(parent)->i_uid;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	security_sock_graft(sk, parent);
 	write_unlock_bh(&sk->sk_callback_lock);
 }
@@ -1792,6 +1835,7 @@ extern kuid_t sock_i_uid(struct sock *sk);
 extern unsigned long sock_i_ino(struct sock *sk);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline kuid_t sock_net_uid(const struct net *net, const struct sock *sk)
 {
 	return sk ? sk->sk_uid : make_kuid(net->user_ns, 0);
@@ -1799,6 +1843,8 @@ static inline kuid_t sock_net_uid(const struct net *net, const struct sock *sk)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static inline struct dst_entry *
 __sk_dst_get(struct sock *sk)
 {
@@ -1854,6 +1900,7 @@ static inline void
 sk_dst_set(struct sock *sk, struct dst_entry *dst)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct dst_entry *old_dst;
 
 	sk_tx_queue_clear(sk);
@@ -1864,6 +1911,11 @@ sk_dst_set(struct sock *sk, struct dst_entry *dst)
 	__sk_dst_set(sk, dst);
 	spin_unlock(&sk->sk_dst_lock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	spin_lock(&sk->sk_dst_lock);
+	__sk_dst_set(sk, dst);
+	spin_unlock(&sk->sk_dst_lock);
+>>>>>>> master
 }
 
 static inline void
@@ -1876,12 +1928,18 @@ static inline void
 sk_dst_reset(struct sock *sk)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sk_dst_set(sk, NULL);
 =======
 	spin_lock(&sk->sk_dst_lock);
 	__sk_dst_reset(sk);
 	spin_unlock(&sk->sk_dst_lock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	spin_lock(&sk->sk_dst_lock);
+	__sk_dst_reset(sk);
+	spin_unlock(&sk->sk_dst_lock);
+>>>>>>> master
 }
 
 extern struct dst_entry *__sk_dst_check(struct sock *sk, u32 cookie);
@@ -2347,6 +2405,7 @@ extern int sock_get_timestamp(struct sock *, struct timeval __user *);
 extern int sock_get_timestampns(struct sock *, struct timespec __user *);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool sk_ns_capable(const struct sock *sk,
 		   struct user_namespace *user_ns, int cap);
 bool sk_capable(const struct sock *sk, int cap);
@@ -2354,6 +2413,8 @@ bool sk_net_capable(const struct sock *sk, int cap);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  *	Enable debug/info messages
  */

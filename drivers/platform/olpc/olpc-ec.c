@@ -331,10 +331,14 @@ static int __init olpc_ec_init_module(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 arch_initcall(olpc_ec_init_module);
 =======
 module_init(olpc_ec_init_module);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+module_init(olpc_ec_init_module);
+>>>>>>> master
 
 MODULE_AUTHOR("Andres Salomon <dilinger@queued.net>");
 MODULE_LICENSE("GPL");

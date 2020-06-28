@@ -120,10 +120,14 @@
 #define WM8904_GPIO_REGS 4
 #define WM8904_DRC_REGS  4
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define WM8904_EQ_REGS   24
 =======
 #define WM8904_EQ_REGS   25
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define WM8904_EQ_REGS   25
+>>>>>>> master
 
 /**
  * DRC configurations are specified with a label and a set of register

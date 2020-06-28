@@ -177,10 +177,14 @@ bool lguest_address_ok(const struct lguest *lg,
 		       unsigned long addr, unsigned long len)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return addr+len <= lg->pfn_limit * PAGE_SIZE && (addr+len >= addr);
 =======
 	return (addr+len) / PAGE_SIZE < lg->pfn_limit && (addr+len >= addr);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return (addr+len) / PAGE_SIZE < lg->pfn_limit && (addr+len >= addr);
+>>>>>>> master
 }
 
 /*

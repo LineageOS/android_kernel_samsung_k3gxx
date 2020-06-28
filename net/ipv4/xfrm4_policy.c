@@ -236,10 +236,14 @@ static struct dst_ops xfrm4_dst_ops = {
 	.ifdown =		xfrm4_dst_ifdown,
 	.local_out =		__ip_local_out,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.gc_thresh =		32768,
 =======
 	.gc_thresh =		1024,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	.gc_thresh =		1024,
+>>>>>>> master
 };
 
 static struct xfrm_policy_afinfo xfrm4_policy_afinfo = {

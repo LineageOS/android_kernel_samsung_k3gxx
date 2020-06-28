@@ -242,6 +242,7 @@ static void snd_emu10k1_proc_spdif_read(struct snd_info_entry *entry,
 	u32 value;
 	u32 value2;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 rate;
 
 	if (emu->card_capabilities->emu_model) {
@@ -250,6 +251,8 @@ static void snd_emu10k1_proc_spdif_read(struct snd_info_entry *entry,
 			snd_emu1010_fpga_read(emu, 0x2a, &value);
 			snd_emu1010_fpga_read(emu, 0x2b, &value2);
 =======
+=======
+>>>>>>> master
 	unsigned long flags;
 	u32 rate;
 
@@ -262,18 +265,24 @@ static void snd_emu10k1_proc_spdif_read(struct snd_info_entry *entry,
 			snd_emu1010_fpga_read(emu, 0x2a, &value);
 			snd_emu1010_fpga_read(emu, 0x2b, &value2);
 			spin_unlock_irqrestore(&emu->emu_lock, flags);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			rate = 0x1770000 / (((value << 5) | value2)+1);	
 			snd_iprintf(buffer, "ADAT Locked : %u\n", rate);
 		} else {
 			snd_iprintf(buffer, "ADAT Unlocked\n");
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		snd_emu1010_fpga_read(emu, 0x20, &value);
 		if ((value & 0x4) == 0) {
 			snd_emu1010_fpga_read(emu, 0x28, &value);
 			snd_emu1010_fpga_read(emu, 0x29, &value2);
 =======
+=======
+>>>>>>> master
 		spin_lock_irqsave(&emu->emu_lock, flags);
 		snd_emu1010_fpga_read(emu, 0x20, &value);
 		spin_unlock_irqrestore(&emu->emu_lock, flags);
@@ -282,7 +291,10 @@ static void snd_emu10k1_proc_spdif_read(struct snd_info_entry *entry,
 			snd_emu1010_fpga_read(emu, 0x28, &value);
 			snd_emu1010_fpga_read(emu, 0x29, &value2);
 			spin_unlock_irqrestore(&emu->emu_lock, flags);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			rate = 0x1770000 / (((value << 5) | value2)+1);	
 			snd_iprintf(buffer, "SPDIF Locked : %d\n", rate);
 		} else {
@@ -428,13 +440,18 @@ static void snd_emu_proc_emu1010_reg_read(struct snd_info_entry *entry,
 	struct snd_emu10k1 *emu = entry->private_data;
 	u32 value;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned long flags;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned long flags;
+>>>>>>> master
 	int i;
 	snd_iprintf(buffer, "EMU1010 Registers:\n\n");
 
 	for(i = 0; i < 0x40; i+=1) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		snd_emu1010_fpga_read(emu, i, &value);
 =======
@@ -442,6 +459,11 @@ static void snd_emu_proc_emu1010_reg_read(struct snd_info_entry *entry,
 		snd_emu1010_fpga_read(emu, i, &value);
 		spin_unlock_irqrestore(&emu->emu_lock, flags);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		spin_lock_irqsave(&emu->emu_lock, flags);
+		snd_emu1010_fpga_read(emu, i, &value);
+		spin_unlock_irqrestore(&emu->emu_lock, flags);
+>>>>>>> master
 		snd_iprintf(buffer, "%02X: %08X, %02X\n", i, value, (value >> 8) & 0x7f);
 	}
 }

@@ -353,10 +353,14 @@ static inline void write_all_bytes(struct si_sm_data *bt)
 static inline int read_all_bytes(struct si_sm_data *bt)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int i;
 =======
 	unsigned char i;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned char i;
+>>>>>>> master
 
 	/*
 	 * length is "framing info", minimum = 4: NetFn, Seq, Cmd, cCode.

@@ -31,9 +31,12 @@ config SND_ALS300
 	select SND_AC97_CODEC
 	select SND_OPL3_LIB
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select ZONE_DMA
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	help
 	  Say 'Y' or 'M' to include support for Avance Logic ALS300/ALS300+
 
@@ -59,9 +62,12 @@ config SND_ALI5451
 	select SND_MPU401_UART
 	select SND_AC97_CODEC
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select ZONE_DMA
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	help
 	  Say Y here to include support for the integrated AC97 sound
 	  device on motherboards using the ALi M5451 Audio Controller
@@ -167,9 +173,12 @@ config SND_AZT3328
 	select SND_RAWMIDI
 	select SND_AC97_CODEC
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select ZONE_DMA
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	help
 	  Say Y here to include support for Aztech AZF3328 (PCI168)
 	  soundcards.
@@ -476,9 +485,12 @@ config SND_EMU10K1
 	select SND_RAWMIDI
 	select SND_AC97_CODEC
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select ZONE_DMA
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	help
 	  Say Y to include support for Sound Blaster PCI 512, Live!,
 	  Audigy and E-mu APS (partially supported) soundcards.
@@ -495,9 +507,12 @@ config SND_EMU10K1X
 	select SND_AC97_CODEC
 	select SND_RAWMIDI
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select ZONE_DMA
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	help
 	  Say Y here to include support for the Dell OEM version of the
 	  Sound Blaster Live!.
@@ -532,9 +547,12 @@ config SND_ES1938
 	select SND_MPU401_UART
 	select SND_AC97_CODEC
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select ZONE_DMA
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	help
 	  Say Y here to include support for soundcards based on ESS Solo-1
 	  (ES1938, ES1946, ES1969) chips.
@@ -547,9 +565,12 @@ config SND_ES1968
 	select SND_MPU401_UART
 	select SND_AC97_CODEC
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select ZONE_DMA
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	help
 	  Say Y here to include support for soundcards based on ESS Maestro
 	  1/2/2E chips.
@@ -632,9 +653,12 @@ config SND_ICE1712
 	select SND_AC97_CODEC
 	select BITREVERSE
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select ZONE_DMA
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	help
 	  Say Y here to include support for soundcards based on the
 	  ICE1712 (Envy24) chip.
@@ -723,9 +747,12 @@ config SND_MAESTRO3
 	tristate "ESS Allegro/Maestro3"
 	select SND_AC97_CODEC
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select ZONE_DMA
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	help
 	  Say Y here to include support for soundcards based on ESS Maestro 3
 	  (Allegro) chips.
@@ -823,9 +850,12 @@ config SND_SIS7019
 	depends on X86 && !X86_64
 	select SND_AC97_CODEC
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select ZONE_DMA
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	help
 	  Say Y here to include support for the SiS 7019 Audio Accelerator.
 
@@ -838,9 +868,12 @@ config SND_SONICVIBES
 	select SND_MPU401_UART
 	select SND_AC97_CODEC
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select ZONE_DMA
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	help
 	  Say Y here to include support for soundcards based on the S3
 	  SonicVibes chip.
@@ -853,9 +886,12 @@ config SND_TRIDENT
 	select SND_MPU401_UART
 	select SND_AC97_CODEC
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select ZONE_DMA
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	help
 	  Say Y here to include support for soundcards based on Trident
 	  4D-Wave DX/NX or SiS 7018 chips.
@@ -893,12 +929,17 @@ config SND_VIRTUOSO
 	help
 	  Say Y here to include support for sound cards based on the
 <<<<<<< HEAD
+<<<<<<< HEAD
 	  Asus AV66/AV100/AV200 chips, i.e., Xonar D1, DX, D2, D2X, DS, DSX,
 	  Essence ST (Deluxe), and Essence STX (II).
 =======
 	  Asus AV66/AV100/AV200 chips, i.e., Xonar D1, DX, D2, D2X, DS,
 	  Essence ST (Deluxe), and Essence STX.
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	  Asus AV66/AV100/AV200 chips, i.e., Xonar D1, DX, D2, D2X, DS,
+	  Essence ST (Deluxe), and Essence STX.
+>>>>>>> master
 	  Support for the HDAV1.3 (Deluxe) and HDAV1.3 Slim is experimental;
 	  for the Xense, missing.
 

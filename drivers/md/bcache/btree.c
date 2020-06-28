@@ -327,6 +327,7 @@ static void do_btree_write(struct btree *b)
 
 	btree_bio_init(b);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	b->bio->bi_rw	= REQ_META|WRITE_SYNC|REQ_FUA;
 	b->bio->bi_size	= set_blocks(i, b->c) * block_bytes(b->c);
 	bch_bio_map(b->bio, i);
@@ -347,11 +348,16 @@ static void do_btree_write(struct btree *b)
 	 */
 
 =======
+=======
+>>>>>>> master
 	b->bio->bi_rw	= REQ_META|WRITE_SYNC;
 	b->bio->bi_size	= set_blocks(i, b->c) * block_bytes(b->c);
 	bch_bio_map(b->bio, i);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	bkey_copy(&k.key, &b->key);
 	SET_PTR_OFFSET(&k.key, 0, PTR_OFFSET(&k.key, 0) + bset_offset(b, i));
 
@@ -641,10 +647,14 @@ static int bch_mca_shrink(struct shrinker *shrink, struct shrink_control *sc)
 
 	/* Return -1 if we can't do anything right now */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (sc->gfp_mask & __GFP_IO)
 =======
 	if (sc->gfp_mask & __GFP_WAIT)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (sc->gfp_mask & __GFP_WAIT)
+>>>>>>> master
 		mutex_lock(&c->bucket_lock);
 	else if (!mutex_trylock(&c->bucket_lock))
 		return -1;
@@ -2169,11 +2179,14 @@ void bch_btree_set_root(struct btree *b)
 {
 	unsigned i;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct closure cl;
 
 	closure_init_stack(&cl);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	BUG_ON(!b->written);
 
@@ -2188,6 +2201,7 @@ void bch_btree_set_root(struct btree *b)
 	__bkey_put(b->c, &b->key);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bch_journal_meta(b->c, &cl);
 	pr_debug("%s for %pf", pbtree(b), __builtin_return_address(0));
 	closure_sync(&cl);
@@ -2195,6 +2209,10 @@ void bch_btree_set_root(struct btree *b)
 	bch_journal_meta(b->c, NULL);
 	pr_debug("%s for %pf", pbtree(b), __builtin_return_address(0));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	bch_journal_meta(b->c, NULL);
+	pr_debug("%s for %pf", pbtree(b), __builtin_return_address(0));
+>>>>>>> master
 }
 
 /* Cache lookup */

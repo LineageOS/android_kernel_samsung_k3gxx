@@ -395,10 +395,14 @@ void picolcd_debug_out_report(struct picolcd_data *data,
 		struct hid_device *hdev, struct hid_report *report)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 *raw_data;
 =======
 	u8 raw_data[70];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u8 raw_data[70];
+>>>>>>> master
 	int raw_size = (report->size >> 3) + 1;
 	char *buff;
 #define BUFF_SZ 256
@@ -411,6 +415,7 @@ void picolcd_debug_out_report(struct picolcd_data *data,
 	if (!buff)
 		return;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	raw_data = hid_alloc_report_buf(report, GFP_ATOMIC);
 	if (!raw_data) {
@@ -426,6 +431,8 @@ void picolcd_debug_out_report(struct picolcd_data *data,
 	dump_buff_as_hex(buff, BUFF_SZ, raw_data, raw_size);
 	hid_debug_event(hdev, buff);
 =======
+=======
+>>>>>>> master
 	snprintf(buff, BUFF_SZ, "\nout report %d (size %d) =  ",
 			report->id, raw_size);
 	hid_debug_event(hdev, buff);
@@ -439,7 +446,10 @@ void picolcd_debug_out_report(struct picolcd_data *data,
 		dump_buff_as_hex(buff, BUFF_SZ, raw_data, raw_size);
 		hid_debug_event(hdev, buff);
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	switch (report->id) {
 	case REPORT_LED_STATE:
@@ -665,9 +675,12 @@ void picolcd_debug_out_report(struct picolcd_data *data,
 	}
 	wake_up_interruptible(&hdev->debug_wait);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kfree(raw_data);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	kfree(buff);
 }
 

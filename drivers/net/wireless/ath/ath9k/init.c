@@ -768,11 +768,15 @@ void ath9k_set_hw_capab(struct ath_softc *sc, struct ieee80211_hw *hw)
 		IEEE80211_HW_SPECTRUM_MGMT |
 		IEEE80211_HW_REPORTS_TX_ACK_STATUS |
 <<<<<<< HEAD
+<<<<<<< HEAD
 		IEEE80211_HW_SUPPORTS_RC_TABLE |
 		IEEE80211_HW_SUPPORTS_HT_CCK_RATES;
 =======
 		IEEE80211_HW_SUPPORTS_RC_TABLE;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		IEEE80211_HW_SUPPORTS_RC_TABLE;
+>>>>>>> master
 
 	if (sc->sc_ah->caps.hw_caps & ATH9K_HW_CAP_HT)
 		 hw->flags |= IEEE80211_HW_AMPDU_AGGREGATION;
@@ -824,9 +828,12 @@ void ath9k_set_hw_capab(struct ath_softc *sc, struct ieee80211_hw *hw)
 	hw->sta_data_size = sizeof(struct ath_node);
 	hw->vif_data_size = sizeof(struct ath_vif);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hw->extra_tx_headroom = 4;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	hw->wiphy->available_antennas_rx = BIT(ah->caps.max_rxchains) - 1;
 	hw->wiphy->available_antennas_tx = BIT(ah->caps.max_txchains) - 1;

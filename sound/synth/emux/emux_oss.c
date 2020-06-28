@@ -70,11 +70,15 @@ snd_emux_init_seq_oss(struct snd_emux *emu)
 	struct snd_seq_device *dev;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* using device#1 here for avoiding conflicts with OPL3 */
 	if (snd_seq_device_new(emu->card, 1, SNDRV_SEQ_DEV_ID_OSS,
 =======
 	if (snd_seq_device_new(emu->card, 0, SNDRV_SEQ_DEV_ID_OSS,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (snd_seq_device_new(emu->card, 0, SNDRV_SEQ_DEV_ID_OSS,
+>>>>>>> master
 			       sizeof(struct snd_seq_oss_reg), &dev) < 0)
 		return;
 
@@ -124,16 +128,22 @@ snd_emux_open_seq_oss(struct snd_seq_oss_arg *arg, void *closure)
 		return -ENXIO;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!snd_emux_inc_count(emu))
 		return -EFAULT;
 =======
+=======
+>>>>>>> master
 	mutex_lock(&emu->register_mutex);
 
 	if (!snd_emux_inc_count(emu)) {
 		mutex_unlock(&emu->register_mutex);
 		return -EFAULT;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	memset(&callback, 0, sizeof(callback));
 	callback.owner = THIS_MODULE;
@@ -146,9 +156,13 @@ snd_emux_open_seq_oss(struct snd_seq_oss_arg *arg, void *closure)
 		snd_printk(KERN_ERR "can't create port\n");
 		snd_emux_dec_count(emu);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		mutex_unlock(&emu->register_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		mutex_unlock(&emu->register_mutex);
+>>>>>>> master
 		return -ENOMEM;
 	}
 
@@ -162,10 +176,15 @@ snd_emux_open_seq_oss(struct snd_seq_oss_arg *arg, void *closure)
 
 	snd_emux_reset_port(p);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	mutex_unlock(&emu->register_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	mutex_unlock(&emu->register_mutex);
+>>>>>>> master
 	return 0;
 }
 
@@ -212,18 +231,26 @@ snd_emux_close_seq_oss(struct snd_seq_oss_arg *arg)
 		return -ENXIO;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	mutex_lock(&emu->register_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	mutex_lock(&emu->register_mutex);
+>>>>>>> master
 	snd_emux_sounds_off_all(p);
 	snd_soundfont_close_check(emu->sflist, SF_CLIENT_NO(p->chset.port));
 	snd_seq_event_port_detach(p->chset.client, p->chset.port);
 	snd_emux_dec_count(emu);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	mutex_unlock(&emu->register_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	mutex_unlock(&emu->register_mutex);
+>>>>>>> master
 	return 0;
 }
 

@@ -351,6 +351,7 @@ int mlx4_en_activate_rx_rings(struct mlx4_en_priv *priv)
 
 		ring->stride = stride;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (ring->stride <= TXBB_SIZE) {
 			/* Stamp first unused send wqe */
 			__be32 *ptr = (__be32 *)ring->buf;
@@ -363,6 +364,10 @@ int mlx4_en_activate_rx_rings(struct mlx4_en_priv *priv)
 		if (ring->stride <= TXBB_SIZE)
 			ring->buf += TXBB_SIZE;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (ring->stride <= TXBB_SIZE)
+			ring->buf += TXBB_SIZE;
+>>>>>>> master
 
 		ring->log_stride = ffs(ring->stride) - 1;
 		ring->buf_size = ring->size * ring->stride;

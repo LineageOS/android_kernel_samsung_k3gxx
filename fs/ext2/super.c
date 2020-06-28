@@ -1494,9 +1494,12 @@ static ssize_t ext2_quota_write(struct super_block *sb, int type,
 
 		tmp_bh.b_state = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		tmp_bh.b_size = sb->s_blocksize;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		err = ext2_get_block(inode, blk, &tmp_bh, 1);
 		if (err < 0)
 			goto out;

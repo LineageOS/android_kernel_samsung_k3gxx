@@ -677,6 +677,7 @@ static void __exit tgr192_mod_fini(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("tgr192");
 MODULE_ALIAS_CRYPTO("tgr160");
 MODULE_ALIAS_CRYPTO("tgr128");
@@ -684,6 +685,10 @@ MODULE_ALIAS_CRYPTO("tgr128");
 MODULE_ALIAS("tgr160");
 MODULE_ALIAS("tgr128");
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+MODULE_ALIAS("tgr160");
+MODULE_ALIAS("tgr128");
+>>>>>>> master
 
 module_init(tgr192_mod_init);
 module_exit(tgr192_mod_fini);

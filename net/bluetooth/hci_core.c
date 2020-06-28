@@ -1124,6 +1124,7 @@ int hci_dev_open(__u16 dev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Check for rfkill but allow the HCI setup stage to proceed
 	 * (which in itself doesn't cause any RF activity).
 	 */
@@ -1132,6 +1133,9 @@ int hci_dev_open(__u16 dev)
 =======
 	if (hdev->rfkill && rfkill_blocked(hdev->rfkill)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (hdev->rfkill && rfkill_blocked(hdev->rfkill)) {
+>>>>>>> master
 		ret = -ERFKILL;
 		goto done;
 	}
@@ -1554,6 +1558,7 @@ static int hci_rfkill_set_block(void *data, bool blocked)
 	BT_DBG("%p name %s blocked %d", hdev, hdev->name, blocked);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (blocked) {
 		set_bit(HCI_RFKILLED, &hdev->dev_flags);
 		if (!test_bit(HCI_SETUP, &hdev->dev_flags))
@@ -1562,11 +1567,16 @@ static int hci_rfkill_set_block(void *data, bool blocked)
 		clear_bit(HCI_RFKILLED, &hdev->dev_flags);
 }
 =======
+=======
+>>>>>>> master
 	if (!blocked)
 		return 0;
 
 	hci_dev_do_close(hdev);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return 0;
 }
@@ -1589,6 +1599,7 @@ static void hci_power_on(struct work_struct *work)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (test_bit(HCI_RFKILLED, &hdev->dev_flags)) {
 		clear_bit(HCI_AUTO_OFF, &hdev->dev_flags);
 		hci_dev_do_close(hdev);
@@ -1601,6 +1612,11 @@ static void hci_power_on(struct work_struct *work)
 		queue_delayed_work(hdev->req_workqueue, &hdev->power_off,
 				   HCI_AUTO_OFF_TIMEOUT);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (test_bit(HCI_AUTO_OFF, &hdev->dev_flags))
+		queue_delayed_work(hdev->req_workqueue, &hdev->power_off,
+				   HCI_AUTO_OFF_TIMEOUT);
+>>>>>>> master
 
 	if (test_and_clear_bit(HCI_SETUP, &hdev->dev_flags))
 		mgmt_index_added(hdev);
@@ -2270,11 +2286,14 @@ int hci_register_dev(struct hci_dev *hdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (hdev->rfkill && rfkill_blocked(hdev->rfkill))
 		set_bit(HCI_RFKILLED, &hdev->dev_flags);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	set_bit(HCI_SETUP, &hdev->dev_flags);
 
 	if (hdev->dev_type != HCI_AMP)

@@ -128,9 +128,12 @@ static int pdiag_put_fanout(struct packet_sock *po, struct sk_buff *nlskb)
 static int sk_diag_fill(struct sock *sk, struct sk_buff *skb,
 			struct packet_diag_req *req,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			bool may_report_filterinfo,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			struct user_namespace *user_ns,
 			u32 portid, u32 seq, u32 flags, int sk_ino)
 {
@@ -176,11 +179,15 @@ static int sk_diag_fill(struct sock *sk, struct sk_buff *skb,
 
 	if ((req->pdiag_show & PACKET_SHOW_FILTER) &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    sock_diag_put_filterinfo(may_report_filterinfo, sk, skb,
 				     PACKET_DIAG_FILTER))
 =======
 	    sock_diag_put_filterinfo(user_ns, sk, skb, PACKET_DIAG_FILTER))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	    sock_diag_put_filterinfo(user_ns, sk, skb, PACKET_DIAG_FILTER))
+>>>>>>> master
 		goto out_nlmsg_trim;
 
 	return nlmsg_end(skb, nlh);
@@ -197,6 +204,7 @@ static int packet_diag_dump(struct sk_buff *skb, struct netlink_callback *cb)
 	struct net *net;
 	struct sock *sk;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool may_report_filterinfo;
 
 	net = sock_net(skb->sk);
@@ -207,6 +215,11 @@ static int packet_diag_dump(struct sk_buff *skb, struct netlink_callback *cb)
 	net = sock_net(skb->sk);
 	req = nlmsg_data(cb->nlh);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	net = sock_net(skb->sk);
+	req = nlmsg_data(cb->nlh);
+>>>>>>> master
 
 	mutex_lock(&net->packet.sklist_lock);
 	sk_for_each(sk, &net->packet.sklist) {
@@ -217,9 +230,12 @@ static int packet_diag_dump(struct sk_buff *skb, struct netlink_callback *cb)
 
 		if (sk_diag_fill(sk, skb, req,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				 may_report_filterinfo,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				 sk_user_ns(NETLINK_CB(cb->skb).sk),
 				 NETLINK_CB(cb->skb).portid,
 				 cb->nlh->nlmsg_seq, NLM_F_MULTI,

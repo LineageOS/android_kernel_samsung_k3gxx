@@ -108,11 +108,15 @@ static int	audit_rate_limit;
 /* Number of outstanding audit_buffers allowed. */
 static int	audit_backlog_limit = 64;
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define AUDIT_BACKLOG_WAIT_TIME (60 * HZ)
 static int	audit_backlog_wait_time = AUDIT_BACKLOG_WAIT_TIME;
 =======
 static int	audit_backlog_wait_time = 60 * HZ;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int	audit_backlog_wait_time = 60 * HZ;
+>>>>>>> master
 static int	audit_backlog_wait_overflow = 0;
 
 /* The identity of the user shutting down the audit system. */
@@ -607,20 +611,28 @@ static int audit_netlink_ok(struct sk_buff *skb, u16 msg_type)
 	case AUDIT_TRIM:
 	case AUDIT_MAKE_EQUIV:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!netlink_capable(skb, CAP_AUDIT_CONTROL))
 =======
 		if (!capable(CAP_AUDIT_CONTROL))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (!capable(CAP_AUDIT_CONTROL))
+>>>>>>> master
 			err = -EPERM;
 		break;
 	case AUDIT_USER:
 	case AUDIT_FIRST_USER_MSG ... AUDIT_LAST_USER_MSG:
 	case AUDIT_FIRST_USER_MSG2 ... AUDIT_LAST_USER_MSG2:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!netlink_capable(skb, CAP_AUDIT_WRITE))
 =======
 		if (!capable(CAP_AUDIT_WRITE))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (!capable(CAP_AUDIT_WRITE))
+>>>>>>> master
 			err = -EPERM;
 		break;
 	default:  /* bad msg */
@@ -636,10 +648,14 @@ static int audit_log_common_recv_msg(struct audit_buffer **ab, u16 msg_type)
 	uid_t uid = from_kuid(&init_user_ns, current_uid());
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!audit_enabled && msg_type != AUDIT_USER_AVC) {
 =======
 	if (!audit_enabled) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!audit_enabled) {
+>>>>>>> master
 		*ab = NULL;
 		return rc;
 	}
@@ -686,9 +702,12 @@ static int audit_receive_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
 	switch (msg_type) {
 	case AUDIT_GET:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		status_set.mask		 = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		status_set.enabled	 = audit_enabled;
 		status_set.failure	 = audit_failure;
 		status_set.pid		 = audit_pid;
@@ -701,10 +720,14 @@ static int audit_receive_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
 		break;
 	case AUDIT_SET:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (nlmsg_len(nlh) < sizeof(struct audit_status))
 =======
 		if (nlh->nlmsg_len < sizeof(struct audit_status))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (nlh->nlmsg_len < sizeof(struct audit_status))
+>>>>>>> master
 			return -EINVAL;
 		status_get   = (struct audit_status *)data;
 		if (status_get->mask & AUDIT_STATUS_ENABLED) {
@@ -867,10 +890,14 @@ static int audit_receive_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
 		memset(&s, 0, sizeof(s));
 		/* guard against past and future API changes */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		memcpy(&s, data, min_t(size_t, sizeof(s), nlmsg_len(nlh)));
 =======
 		memcpy(&s, data, min(sizeof(s), (size_t)nlh->nlmsg_len));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		memcpy(&s, data, min(sizeof(s), (size_t)nlh->nlmsg_len));
+>>>>>>> master
 		if ((s.enabled != 0 && s.enabled != 1) ||
 		    (s.log_passwd != 0 && s.log_passwd != 1))
 			return -EINVAL;
@@ -1156,6 +1183,7 @@ struct audit_buffer *audit_log_start(struct audit_context *ctx, gfp_t gfp_mask,
 			sleep_time = timeout_start + audit_backlog_wait_time -
 					jiffies;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if ((long)sleep_time > 0) {
 				wait_for_auditd(sleep_time);
 				continue;
@@ -1165,6 +1193,11 @@ struct audit_buffer *audit_log_start(struct audit_context *ctx, gfp_t gfp_mask,
 				wait_for_auditd(sleep_time);
 			continue;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			if ((long)sleep_time > 0)
+				wait_for_auditd(sleep_time);
+			continue;
+>>>>>>> master
 		}
 		if (audit_rate_check() && printk_ratelimit())
 			printk(KERN_WARNING
@@ -1179,10 +1212,13 @@ struct audit_buffer *audit_log_start(struct audit_context *ctx, gfp_t gfp_mask,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	audit_backlog_wait_time = AUDIT_BACKLOG_WAIT_TIME;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ab = audit_buffer_alloc(ctx, gfp_mask, type);
 	if (!ab) {
 		audit_log_lost("out of memory in audit_log_start");
@@ -1458,10 +1494,14 @@ void audit_log_cap(struct audit_buffer *ab, char *prefix, kernel_cap_t *cap)
 	CAP_FOR_EACH_U32(i) {
 		audit_log_format(ab, "%08x",
 <<<<<<< HEAD
+<<<<<<< HEAD
 				 cap->cap[CAP_LAST_U32 - i]);
 =======
 				 cap->cap[(_KERNEL_CAPABILITY_U32S-1) - i]);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				 cap->cap[(_KERNEL_CAPABILITY_U32S-1) - i]);
+>>>>>>> master
 	}
 }
 
@@ -1590,6 +1630,7 @@ void audit_log_name(struct audit_context *context, struct audit_names *n,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* log the audit_names record type */
 	audit_log_format(ab, " nametype=");
 	switch(n->type) {
@@ -1612,6 +1653,8 @@ void audit_log_name(struct audit_context *context, struct audit_names *n,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	audit_log_fcaps(ab, n);
 	audit_log_end(ab);
 }

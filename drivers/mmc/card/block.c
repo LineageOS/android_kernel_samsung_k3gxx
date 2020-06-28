@@ -203,10 +203,13 @@ static ssize_t power_ro_lock_show(struct device *dev,
 	ret = snprintf(buf, PAGE_SIZE, "%d\n", locked);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mmc_blk_put(md);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return ret;
 }
 
@@ -263,10 +266,14 @@ static ssize_t force_ro_show(struct device *dev, struct device_attribute *attr,
 	struct mmc_blk_data *md = mmc_blk_get(dev_to_disk(dev));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = snprintf(buf, PAGE_SIZE, "%d\n",
 =======
 	ret = snprintf(buf, PAGE_SIZE, "%d",
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ret = snprintf(buf, PAGE_SIZE, "%d",
+>>>>>>> master
 		       get_disk_ro(dev_to_disk(dev)) ^
 		       md->read_only);
 	mmc_blk_put(md);
@@ -921,10 +928,14 @@ static int mmc_blk_reset(struct mmc_blk_data *md, struct mmc_host *host,
  */
 static int mmc_blk_cmd_recovery(struct mmc_card *card, struct request *req,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct mmc_blk_request *brq, int *ecc_err, int *gen_err)
 =======
 	struct mmc_blk_request *brq, int *ecc_err)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct mmc_blk_request *brq, int *ecc_err)
+>>>>>>> master
 {
 	struct mmc_command *cmd = &brq->cmd;
 	bool prev_cmd_status_valid = true;
@@ -964,6 +975,7 @@ static int mmc_blk_cmd_recovery(struct mmc_card *card, struct request *req,
 		*ecc_err = 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Flag General errors */
 	if (!mmc_host_is_spi(card->host) && rq_data_dir(req) != READ)
 		if ((status & R1_ERROR) ||
@@ -976,6 +988,8 @@ static int mmc_blk_cmd_recovery(struct mmc_card *card, struct request *req,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/*
 	 * Check the current card state.  If it is in some data transfer
 	 * mode, tell it to stop (and hopefully transition back to TRAN.)
@@ -996,6 +1010,7 @@ static int mmc_blk_cmd_recovery(struct mmc_card *card, struct request *req,
 		if (stop_status & R1_CARD_ECC_FAILED)
 			*ecc_err = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!mmc_host_is_spi(card->host) && rq_data_dir(req) != READ)
 			if (stop_status & R1_ERROR) {
 				pr_err("%s: %s: general error sending stop command, stop cmd response %#x\n",
@@ -1005,6 +1020,8 @@ static int mmc_blk_cmd_recovery(struct mmc_card *card, struct request *req,
 			}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	/* Check for set block count errors */
@@ -1080,6 +1097,7 @@ static inline void mmc_blk_reset_success(struct mmc_blk_data *md, int type)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int mmc_access_rpmb(struct mmc_queue *mq)
 {
 	struct mmc_blk_data *md = mq->data;
@@ -1094,6 +1112,8 @@ int mmc_access_rpmb(struct mmc_queue *mq)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int mmc_blk_issue_discard_rq(struct mmc_queue *mq, struct request *req)
 {
 	struct mmc_blk_data *md = mq->data;
@@ -1276,10 +1296,14 @@ static int mmc_blk_err_check(struct mmc_card *card,
 	struct mmc_blk_request *brq = &mq_mrq->brq;
 	struct request *req = mq_mrq->req;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ecc_err = 0, gen_err = 0;
 =======
 	int ecc_err = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int ecc_err = 0;
+>>>>>>> master
 
 	/*
 	 * sbc.error indicates a problem with the set block count
@@ -1295,11 +1319,16 @@ static int mmc_blk_err_check(struct mmc_card *card,
 		if (brq->sbc.error || brq->cmd.error || brq->stop.error ||
 		    brq->data.error) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		switch (mmc_blk_cmd_recovery(card, req, brq, &ecc_err, &gen_err)) {
 =======
 			switch (mmc_blk_cmd_recovery(card, req,
 							brq, &ecc_err)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			switch (mmc_blk_cmd_recovery(card, req,
+							brq, &ecc_err)) {
+>>>>>>> master
 			case ERR_RETRY:
 				return MMC_BLK_RETRY;
 			case ERR_ABORT:
@@ -1334,6 +1363,7 @@ static int mmc_blk_err_check(struct mmc_card *card,
 		unsigned long timeout;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Check stop command response */
 		if (brq->stop.resp[0] & R1_ERROR) {
 			pr_err("%s: %s: general error sending stop command, stop cmd response %#x\n",
@@ -1344,6 +1374,8 @@ static int mmc_blk_err_check(struct mmc_card *card,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		timeout = jiffies + msecs_to_jiffies(MMC_BLK_TIMEOUT_MS);
 		do {
 			int err = get_card_status(card, &status, 5);
@@ -1367,6 +1399,7 @@ static int mmc_blk_err_check(struct mmc_card *card,
 			}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (status & R1_ERROR) {
 				pr_err("%s: %s: general error sending status command, card status %#x\n",
 				       req->rq_disk->disk_name, __func__,
@@ -1376,6 +1409,8 @@ static int mmc_blk_err_check(struct mmc_card *card,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			/* Timeout if the device never becomes ready for data
 			 * and never leaves the program state.
 			 */
@@ -1396,6 +1431,7 @@ static int mmc_blk_err_check(struct mmc_card *card,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* if general error occurs, retry the write operation. */
 	if (gen_err) {
 		pr_warn("%s: retrying write for general error\n",
@@ -1405,6 +1441,8 @@ static int mmc_blk_err_check(struct mmc_card *card,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (brq->data.error) {
 		pr_err("%s: error %d transferring data, sector %u, nr %u, cmd response %#x, card status %#x\n",
 		       req->rq_disk->disk_name, brq->data.error,
@@ -1510,13 +1548,19 @@ static void mmc_blk_rw_rq_prep(struct mmc_queue_req *mqrq,
 	/*
 	 * Reliable writes are used to implement Forced Unit Access and
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * are supported only on MMCs.
 =======
+=======
+>>>>>>> master
 	 * REQ_META accesses, and are supported only on MMCs.
 	 *
 	 * XXX: this really needs a good explanation of why REQ_META
 	 * is treated special.
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	 */
 	bool do_rel_wr = (req->cmd_flags & REQ_FUA) &&
 		(rq_data_dir(req) == WRITE) &&
@@ -1837,12 +1881,17 @@ static void mmc_blk_packed_hdr_wrq_prep(struct mmc_queue_req *mqrq,
 	packed_cmd_hdr = packed->cmd_hdr;
 	memset(packed_cmd_hdr, 0, sizeof(packed->cmd_hdr));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	packed_cmd_hdr[0] = cpu_to_le32((packed->nr_entries << 16) |
 		(PACKED_CMD_WR << 8) | PACKED_CMD_VER);
 =======
 	packed_cmd_hdr[0] = (packed->nr_entries << 16) |
 		(PACKED_CMD_WR << 8) | PACKED_CMD_VER;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	packed_cmd_hdr[0] = (packed->nr_entries << 16) |
+		(PACKED_CMD_WR << 8) | PACKED_CMD_VER;
+>>>>>>> master
 	hdr_blocks = mmc_large_sector(card) ? 8 : 1;
 
 	/*
@@ -1857,6 +1906,7 @@ static void mmc_blk_packed_hdr_wrq_prep(struct mmc_queue_req *mqrq,
 			 card->ext_csd.data_tag_unit_size);
 		/* Argument of CMD23 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		packed_cmd_hdr[(i * 2)] = cpu_to_le32(
 			(do_rel_wr ? MMC_CMD23_ARG_REL_WR : 0) |
 			(do_data_tag ? MMC_CMD23_ARG_TAG_REQ : 0) |
@@ -1866,6 +1916,8 @@ static void mmc_blk_packed_hdr_wrq_prep(struct mmc_queue_req *mqrq,
 			mmc_card_blockaddr(card) ?
 			blk_rq_pos(prq) : blk_rq_pos(prq) << 9);
 =======
+=======
+>>>>>>> master
 		packed_cmd_hdr[(i * 2)] =
 			(do_rel_wr ? MMC_CMD23_ARG_REL_WR : 0) |
 			(do_data_tag ? MMC_CMD23_ARG_TAG_REQ : 0) |
@@ -1874,7 +1926,10 @@ static void mmc_blk_packed_hdr_wrq_prep(struct mmc_queue_req *mqrq,
 		packed_cmd_hdr[((i * 2)) + 1] =
 			mmc_card_blockaddr(card) ?
 			blk_rq_pos(prq) : blk_rq_pos(prq) << 9;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		packed->blocks += blk_rq_sectors(prq);
 		i++;
 	}
@@ -2108,6 +2163,7 @@ static int mmc_blk_issue_rw_rq(struct mmc_queue *mq, struct request *rqc)
 		case MMC_BLK_CMD_ERR:
 			ret = mmc_blk_cmd_err(md, card, brq, req, ret);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (mmc_blk_reset(md, card->host, type))
 				goto cmd_abort;
 			if (!ret)
@@ -2118,6 +2174,11 @@ static int mmc_blk_issue_rw_rq(struct mmc_queue *mq, struct request *rqc)
 				break;
 			goto cmd_abort;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			if (!mmc_blk_reset(md, card->host, type))
+				break;
+			goto cmd_abort;
+>>>>>>> master
 		case MMC_BLK_RETRY:
 			if (retry++ < 5)
 				break;
@@ -2555,11 +2616,15 @@ static struct mmc_blk_data *mmc_blk_alloc_req(struct mmc_card *card,
 
 	if (mmc_host_cmd23(card->host)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if ((mmc_card_mmc(card) &&
 		     card->csd.mmca_vsn >= CSD_SPEC_VER_3) ||
 =======
 		if (mmc_card_mmc(card) ||
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (mmc_card_mmc(card) ||
+>>>>>>> master
 		    (mmc_card_sd(card) &&
 		     card->scr.cmds & SD_SCR_CMD23_SUPPORT &&
 		     mmc_sd_card_uhs(card)))
@@ -2790,6 +2855,7 @@ static const struct mmc_fixup blk_fixups[] =
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * Some MMC cards need longer data read timeout than indicated in CSD.
 	 */
 	MMC_FIXUP(CID_NAME_ANY, CID_MANFID_MICRON, 0x200, add_quirk_mmc,
@@ -2797,12 +2863,17 @@ static const struct mmc_fixup blk_fixups[] =
 	MMC_FIXUP("008GE0", CID_MANFID_TOSHIBA, CID_OEMID_ANY, add_quirk_mmc,
 		  MMC_QUIRK_LONG_READ_TIME),
 =======
+=======
+>>>>>>> master
 	 * Some Micron MMC cards needs longer data read timeout than
 	 * indicated in CSD.
 	 */
 	MMC_FIXUP(CID_NAME_ANY, CID_MANFID_MICRON, 0x200, add_quirk_mmc,
 		  MMC_QUIRK_LONG_READ_TIME),
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/*
 	 * On these Samsung MoviNAND parts, performing secure erase or

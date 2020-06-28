@@ -36,6 +36,7 @@ static const char hcd_name[] = "ehci-pci";
 
 /*-------------------------------------------------------------------------*/
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define PCI_DEVICE_ID_INTEL_QUARK_X1000_SOC		0x0939
 static inline bool is_intel_quark_x1000(struct pci_dev *pdev)
 {
@@ -53,6 +54,8 @@ static inline bool is_intel_quark_x1000(struct pci_dev *pdev)
 #define INTEL_QUARK_X1000_EHCI_MAX_THRESHOLD	0x007f007f
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 /* called after powerup, by probe or system-pm "wakeup" */
 static int ehci_pci_reinit(struct ehci_hcd *ehci, struct pci_dev *pdev)
@@ -69,6 +72,7 @@ static int ehci_pci_reinit(struct ehci_hcd *ehci, struct pci_dev *pdev)
 		ehci_dbg(ehci, "MWI active\n");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Reset the threshold limit */
 	if (is_intel_quark_x1000(pdev)) {
 		/*
@@ -81,6 +85,8 @@ static int ehci_pci_reinit(struct ehci_hcd *ehci, struct pci_dev *pdev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 }
 
@@ -435,10 +441,14 @@ static struct pci_driver ehci_pci_driver = {
 	.shutdown = 	usb_hcd_pci_shutdown,
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_PM
 =======
 #ifdef CONFIG_PM_SLEEP
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#ifdef CONFIG_PM_SLEEP
+>>>>>>> master
 	.driver =	{
 		.pm =	&usb_hcd_pci_pm_ops
 	},

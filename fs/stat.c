@@ -448,6 +448,7 @@ void inode_add_bytes(struct inode *inode, loff_t bytes)
 EXPORT_SYMBOL(inode_add_bytes);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void __inode_sub_bytes(struct inode *inode, loff_t bytes)
 {
 =======
@@ -455,6 +456,11 @@ void inode_sub_bytes(struct inode *inode, loff_t bytes)
 {
 	spin_lock(&inode->i_lock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+void inode_sub_bytes(struct inode *inode, loff_t bytes)
+{
+	spin_lock(&inode->i_lock);
+>>>>>>> master
 	inode->i_blocks -= bytes >> 9;
 	bytes &= 511;
 	if (inode->i_bytes < bytes) {
@@ -462,6 +468,7 @@ void inode_sub_bytes(struct inode *inode, loff_t bytes)
 		inode->i_bytes += 512;
 	}
 	inode->i_bytes -= bytes;
+<<<<<<< HEAD
 <<<<<<< HEAD
 }
 
@@ -473,6 +480,8 @@ void inode_sub_bytes(struct inode *inode, loff_t bytes)
 	__inode_sub_bytes(inode, bytes);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	spin_unlock(&inode->i_lock);
 }
 

@@ -60,11 +60,14 @@ static int pci263_do_insn_bits(struct comedi_device *dev,
 		outb(s->state >> 8, dev->iobase + 1);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	data[1] = s->state;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return insn->n;
 }
 

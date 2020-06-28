@@ -346,10 +346,14 @@ static inline int pm80x_dev_suspend(struct device *dev)
 
 	if (device_may_wakeup(dev))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		set_bit(irq, &chip->wu_flag);
 =======
 		set_bit((1 << irq), &chip->wu_flag);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		set_bit((1 << irq), &chip->wu_flag);
+>>>>>>> master
 
 	return 0;
 }
@@ -362,10 +366,14 @@ static inline int pm80x_dev_resume(struct device *dev)
 
 	if (device_may_wakeup(dev))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		clear_bit(irq, &chip->wu_flag);
 =======
 		clear_bit((1 << irq), &chip->wu_flag);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		clear_bit((1 << irq), &chip->wu_flag);
+>>>>>>> master
 
 	return 0;
 }

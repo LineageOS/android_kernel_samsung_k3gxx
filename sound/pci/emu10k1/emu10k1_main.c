@@ -283,10 +283,14 @@ static int snd_emu10k1_init(struct snd_emu10k1 *emu, int enable_ir, int resume)
 	snd_emu10k1_ptr_write(emu, TCBS, 0, 4);	/* taken from original driver */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	silent_page = (emu->silent_page.addr << emu->address_mode) | (emu->address_mode ? MAP_PTI_MASK1 : MAP_PTI_MASK0);
 =======
 	silent_page = (emu->silent_page.addr << 1) | MAP_PTI_MASK;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	silent_page = (emu->silent_page.addr << 1) | MAP_PTI_MASK;
+>>>>>>> master
 	for (ch = 0; ch < NUM_G; ch++) {
 		snd_emu10k1_ptr_write(emu, MAPA, ch, silent_page);
 		snd_emu10k1_ptr_write(emu, MAPB, ch, silent_page);
@@ -353,6 +357,7 @@ static int snd_emu10k1_init(struct snd_emu10k1 *emu, int enable_ir, int resume)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (emu->address_mode == 0) {
 		/* use 16M in 4G */
 		outl(inl(emu->port + HCFG) | HCFG_EXPANDED_MEM, emu->port + HCFG);
@@ -360,6 +365,8 @@ static int snd_emu10k1_init(struct snd_emu10k1 *emu, int enable_ir, int resume)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 }
 
@@ -1424,10 +1431,14 @@ static struct snd_emu_chip_details emu_chip_details[] = {
 	 */
 	{.vendor = 0x1102, .device = 0x0008, .subsystem = 0x20011102,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 .driver = "Audigy2", .name = "Audigy 2 ZS Notebook [SB0530]",
 =======
 	 .driver = "Audigy2", .name = "SB Audigy 2 ZS Notebook [SB0530]",
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	 .driver = "Audigy2", .name = "SB Audigy 2 ZS Notebook [SB0530]",
+>>>>>>> master
 	 .id = "Audigy2",
 	 .emu10k2_chip = 1,
 	 .ca0108_chip = 1,
@@ -1578,10 +1589,14 @@ static struct snd_emu_chip_details emu_chip_details[] = {
 	 .ac97_chip = 1} ,
 	{.vendor = 0x1102, .device = 0x0004, .subsystem = 0x10051102,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 .driver = "Audigy2", .name = "Audigy 2 Platinum EX [SB0280]",
 =======
 	 .driver = "Audigy2", .name = "SB Audigy 2 Platinum EX [SB0280]",
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	 .driver = "Audigy2", .name = "SB Audigy 2 Platinum EX [SB0280]",
+>>>>>>> master
 	 .id = "Audigy2",
 	 .emu10k2_chip = 1,
 	 .ca0102_chip = 1,
@@ -1886,6 +1901,7 @@ int snd_emu10k1_create(struct snd_card *card,
 	is_audigy = emu->audigy = c->emu10k2_chip;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* set addressing mode */
 	emu->address_mode = is_audigy ? 0 : 1;
 	/* set the DMA transfer mask */
@@ -1894,6 +1910,10 @@ int snd_emu10k1_create(struct snd_card *card,
 	/* set the DMA transfer mask */
 	emu->dma_mask = is_audigy ? AUDIGY_DMA_MASK : EMU10K1_DMA_MASK;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	/* set the DMA transfer mask */
+	emu->dma_mask = is_audigy ? AUDIGY_DMA_MASK : EMU10K1_DMA_MASK;
+>>>>>>> master
 	if (pci_set_dma_mask(pci, emu->dma_mask) < 0 ||
 	    pci_set_consistent_dma_mask(pci, emu->dma_mask) < 0) {
 		snd_printk(KERN_ERR "architecture does not support PCI busmaster DMA with mask 0x%lx\n", emu->dma_mask);
@@ -1917,10 +1937,14 @@ int snd_emu10k1_create(struct snd_card *card,
 	emu->max_cache_pages = max_cache_bytes >> PAGE_SHIFT;
 	if (snd_dma_alloc_pages(SNDRV_DMA_TYPE_DEV, snd_dma_pci_data(pci),
 <<<<<<< HEAD
+<<<<<<< HEAD
 				(emu->address_mode ? 32 : 16) * 1024, &emu->ptb_pages) < 0) {
 =======
 				32 * 1024, &emu->ptb_pages) < 0) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				32 * 1024, &emu->ptb_pages) < 0) {
+>>>>>>> master
 		err = -ENOMEM;
 		goto error;
 	}
@@ -2020,12 +2044,17 @@ int snd_emu10k1_create(struct snd_card *card,
 	/* Clear silent pages and set up pointers */
 	memset(emu->silent_page.area, 0, PAGE_SIZE);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	silent_page = emu->silent_page.addr << emu->address_mode;
 	for (idx = 0; idx < (emu->address_mode ? MAXPAGES1 : MAXPAGES0); idx++)
 =======
 	silent_page = emu->silent_page.addr << 1;
 	for (idx = 0; idx < MAXPAGES; idx++)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	silent_page = emu->silent_page.addr << 1;
+	for (idx = 0; idx < MAXPAGES; idx++)
+>>>>>>> master
 		((u32 *)emu->ptb_pages.area)[idx] = cpu_to_le32(silent_page | idx);
 
 	/* set up voice indices */

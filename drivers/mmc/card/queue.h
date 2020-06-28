@@ -79,11 +79,16 @@ extern void mmc_queue_bounce_post(struct mmc_queue_req *);
 extern int mmc_packed_init(struct mmc_queue *, struct mmc_card *);
 extern void mmc_packed_clean(struct mmc_queue *);
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern void mmc_wait_cmdq_empty(struct mmc_host *);
 extern int mmc_access_rpmb(struct mmc_queue *);
 =======
 
 extern void mmc_wait_cmdq_empty(struct mmc_host *);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+extern void mmc_wait_cmdq_empty(struct mmc_host *);
+>>>>>>> master
 
 #endif

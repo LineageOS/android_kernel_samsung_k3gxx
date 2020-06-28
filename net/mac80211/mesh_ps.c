@@ -37,9 +37,12 @@ static struct sk_buff *mps_qos_null_get(struct sta_info *sta)
 	nullfunc->frame_control = fc;
 	nullfunc->duration_id = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nullfunc->seq_ctrl = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* no address resolution for this frame -> set addr 1 immediately */
 	memcpy(nullfunc->addr1, sta->sta.addr, ETH_ALEN);
 	memset(skb_put(skb, 2), 0, 2); /* append QoS control field */

@@ -692,9 +692,12 @@ struct backref_node *build_backref_tree(struct reloc_control *rc,
 	int ret;
 	int err = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool need_check = true;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	path1 = btrfs_alloc_path();
 	path2 = btrfs_alloc_path();
@@ -919,9 +922,12 @@ again:
 
 		lower = cur;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		need_check = true;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		for (; level < BTRFS_MAX_LEVEL; level++) {
 			if (!path2->nodes[level]) {
 				BUG_ON(btrfs_root_bytenr(&root->root_item) !=
@@ -966,6 +972,7 @@ again:
 				/*
 				 * add the block to pending list if we
 <<<<<<< HEAD
+<<<<<<< HEAD
 				 * need check its backrefs, we only do this once
 				 * while walking up a tree as we will catch
 				 * anything else later on.
@@ -980,6 +987,8 @@ again:
 					INIT_LIST_HEAD(&edge->list[UPPER]);
 				}
 =======
+=======
+>>>>>>> master
 				 * need check its backrefs. only block
 				 * at 'cur->level + 1' is added to the
 				 * tail of pending list. this guarantees
@@ -992,7 +1001,10 @@ again:
 						      &list);
 				} else
 					INIT_LIST_HEAD(&edge->list[UPPER]);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			} else {
 				upper = rb_entry(rb_node, struct backref_node,
 						 rb_node);

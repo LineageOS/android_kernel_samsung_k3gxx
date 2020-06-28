@@ -252,10 +252,14 @@ static void dwc3_ep0_stall_and_restart(struct dwc3 *dwc)
 	/* stall is always issued on EP0 */
 	dep = dwc->eps[0];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__dwc3_gadget_ep_set_halt(dep, 1, false);
 =======
 	__dwc3_gadget_ep_set_halt(dep, 1);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	__dwc3_gadget_ep_set_halt(dep, 1);
+>>>>>>> master
 	dep->flags = DWC3_EP_ENABLED;
 	dwc->delayed_status = false;
 
@@ -478,12 +482,16 @@ static int dwc3_ep0_handle_feature(struct dwc3 *dwc,
 			if (!dep)
 				return -EINVAL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (set == 0 && (dep->flags & DWC3_EP_WEDGE))
 				break;
 			ret = __dwc3_gadget_ep_set_halt(dep, set, true);
 =======
 			ret = __dwc3_gadget_ep_set_halt(dep, set);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			ret = __dwc3_gadget_ep_set_halt(dep, set);
+>>>>>>> master
 			if (ret)
 				return -EINVAL;
 			break;
@@ -745,12 +753,15 @@ static int dwc3_ep0_std_request(struct dwc3 *dwc, struct usb_ctrlrequest *ctrl)
 		ret = dwc3_ep0_set_isoch_delay(dwc, ctrl);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case USB_REQ_SET_INTERFACE:
 		dev_vdbg(dwc->dev, "USB_REQ_SET_INTERFACE\n");
 		dwc->start_config_issued = false;
 		/* Fall through */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	default:
 		dev_vdbg(dwc->dev, "Forwarding to gadget driver\n");
 		ret = dwc3_ep0_delegate_req(dwc, ctrl);
@@ -838,6 +849,7 @@ static void dwc3_ep0_complete_data(struct dwc3 *dwc,
 
 		transfer_size += (maxp - (transfer_size % maxp));
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		/* Maximum of DWC3_EP0_BOUNCE_SIZE can only be received */
 		if (transfer_size > DWC3_EP0_BOUNCE_SIZE)
@@ -845,6 +857,8 @@ static void dwc3_ep0_complete_data(struct dwc3 *dwc,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		transferred = min_t(u32, ur->length,
 				transfer_size - length);
 		memcpy(ur->buf, dwc->ep0_bounce, transferred);
@@ -967,6 +981,7 @@ static void __dwc3_ep0_do_control_data(struct dwc3 *dwc,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		maxpacket = dep->endpoint.maxpacket;
 		transfer_size = roundup(req->request.length, maxpacket);
 
@@ -976,12 +991,17 @@ static void __dwc3_ep0_do_control_data(struct dwc3 *dwc,
 		}
 
 =======
+=======
+>>>>>>> master
 		WARN_ON(req->request.length > DWC3_EP0_BOUNCE_SIZE);
 
 		maxpacket = dep->endpoint.maxpacket;
 		transfer_size = roundup(req->request.length, maxpacket);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		dwc->ep0_bounced = true;
 
 		/*

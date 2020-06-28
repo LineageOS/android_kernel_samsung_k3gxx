@@ -144,9 +144,12 @@ static void _rtl88ee_set_fw_clock_on(struct ieee80211_hw *hw,
 			rtlhal->fw_clk_change_in_progress = false;
 			spin_unlock_bh(&rtlpriv->locks.fw_ps_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			break;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		}
 	}
 
@@ -1029,6 +1032,7 @@ int rtl88ee_hw_init(struct ieee80211_hw *hw)
 	int err = 0;
 	u8 tmp_u1b, u1byte;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long flags;
 
 	RT_TRACE(rtlpriv, COMP_INIT, DBG_LOUD, "Rtl8188EE hw init\n");
@@ -1048,6 +1052,11 @@ int rtl88ee_hw_init(struct ieee80211_hw *hw)
 	RT_TRACE(rtlpriv, COMP_INIT, DBG_LOUD, "Rtl8188EE hw init\n");
 	rtlpriv->rtlhal.being_init_adapter = true;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	RT_TRACE(rtlpriv, COMP_INIT, DBG_LOUD, "Rtl8188EE hw init\n");
+	rtlpriv->rtlhal.being_init_adapter = true;
+>>>>>>> master
 	rtlpriv->intf_ops->disable_aspm(hw);
 
 	tmp_u1b = rtl_read_byte(rtlpriv, REG_SYS_CLKR+1);
@@ -1064,10 +1073,14 @@ int rtl88ee_hw_init(struct ieee80211_hw *hw)
 		RT_TRACE(rtlpriv, COMP_ERR, DBG_EMERG, "Init MAC failed\n");
 		err = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto exit;
 =======
 		return err;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return err;
+>>>>>>> master
 	}
 
 	err = rtl88e_download_fw(hw, false);
@@ -1076,11 +1089,16 @@ int rtl88ee_hw_init(struct ieee80211_hw *hw)
 			 "Failed to download FW. Init HW without FW now..\n");
 		err = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto exit;
 =======
 		rtlhal->fw_ready = false;
 		return err;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		rtlhal->fw_ready = false;
+		return err;
+>>>>>>> master
 	} else {
 		rtlhal->fw_ready = true;
 	}
@@ -1164,6 +1182,7 @@ int rtl88ee_hw_init(struct ieee80211_hw *hw)
 	rtl_write_byte(rtlpriv, REG_NAV_CTRL+2,  ((30000+127)/128));
 	rtl88e_dm_init(hw);
 <<<<<<< HEAD
+<<<<<<< HEAD
 exit:
 	local_irq_restore(flags);
 	rtlpriv->rtlhal.being_init_adapter = false;
@@ -1171,11 +1190,16 @@ exit:
 		 err);
 	return err;
 =======
+=======
+>>>>>>> master
 	rtlpriv->rtlhal.being_init_adapter = false;
 	RT_TRACE(rtlpriv, COMP_INIT, DBG_LOUD, "end of Rtl8188EE hw init %x\n",
 		 err);
 	return 0;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static enum version_8188e _rtl88ee_read_chip_version(struct ieee80211_hw *hw)

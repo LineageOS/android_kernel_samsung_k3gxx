@@ -95,9 +95,13 @@ static struct hid_field *hid_register_field(struct hid_report *report, unsigned 
 {
 	struct hid_field *field;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int i;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int i;
+>>>>>>> master
 
 	if (report->maxfield == HID_MAX_FIELDS) {
 		hid_err(report->device, "too many fields in report\n");
@@ -117,11 +121,17 @@ static struct hid_field *hid_register_field(struct hid_report *report, unsigned 
 	field->report = report;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	for (i = 0; i < usages; i++)
 		field->usage[i].usage_index = i;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	for (i = 0; i < usages; i++)
+		field->usage[i].usage_index = i;
+
+>>>>>>> master
 	return field;
 }
 
@@ -233,6 +243,7 @@ static int hid_add_field(struct hid_parser *parser, unsigned report_type, unsign
 	struct hid_report *report;
 	struct hid_field *field;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned usages;
 	unsigned offset;
 	unsigned i;
@@ -241,6 +252,11 @@ static int hid_add_field(struct hid_parser *parser, unsigned report_type, unsign
 	unsigned offset;
 	int i;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int usages;
+	unsigned offset;
+	int i;
+>>>>>>> master
 
 	report = hid_register_report(parser->device, report_type, parser->global.report_id);
 	if (!report) {
@@ -268,11 +284,15 @@ static int hid_add_field(struct hid_parser *parser, unsigned report_type, unsign
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	usages = max_t(unsigned, parser->local.usage_index,
 				 parser->global.report_count);
 =======
 	usages = max_t(int, parser->local.usage_index, parser->global.report_count);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	usages = max_t(int, parser->local.usage_index, parser->global.report_count);
+>>>>>>> master
 
 	field = hid_register_field(report, usages, parser->global.report_count);
 	if (!field)
@@ -284,10 +304,14 @@ static int hid_add_field(struct hid_parser *parser, unsigned report_type, unsign
 
 	for (i = 0; i < usages; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		unsigned j = i;
 =======
 		int j = i;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		int j = i;
+>>>>>>> master
 		/* Duplicate the last usage we parsed if we have excess values */
 		if (i >= parser->local.usage_index)
 			j = parser->local.usage_index - 1;
@@ -295,9 +319,12 @@ static int hid_add_field(struct hid_parser *parser, unsigned report_type, unsign
 		field->usage[i].collection_index =
 			parser->local.collection_index[j];
 <<<<<<< HEAD
+<<<<<<< HEAD
 		field->usage[i].usage_index = i;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	field->maxusage = usages;
@@ -828,6 +855,7 @@ struct hid_report *hid_validate_values(struct hid_device *hid,
 	 * drivers go to access report values.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (id == 0) {
 		/*
 		 * Validating on id 0 means we should examine the first
@@ -842,6 +870,9 @@ struct hid_report *hid_validate_values(struct hid_device *hid,
 =======
 	report = hid->report_enum[type].report_id_hash[id];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	report = hid->report_enum[type].report_id_hash[id];
+>>>>>>> master
 	if (!report) {
 		hid_err(hid, "missing %s %u\n", hid_report_names[type], id);
 		return NULL;
@@ -1237,11 +1268,15 @@ static void hid_output_field(const struct hid_device *hid,
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Create a report. 'data' has to be allocated using
  * hid_alloc_report_buf() so that it has proper size.
 =======
  * Create a report.
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ * Create a report.
+>>>>>>> master
  */
 
 void hid_output_report(struct hid_report *report, __u8 *data)
@@ -1258,6 +1293,7 @@ void hid_output_report(struct hid_report *report, __u8 *data)
 EXPORT_SYMBOL_GPL(hid_output_report);
 
 /*
+<<<<<<< HEAD
 <<<<<<< HEAD
  * Allocator for buffer that is going to be passed to hid_output_report()
  */
@@ -1277,6 +1313,8 @@ EXPORT_SYMBOL_GPL(hid_alloc_report_buf);
 /*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  * Set a field value. The report this field belongs to has to be
  * created and transferred to the device, to set this value in the
  * device.
@@ -1284,6 +1322,7 @@ EXPORT_SYMBOL_GPL(hid_alloc_report_buf);
 
 int hid_set_field(struct hid_field *field, unsigned offset, __s32 value)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	unsigned size;
 
@@ -1294,6 +1333,9 @@ int hid_set_field(struct hid_field *field, unsigned offset, __s32 value)
 =======
 	unsigned size = field->report_size;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned size = field->report_size;
+>>>>>>> master
 
 	hid_dump_input(field->report->device, field->usage + offset, value);
 
@@ -1370,10 +1412,14 @@ int hid_report_raw_event(struct hid_device *hid, int type, u8 *data, int size,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (hid->claimed != HID_CLAIMED_HIDRAW && report->maxfield) {
 =======
 	if (hid->claimed != HID_CLAIMED_HIDRAW) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (hid->claimed != HID_CLAIMED_HIDRAW) {
+>>>>>>> master
 		for (a = 0; a < report->maxfield; a++)
 			hid_input_field(hid, report->field[a], cdata, interrupt);
 		hdrv = hid->driver;
@@ -1516,10 +1562,14 @@ int hid_connect(struct hid_device *hdev, unsigned int connect_mask)
 	};
 	const char *type, *bus;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	char buf[64] = "";
 =======
 	char buf[64];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	char buf[64];
+>>>>>>> master
 	unsigned int i;
 	int len;
 	int ret;
@@ -1630,9 +1680,12 @@ static const struct hid_device_id hid_have_special_driver[] = {
 	{ HID_USB_DEVICE(USB_VENDOR_ID_A4TECH, USB_DEVICE_ID_A4TECH_RP_649) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ACRUX, 0x0802) },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ACRUX, 0xf705) },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_MIGHTYMOUSE) },
 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_MAGICMOUSE) },
 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_MAGICTRACKPAD) },
@@ -1748,9 +1801,12 @@ static const struct hid_device_id hid_have_special_driver[] = {
 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_EASYPEN_I405X) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_MOUSEPEN_I608X) },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_MOUSEPEN_I608X_2) },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_EASYPEN_M610X) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_LABTEC, USB_DEVICE_ID_LABTEC_WIRELESS_KEYBOARD) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_LCPOWER, USB_DEVICE_ID_LCPOWER_LC1000 ) },
@@ -1779,9 +1835,12 @@ static const struct hid_device_id hid_have_special_driver[] = {
 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_MOMO_WHEEL) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_MOMO_WHEEL2) },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_VIBRATION_WHEEL) },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_DFP_WHEEL) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_DFGT_WHEEL) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_G25_WHEEL) },
@@ -1830,6 +1889,7 @@ static const struct hid_device_id hid_have_special_driver[] = {
 	{ HID_USB_DEVICE(USB_VENDOR_ID_PRIMAX, USB_DEVICE_ID_PRIMAX_KEYBOARD) },
 #if IS_ENABLED(CONFIG_HID_ROCCAT)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ROCCAT, USB_DEVICE_ID_ROCCAT_ARVO) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ROCCAT, USB_DEVICE_ID_ROCCAT_ISKU) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ROCCAT, USB_DEVICE_ID_ROCCAT_ISKUFX) },
@@ -1839,12 +1899,17 @@ static const struct hid_device_id hid_have_special_driver[] = {
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ROCCAT, USB_DEVICE_ID_ROCCAT_KONEPURE_OPTICAL) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ROCCAT, USB_DEVICE_ID_ROCCAT_KONEXTD) },
 =======
+=======
+>>>>>>> master
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ROCCAT, USB_DEVICE_ID_ROCCAT_KONE) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ROCCAT, USB_DEVICE_ID_ROCCAT_ARVO) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ROCCAT, USB_DEVICE_ID_ROCCAT_ISKU) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ROCCAT, USB_DEVICE_ID_ROCCAT_KONEPLUS) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ROCCAT, USB_DEVICE_ID_ROCCAT_KONEPURE) },
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ROCCAT, USB_DEVICE_ID_ROCCAT_KOVAPLUS) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ROCCAT, USB_DEVICE_ID_ROCCAT_LUA) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ROCCAT, USB_DEVICE_ID_ROCCAT_PYRA_WIRED) },
@@ -1855,10 +1920,13 @@ static const struct hid_device_id hid_have_special_driver[] = {
 	{ HID_USB_DEVICE(USB_VENDOR_ID_SAMSUNG, USB_DEVICE_ID_SAMSUNG_IR_REMOTE) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_SAMSUNG, USB_DEVICE_ID_SAMSUNG_WIRELESS_KBD_MOUSE) },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ HID_USB_DEVICE(USB_VENDOR_ID_SIS2_TOUCH, USB_DEVICE_ID_SIS9200_TOUCH) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_SIS2_TOUCH, USB_DEVICE_ID_SIS817_TOUCH) },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_SAMSUNG_ELECTRONICS, USB_DEVICE_ID_SAMSUNG_WIRELESS_KBD) },
 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_SAMSUNG_ELECTRONICS, USB_DEVICE_ID_SAMSUNG_WIRELESS_GAMEPAD) },
 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_SAMSUNG_ELECTRONICS, USB_DEVICE_ID_SAMSUNG_WIRELESS_ACTIONMOUSE) },
@@ -2433,7 +2501,10 @@ bool hid_ignore(struct hid_device *hdev)
 			return true;
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	case USB_VENDOR_ID_DWAV:
 		/* These are handled by usbtouchscreen. hdev->type is probably
 		 * HID_TYPE_USBNONE, but we say !HID_TYPE_USBMOUSE to match
@@ -2443,7 +2514,10 @@ bool hid_ignore(struct hid_device *hdev)
 		    hdev->type != HID_TYPE_USBMOUSE)
 			return true;
 		break;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	case USB_VENDOR_ID_VELLEMAN:
 		/* These are not HID devices.  They are handled by comedi. */
 		if ((hdev->product >= USB_DEVICE_ID_VELLEMAN_K8055_FIRST &&

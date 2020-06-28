@@ -53,6 +53,7 @@ static void unmark_dirty(struct super_block *s)
 
 /* Filesystem error... */
 <<<<<<< HEAD
+<<<<<<< HEAD
 void hpfs_error(struct super_block *s, const char *fmt, ...)
 {
 	struct va_format vaf;
@@ -68,6 +69,8 @@ void hpfs_error(struct super_block *s, const char *fmt, ...)
 	va_end(args);
 
 =======
+=======
+>>>>>>> master
 static char err_buf[1024];
 
 void hpfs_error(struct super_block *s, const char *fmt, ...)
@@ -79,7 +82,10 @@ void hpfs_error(struct super_block *s, const char *fmt, ...)
 	va_end(args);
 
 	printk("HPFS: filesystem error: %s", err_buf);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (!hpfs_sb(s)->sb_was_error) {
 		if (hpfs_sb(s)->sb_err == 2) {
 			printk("; crashing the system because you wanted it\n");

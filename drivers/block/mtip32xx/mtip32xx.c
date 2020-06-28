@@ -1494,6 +1494,7 @@ static inline void ata_swap_string(u16 *buf, unsigned int len)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void mtip_set_timeout(struct driver_data *dd,
 					struct host_to_dev_fis *fis,
 					unsigned int *timeout, u8 erasemode)
@@ -1527,6 +1528,8 @@ static void mtip_set_timeout(struct driver_data *dd,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  * Request the device identity information.
  *
@@ -1637,9 +1640,12 @@ static int mtip_standby_immediate(struct mtip_port *port)
 	struct host_to_dev_fis	fis;
 	unsigned long start;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int timeout;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* Build the FIS. */
 	memset(&fis, 0, sizeof(struct host_to_dev_fis));
@@ -1648,10 +1654,13 @@ static int mtip_standby_immediate(struct mtip_port *port)
 	fis.command	= ATA_CMD_STANDBYNOW1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mtip_set_timeout(port->dd, &fis, &timeout, 0);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	start = jiffies;
 	rv = mtip_exec_internal_command(port,
 					&fis,
@@ -1661,10 +1670,14 @@ static int mtip_standby_immediate(struct mtip_port *port)
 					0,
 					GFP_ATOMIC,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					timeout);
 =======
 					15000);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+					15000);
+>>>>>>> master
 	dbg_printk(MTIP_DRV_NAME "Time taken to complete standby cmd: %d ms\n",
 			jiffies_to_msecs(jiffies - start));
 	if (rv)
@@ -2204,7 +2217,10 @@ static unsigned int implicit_sector(unsigned char command,
 	return rv;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 static void mtip_set_timeout(struct driver_data *dd,
 					struct host_to_dev_fis *fis,
 					unsigned int *timeout, u8 erasemode)
@@ -2235,7 +2251,10 @@ static void mtip_set_timeout(struct driver_data *dd,
 		break;
 	}
 }
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 /*
  * Executes a taskfile
@@ -4091,9 +4110,12 @@ skip_create_disk:
 	blk_queue_max_segment_size(dd->queue, 0x400000);
 	blk_queue_io_min(dd->queue, 4096);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	blk_queue_bounce_limit(dd->queue, dd->pdev->dma_mask);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/*
 	 * write back cache is not supported in the device. FUA depends on
@@ -4338,6 +4360,7 @@ static DEFINE_HANDLER(6);
 static DEFINE_HANDLER(7);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void mtip_disable_link_opts(struct driver_data *dd, struct pci_dev *pdev)
 {
 	int pos;
@@ -4391,6 +4414,8 @@ static void mtip_fix_ero_nosnoop(struct driver_data *dd, struct pci_dev *pdev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  * Called for each supported PCI device detected.
  *
@@ -4543,10 +4568,13 @@ static int mtip_pci_probe(struct pci_dev *pdev,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mtip_fix_ero_nosnoop(dd, pdev);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Initialize the block layer. */
 	rv = mtip_block_initialize(dd);
 	if (rv < 0) {
@@ -4840,20 +4868,28 @@ static int __init mtip_init(void)
 static void __exit mtip_exit(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	debugfs_remove_recursive(dfs_parent);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	debugfs_remove_recursive(dfs_parent);
+
+>>>>>>> master
 	/* Release the allocated major block device number. */
 	unregister_blkdev(mtip_major, MTIP_DRV_NAME);
 
 	/* Unregister the PCI driver. */
 	pci_unregister_driver(&mtip_pci_driver);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	debugfs_remove_recursive(dfs_parent);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 MODULE_AUTHOR("Micron Technology, Inc");

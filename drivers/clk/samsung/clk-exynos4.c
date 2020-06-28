@@ -41,10 +41,14 @@
 #define SRC_CAM			0xc220
 #define SRC_TV			0xc224
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define SRC_MFC			0xc228
 =======
 #define SRC_MFC			0xcc28
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define SRC_MFC			0xcc28
+>>>>>>> master
 #define SRC_G3D			0xc22c
 #define E4210_SRC_IMAGE		0xc230
 #define SRC_LCD0		0xc234

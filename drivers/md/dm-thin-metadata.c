@@ -592,6 +592,7 @@ static int __open_metadata(struct dm_pool_metadata *pmd)
 	disk_super = dm_block_data(sblock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Verify the data block size hasn't changed */
 	if (le32_to_cpu(disk_super->data_block_size) != pmd->data_block_size) {
 		DMERR("changing the data block size (from %u to %llu) is not supported",
@@ -603,6 +604,8 @@ static int __open_metadata(struct dm_pool_metadata *pmd)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	r = __check_incompat_features(disk_super, pmd);
 	if (r < 0)
 		goto bad_unlock_sblock;
@@ -1195,6 +1198,7 @@ static int __reserve_metadata_snap(struct dm_pool_metadata *pmd)
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * We commit to ensure the btree roots which we increment in a
 	 * moment are up to date.
 	 */
@@ -1203,6 +1207,8 @@ static int __reserve_metadata_snap(struct dm_pool_metadata *pmd)
 	/*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	 * Copy the superblock.
 	 */
 	dm_sm_inc_block(pmd->metadata_sm, THIN_SUPERBLOCK_LOCATION);
@@ -1294,12 +1300,17 @@ static int __release_metadata_snap(struct dm_pool_metadata *pmd)
 
 	disk_super = dm_block_data(copy);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dm_btree_del(&pmd->info, le64_to_cpu(disk_super->data_mapping_root));
 	dm_btree_del(&pmd->details_info, le64_to_cpu(disk_super->device_details_root));
 =======
 	dm_sm_dec_block(pmd->metadata_sm, le64_to_cpu(disk_super->data_mapping_root));
 	dm_sm_dec_block(pmd->metadata_sm, le64_to_cpu(disk_super->device_details_root));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	dm_sm_dec_block(pmd->metadata_sm, le64_to_cpu(disk_super->data_mapping_root));
+	dm_sm_dec_block(pmd->metadata_sm, le64_to_cpu(disk_super->device_details_root));
+>>>>>>> master
 	dm_sm_dec_block(pmd->metadata_sm, held_root);
 
 	return dm_tm_unlock(pmd->tm, copy);
@@ -1376,6 +1387,7 @@ dm_thin_id dm_thin_dev_id(struct dm_thin_device *td)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Check whether @time (of block creation) is older than @td's last snapshot.
  * If so then the associated block is shared with the last snapshot device.
@@ -1384,6 +1396,8 @@ dm_thin_id dm_thin_dev_id(struct dm_thin_device *td)
  */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static bool __snapshotted_since(struct dm_thin_device *td, uint32_t time)
 {
 	return td->snapshotted_time > time;
@@ -1494,6 +1508,7 @@ int dm_thin_remove_block(struct dm_thin_device *td, dm_block_t block)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int dm_pool_block_is_used(struct dm_pool_metadata *pmd, dm_block_t b, bool *result)
 {
 	int r;
@@ -1510,6 +1525,8 @@ int dm_pool_block_is_used(struct dm_pool_metadata *pmd, dm_block_t b, bool *resu
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 bool dm_thin_changed_this_transaction(struct dm_thin_device *td)
 {
 	int r;
@@ -1521,6 +1538,7 @@ bool dm_thin_changed_this_transaction(struct dm_thin_device *td)
 	return r;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 bool dm_pool_changed_this_transaction(struct dm_pool_metadata *pmd)
 {
@@ -1541,6 +1559,8 @@ bool dm_pool_changed_this_transaction(struct dm_pool_metadata *pmd)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 bool dm_thin_aborted_changes(struct dm_thin_device *td)
 {
 	bool r;

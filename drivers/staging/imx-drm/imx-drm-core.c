@@ -682,9 +682,12 @@ found:
 	return i;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(imx_drm_encoder_get_mux_id);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 /*
  * imx_drm_remove_encoder - remove an encoder

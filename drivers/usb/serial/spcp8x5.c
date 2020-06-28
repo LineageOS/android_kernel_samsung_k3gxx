@@ -156,6 +156,7 @@ static int spcp8x5_probe(struct usb_serial *serial,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int spcp8x5_attach(struct usb_serial *serial)
 {
 	unsigned char num_ports = serial->num_ports;
@@ -171,6 +172,8 @@ static int spcp8x5_attach(struct usb_serial *serial)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int spcp8x5_port_probe(struct usb_serial_port *port)
 {
 	const struct usb_device_id *id = usb_get_serial_data(port->serial);
@@ -235,6 +238,7 @@ static int spcp8x5_get_msr(struct usb_serial_port *port, u8 *status)
 			      GET_UART_STATUS, GET_UART_STATUS_TYPE,
 			      0, GET_UART_STATUS_MSR, buf, 1, 100);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret < 1) {
 		dev_err(&port->dev, "failed to get modem status: %d", ret);
 		if (ret >= 0)
@@ -247,12 +251,17 @@ static int spcp8x5_get_msr(struct usb_serial_port *port, u8 *status)
 	ret = 0;
 out:
 =======
+=======
+>>>>>>> master
 	if (ret < 0)
 		dev_err(&port->dev, "failed to get modem status: %d", ret);
 
 	dev_dbg(&port->dev, "0xc0:0x22:0:6  %d - 0x02%x", ret, *buf);
 	*status = *buf;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	kfree(buf);
 
 	return ret;
@@ -377,6 +386,7 @@ static void spcp8x5_set_termios(struct tty_struct *tty,
 
 	/* Set Data Length : 00:5bit, 01:6bit, 10:7bit, 11:8bit */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	switch (cflag & CSIZE) {
 	case CS5:
 		buf[1] |= SET_UART_FORMAT_SIZE_5;
@@ -392,6 +402,8 @@ static void spcp8x5_set_termios(struct tty_struct *tty,
 		buf[1] |= SET_UART_FORMAT_SIZE_8;
 		break;
 =======
+=======
+>>>>>>> master
 	if (cflag & CSIZE) {
 		switch (cflag & CSIZE) {
 		case CS5:
@@ -408,7 +420,10 @@ static void spcp8x5_set_termios(struct tty_struct *tty,
 			buf[1] |= SET_UART_FORMAT_SIZE_8;
 			break;
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	/* Set Stop bit2 : 0:1bit 1:2bit */
@@ -529,9 +544,12 @@ static struct usb_serial_driver spcp8x5_device = {
 	.tiocmset		= spcp8x5_tiocmset,
 	.probe			= spcp8x5_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.attach			= spcp8x5_attach,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	.port_probe		= spcp8x5_port_probe,
 	.port_remove		= spcp8x5_port_remove,
 };

@@ -1295,6 +1295,7 @@ static void enic_rq_indicate_buf(struct vnic_rq *rq,
 		skb->protocol = eth_type_trans(skb, netdev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Hardware does not provide whole packet checksum. It only
 		 * provides pseudo checksum. Since hw validates the packet
 		 * checksum but not provide us the checksum value. use
@@ -1304,11 +1305,16 @@ static void enic_rq_indicate_buf(struct vnic_rq *rq,
 		    ipv4_csum_ok)
 			skb->ip_summed = CHECKSUM_UNNECESSARY;
 =======
+=======
+>>>>>>> master
 		if ((netdev->features & NETIF_F_RXCSUM) && !csum_not_calc) {
 			skb->csum = htons(checksum);
 			skb->ip_summed = CHECKSUM_COMPLETE;
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		if (vlan_stripped)
 			__vlan_hwaccel_put_tag(skb, htons(ETH_P_8021Q), vlan_tci);

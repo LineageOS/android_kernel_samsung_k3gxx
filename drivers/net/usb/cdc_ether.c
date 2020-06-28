@@ -710,6 +710,7 @@ static const struct usb_device_id	products [] = {
 	.driver_info = (unsigned long)&wwan_info,
 }, {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Telit modules */
 	USB_VENDOR_AND_INTERFACE_INFO(0x1bc7, USB_CLASS_COMM,
 			USB_CDC_SUBCLASS_ETHERNET, USB_CDC_PROTO_NONE),
@@ -717,6 +718,8 @@ static const struct usb_device_id	products [] = {
 }, {
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	USB_INTERFACE_INFO(USB_CLASS_COMM, USB_CDC_SUBCLASS_ETHERNET,
 			USB_CDC_PROTO_NONE),
 	.driver_info = (unsigned long) &cdc_info,

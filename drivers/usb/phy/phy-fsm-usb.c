@@ -30,10 +30,14 @@
 #include <linux/usb/otg.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "phy-fsm-usb.h"
 =======
 #include "phy-otg-fsm.h"
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#include "phy-otg-fsm.h"
+>>>>>>> master
 
 /* Change USB protocol when there is a protocol change */
 static int otg_set_protocol(struct otg_fsm *fsm, int protocol)

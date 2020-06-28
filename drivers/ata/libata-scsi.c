@@ -113,6 +113,7 @@ static const char *ata_lpm_policy_names[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static ssize_t ata_scsi_lpm_store(struct device *device,
 				  struct device_attribute *attr,
 				  const char *buf, size_t count)
@@ -122,13 +123,18 @@ static ssize_t ata_scsi_lpm_store(struct device *device,
 	struct ata_link *link;
 	struct ata_device *dev;
 =======
+=======
+>>>>>>> master
 static ssize_t ata_scsi_lpm_store(struct device *dev,
 				  struct device_attribute *attr,
 				  const char *buf, size_t count)
 {
 	struct Scsi_Host *shost = class_to_shost(dev);
 	struct ata_port *ap = ata_shost_to_port(shost);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	enum ata_lpm_policy policy;
 	unsigned long flags;
 
@@ -145,6 +151,7 @@ static ssize_t ata_scsi_lpm_store(struct device *dev,
 
 	spin_lock_irqsave(ap->lock, flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	ata_for_each_link(link, ap, EDGE) {
 		ata_for_each_dev(dev, &ap->link, ENABLED) {
@@ -160,11 +167,16 @@ static ssize_t ata_scsi_lpm_store(struct device *dev,
 out_unlock:
 	spin_unlock_irqrestore(ap->lock, flags);
 =======
+=======
+>>>>>>> master
 	ap->target_lpm_policy = policy;
 	ata_port_schedule_eh(ap);
 	spin_unlock_irqrestore(ap->lock, flags);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return count;
 }
 
@@ -690,6 +702,7 @@ int ata_sas_scsi_ioctl(struct ata_port *ap, struct scsi_device *scsidev,
 		     int cmd, void __user *arg)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long val;
 	int rc = -EINVAL;
 	unsigned long flags;
@@ -703,6 +716,8 @@ int ata_sas_scsi_ioctl(struct ata_port *ap, struct scsi_device *scsidev,
 
 	case HDIO_SET_32BIT:
 =======
+=======
+>>>>>>> master
 	int val = -EINVAL, rc = -EINVAL;
 	unsigned long flags;
 
@@ -716,7 +731,10 @@ int ata_sas_scsi_ioctl(struct ata_port *ap, struct scsi_device *scsidev,
 		return 0;
 
 	case ATA_IOC_SET_IO32:
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		val = (unsigned long) arg;
 		rc = 0;
 		spin_lock_irqsave(ap->lock, flags);
@@ -2544,11 +2562,15 @@ static unsigned int ata_scsiop_read_cap(struct ata_scsi_args *args, u8 *rbuf)
 		rbuf[15] = lowest_aligned;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (ata_id_has_trim(args->id) &&
 		    !(dev->horkage & ATA_HORKAGE_NOTRIM)) {
 =======
 		if (ata_id_has_trim(args->id)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (ata_id_has_trim(args->id)) {
+>>>>>>> master
 			rbuf[14] |= 0x80; /* TPE */
 
 			if (ata_id_has_zero_after_trim(args->id))
@@ -2831,6 +2853,7 @@ static struct ata_device *ata_find_dev(struct ata_port *ap, int devno)
 {
 	if (!sata_pmp_attached(ap)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (likely(devno >= 0 &&
 			   devno < ata_link_max_devices(&ap->link)))
 			return &ap->link.device[devno];
@@ -2838,11 +2861,16 @@ static struct ata_device *ata_find_dev(struct ata_port *ap, int devno)
 		if (likely(devno >= 0 &&
 			   devno < ap->nr_pmp_links))
 =======
+=======
+>>>>>>> master
 		if (likely(devno < ata_link_max_devices(&ap->link)))
 			return &ap->link.device[devno];
 	} else {
 		if (likely(devno < ap->nr_pmp_links))
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			return &ap->pmp_link[devno].device[0];
 	}
 
@@ -3672,9 +3700,12 @@ int ata_scsi_add_hosts(struct ata_host *host, struct scsi_host_template *sht)
 		shost->max_channel = 1;
 		shost->max_cmd_len = 16;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		shost->no_write_same = 1;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		/* Schedule policy is determined by ->qc_defer()
 		 * callback and it needs to see every deferred qc.
@@ -3925,6 +3956,7 @@ void ata_scsi_hotplug(struct work_struct *work)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * XXX - UGLY HACK
 	 *
@@ -3948,6 +3980,8 @@ void ata_scsi_hotplug(struct work_struct *work)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	DPRINTK("ENTER\n");
 	mutex_lock(&ap->scsi_scan_mutex);
 

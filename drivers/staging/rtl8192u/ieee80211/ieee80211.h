@@ -2251,10 +2251,14 @@ static inline void *ieee80211_priv(struct net_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int ieee80211_is_empty_essid(const char *essid, int essid_len)
 =======
 extern inline int ieee80211_is_empty_essid(const char *essid, int essid_len)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+extern inline int ieee80211_is_empty_essid(const char *essid, int essid_len)
+>>>>>>> master
 {
 	/* Single white space is for Linksys APs */
 	if (essid_len == 1 && essid[0] == ' ')
@@ -2271,10 +2275,14 @@ extern inline int ieee80211_is_empty_essid(const char *essid, int essid_len)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int ieee80211_is_valid_mode(struct ieee80211_device *ieee, int mode)
 =======
 extern inline int ieee80211_is_valid_mode(struct ieee80211_device *ieee, int mode)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+extern inline int ieee80211_is_valid_mode(struct ieee80211_device *ieee, int mode)
+>>>>>>> master
 {
 	/*
 	 * It is possible for both access points and our device to support
@@ -2301,10 +2309,14 @@ extern inline int ieee80211_is_valid_mode(struct ieee80211_device *ieee, int mod
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int ieee80211_get_hdrlen(u16 fc)
 =======
 extern inline int ieee80211_get_hdrlen(u16 fc)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+extern inline int ieee80211_get_hdrlen(u16 fc)
+>>>>>>> master
 {
 	int hdrlen = IEEE80211_3ADDR_LEN;
 
@@ -2591,19 +2603,27 @@ void ieee80211_softmac_scan_syncro(struct ieee80211_device *ieee);
 extern const long ieee80211_wlan_frequencies[];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline void ieee80211_increment_scans(struct ieee80211_device *ieee)
 =======
 extern inline void ieee80211_increment_scans(struct ieee80211_device *ieee)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+extern inline void ieee80211_increment_scans(struct ieee80211_device *ieee)
+>>>>>>> master
 {
 	ieee->scans++;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int ieee80211_get_scans(struct ieee80211_device *ieee)
 =======
 extern inline int ieee80211_get_scans(struct ieee80211_device *ieee)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+extern inline int ieee80211_get_scans(struct ieee80211_device *ieee)
+>>>>>>> master
 {
 	return ieee->scans;
 }

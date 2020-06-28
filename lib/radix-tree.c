@@ -1016,6 +1016,7 @@ radix_tree_gang_lookup(struct radix_tree_root *root, void **results,
 
 	radix_tree_for_each_slot(slot, root, &iter, first_index) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		results[ret] = rcu_dereference_raw(*slot);
 		if (!results[ret])
 			continue;
@@ -1028,6 +1029,11 @@ radix_tree_gang_lookup(struct radix_tree_root *root, void **results,
 		if (!results[ret])
 			continue;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		results[ret] = indirect_to_ptr(rcu_dereference_raw(*slot));
+		if (!results[ret])
+			continue;
+>>>>>>> master
 		if (++ret == max_items)
 			break;
 	}
@@ -1105,6 +1111,7 @@ radix_tree_gang_lookup_tag(struct radix_tree_root *root, void **results,
 
 	radix_tree_for_each_tagged(slot, root, &iter, first_index, tag) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		results[ret] = rcu_dereference_raw(*slot);
 		if (!results[ret])
 			continue;
@@ -1117,6 +1124,11 @@ radix_tree_gang_lookup_tag(struct radix_tree_root *root, void **results,
 		if (!results[ret])
 			continue;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		results[ret] = indirect_to_ptr(rcu_dereference_raw(*slot));
+		if (!results[ret])
+			continue;
+>>>>>>> master
 		if (++ret == max_items)
 			break;
 	}

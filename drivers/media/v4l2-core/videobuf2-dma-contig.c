@@ -118,11 +118,15 @@ static void vb2_dc_prepare(void *buf_priv)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma_sync_sg_for_device(buf->dev, sgt->sgl, sgt->orig_nents,
 			       buf->dma_dir);
 =======
 	dma_sync_sg_for_device(buf->dev, sgt->sgl, sgt->nents, buf->dma_dir);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	dma_sync_sg_for_device(buf->dev, sgt->sgl, sgt->nents, buf->dma_dir);
+>>>>>>> master
 }
 
 static void vb2_dc_finish(void *buf_priv)
@@ -135,10 +139,14 @@ static void vb2_dc_finish(void *buf_priv)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma_sync_sg_for_cpu(buf->dev, sgt->sgl, sgt->orig_nents, buf->dma_dir);
 =======
 	dma_sync_sg_for_cpu(buf->dev, sgt->sgl, sgt->nents, buf->dma_dir);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	dma_sync_sg_for_cpu(buf->dev, sgt->sgl, sgt->nents, buf->dma_dir);
+>>>>>>> master
 }
 
 /*********************************************/

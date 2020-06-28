@@ -168,9 +168,12 @@ static const struct xpad_device {
 	{ 0x146b, 0x0601, "BigBen Interactive XBOX 360 Controller", 0, XTYPE_XBOX360 },
 	{ 0x1689, 0xfd00, "Razer Onza Tournament Edition", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360 },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ 0x1689, 0xfd01, "Razer Onza Classic Edition", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360 },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ 0x1bad, 0x0002, "Harmonix Rock Band Guitar", 0, XTYPE_XBOX360 },
 	{ 0x1bad, 0x0003, "Harmonix Rock Band Drumkit", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360 },
 	{ 0x1bad, 0xf016, "Mad Catz Xbox 360 Controller", 0, XTYPE_XBOX360 },
@@ -847,11 +850,14 @@ static int xpad_probe(struct usb_interface *intf, const struct usb_device_id *id
 	int i, error;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (intf->cur_altsetting->desc.bNumEndpoints != 2)
 		return -ENODEV;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	for (i = 0; xpad_device[i].idVendor; i++) {
 		if ((le16_to_cpu(udev->descriptor.idVendor) == xpad_device[i].idVendor) &&
 		    (le16_to_cpu(udev->descriptor.idProduct) == xpad_device[i].idProduct))
@@ -908,6 +914,7 @@ static int xpad_probe(struct usb_interface *intf, const struct usb_device_id *id
 	input_dev->phys = xpad->phys;
 	usb_to_input_id(udev, &input_dev->id);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (xpad->xtype == XTYPE_XBOX360W) {
 		/* x360w controllers and the receiver have different ids */
@@ -916,6 +923,8 @@ static int xpad_probe(struct usb_interface *intf, const struct usb_device_id *id
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	input_dev->dev.parent = &intf->dev;
 
 	input_set_drvdata(input_dev, xpad);
@@ -1021,6 +1030,7 @@ static int xpad_probe(struct usb_interface *intf, const struct usb_device_id *id
 
 		ep_irq_in = &intf->cur_altsetting->endpoint[1].desc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (usb_endpoint_is_bulk_out(ep_irq_in)) {
 			usb_fill_bulk_urb(xpad->bulk_out, udev,
 					  usb_sndbulkpipe(udev,
@@ -1039,6 +1049,11 @@ static int xpad_probe(struct usb_interface *intf, const struct usb_device_id *id
 				usb_sndbulkpipe(udev, ep_irq_in->bEndpointAddress),
 				xpad->bdata, XPAD_PKT_LEN, xpad_bulk_out, xpad);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		usb_fill_bulk_urb(xpad->bulk_out, udev,
+				usb_sndbulkpipe(udev, ep_irq_in->bEndpointAddress),
+				xpad->bdata, XPAD_PKT_LEN, xpad_bulk_out, xpad);
+>>>>>>> master
 
 		/*
 		 * Submit the int URB immediately rather than waiting for open

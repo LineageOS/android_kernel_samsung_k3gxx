@@ -71,9 +71,12 @@ static int ses_recv_diag(struct scsi_device *sdev, int page_code,
 			 void *buf, int bufflen)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	unsigned char cmd[] = {
 		RECEIVE_DIAGNOSTIC,
 		1,		/* Set PCV bit */
@@ -82,6 +85,7 @@ static int ses_recv_diag(struct scsi_device *sdev, int page_code,
 		bufflen & 0xff,
 		0
 	};
+<<<<<<< HEAD
 <<<<<<< HEAD
 	unsigned char recv_page_code;
 
@@ -108,6 +112,11 @@ static int ses_recv_diag(struct scsi_device *sdev, int page_code,
 	return scsi_execute_req(sdev, cmd, DMA_FROM_DEVICE, buf, bufflen,
 				NULL, SES_TIMEOUT, SES_RETRIES, NULL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	return scsi_execute_req(sdev, cmd, DMA_FROM_DEVICE, buf, bufflen,
+				NULL, SES_TIMEOUT, SES_RETRIES, NULL);
+>>>>>>> master
 }
 
 static int ses_send_diag(struct scsi_device *sdev, int page_code,
@@ -464,6 +473,7 @@ static void ses_enclosure_data_process(struct enclosure_device *edev,
 				desc_ptr += len;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (addl_desc_ptr &&
 			    /* only find additional descriptions for specific devices */
 			    (type_ptr[0] == ENCLOSURE_COMPONENT_DEVICE ||
@@ -476,6 +486,9 @@ static void ses_enclosure_data_process(struct enclosure_device *edev,
 =======
 			if (addl_desc_ptr)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			if (addl_desc_ptr)
+>>>>>>> master
 				addl_desc_ptr += addl_desc_ptr[1] + 2;
 
 		}

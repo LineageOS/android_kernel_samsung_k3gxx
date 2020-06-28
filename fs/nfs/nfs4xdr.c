@@ -2436,10 +2436,14 @@ static void nfs4_xdr_enc_getacl(struct rpc_rqst *req, struct xdr_stream *xdr,
 	encode_sequence(xdr, &args->seq_args, &hdr);
 	encode_putfh(xdr, args->fh, &hdr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	replen = hdr.replen + op_decode_hdr_maxsz;
 =======
 	replen = hdr.replen + op_decode_hdr_maxsz + 1;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	replen = hdr.replen + op_decode_hdr_maxsz + 1;
+>>>>>>> master
 	encode_getattr_two(xdr, FATTR4_WORD0_ACL, 0, &hdr);
 
 	xdr_inline_pages(&req->rq_rcv_buf, replen << 2,
@@ -3007,11 +3011,15 @@ out_overflow:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static bool __decode_op_hdr(struct xdr_stream *xdr, enum nfs_opnum4 expected,
 		int *nfs_retval)
 =======
 static int decode_op_hdr(struct xdr_stream *xdr, enum nfs_opnum4 expected)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int decode_op_hdr(struct xdr_stream *xdr, enum nfs_opnum4 expected)
+>>>>>>> master
 {
 	__be32 *p;
 	uint32_t opnum;
@@ -3021,6 +3029,7 @@ static int decode_op_hdr(struct xdr_stream *xdr, enum nfs_opnum4 expected)
 	if (unlikely(!p))
 		goto out_overflow;
 	opnum = be32_to_cpup(p++);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (unlikely(opnum != expected))
 		goto out_bad_operation;
@@ -3049,6 +3058,8 @@ static int decode_op_hdr(struct xdr_stream *xdr, enum nfs_opnum4 expected)
 	__decode_op_hdr(xdr, expected, &retval);
 	return retval;
 =======
+=======
+>>>>>>> master
 	if (opnum != expected) {
 		dprintk("nfs: Server returned operation"
 			" %d but we issued a request for %d\n",
@@ -3062,7 +3073,10 @@ static int decode_op_hdr(struct xdr_stream *xdr, enum nfs_opnum4 expected)
 out_overflow:
 	print_overflow_msg(__func__, xdr);
 	return -EIO;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /* Dummy routine */
@@ -4881,6 +4895,7 @@ static int decode_open(struct xdr_stream *xdr, struct nfs_openres *res)
 	int status;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!__decode_op_hdr(xdr, OP_OPEN, &status))
 		return status;
 	nfs_increment_open_seqid(status, res->seqid);
@@ -4888,12 +4903,17 @@ static int decode_open(struct xdr_stream *xdr, struct nfs_openres *res)
 		return status;
 	status = decode_stateid(xdr, &res->stateid);
 =======
+=======
+>>>>>>> master
 	status = decode_op_hdr(xdr, OP_OPEN);
 	if (status != -EIO)
 		nfs_increment_open_seqid(status, res->seqid);
 	if (!status)
 		status = decode_stateid(xdr, &res->stateid);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (unlikely(status))
 		return status;
 

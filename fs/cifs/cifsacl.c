@@ -1028,6 +1028,7 @@ id_mode_to_cifs_acl(struct inode *inode, const char *path, __u64 nmode,
 	struct cifs_ntsd *pntsd = NULL; /* acl obtained from server */
 	struct cifs_ntsd *pnntsd = NULL; /* modified acl to be sent to server */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
 	struct tcon_link *tlink = cifs_sb_tlink(cifs_sb);
 	struct cifs_tcon *tcon;
@@ -1037,10 +1038,13 @@ id_mode_to_cifs_acl(struct inode *inode, const char *path, __u64 nmode,
 	tcon = tlink_tcon(tlink);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	cifs_dbg(NOISY, "set ACL from mode for %s\n", path);
 
 	/* Get the security descriptor */
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	if (tcon->ses->server->ops->get_acl == NULL) {
@@ -1056,12 +1060,17 @@ id_mode_to_cifs_acl(struct inode *inode, const char *path, __u64 nmode,
 		cifs_put_tlink(tlink);
 		return rc;
 =======
+=======
+>>>>>>> master
 	pntsd = get_cifs_acl(CIFS_SB(inode->i_sb), inode, path, &secdesclen);
 	if (IS_ERR(pntsd)) {
 		rc = PTR_ERR(pntsd);
 		cifs_dbg(VFS, "%s: error %d getting sec desc\n", __func__, rc);
 		goto out;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	/*
@@ -1075,9 +1084,12 @@ id_mode_to_cifs_acl(struct inode *inode, const char *path, __u64 nmode,
 	if (!pnntsd) {
 		kfree(pntsd);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cifs_put_tlink(tlink);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return -ENOMEM;
 	}
 
@@ -1086,6 +1098,7 @@ id_mode_to_cifs_acl(struct inode *inode, const char *path, __u64 nmode,
 
 	cifs_dbg(NOISY, "build_sec_desc rc: %d\n", rc);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (tcon->ses->server->ops->set_acl == NULL)
 		rc = -EOPNOTSUPP;
@@ -1101,6 +1114,8 @@ id_mode_to_cifs_acl(struct inode *inode, const char *path, __u64 nmode,
 	kfree(pnntsd);
 	kfree(pntsd);
 =======
+=======
+>>>>>>> master
 	if (!rc) {
 		/* Set the security descriptor */
 		rc = set_cifs_acl(pnntsd, secdesclen, inode, path, aclflag);
@@ -1110,6 +1125,9 @@ id_mode_to_cifs_acl(struct inode *inode, const char *path, __u64 nmode,
 	kfree(pnntsd);
 	kfree(pntsd);
 out:
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return rc;
 }

@@ -119,10 +119,14 @@ typedef enum {
  * thin air in the hopes othat we don't trigger a kernel panic.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define SCTP_MAX_NUM_COMMANDS 20
 =======
 #define SCTP_MAX_NUM_COMMANDS 14
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define SCTP_MAX_NUM_COMMANDS 14
+>>>>>>> master
 
 typedef union {
 	__s32 i32;

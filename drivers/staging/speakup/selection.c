@@ -5,11 +5,14 @@
 #include <linux/device.h> /* for dev_warn */
 #include <linux/selection.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/workqueue.h>
 #include <linux/tty.h>
 #include <asm/cmpxchg.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 #include "speakup.h"
 
@@ -128,6 +131,7 @@ int speakup_set_selection(struct tty_struct *tty)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct speakup_paste_work {
 	struct work_struct work;
 	struct tty_struct *tty;
@@ -149,6 +153,8 @@ static void __speakup_paste_selection(struct work_struct *work)
 
 	/* FIXME: this is completely unsafe */
 =======
+=======
+>>>>>>> master
 /* TODO: move to some helper thread, probably.  That'd fix having to check for
  * in_atomic().  */
 int speakup_paste_selection(struct tty_struct *tty)
@@ -156,32 +162,47 @@ int speakup_paste_selection(struct tty_struct *tty)
 	struct vc_data *vc = (struct vc_data *) tty->driver_data;
 	int pasted = 0, count;
 	DECLARE_WAITQUEUE(wait, current);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	add_wait_queue(&vc->paste_wait, &wait);
 	while (sel_buffer && sel_buffer_lth > pasted) {
 		set_current_state(TASK_INTERRUPTIBLE);
 		if (test_bit(TTY_THROTTLED, &tty->flags)) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 			if (in_atomic())
 				/* if we are in an interrupt handler, abort */
 				break;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			if (in_atomic())
+				/* if we are in an interrupt handler, abort */
+				break;
+>>>>>>> master
 			schedule();
 			continue;
 		}
 		count = sel_buffer_lth - pasted;
 		count = min_t(int, count, tty->receive_room);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ld->ops->receive_buf(tty, sel_buffer + pasted, NULL, count);
 =======
 		tty->ldisc->ops->receive_buf(tty, sel_buffer + pasted,
 			NULL, count);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		tty->ldisc->ops->receive_buf(tty, sel_buffer + pasted,
+			NULL, count);
+>>>>>>> master
 		pasted += count;
 	}
 	remove_wait_queue(&vc->paste_wait, &wait);
 	current->state = TASK_RUNNING;
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	tty_ldisc_deref(ld);
@@ -214,3 +235,8 @@ void speakup_cancel_paste(void)
 }
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return 0;
+}
+
+>>>>>>> master

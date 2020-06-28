@@ -137,6 +137,7 @@ static int tc_ctl_tfilter(struct sk_buff *skb, struct nlmsghdr *n)
 	unsigned long fh;
 	int err;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int tp_created;
 
 	if ((n->nlmsg_type != RTM_GETTFILTER) && !netlink_capable(skb, CAP_NET_ADMIN))
@@ -146,13 +147,18 @@ replay:
 	tp_created = 0;
 
 =======
+=======
+>>>>>>> master
 	int tp_created = 0;
 
 	if ((n->nlmsg_type != RTM_GETTFILTER) && !capable(CAP_NET_ADMIN))
 		return -EPERM;
 
 replay:
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	err = nlmsg_parse(n, sizeof(*t), tca, TCA_MAX, NULL);
 	if (err < 0)
 		return err;

@@ -143,21 +143,28 @@ acpi_hw_validate_io_request(acpi_io_address address, u32 bit_width)
 	last_address = address + byte_width - 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ACPI_DEBUG_PRINT((ACPI_DB_IO,
 			  "Address %8.8X%8.8X LastAddress %8.8X%8.8X Length %X",
 			  ACPI_FORMAT_UINT64(address),
 			  ACPI_FORMAT_UINT64(last_address), byte_width));
 =======
+=======
+>>>>>>> master
 	ACPI_DEBUG_PRINT((ACPI_DB_IO, "Address %p LastAddress %p Length %X",
 			  ACPI_CAST_PTR(void, address), ACPI_CAST_PTR(void,
 								      last_address),
 			  byte_width));
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* Maximum 16-bit address in I/O space */
 
 	if (last_address > ACPI_UINT16_MAX) {
 		ACPI_ERROR((AE_INFO,
+<<<<<<< HEAD
 <<<<<<< HEAD
 			    "Illegal I/O port address/length above 64K: %8.8X%8.8X/0x%X",
 			    ACPI_FORMAT_UINT64(address), byte_width));
@@ -165,6 +172,10 @@ acpi_hw_validate_io_request(acpi_io_address address, u32 bit_width)
 			    "Illegal I/O port address/length above 64K: %p/0x%X",
 			    ACPI_CAST_PTR(void, address), byte_width));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			    "Illegal I/O port address/length above 64K: %p/0x%X",
+			    ACPI_CAST_PTR(void, address), byte_width));
+>>>>>>> master
 		return_ACPI_STATUS(AE_LIMIT);
 	}
 
@@ -194,12 +205,17 @@ acpi_hw_validate_io_request(acpi_io_address address, u32 bit_width)
 			if (acpi_gbl_osi_data >= port_info->osi_dependency) {
 				ACPI_DEBUG_PRINT((ACPI_DB_IO,
 <<<<<<< HEAD
+<<<<<<< HEAD
 						  "Denied AML access to port 0x%8.8X%8.8X/%X (%s 0x%.4X-0x%.4X)",
 						  ACPI_FORMAT_UINT64(address),
 =======
 						  "Denied AML access to port 0x%p/%X (%s 0x%.4X-0x%.4X)",
 						  ACPI_CAST_PTR(void, address),
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+						  "Denied AML access to port 0x%p/%X (%s 0x%.4X-0x%.4X)",
+						  ACPI_CAST_PTR(void, address),
+>>>>>>> master
 						  byte_width, port_info->name,
 						  port_info->start,
 						  port_info->end));

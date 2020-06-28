@@ -44,11 +44,14 @@
 #include "atbm8830.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Max transfer size done by I2C transfer functions */
 #define MAX_XFER_SIZE  64
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /* debug */
 static int dvb_usb_cxusb_debug;
 module_param_named(debug, dvb_usb_cxusb_debug, int, 0644);
@@ -64,6 +67,7 @@ static int cxusb_ctrl_msg(struct dvb_usb_device *d,
 {
 	int wo = (rbuf == NULL || rlen == 0); /* write-only */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 sndbuf[MAX_XFER_SIZE];
 
 	if (1 + wlen > sizeof(sndbuf)) {
@@ -75,6 +79,9 @@ static int cxusb_ctrl_msg(struct dvb_usb_device *d,
 =======
 	u8 sndbuf[1+wlen];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u8 sndbuf[1+wlen];
+>>>>>>> master
 	memset(sndbuf, 0, 1+wlen);
 
 	sndbuf[0] = cmd;
@@ -157,9 +164,12 @@ static int cxusb_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 {
 	struct dvb_usb_device *d = i2c_get_adapdata(adap);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	int i;
 
 	if (mutex_lock_interruptible(&d->i2c_mutex) < 0)
@@ -180,6 +190,7 @@ static int cxusb_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 		if (msg[i].flags & I2C_M_RD) {
 			/* read only */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			u8 obuf[3], ibuf[MAX_XFER_SIZE];
 
 			if (1 + msg[i].len > sizeof(ibuf)) {
@@ -191,6 +202,9 @@ static int cxusb_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 =======
 			u8 obuf[3], ibuf[1+msg[i].len];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			u8 obuf[3], ibuf[1+msg[i].len];
+>>>>>>> master
 			obuf[0] = 0;
 			obuf[1] = msg[i].len;
 			obuf[2] = msg[i].addr;
@@ -204,6 +218,7 @@ static int cxusb_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 		} else if (i+1 < num && (msg[i+1].flags & I2C_M_RD) &&
 			   msg[i].addr == msg[i+1].addr) {
 			/* write to then read from same address */
+<<<<<<< HEAD
 <<<<<<< HEAD
 			u8 obuf[MAX_XFER_SIZE], ibuf[MAX_XFER_SIZE];
 
@@ -222,6 +237,9 @@ static int cxusb_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 =======
 			u8 obuf[3+msg[i].len], ibuf[1+msg[i+1].len];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			u8 obuf[3+msg[i].len], ibuf[1+msg[i+1].len];
+>>>>>>> master
 			obuf[0] = msg[i].len;
 			obuf[1] = msg[i+1].len;
 			obuf[2] = msg[i].addr;
@@ -241,6 +259,7 @@ static int cxusb_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 		} else {
 			/* write only */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			u8 obuf[MAX_XFER_SIZE], ibuf;
 
 			if (2 + msg[i].len > sizeof(obuf)) {
@@ -252,6 +271,9 @@ static int cxusb_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 =======
 			u8 obuf[2+msg[i].len], ibuf;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			u8 obuf[2+msg[i].len], ibuf;
+>>>>>>> master
 			obuf[0] = msg[i].addr;
 			obuf[1] = msg[i].len;
 			memcpy(&obuf[2], msg[i].buf, msg[i].len);
@@ -265,6 +287,7 @@ static int cxusb_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (i == num)
 		ret = num;
 	else
@@ -277,6 +300,10 @@ unlock:
 	mutex_unlock(&d->i2c_mutex);
 	return i == num ? num : -EREMOTEIO;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	mutex_unlock(&d->i2c_mutex);
+	return i == num ? num : -EREMOTEIO;
+>>>>>>> master
 }
 
 static u32 cxusb_i2c_func(struct i2c_adapter *adapter)

@@ -459,10 +459,14 @@ struct nilfs_btree_node {
 #define NILFS_BTREE_LEVEL_DATA          0
 #define NILFS_BTREE_LEVEL_NODE_MIN      (NILFS_BTREE_LEVEL_DATA + 1)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define NILFS_BTREE_LEVEL_MAX           14	/* Max level (exclusive) */
 =======
 #define NILFS_BTREE_LEVEL_MAX           14
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define NILFS_BTREE_LEVEL_MAX           14
+>>>>>>> master
 
 /**
  * struct nilfs_palloc_group_desc - block group descriptor

@@ -46,11 +46,15 @@
 #define NFULNL_TIMEOUT_DEFAULT 	100	/* every second */
 #define NFULNL_QTHRESH_DEFAULT 	100	/* 100 packets */
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* max packet size is limited by 16-bit struct nfattr nfa_len field */
 #define NFULNL_COPY_RANGE_MAX	(0xFFFF - NLA_HDRLEN)
 =======
 #define NFULNL_COPY_RANGE_MAX	0xFFFF	/* max packet size is limited by 16-bit struct nfattr nfa_len field */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define NFULNL_COPY_RANGE_MAX	0xFFFF	/* max packet size is limited by 16-bit struct nfattr nfa_len field */
+>>>>>>> master
 
 #define PRINTR(x, args...)	do { if (net_ratelimit()) \
 				     printk(x, ## args); } while (0);
@@ -261,10 +265,13 @@ nfulnl_set_mode(struct nfulnl_instance *inst, u_int8_t mode,
 	case NFULNL_COPY_PACKET:
 		inst->copy_mode = mode;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (range == 0)
 			range = NFULNL_COPY_RANGE_MAX;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		inst->copy_range = min_t(unsigned int,
 					 range, NFULNL_COPY_RANGE_MAX);
 		break;
@@ -356,21 +363,28 @@ nfulnl_alloc_skb(u32 peer_portid, unsigned int inst_size, unsigned int pkt_size)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void
 __nfulnl_send(struct nfulnl_instance *inst)
 {
 =======
+=======
+>>>>>>> master
 static int
 __nfulnl_send(struct nfulnl_instance *inst)
 {
 	int status = -1;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (inst->qlen > 1) {
 		struct nlmsghdr *nlh = nlmsg_put(inst->skb, 0, 0,
 						 NLMSG_DONE,
 						 sizeof(struct nfgenmsg),
 						 0);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (WARN_ONCE(!nlh, "bad nlskb size: %u, tailroom %d\n",
 			      inst->skb->len, skb_tailroom(inst->skb))) {
@@ -384,6 +398,8 @@ out:
 	inst->qlen = 0;
 	inst->skb = NULL;
 =======
+=======
+>>>>>>> master
 		if (!nlh)
 			goto out;
 	}
@@ -394,7 +410,10 @@ out:
 	inst->skb = NULL;
 out:
 	return status;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static void
@@ -678,11 +697,15 @@ nfulnl_log_packet(struct net *net,
 		+ nla_total_size(plen)			/* prefix */
 		+ nla_total_size(sizeof(struct nfulnl_msg_packet_hw))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		+ nla_total_size(sizeof(struct nfulnl_msg_packet_timestamp))
 		+ nla_total_size(sizeof(struct nfgenmsg));	/* NLMSG_DONE */
 =======
 		+ nla_total_size(sizeof(struct nfulnl_msg_packet_timestamp));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		+ nla_total_size(sizeof(struct nfulnl_msg_packet_timestamp));
+>>>>>>> master
 
 	if (in && skb_mac_header_was_set(skb)) {
 		size +=   nla_total_size(skb->dev->hard_header_len)
@@ -712,11 +735,16 @@ nfulnl_log_packet(struct net *net,
 
 	case NFULNL_COPY_PACKET:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (inst->copy_range > skb->len)
 =======
 		if (inst->copy_range == 0
 		    || inst->copy_range > skb->len)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (inst->copy_range == 0
+		    || inst->copy_range > skb->len)
+>>>>>>> master
 			data_len = skb->len;
 		else
 			data_len = inst->copy_range;
@@ -730,11 +758,16 @@ nfulnl_log_packet(struct net *net,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (inst->skb && size > skb_tailroom(inst->skb)) {
 =======
 	if (inst->skb &&
 	    size > skb_tailroom(inst->skb) - sizeof(struct nfgenmsg)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (inst->skb &&
+	    size > skb_tailroom(inst->skb) - sizeof(struct nfgenmsg)) {
+>>>>>>> master
 		/* either the queue len is too high or we don't have
 		 * enough room in the skb left. flush to userspace. */
 		__nfulnl_flush(inst);

@@ -264,9 +264,12 @@
 					regulator-min-microvolt = <1000000>;
 					regulator-max-microvolt = <1000000>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 					regulator-always-on;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 					regulator-boot-on;
 					op_mode = <1>;
 				};

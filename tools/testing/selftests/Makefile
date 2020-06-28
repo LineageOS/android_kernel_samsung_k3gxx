@@ -5,9 +5,12 @@ TARGETS += kcmp
 TARGETS += memory-hotplug
 TARGETS += mqueue
 <<<<<<< HEAD
+<<<<<<< HEAD
 TARGETS += mount
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 TARGETS += net
 TARGETS += ptrace
 TARGETS += vm

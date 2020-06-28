@@ -185,10 +185,14 @@ static int ehci_mxc_drv_remove(struct platform_device *pdev)
 		pdata->exit(pdev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (pdata && pdata->otg)
 =======
 	if (pdata->otg)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (pdata->otg)
+>>>>>>> master
 		usb_phy_shutdown(pdata->otg);
 
 	clk_disable_unprepare(priv->usbclk);

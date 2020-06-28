@@ -158,11 +158,14 @@ static u16 dib8000_i2c_read16(struct i2c_device *i2c, u16 reg)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static u16 __dib8000_read_word(struct dib8000_state *state, u16 reg)
 {
 	u16 ret;
 
 =======
+=======
+>>>>>>> master
 static u16 dib8000_read_word(struct dib8000_state *state, u16 reg)
 {
 	u16 ret;
@@ -172,7 +175,10 @@ static u16 dib8000_read_word(struct dib8000_state *state, u16 reg)
 		return 0;
 	}
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	state->i2c_write_buffer[0] = reg >> 8;
 	state->i2c_write_buffer[1] = reg & 0xff;
 
@@ -191,6 +197,7 @@ static u16 dib8000_read_word(struct dib8000_state *state, u16 reg)
 
 	ret = (state->i2c_read_buffer[0] << 8) | state->i2c_read_buffer[1];
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	return ret;
 }
@@ -208,6 +215,8 @@ static u16 dib8000_read_word(struct dib8000_state *state, u16 reg)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	mutex_unlock(&state->i2c_buffer_lock);
 
 	return ret;
@@ -217,6 +226,7 @@ static u32 dib8000_read32(struct dib8000_state *state, u16 reg)
 {
 	u16 rw[2];
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (mutex_lock_interruptible(&state->i2c_buffer_lock) < 0) {
 		dprintk("could not acquire lock");
@@ -231,6 +241,10 @@ static u32 dib8000_read32(struct dib8000_state *state, u16 reg)
 	rw[0] = dib8000_read_word(state, reg + 0);
 	rw[1] = dib8000_read_word(state, reg + 1);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	rw[0] = dib8000_read_word(state, reg + 0);
+	rw[1] = dib8000_read_word(state, reg + 1);
+>>>>>>> master
 
 	return ((rw[0] << 16) | (rw[1]));
 }
@@ -2483,11 +2497,15 @@ static int dib8000_autosearch_start(struct dvb_frontend *fe)
 		internal = dib8000_read32(state, 23) / 1000;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if ((state->revision >= 0x8002) &&
 	    (state->autosearch_state == AS_SEARCHING_FFT)) {
 =======
 	if (state->autosearch_state == AS_SEARCHING_FFT) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (state->autosearch_state == AS_SEARCHING_FFT) {
+>>>>>>> master
 		dib8000_write_word(state,  37, 0x0065); /* P_ctrl_pha_off_max default values */
 		dib8000_write_word(state, 116, 0x0000); /* P_ana_gain to 0 */
 
@@ -2524,11 +2542,15 @@ static int dib8000_autosearch_start(struct dvb_frontend *fe)
 		dib8000_write_word(state, 770, (dib8000_read_word(state, 770) & 0xdfff) | (0 << 13)); /* P_restart_ccg = 0 */
 		dib8000_write_word(state, 0, (dib8000_read_word(state, 0) & 0x7ff) | (0 << 15) | (1 << 13)); /* P_restart_search = 0; */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if ((state->revision >= 0x8002) &&
 		   (state->autosearch_state == AS_SEARCHING_GUARD)) {
 =======
 	} else if (state->autosearch_state == AS_SEARCHING_GUARD) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	} else if (state->autosearch_state == AS_SEARCHING_GUARD) {
+>>>>>>> master
 		c->transmission_mode = TRANSMISSION_MODE_8K;
 		c->guard_interval = GUARD_INTERVAL_1_8;
 		c->inversion = 0;
@@ -2631,11 +2653,15 @@ static int dib8000_autosearch_irq(struct dvb_frontend *fe)
 	u16 irq_pending = dib8000_read_word(state, 1284);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if ((state->revision >= 0x8002) &&
 	    (state->autosearch_state == AS_SEARCHING_FFT)) {
 =======
 	if (state->autosearch_state == AS_SEARCHING_FFT) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (state->autosearch_state == AS_SEARCHING_FFT) {
+>>>>>>> master
 		if (irq_pending & 0x1) {
 			dprintk("dib8000_autosearch_irq: max correlation result available");
 			return 3;

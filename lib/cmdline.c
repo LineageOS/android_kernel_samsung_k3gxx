@@ -23,10 +23,14 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int get_range(char **str, int *pint, int n)
 =======
 static int get_range(char **str, int *pint)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int get_range(char **str, int *pint)
+>>>>>>> master
 {
 	int x, inc_counter, upper_range;
 
@@ -34,10 +38,14 @@ static int get_range(char **str, int *pint)
 	upper_range = simple_strtol((*str), NULL, 0);
 	inc_counter = upper_range - *pint;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	for (x = *pint; n && x < upper_range; x++, n--)
 =======
 	for (x = *pint; x < upper_range; x++)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	for (x = *pint; x < upper_range; x++)
+>>>>>>> master
 		*pint++ = x;
 	return inc_counter;
 }
@@ -104,10 +112,14 @@ char *get_options(const char *str, int nints, int *ints)
 		if (res == 3) {
 			int range_nums;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			range_nums = get_range((char **)&str, ints + i, nints - i);
 =======
 			range_nums = get_range((char **)&str, ints + i);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			range_nums = get_range((char **)&str, ints + i);
+>>>>>>> master
 			if (range_nums < 0)
 				break;
 			/*

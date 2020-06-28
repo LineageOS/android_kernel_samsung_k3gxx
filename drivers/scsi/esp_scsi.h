@@ -272,9 +272,12 @@ struct esp_cmd_entry {
 
 	u8			tag[2];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8			orig_tag[2];
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	u8			status;
 	u8			message;

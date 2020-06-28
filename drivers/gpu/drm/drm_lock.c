@@ -59,11 +59,14 @@ int drm_lock(struct drm_device *dev, void *data, struct drm_file *file_priv)
 	int ret = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (drm_core_check_feature(dev, DRIVER_MODESET))
 		return -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	++file_priv->lock_count;
 
 	if (lock->context == DRM_KERNEL_CONTEXT) {
@@ -158,11 +161,14 @@ int drm_unlock(struct drm_device *dev, void *data, struct drm_file *file_priv)
 	struct drm_master *master = file_priv->master;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (drm_core_check_feature(dev, DRIVER_MODESET))
 		return -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (lock->context == DRM_KERNEL_CONTEXT) {
 		DRM_ERROR("Process %d using kernel context %d\n",
 			  task_pid_nr(current), lock->context);

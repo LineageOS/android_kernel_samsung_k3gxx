@@ -166,18 +166,24 @@ out:
 	mutex_unlock(&ppriv->vlan_mutex);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rtnl_unlock();
 
 	if (result)
 		free_netdev(priv->dev);
 
 =======
+=======
+>>>>>>> master
 	if (result)
 		free_netdev(priv->dev);
 
 	rtnl_unlock();
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return result;
 }
 

@@ -357,10 +357,14 @@ static int ip_frag_queue(struct ipq *qp, struct sk_buff *skb)
 
 	/* Determine the position of this fragment. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	end = offset + skb->len - skb_network_offset(skb) - ihl;
 =======
 	end = offset + skb->len - ihl;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	end = offset + skb->len - ihl;
+>>>>>>> master
 	err = -EINVAL;
 
 	/* Is this the final fragment? */
@@ -391,10 +395,14 @@ static int ip_frag_queue(struct ipq *qp, struct sk_buff *skb)
 
 	err = -ENOMEM;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!pskb_pull(skb, skb_network_offset(skb) + ihl))
 =======
 	if (pskb_pull(skb, ihl) == NULL)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (pskb_pull(skb, ihl) == NULL)
+>>>>>>> master
 		goto err;
 
 	err = pskb_trim_rcsum(skb, end - offset);
@@ -636,11 +644,14 @@ static int ip_frag_reasm(struct ipq *qp, struct sk_buff *prev,
 	iph->tot_len = htons(len);
 	iph->tos |= ecn;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	ip_send_check(iph);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	IP_INC_STATS_BH(net, IPSTATS_MIB_REASMOKS);
 	qp->q.fragments = NULL;
 	qp->q.fragments_tail = NULL;
@@ -668,11 +679,14 @@ int ip_defrag(struct sk_buff *skb, u32 user)
 	IP_INC_STATS_BH(net, IPSTATS_MIB_REASMREQDS);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!net->ipv4.frags.high_thresh)
 		goto fail;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Start by cleaning up the memory. */
 	ip_evictor(net);
 
@@ -690,9 +704,12 @@ int ip_defrag(struct sk_buff *skb, u32 user)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 fail:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	IP_INC_STATS_BH(net, IPSTATS_MIB_REASMFAILS);
 	kfree_skb(skb);
 	return -ENOMEM;
@@ -703,14 +720,18 @@ struct sk_buff *ip_check_defrag(struct sk_buff *skb, u32 user)
 {
 	struct iphdr iph;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int netoff;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	u32 len;
 
 	if (skb->protocol != htons(ETH_P_IP))
 		return skb;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	netoff = skb_network_offset(skb);
 
@@ -718,6 +739,9 @@ struct sk_buff *ip_check_defrag(struct sk_buff *skb, u32 user)
 =======
 	if (!skb_copy_bits(skb, 0, &iph, sizeof(iph)))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!skb_copy_bits(skb, 0, &iph, sizeof(iph)))
+>>>>>>> master
 		return skb;
 
 	if (iph.ihl < 5 || iph.version != 4)
@@ -725,15 +749,20 @@ struct sk_buff *ip_check_defrag(struct sk_buff *skb, u32 user)
 
 	len = ntohs(iph.tot_len);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (skb->len < netoff + len || len < (iph.ihl * 4))
 =======
 	if (skb->len < len || len < (iph.ihl * 4))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (skb->len < len || len < (iph.ihl * 4))
+>>>>>>> master
 		return skb;
 
 	if (ip_is_fragment(&iph)) {
 		skb = skb_share_check(skb, GFP_ATOMIC);
 		if (skb) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 			if (!pskb_may_pull(skb, netoff + iph.ihl * 4))
 				return skb;
@@ -743,6 +772,11 @@ struct sk_buff *ip_check_defrag(struct sk_buff *skb, u32 user)
 				return skb;
 			if (pskb_trim_rcsum(skb, len))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			if (!pskb_may_pull(skb, iph.ihl*4))
+				return skb;
+			if (pskb_trim_rcsum(skb, len))
+>>>>>>> master
 				return skb;
 			memset(IPCB(skb), 0, sizeof(struct inet_skb_parm));
 			if (ip_defrag(skb, user))

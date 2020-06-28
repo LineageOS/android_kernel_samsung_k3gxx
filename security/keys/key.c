@@ -300,10 +300,13 @@ struct key *key_alloc(struct key_type *type, const char *desc,
 	if (!(flags & KEY_ALLOC_NOT_IN_QUOTA))
 		key->flags |= 1 << KEY_FLAG_IN_QUOTA;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (flags & KEY_ALLOC_UID_KEYRING)
 		key->flags |= 1 << KEY_FLAG_UID_KEYRING;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	memset(&key->type_data, 0, sizeof(key->type_data));
 
@@ -903,6 +906,7 @@ error:
 	__key_link_end(keyring, ktype, prealloc);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	key = key_ref_to_ptr(key_ref);
 	if (test_bit(KEY_FLAG_USER_CONSTRUCT, &key->flags)) {
 		ret = wait_for_key_construction(key, true);
@@ -915,6 +919,8 @@ error:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	key_ref = __key_update(key_ref, &prep);
 	goto error_free_prep;
 }

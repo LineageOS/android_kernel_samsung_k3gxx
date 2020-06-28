@@ -20,9 +20,13 @@
 #define LSM330DLC_GYRO_DEV_NAME		"lsm330dlc_gyro"
 #define L3GD20_GYRO_DEV_NAME		"l3gd20"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define L3GD20H_GYRO_DEV_NAME		"l3gd20h"
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define L3GD20H_GYRO_DEV_NAME		"l3gd20h"
+>>>>>>> master
 #define L3G4IS_GYRO_DEV_NAME		"l3g4is_ui"
 #define LSM330_GYRO_DEV_NAME		"lsm330_gyro"
 

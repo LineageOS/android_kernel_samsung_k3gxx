@@ -83,10 +83,14 @@ ext4_unaligned_aio(struct inode *inode, const struct iovec *iov,
 	loff_t final_size = pos + count;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (pos >= i_size_read(inode))
 =======
 	if (pos >= inode->i_size)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (pos >= inode->i_size)
+>>>>>>> master
 		return 0;
 
 	if ((pos & blockmask) || (final_size & blockmask))
@@ -105,10 +109,14 @@ ext4_file_dio_write(struct kiocb *iocb, const struct iovec *iov,
 	int unaligned_aio = 0;
 	ssize_t ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int *overwrite = iocb->private;
 =======
 	int overwrite = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int overwrite = 0;
+>>>>>>> master
 	size_t length = iov_length(iov, nr_segs);
 
 	if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS) &&
@@ -127,10 +135,15 @@ ext4_file_dio_write(struct kiocb *iocb, const struct iovec *iov,
 	blk_start_plug(&plug);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	iocb->private = &overwrite;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	iocb->private = &overwrite;
+
+>>>>>>> master
 	/* check whether we do a DIO overwrite or not */
 	if (ext4_should_dioread_nolock(inode) && !unaligned_aio &&
 	    !file->f_mapping->nrpages && pos + length <= i_size_read(inode)) {
@@ -155,10 +168,14 @@ ext4_file_dio_write(struct kiocb *iocb, const struct iovec *iov,
 		 */
 		if (err == len && (map.m_flags & EXT4_MAP_MAPPED))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			*overwrite = 1;
 =======
 			overwrite = 1;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			overwrite = 1;
+>>>>>>> master
 	}
 
 	ret = __generic_file_aio_write(iocb, iov, nr_segs, &iocb->ki_pos);
@@ -186,9 +203,12 @@ ext4_file_write(struct kiocb *iocb, const struct iovec *iov,
 	struct inode *inode = file_inode(iocb->ki_filp);
 	ssize_t ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int overwrite = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/*
 	 * If we have encountered a bitmap-format file, the size limit
@@ -210,9 +230,12 @@ ext4_file_write(struct kiocb *iocb, const struct iovec *iov,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	iocb->private = &overwrite;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (unlikely(iocb->ki_filp->f_flags & O_DIRECT))
 		ret = ext4_file_dio_write(iocb, iov, nr_segs, pos);
 	else
@@ -357,9 +380,12 @@ static int ext4_find_unwritten_pgoff(struct inode *inode,
 		nr_pages = pagevec_lookup(&pvec, inode->i_mapping, index,
 					  (pgoff_t)num);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (nr_pages == 0)
 			break;
 =======
+=======
+>>>>>>> master
 		if (nr_pages == 0) {
 			if (whence == SEEK_DATA)
 				break;
@@ -385,7 +411,10 @@ static int ext4_find_unwritten_pgoff(struct inode *inode,
 			found = 1;
 			break;
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		for (i = 0; i < nr_pages; i++) {
 			struct page *page = pvec.pages[i];
@@ -393,29 +422,38 @@ static int ext4_find_unwritten_pgoff(struct inode *inode,
 
 			/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 * If current offset is smaller than the page offset,
 			 * there is a hole at this offset.
 			 */
 			if (whence == SEEK_HOLE && lastoff < endoff &&
 			    lastoff < page_offset(pvec.pages[i])) {
 =======
+=======
+>>>>>>> master
 			 * If the current offset is not beyond the end of given
 			 * range, it will be a hole.
 			 */
 			if (lastoff < endoff && whence == SEEK_HOLE &&
 			    page->index > end) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				found = 1;
 				*offset = lastoff;
 				goto out;
 			}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (page->index > end)
 				goto out;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			lock_page(page);
 
 			if (unlikely(page->mapping != inode->i_mapping)) {
@@ -433,10 +471,13 @@ static int ext4_find_unwritten_pgoff(struct inode *inode,
 				bh = head = page_buffers(page);
 				do {
 <<<<<<< HEAD
+<<<<<<< HEAD
 					if (lastoff + bh->b_size <= startoff)
 						goto next;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 					if (buffer_uptodate(bh) ||
 					    buffer_unwritten(bh)) {
 						if (whence == SEEK_DATA)
@@ -452,9 +493,12 @@ static int ext4_find_unwritten_pgoff(struct inode *inode,
 						goto out;
 					}
 <<<<<<< HEAD
+<<<<<<< HEAD
 next:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 					lastoff += bh->b_size;
 					bh = bh->b_this_page;
 				} while (bh != head);
@@ -465,10 +509,13 @@ next:
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* The no. of pages is less than our desired, we are done. */
 		if (nr_pages < num)
 			break;
 =======
+=======
+>>>>>>> master
 		/*
 		 * The no. of pages is less than our desired, that would be a
 		 * hole in there.
@@ -478,12 +525,16 @@ next:
 			*offset = lastoff;
 			break;
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		index = pvec.pages[i - 1]->index + 1;
 		pagevec_release(&pvec);
 	} while (index <= end);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (whence == SEEK_HOLE && lastoff < endoff) {
 		found = 1;
@@ -491,6 +542,8 @@ next:
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 out:
 	pagevec_release(&pvec);
 	return found;
@@ -513,10 +566,14 @@ static loff_t ext4_seek_data(struct file *file, loff_t offset, loff_t maxsize)
 
 	isize = i_size_read(inode);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (offset < 0 || offset >= isize) {
 =======
 	if (offset >= isize) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (offset >= isize) {
+>>>>>>> master
 		mutex_unlock(&inode->i_mutex);
 		return -ENXIO;
 	}
@@ -600,10 +657,14 @@ static loff_t ext4_seek_hole(struct file *file, loff_t offset, loff_t maxsize)
 
 	isize = i_size_read(inode);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (offset < 0 || offset >= isize) {
 =======
 	if (offset >= isize) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (offset >= isize) {
+>>>>>>> master
 		mutex_unlock(&inode->i_mutex);
 		return -ENXIO;
 	}

@@ -326,11 +326,16 @@ static int validate_region_size(struct raid_set *rs, unsigned long region_size)
 		if (min_region_size > (1 << 13)) {
 			/* If not a power of 2, make it the next power of 2 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			region_size = roundup_pow_of_two(min_region_size);
 =======
 			if (min_region_size & (min_region_size - 1))
 				region_size = 1 << fls(region_size);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			if (min_region_size & (min_region_size - 1))
+				region_size = 1 << fls(region_size);
+>>>>>>> master
 			DMINFO("Choosing default region size of %lu sectors",
 			       region_size);
 		} else {
@@ -385,10 +390,14 @@ static int validate_raid_redundancy(struct raid_set *rs)
 {
 	unsigned i, rebuild_cnt = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned rebuilds_per_group = 0, copies, d;
 =======
 	unsigned rebuilds_per_group, copies, d;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned rebuilds_per_group, copies, d;
+>>>>>>> master
 	unsigned group_size, last_group_start;
 
 	for (i = 0; i < rs->md.raid_disks; i++)
@@ -794,11 +803,16 @@ struct dm_raid_superblock {
 	__le32 stripe_sectors;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Remainder of a logical block is zero-filled when writing (see super_sync()). */
 =======
 	__u8 pad[452];		/* Round struct to 512 bytes. */
 				/* Always set to 0 when writing. */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	__u8 pad[452];		/* Round struct to 512 bytes. */
+				/* Always set to 0 when writing. */
+>>>>>>> master
 } __packed;
 
 static int read_disk_sb(struct md_rdev *rdev, int size)
@@ -836,10 +850,14 @@ static void super_sync(struct mddev *mddev, struct md_rdev *rdev)
 			failed_devices |= (1ULL << i);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memset(sb + 1, 0, rdev->sb_size - sizeof(*sb));
 =======
 	memset(sb, 0, sizeof(*sb));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	memset(sb, 0, sizeof(*sb));
+>>>>>>> master
 
 	sb->magic = cpu_to_le32(DM_RAID_MAGIC);
 	sb->features = cpu_to_le32(0);	/* No features yet */
@@ -875,6 +893,7 @@ static int super_load(struct md_rdev *rdev, struct md_rdev *refdev)
 
 	rdev->sb_start = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rdev->sb_size = bdev_logical_block_size(rdev->meta_bdev);
 	if (rdev->sb_size < sizeof(*sb) || rdev->sb_size > PAGE_SIZE) {
 		DMERR("superblock size of a logical block is no longer valid");
@@ -883,6 +902,9 @@ static int super_load(struct md_rdev *rdev, struct md_rdev *refdev)
 =======
 	rdev->sb_size = sizeof(*sb);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	rdev->sb_size = sizeof(*sb);
+>>>>>>> master
 
 	ret = read_disk_sb(rdev, rdev->sb_size);
 	if (ret)

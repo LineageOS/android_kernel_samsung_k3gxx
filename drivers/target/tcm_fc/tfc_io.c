@@ -347,10 +347,14 @@ void ft_invl_hw_context(struct ft_cmd *cmd)
 		if (ep) {
 			lport = ep->lp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (lport && (ep->xid <= lport->lro_xid)) {
 =======
 			if (lport && (ep->xid <= lport->lro_xid))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			if (lport && (ep->xid <= lport->lro_xid))
+>>>>>>> master
 				/*
 				 * "ddp_done" trigger invalidation of HW
 				 * specific DDP context
@@ -366,9 +370,12 @@ void ft_invl_hw_context(struct ft_cmd *cmd)
 				 */
 				cmd->was_ddp_setup = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		}
 	}
 }

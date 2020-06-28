@@ -575,6 +575,7 @@ il4965_translate_rx_status(struct il_priv *il, u32 decrypt_in)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define SMALL_PACKET_SIZE 256
 
 static void
@@ -585,6 +586,11 @@ static void
 il4965_pass_packet_to_mac80211(struct il_priv *il, struct ieee80211_hdr *hdr,
 			       u16 len, u32 ampdu_status, struct il_rx_buf *rxb,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static void
+il4965_pass_packet_to_mac80211(struct il_priv *il, struct ieee80211_hdr *hdr,
+			       u16 len, u32 ampdu_status, struct il_rx_buf *rxb,
+>>>>>>> master
 			       struct ieee80211_rx_status *stats)
 {
 	struct sk_buff *skb;
@@ -602,15 +608,20 @@ il4965_pass_packet_to_mac80211(struct il_priv *il, struct ieee80211_hdr *hdr,
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	skb = dev_alloc_skb(SMALL_PACKET_SIZE);
 =======
 	skb = dev_alloc_skb(128);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	skb = dev_alloc_skb(128);
+>>>>>>> master
 	if (!skb) {
 		IL_ERR("dev_alloc_skb failed\n");
 		return;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (len <= SMALL_PACKET_SIZE) {
 		memcpy(skb_put(skb, len), hdr, len);
@@ -624,16 +635,25 @@ il4965_pass_packet_to_mac80211(struct il_priv *il, struct ieee80211_hdr *hdr,
 	skb_add_rx_frag(skb, 0, rxb->page, (void *)hdr - rxb_addr(rxb), len,
 			len);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	skb_add_rx_frag(skb, 0, rxb->page, (void *)hdr - rxb_addr(rxb), len,
+			len);
+>>>>>>> master
 
 	il_update_stats(il, false, fc, len);
 	memcpy(IEEE80211_SKB_RXCB(skb), stats, sizeof(*stats));
 
 	ieee80211_rx(il->hw, skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	il->alloc_rxb_page--;
 	rxb->page = NULL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	il->alloc_rxb_page--;
+	rxb->page = NULL;
+>>>>>>> master
 }
 
 /* Called for N_RX (legacy ABG frames), or
@@ -4473,6 +4493,7 @@ il4965_irq_tasklet(struct il_priv *il)
 		} else {
 			clear_bit(S_RFKILL, &il->status);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			il_force_reset(il, true);
 		}
 		wiphy_rfkill_set_hw_state(il->hw->wiphy, hw_rf_kill);
@@ -4481,6 +4502,11 @@ il4965_irq_tasklet(struct il_priv *il)
 			il_force_reset(il, true);
 		}
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			wiphy_rfkill_set_hw_state(il->hw->wiphy, hw_rf_kill);
+			il_force_reset(il, true);
+		}
+>>>>>>> master
 
 		handled |= CSR_INT_BIT_RF_KILL;
 	}

@@ -149,10 +149,14 @@ AES_Te:
 .align	5
 ENTRY(AES_encrypt)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	adr	r3,AES_encrypt
 =======
 	sub	r3,pc,#8		@ AES_encrypt
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	sub	r3,pc,#8		@ AES_encrypt
+>>>>>>> master
 	stmdb   sp!,{r1,r4-r12,lr}
 	mov	r12,r0		@ inp
 	mov	r11,r2
@@ -386,10 +390,14 @@ _armv4_AES_encrypt:
 ENTRY(private_AES_set_encrypt_key)
 _armv4_AES_set_encrypt_key:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	adr	r3,_armv4_AES_set_encrypt_key
 =======
 	sub	r3,pc,#8		@ AES_set_encrypt_key
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	sub	r3,pc,#8		@ AES_set_encrypt_key
+>>>>>>> master
 	teq	r0,#0
 	moveq	r0,#-1
 	beq	.Labrt
@@ -852,10 +860,14 @@ AES_Td:
 .align	5
 ENTRY(AES_decrypt)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	adr	r3,AES_decrypt
 =======
 	sub	r3,pc,#8		@ AES_decrypt
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	sub	r3,pc,#8		@ AES_decrypt
+>>>>>>> master
 	stmdb   sp!,{r1,r4-r12,lr}
 	mov	r12,r0		@ inp
 	mov	r11,r2

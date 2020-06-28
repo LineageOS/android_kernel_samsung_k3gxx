@@ -1588,9 +1588,12 @@ static void dma_tasklet(unsigned long data)
 	struct d40_desc *d40d;
 	unsigned long flags;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool callback_active;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	dma_async_tx_callback callback;
 	void *callback_param;
 
@@ -1619,9 +1622,12 @@ static void dma_tasklet(unsigned long data)
 
 	/* Callback to client */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	callback_active = !!(d40d->txd.flags & DMA_PREP_INTERRUPT);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	callback = d40d->txd.callback;
 	callback_param = d40d->txd.callback_param;
 
@@ -1645,10 +1651,14 @@ static void dma_tasklet(unsigned long data)
 	spin_unlock_irqrestore(&d40c->lock, flags);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (callback_active && callback)
 =======
 	if (callback && (d40d->txd.flags & DMA_PREP_INTERRUPT))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (callback && (d40d->txd.flags & DMA_PREP_INTERRUPT))
+>>>>>>> master
 		callback(callback_param);
 
 	return;

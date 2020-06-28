@@ -415,17 +415,23 @@ static void dma_irq_handle_channel(struct imxdma_channel *imxdmac)
 	int chno = imxdmac->channel;
 	struct imxdma_desc *desc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long flags;
 
 	spin_lock_irqsave(&imxdma->lock, flags);
 	if (list_empty(&imxdmac->ld_active)) {
 		spin_unlock_irqrestore(&imxdma->lock, flags);
 =======
+=======
+>>>>>>> master
 
 	spin_lock(&imxdma->lock);
 	if (list_empty(&imxdmac->ld_active)) {
 		spin_unlock(&imxdma->lock);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		goto out;
 	}
 
@@ -433,10 +439,14 @@ static void dma_irq_handle_channel(struct imxdma_channel *imxdmac)
 				struct imxdma_desc,
 				node);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_unlock_irqrestore(&imxdma->lock, flags);
 =======
 	spin_unlock(&imxdma->lock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	spin_unlock(&imxdma->lock);
+>>>>>>> master
 
 	if (desc->sg) {
 		u32 tmp;
@@ -509,9 +519,13 @@ static int imxdma_xfer_desc(struct imxdma_desc *d)
 	struct imxdma_channel *imxdmac = to_imxdma_chan(d->desc.chan);
 	struct imxdma_engine *imxdma = imxdmac->imxdma;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned long flags;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned long flags;
+>>>>>>> master
 	int slot = -1;
 	int i;
 
@@ -520,9 +534,13 @@ static int imxdma_xfer_desc(struct imxdma_desc *d)
 	case IMXDMA_DESC_INTERLEAVED:
 		/* Try to get a free 2D slot */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		spin_lock_irqsave(&imxdma->lock, flags);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		spin_lock_irqsave(&imxdma->lock, flags);
+>>>>>>> master
 		for (i = 0; i < IMX_DMA_2D_SLOTS; i++) {
 			if ((imxdma->slots_2d[i].count > 0) &&
 			((imxdma->slots_2d[i].xsr != d->x) ||
@@ -533,14 +551,20 @@ static int imxdma_xfer_desc(struct imxdma_desc *d)
 			break;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (slot < 0)
 			return -EBUSY;
 =======
+=======
+>>>>>>> master
 		if (slot < 0) {
 			spin_unlock_irqrestore(&imxdma->lock, flags);
 			return -EBUSY;
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		imxdma->slots_2d[slot].xsr = d->x;
 		imxdma->slots_2d[slot].ysr = d->y;
@@ -550,9 +574,13 @@ static int imxdma_xfer_desc(struct imxdma_desc *d)
 		imxdmac->slot_2d = slot;
 		imxdmac->enabled_2d = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		spin_unlock_irqrestore(&imxdma->lock, flags);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		spin_unlock_irqrestore(&imxdma->lock, flags);
+>>>>>>> master
 
 		if (slot == IMX_DMA_2D_SLOT_A) {
 			d->config_mem &= ~CCR_MSEL_B;
@@ -629,6 +657,7 @@ static void imxdma_tasklet(unsigned long data)
 	struct imxdma_engine *imxdma = imxdmac->imxdma;
 	struct imxdma_desc *desc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long flags;
 
 	spin_lock_irqsave(&imxdma->lock, flags);
@@ -641,6 +670,8 @@ static void imxdma_tasklet(unsigned long data)
 	desc = list_first_entry(&imxdmac->ld_active, struct imxdma_desc, node);
 
 =======
+=======
+>>>>>>> master
 
 	spin_lock(&imxdma->lock);
 
@@ -653,7 +684,10 @@ static void imxdma_tasklet(unsigned long data)
 	if (desc->desc.callback)
 		desc->desc.callback(desc->desc.callback_param);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* If we are dealing with a cyclic descriptor, keep it on ld_active
 	 * and dont mark the descriptor as complete.
 	 * Only in non-cyclic cases it would be marked as complete
@@ -681,6 +715,7 @@ static void imxdma_tasklet(unsigned long data)
 	}
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_unlock_irqrestore(&imxdma->lock, flags);
 
 	if (desc->desc.callback)
@@ -689,6 +724,9 @@ out:
 =======
 	spin_unlock(&imxdma->lock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	spin_unlock(&imxdma->lock);
+>>>>>>> master
 }
 
 static int imxdma_control(struct dma_chan *chan, enum dma_ctrl_cmd cmd,
@@ -911,10 +949,14 @@ static struct dma_async_tx_descriptor *imxdma_prep_dma_cyclic(
 
 	imxdmac->sg_list = kcalloc(periods + 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			sizeof(struct scatterlist), GFP_ATOMIC);
 =======
 			sizeof(struct scatterlist), GFP_KERNEL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			sizeof(struct scatterlist), GFP_KERNEL);
+>>>>>>> master
 	if (!imxdmac->sg_list)
 		return NULL;
 

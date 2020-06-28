@@ -39,6 +39,7 @@ struct pstore_read_data {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline u64 generic_id(unsigned long timestamp,
 			     unsigned int part, int count)
 {
@@ -47,6 +48,8 @@ static inline u64 generic_id(unsigned long timestamp,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int efi_pstore_read_func(struct efivar_entry *entry, void *data)
 {
 	efi_guid_t vendor = LINUX_EFI_CRASH_GUID;
@@ -66,10 +69,14 @@ static int efi_pstore_read_func(struct efivar_entry *entry, void *data)
 	if (sscanf(name, "dump-type%u-%u-%d-%lu",
 		   cb_data->type, &part, &cnt, &time) == 4) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		*cb_data->id = generic_id(time, part, cnt);
 =======
 		*cb_data->id = part;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		*cb_data->id = part;
+>>>>>>> master
 		*cb_data->count = cnt;
 		cb_data->timespec->tv_sec = time;
 		cb_data->timespec->tv_nsec = 0;
@@ -81,10 +88,14 @@ static int efi_pstore_read_func(struct efivar_entry *entry, void *data)
 		 * multiple logs, remains.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		*cb_data->id = generic_id(time, part, 0);
 =======
 		*cb_data->id = part;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		*cb_data->id = part;
+>>>>>>> master
 		*cb_data->count = 0;
 		cb_data->timespec->tv_sec = time;
 		cb_data->timespec->tv_nsec = 0;
@@ -203,6 +214,7 @@ static int efi_pstore_erase(enum pstore_type_id type, u64 id, int count,
 	efi_char16_t efi_name[DUMP_NAME_LEN];
 	int found, i;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int part;
 
 	do_div(id, 1000);
@@ -213,15 +225,24 @@ static int efi_pstore_erase(enum pstore_type_id type, u64 id, int count,
 	sprintf(name, "dump-type%u-%u-%d-%lu", type, (unsigned int)id, count,
 		time.tv_sec);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	sprintf(name, "dump-type%u-%u-%d-%lu", type, (unsigned int)id, count,
+		time.tv_sec);
+>>>>>>> master
 
 	for (i = 0; i < DUMP_NAME_LEN; i++)
 		efi_name[i] = name[i];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	edata.id = part;
 =======
 	edata.id = id;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	edata.id = id;
+>>>>>>> master
 	edata.type = type;
 	edata.count = count;
 	edata.time = time;

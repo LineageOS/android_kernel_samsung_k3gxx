@@ -271,6 +271,7 @@ static void virtscsi_req_done(struct virtqueue *vq)
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void virtscsi_poll_requests(struct virtio_scsi *vscsi)
 {
 	int i, num_vqs;
@@ -283,6 +284,8 @@ static void virtscsi_poll_requests(struct virtio_scsi *vscsi)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static void virtscsi_complete_free(struct virtio_scsi *vscsi, void *buf)
 {
 	struct virtio_scsi_cmd *cmd = buf;
@@ -302,10 +305,13 @@ static void virtscsi_ctrl_done(struct virtqueue *vq)
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void virtscsi_handle_event(struct work_struct *work);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int virtscsi_kick_event(struct virtio_scsi *vscsi,
 			       struct virtio_scsi_event_node *event_node)
 {
@@ -314,9 +320,12 @@ static int virtscsi_kick_event(struct virtio_scsi *vscsi,
 	unsigned long flags;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	INIT_WORK(&event_node->work, virtscsi_handle_event);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	sg_init_one(&sg, &event_node->event, sizeof(struct virtio_scsi_event));
 
 	spin_lock_irqsave(&vscsi->event_vq.vq_lock, flags);
@@ -435,9 +444,13 @@ static void virtscsi_complete_event(struct virtio_scsi *vscsi, void *buf)
 	struct virtio_scsi_event_node *event_node = buf;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	INIT_WORK(&event_node->work, virtscsi_handle_event);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	INIT_WORK(&event_node->work, virtscsi_handle_event);
+>>>>>>> master
 	schedule_work(&event_node->work);
 }
 
@@ -628,6 +641,7 @@ static int virtscsi_tmf(struct virtio_scsi *vscsi, struct virtio_scsi_cmd *cmd)
 		ret = SUCCESS;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * The spec guarantees that all requests related to the TMF have
 	 * been completed, but the callback might not have run yet if
@@ -642,6 +656,8 @@ static int virtscsi_tmf(struct virtio_scsi *vscsi, struct virtio_scsi_cmd *cmd)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 out:
 	mempool_free(cmd, virtscsi_cmd_pool);
 	return ret;
@@ -792,6 +808,7 @@ static void __virtscsi_set_affinity(struct virtio_scsi *vscsi, bool affinity)
 		vscsi->affinity_hint_set = true;
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		for (i = 0; i < vscsi->num_queues; i++) {
 			if (!vscsi->req_vqs[i].vq)
 				continue;
@@ -802,6 +819,10 @@ static void __virtscsi_set_affinity(struct virtio_scsi *vscsi, bool affinity)
 		for (i = 0; i < vscsi->num_queues; i++)
 			virtqueue_set_affinity(vscsi->req_vqs[i].vq, -1);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		for (i = 0; i < vscsi->num_queues; i++)
+			virtqueue_set_affinity(vscsi->req_vqs[i].vq, -1);
+>>>>>>> master
 
 		vscsi->affinity_hint_set = false;
 	}
@@ -1007,12 +1028,15 @@ static void virtscsi_remove(struct virtio_device *vdev)
 static int virtscsi_freeze(struct virtio_device *vdev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct Scsi_Host *sh = virtio_scsi_host(vdev);
 	struct virtio_scsi *vscsi = shost_priv(sh);
 
 	unregister_hotcpu_notifier(&vscsi->nb);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	virtscsi_remove_vqs(vdev);
 	return 0;
 }
@@ -1021,6 +1045,7 @@ static int virtscsi_restore(struct virtio_device *vdev)
 {
 	struct Scsi_Host *sh = virtio_scsi_host(vdev);
 	struct virtio_scsi *vscsi = shost_priv(sh);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int err;
 
@@ -1037,6 +1062,10 @@ static int virtscsi_restore(struct virtio_device *vdev)
 
 	return virtscsi_init(vdev, vscsi);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	return virtscsi_init(vdev, vscsi);
+>>>>>>> master
 }
 #endif
 

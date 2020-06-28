@@ -565,9 +565,13 @@ static struct beiscsi_hba *beiscsi_hba_alloc(struct pci_dev *pcidev)
 		return NULL;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	shost->dma_boundary = pcidev->dma_mask;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	shost->dma_boundary = pcidev->dma_mask;
+>>>>>>> master
 	shost->max_id = BE2_MAX_SESSIONS;
 	shost->max_channel = 0;
 	shost->max_cmd_len = BEISCSI_MAX_CMD_LEN;
@@ -2983,10 +2987,14 @@ be_sgl_create_contiguous(void *virtual_address,
 	WARN_ON(!virtual_address);
 	WARN_ON(!physical_address);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WARN_ON(!length);
 =======
 	WARN_ON(!length > 0);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	WARN_ON(!length > 0);
+>>>>>>> master
 	WARN_ON(!sgl);
 
 	sgl->va = virtual_address;
@@ -4049,9 +4057,12 @@ put_shost:
 free_kset:
 	iscsi_boot_destroy_kset(phba->boot_kset);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	phba->boot_kset = NULL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return -ENOMEM;
 }
 
@@ -5093,6 +5104,7 @@ hba_free:
 	if (phba->msix_enabled)
 		pci_disable_msix(phba->pcidev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pci_dev_put(phba->pcidev);
 	iscsi_host_free(phba->shost);
 	pci_set_drvdata(pcidev, NULL);
@@ -5101,6 +5113,11 @@ hba_free:
 	pci_dev_put(phba->pcidev);
 	iscsi_host_free(phba->shost);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	iscsi_host_remove(phba->shost);
+	pci_dev_put(phba->pcidev);
+	iscsi_host_free(phba->shost);
+>>>>>>> master
 disable_pci:
 	pci_disable_device(pcidev);
 	return ret;

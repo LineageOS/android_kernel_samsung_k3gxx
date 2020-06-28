@@ -21,11 +21,14 @@
 #include "fc2580_priv.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Max transfer size done by I2C transfer functions */
 #define MAX_XFER_SIZE  64
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  * TODO:
  * I2C write and read works only for one single register. Multiple registers
@@ -48,23 +51,32 @@ static int fc2580_wr_regs(struct fc2580_priv *priv, u8 reg, u8 *val, int len)
 {
 	int ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 buf[MAX_XFER_SIZE];
 =======
 	u8 buf[1 + len];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u8 buf[1 + len];
+>>>>>>> master
 	struct i2c_msg msg[1] = {
 		{
 			.addr = priv->cfg->i2c_addr,
 			.flags = 0,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			.len = 1 + len,
 =======
 			.len = sizeof(buf),
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			.len = sizeof(buf),
+>>>>>>> master
 			.buf = buf,
 		}
 	};
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (1 + len > sizeof(buf)) {
 		dev_warn(&priv->i2c->dev,
@@ -75,6 +87,8 @@ static int fc2580_wr_regs(struct fc2580_priv *priv, u8 reg, u8 *val, int len)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	buf[0] = reg;
 	memcpy(&buf[1], val, len);
 
@@ -94,10 +108,14 @@ static int fc2580_rd_regs(struct fc2580_priv *priv, u8 reg, u8 *val, int len)
 {
 	int ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 buf[MAX_XFER_SIZE];
 =======
 	u8 buf[len];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u8 buf[len];
+>>>>>>> master
 	struct i2c_msg msg[2] = {
 		{
 			.addr = priv->cfg->i2c_addr,
@@ -108,14 +126,19 @@ static int fc2580_rd_regs(struct fc2580_priv *priv, u8 reg, u8 *val, int len)
 			.addr = priv->cfg->i2c_addr,
 			.flags = I2C_M_RD,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			.len = len,
 =======
 			.len = sizeof(buf),
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			.len = sizeof(buf),
+>>>>>>> master
 			.buf = buf,
 		}
 	};
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (len > sizeof(buf)) {
 		dev_warn(&priv->i2c->dev,
@@ -126,6 +149,8 @@ static int fc2580_rd_regs(struct fc2580_priv *priv, u8 reg, u8 *val, int len)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ret = i2c_transfer(priv->i2c, msg, 2);
 	if (ret == 2) {
 		memcpy(val, buf, len);
@@ -221,10 +246,14 @@ static int fc2580_set_params(struct dvb_frontend *fe)
 	f_ref = 2UL * priv->cfg->clock / r_val;
 	n_val = div_u64_rem(f_vco, f_ref, &k_val);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	k_val_reg = div_u64(1ULL * k_val * (1 << 20), f_ref);
 =======
 	k_val_reg = 1UL * k_val * (1 << 20) / f_ref;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	k_val_reg = 1UL * k_val * (1 << 20) / f_ref;
+>>>>>>> master
 
 	ret = fc2580_wr_reg(priv, 0x18, r18_val | ((k_val_reg >> 16) & 0xff));
 	if (ret < 0)
@@ -378,12 +407,17 @@ static int fc2580_set_params(struct dvb_frontend *fe)
 		goto err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = fc2580_wr_reg(priv, 0x37, div_u64(1ULL * priv->cfg->clock *
 			fc2580_if_filter_lut[i].mul, 1000000000));
 =======
 	ret = fc2580_wr_reg(priv, 0x37, 1UL * priv->cfg->clock * \
 			fc2580_if_filter_lut[i].mul / 1000000000);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ret = fc2580_wr_reg(priv, 0x37, 1UL * priv->cfg->clock * \
+			fc2580_if_filter_lut[i].mul / 1000000000);
+>>>>>>> master
 	if (ret < 0)
 		goto err;
 

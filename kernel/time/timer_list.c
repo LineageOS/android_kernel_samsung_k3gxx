@@ -266,15 +266,21 @@ static int timer_list_show(struct seq_file *m, void *v)
 {
 	struct timer_list_iter *iter = v;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (iter->cpu == -1 && !iter->second_pass)
 		timer_list_header(m, iter->now);
 =======
+=======
+>>>>>>> master
 	u64 now = ktime_to_ns(ktime_get());
 
 	if (iter->cpu == -1 && !iter->second_pass)
 		timer_list_header(m, now);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	else if (!iter->second_pass)
 		print_cpu(m, iter->cpu, iter->now);
 #ifdef CONFIG_GENERIC_CLOCKEVENTS
@@ -305,6 +311,7 @@ void sysrq_timer_list_show(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void *move_iter(struct timer_list_iter *iter, loff_t offset)
 {
 	for (; offset; offset--) {
@@ -321,6 +328,8 @@ static void *move_iter(struct timer_list_iter *iter, loff_t offset)
 #endif
 		}
 =======
+=======
+>>>>>>> master
 static void *timer_list_start(struct seq_file *file, loff_t *offset)
 {
 	struct timer_list_iter *iter = file->private;
@@ -338,11 +347,15 @@ static void *timer_list_start(struct seq_file *file, loff_t *offset)
 #else
 		return NULL;
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 	return iter;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void *timer_list_start(struct seq_file *file, loff_t *offset)
 {
@@ -361,13 +374,18 @@ static void *timer_list_next(struct seq_file *file, void *v, loff_t *offset)
 	++*offset;
 	return move_iter(iter, 1);
 =======
+=======
+>>>>>>> master
 static void *timer_list_next(struct seq_file *file, void *v, loff_t *offset)
 {
 	struct timer_list_iter *iter = file->private;
 	iter->cpu = cpumask_next(iter->cpu, cpu_online_mask);
 	++*offset;
 	return timer_list_start(file, offset);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static void timer_list_stop(struct seq_file *seq, void *v)

@@ -587,10 +587,14 @@ static int scc_wait_after_reset(struct ata_link *link, unsigned int devmask,
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int scc_bus_softreset(struct ata_port *ap, unsigned int devmask,
 =======
 static unsigned int scc_bus_softreset(struct ata_port *ap, unsigned int devmask,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static unsigned int scc_bus_softreset(struct ata_port *ap, unsigned int devmask,
+>>>>>>> master
                                       unsigned long deadline)
 {
 	struct ata_ioports *ioaddr = &ap->ioaddr;
@@ -605,12 +609,18 @@ static unsigned int scc_bus_softreset(struct ata_port *ap, unsigned int devmask,
 	out_be32(ioaddr->ctl_addr, ap->ctl);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return scc_wait_after_reset(&ap->link, devmask, deadline);
 =======
 	scc_wait_after_reset(&ap->link, devmask, deadline);
 
 	return 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	scc_wait_after_reset(&ap->link, devmask, deadline);
+
+	return 0;
+>>>>>>> master
 }
 
 /**
@@ -628,11 +638,15 @@ static int scc_softreset(struct ata_link *link, unsigned int *classes,
 	struct ata_port *ap = link->ap;
 	unsigned int slave_possible = ap->flags & ATA_FLAG_SLAVE_POSS;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int devmask = 0;
 	int rc;
 =======
 	unsigned int devmask = 0, err_mask;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned int devmask = 0, err_mask;
+>>>>>>> master
 	u8 err;
 
 	DPRINTK("ENTER\n");
@@ -649,6 +663,7 @@ static int scc_softreset(struct ata_link *link, unsigned int *classes,
 	/* issue bus reset */
 	DPRINTK("about to softreset, devmask=%x\n", devmask);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rc = scc_bus_softreset(ap, devmask, deadline);
 	if (rc) {
 		ata_port_err(ap, "SRST failed (err_mask=0x%x)\n", rc);
@@ -657,6 +672,11 @@ static int scc_softreset(struct ata_link *link, unsigned int *classes,
 	if (err_mask) {
 		ata_port_err(ap, "SRST failed (err_mask=0x%x)\n", err_mask);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	err_mask = scc_bus_softreset(ap, devmask, deadline);
+	if (err_mask) {
+		ata_port_err(ap, "SRST failed (err_mask=0x%x)\n", err_mask);
+>>>>>>> master
 		return -EIO;
 	}
 

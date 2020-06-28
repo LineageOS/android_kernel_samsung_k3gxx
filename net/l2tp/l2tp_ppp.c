@@ -198,10 +198,15 @@ static int pppol2tp_recvmsg(struct kiocb *iocb, struct socket *sock,
 		goto end;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	msg->msg_namelen = 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	msg->msg_namelen = 0;
+
+>>>>>>> master
 	err = 0;
 	skb = skb_recv_datagram(sk, flags & ~MSG_DONTWAIT,
 				flags & MSG_DONTWAIT, &err);
@@ -357,12 +362,16 @@ static int pppol2tp_sendmsg(struct kiocb *iocb, struct socket *sock, struct msgh
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	local_bh_disable();
 	l2tp_xmit_skb(session, skb, session->hdr_len);
 	local_bh_enable();
 =======
 	l2tp_xmit_skb(session, skb, session->hdr_len);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	l2tp_xmit_skb(session, skb, session->hdr_len);
+>>>>>>> master
 
 	sock_put(ps->tunnel_sock);
 	sock_put(sk);
@@ -432,12 +441,16 @@ static int pppol2tp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
 	skb->data[1] = ppph[1];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	local_bh_disable();
 	l2tp_xmit_skb(session, skb, session->hdr_len);
 	local_bh_enable();
 =======
 	l2tp_xmit_skb(session, skb, session->hdr_len);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	l2tp_xmit_skb(session, skb, session->hdr_len);
+>>>>>>> master
 
 	sock_put(sk_tun);
 	sock_put(sk);
@@ -768,6 +781,7 @@ static int pppol2tp_connect(struct socket *sock, struct sockaddr *uservaddr,
 
 	/* If PMTU discovery was enabled, use the MTU that was discovered */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dst = sk_dst_get(tunnel->sock);
 	if (dst != NULL) {
 		u32 pmtu = dst_mtu(dst);
@@ -777,6 +791,11 @@ static int pppol2tp_connect(struct socket *sock, struct sockaddr *uservaddr,
 	if (dst != NULL) {
 		u32 pmtu = dst_mtu(__sk_dst_get(sk));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	dst = sk_dst_get(sk);
+	if (dst != NULL) {
+		u32 pmtu = dst_mtu(__sk_dst_get(sk));
+>>>>>>> master
 		if (pmtu != 0)
 			session->mtu = session->mru = pmtu -
 				PPPOL2TP_HEADER_OVERHEAD;
@@ -1596,10 +1615,14 @@ static void pppol2tp_next_tunnel(struct net *net, struct pppol2tp_seq_data *pd)
 static void pppol2tp_next_session(struct net *net, struct pppol2tp_seq_data *pd)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pd->session = l2tp_session_get_nth(pd->tunnel, pd->session_idx, true);
 =======
 	pd->session = l2tp_session_find_nth(pd->tunnel, pd->session_idx);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	pd->session = l2tp_session_find_nth(pd->tunnel, pd->session_idx);
+>>>>>>> master
 	pd->session_idx++;
 
 	if (pd->session == NULL) {
@@ -1727,6 +1750,7 @@ static int pppol2tp_seq_show(struct seq_file *m, void *v)
 	/* Show the tunnel or session context.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!pd->session) {
 		pppol2tp_seq_tunnel_show(m, pd->tunnel);
 	} else {
@@ -1736,11 +1760,16 @@ static int pppol2tp_seq_show(struct seq_file *m, void *v)
 		l2tp_session_dec_refcount(pd->session);
 	}
 =======
+=======
+>>>>>>> master
 	if (pd->session == NULL)
 		pppol2tp_seq_tunnel_show(m, pd->tunnel);
 	else
 		pppol2tp_seq_session_show(m, pd->session);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 out:
 	return 0;

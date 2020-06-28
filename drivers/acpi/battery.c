@@ -35,9 +35,12 @@
 #include <linux/slab.h>
 #include <linux/suspend.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/delay.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #include <asm/unaligned.h>
 
 #ifdef CONFIG_ACPI_PROCFS_POWER
@@ -73,9 +76,12 @@ MODULE_DESCRIPTION("ACPI Battery Driver");
 MODULE_LICENSE("GPL");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int battery_bix_broken_package;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static unsigned int cache_time = 1000;
 module_param(cache_time, uint, 0644);
 MODULE_PARM_DESC(cache_time, "cache time in milliseconds");
@@ -452,6 +458,7 @@ static int acpi_battery_get_info(struct acpi_battery *battery)
 		return -ENODEV;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (battery_bix_broken_package)
 		result = extract_package(battery, buffer.pointer,
@@ -461,6 +468,9 @@ static int acpi_battery_get_info(struct acpi_battery *battery)
 =======
 	if (test_bit(ACPI_BATTERY_XINFO_PRESENT, &battery->flags))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (test_bit(ACPI_BATTERY_XINFO_PRESENT, &battery->flags))
+>>>>>>> master
 		result = extract_package(battery, buffer.pointer,
 				extended_info_offsets,
 				ARRAY_SIZE(extended_info_offsets));
@@ -1082,6 +1092,7 @@ static int battery_notify(struct notifier_block *nb,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct dmi_system_id bat_dmi_table[] = {
 	{
 		.ident = "NEC LZ750/LS",
@@ -1117,6 +1128,8 @@ static int acpi_battery_update_retry(struct acpi_battery *battery)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int acpi_battery_add(struct acpi_device *device)
 {
 	int result = 0;
@@ -1137,6 +1150,7 @@ static int acpi_battery_add(struct acpi_device *device)
 			"_BIX", &handle)))
 		set_bit(ACPI_BATTERY_XINFO_PRESENT, &battery->flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	result = acpi_battery_update_retry(battery);
 	if (result)
@@ -1147,6 +1161,11 @@ static int acpi_battery_add(struct acpi_device *device)
 	if (result)
 		goto fail;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	result = acpi_battery_update(battery);
+	if (result)
+		goto fail;
+>>>>>>> master
 #ifdef CONFIG_ACPI_PROCFS_POWER
 	result = acpi_battery_add_fs(device);
 #endif
@@ -1236,10 +1255,13 @@ static void __init acpi_battery_init_async(void *unused, async_cookie_t cookie)
 		return;
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (dmi_check_system(bat_dmi_table))
 		battery_bix_broken_package = 1;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (acpi_bus_register_driver(&acpi_battery_driver) < 0) {
 #ifdef CONFIG_ACPI_PROCFS_POWER
 		acpi_unlock_battery_dir(acpi_battery_dir);

@@ -312,6 +312,7 @@ static int hdpvr_probe(struct usb_interface *interface,
 	dev->workqueue = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* init video transfer queues first of all */
 	/* to prevent oops in hdpvr_delete() on error paths */
 	INIT_LIST_HEAD(&dev->free_buff_list);
@@ -319,6 +320,8 @@ static int hdpvr_probe(struct usb_interface *interface,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* register v4l2_device early so it can be used for printks */
 	if (v4l2_device_register(&interface->dev, &dev->v4l2_dev)) {
 		dev_err(&interface->dev, "v4l2_device_register failed\n");
@@ -342,12 +345,18 @@ static int hdpvr_probe(struct usb_interface *interface,
 		goto error;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	/* init video transfer queues */
 	INIT_LIST_HEAD(&dev->free_buff_list);
 	INIT_LIST_HEAD(&dev->rec_buff_list);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	dev->options = hdpvr_default_options;
 
 	if (default_video_input < HDPVR_VIDEO_INPUTS)
@@ -425,10 +434,14 @@ static int hdpvr_probe(struct usb_interface *interface,
 	if (retval < 0) {
 		v4l2_err(&dev->v4l2_dev, "registering videodev failed\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto reg_fail;
 =======
 		goto error;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		goto error;
+>>>>>>> master
 	}
 
 	/* let the user know what node this device is now attached to */

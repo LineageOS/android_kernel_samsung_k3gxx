@@ -1304,12 +1304,18 @@ int ocfs2_local_release_dquot(handle_t *handle, struct dquot *dquot)
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	/* Clear the read bit so that next time someone uses this
 	 * dquot he reads fresh info from disk and allocates local
 	 * dquot structure */
 	clear_bit(DQ_READ_B, &dquot->dq_flags);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return status;
 }
 

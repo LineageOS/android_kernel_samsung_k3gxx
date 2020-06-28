@@ -27,6 +27,7 @@ struct tps65912_gpio_data {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define to_tgd(gc) container_of(gc, struct tps65912_gpio_data, gpio_chip)
 
 static int tps65912_gpio_get(struct gpio_chip *gc, unsigned offset)
@@ -38,6 +39,11 @@ static int tps65912_gpio_get(struct gpio_chip *gc, unsigned offset)
 {
 	struct tps65912 *tps65912 = container_of(gc, struct tps65912, gpio);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int tps65912_gpio_get(struct gpio_chip *gc, unsigned offset)
+{
+	struct tps65912 *tps65912 = container_of(gc, struct tps65912, gpio);
+>>>>>>> master
 	int val;
 
 	val = tps65912_reg_read(tps65912, TPS65912_GPIO1 + offset);
@@ -52,11 +58,15 @@ static void tps65912_gpio_set(struct gpio_chip *gc, unsigned offset,
 			      int value)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct tps65912_gpio_data *tps65912_gpio = to_tgd(gc);
 	struct tps65912 *tps65912 = tps65912_gpio->tps65912;
 =======
 	struct tps65912 *tps65912 = container_of(gc, struct tps65912, gpio);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct tps65912 *tps65912 = container_of(gc, struct tps65912, gpio);
+>>>>>>> master
 
 	if (value)
 		tps65912_set_bits(tps65912, TPS65912_GPIO1 + offset,
@@ -70,11 +80,15 @@ static int tps65912_gpio_output(struct gpio_chip *gc, unsigned offset,
 				int value)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct tps65912_gpio_data *tps65912_gpio = to_tgd(gc);
 	struct tps65912 *tps65912 = tps65912_gpio->tps65912;
 =======
 	struct tps65912 *tps65912 = container_of(gc, struct tps65912, gpio);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct tps65912 *tps65912 = container_of(gc, struct tps65912, gpio);
+>>>>>>> master
 
 	/* Set the initial value */
 	tps65912_gpio_set(gc, offset, value);
@@ -86,11 +100,15 @@ static int tps65912_gpio_output(struct gpio_chip *gc, unsigned offset,
 static int tps65912_gpio_input(struct gpio_chip *gc, unsigned offset)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct tps65912_gpio_data *tps65912_gpio = to_tgd(gc);
 	struct tps65912 *tps65912 = tps65912_gpio->tps65912;
 =======
 	struct tps65912 *tps65912 = container_of(gc, struct tps65912, gpio);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct tps65912 *tps65912 = container_of(gc, struct tps65912, gpio);
+>>>>>>> master
 
 	return tps65912_clear_bits(tps65912, TPS65912_GPIO1 + offset,
 								GPIO_CFG_MASK);

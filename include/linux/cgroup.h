@@ -870,6 +870,7 @@ unsigned short css_depth(struct cgroup_subsys_state *css);
 struct cgroup_subsys_state *cgroup_css_from_dir(struct file *f, int id);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Default Android check for whether the current process is allowed to move a
  * task across cgroups, either because CAP_SYS_NICE is set or because the uid
@@ -883,6 +884,8 @@ int subsys_cgroup_allow_attach(struct cgroup *cgrp,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #else /* !CONFIG_CGROUPS */
 
 static inline int cgroup_init_early(void) { return 0; }
@@ -907,6 +910,7 @@ static inline int cgroup_attach_task_all(struct task_struct *from,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int subsys_cgroup_allow_attach(struct cgroup *cgrp,
 					     struct cgroup_taskset *tset)
 {
@@ -914,6 +918,8 @@ static inline int subsys_cgroup_allow_attach(struct cgroup *cgrp,
 }
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #endif /* !CONFIG_CGROUPS */
 
 #endif /* _LINUX_CGROUP_H */

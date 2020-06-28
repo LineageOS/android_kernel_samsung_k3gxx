@@ -383,11 +383,14 @@ sg_read(struct file *filp, char __user *buf, size_t count, loff_t * ppos)
 	int retval = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(segment_eq(get_fs(), KERNEL_DS)))
 		return -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if ((!(sfp = (Sg_fd *) filp->private_data)) || (!(sdp = sfp->parentdp)))
 		return -ENXIO;
 	SCSI_LOG_TIMEOUT(3, printk("sg_read: %s, count=%d\n",
@@ -529,10 +532,14 @@ sg_new_read(Sg_fd * sfp, char __user *buf, size_t count, Sg_request * srp)
 {
 	sg_io_hdr_t *hp = &srp->header;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err = 0, err2;
 =======
 	int err = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int err = 0;
+>>>>>>> master
 	int len;
 
 	if (count < SZ_SG_IO_HDR) {
@@ -562,12 +569,17 @@ sg_new_read(Sg_fd * sfp, char __user *buf, size_t count, Sg_request * srp)
 	}
 err_out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err2 = sg_finish_rem_req(srp);
 	return err ? : err2 ? : count;
 =======
 	err = sg_finish_rem_req(srp);
 	return (0 == err) ? count : err;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	err = sg_finish_rem_req(srp);
+	return (0 == err) ? count : err;
+>>>>>>> master
 }
 
 static ssize_t
@@ -584,11 +596,14 @@ sg_write(struct file *filp, const char __user *buf, size_t count, loff_t * ppos)
 	unsigned char cmnd[MAX_COMMAND_SIZE];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(segment_eq(get_fs(), KERNEL_DS)))
 		return -EINVAL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if ((!(sfp = (Sg_fd *) filp->private_data)) || (!(sdp = sfp->parentdp)))
 		return -ENXIO;
 	SCSI_LOG_TIMEOUT(3, printk("sg_write: %s, count=%d\n",
@@ -655,11 +670,15 @@ sg_write(struct file *filp, const char __user *buf, size_t count, loff_t * ppos)
 		hp->dxfer_direction = (mxsize > 0) ? SG_DXFER_FROM_DEV : SG_DXFER_NONE;
 	hp->dxfer_len = mxsize;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if ((hp->dxfer_direction == SG_DXFER_TO_DEV) ||
 	    (hp->dxfer_direction == SG_DXFER_TO_FROM_DEV))
 =======
 	if (hp->dxfer_direction == SG_DXFER_TO_DEV)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (hp->dxfer_direction == SG_DXFER_TO_DEV)
+>>>>>>> master
 		hp->dxferp = (char __user *)buf + cmd_size;
 	else
 		hp->dxferp = NULL;
@@ -792,6 +811,7 @@ sg_common_write(Sg_fd * sfp, Sg_request * srp,
 	}
 	if (sdp->detached) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (srp->bio) {
 			if (srp->rq->cmd != srp->rq->__cmd)
 				kfree(srp->rq->cmd);
@@ -804,6 +824,10 @@ sg_common_write(Sg_fd * sfp, Sg_request * srp,
 		if (srp->bio)
 			blk_end_request_all(srp->rq, -EIO);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (srp->bio)
+			blk_end_request_all(srp->rq, -EIO);
+>>>>>>> master
 		sg_finish_rem_req(srp);
 		return -ENODEV;
 	}
@@ -1296,10 +1320,14 @@ sg_mmap(struct file *filp, struct vm_area_struct *vma)
 
 	sfp->mmap_called = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vma->vm_flags |= VM_IO | VM_DONTEXPAND | VM_DONTDUMP;
 =======
 	vma->vm_flags |= VM_DONTEXPAND | VM_DONTDUMP;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	vma->vm_flags |= VM_DONTEXPAND | VM_DONTDUMP;
+>>>>>>> master
 	vma->vm_private_data = sfp;
 	vma->vm_ops = &sg_mmap_vm_ops;
 	return 0;

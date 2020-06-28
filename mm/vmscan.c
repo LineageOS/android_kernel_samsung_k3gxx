@@ -50,9 +50,12 @@
 
 #include <linux/swapops.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/balloon_compaction.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 #include "internal.h"
 
@@ -785,20 +788,27 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 			 * writeback and there is nothing else to reclaim.
 			 *
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 * Require may_enter_fs to wait on writeback, because
 			 * fs may not have submitted IO yet. And a loop driver
 =======
 			 * Check __GFP_IO, certainly because a loop driver
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			 * Check __GFP_IO, certainly because a loop driver
+>>>>>>> master
 			 * thread might enter reclaim, and deadlock if it waits
 			 * on a page for which it is needed to do the write
 			 * (loop masks off __GFP_IO|__GFP_FS for this reason);
 			 * but more thought would probably show more reasons.
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 */
 			if (global_reclaim(sc) ||
 			    !PageReclaim(page) || !may_enter_fs) {
 =======
+=======
+>>>>>>> master
 			 *
 			 * Don't require __GFP_FS, since we're not going into
 			 * the FS, just waiting on its writeback completion.
@@ -808,7 +818,10 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 			 */
 			if (global_reclaim(sc) ||
 			    !PageReclaim(page) || !(sc->gfp_mask & __GFP_IO)) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				/*
 				 * This is slightly racy - end_page_writeback()
 				 * might have just cleared PageReclaim, then
@@ -996,10 +1009,14 @@ cull_mlocked:
 			try_to_free_swap(page);
 		unlock_page(page);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		list_add(&page->lru, &ret_pages);
 =======
 		putback_lru_page(page);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		putback_lru_page(page);
+>>>>>>> master
 		continue;
 
 activate_locked:
@@ -1049,11 +1066,15 @@ unsigned long reclaim_clean_pages_from_list(struct zone *zone,
 
 	list_for_each_entry_safe(page, next, page_list, lru) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (page_is_file_cache(page) && !PageDirty(page) &&
 		    !isolated_balloon_page(page)) {
 =======
 		if (page_is_file_cache(page) && !PageDirty(page)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (page_is_file_cache(page) && !PageDirty(page)) {
+>>>>>>> master
 			ClearPageActive(page);
 			list_move(&page->lru, &clean_pages);
 		}
@@ -2221,6 +2242,7 @@ static bool shrink_zones(struct zonelist *zonelist, struct scan_control *sc)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static unsigned long zone_reclaimable_pages(struct zone *zone)
 {
 	int nr;
@@ -2237,6 +2259,8 @@ static unsigned long zone_reclaimable_pages(struct zone *zone)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static bool zone_reclaimable(struct zone *zone)
 {
 	return zone->pages_scanned < zone_reclaimable_pages(zone) * 6;
@@ -2395,15 +2419,19 @@ static bool pfmemalloc_watermark_ok(pg_data_t *pgdat)
 	for (i = 0; i <= ZONE_NORMAL; i++) {
 		zone = &pgdat->node_zones[i];
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!populated_zone(zone))
 			continue;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		pfmemalloc_reserve += min_wmark_pages(zone);
 		free_pages += zone_page_state(zone, NR_FREE_PAGES);
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* If there are no reserves (unexpected config) then do not throttle */
 	if (!pfmemalloc_reserve)
@@ -2411,6 +2439,8 @@ static bool pfmemalloc_watermark_ok(pg_data_t *pgdat)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	wmark_ok = free_pages > pfmemalloc_reserve / 2;
 
 	/* kswapd must be awake if processes are being throttled */
@@ -2436,6 +2466,7 @@ static bool throttle_direct_reclaim(gfp_t gfp_mask, struct zonelist *zonelist,
 					nodemask_t *nodemask)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct zoneref *z;
 	struct zone *zone;
 	pg_data_t *pgdat = NULL;
@@ -2444,6 +2475,11 @@ static bool throttle_direct_reclaim(gfp_t gfp_mask, struct zonelist *zonelist,
 	int high_zoneidx = gfp_zone(gfp_mask);
 	pg_data_t *pgdat;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct zone *zone;
+	int high_zoneidx = gfp_zone(gfp_mask);
+	pg_data_t *pgdat;
+>>>>>>> master
 
 	/*
 	 * Kernel threads should not be throttled as they may be indirectly
@@ -2462,6 +2498,7 @@ static bool throttle_direct_reclaim(gfp_t gfp_mask, struct zonelist *zonelist,
 	if (fatal_signal_pending(current))
 		goto out;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/*
 	 * Check if the pfmemalloc reserves are ok by finding the first node
@@ -2492,11 +2529,16 @@ static bool throttle_direct_reclaim(gfp_t gfp_mask, struct zonelist *zonelist,
 	/* If no zone was usable by the allocation flags then do not throttle */
 	if (!pgdat)
 =======
+=======
+>>>>>>> master
 	/* Check if the pfmemalloc reserves are ok */
 	first_zones_zonelist(zonelist, high_zoneidx, NULL, &zone);
 	pgdat = zone->zone_pgdat;
 	if (pfmemalloc_watermark_ok(pgdat))
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		goto out;
 
 	/* Account for the throttling */
@@ -2774,6 +2816,7 @@ static bool prepare_kswapd_sleep(pg_data_t *pgdat, int order, long remaining,
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * The throttled processes are normally woken up in balance_pgdat() as
 	 * soon as pfmemalloc_watermark_ok() is true. But there is a potential
 	 * race between when kswapd checks the watermarks and a process gets
@@ -2789,6 +2832,8 @@ static bool prepare_kswapd_sleep(pg_data_t *pgdat, int order, long remaining,
 	if (waitqueue_active(&pgdat->pfmemalloc_wait))
 		wake_up_all(&pgdat->pfmemalloc_wait);
 =======
+=======
+>>>>>>> master
 	 * There is a potential race between when kswapd checks its watermarks
 	 * and a process gets throttled. There is also a potential race if
 	 * processes get throttled, kswapd wakes, a large process exits therby
@@ -2801,7 +2846,10 @@ static bool prepare_kswapd_sleep(pg_data_t *pgdat, int order, long remaining,
 		wake_up(&pgdat->pfmemalloc_wait);
 		return false;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return pgdat_balanced(pgdat, order, classzone_idx);
 }
@@ -3251,6 +3299,7 @@ static int kswapd(void *p)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tsk->flags &= ~(PF_MEMALLOC | PF_SWAPWRITE | PF_KSWAPD);
 	current->reclaim_state = NULL;
 	lockdep_clear_current_reclaim_state();
@@ -3258,6 +3307,9 @@ static int kswapd(void *p)
 =======
 	current->reclaim_state = NULL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	current->reclaim_state = NULL;
+>>>>>>> master
 	return 0;
 }
 
@@ -3288,7 +3340,10 @@ void wakeup_kswapd(struct zone *zone, int order, enum zone_type classzone_idx)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 /*
  * The reclaimable count would be mostly accurate.
  * The less reclaimable pages may be
@@ -3324,7 +3379,10 @@ unsigned long zone_reclaimable_pages(struct zone *zone)
 	return nr;
 }
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #ifdef CONFIG_HIBERNATION
 /*
  * Try to free `nr_to_reclaim' of memory, system-wide, and return the number of

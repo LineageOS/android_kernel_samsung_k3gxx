@@ -585,6 +585,7 @@ static void atmci_timeout_timer(unsigned long data)
 		host->mrq->cmd->data->error = -ETIMEDOUT;
 		host->data = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * With some SDIO modules, sometimes DMA transfer hangs. If
 		 * stop_transfer() is not called then the DMA request is not
@@ -594,6 +595,8 @@ static void atmci_timeout_timer(unsigned long data)
 			host->stop_transfer(host);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	} else {
 		host->mrq->cmd->error = -ETIMEDOUT;
 		host->cmd = NULL;
@@ -1192,6 +1195,7 @@ static void atmci_start_request(struct atmel_mci *host,
 	cmd = mrq->cmd;
 	cmdflags = atmci_prepare_command(slot->mmc, cmd);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/*
 	 * DMA transfer should be started before sending the command to avoid
@@ -1204,16 +1208,22 @@ static void atmci_start_request(struct atmel_mci *host,
 =======
 	atmci_send_command(host, cmd, cmdflags);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	atmci_send_command(host, cmd, cmdflags);
+>>>>>>> master
 
 	if (data)
 		host->submit_data(host, data);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (host->submit_data == &atmci_submit_data_dma)
 		atmci_send_command(host, cmd, cmdflags);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (mrq->stop) {
 		host->stop_cmdr = atmci_prepare_command(slot->mmc, mrq->stop);
 		host->stop_cmdr |= ATMCI_CMDR_STOP_XFER;
@@ -1306,10 +1316,14 @@ static void atmci_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
 	if (ios->clock) {
 		unsigned int clock_min = ~0U;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		int clkdiv;
 =======
 		u32 clkdiv;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		u32 clkdiv;
+>>>>>>> master
 
 		spin_lock_bh(&host->lock);
 		if (!host->mode_reg) {
@@ -1335,6 +1349,7 @@ static void atmci_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
 		if (host->caps.has_odd_clk_div) {
 			clkdiv = DIV_ROUND_UP(host->bus_hz, clock_min) - 2;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (clkdiv < 0) {
 				dev_warn(&mmc->class_dev,
 					 "clock %u too fast; using %lu\n",
@@ -1344,6 +1359,9 @@ static void atmci_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
 =======
 			if (clkdiv > 511) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			if (clkdiv > 511) {
+>>>>>>> master
 				dev_warn(&mmc->class_dev,
 				         "clock %u too slow; using %lu\n",
 				         clock_min, host->bus_hz / (511 + 2));
@@ -1829,6 +1847,7 @@ static void atmci_tasklet_func(unsigned long priv)
 				host->stop_transfer(host);
 				host->data = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if (data) {
 					if (status & ATMCI_DTOE) {
 						data->error = -ETIMEDOUT;
@@ -1838,13 +1857,18 @@ static void atmci_tasklet_func(unsigned long priv)
 						data->error = -EIO;
 					}
 =======
+=======
+>>>>>>> master
 				if (status & ATMCI_DTOE) {
 					data->error = -ETIMEDOUT;
 				} else if (status & ATMCI_DCRCE) {
 					data->error = -EILSEQ;
 				} else {
 					data->error = -EIO;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				}
 			}
 

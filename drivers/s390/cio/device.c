@@ -1611,10 +1611,14 @@ out_unlock:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct ccw_device *ccw_device_probe_console(struct ccw_driver *drv)
 =======
 struct ccw_device *ccw_device_probe_console(void)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+struct ccw_device *ccw_device_probe_console(void)
+>>>>>>> master
 {
 	struct io_subchannel_private *io_priv;
 	struct ccw_device *cdev;
@@ -1637,9 +1641,12 @@ struct ccw_device *ccw_device_probe_console(void)
 		return cdev;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cdev->drv = drv;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	set_io_private(sch, io_priv);
 	ret = ccw_device_console_enable(cdev, sch);
 	if (ret) {

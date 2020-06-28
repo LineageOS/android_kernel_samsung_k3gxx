@@ -300,9 +300,13 @@ struct mlx4_en_cq {
 	struct mlx4_hwq_resources wqres;
 	int                     ring;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	spinlock_t              lock;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	spinlock_t              lock;
+>>>>>>> master
 	struct net_device      *dev;
 	struct napi_struct	napi;
 	int size;

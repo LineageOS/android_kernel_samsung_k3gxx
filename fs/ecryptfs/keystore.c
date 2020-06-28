@@ -36,12 +36,18 @@
 #include "ecryptfs_kernel.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 #include "ecryptfs_dek.h"
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /**
  * request_key returned an error instead of a valid key address;
  * determine the type of error, make appropriate log entries, and
@@ -1907,7 +1913,10 @@ int ecryptfs_parse_packet_set(struct ecryptfs_crypt_stat *crypt_stat,
 			goto out_wipe_list;
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 		case ECRYPTFS_DEK_PACKET_TYPE:
 			printk("%s() ECRYPTFS_DEK_PACKET_TYPE \n",
@@ -1924,7 +1933,10 @@ int ecryptfs_parse_packet_set(struct ecryptfs_crypt_stat *crypt_stat,
 			i += packet_size;
 			break;
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		default:
 			ecryptfs_printk(KERN_DEBUG, "No packet at offset [%zd] "
 					"of the file header; hex value of "
@@ -2025,7 +2037,10 @@ found_matching_auth_tok:
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 	if((crypt_stat->flags & ECRYPTFS_DEK_IS_SENSITIVE)) {
 		rc = ecryptfs_get_sdp_dek(crypt_stat);
@@ -2035,7 +2050,10 @@ found_matching_auth_tok:
 		}
 	}
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	rc = ecryptfs_compute_root_iv(crypt_stat);
 	if (rc) {
 		ecryptfs_printk(KERN_ERR, "Error computing "
@@ -2482,10 +2500,13 @@ encrypted_session_key_set:
 	(*packet_size) += ECRYPTFS_SALT_SIZE;	/* salt */
 	dest[(*packet_size)++] = 0x60;	/* hash iterations (65536) */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memcpy(&dest[(*packet_size)], key_rec->enc_key,
 	       key_rec->enc_key_size);
 	(*packet_size) += key_rec->enc_key_size;
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 	if ((crypt_stat->flags & ECRYPTFS_DEK_IS_SENSITIVE)) {
 		ecryptfs_printk(KERN_DEBUG, "Sensitive file, tag_3 to zeroes\n");
@@ -2500,7 +2521,10 @@ encrypted_session_key_set:
 	       key_rec->enc_key_size);
 	(*packet_size) += key_rec->enc_key_size;
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 out:
 	if (rc)
 		(*packet_size) = 0;
@@ -2586,7 +2610,10 @@ ecryptfs_generate_key_packet_set(char *dest_base,
 			}
 			(*len) += written;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 			if (crypt_stat->flags & ECRYPTFS_DEK_SDP_ENABLED &&
 				crypt_stat->flags & ECRYPTFS_DEK_IS_SENSITIVE) {
@@ -2600,7 +2627,10 @@ ecryptfs_generate_key_packet_set(char *dest_base,
 				(*len) += written;
 			}
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		} else if (auth_tok->token_type == ECRYPTFS_PRIVATE_KEY) {
 			rc = write_tag_1_packet(dest_base + (*len), &max,
 						auth_tok_key, auth_tok,

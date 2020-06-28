@@ -326,10 +326,14 @@ static const unsigned int cs42l73_mono_mix_values[] = { 0, 1, 2 };
 
 static const struct soc_enum spk_asp_enum =
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SOC_VALUE_ENUM_SINGLE(CS42L73_MMIXCTL, 6, 3,
 =======
 	SOC_VALUE_ENUM_SINGLE(CS42L73_MMIXCTL, 6, 1,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	SOC_VALUE_ENUM_SINGLE(CS42L73_MMIXCTL, 6, 1,
+>>>>>>> master
 			      ARRAY_SIZE(cs42l73_mono_mix_texts),
 			      cs42l73_mono_mix_texts,
 			      cs42l73_mono_mix_values);
@@ -348,10 +352,14 @@ static const struct snd_kcontrol_new spk_xsp_mixer =
 
 static const struct soc_enum esl_asp_enum =
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SOC_VALUE_ENUM_SINGLE(CS42L73_MMIXCTL, 2, 3,
 =======
 	SOC_VALUE_ENUM_SINGLE(CS42L73_MMIXCTL, 2, 5,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	SOC_VALUE_ENUM_SINGLE(CS42L73_MMIXCTL, 2, 5,
+>>>>>>> master
 			      ARRAY_SIZE(cs42l73_mono_mix_texts),
 			      cs42l73_mono_mix_texts,
 			      cs42l73_mono_mix_values);
@@ -361,10 +369,14 @@ static const struct snd_kcontrol_new esl_asp_mixer =
 
 static const struct soc_enum esl_xsp_enum =
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SOC_VALUE_ENUM_SINGLE(CS42L73_MMIXCTL, 0, 3,
 =======
 	SOC_VALUE_ENUM_SINGLE(CS42L73_MMIXCTL, 0, 7,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	SOC_VALUE_ENUM_SINGLE(CS42L73_MMIXCTL, 0, 7,
+>>>>>>> master
 			      ARRAY_SIZE(cs42l73_mono_mix_texts),
 			      cs42l73_mono_mix_texts,
 			      cs42l73_mono_mix_values);

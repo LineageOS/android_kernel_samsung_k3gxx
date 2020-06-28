@@ -525,6 +525,7 @@ gigaset_tty_open(struct tty_struct *tty)
 	atomic_set(&cs->hw.ser->refcnt, 1);
 	init_completion(&cs->hw.ser->dead_cmp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tty->disc_data = cs;
 
 	/* Set the amount of data we're willing to receive per call
@@ -540,6 +541,10 @@ gigaset_tty_open(struct tty_struct *tty)
 
 	tty->disc_data = cs;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	tty->disc_data = cs;
+>>>>>>> master
 
 	/* OK.. Initialization of the datastructures and the HW is done.. Now
 	 * startup system and notify the LL that we are ready to run
@@ -793,6 +798,7 @@ static int __init ser_gigaset_init(void)
 				    GIGASET_MODULENAME, GIGASET_DEVNAME,
 				    &ops, THIS_MODULE);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!driver) {
 		rc = -ENOMEM;
 		goto error;
@@ -801,6 +807,10 @@ static int __init ser_gigaset_init(void)
 	if (!driver)
 		goto error;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!driver)
+		goto error;
+>>>>>>> master
 
 	rc = tty_register_ldisc(N_GIGASET_M101, &gigaset_ldisc);
 	if (rc != 0) {

@@ -812,12 +812,15 @@ static const struct net_device_ops islpci_netdev_ops = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct device_type wlan_type = {
 	.name	= "wlan",
 };
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 struct net_device *
 islpci_setup(struct pci_dev *pdev)
 {
@@ -829,6 +832,7 @@ islpci_setup(struct pci_dev *pdev)
 
 	pci_set_drvdata(pdev, ndev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SET_NETDEV_DEV(ndev, &pdev->dev);
 	SET_NETDEV_DEVTYPE(ndev, &wlan_type);
 =======
@@ -836,6 +840,11 @@ islpci_setup(struct pci_dev *pdev)
 	SET_NETDEV_DEV(ndev, &pdev->dev);
 #endif
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#if defined(SET_NETDEV_DEV)
+	SET_NETDEV_DEV(ndev, &pdev->dev);
+#endif
+>>>>>>> master
 
 	/* setup the structure members */
 	ndev->base_addr = pci_resource_start(pdev, 0);

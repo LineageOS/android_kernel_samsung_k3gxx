@@ -164,6 +164,7 @@ void vmw_fifo_release(struct vmw_private *dev_priv, struct vmw_fifo_state *fifo)
 	mutex_lock(&dev_priv->hw_mutex);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vmw_write(dev_priv, SVGA_REG_SYNC, SVGA_SYNC_GENERIC);
 	while (vmw_read(dev_priv, SVGA_REG_BUSY) != 0)
 		;
@@ -171,6 +172,10 @@ void vmw_fifo_release(struct vmw_private *dev_priv, struct vmw_fifo_state *fifo)
 	while (vmw_read(dev_priv, SVGA_REG_BUSY) != 0)
 		vmw_write(dev_priv, SVGA_REG_SYNC, SVGA_SYNC_GENERIC);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	while (vmw_read(dev_priv, SVGA_REG_BUSY) != 0)
+		vmw_write(dev_priv, SVGA_REG_SYNC, SVGA_SYNC_GENERIC);
+>>>>>>> master
 
 	dev_priv->last_read_seqno = ioread32(fifo_mem + SVGA_FIFO_FENCE);
 
@@ -374,10 +379,13 @@ void *vmw_fifo_reserve(struct vmw_private *dev_priv, uint32_t bytes)
 			else {
 				fifo_state->dynamic_buffer = vmalloc(bytes);
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if (!fifo_state->dynamic_buffer)
 					goto out_err;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				return fifo_state->dynamic_buffer;
 			}
 		}

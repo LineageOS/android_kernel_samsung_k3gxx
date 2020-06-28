@@ -1073,10 +1073,14 @@ config EXYNOS_RUN_QUEUE_STATS
          in user mode, called MPDecision will be using this data to decide
          on when to switch off/on the other cores.
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
          
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+         
+>>>>>>> master
 config SEC_BAT_AUT
 	bool "Samsung TN Bat Automation Test Feature"
 	default n
@@ -1111,10 +1115,16 @@ config EXYNOS5433_ASV_NEON_WORKAROUND
 	  Increase ATL voltage
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 config CHARGE_CONTROL
 	bool "Charge level interface"
 	default y
 	help
 	  Allows changing of AC, USB and WIRELESS charging currents
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master

@@ -58,11 +58,15 @@ static inline long do_strnlen_user(const char __user *src, unsigned long count, 
 		}
 		res += sizeof(unsigned long);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* We already handled 'unsigned long' bytes. Did we do it all ? */
 		if (unlikely(max <= sizeof(unsigned long)))
 =======
 		if (unlikely(max < sizeof(unsigned long)))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (unlikely(max < sizeof(unsigned long)))
+>>>>>>> master
 			break;
 		max -= sizeof(unsigned long);
 		if (unlikely(__get_user(c,(unsigned long __user *)(src+res))))

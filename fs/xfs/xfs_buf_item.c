@@ -297,12 +297,15 @@ xfs_buf_item_format(
 	ASSERT((bip->bli_flags & XFS_BLI_LOGGED) ||
 	       (bip->bli_flags & XFS_BLI_STALE));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ASSERT((bip->bli_flags & XFS_BLI_STALE) ||
 	       (xfs_blft_from_flags(&bip->__bli_format) > XFS_BLFT_UNKNOWN_BUF
 	        && xfs_blft_from_flags(&bip->__bli_format) < XFS_BLFT_MAX_BUF));
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/*
 	 * If it is an inode buffer, transfer the in-memory state to the

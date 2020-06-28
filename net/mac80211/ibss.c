@@ -1167,9 +1167,12 @@ int ieee80211_ibss_leave(struct ieee80211_sub_if_data *sdata)
 	ieee80211_bss_info_change_notify(sdata, BSS_CHANGED_BEACON_ENABLED |
 						BSS_CHANGED_IBSS);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ieee80211_vif_release_channel(sdata);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	synchronize_rcu();
 	kfree(presp);
 

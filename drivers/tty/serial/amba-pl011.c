@@ -1544,10 +1544,13 @@ static int pl011_startup(struct uart_port *port)
 	 * Provoke TX FIFO interrupt into asserting.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock_irq(&uap->port.lock);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	cr = UART01x_CR_UARTEN | UART011_CR_TXE | UART011_CR_LBE;
 	writew(cr, uap->port.membase + UART011_CR);
 	writew(0, uap->port.membase + UART011_FBRD);
@@ -1573,10 +1576,13 @@ static int pl011_startup(struct uart_port *port)
 	writew(cr, uap->port.membase + UART011_CR);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_unlock_irq(&uap->port.lock);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/*
 	 * initialise the old status of the modem signals
 	 */
@@ -1647,18 +1653,24 @@ static void pl011_shutdown(struct uart_port *port)
 	 */
 	uap->autorts = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock_irq(&uap->port.lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	cr = readw(uap->port.membase + UART011_CR);
 	uap->old_cr = cr;
 	cr &= UART011_CR_RTS | UART011_CR_DTR;
 	cr |= UART01x_CR_UARTEN | UART011_CR_TXE;
 	writew(cr, uap->port.membase + UART011_CR);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_unlock_irq(&uap->port.lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/*
 	 * disable break condition and fifos

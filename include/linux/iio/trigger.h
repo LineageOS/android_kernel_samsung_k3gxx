@@ -84,6 +84,7 @@ static inline void iio_trigger_put(struct iio_trigger *trig)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline struct iio_trigger *iio_trigger_get(struct iio_trigger *trig)
 {
 	get_device(&trig->dev);
@@ -91,11 +92,16 @@ static inline struct iio_trigger *iio_trigger_get(struct iio_trigger *trig)
 
 	return trig;
 =======
+=======
+>>>>>>> master
 static inline void iio_trigger_get(struct iio_trigger *trig)
 {
 	get_device(&trig->dev);
 	__module_get(trig->ops->owner);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /**

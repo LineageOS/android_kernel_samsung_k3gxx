@@ -519,6 +519,7 @@ static void
 isdnloop_fake_err(isdnloop_card *card)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	char buf[64];
 
 	snprintf(buf, sizeof(buf), "E%s", card->omsg);
@@ -527,6 +528,11 @@ isdnloop_fake_err(isdnloop_card *card)
 
 	sprintf(buf, "E%s", card->omsg);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	char buf[60];
+
+	sprintf(buf, "E%s", card->omsg);
+>>>>>>> master
 	isdnloop_fake(card, buf, -1);
 	isdnloop_fake(card, "NAK", -1);
 }
@@ -910,10 +916,13 @@ isdnloop_parse_cmd(isdnloop_card *card)
 		/* 0x;EAZ */
 		p += 3;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (strlen(p) >= sizeof(card->eazlist[0]))
 			break;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		strcpy(card->eazlist[ch - 1], p);
 		break;
 	case 8:
@@ -1082,6 +1091,7 @@ isdnloop_start(isdnloop_card *card, isdnloop_sdef *sdefp)
 	if (copy_from_user((char *) &sdef, (char *) sdefp, sizeof(sdef)))
 		return -EFAULT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	for (i = 0; i < 3; i++) {
 		if (!memchr(sdef.num[i], 0, sizeof(sdef.num[i])))
@@ -1090,6 +1100,8 @@ isdnloop_start(isdnloop_card *card, isdnloop_sdef *sdefp)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	spin_lock_irqsave(&card->isdnloop_lock, flags);
 	switch (sdef.ptype) {
 	case ISDN_PTYPE_EURO:
@@ -1104,6 +1116,7 @@ isdnloop_start(isdnloop_card *card, isdnloop_sdef *sdefp)
 			return -ENOMEM;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		for (i = 0; i < 3; i++) {
 			strlcpy(card->s0num[i], sdef.num[i],
 				sizeof(card->s0num[0]));
@@ -1112,6 +1125,10 @@ isdnloop_start(isdnloop_card *card, isdnloop_sdef *sdefp)
 		for (i = 0; i < 3; i++)
 			strcpy(card->s0num[i], sdef.num[i]);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		for (i = 0; i < 3; i++)
+			strcpy(card->s0num[i], sdef.num[i]);
+>>>>>>> master
 		break;
 	case ISDN_PTYPE_1TR6:
 		if (isdnloop_fake(card, "DRV1.04TC-1TR6-CAPI-CNS-BASIS-29.11.95",
@@ -1125,10 +1142,14 @@ isdnloop_start(isdnloop_card *card, isdnloop_sdef *sdefp)
 			return -ENOMEM;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		strlcpy(card->s0num[0], sdef.num[0], sizeof(card->s0num[0]));
 =======
 		strcpy(card->s0num[0], sdef.num[0]);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		strcpy(card->s0num[0], sdef.num[0]);
+>>>>>>> master
 		card->s0num[1][0] = '\0';
 		card->s0num[2][0] = '\0';
 		break;
@@ -1157,10 +1178,14 @@ isdnloop_command(isdn_ctrl *c, isdnloop_card *card)
 	ulong a;
 	int i;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	char cbuf[80];
 =======
 	char cbuf[60];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	char cbuf[60];
+>>>>>>> master
 	isdn_ctrl cmd;
 	isdnloop_cdef cdef;
 
@@ -1226,9 +1251,13 @@ isdnloop_command(isdn_ctrl *c, isdnloop_card *card)
 		if ((c->arg & 255) < ISDNLOOP_BCH) {
 			char *p;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			char dial[50];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			char dial[50];
+>>>>>>> master
 			char dcode[4];
 
 			a = c->arg;
@@ -1241,16 +1270,22 @@ isdnloop_command(isdn_ctrl *c, isdnloop_card *card)
 				/* Normal Dial */
 				strcpy(dcode, "CAL");
 <<<<<<< HEAD
+<<<<<<< HEAD
 			snprintf(cbuf, sizeof(cbuf),
 				 "%02d;D%s_R%s,%02d,%02d,%s\n", (int) (a + 1),
 				 dcode, p, c->parm.setup.si1,
 				 c->parm.setup.si2, c->parm.setup.eazmsn);
 =======
+=======
+>>>>>>> master
 			strcpy(dial, p);
 			sprintf(cbuf, "%02d;D%s_R%s,%02d,%02d,%s\n", (int) (a + 1),
 				dcode, dial, c->parm.setup.si1,
 				c->parm.setup.si2, c->parm.setup.eazmsn);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			i = isdnloop_writecmd(cbuf, strlen(cbuf), 0, card);
 		}
 		break;

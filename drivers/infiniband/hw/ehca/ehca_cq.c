@@ -284,9 +284,12 @@ struct ib_cq *ehca_create_cq(struct ib_device *device, int cqe, int comp_vector,
 		if (ib_copy_to_udata(udata, &resp, sizeof(resp))) {
 			ehca_err(device, "Copy to udata failed.");
 <<<<<<< HEAD
+<<<<<<< HEAD
 			cq = ERR_PTR(-EFAULT);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			goto create_cq_exit4;
 		}
 	}

@@ -300,9 +300,12 @@ struct bfa_fcs_lport_s *bfa_fcs_lookup_port(struct bfa_fcs_s *fcs,
 					    u16 vf_id, wwn_t lpwwn);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void bfa_fcs_lport_set_symname(struct bfa_fcs_lport_s *port, char *symname);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 void bfa_fcs_lport_get_info(struct bfa_fcs_lport_s *port,
 			    struct bfa_lport_info_s *port_info);
 void bfa_fcs_lport_get_attr(struct bfa_fcs_lport_s *port,

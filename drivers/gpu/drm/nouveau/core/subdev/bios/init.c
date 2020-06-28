@@ -367,6 +367,7 @@ init_script(struct nouveau_bios *bios, int index)
 {
 	struct nvbios_init init = { .bios = bios };
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u16 bmp_ver = bmp_version(bios), data;
 
 	if (bmp_ver && bmp_ver < 0x0510) {
@@ -375,6 +376,8 @@ init_script(struct nouveau_bios *bios, int index)
 
 		data = bios->bmp_offset + (bmp_ver < 0x0200 ? 14 : 18);
 =======
+=======
+>>>>>>> master
 	u16 data;
 
 	if (bmp_version(bios) && bmp_version(bios) < 0x0510) {
@@ -382,7 +385,10 @@ init_script(struct nouveau_bios *bios, int index)
 			return 0x0000;
 
 		data = bios->bmp_offset + (bios->version.major < 2 ? 14 : 18);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return nv_ro16(bios, data + (index * 2));
 	}
 
@@ -591,6 +597,7 @@ init_reserved(struct nvbios_init *init)
 {
 	u8 opcode = nv_ro08(init->bios, init->offset);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 length, i;
 
 	switch (opcode) {
@@ -611,6 +618,10 @@ init_reserved(struct nvbios_init *init)
 	trace("RESERVED\t0x%02x\n", opcode);
 	init->offset += 1;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	trace("RESERVED\t0x%02x\n", opcode);
+	init->offset += 1;
+>>>>>>> master
 }
 
 /**
@@ -1311,6 +1322,7 @@ init_jump(struct nvbios_init *init)
 
 	trace("JUMP\t0x%04x\n", offset);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (init_exec(init))
 		init->offset = offset;
@@ -1319,6 +1331,9 @@ init_jump(struct nvbios_init *init)
 =======
 	init->offset = offset;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	init->offset = offset;
+>>>>>>> master
 }
 
 /**
@@ -2174,9 +2189,12 @@ static struct nvbios_init_opcode {
 	[0x9a] = { init_i2c_long_if },
 	[0xa9] = { init_gpio_ne },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	[0xaa] = { init_reserved },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 
 #define init_opcode_nr (sizeof(init_opcode) / sizeof(init_opcode[0]))

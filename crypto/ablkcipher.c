@@ -390,9 +390,12 @@ static int crypto_init_ablkcipher_ops(struct crypto_tfm *tfm, u32 type,
 	crt->base = __crypto_ablkcipher_cast(tfm);
 	crt->ivsize = alg->ivsize;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	crt->has_setkey = alg->max_keysize;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return 0;
 }
@@ -475,9 +478,12 @@ static int crypto_init_givcipher_ops(struct crypto_tfm *tfm, u32 type,
 	crt->base = __crypto_ablkcipher_cast(tfm);
 	crt->ivsize = alg->ivsize;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	crt->has_setkey = alg->max_keysize;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return 0;
 }
@@ -724,10 +730,14 @@ err:
 		if (err != -EAGAIN)
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (fatal_signal_pending(current)) {
 =======
 		if (signal_pending(current)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (signal_pending(current)) {
+>>>>>>> master
 			err = -EINTR;
 			break;
 		}

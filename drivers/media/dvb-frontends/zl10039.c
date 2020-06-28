@@ -31,11 +31,14 @@
 static int debug;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Max transfer size done by I2C transfer functions */
 #define MAX_XFER_SIZE  64
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #define dprintk(args...) \
 	do { \
 		if (debug) \
@@ -105,10 +108,14 @@ static int zl10039_write(struct zl10039_state *state,
 			const size_t count)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 buf[MAX_XFER_SIZE];
 =======
 	u8 buf[count + 1];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u8 buf[count + 1];
+>>>>>>> master
 	struct i2c_msg msg = {
 		.addr = state->i2c_addr,
 		.flags = 0,
@@ -116,6 +123,7 @@ static int zl10039_write(struct zl10039_state *state,
 		.len = count + 1,
 	};
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (1 + count > sizeof(buf)) {
 		printk(KERN_WARNING
@@ -126,6 +134,8 @@ static int zl10039_write(struct zl10039_state *state,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	dprintk("%s\n", __func__);
 	/* Write register address and data in one go */
 	buf[0] = reg;

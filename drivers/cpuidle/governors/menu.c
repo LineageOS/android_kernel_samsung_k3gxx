@@ -281,10 +281,14 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	data->last_state_idx = CPUIDLE_DRIVER_STATE_START - 1;
 =======
 	data->last_state_idx = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	data->last_state_idx = 0;
+>>>>>>> master
 	data->exit_us = 0;
 
 	/* Special case when user has set very strict latency requirement */

@@ -944,10 +944,14 @@ again:
 
 		while (cur_offset < item_size) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			extref = (struct btrfs_inode_extref *)(base + cur_offset);
 =======
 			extref = (struct btrfs_inode_extref *)base + cur_offset;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			extref = (struct btrfs_inode_extref *)base + cur_offset;
+>>>>>>> master
 
 			victim_name_len = btrfs_inode_extref_name_len(leaf, extref);
 
@@ -1696,18 +1700,26 @@ next:
 	/* check the next slot in the tree to see if it is a valid item */
 	nritems = btrfs_header_nritems(path->nodes[0]);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	path->slots[0]++;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (path->slots[0] >= nritems) {
 		ret = btrfs_next_leaf(root, path);
 		if (ret)
 			goto out;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	} else {
 		path->slots[0]++;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	} else {
+		path->slots[0]++;
+>>>>>>> master
 	}
 
 	btrfs_item_key_to_cpu(path->nodes[0], &key, path->slots[0]);
@@ -3326,10 +3338,14 @@ static int log_one_extent(struct btrfs_trans_handle *trans,
 						 BTRFS_FILE_EXTENT_REG,
 						 &token);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (em->block_start == EXTENT_MAP_HOLE)
 =======
 		if (em->block_start == 0)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (em->block_start == 0)
+>>>>>>> master
 			skip_csum = true;
 	}
 

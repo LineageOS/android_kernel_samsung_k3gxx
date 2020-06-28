@@ -129,6 +129,7 @@ static void br_stp_start(struct net_bridge *br)
 	char *envp[] = { NULL };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (net_eq(dev_net(br->dev), &init_net))
 		r = call_usermodehelper(BR_STP_PROG, argv, envp, UMH_WAIT_PROC);
 	else
@@ -144,6 +145,9 @@ static void br_stp_start(struct net_bridge *br)
 =======
 	r = call_usermodehelper(BR_STP_PROG, argv, envp, UMH_WAIT_PROC);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	r = call_usermodehelper(BR_STP_PROG, argv, envp, UMH_WAIT_PROC);
+>>>>>>> master
 	if (r == 0) {
 		br->stp_enabled = BR_USER_STP;
 		br_debug(br, "userspace STP started\n");
@@ -153,16 +157,22 @@ static void br_stp_start(struct net_bridge *br)
 
 		/* To start timers on any ports left in blocking */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		br_port_state_selection(br);
 	}
 
 	spin_unlock_bh(&br->lock);
 =======
+=======
+>>>>>>> master
 		spin_lock_bh(&br->lock);
 		br_port_state_selection(br);
 		spin_unlock_bh(&br->lock);
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static void br_stp_stop(struct net_bridge *br)
@@ -256,19 +266,26 @@ bool br_stp_recalculate_bridge_id(struct net_bridge *br)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Acquires and releases bridge lock */
 =======
 /* called under bridge lock */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+/* called under bridge lock */
+>>>>>>> master
 void br_stp_set_bridge_priority(struct net_bridge *br, u16 newprio)
 {
 	struct net_bridge_port *p;
 	int wasroot;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock_bh(&br->lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	wasroot = br_is_root_bridge(br);
 
 	list_for_each_entry(p, &br->port_list, list) {
@@ -287,9 +304,12 @@ void br_stp_set_bridge_priority(struct net_bridge *br, u16 newprio)
 	if (br_is_root_bridge(br) && !wasroot)
 		br_become_root_bridge(br);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_unlock_bh(&br->lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /* called under bridge lock */

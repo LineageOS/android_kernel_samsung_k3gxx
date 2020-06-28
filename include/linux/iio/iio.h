@@ -570,6 +570,7 @@ int iio_str_to_fixpoint(const char *str, int fract_mult, int *integer,
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * IIO_RAD_TO_DEGREE() - Convert rad to degree
  * @rad: A value in rad
  *
@@ -581,6 +582,8 @@ int iio_str_to_fixpoint(const char *str, int fract_mult, int *integer,
 /**
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  * IIO_G_TO_M_S_2() - Convert g to meter / second**2
  * @g: A value in g
  *
@@ -588,6 +591,7 @@ int iio_str_to_fixpoint(const char *str, int fract_mult, int *integer,
  */
 #define IIO_G_TO_M_S_2(g) ((g) * 980665ULL / 100000ULL)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /**
  * IIO_M_S_2_TO_G() - Convert meter / second**2 to g
@@ -599,4 +603,6 @@ int iio_str_to_fixpoint(const char *str, int fract_mult, int *integer,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #endif /* _INDUSTRIAL_IO_H_ */

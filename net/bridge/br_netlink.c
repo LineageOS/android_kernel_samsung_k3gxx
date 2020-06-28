@@ -129,10 +129,14 @@ static int br_fill_ifinfo(struct sk_buff *skb,
 			pv = br_get_vlan_info(br);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!pv || bitmap_empty(pv->vlan_bitmap, VLAN_N_VID))
 =======
 		if (!pv || bitmap_empty(pv->vlan_bitmap, BR_VLAN_BITMAP_LEN))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (!pv || bitmap_empty(pv->vlan_bitmap, BR_VLAN_BITMAP_LEN))
+>>>>>>> master
 			goto done;
 
 		af = nla_nest_start(skb, IFLA_AF_SPEC);
@@ -141,10 +145,14 @@ static int br_fill_ifinfo(struct sk_buff *skb,
 
 		pvid = br_get_pvid(pv);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		for_each_set_bit(vid, pv->vlan_bitmap, VLAN_N_VID) {
 =======
 		for_each_set_bit(vid, pv->vlan_bitmap, BR_VLAN_BITMAP_LEN) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		for_each_set_bit(vid, pv->vlan_bitmap, BR_VLAN_BITMAP_LEN) {
+>>>>>>> master
 			vinfo.vid = vid;
 			vinfo.flags = 0;
 			if (vid == pvid)
@@ -212,10 +220,14 @@ int br_getlink(struct sk_buff *skb, u32 pid, u32 seq,
 {
 	int err = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct net_bridge_port *port = br_port_get_rtnl(dev);
 =======
 	struct net_bridge_port *port = br_port_get_rcu(dev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct net_bridge_port *port = br_port_get_rcu(dev);
+>>>>>>> master
 
 	/* not a bridge port and  */
 	if (!port && !(filter_mask & RTEXT_FILTER_BRVLAN))
@@ -451,6 +463,7 @@ static int br_validate(struct nlattr *tb[], struct nlattr *data[])
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int br_dev_newlink(struct net *src_net, struct net_device *dev,
 			  struct nlattr *tb[], struct nlattr *data[])
 {
@@ -467,16 +480,22 @@ static int br_dev_newlink(struct net *src_net, struct net_device *dev,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static size_t br_get_link_af_size(const struct net_device *dev)
 {
 	struct net_port_vlans *pv;
 
 	if (br_port_exists(dev))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pv = nbp_get_vlan_info(br_port_get_rtnl(dev));
 =======
 		pv = nbp_get_vlan_info(br_port_get_rcu(dev));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		pv = nbp_get_vlan_info(br_port_get_rcu(dev));
+>>>>>>> master
 	else if (dev->priv_flags & IFF_EBRIDGE)
 		pv = br_get_vlan_info((struct net_bridge *)netdev_priv(dev));
 	else
@@ -500,9 +519,12 @@ struct rtnl_link_ops br_link_ops __read_mostly = {
 	.setup		= br_dev_setup,
 	.validate	= br_validate,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.newlink	= br_dev_newlink,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	.dellink	= br_dev_delete,
 };
 

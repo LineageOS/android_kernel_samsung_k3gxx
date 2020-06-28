@@ -20,9 +20,12 @@
 #include <linux/can.h>
 #include <linux/can/dev.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/can/skb.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #include <linux/can/error.h>
 
 #include <linux/mfd/janz.h>
@@ -1139,10 +1142,13 @@ static void ican3_handle_message(struct ican3_dev *mod, struct ican3_msg *msg)
 static void ican3_put_echo_skb(struct ican3_dev *mod, struct sk_buff *skb)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	skb = can_create_echo_skb(skb);
 	if (!skb)
 		return;
 =======
+=======
+>>>>>>> master
 	struct sock *srcsk = skb->sk;
 
 	if (atomic_read(&skb->users) != 1) {
@@ -1157,7 +1163,10 @@ static void ican3_put_echo_skb(struct ican3_dev *mod, struct sk_buff *skb)
 	}
 
 	skb->sk = srcsk;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* save this skb for tx interrupt echo handling */
 	skb_queue_tail(&mod->echoq, skb);

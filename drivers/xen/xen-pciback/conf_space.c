@@ -17,12 +17,17 @@
 #include "conf_space_quirks.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool xen_pcibk_permissive;
 module_param_named(permissive, xen_pcibk_permissive, bool, 0644);
 =======
 static bool permissive;
 module_param(permissive, bool, 0644);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static bool permissive;
+module_param(permissive, bool, 0644);
+>>>>>>> master
 
 /* This is where xen_pcibk_read_config_byte, xen_pcibk_read_config_word,
  * xen_pcibk_write_config_word, and xen_pcibk_write_config_byte are created. */
@@ -189,11 +194,16 @@ int xen_pcibk_config_read(struct pci_dev *dev, int offset, int size,
 		field_end = OFFSET(cfg_entry) + field->size;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 if (req_end > field_start && field_end > req_start) {
 =======
 		if ((req_start >= field_start && req_start < field_end)
 		    || (req_end > field_start && req_end <= field_end)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if ((req_start >= field_start && req_start < field_end)
+		    || (req_end > field_start && req_end <= field_end)) {
+>>>>>>> master
 			err = conf_space_read(dev, cfg_entry, field_start,
 					      &tmp_val);
 			if (err)
@@ -240,11 +250,16 @@ int xen_pcibk_config_write(struct pci_dev *dev, int offset, int size, u32 value)
 		field_end = OFFSET(cfg_entry) + field->size;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 if (req_end > field_start && field_end > req_start) {
 =======
 		if ((req_start >= field_start && req_start < field_end)
 		    || (req_end > field_start && req_end <= field_end)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if ((req_start >= field_start && req_start < field_end)
+		    || (req_end > field_start && req_end <= field_end)) {
+>>>>>>> master
 			tmp_val = 0;
 
 			err = xen_pcibk_config_read(dev, field_start,
@@ -276,10 +291,14 @@ int xen_pcibk_config_write(struct pci_dev *dev, int offset, int size, u32 value)
 		 * they have entries in the config_field list that intercept
 		 * the write and do nothing. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (dev_data->permissive || xen_pcibk_permissive) {
 =======
 		if (dev_data->permissive || permissive) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (dev_data->permissive || permissive) {
+>>>>>>> master
 			switch (size) {
 			case 1:
 				err = pci_write_config_byte(dev, offset,

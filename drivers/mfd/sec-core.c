@@ -336,12 +336,15 @@ static int sec_pmic_probe(struct i2c_client *i2c,
 
 	sec_pmic->rtc = i2c_new_dummy(i2c->adapter, RTC_I2C_ADDR);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!sec_pmic->rtc) {
 		dev_err(&i2c->dev, "Failed to allocate I2C for RTC\n");
 		return -ENODEV;
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	i2c_set_clientdata(sec_pmic->rtc, sec_pmic);
 	sec_pmic->rtc_regmap = devm_regmap_init_i2c(sec_pmic->rtc, &sec_regmap_config);
 	if (IS_ERR(sec_pmic->rtc_regmap)) {

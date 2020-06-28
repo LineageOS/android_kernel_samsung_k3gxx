@@ -327,6 +327,7 @@ out:
  */
 static void irqtime_account_process_tick(struct task_struct *p, int user_tick,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					 struct rq *rq, int ticks)
 {
 	cputime_t scaled = cputime_to_scaled(cputime_one_jiffy);
@@ -336,11 +337,17 @@ static void irqtime_account_process_tick(struct task_struct *p, int user_tick,
 {
 	cputime_t one_jiffy_scaled = cputime_to_scaled(cputime_one_jiffy);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+						struct rq *rq)
+{
+	cputime_t one_jiffy_scaled = cputime_to_scaled(cputime_one_jiffy);
+>>>>>>> master
 	u64 *cpustat = kcpustat_this_cpu->cpustat;
 
 	if (steal_account_process_tick())
 		return;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	cputime *= ticks;
 	scaled *= ticks;
@@ -350,17 +357,23 @@ static void irqtime_account_process_tick(struct task_struct *p, int user_tick,
 	} else if (irqtime_account_si_update()) {
 		cpustat[CPUTIME_SOFTIRQ] += cputime;
 =======
+=======
+>>>>>>> master
 	if (irqtime_account_hi_update()) {
 		cpustat[CPUTIME_IRQ] += (__force u64) cputime_one_jiffy;
 	} else if (irqtime_account_si_update()) {
 		cpustat[CPUTIME_SOFTIRQ] += (__force u64) cputime_one_jiffy;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	} else if (this_cpu_ksoftirqd() == p) {
 		/*
 		 * ksoftirqd time do not get accounted in cpu_softirq_time.
 		 * So, we have to handle it separately here.
 		 * Also, p->stime needs to be updated for ksoftirqd.
 		 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 		__account_system_time(p, cputime, scaled, CPUTIME_SOFTIRQ);
 	} else if (user_tick) {
@@ -372,6 +385,8 @@ static void irqtime_account_process_tick(struct task_struct *p, int user_tick,
 	} else {
 		__account_system_time(p, cputime, scaled,	CPUTIME_SYSTEM);
 =======
+=======
+>>>>>>> master
 		__account_system_time(p, cputime_one_jiffy, one_jiffy_scaled,
 					CPUTIME_SOFTIRQ);
 	} else if (user_tick) {
@@ -383,32 +398,45 @@ static void irqtime_account_process_tick(struct task_struct *p, int user_tick,
 	} else {
 		__account_system_time(p, cputime_one_jiffy, one_jiffy_scaled,
 					CPUTIME_SYSTEM);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 }
 
 static void irqtime_account_idle_ticks(int ticks)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct rq *rq = this_rq();
 
 	irqtime_account_process_tick(current, 0, rq, ticks);
 =======
+=======
+>>>>>>> master
 	int i;
 	struct rq *rq = this_rq();
 
 	for (i = 0; i < ticks; i++)
 		irqtime_account_process_tick(current, 0, rq);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 #else /* CONFIG_IRQ_TIME_ACCOUNTING */
 static inline void irqtime_account_idle_ticks(int ticks) {}
 static inline void irqtime_account_process_tick(struct task_struct *p, int user_tick,
 <<<<<<< HEAD
+<<<<<<< HEAD
 						struct rq *rq, int nr_ticks) {}
 =======
 						struct rq *rq) {}
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+						struct rq *rq) {}
+>>>>>>> master
 #endif /* CONFIG_IRQ_TIME_ACCOUNTING */
 
 /*
@@ -504,10 +532,14 @@ void account_process_tick(struct task_struct *p, int user_tick)
 
 	if (sched_clock_irqtime) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		irqtime_account_process_tick(p, user_tick, rq, 1);
 =======
 		irqtime_account_process_tick(p, user_tick, rq);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		irqtime_account_process_tick(p, user_tick, rq);
+>>>>>>> master
 		return;
 	}
 
@@ -602,10 +634,14 @@ static void cputime_adjust(struct task_cputime *curr,
 			   cputime_t *ut, cputime_t *st)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cputime_t rtime, stime, utime;
 =======
 	cputime_t rtime, stime, utime, total;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	cputime_t rtime, stime, utime, total;
+>>>>>>> master
 
 	if (vtime_accounting_enabled()) {
 		*ut = curr->utime;
@@ -614,11 +650,17 @@ static void cputime_adjust(struct task_cputime *curr,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	stime = curr->stime;
 	total = stime + curr->utime;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	stime = curr->stime;
+	total = stime + curr->utime;
+
+>>>>>>> master
 	/*
 	 * Tick based cputime accounting depend on random scheduling
 	 * timeslices of a task to be interrupted or not by the timer.
@@ -640,6 +682,7 @@ static void cputime_adjust(struct task_cputime *curr,
 		goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	stime = curr->stime;
 	utime = curr->utime;
 
@@ -654,6 +697,8 @@ static void cputime_adjust(struct task_cputime *curr,
 				    (__force u64)rtime, (__force u64)total);
 		utime = rtime - stime;
 =======
+=======
+>>>>>>> master
 	if (total) {
 		stime = scale_stime((__force u64)stime,
 				    (__force u64)rtime, (__force u64)total);
@@ -661,7 +706,10 @@ static void cputime_adjust(struct task_cputime *curr,
 	} else {
 		stime = rtime;
 		utime = 0;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	/*

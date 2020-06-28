@@ -264,9 +264,12 @@ struct acpi_object_region_field {
 	union acpi_operand_object *region_obj;	/* Containing op_region object */
 	u8 *resource_buffer;	/* resource_template for serial regions/fields */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u16 pin_number_index;	/* Index relative to previous Connection/Template */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 
 struct acpi_object_bank_field {

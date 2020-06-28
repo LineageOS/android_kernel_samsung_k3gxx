@@ -16,10 +16,13 @@
 #include <linux/blkdev.h>
 #include <linux/hdreg.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/completion.h>
 #include <linux/kobject.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 /*
  * Suspend feature flags
@@ -131,6 +134,7 @@ void dm_interface_exit(void);
  * sysfs interface
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct dm_kobject_holder {
 	struct kobject kobj;
 	struct completion completion;
@@ -143,12 +147,15 @@ static inline struct completion *dm_get_completion_from_kobject(struct kobject *
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 int dm_sysfs_init(struct mapped_device *md);
 void dm_sysfs_exit(struct mapped_device *md);
 struct kobject *dm_kobject(struct mapped_device *md);
 struct mapped_device *dm_get_from_kobject(struct kobject *kobj);
 
 /*
+<<<<<<< HEAD
 <<<<<<< HEAD
  * The kobject helper
  */
@@ -157,6 +164,8 @@ void dm_kobject_release(struct kobject *kobj);
 /*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  * Targets for linear and striped mappings
  */
 int dm_linear_init(void);

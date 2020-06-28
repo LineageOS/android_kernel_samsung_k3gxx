@@ -143,9 +143,12 @@ static void slave_connector_destroy(struct drm_connector *connector)
 {
 	struct slave_connector *slave_connector = to_slave_connector(connector);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	drm_sysfs_connector_remove(connector);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	drm_connector_cleanup(connector);
 	kfree(slave_connector);
 }

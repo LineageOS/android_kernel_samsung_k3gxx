@@ -5,9 +5,12 @@
 
 #include <linux/delay.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <asm/unaligned.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #include <linux/fb.h>
 #include <video/mach64.h>
 #include "atyfb.h"
@@ -424,10 +427,14 @@ void atyfb_imageblit(struct fb_info *info, const struct fb_image *image)
 		for (pbitmap = (u32*)(image->data); dwords; dwords--, pbitmap++) {
 			wait_for_fifo(1, par);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			aty_st_le32(HOST_DATA0, get_unaligned_le32(pbitmap), par);
 =======
 			aty_st_le32(HOST_DATA0, le32_to_cpup(pbitmap), par);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			aty_st_le32(HOST_DATA0, le32_to_cpup(pbitmap), par);
+>>>>>>> master
 		}
 	}
 

@@ -30,6 +30,7 @@
 	};
 	cpus {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		#address-cells = <0>;
 		#size-cells = <0>;
 
@@ -40,6 +41,10 @@
 		cpu@0 {
 			compatible = "arm,arm926ejs";
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		cpu@0 {
+			compatible = "arm,arm926ejs";
+>>>>>>> master
 		};
 	};
 

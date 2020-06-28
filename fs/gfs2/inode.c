@@ -1537,6 +1537,7 @@ static int setattr_chown(struct inode *inode, struct iattr *attr)
 		ogid = ngid = NO_GID_QUOTA_CHANGE;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	error = get_write_access(inode);
 	if (error)
 		return error;
@@ -1557,6 +1558,11 @@ static int setattr_chown(struct inode *inode, struct iattr *attr)
 	if (error)
 		return error;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	error = gfs2_quota_lock(ip, nuid, ngid);
+	if (error)
+		return error;
+>>>>>>> master
 
 	if (!uid_eq(ouid, NO_UID_QUOTA_CHANGE) ||
 	    !gid_eq(ogid, NO_GID_QUOTA_CHANGE)) {
@@ -1585,10 +1591,13 @@ out_end_trans:
 out_gunlock_q:
 	gfs2_quota_unlock(ip);
 <<<<<<< HEAD
+<<<<<<< HEAD
 out:
 	put_write_access(inode);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return error;
 }
 

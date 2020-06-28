@@ -71,10 +71,14 @@ static int atmel_pwm_bl_get_intensity(struct backlight_device *bd)
 {
 	struct atmel_pwm_bl *pwmbl = bl_get_data(bd);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 intensity;
 =======
 	u8 intensity;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u8 intensity;
+>>>>>>> master
 
 	if (pwmbl->pdata->pwm_active_low) {
 		intensity = pwm_channel_readl(&pwmbl->pwmc, PWM_CDTY) -
@@ -85,10 +89,14 @@ static int atmel_pwm_bl_get_intensity(struct backlight_device *bd)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return intensity & 0xffff;
 =======
 	return intensity;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return intensity;
+>>>>>>> master
 }
 
 static int atmel_pwm_bl_init_pwm(struct atmel_pwm_bl *pwmbl)
@@ -127,10 +135,14 @@ static const struct backlight_ops atmel_pwm_bl_ops = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int atmel_pwm_bl_probe(struct platform_device *pdev)
 =======
 static int __init atmel_pwm_bl_probe(struct platform_device *pdev)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int __init atmel_pwm_bl_probe(struct platform_device *pdev)
+>>>>>>> master
 {
 	struct backlight_properties props;
 	const struct atmel_pwm_bl_platform_data *pdata;
@@ -216,6 +228,7 @@ err_free_mem:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int atmel_pwm_bl_remove(struct platform_device *pdev)
 {
 	struct atmel_pwm_bl *pwmbl = platform_get_drvdata(pdev);
@@ -225,13 +238,18 @@ static int atmel_pwm_bl_remove(struct platform_device *pdev)
 					0 ^ pwmbl->pdata->on_active_low);
 	}
 =======
+=======
+>>>>>>> master
 static int __exit atmel_pwm_bl_remove(struct platform_device *pdev)
 {
 	struct atmel_pwm_bl *pwmbl = platform_get_drvdata(pdev);
 
 	if (pwmbl->gpio_on != -1)
 		gpio_set_value(pwmbl->gpio_on, 0);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	pwm_channel_disable(&pwmbl->pwmc);
 	pwm_channel_free(&pwmbl->pwmc);
 	backlight_device_unregister(pwmbl->bldev);
@@ -246,17 +264,23 @@ static struct platform_driver atmel_pwm_bl_driver = {
 	},
 	/* REVISIT add suspend() and resume() */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.probe = atmel_pwm_bl_probe,
 	.remove = atmel_pwm_bl_remove,
 };
 
 module_platform_driver(atmel_pwm_bl_driver);
 =======
+=======
+>>>>>>> master
 	.remove = __exit_p(atmel_pwm_bl_remove),
 };
 
 module_platform_driver_probe(atmel_pwm_bl_driver, atmel_pwm_bl_probe);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 MODULE_AUTHOR("Hans-Christian egtvedt <hans-christian.egtvedt@atmel.com>");
 MODULE_DESCRIPTION("Atmel PWM backlight driver");

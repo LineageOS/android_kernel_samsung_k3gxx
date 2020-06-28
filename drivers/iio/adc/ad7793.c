@@ -102,10 +102,14 @@
 
 /* ID Register Bit Designations (AD7793_REG_ID) */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define AD7785_ID		0x3
 =======
 #define AD7785_ID		0xB
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define AD7785_ID		0xB
+>>>>>>> master
 #define AD7792_ID		0xA
 #define AD7793_ID		0xB
 #define AD7794_ID		0xF

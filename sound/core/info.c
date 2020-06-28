@@ -682,10 +682,14 @@ int snd_info_card_free(struct snd_card *card)
  * @buffer: the procfs buffer
  * @line: the buffer to store
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @len: the max. buffer size
 =======
  * @len: the max. buffer size - 1
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ * @len: the max. buffer size - 1
+>>>>>>> master
  *
  * Reads one line from the buffer and stores the string.
  *
@@ -706,10 +710,14 @@ int snd_info_get_line(struct snd_info_buffer *buffer, char *line, int len)
 		if (c == '\n')
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (len > 1) {
 =======
 		if (len) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (len) {
+>>>>>>> master
 			len--;
 			*line++ = c;
 		}

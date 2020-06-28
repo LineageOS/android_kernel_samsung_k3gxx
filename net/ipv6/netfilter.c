@@ -31,6 +31,7 @@ int ip6_route_me_harder(struct sk_buff *skb)
 		.saddr = iph->saddr,
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err;
 
 	dst = ip6_route_output(net, skb->sk, &fl6);
@@ -41,6 +42,8 @@ int ip6_route_me_harder(struct sk_buff *skb)
 		dst_release(dst);
 		return err;
 =======
+=======
+>>>>>>> master
 
 	dst = ip6_route_output(net, skb->sk, &fl6);
 	if (dst->error) {
@@ -48,7 +51,10 @@ int ip6_route_me_harder(struct sk_buff *skb)
 		LIMIT_NETDEBUG(KERN_DEBUG "ip6_route_me_harder: No more route.\n");
 		dst_release(dst);
 		return dst->error;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	/* Drop old route. */

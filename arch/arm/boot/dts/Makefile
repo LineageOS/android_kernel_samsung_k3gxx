@@ -47,6 +47,7 @@ dtb-$(CONFIG_ARCH_DOVE) += dove-cm-a510.dtb \
 	dove-cubox.dtb \
 	dove-dove-db.dtb
 <<<<<<< HEAD
+<<<<<<< HEAD
 dtb-$(CONFIG_ARCH_EXYNOS5) += exynos5422-k3g_eur_open_00.dts \
 	exynos5422-k3g_eur_open_01.dts \
 	exynos5422-k3g_eur_open_02.dts \
@@ -56,6 +57,8 @@ dtb-$(CONFIG_ARCH_EXYNOS5) += exynos5422-k3g_eur_open_00.dts \
 	exynos5422-k3g_eur_open_10.dtb
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #dtb-$(CONFIG_ARCH_EXYNOS) += exynos4210-origen.dtb \
 #	exynos4210-smdkv310.dtb \
 #	exynos4210-trats.dtb \

@@ -743,6 +743,7 @@ static bool can_stop_idle_tick(int cpu, struct tick_sched *ts)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(ts->nohz_mode == NOHZ_MODE_INACTIVE)) {
 		ts->sleep_length = (ktime_t) { .tv64 = NSEC_PER_SEC/HZ };
 		return false;
@@ -751,6 +752,10 @@ static bool can_stop_idle_tick(int cpu, struct tick_sched *ts)
 	if (unlikely(ts->nohz_mode == NOHZ_MODE_INACTIVE))
 		return false;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (unlikely(ts->nohz_mode == NOHZ_MODE_INACTIVE))
+		return false;
+>>>>>>> master
 
 	if (need_resched())
 		return false;

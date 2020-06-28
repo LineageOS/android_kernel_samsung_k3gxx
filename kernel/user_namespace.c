@@ -25,9 +25,12 @@
 
 static struct kmem_cache *user_ns_cachep __read_mostly;
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DEFINE_MUTEX(userns_state_mutex);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 static bool new_idmap_permitted(const struct file *file,
 				struct user_namespace *ns, int cap_setid,
@@ -43,9 +46,12 @@ static void set_cred_user_ns(struct cred *cred, struct user_namespace *user_ns)
 	cred->cap_permitted = CAP_FULL_SET;
 	cred->cap_effective = CAP_FULL_SET;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cred->cap_ambient = CAP_EMPTY_SET;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	cred->cap_bset = CAP_FULL_SET;
 #ifdef CONFIG_KEYS
 	key_put(cred->request_key_auth);
@@ -108,6 +114,7 @@ int create_user_ns(struct cred *new)
 	ns->group = group;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Inherit USERNS_SETGROUPS_ALLOWED from our parent */
 	mutex_lock(&userns_state_mutex);
 	ns->flags = parent_ns->flags;
@@ -115,6 +122,8 @@ int create_user_ns(struct cred *new)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	set_cred_user_ns(new, ns);
 
 	update_mnt_policy(ns);
@@ -165,10 +174,14 @@ static u32 map_id_range_down(struct uid_gid_map *map, u32 id, u32 count)
 	/* Find the matching extent */
 	extents = map->nr_extents;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	smp_rmb();
 =======
 	smp_read_barrier_depends();
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	smp_read_barrier_depends();
+>>>>>>> master
 	for (idx = 0; idx < extents; idx++) {
 		first = map->extent[idx].first;
 		last = first + map->extent[idx].count - 1;
@@ -193,10 +206,14 @@ static u32 map_id_down(struct uid_gid_map *map, u32 id)
 	/* Find the matching extent */
 	extents = map->nr_extents;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	smp_rmb();
 =======
 	smp_read_barrier_depends();
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	smp_read_barrier_depends();
+>>>>>>> master
 	for (idx = 0; idx < extents; idx++) {
 		first = map->extent[idx].first;
 		last = first + map->extent[idx].count - 1;
@@ -220,10 +237,14 @@ static u32 map_id_up(struct uid_gid_map *map, u32 id)
 	/* Find the matching extent */
 	extents = map->nr_extents;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	smp_rmb();
 =======
 	smp_read_barrier_depends();
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	smp_read_barrier_depends();
+>>>>>>> master
 	for (idx = 0; idx < extents; idx++) {
 		first = map->extent[idx].lower_first;
 		last = first + map->extent[idx].count - 1;
@@ -606,11 +627,17 @@ static bool mappings_overlap(struct uid_gid_map *new_map, struct uid_gid_extent 
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 static DEFINE_MUTEX(id_map_mutex);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+static DEFINE_MUTEX(id_map_mutex);
+
+>>>>>>> master
 static ssize_t map_write(struct file *file, const char __user *buf,
 			 size_t count, loff_t *ppos,
 			 int cap_setid,
@@ -628,10 +655,14 @@ static ssize_t map_write(struct file *file, const char __user *buf,
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * The userns_state_mutex serializes all writes to any given map.
 =======
 	 * The id_map_mutex serializes all writes to any given map.
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	 * The id_map_mutex serializes all writes to any given map.
+>>>>>>> master
 	 *
 	 * Any map is only ever written once.
 	 *
@@ -647,17 +678,23 @@ static ssize_t map_write(struct file *file, const char __user *buf,
 	 *
 	 * To achieve this smp_wmb() is used on guarantee the write
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * order and smp_rmb() is guaranteed that we don't have crazy
 	 * architectures returning stale data.
 	 */
 	mutex_lock(&userns_state_mutex);
 =======
+=======
+>>>>>>> master
 	 * order and smp_read_barrier_depends() is guaranteed that we
 	 * don't have crazy architectures returning stale data.
 	 *
 	 */
 	mutex_lock(&id_map_mutex);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	ret = -EPERM;
 	/* Only allow one successful write to the map */
@@ -785,10 +822,14 @@ static ssize_t map_write(struct file *file, const char __user *buf,
 	ret = count;
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_unlock(&userns_state_mutex);
 =======
 	mutex_unlock(&id_map_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	mutex_unlock(&id_map_mutex);
+>>>>>>> master
 	if (page)
 		free_page(page);
 	return ret;
@@ -859,6 +900,7 @@ static bool new_idmap_permitted(const struct file *file,
 			if (uid_eq(uid, cred->euid))
 				return true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		} else if (cap_setid == CAP_SETGID) {
 			kgid_t gid = make_kgid(ns->parent, id);
 			if (!(ns->flags & USERNS_SETGROUPS_ALLOWED) &&
@@ -866,6 +908,8 @@ static bool new_idmap_permitted(const struct file *file,
 				return true;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		}
 	}
 
@@ -884,6 +928,7 @@ static bool new_idmap_permitted(const struct file *file,
 	return false;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 int proc_setgroups_show(struct seq_file *seq, void *v)
 {
@@ -965,19 +1010,26 @@ out_unlock:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 bool userns_may_setgroups(const struct user_namespace *ns)
 {
 	bool allowed;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_lock(&userns_state_mutex);
 =======
 	mutex_lock(&id_map_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	mutex_lock(&id_map_mutex);
+>>>>>>> master
 	/* It is not safe to use setgroups until a gid mapping in
 	 * the user namespace has been established.
 	 */
 	allowed = ns->gid_map.nr_extents != 0;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Is setgroups allowed? */
 	allowed = allowed && (ns->flags & USERNS_SETGROUPS_ALLOWED);
@@ -985,6 +1037,9 @@ bool userns_may_setgroups(const struct user_namespace *ns)
 =======
 	mutex_unlock(&id_map_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	mutex_unlock(&id_map_mutex);
+>>>>>>> master
 
 	return allowed;
 }

@@ -304,7 +304,10 @@ static int twl_post_command_packet(TW_Device_Extension *tw_dev, int request_id)
 } /* End twl_post_command_packet() */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 /* This function will perform a pci-dma mapping for a scatter gather list */
 static int twl_map_scsi_sg_data(TW_Device_Extension *tw_dev, int request_id)
 {
@@ -325,7 +328,10 @@ static int twl_map_scsi_sg_data(TW_Device_Extension *tw_dev, int request_id)
 	return use_sg;
 } /* End twl_map_scsi_sg_data() */
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /* This function hands scsi cdb's to the firmware */
 static int twl_scsiop_execute_scsi(TW_Device_Extension *tw_dev, int request_id, char *cdb, int use_sg, TW_SG_Entry_ISO *sglistarg)
 {
@@ -374,12 +380,17 @@ static int twl_scsiop_execute_scsi(TW_Device_Extension *tw_dev, int request_id, 
 		/* Map sglist from scsi layer to cmd packet */
 		if (scsi_sg_count(srb)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			sg_count = scsi_dma_map(srb);
 			if (sg_count <= 0)
 =======
 			sg_count = twl_map_scsi_sg_data(tw_dev, request_id);
 			if (sg_count == 0)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			sg_count = twl_map_scsi_sg_data(tw_dev, request_id);
+			if (sg_count == 0)
+>>>>>>> master
 				goto out;
 
 			scsi_for_each_sg(srb, sg, sg_count, i) {
@@ -1125,7 +1136,10 @@ out:
 } /* End twl_initialize_device_extension() */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 /* This function will perform a pci-dma unmap */
 static void twl_unmap_scsi_data(TW_Device_Extension *tw_dev, int request_id)
 {
@@ -1135,7 +1149,10 @@ static void twl_unmap_scsi_data(TW_Device_Extension *tw_dev, int request_id)
 		scsi_dma_unmap(cmd);
 } /* End twl_unmap_scsi_data() */
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /* This function will handle attention interrupts */
 static int twl_handle_attention_interrupt(TW_Device_Extension *tw_dev)
 {
@@ -1277,18 +1294,24 @@ static irqreturn_t twl_interrupt(int irq, void *dev_instance)
 
 			/* Now complete the io */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			scsi_dma_unmap(cmd);
 			cmd->scsi_done(cmd);
 			tw_dev->state[request_id] = TW_S_COMPLETED;
 			twl_free_request_id(tw_dev, request_id);
 			tw_dev->posted_request_count--;
 =======
+=======
+>>>>>>> master
 			tw_dev->state[request_id] = TW_S_COMPLETED;
 			twl_free_request_id(tw_dev, request_id);
 			tw_dev->posted_request_count--;
 			tw_dev->srb[request_id]->scsi_done(tw_dev->srb[request_id]);
 			twl_unmap_scsi_data(tw_dev, request_id);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		}
 
 		/* Check for another response interrupt */
@@ -1434,6 +1457,7 @@ static int twl_reset_device_extension(TW_Device_Extension *tw_dev, int ioctl_res
 		    (tw_dev->state[i] != TW_S_INITIAL) &&
 		    (tw_dev->state[i] != TW_S_COMPLETED)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			struct scsi_cmnd *cmd = tw_dev->srb[i];
 
 			if (cmd) {
@@ -1441,11 +1465,16 @@ static int twl_reset_device_extension(TW_Device_Extension *tw_dev, int ioctl_res
 				scsi_dma_unmap(cmd);
 				cmd->scsi_done(cmd);
 =======
+=======
+>>>>>>> master
 			if (tw_dev->srb[i]) {
 				tw_dev->srb[i]->result = (DID_RESET << 16);
 				tw_dev->srb[i]->scsi_done(tw_dev->srb[i]);
 				twl_unmap_scsi_data(tw_dev, i);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			}
 		}
 	}
@@ -1550,11 +1579,17 @@ static int twl_scsi_queue_lck(struct scsi_cmnd *SCpnt, void (*done)(struct scsi_
 	tw_dev->srb[request_id] = SCpnt;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Initialize phase to zero */
 	SCpnt->SCp.phase = TW_PHASE_INITIAL;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	/* Initialize phase to zero */
+	SCpnt->SCp.phase = TW_PHASE_INITIAL;
+
+>>>>>>> master
 	retval = twl_scsiop_execute_scsi(tw_dev, request_id, NULL, 0, NULL);
 	if (retval) {
 		tw_dev->state[request_id] = TW_S_COMPLETED;
@@ -1632,11 +1667,15 @@ static struct scsi_host_template driver_template = {
 	.use_clustering		= ENABLE_CLUSTERING,
 	.shost_attrs		= twl_host_attrs,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.emulated		= 1,
 	.no_write_same		= 1,
 =======
 	.emulated		= 1
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	.emulated		= 1
+>>>>>>> master
 };
 
 /* This function will probe and initialize a card */

@@ -316,10 +316,14 @@ static int xilinx_spi_txrx_bufs(struct spi_device *spi, struct spi_transfer *t)
 
 		/* See if there is more data to send */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (xspi->remaining_bytes <= 0)
 =======
 		if (!xspi->remaining_bytes > 0)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (!xspi->remaining_bytes > 0)
+>>>>>>> master
 			break;
 	}
 

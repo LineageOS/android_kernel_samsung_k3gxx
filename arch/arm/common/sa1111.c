@@ -873,6 +873,7 @@ struct sa1111_save_data {
 #ifdef CONFIG_PM
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int sa1111_suspend_noirq(struct device *dev)
 {
 	struct sa1111 *sachip = dev_get_drvdata(dev);
@@ -881,6 +882,11 @@ static int sa1111_suspend(struct platform_device *dev, pm_message_t state)
 {
 	struct sa1111 *sachip = platform_get_drvdata(dev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int sa1111_suspend(struct platform_device *dev, pm_message_t state)
+{
+	struct sa1111 *sachip = platform_get_drvdata(dev);
+>>>>>>> master
 	struct sa1111_save_data *save;
 	unsigned long flags;
 	unsigned int val;
@@ -944,6 +950,7 @@ static int sa1111_suspend(struct platform_device *dev, pm_message_t state)
  *	via LDM after this function.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int sa1111_resume_noirq(struct device *dev)
 {
 	struct sa1111 *sachip = dev_get_drvdata(dev);
@@ -952,6 +959,11 @@ static int sa1111_resume(struct platform_device *dev)
 {
 	struct sa1111 *sachip = platform_get_drvdata(dev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int sa1111_resume(struct platform_device *dev)
+{
+	struct sa1111 *sachip = platform_get_drvdata(dev);
+>>>>>>> master
 	struct sa1111_save_data *save;
 	unsigned long flags, id;
 	void __iomem *base;
@@ -968,10 +980,14 @@ static int sa1111_resume(struct platform_device *dev)
 	if ((id & SKID_ID_MASK) != SKID_SA1111_ID) {
 		__sa1111_remove(sachip);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_set_drvdata(dev, NULL);
 =======
 		platform_set_drvdata(dev, NULL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		platform_set_drvdata(dev, NULL);
+>>>>>>> master
 		kfree(save);
 		return 0;
 	}
@@ -1023,12 +1039,17 @@ static int sa1111_resume(struct platform_device *dev)
 
 #else
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define sa1111_suspend_noirq NULL
 #define sa1111_resume_noirq  NULL
 =======
 #define sa1111_suspend NULL
 #define sa1111_resume  NULL
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define sa1111_suspend NULL
+#define sa1111_resume  NULL
+>>>>>>> master
 #endif
 
 static int sa1111_probe(struct platform_device *pdev)
@@ -1063,6 +1084,7 @@ static int sa1111_remove(struct platform_device *pdev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct dev_pm_ops sa1111_pm_ops = {
 	.suspend_noirq = sa1111_suspend_noirq,
 	.resume_noirq = sa1111_resume_noirq,
@@ -1070,6 +1092,8 @@ static struct dev_pm_ops sa1111_pm_ops = {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  *	Not sure if this should be on the system bus or not yet.
  *	We really want some way to register a system device at
@@ -1083,17 +1107,23 @@ static struct platform_driver sa1111_device_driver = {
 	.probe		= sa1111_probe,
 	.remove		= sa1111_remove,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.driver		= {
 		.name	= "sa1111",
 		.owner	= THIS_MODULE,
 		.pm	= &sa1111_pm_ops,
 =======
+=======
+>>>>>>> master
 	.suspend	= sa1111_suspend,
 	.resume		= sa1111_resume,
 	.driver		= {
 		.name	= "sa1111",
 		.owner	= THIS_MODULE,
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	},
 };
 

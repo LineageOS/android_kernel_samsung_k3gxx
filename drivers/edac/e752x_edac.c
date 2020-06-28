@@ -1183,6 +1183,7 @@ static int e752x_get_devs(struct pci_dev *pdev, int dev_idx,
 				pvt->dev_info->err_dev, pvt->bridge_ck);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (pvt->bridge_ck == NULL) {
 		pvt->bridge_ck = pci_scan_single_device(pdev->bus,
 							PCI_DEVFN(0, 1));
@@ -1193,6 +1194,11 @@ static int e752x_get_devs(struct pci_dev *pdev, int dev_idx,
 		pvt->bridge_ck = pci_scan_single_device(pdev->bus,
 							PCI_DEVFN(0, 1));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (pvt->bridge_ck == NULL)
+		pvt->bridge_ck = pci_scan_single_device(pdev->bus,
+							PCI_DEVFN(0, 1));
+>>>>>>> master
 
 	if (pvt->bridge_ck == NULL) {
 		e752x_printk(KERN_ERR, "error reporting device not found:"

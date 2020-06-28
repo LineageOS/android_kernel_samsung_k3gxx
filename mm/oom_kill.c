@@ -118,10 +118,14 @@ struct task_struct *find_lock_task_mm(struct task_struct *p)
 found:
 	rcu_read_unlock();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
  
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ 
+>>>>>>> master
 	return t;
 }
 
@@ -242,10 +246,14 @@ unsigned long oom_badness(struct task_struct *p, struct mem_cgroup *memcg,
 	 */
 	if (has_capability_noaudit(p, CAP_SYS_ADMIN))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		points -= (points * 3) / 100;
 =======
 		adj -= 30;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		adj -= 30;
+>>>>>>> master
 
 	/* Normalize to oom_score_adj units */
 	adj *= totalpages / 1000;
@@ -594,6 +602,7 @@ static void dump_header(struct task_struct *p, gfp_t gfp_mask, int order,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Number of OOM killer invocations (including memcg OOM killer).
  * Primarily used by PM freezer to check for potential races with
@@ -613,6 +622,8 @@ void note_oom_kill(void)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #define K(x) ((x) << (PAGE_SHIFT-10))
 /*
  * Must be called while holding a reference to p, which will be released upon
@@ -928,6 +939,7 @@ out:
 void pagefault_out_of_memory(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct zonelist *zonelist;
 
 	if (mem_cgroup_oom_synchronize(true))
@@ -939,6 +951,11 @@ void pagefault_out_of_memory(void)
 						  GFP_KERNEL);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct zonelist *zonelist = node_zonelist(first_online_node,
+						  GFP_KERNEL);
+
+>>>>>>> master
 	if (try_set_zonelist_oom(zonelist, GFP_KERNEL)) {
 		out_of_memory(NULL, 0, 0, NULL, false);
 		clear_zonelist_oom(zonelist, GFP_KERNEL);

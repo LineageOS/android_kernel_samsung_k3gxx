@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 if USB && MEDIA_SUPPORT
 
 menuconfig MEDIA_USB_SUPPORT
@@ -8,6 +9,11 @@ menuconfig MEDIA_USB_SUPPORT
 	bool "Media USB Adapters"
 	depends on USB && MEDIA_SUPPORT
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+menuconfig MEDIA_USB_SUPPORT
+	bool "Media USB Adapters"
+	depends on USB && MEDIA_SUPPORT
+>>>>>>> master
 	help
 	  Enable media drivers for USB bus.
 	  If you have such devices, say Y.
@@ -60,6 +66,9 @@ endif
 
 endif #MEDIA_USB_SUPPORT
 <<<<<<< HEAD
+<<<<<<< HEAD
 endif #USB
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master

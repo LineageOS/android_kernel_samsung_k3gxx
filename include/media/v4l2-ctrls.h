@@ -23,9 +23,12 @@
 
 #include <linux/list.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/mutex.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #include <linux/videodev2.h>
 
 /* forward references */

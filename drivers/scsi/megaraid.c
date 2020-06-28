@@ -4245,9 +4245,12 @@ static struct scsi_host_template megaraid_template = {
 	.eh_bus_reset_handler		= megaraid_reset,
 	.eh_host_reset_handler		= megaraid_reset,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.no_write_same			= 1,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 
 static int

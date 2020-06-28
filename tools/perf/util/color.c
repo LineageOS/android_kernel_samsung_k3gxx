@@ -319,6 +319,7 @@ int percent_color_fprintf(FILE *fp, const char *fmt, double percent)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int percent_color_snprintf(char *bf, size_t size, const char *fmt, ...)
 {
 	va_list args;
@@ -334,5 +335,10 @@ int percent_color_snprintf(char *bf, size_t size, const char *fmt, double percen
 {
 	const char *color = get_percent_color(percent);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+int percent_color_snprintf(char *bf, size_t size, const char *fmt, double percent)
+{
+	const char *color = get_percent_color(percent);
+>>>>>>> master
 	return color_snprintf(bf, size, color, fmt, percent);
 }

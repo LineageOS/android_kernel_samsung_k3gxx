@@ -1751,10 +1751,14 @@ sub dump_struct($$) {
 	$members =~ s/kmemcheck_bitfield_.*?;//gos;
 	# strip attributes
 <<<<<<< HEAD
+<<<<<<< HEAD
 	$members =~ s/__aligned\s*\([^;]*\)//gos;
 =======
 	$members =~ s/__aligned\s*\(.+\)//gos;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	$members =~ s/__aligned\s*\(.+\)//gos;
+>>>>>>> master
 
 	create_parameterlist($members, ';', $file);
 	check_sections($file, $declaration_name, "struct", $sectcheck, $struct_actual, $nested);

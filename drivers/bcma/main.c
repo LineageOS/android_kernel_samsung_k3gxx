@@ -433,6 +433,7 @@ static int bcma_device_probe(struct device *dev)
 	int err = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	get_device(dev);
 	if (adrv->probe)
 		err = adrv->probe(core);
@@ -442,6 +443,10 @@ static int bcma_device_probe(struct device *dev)
 	if (adrv->probe)
 		err = adrv->probe(core);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (adrv->probe)
+		err = adrv->probe(core);
+>>>>>>> master
 
 	return err;
 }
@@ -455,9 +460,12 @@ static int bcma_device_remove(struct device *dev)
 	if (adrv->remove)
 		adrv->remove(core);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	put_device(dev);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return 0;
 }

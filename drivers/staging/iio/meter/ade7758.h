@@ -120,9 +120,13 @@ struct ade7758_state {
 	u8			*rx;
 	struct mutex		buf_lock;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	const struct iio_chan_spec *ade7758_ring_channels;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	const struct iio_chan_spec *ade7758_ring_channels;
+>>>>>>> master
 	struct spi_transfer	ring_xfer[4];
 	struct spi_message	ring_msg;
 	/*

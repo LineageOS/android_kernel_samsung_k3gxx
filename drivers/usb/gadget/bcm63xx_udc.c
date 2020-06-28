@@ -362,6 +362,7 @@ static inline void usb_dma_writel(struct bcm63xx_udc *udc, u32 val, u32 off)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline u32 usb_dmac_readl(struct bcm63xx_udc *udc, u32 off, int chan)
 {
 	return bcm_readl(udc->iudma_regs + IUDMA_DMAC_OFFSET + off +
@@ -387,6 +388,8 @@ static inline void usb_dmas_writel(struct bcm63xx_udc *udc, u32 val, u32 off,
 	bcm_writel(val, udc->iudma_regs + IUDMA_DMAS_OFFSET + off +
 			(ENETDMA_CHAN_WIDTH * chan));
 =======
+=======
+>>>>>>> master
 static inline u32 usb_dmac_readl(struct bcm63xx_udc *udc, u32 off)
 {
 	return bcm_readl(udc->iudma_regs + IUDMA_DMAC_OFFSET + off);
@@ -405,7 +408,10 @@ static inline u32 usb_dmas_readl(struct bcm63xx_udc *udc, u32 off)
 static inline void usb_dmas_writel(struct bcm63xx_udc *udc, u32 val, u32 off)
 {
 	bcm_writel(val, udc->iudma_regs + IUDMA_DMAS_OFFSET + off);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static inline void set_clocks(struct bcm63xx_udc *udc, bool is_enabled)
@@ -667,10 +673,14 @@ static void iudma_write(struct bcm63xx_udc *udc, struct iudma_ch *iudma,
 
 	usb_dmac_writel(udc, ENETDMAC_CHANCFG_EN_MASK,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ENETDMAC_CHANCFG_REG, iudma->ch_idx);
 =======
 			ENETDMAC_CHANCFG_REG(iudma->ch_idx));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			ENETDMAC_CHANCFG_REG(iudma->ch_idx));
+>>>>>>> master
 }
 
 /**
@@ -727,6 +737,7 @@ static void iudma_reset_channel(struct bcm63xx_udc *udc, struct iudma_ch *iudma)
 
 	/* stop DMA, then wait for the hardware to wrap up */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	usb_dmac_writel(udc, 0, ENETDMAC_CHANCFG_REG, ch_idx);
 
 	while (usb_dmac_readl(udc, ENETDMAC_CHANCFG_REG, ch_idx) &
@@ -735,6 +746,11 @@ static void iudma_reset_channel(struct bcm63xx_udc *udc, struct iudma_ch *iudma)
 
 	while (usb_dmac_readl(udc, ENETDMAC_CHANCFG_REG(ch_idx)) &
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	usb_dmac_writel(udc, 0, ENETDMAC_CHANCFG_REG(ch_idx));
+
+	while (usb_dmac_readl(udc, ENETDMAC_CHANCFG_REG(ch_idx)) &
+>>>>>>> master
 				   ENETDMAC_CHANCFG_EN_MASK) {
 		udelay(1);
 
@@ -752,16 +768,22 @@ static void iudma_reset_channel(struct bcm63xx_udc *udc, struct iudma_ch *iudma)
 				 ch_idx);
 			usb_dmac_writel(udc, ENETDMAC_CHANCFG_BUFHALT_MASK,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					ENETDMAC_CHANCFG_REG, ch_idx);
 		}
 	}
 	usb_dmac_writel(udc, ~0, ENETDMAC_IR_REG, ch_idx);
 =======
+=======
+>>>>>>> master
 					ENETDMAC_CHANCFG_REG(ch_idx));
 		}
 	}
 	usb_dmac_writel(udc, ~0, ENETDMAC_IR_REG(ch_idx));
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* don't leave "live" HW-owned entries for the next guy to step on */
 	for (d = iudma->bd_ring; d <= iudma->end_bd; d++)
@@ -774,18 +796,24 @@ static void iudma_reset_channel(struct bcm63xx_udc *udc, struct iudma_ch *iudma)
 	/* set up IRQs, UBUS burst size, and BD base for this channel */
 	usb_dmac_writel(udc, ENETDMAC_IR_BUFDONE_MASK,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ENETDMAC_IRMASK_REG, ch_idx);
 	usb_dmac_writel(udc, 8, ENETDMAC_MAXBURST_REG, ch_idx);
 
 	usb_dmas_writel(udc, iudma->bd_ring_dma, ENETDMAS_RSTART_REG, ch_idx);
 	usb_dmas_writel(udc, 0, ENETDMAS_SRAM2_REG, ch_idx);
 =======
+=======
+>>>>>>> master
 			ENETDMAC_IRMASK_REG(ch_idx));
 	usb_dmac_writel(udc, 8, ENETDMAC_MAXBURST_REG(ch_idx));
 
 	usb_dmas_writel(udc, iudma->bd_ring_dma, ENETDMAS_RSTART_REG(ch_idx));
 	usb_dmas_writel(udc, 0, ENETDMAS_SRAM2_REG(ch_idx));
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /**
@@ -2089,10 +2117,14 @@ static irqreturn_t bcm63xx_udc_data_isr(int irq, void *dev_id)
 
 	usb_dmac_writel(udc, ENETDMAC_IR_BUFDONE_MASK,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ENETDMAC_IR_REG, iudma->ch_idx);
 =======
 			ENETDMAC_IR_REG(iudma->ch_idx));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			ENETDMAC_IR_REG(iudma->ch_idx));
+>>>>>>> master
 	bep = iudma->bep;
 	rc = iudma_read(udc, iudma);
 
@@ -2233,6 +2265,7 @@ static int bcm63xx_iudma_dbg_show(struct seq_file *s, void *p)
 			   max_t(int, iudma_defaults[ch_idx].ep_num, 0));
 		seq_printf(s, "  cfg: %08x; irqstat: %08x; irqmask: %08x; maxburst: %08x\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			   usb_dmac_readl(udc, ENETDMAC_CHANCFG_REG, ch_idx),
 			   usb_dmac_readl(udc, ENETDMAC_IR_REG, ch_idx),
 			   usb_dmac_readl(udc, ENETDMAC_IRMASK_REG, ch_idx),
@@ -2246,6 +2279,8 @@ static int bcm63xx_iudma_dbg_show(struct seq_file *s, void *p)
 			   sram3 >> 16, sram3 & 0xffff,
 			   usb_dmas_readl(udc, ENETDMAS_SRAM4_REG, ch_idx));
 =======
+=======
+>>>>>>> master
 			   usb_dmac_readl(udc, ENETDMAC_CHANCFG_REG(ch_idx)),
 			   usb_dmac_readl(udc, ENETDMAC_IR_REG(ch_idx)),
 			   usb_dmac_readl(udc, ENETDMAC_IRMASK_REG(ch_idx)),
@@ -2258,7 +2293,10 @@ static int bcm63xx_iudma_dbg_show(struct seq_file *s, void *p)
 			   sram2 >> 16, sram2 & 0xffff,
 			   sram3 >> 16, sram3 & 0xffff,
 			   usb_dmas_readl(udc, ENETDMAS_SRAM4_REG(ch_idx)));
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		seq_printf(s, "  desc: %d/%d used", iudma->n_bds_used,
 			   iudma->n_bds);
 

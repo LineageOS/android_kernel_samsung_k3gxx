@@ -550,8 +550,12 @@ module_exit(cast5_mod_fini);
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Cast5 Cipher Algorithm");
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("cast5");
 MODULE_ALIAS_CRYPTO("cast5-generic");
 =======
 MODULE_ALIAS("cast5");
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+MODULE_ALIAS("cast5");
+>>>>>>> master

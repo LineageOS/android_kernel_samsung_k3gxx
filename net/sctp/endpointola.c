@@ -76,11 +76,15 @@ static struct sctp_endpoint *sctp_endpoint_init(struct sctp_endpoint *ep,
 		return NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ep->auth_enable = net->sctp.auth_enable;
 	if (ep->auth_enable) {
 =======
 	if (net->sctp.auth_enable) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (net->sctp.auth_enable) {
+>>>>>>> master
 		/* Allocate space for HMACS and CHUNKS authentication
 		 * variables.  There are arrays that we encode directly
 		 * into parameters to make the rest of the operations easier.

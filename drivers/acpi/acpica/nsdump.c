@@ -259,19 +259,25 @@ acpi_ns_dump_one_object(acpi_handle obj_handle,
 		case ACPI_TYPE_PROCESSOR:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			acpi_os_printf("ID %02X Len %02X Addr %8.8X%8.8X\n",
 				       obj_desc->processor.proc_id,
 				       obj_desc->processor.length,
 				       ACPI_FORMAT_UINT64(obj_desc->processor.
 							  address));
 =======
+=======
+>>>>>>> master
 			acpi_os_printf("ID %02X Len %02X Addr %p\n",
 				       obj_desc->processor.proc_id,
 				       obj_desc->processor.length,
 				       ACPI_CAST_PTR(void,
 						     obj_desc->processor.
 						     address));
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			break;
 
 		case ACPI_TYPE_DEVICE:
@@ -343,6 +349,7 @@ acpi_ns_dump_one_object(acpi_handle obj_handle,
 			if (obj_desc->region.flags & AOPOBJ_DATA_VALID) {
 				acpi_os_printf(" Addr %8.8X%8.8X Len %.4X\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 					       ACPI_FORMAT_UINT64(obj_desc->
 								  region.
 								  address),
@@ -350,6 +357,10 @@ acpi_ns_dump_one_object(acpi_handle obj_handle,
 					       ACPI_FORMAT_NATIVE_UINT
 					       (obj_desc->region.address),
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+					       ACPI_FORMAT_NATIVE_UINT
+					       (obj_desc->region.address),
+>>>>>>> master
 					       obj_desc->region.length);
 			} else {
 				acpi_os_printf

@@ -718,9 +718,13 @@ static int ibmvfc_reset_crq(struct ibmvfc_host *vhost)
 	vhost->state = IBMVFC_NO_CRQ;
 	vhost->logged_in = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ibmvfc_set_host_action(vhost, IBMVFC_HOST_ACTION_NONE);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ibmvfc_set_host_action(vhost, IBMVFC_HOST_ACTION_NONE);
+>>>>>>> master
 
 	/* Clean out the queue */
 	memset(crq->msgs, 0, PAGE_SIZE);

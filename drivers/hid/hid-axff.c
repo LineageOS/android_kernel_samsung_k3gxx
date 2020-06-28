@@ -96,10 +96,14 @@ static int axff_init(struct hid_device *hid)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (field_count < 4 && hid->product != 0xf705) {
 =======
 	if (field_count < 4) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (field_count < 4) {
+>>>>>>> master
 		hid_err(hid, "not enough fields in the report: %d\n",
 			field_count);
 		return -ENODEV;
@@ -185,9 +189,12 @@ static void ax_remove(struct hid_device *hdev)
 static const struct hid_device_id ax_devices[] = {
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ACRUX, 0x0802), },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ACRUX, 0xf705), },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ }
 };
 MODULE_DEVICE_TABLE(hid, ax_devices);

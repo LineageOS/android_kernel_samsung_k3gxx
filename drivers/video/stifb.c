@@ -1102,9 +1102,12 @@ static int __init stifb_init_fb(struct sti_struct *sti, int bpp_pref)
 
 	fb->sti = sti;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_name = sti->sti_data->inq_outptr.dev_name;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* store upper 32bits of the graphics id */
 	fb->id = fb->sti->graphics_id[0];
 
@@ -1119,18 +1122,24 @@ static int __init stifb_init_fb(struct sti_struct *sti, int bpp_pref)
 		  if the device name contains the string "DX" and tell the
 		  user how to reconfigure the card. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (strstr(dev_name, "DX")) {
 		   printk(KERN_WARNING
 "WARNING: stifb framebuffer driver does not support '%s' in double-buffer mode.\n"
 "WARNING: Please disable the double-buffer mode in IPL menu (the PARISC-BIOS).\n",
 			dev_name);
 =======
+=======
+>>>>>>> master
 		if (strstr(sti->outptr.dev_name, "DX")) {
 		   printk(KERN_WARNING
 "WARNING: stifb framebuffer driver does not support '%s' in double-buffer mode.\n"
 "WARNING: Please disable the double-buffer mode in IPL menu (the PARISC-BIOS).\n",
 			sti->outptr.dev_name);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		   goto out_err0;
 		}
 		/* fall though */
@@ -1143,10 +1152,14 @@ static int __init stifb_init_fb(struct sti_struct *sti, int bpp_pref)
 	default:
 		printk(KERN_WARNING "stifb: '%s' (id: 0x%08x) not supported.\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dev_name, fb->id);
 =======
 			sti->outptr.dev_name, fb->id);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			sti->outptr.dev_name, fb->id);
+>>>>>>> master
 		goto out_err0;
 	}
 	
@@ -1171,9 +1184,13 @@ static int __init stifb_init_fb(struct sti_struct *sti, int bpp_pref)
 		break;
 	case S9000_ID_TIMBER:	/* HP9000/710 Any (may be a grayscale device) */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		dev_name = fb->sti->outptr.dev_name;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		dev_name = fb->sti->outptr.dev_name;
+>>>>>>> master
 		if (strstr(dev_name, "GRAYSCALE") || 
 		    strstr(dev_name, "Grayscale") ||
 		    strstr(dev_name, "grayscale"))
@@ -1310,10 +1327,14 @@ static int __init stifb_init_fb(struct sti_struct *sti, int bpp_pref)
 		var->yres,
 		var->bits_per_pixel,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_name,
 =======
 		sti->outptr.dev_name,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		sti->outptr.dev_name,
+>>>>>>> master
 		fb->id, 
 		fix->mmio_start);
 

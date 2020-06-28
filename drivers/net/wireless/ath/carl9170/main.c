@@ -1858,11 +1858,15 @@ void *carl9170_alloc(size_t priv_size)
 		     IEEE80211_HW_PS_NULLFUNC_STACK |
 		     IEEE80211_HW_NEED_DTIM_BEFORE_ASSOC |
 <<<<<<< HEAD
+<<<<<<< HEAD
 		     IEEE80211_HW_SIGNAL_DBM |
 		     IEEE80211_HW_SUPPORTS_HT_CCK_RATES;
 =======
 		     IEEE80211_HW_SIGNAL_DBM;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		     IEEE80211_HW_SIGNAL_DBM;
+>>>>>>> master
 
 	if (!modparam_noht) {
 		/*

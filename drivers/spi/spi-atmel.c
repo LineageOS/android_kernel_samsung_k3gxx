@@ -595,11 +595,15 @@ static int atmel_spi_next_xfer_dma_submit(struct spi_master *master,
 	*plen = len;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (atmel_spi_dma_slave_config(as, &slave_config,
 				       xfer->bits_per_word))
 =======
 	if (atmel_spi_dma_slave_config(as, &slave_config, 8))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (atmel_spi_dma_slave_config(as, &slave_config, 8))
+>>>>>>> master
 		goto err_exit;
 
 	/* Send both scatterlists */

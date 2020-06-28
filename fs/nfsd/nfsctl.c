@@ -700,6 +700,7 @@ static ssize_t __write_ports_addfd(char *buf, struct net *net)
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (svc_alien_sock(net, fd)) {
 		printk(KERN_ERR "%s: socket net is different to NFSd's one\n", __func__);
 		return -EINVAL;
@@ -707,6 +708,8 @@ static ssize_t __write_ports_addfd(char *buf, struct net *net)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	err = nfsd_create_serv(net);
 	if (err != 0)
 		return err;

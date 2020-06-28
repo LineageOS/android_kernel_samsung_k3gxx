@@ -308,10 +308,13 @@ struct matrox_accel_data {
 	u_int32_t	m_dwg_rect;
 	u_int32_t	m_opmode;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u_int32_t	m_access;
 	u_int32_t	m_pitch;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 
 struct v4l2_queryctrl;
@@ -702,10 +705,14 @@ void matroxfb_unregister_driver(struct matroxfb_driver* drv);
 #define mga_fifo(n)	do {} while ((mga_inl(M_FIFOSTATUS) & 0xFF) < (n))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define WaitTillIdle()	do { mga_inl(M_STATUS); do {} while (mga_inl(M_STATUS) & 0x10000); } while (0)
 =======
 #define WaitTillIdle()	do {} while (mga_inl(M_STATUS) & 0x10000)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define WaitTillIdle()	do {} while (mga_inl(M_STATUS) & 0x10000)
+>>>>>>> master
 
 /* code speedup */
 #ifdef CONFIG_FB_MATROX_MILLENIUM

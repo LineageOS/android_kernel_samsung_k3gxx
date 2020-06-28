@@ -154,6 +154,7 @@ u16 ieee80211_select_queue(struct ieee80211_sub_if_data *sdata,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (skb->protocol == sdata->control_port_protocol) {
 		skb->priority = 7;
 		return ieee80211_downgrade_queue(sdata, skb);
@@ -161,6 +162,8 @@ u16 ieee80211_select_queue(struct ieee80211_sub_if_data *sdata,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* use the data classifier to determine what 802.1d tag the
 	 * data frame has */
 	skb->priority = cfg80211_classify8021d(skb);

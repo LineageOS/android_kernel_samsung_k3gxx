@@ -103,10 +103,14 @@ void __init vexpress_osc_of_setup(struct device_node *node)
 	osc = kzalloc(sizeof(*osc), GFP_KERNEL);
 	if (!osc)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return;
 =======
 		goto error;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		goto error;
+>>>>>>> master
 
 	osc->func = vexpress_config_func_get_by_node(node);
 	if (!osc->func) {

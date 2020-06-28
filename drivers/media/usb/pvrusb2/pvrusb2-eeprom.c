@@ -124,11 +124,14 @@ int pvr2_eeprom_analyze(struct pvr2_hdw *hdw)
 
 	eeprom = pvr2_eeprom_fetch(hdw);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!eeprom)
 		return -EINVAL;
 
 	tveeprom_hauppauge_analog(NULL, &tvdata, eeprom);
 =======
+=======
+>>>>>>> master
 	if (!eeprom) return -EINVAL;
 
 	{
@@ -138,7 +141,10 @@ int pvr2_eeprom_analyze(struct pvr2_hdw *hdw)
 		fake_client.adapter = &hdw->i2c_adap;
 		tveeprom_hauppauge_analog(&fake_client,&tvdata,eeprom);
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	trace_eeprom("eeprom assumed v4l tveeprom module");
 	trace_eeprom("eeprom direct call results:");

@@ -97,20 +97,28 @@ static int utimes_common(struct path *path, struct timespec *times)
 
 		if (!inode_owner_or_capable(inode)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			error = inode_permission2(path->mnt, inode, MAY_WRITE);
 =======
 			error = inode_permission(inode, MAY_WRITE);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			error = inode_permission(inode, MAY_WRITE);
+>>>>>>> master
 			if (error)
 				goto mnt_drop_write_and_out;
 		}
 	}
 	mutex_lock(&inode->i_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	error = notify_change2(path->mnt, path->dentry, &newattrs);
 =======
 	error = notify_change(path->dentry, &newattrs);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	error = notify_change(path->dentry, &newattrs);
+>>>>>>> master
 	mutex_unlock(&inode->i_mutex);
 
 mnt_drop_write_and_out:

@@ -726,6 +726,7 @@ static int fsl_elbc_write_page(struct mtd_info *mtd, struct nand_chip *chip,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* ECC will be calculated automatically, and errors will be detected in
  * waitfunc.
  */
@@ -741,6 +742,8 @@ static int fsl_elbc_write_subpage(struct mtd_info *mtd, struct nand_chip *chip,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int fsl_elbc_chip_init(struct fsl_elbc_mtd *priv)
 {
 	struct fsl_lbc_ctrl *ctrl = priv->ctrl;
@@ -780,9 +783,12 @@ static int fsl_elbc_chip_init(struct fsl_elbc_mtd *priv)
 	chip->ecc.read_page = fsl_elbc_read_page;
 	chip->ecc.write_page = fsl_elbc_write_page;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	chip->ecc.write_subpage = fsl_elbc_write_subpage;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* If CS Base Register selects full hardware ECC then use it */
 	if ((in_be32(&lbc->bank[priv->bank].br) & BR_DECC) ==

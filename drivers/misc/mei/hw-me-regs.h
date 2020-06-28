@@ -110,6 +110,7 @@
 #define MEI_DEV_ID_PPT_3      0x1DBA  /* Panther Point */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MEI_DEV_ID_LPT_H      0x8C3A  /* Lynx Point H */
 #define MEI_DEV_ID_LPT_W      0x8D3A  /* Lynx Point - Wellsburg */
 #define MEI_DEV_ID_LPT_LP     0x9C3A  /* Lynx Point LP */
@@ -125,6 +126,10 @@
 #define MEI_DEV_ID_LPT        0x8C3A  /* Lynx Point */
 #define MEI_DEV_ID_LPT_LP     0x9C3A  /* Lynx Point LP */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define MEI_DEV_ID_LPT        0x8C3A  /* Lynx Point */
+#define MEI_DEV_ID_LPT_LP     0x9C3A  /* Lynx Point LP */
+>>>>>>> master
 /*
  * MEI HW Section
  */

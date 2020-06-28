@@ -137,9 +137,12 @@ struct omap2_mcspi_cs {
 	unsigned long		phys;
 	int			word_len;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u16			mode;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	struct list_head	node;
 	/* Context save and restore shadow register */
 	u32			chconf0;
@@ -806,10 +809,13 @@ static int omap2_mcspi_setup_transfer(struct spi_device *spi,
 	mcspi_write_chconf0(spi, l);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cs->mode = spi->mode;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	dev_dbg(&spi->dev, "setup: speed %d, sample %s edge, clk %s\n",
 			OMAP2_MCSPI_MAX_FREQ >> div,
 			(spi->mode & SPI_CPHA) ? "trailing" : "leading",
@@ -881,9 +887,12 @@ static int omap2_mcspi_setup(struct spi_device *spi)
 		cs->base = mcspi->base + spi->chip_select * 0x14;
 		cs->phys = mcspi->phys + spi->chip_select * 0x14;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cs->mode = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		cs->chconf0 = 0;
 		spi->controller_state = cs;
 		/* Link this to context save list */
@@ -1057,6 +1066,7 @@ static void omap2_mcspi_work(struct omap2_mcspi *mcspi, struct spi_message *m)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * The slave driver could have changed spi->mode in which case
 	 * it will be different from cs->mode (the current hardware setup).
@@ -1069,6 +1079,8 @@ static void omap2_mcspi_work(struct omap2_mcspi *mcspi, struct spi_message *m)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	omap2_mcspi_set_enable(spi, 0);
 
 	m->status = status;

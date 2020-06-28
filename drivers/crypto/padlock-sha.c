@@ -594,13 +594,19 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Michal Ludvig");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("sha1-all");
 MODULE_ALIAS_CRYPTO("sha256-all");
 MODULE_ALIAS_CRYPTO("sha1-padlock");
 MODULE_ALIAS_CRYPTO("sha256-padlock");
 =======
+=======
+>>>>>>> master
 MODULE_ALIAS("sha1-all");
 MODULE_ALIAS("sha256-all");
 MODULE_ALIAS("sha1-padlock");
 MODULE_ALIAS("sha256-padlock");
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master

@@ -676,10 +676,14 @@ s32 efx_filter_insert_filter(struct efx_nic *efx, struct efx_filter_spec *spec,
 		BUILD_BUG_ON(EFX_FILTER_INDEX_MC_DEF !=
 			     EFX_FILTER_MC_DEF - EFX_FILTER_UC_DEF);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rep_index = spec->type - EFX_FILTER_UC_DEF;
 =======
 		rep_index = spec->type - EFX_FILTER_INDEX_UC_DEF;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		rep_index = spec->type - EFX_FILTER_INDEX_UC_DEF;
+>>>>>>> master
 		ins_index = rep_index;
 
 		spin_lock_bh(&state->lock);

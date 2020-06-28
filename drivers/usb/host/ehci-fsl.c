@@ -131,10 +131,14 @@ static int usb_hcd_fsl_probe(const struct hc_driver *driver,
 
 	/* Enable USB controller, 83xx or 8536 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (pdata->have_sysif_regs && pdata->controller_ver < FSL_USB_VER_1_6)
 =======
 	if (pdata->have_sysif_regs)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (pdata->have_sysif_regs)
+>>>>>>> master
 		setbits32(hcd->regs + FSL_SOC_USB_CTRL, 0x4);
 
 	/* Don't need to set host mode here. It will be done by tdi_reset() */
@@ -237,10 +241,13 @@ static int ehci_fsl_setup_phy(struct usb_hcd *hcd,
 		if (pdata->have_sysif_regs && pdata->controller_ver) {
 			/* controller version 1.6 or above */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			clrbits32(non_ehci + FSL_SOC_USB_CTRL, UTMI_PHY_EN);
 			setbits32(non_ehci + FSL_SOC_USB_CTRL,
 				ULPI_PHY_CLK_SEL | USB_CTRL_USB_EN);
 =======
+=======
+>>>>>>> master
 			setbits32(non_ehci + FSL_SOC_USB_CTRL,
 					ULPI_PHY_CLK_SEL);
 			/*
@@ -250,7 +257,10 @@ static int ehci_fsl_setup_phy(struct usb_hcd *hcd,
 			 */
 			clrsetbits_be32(non_ehci + FSL_SOC_USB_CTRL,
 					UTMI_PHY_EN, USB_CTRL_USB_EN);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		}
 		portsc |= PORT_PTS_ULPI;
 		break;
@@ -278,11 +288,15 @@ static int ehci_fsl_setup_phy(struct usb_hcd *hcd,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (pdata->have_sysif_regs &&
 	    pdata->controller_ver > FSL_USB_VER_1_6 &&
 =======
 	if (pdata->have_sysif_regs && pdata->controller_ver &&
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (pdata->have_sysif_regs && pdata->controller_ver &&
+>>>>>>> master
 	    (phy_mode == FSL_USB2_PHY_ULPI)) {
 		/* check PHY_CLK_VALID to get phy clk valid */
 		if (!spin_event_timeout(in_be32(non_ehci + FSL_SOC_USB_CTRL) &

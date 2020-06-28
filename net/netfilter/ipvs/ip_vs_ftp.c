@@ -184,10 +184,13 @@ static int ip_vs_ftp_out(struct ip_vs_app *app, struct ip_vs_conn *cp,
 	struct net *net;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	*diff = 0;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #ifdef CONFIG_IP_VS_IPV6
 	/* This application helper doesn't work with IPv6 yet,
 	 * so turn this into a no-op for IPv6 packets
@@ -197,10 +200,15 @@ static int ip_vs_ftp_out(struct ip_vs_app *app, struct ip_vs_conn *cp,
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	*diff = 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	*diff = 0;
+
+>>>>>>> master
 	/* Only useful for established sessions */
 	if (cp->state != IP_VS_TCP_S_ESTABLISHED)
 		return 1;
@@ -330,11 +338,14 @@ static int ip_vs_ftp_in(struct ip_vs_app *app, struct ip_vs_conn *cp,
 	struct net *net;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* no diff required for incoming packets */
 	*diff = 0;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #ifdef CONFIG_IP_VS_IPV6
 	/* This application helper doesn't work with IPv6 yet,
 	 * so turn this into a no-op for IPv6 packets
@@ -344,11 +355,17 @@ static int ip_vs_ftp_in(struct ip_vs_app *app, struct ip_vs_conn *cp,
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* no diff required for incoming packets */
 	*diff = 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	/* no diff required for incoming packets */
+	*diff = 0;
+
+>>>>>>> master
 	/* Only useful for established sessions */
 	if (cp->state != IP_VS_TCP_S_ESTABLISHED)
 		return 1;

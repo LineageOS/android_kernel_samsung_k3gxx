@@ -30,9 +30,12 @@
 #include <linux/mutex.h>
 #include <linux/serial.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/swab.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #include <linux/kfifo.h>
 #include <linux/ioctl.h>
 #include <linux/firmware.h>
@@ -289,10 +292,14 @@ static int read_download_mem(struct usb_device *dev, int start_address,
 	int status = 0;
 	__u8 read_length;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u16 be_start_address;
 =======
 	__be16 be_start_address;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	__be16 be_start_address;
+>>>>>>> master
 
 	dev_dbg(&dev->dev, "%s - @ %x for %d\n", __func__, start_address, length);
 
@@ -309,6 +316,7 @@ static int read_download_mem(struct usb_device *dev, int start_address,
 			dev_dbg(&dev->dev, "%s - @ %x for %d\n", __func__, start_address, read_length);
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * NOTE: Must use swab as wIndex is sent in little-endian
 		 *       byte order regardless of host byte order.
@@ -318,11 +326,16 @@ static int read_download_mem(struct usb_device *dev, int start_address,
 					(__u16)address_type,
 					be_start_address,
 =======
+=======
+>>>>>>> master
 		be_start_address = cpu_to_be16(start_address);
 		status = ti_vread_sync(dev, UMPC_MEMORY_READ,
 					(__u16)address_type,
 					(__force __u16)be_start_address,
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 					buffer, read_length);
 
 		if (status) {
@@ -420,10 +433,14 @@ static int write_i2c_mem(struct edgeport_serial *serial,
 	int status = 0;
 	int write_length;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u16 be_start_address;
 =======
 	__be16 be_start_address;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	__be16 be_start_address;
+>>>>>>> master
 
 	/* We can only send a maximum of 1 aligned byte page at a time */
 
@@ -439,6 +456,7 @@ static int write_i2c_mem(struct edgeport_serial *serial,
 	usb_serial_debug_data(dev, __func__, write_length, buffer);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * Write first page.
 	 *
@@ -450,12 +468,17 @@ static int write_i2c_mem(struct edgeport_serial *serial,
 				UMPC_MEMORY_WRITE, (__u16)address_type,
 				be_start_address,
 =======
+=======
+>>>>>>> master
 	/* Write first page */
 	be_start_address = cpu_to_be16(start_address);
 	status = ti_vsend_sync(serial->serial->dev,
 				UMPC_MEMORY_WRITE, (__u16)address_type,
 				(__force __u16)be_start_address,
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				buffer,	write_length);
 	if (status) {
 		dev_dbg(dev, "%s - ERROR %d\n", __func__, status);
@@ -479,6 +502,7 @@ static int write_i2c_mem(struct edgeport_serial *serial,
 		usb_serial_debug_data(dev, __func__, write_length, buffer);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * Write next page.
 		 *
@@ -490,12 +514,17 @@ static int write_i2c_mem(struct edgeport_serial *serial,
 				(__u16)address_type,
 				be_start_address,
 =======
+=======
+>>>>>>> master
 		/* Write next page */
 		be_start_address = cpu_to_be16(start_address);
 		status = ti_vsend_sync(serial->serial->dev, UMPC_MEMORY_WRITE,
 				(__u16)address_type,
 				(__force __u16)be_start_address,
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				buffer, write_length);
 		if (status) {
 			dev_err(dev, "%s - ERROR %d\n", __func__, status);
@@ -643,12 +672,17 @@ static int get_descriptor_addr(struct edgeport_serial *serial,
 			return start_address;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		start_address = start_address + sizeof(struct ti_i2c_desc) +
 						le16_to_cpu(rom_desc->Size);
 =======
 		start_address = start_address + sizeof(struct ti_i2c_desc)
 							+ rom_desc->Size;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		start_address = start_address + sizeof(struct ti_i2c_desc)
+							+ rom_desc->Size;
+>>>>>>> master
 
 	} while ((start_address < TI_MAX_I2C_SIZE) && rom_desc->Type);
 
@@ -662,10 +696,14 @@ static int valid_csum(struct ti_i2c_desc *rom_desc, __u8 *buffer)
 	__u8 cs = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	for (i = 0; i < le16_to_cpu(rom_desc->Size); i++)
 =======
 	for (i = 0; i < rom_desc->Size; i++)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	for (i = 0; i < rom_desc->Size; i++)
+>>>>>>> master
 		cs = (__u8)(cs + buffer[i]);
 
 	if (cs != rom_desc->CheckSum) {
@@ -720,10 +758,14 @@ static int check_i2c_image(struct edgeport_serial *serial)
 
 		if ((start_address + sizeof(struct ti_i2c_desc) +
 <<<<<<< HEAD
+<<<<<<< HEAD
 			le16_to_cpu(rom_desc->Size)) > TI_MAX_I2C_SIZE) {
 =======
 					rom_desc->Size) > TI_MAX_I2C_SIZE) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+					rom_desc->Size) > TI_MAX_I2C_SIZE) {
+>>>>>>> master
 			status = -ENODEV;
 			dev_dbg(dev, "%s - structure too big, erroring out.\n", __func__);
 			break;
@@ -739,11 +781,15 @@ static int check_i2c_image(struct edgeport_serial *serial)
 			status = read_rom(serial, start_address +
 						sizeof(struct ti_i2c_desc),
 <<<<<<< HEAD
+<<<<<<< HEAD
 						le16_to_cpu(rom_desc->Size),
 						buffer);
 =======
 						rom_desc->Size, buffer);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+						rom_desc->Size, buffer);
+>>>>>>> master
 			if (status)
 				break;
 
@@ -753,10 +799,14 @@ static int check_i2c_image(struct edgeport_serial *serial)
 		}
 		start_address = start_address + sizeof(struct ti_i2c_desc) +
 <<<<<<< HEAD
+<<<<<<< HEAD
 						le16_to_cpu(rom_desc->Size);
 =======
 								rom_desc->Size;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+								rom_desc->Size;
+>>>>>>> master
 
 	} while ((rom_desc->Type != I2C_DESC_TYPE_ION) &&
 				(start_address < TI_MAX_I2C_SIZE));
@@ -796,10 +846,14 @@ static int get_manuf_info(struct edgeport_serial *serial, __u8 *buffer)
 	/* Read the descriptor data */
 	status = read_rom(serial, start_address+sizeof(struct ti_i2c_desc),
 <<<<<<< HEAD
+<<<<<<< HEAD
 					le16_to_cpu(rom_desc->Size), buffer);
 =======
 						rom_desc->Size, buffer);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+						rom_desc->Size, buffer);
+>>>>>>> master
 	if (status)
 		goto exit;
 
@@ -895,10 +949,14 @@ static int build_i2c_fw_hdr(__u8 *header, struct device *dev)
 
 	i2c_header->Type	= I2C_DESC_TYPE_FIRMWARE_BLANK;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	i2c_header->Size	= cpu_to_le16(buffer_size);
 =======
 	i2c_header->Size	= (__u16)buffer_size;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	i2c_header->Size	= (__u16)buffer_size;
+>>>>>>> master
 	i2c_header->CheckSum	= cs;
 	firmware_rec->Ver_Major	= OperationalMajorVersion;
 	firmware_rec->Ver_Minor	= OperationalMinorVersion;
@@ -1457,11 +1515,16 @@ static int download_fw(struct edgeport_serial *serial)
 		dev_dbg(dev, "%s - Download successful -- Device rebooting...\n", __func__);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return 1;
 =======
 		/* return an error on purpose */
 		return -ENODEV;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		/* return an error on purpose */
+		return -ENODEV;
+>>>>>>> master
 	}
 
 stayinbootmode:
@@ -1470,10 +1533,14 @@ stayinbootmode:
 	serial->product_info.TiMode = TI_MODE_BOOT;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return 1;
 =======
 	return 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return 0;
+>>>>>>> master
 }
 
 
@@ -1647,6 +1714,7 @@ static void edge_interrupt_callback(struct urb *urb)
 	dev_dbg(dev, "%s - port_number %d, function %d, info 0x%x\n", __func__,
 		port_number, function, data[1]);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (port_number >= edge_serial->serial->num_ports) {
 		dev_err(dev, "bad port number %d\n", port_number);
@@ -1655,6 +1723,8 @@ static void edge_interrupt_callback(struct urb *urb)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	port = edge_serial->serial->port[port_number];
 	edge_port = usb_get_serial_port_data(port);
 	if (!edge_port) {
@@ -1736,10 +1806,14 @@ static void edge_bulk_in_callback(struct urb *urb)
 	port_number = edge_port->port->number - edge_port->port->serial->minor;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (urb->actual_length > 0 && edge_port->lsr_event) {
 =======
 	if (edge_port->lsr_event) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (edge_port->lsr_event) {
+>>>>>>> master
 		edge_port->lsr_event = 0;
 		dev_dbg(dev, "%s ===== Port %u LSR Status = %02x, Data = %02x ======\n",
 			__func__, port_number, edge_port->lsr_mask, *data);
@@ -2518,6 +2592,7 @@ static int edge_startup(struct usb_serial *serial)
 	int status;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Make sure we have the required endpoints when in download mode. */
 	if (serial->interface->cur_altsetting->desc.bNumEndpoints > 1) {
 		if (serial->num_bulk_in < serial->num_ports ||
@@ -2527,6 +2602,8 @@ static int edge_startup(struct usb_serial *serial)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* create our private serial structure */
 	edge_serial = kzalloc(sizeof(struct edgeport_serial), GFP_KERNEL);
 	if (edge_serial == NULL) {
@@ -2539,20 +2616,27 @@ static int edge_startup(struct usb_serial *serial)
 
 	status = download_fw(edge_serial);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (status < 0) {
 =======
 	if (status) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (status) {
+>>>>>>> master
 		kfree(edge_serial);
 		return status;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (status > 0)
 		return 1;	/* bind but do not register any ports */
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 }
 

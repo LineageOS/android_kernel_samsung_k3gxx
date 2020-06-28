@@ -535,7 +535,10 @@ int ubi_resize_volume(struct ubi_volume_desc *desc, int reserved_pebs)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	/* Change volume table record */
 	vtbl_rec = ubi->vtbl[vol_id];
 	vtbl_rec.reserved_pebs = cpu_to_be32(reserved_pebs);
@@ -543,7 +546,10 @@ int ubi_resize_volume(struct ubi_volume_desc *desc, int reserved_pebs)
 	if (err)
 		goto out_acc;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (pebs < 0) {
 		for (i = 0; i < -pebs; i++) {
 			err = ubi_eba_unmap_leb(ubi, vol, reserved_pebs + i);
@@ -561,6 +567,7 @@ int ubi_resize_volume(struct ubi_volume_desc *desc, int reserved_pebs)
 		spin_unlock(&ubi->volumes_lock);
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/*
 	 * When we shrink a volume we have to flush all pending (erase) work.
@@ -582,6 +589,8 @@ int ubi_resize_volume(struct ubi_volume_desc *desc, int reserved_pebs)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	vol->reserved_pebs = reserved_pebs;
 	if (vol->vol_type == UBI_DYNAMIC_VOLUME) {
 		vol->used_ebs = reserved_pebs;

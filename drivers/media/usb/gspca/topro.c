@@ -4792,6 +4792,7 @@ static void sd_set_streamparm(struct gspca_dev *gspca_dev,
 	int fr, i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (tpf->numerator == 0 || tpf->denominator == 0)
 		sd->framerate = 30;
 	else
@@ -4800,6 +4801,9 @@ static void sd_set_streamparm(struct gspca_dev *gspca_dev,
 =======
 	sd->framerate = tpf->denominator / tpf->numerator;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	sd->framerate = tpf->denominator / tpf->numerator;
+>>>>>>> master
 	if (gspca_dev->streaming)
 		setframerate(gspca_dev, v4l2_ctrl_g_ctrl(gspca_dev->exposure));
 

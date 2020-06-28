@@ -132,18 +132,24 @@ static int wm8775_s_routing(struct v4l2_subdev *sd,
 	}
 	state->input = input;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (v4l2_ctrl_g_ctrl(state->mute))
 		return 0;
 	if (!v4l2_ctrl_g_ctrl(state->vol))
 		return 0;
 =======
+=======
+>>>>>>> master
 	if (!v4l2_ctrl_g_ctrl(state->mute))
 		return 0;
 	if (!v4l2_ctrl_g_ctrl(state->vol))
 		return 0;
 	if (!v4l2_ctrl_g_ctrl(state->bal))
 		return 0;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	wm8775_set_audio(sd, 1);
 	return 0;
 }

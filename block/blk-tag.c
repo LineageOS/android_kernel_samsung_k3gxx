@@ -28,6 +28,7 @@ EXPORT_SYMBOL(blk_queue_find_tag);
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * blk_free_tags - release a given set of tag maintenance info
  * @bqt:	the tag map to free
  *
@@ -38,6 +39,8 @@ void blk_free_tags(struct blk_queue_tag *bqt)
 {
 	if (atomic_dec_and_test(&bqt->refcnt)) {
 =======
+=======
+>>>>>>> master
  * __blk_free_tags - release a given set of tag maintenance info
  * @bqt:	the tag map to free
  *
@@ -50,7 +53,10 @@ static int __blk_free_tags(struct blk_queue_tag *bqt)
 
 	retval = atomic_dec_and_test(&bqt->refcnt);
 	if (retval) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		BUG_ON(find_first_bit(bqt->tag_map, bqt->max_depth) <
 							bqt->max_depth);
 
@@ -63,6 +69,7 @@ static int __blk_free_tags(struct blk_queue_tag *bqt)
 		kfree(bqt);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 EXPORT_SYMBOL(blk_free_tags);
 =======
@@ -70,6 +77,11 @@ EXPORT_SYMBOL(blk_free_tags);
 	return retval;
 }
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	return retval;
+}
+>>>>>>> master
 
 /**
  * __blk_queue_free_tags - release tag maintenance info
@@ -87,10 +99,14 @@ void __blk_queue_free_tags(struct request_queue *q)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	blk_free_tags(bqt);
 =======
 	__blk_free_tags(bqt);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	__blk_free_tags(bqt);
+>>>>>>> master
 
 	q->queue_tags = NULL;
 	queue_flag_clear_unlocked(QUEUE_FLAG_QUEUED, q);
@@ -98,7 +114,10 @@ void __blk_queue_free_tags(struct request_queue *q)
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
  * blk_free_tags - release a given set of tag maintenance info
  * @bqt:	the tag map to free
  *
@@ -114,7 +133,10 @@ void blk_free_tags(struct blk_queue_tag *bqt)
 EXPORT_SYMBOL(blk_free_tags);
 
 /**
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  * blk_queue_free_tags - release tag maintenance info
  * @q:  the request queue for the device
  *

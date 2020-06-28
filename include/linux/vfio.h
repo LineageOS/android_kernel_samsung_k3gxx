@@ -77,7 +77,10 @@ extern void vfio_unregister_iommu_driver(
 				const struct vfio_iommu_driver_ops *ops);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 /**
  * offsetofend(TYPE, MEMBER)
  *
@@ -92,5 +95,8 @@ extern void vfio_unregister_iommu_driver(
 	TYPE tmp;						\
 	offsetof(TYPE, MEMBER) + sizeof(tmp.MEMBER); })		\
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #endif /* VFIO_H */

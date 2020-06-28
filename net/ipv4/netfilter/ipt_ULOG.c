@@ -221,9 +221,12 @@ static void ipt_ulog_packet(struct net *net,
 
 	pm = nlmsg_data(nlh);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memset(pm, 0, sizeof(*pm));
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* We might not have a timestamp, get one */
 	if (skb->tstamp.tv64 == 0)
@@ -243,10 +246,15 @@ static void ipt_ulog_packet(struct net *net,
 	else if (loginfo->prefix[0] != '\0')
 		strncpy(pm->prefix, loginfo->prefix, sizeof(pm->prefix));
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	else
 		*(pm->prefix) = '\0';
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	else
+		*(pm->prefix) = '\0';
+>>>>>>> master
 
 	if (in && in->hard_header_len > 0 &&
 	    skb->mac_header != skb->network_header &&
@@ -259,10 +267,13 @@ static void ipt_ulog_packet(struct net *net,
 	if (in)
 		strncpy(pm->indev_name, in->name, sizeof(pm->indev_name));
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (out)
 		strncpy(pm->outdev_name, out->name, sizeof(pm->outdev_name));
 =======
+=======
+>>>>>>> master
 	else
 		pm->indev_name[0] = '\0';
 
@@ -270,7 +281,10 @@ static void ipt_ulog_packet(struct net *net,
 		strncpy(pm->outdev_name, out->name, sizeof(pm->outdev_name));
 	else
 		pm->outdev_name[0] = '\0';
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* copy_len <= skb->len, so can't fail. */
 	if (skb_copy_bits(skb, 0, pm->payload, copy_len) < 0)

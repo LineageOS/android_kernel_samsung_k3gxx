@@ -38,6 +38,7 @@ probe_likely_condition(struct ftrace_branch_data *f, int val, int expect)
 	struct ring_buffer *buffer;
 	unsigned long flags;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int pc;
 	const char *p;
 
@@ -49,6 +50,11 @@ probe_likely_condition(struct ftrace_branch_data *f, int val, int expect)
 	const char *p;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int cpu, pc;
+	const char *p;
+
+>>>>>>> master
 	/*
 	 * I would love to save just the ftrace_likely_data pointer, but
 	 * this code can also be used by modules. Ugly things can happen
@@ -60,16 +66,22 @@ probe_likely_condition(struct ftrace_branch_data *f, int val, int expect)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	raw_local_irq_save(flags);
 	current->trace_recursion |= TRACE_BRANCH_BIT;
 	data = this_cpu_ptr(tr->trace_buffer.data);
 	if (atomic_read(&data->disabled))
 =======
+=======
+>>>>>>> master
 	local_irq_save(flags);
 	cpu = raw_smp_processor_id();
 	data = per_cpu_ptr(tr->trace_buffer.data, cpu);
 	if (atomic_inc_return(&data->disabled) != 1)
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		goto out;
 
 	pc = preempt_count();
@@ -99,12 +111,17 @@ probe_likely_condition(struct ftrace_branch_data *f, int val, int expect)
 
  out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	current->trace_recursion &= ~TRACE_BRANCH_BIT;
 	raw_local_irq_restore(flags);
 =======
 	atomic_dec(&data->disabled);
 	local_irq_restore(flags);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	atomic_dec(&data->disabled);
+	local_irq_restore(flags);
+>>>>>>> master
 }
 
 static inline

@@ -98,6 +98,7 @@ spc_emulate_inquiry_std(struct se_cmd *cmd, unsigned char *buf)
 	buf[7] = 0x2; /* CmdQue=1 */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memcpy(&buf[8], "LIO-ORG ", 8);
 	memset(&buf[16], 0x20, 16);
 	memcpy(&buf[16], dev->t10_wwn.model,
@@ -109,6 +110,11 @@ spc_emulate_inquiry_std(struct se_cmd *cmd, unsigned char *buf)
 	snprintf(&buf[16], 16, "%s", dev->t10_wwn.model);
 	snprintf(&buf[32], 4, "%s", dev->t10_wwn.revision);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	snprintf(&buf[8], 8, "LIO-ORG");
+	snprintf(&buf[16], 16, "%s", dev->t10_wwn.model);
+	snprintf(&buf[32], 4, "%s", dev->t10_wwn.revision);
+>>>>>>> master
 	buf[4] = 31; /* Set additional length to 31 */
 
 	return 0;
@@ -451,9 +457,13 @@ spc_emulate_evpd_b0(struct se_cmd *cmd, unsigned char *buf)
 {
 	struct se_device *dev = cmd->se_dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	u32 max_sectors;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u32 max_sectors;
+>>>>>>> master
 	int have_tp = 0;
 
 	/*
@@ -479,12 +489,18 @@ spc_emulate_evpd_b0(struct se_cmd *cmd, unsigned char *buf)
 	 * Set MAXIMUM TRANSFER LENGTH
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	put_unaligned_be32(dev->dev_attrib.hw_max_sectors, &buf[8]);
 =======
 	max_sectors = min(dev->dev_attrib.fabric_max_sectors,
 			  dev->dev_attrib.hw_max_sectors);
 	put_unaligned_be32(max_sectors, &buf[8]);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	max_sectors = min(dev->dev_attrib.fabric_max_sectors,
+			  dev->dev_attrib.hw_max_sectors);
+	put_unaligned_be32(max_sectors, &buf[8]);
+>>>>>>> master
 
 	/*
 	 * Set OPTIMAL TRANSFER LENGTH
@@ -642,9 +658,12 @@ spc_emulate_inquiry(struct se_cmd *cmd)
 	sense_reason_t ret;
 	int p;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int len = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	memset(buf, 0, SE_INQUIRY_BUF);
 
@@ -663,9 +682,12 @@ spc_emulate_inquiry(struct se_cmd *cmd)
 
 		ret = spc_emulate_inquiry_std(cmd, buf);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		len = buf[4] + 5;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		goto out;
 	}
 
@@ -674,9 +696,12 @@ spc_emulate_inquiry(struct se_cmd *cmd)
 			buf[1] = cdb[2];
 			ret = evpd_handlers[p].emulate(cmd, buf);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			len = get_unaligned_be16(&buf[2]) + 4;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			goto out;
 		}
 	}
@@ -693,10 +718,14 @@ out:
 
 	if (!ret)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		target_complete_cmd_with_length(cmd, GOOD, len);
 =======
 		target_complete_cmd(cmd, GOOD);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		target_complete_cmd(cmd, GOOD);
+>>>>>>> master
 	return ret;
 }
 
@@ -1015,10 +1044,14 @@ set_length:
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	target_complete_cmd_with_length(cmd, GOOD, length);
 =======
 	target_complete_cmd(cmd, GOOD);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	target_complete_cmd(cmd, GOOD);
+>>>>>>> master
 	return 0;
 }
 
@@ -1196,10 +1229,14 @@ done:
 	transport_kunmap_data_sg(cmd);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	target_complete_cmd_with_length(cmd, GOOD, 8 + lun_count * 8);
 =======
 	target_complete_cmd(cmd, GOOD);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	target_complete_cmd(cmd, GOOD);
+>>>>>>> master
 	return 0;
 }
 EXPORT_SYMBOL(spc_emulate_report_luns);

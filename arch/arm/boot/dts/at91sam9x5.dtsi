@@ -34,6 +34,7 @@
 	};
 	cpus {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		#address-cells = <0>;
 		#size-cells = <0>;
 
@@ -44,6 +45,10 @@
 		cpu@0 {
 			compatible = "arm,arm926ejs";
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		cpu@0 {
+			compatible = "arm,arm926ejs";
+>>>>>>> master
 		};
 	};
 
@@ -653,10 +658,14 @@
 
 			rtc@fffffeb0 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				compatible = "atmel,at91sam9x5-rtc";
 =======
 				compatible = "atmel,at91rm9200-rtc";
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				compatible = "atmel,at91rm9200-rtc";
+>>>>>>> master
 				reg = <0xfffffeb0 0x40>;
 				interrupts = <1 4 7>;
 				status = "disabled";

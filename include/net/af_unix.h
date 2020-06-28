@@ -7,12 +7,17 @@
 #include <net/sock.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern void unix_inflight(struct user_struct *user, struct file *fp);
 extern void unix_notinflight(struct user_struct *user, struct file *fp);
 =======
 void unix_inflight(struct user_struct *user, struct file *fp);
 void unix_notinflight(struct user_struct *user, struct file *fp);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+void unix_inflight(struct user_struct *user, struct file *fp);
+void unix_notinflight(struct user_struct *user, struct file *fp);
+>>>>>>> master
 extern void unix_gc(void);
 extern void wait_for_unix_gc(void);
 extern struct sock *unix_get_socket(struct file *filp);
@@ -70,6 +75,7 @@ struct unix_sock {
 	wait_queue_t		peer_wake;
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 static inline struct unix_sock *unix_sk(struct sock *sk)
 {
@@ -78,6 +84,9 @@ static inline struct unix_sock *unix_sk(struct sock *sk)
 =======
 #define unix_sk(__sk) ((struct unix_sock *)__sk)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define unix_sk(__sk) ((struct unix_sock *)__sk)
+>>>>>>> master
 
 #define peer_wait peer_wq.wait
 

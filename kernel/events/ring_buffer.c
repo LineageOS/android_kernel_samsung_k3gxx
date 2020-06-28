@@ -88,6 +88,7 @@ again:
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * Since the mmap() consumer (userspace) can run on a different CPU:
 	 *
 	 *   kernel				user
@@ -114,11 +115,16 @@ again:
 	 */
 	smp_wmb();
 =======
+=======
+>>>>>>> master
 	 * Publish the known good head. Rely on the full barrier implied
 	 * by atomic_dec_and_test() order the rb->head read and this
 	 * write.
 	 */
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	rb->user_page->data_head = head;
 
 	/*
@@ -183,6 +189,7 @@ int perf_output_begin(struct perf_output_handle *handle,
 		 * tail pointer. So that all reads will be completed before the
 		 * write is issued.
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 *
 		 * See perf_output_put_handle().
 		 */
@@ -193,6 +200,11 @@ int perf_output_begin(struct perf_output_handle *handle,
 		tail = ACCESS_ONCE(rb->user_page->data_tail);
 		smp_rmb();
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		 */
+		tail = ACCESS_ONCE(rb->user_page->data_tail);
+		smp_rmb();
+>>>>>>> master
 		offset = head = local_read(&rb->head);
 		head += size;
 		if (unlikely(!perf_output_space(rb, tail, offset, head)))

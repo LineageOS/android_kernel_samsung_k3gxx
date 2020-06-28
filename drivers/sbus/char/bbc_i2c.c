@@ -302,15 +302,19 @@ static struct bbc_i2c_bus * attach_one_i2c(struct platform_device *op, int index
 		return NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	INIT_LIST_HEAD(&bp->temps);
 	INIT_LIST_HEAD(&bp->fans);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	bp->i2c_control_regs = of_ioremap(&op->resource[0], 0, 0x2, "bbc_i2c_regs");
 	if (!bp->i2c_control_regs)
 		goto fail;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (op->num_resources == 2) {
 		bp->i2c_bussel_reg = of_ioremap(&op->resource[1], 0, 0x1, "bbc_i2c_bussel");
@@ -322,6 +326,11 @@ static struct bbc_i2c_bus * attach_one_i2c(struct platform_device *op, int index
 	if (!bp->i2c_bussel_reg)
 		goto fail;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	bp->i2c_bussel_reg = of_ioremap(&op->resource[1], 0, 0x1, "bbc_i2c_bussel");
+	if (!bp->i2c_bussel_reg)
+		goto fail;
+>>>>>>> master
 
 	bp->waiting = 0;
 	init_waitqueue_head(&bp->wq);

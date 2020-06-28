@@ -601,6 +601,7 @@ static int usbhsc_resume(struct device *dev)
 	struct platform_device *pdev = usbhs_priv_to_pdev(priv);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!usbhsc_flags_has(priv, USBHSF_RUNTIME_PWCTRL)) {
 		usbhsc_power_ctrl(priv, 1);
 		usbhs_mod_autonomy_mode(priv);
@@ -609,6 +610,10 @@ static int usbhsc_resume(struct device *dev)
 	if (!usbhsc_flags_has(priv, USBHSF_RUNTIME_PWCTRL))
 		usbhsc_power_ctrl(priv, 1);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!usbhsc_flags_has(priv, USBHSF_RUNTIME_PWCTRL))
+		usbhsc_power_ctrl(priv, 1);
+>>>>>>> master
 
 	usbhs_platform_call(priv, phy_reset, pdev);
 

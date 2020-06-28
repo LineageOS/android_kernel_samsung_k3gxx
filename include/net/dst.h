@@ -478,6 +478,7 @@ static inline struct dst_entry *xfrm_lookup(struct net *net,
 	return dst_orig;
 } 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 static inline struct xfrm_state *dst_xfrm(const struct dst_entry *dst)
 {
@@ -486,10 +487,13 @@ static inline struct xfrm_state *dst_xfrm(const struct dst_entry *dst)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #else
 extern struct dst_entry *xfrm_lookup(struct net *net, struct dst_entry *dst_orig,
 				     const struct flowi *fl, struct sock *sk,
 				     int flags);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 /* skb attached with this dst needs transformation if dst->xfrm is valid */
@@ -499,6 +503,8 @@ static inline struct xfrm_state *dst_xfrm(const struct dst_entry *dst)
 }
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #endif
 
 #endif /* _NET_DST_H */

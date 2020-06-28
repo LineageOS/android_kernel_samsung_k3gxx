@@ -108,10 +108,14 @@ static inline int arch_spin_trylock(arch_spinlock_t *lock)
 		"	addeq	%0, %0, %4\n"
 		"	strexeq	%2, %0, [%3]"
 <<<<<<< HEAD
+<<<<<<< HEAD
 		: "=&r" (slock), "=&r" (contended), "=&r" (res)
 =======
 		: "=&r" (slock), "=&r" (contended), "=r" (res)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		: "=&r" (slock), "=&r" (contended), "=r" (res)
+>>>>>>> master
 		: "r" (&lock->slock), "I" (1 << TICKET_SHIFT)
 		: "cc");
 	} while (res);

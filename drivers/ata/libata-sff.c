@@ -998,17 +998,23 @@ static void ata_hsm_qc_complete(struct ata_queued_cmd *qc, int in_wq)
 {
 	struct ata_port *ap = qc->ap;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (ap->ops->error_handler) {
 		if (in_wq) {
 =======
+=======
+>>>>>>> master
 	unsigned long flags;
 
 	if (ap->ops->error_handler) {
 		if (in_wq) {
 			spin_lock_irqsave(ap->lock, flags);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			/* EH might have kicked in while host lock is
 			 * released.
 			 */
@@ -1021,10 +1027,15 @@ static void ata_hsm_qc_complete(struct ata_queued_cmd *qc, int in_wq)
 					ata_port_freeze(ap);
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 			spin_unlock_irqrestore(ap->lock, flags);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+			spin_unlock_irqrestore(ap->lock, flags);
+>>>>>>> master
 		} else {
 			if (likely(!(qc->err_mask & AC_ERR_HSM)))
 				ata_qc_complete(qc);
@@ -1034,14 +1045,20 @@ static void ata_hsm_qc_complete(struct ata_queued_cmd *qc, int in_wq)
 	} else {
 		if (in_wq) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ata_sff_irq_on(ap);
 			ata_qc_complete(qc);
 =======
+=======
+>>>>>>> master
 			spin_lock_irqsave(ap->lock, flags);
 			ata_sff_irq_on(ap);
 			ata_qc_complete(qc);
 			spin_unlock_irqrestore(ap->lock, flags);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		} else
 			ata_qc_complete(qc);
 	}
@@ -1063,6 +1080,7 @@ int ata_sff_hsm_move(struct ata_port *ap, struct ata_queued_cmd *qc,
 	struct ata_link *link = qc->dev->link;
 	struct ata_eh_info *ehi = &link->eh_info;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int poll_next;
 
 	lockdep_assert_held(ap->lock);
@@ -1072,6 +1090,11 @@ int ata_sff_hsm_move(struct ata_port *ap, struct ata_queued_cmd *qc,
 	int poll_next;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned long flags = 0;
+	int poll_next;
+
+>>>>>>> master
 	WARN_ON_ONCE((qc->flags & ATA_QCFLAG_ACTIVE) == 0);
 
 	/* Make sure ata_sff_qc_issue() does not throw things
@@ -1134,7 +1157,10 @@ fsm_start:
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 		/* Send the CDB (atapi) or the first data block (ata pio out).
 		 * During the state transition, interrupt handler shouldn't
 		 * be invoked before the data transfer is complete and
@@ -1143,7 +1169,10 @@ fsm_start:
 		if (in_wq)
 			spin_lock_irqsave(ap->lock, flags);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		if (qc->tf.protocol == ATA_PROT_PIO) {
 			/* PIO data out protocol.
 			 * send first data block.
@@ -1160,11 +1189,17 @@ fsm_start:
 			atapi_send_cdb(ap, qc);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		if (in_wq)
 			spin_unlock_irqrestore(ap->lock, flags);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (in_wq)
+			spin_unlock_irqrestore(ap->lock, flags);
+
+>>>>>>> master
 		/* if polling, ata_sff_pio_task() handles the rest.
 		 * otherwise, interrupt handler takes over from here.
 		 */
@@ -1361,6 +1396,7 @@ void ata_sff_flush_pio_task(struct ata_port *ap)
 
 	cancel_delayed_work_sync(&ap->sff_pio_task);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/*
 	 * We wanna reset the HSM state to IDLE.  If we do so without
@@ -1377,6 +1413,9 @@ void ata_sff_flush_pio_task(struct ata_port *ap)
 =======
 	ap->hsm_task_state = HSM_ST_IDLE;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ap->hsm_task_state = HSM_ST_IDLE;
+>>>>>>> master
 	ap->sff_pio_task_link = NULL;
 
 	if (ata_msg_ctl(ap))
@@ -1393,20 +1432,27 @@ static void ata_sff_pio_task(struct work_struct *work)
 	int poll_next;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock_irq(ap->lock);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	BUG_ON(ap->sff_pio_task_link == NULL);
 	/* qc can be NULL if timeout occurred */
 	qc = ata_qc_from_tag(ap, link->active_tag);
 	if (!qc) {
 		ap->sff_pio_task_link = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto out_unlock;
 =======
 		return;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return;
+>>>>>>> master
 	}
 
 fsm_start:
@@ -1422,6 +1468,7 @@ fsm_start:
 	status = ata_sff_busy_wait(ap, ATA_BUSY, 5);
 	if (status & ATA_BUSY) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		spin_unlock_irq(ap->lock);
 		ata_msleep(ap, 2);
 		spin_lock_irq(ap->lock);
@@ -1431,12 +1478,17 @@ fsm_start:
 			ata_sff_queue_pio_task(link, ATA_SHORT_PAUSE);
 			goto out_unlock;
 =======
+=======
+>>>>>>> master
 		ata_msleep(ap, 2);
 		status = ata_sff_busy_wait(ap, ATA_BUSY, 10);
 		if (status & ATA_BUSY) {
 			ata_sff_queue_pio_task(link, ATA_SHORT_PAUSE);
 			return;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		}
 	}
 
@@ -1454,10 +1506,13 @@ fsm_start:
 	if (poll_next)
 		goto fsm_start;
 <<<<<<< HEAD
+<<<<<<< HEAD
 out_unlock:
 	spin_unlock_irq(ap->lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /**
@@ -2077,6 +2132,7 @@ static int ata_bus_softreset(struct ata_port *ap, unsigned int devmask,
 	DPRINTK("ata%u: bus reset via SRST\n", ap->print_id);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ap->ioaddr.ctl_addr) {
 		/* software reset.  causes dev0 to be selected */
 		iowrite8(ap->ctl, ioaddr->ctl_addr);
@@ -2087,6 +2143,8 @@ static int ata_bus_softreset(struct ata_port *ap, unsigned int devmask,
 		ap->last_ctl = ap->ctl;
 	}
 =======
+=======
+>>>>>>> master
 	/* software reset.  causes dev0 to be selected */
 	iowrite8(ap->ctl, ioaddr->ctl_addr);
 	udelay(20);	/* FIXME: flush */
@@ -2094,7 +2152,10 @@ static int ata_bus_softreset(struct ata_port *ap, unsigned int devmask,
 	udelay(20);	/* FIXME: flush */
 	iowrite8(ap->ctl, ioaddr->ctl_addr);
 	ap->last_ctl = ap->ctl;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* wait the port to become ready */
 	return ata_sff_wait_after_reset(&ap->link, devmask, deadline);
@@ -2296,12 +2357,18 @@ void ata_sff_error_handler(struct ata_port *ap)
 	spin_unlock_irqrestore(ap->lock, flags);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	/* ignore ata_sff_softreset if ctl isn't accessible */
 	if (softreset == ata_sff_softreset && !ap->ioaddr.ctl_addr)
 		softreset = NULL;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* ignore built-in hardresets if SCR access is not available */
 	if ((hardreset == sata_std_hardreset ||
 	     hardreset == sata_sff_hardreset) && !sata_scr_valid(&ap->link))

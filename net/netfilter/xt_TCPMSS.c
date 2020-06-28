@@ -69,10 +69,14 @@ tcpmss_mangle_packet(struct sk_buff *skb,
 
 	/* Header cannot be larger than the packet */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (tcplen < tcph->doff*4 || tcph->doff*4 < sizeof(struct tcphdr))
 =======
 	if (tcplen < tcph->doff*4)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (tcplen < tcph->doff*4)
+>>>>>>> master
 		return -1;
 
 	if (info->mss == XT_TCPMSS_CLAMP_PMTU) {
@@ -122,12 +126,15 @@ tcpmss_mangle_packet(struct sk_buff *skb,
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* tcph->doff has 4 bits, do not wrap it to 0 */
 	if (tcph->doff >= 15)
 		return 0;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/*
 	 * MSS Option not found ?! add it..
 	 */

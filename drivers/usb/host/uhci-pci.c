@@ -130,12 +130,15 @@ static int uhci_pci_init(struct usb_hcd *hcd)
 		uhci->wait_for_hp = 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Intel controllers use non-PME wakeup signalling */
 	if (to_pci_dev(uhci_dev(uhci))->vendor == PCI_VENDOR_ID_INTEL)
 		device_set_run_wake(uhci_dev(uhci), 1);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Set up pointers to PCI-specific functions */
 	uhci->reset_hc = uhci_pci_reset_hc;
 	uhci->check_and_reset_hc = uhci_pci_check_and_reset_hc;
@@ -301,10 +304,14 @@ static struct pci_driver uhci_pci_driver = {
 	.shutdown =	uhci_shutdown,
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_PM
 =======
 #ifdef CONFIG_PM_SLEEP
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#ifdef CONFIG_PM_SLEEP
+>>>>>>> master
 	.driver =	{
 		.pm =	&usb_hcd_pci_pm_ops
 	},

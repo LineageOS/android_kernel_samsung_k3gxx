@@ -32,6 +32,7 @@ struct skcipher_sg_list {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct skcipher_tfm {
 	struct crypto_ablkcipher *skcipher;
 	bool has_key;
@@ -39,6 +40,8 @@ struct skcipher_tfm {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 struct skcipher_ctx {
 	struct list_head tsgl;
 	struct af_alg_sgl rsgl;
@@ -96,6 +99,7 @@ static int skcipher_alloc_sgl(struct sock *sk)
 		sgl->cur = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (sg) {
 			scatterwalk_sg_chain(sg, MAX_SGL_ENTS + 1, sgl->sg);
 			sg_unmark_end(sg + (MAX_SGL_ENTS - 1));
@@ -104,6 +108,10 @@ static int skcipher_alloc_sgl(struct sock *sk)
 		if (sg)
 			scatterwalk_sg_chain(sg, MAX_SGL_ENTS + 1, sgl->sg);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (sg)
+			scatterwalk_sg_chain(sg, MAX_SGL_ENTS + 1, sgl->sg);
+>>>>>>> master
 
 		list_add_tail(&sgl->list, &ctx->tsgl);
 	}
@@ -457,7 +465,10 @@ static int skcipher_recvmsg(struct kiocb *unused, struct socket *sock,
 
 		while (seglen) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 			sgl = list_first_entry(&ctx->tsgl,
 					       struct skcipher_sg_list, list);
 			sg = sgl->sg;
@@ -465,7 +476,10 @@ static int skcipher_recvmsg(struct kiocb *unused, struct socket *sock,
 			while (!sg->length)
 				sg++;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			used = ctx->used;
 			if (!used) {
 				err = skcipher_wait_for_data(sk, flags);
@@ -488,6 +502,7 @@ static int skcipher_recvmsg(struct kiocb *unused, struct socket *sock,
 				goto free;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			sgl = list_first_entry(&ctx->tsgl,
 					       struct skcipher_sg_list, list);
 			sg = sgl->sg;
@@ -497,6 +512,8 @@ static int skcipher_recvmsg(struct kiocb *unused, struct socket *sock,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			ablkcipher_request_set_crypt(&ctx->req, sg,
 						     ctx->rsgl.sg, used,
 						     ctx->iv);
@@ -572,6 +589,7 @@ static struct proto_ops algif_skcipher_ops = {
 	.poll		=	skcipher_poll,
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static int skcipher_check_key(struct socket *sock)
 {
@@ -692,10 +710,16 @@ static void *skcipher_bind(const char *name, u32 type, u32 mask)
 {
 	return crypto_alloc_ablkcipher(name, type, mask);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static void *skcipher_bind(const char *name, u32 type, u32 mask)
+{
+	return crypto_alloc_ablkcipher(name, type, mask);
+>>>>>>> master
 }
 
 static void skcipher_release(void *private)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct skcipher_tfm *tfm = private;
 
@@ -704,10 +728,14 @@ static void skcipher_release(void *private)
 =======
 	crypto_free_ablkcipher(private);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	crypto_free_ablkcipher(private);
+>>>>>>> master
 }
 
 static int skcipher_setkey(void *private, const u8 *key, unsigned int keylen)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct skcipher_tfm *tfm = private;
 	int err;
@@ -719,6 +747,9 @@ static int skcipher_setkey(void *private, const u8 *key, unsigned int keylen)
 =======
 	return crypto_ablkcipher_setkey(private, key, keylen);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return crypto_ablkcipher_setkey(private, key, keylen);
+>>>>>>> master
 }
 
 static void skcipher_sock_destruct(struct sock *sk)
@@ -734,6 +765,7 @@ static void skcipher_sock_destruct(struct sock *sk)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int skcipher_accept_parent_nokey(void *private, struct sock *sk)
 {
 	struct skcipher_ctx *ctx;
@@ -742,22 +774,32 @@ static int skcipher_accept_parent_nokey(void *private, struct sock *sk)
 	struct crypto_ablkcipher *skcipher = tfm->skcipher;
 	unsigned int len = sizeof(*ctx) + crypto_ablkcipher_reqsize(skcipher);
 =======
+=======
+>>>>>>> master
 static int skcipher_accept_parent(void *private, struct sock *sk)
 {
 	struct skcipher_ctx *ctx;
 	struct alg_sock *ask = alg_sk(sk);
 	unsigned int len = sizeof(*ctx) + crypto_ablkcipher_reqsize(private);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	ctx = sock_kmalloc(sk, len, GFP_KERNEL);
 	if (!ctx)
 		return -ENOMEM;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ctx->iv = sock_kmalloc(sk, crypto_ablkcipher_ivsize(skcipher),
 =======
 
 	ctx->iv = sock_kmalloc(sk, crypto_ablkcipher_ivsize(private),
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	ctx->iv = sock_kmalloc(sk, crypto_ablkcipher_ivsize(private),
+>>>>>>> master
 			       GFP_KERNEL);
 	if (!ctx->iv) {
 		sock_kfree_s(sk, ctx, len);
@@ -765,10 +807,14 @@ static int skcipher_accept_parent(void *private, struct sock *sk)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memset(ctx->iv, 0, crypto_ablkcipher_ivsize(skcipher));
 =======
 	memset(ctx->iv, 0, crypto_ablkcipher_ivsize(private));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	memset(ctx->iv, 0, crypto_ablkcipher_ivsize(private));
+>>>>>>> master
 
 	INIT_LIST_HEAD(&ctx->tsgl);
 	ctx->len = len;
@@ -781,6 +827,7 @@ static int skcipher_accept_parent(void *private, struct sock *sk)
 	ask->private = ctx;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ablkcipher_request_set_tfm(&ctx->req, skcipher);
 	ablkcipher_request_set_callback(&ctx->req, CRYPTO_TFM_REQ_MAY_BACKLOG,
 				      af_alg_complete, &ctx->completion);
@@ -789,12 +836,18 @@ static int skcipher_accept_parent(void *private, struct sock *sk)
 	ablkcipher_request_set_callback(&ctx->req, CRYPTO_TFM_REQ_MAY_BACKLOG,
 					af_alg_complete, &ctx->completion);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ablkcipher_request_set_tfm(&ctx->req, private);
+	ablkcipher_request_set_callback(&ctx->req, CRYPTO_TFM_REQ_MAY_BACKLOG,
+					af_alg_complete, &ctx->completion);
+>>>>>>> master
 
 	sk->sk_destruct = skcipher_sock_destruct;
 
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static int skcipher_accept_parent(void *private, struct sock *sk)
 {
@@ -808,11 +861,14 @@ static int skcipher_accept_parent(void *private, struct sock *sk)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static const struct af_alg_type algif_type_skcipher = {
 	.bind		=	skcipher_bind,
 	.release	=	skcipher_release,
 	.setkey		=	skcipher_setkey,
 	.accept		=	skcipher_accept_parent,
+<<<<<<< HEAD
 <<<<<<< HEAD
 	.accept_nokey	=	skcipher_accept_parent_nokey,
 	.ops		=	&algif_skcipher_ops,
@@ -820,6 +876,9 @@ static const struct af_alg_type algif_type_skcipher = {
 =======
 	.ops		=	&algif_skcipher_ops,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	.ops		=	&algif_skcipher_ops,
+>>>>>>> master
 	.name		=	"skcipher",
 	.owner		=	THIS_MODULE
 };

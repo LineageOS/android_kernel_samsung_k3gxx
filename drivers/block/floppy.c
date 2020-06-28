@@ -3054,6 +3054,7 @@ static int raw_cmd_copyout(int cmd, void __user *param,
 
 	while (ptr) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct floppy_raw_cmd cmd = *ptr;
 		cmd.next = NULL;
 		cmd.kernel_data = NULL;
@@ -3061,6 +3062,9 @@ static int raw_cmd_copyout(int cmd, void __user *param,
 =======
 		ret = copy_to_user(param, ptr, sizeof(*ptr));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		ret = copy_to_user(param, ptr, sizeof(*ptr));
+>>>>>>> master
 		if (ret)
 			return -EFAULT;
 		param += sizeof(struct floppy_raw_cmd);
@@ -3115,17 +3119,23 @@ loop:
 	*rcmd = ptr;
 	ret = copy_from_user(ptr, param, sizeof(*ptr));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ptr->next = NULL;
 	ptr->buffer_length = 0;
 	ptr->kernel_data = NULL;
 	if (ret)
 		return -EFAULT;
 =======
+=======
+>>>>>>> master
 	if (ret)
 		return -EFAULT;
 	ptr->next = NULL;
 	ptr->buffer_length = 0;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	param += sizeof(struct floppy_raw_cmd);
 	if (ptr->cmd_count > 33)
 			/* the command may now also take up the space
@@ -3142,9 +3152,13 @@ loop:
 		ptr->reply[i] = 0;
 	ptr->resultcode = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ptr->kernel_data = NULL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ptr->kernel_data = NULL;
+>>>>>>> master
 
 	if (ptr->flags & (FD_RAW_READ | FD_RAW_WRITE)) {
 		if (ptr->length <= 0)

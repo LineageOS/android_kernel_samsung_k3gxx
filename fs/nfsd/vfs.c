@@ -298,6 +298,7 @@ commit_metadata(struct svc_fh *fhp)
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Go over the attributes and take care of the small differences between
  * NFS semantics and what Linux expects.
  */
@@ -305,6 +306,8 @@ static void
 nfsd_sanitize_attrs(struct inode *inode, struct iattr *iap)
 {
 =======
+=======
+>>>>>>> master
  * Set various file attributes.
  * N.B. After this call fhp needs an fh_put
  */
@@ -340,7 +343,10 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp, struct iattr *iap,
 	if (!iap->ia_valid)
 		goto out;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/*
 	 * NFSv2 does not differentiate between "set-[ac]time-to-now"
 	 * which only requires access, and "set-[ac]time-to-X" which
@@ -351,11 +357,16 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp, struct iattr *iap,
 	 *
 	 * We only call inode_change_ok as the last test as technically
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * it is not an interface that we should be using.
 =======
 	 * it is not an interface that we should be using.  It is only
 	 * valid if the filesystem does not define it's own i_op->setattr.
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	 * it is not an interface that we should be using.  It is only
+	 * valid if the filesystem does not define it's own i_op->setattr.
+>>>>>>> master
 	 */
 #define BOTH_TIME_SET (ATTR_ATIME_SET | ATTR_MTIME_SET)
 #define	MAX_TOUCH_TIME_ERROR (30*60)
@@ -382,7 +393,10 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp, struct iattr *iap,
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	    
 	/*
 	 * The size case is special.
@@ -407,7 +421,10 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp, struct iattr *iap,
 			goto out_nfserr;
 		}
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* sanitize the mode change */
 	if (iap->ia_valid & ATTR_MODE) {
@@ -430,6 +447,7 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp, struct iattr *iap,
 			iap->ia_valid |= (ATTR_KILL_SUID | ATTR_KILL_SGID);
 		}
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 }
 
@@ -540,6 +558,8 @@ out_put_write_access_nfserror:
 	err = nfserrno(host_err);
 out_put_write_access:
 =======
+=======
+>>>>>>> master
 
 	/* Change the attributes. */
 
@@ -556,7 +576,10 @@ out_put_write_access:
 		err = nfserrno(host_err);
 		fh_unlock(fhp);
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (size_change)
 		put_write_access(inode);
 	if (!err)
@@ -564,12 +587,18 @@ out_put_write_access:
 out:
 	return err;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 
 out_nfserr:
 	err = nfserrno(host_err);
 	goto out;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 #if defined(CONFIG_NFSD_V2_ACL) || \
@@ -605,11 +634,14 @@ set_nfsv4_acl_one(struct dentry *dentry, struct posix_acl *pacl, char *key)
 	int error = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!pacl)
 		return vfs_setxattr(dentry, key, NULL, 0, 0);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	buflen = posix_acl_xattr_size(pacl->a_count);
 	buf = kmalloc(buflen, GFP_KERNEL);
 	error = -ENOMEM;
@@ -2050,9 +2082,12 @@ struct buffered_dirent {
 
 struct readdir_data {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct dir_context ctx;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	char		*dirent;
 	size_t		used;
 	int		full;
@@ -2091,9 +2126,12 @@ static __be32 nfsd_buffered_readdir(struct file *file, filldir_t func,
 	loff_t offset;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	buf.ctx.actor = nfsd_buffered_filldir;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	buf.dirent = (void *)__get_free_page(GFP_KERNEL);
 	if (!buf.dirent)
 		return nfserrno(-ENOMEM);
@@ -2109,10 +2147,14 @@ static __be32 nfsd_buffered_readdir(struct file *file, filldir_t func,
 		buf.full = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		host_err = iterate_dir(file, &buf.ctx);
 =======
 		host_err = vfs_readdir(file, nfsd_buffered_filldir, &buf);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		host_err = vfs_readdir(file, nfsd_buffered_filldir, &buf);
+>>>>>>> master
 		if (buf.full)
 			host_err = 0;
 

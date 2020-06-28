@@ -41,7 +41,10 @@
 #define ECRYPTFS_WAS_ENCRYPTED_OTHER_DEVICE 0x0100
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 #if 0
 #include <linux/fs.h>
@@ -57,7 +60,10 @@
 #include <sdp/sdp_dlp.h>
 #include <sdp/fs_request.h>
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 /**
  * ecryptfs_read_update_atime
@@ -94,9 +100,12 @@ static ssize_t ecryptfs_read_update_atime(struct kiocb *iocb,
 
 struct ecryptfs_getdents_callback {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct dir_context ctx;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	void *dirent;
 	struct dentry *dentry;
 	filldir_t filldir;
@@ -156,11 +165,15 @@ static int ecryptfs_readdir(struct file *file, void *dirent, filldir_t filldir)
 	buf.filldir_called = 0;
 	buf.entries_written = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	buf.ctx.actor = ecryptfs_filldir;
 	rc = iterate_dir(lower_file, &buf.ctx);
 =======
 	rc = vfs_readdir(lower_file, ecryptfs_filldir, (void *)&buf);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	rc = vfs_readdir(lower_file, ecryptfs_filldir, (void *)&buf);
+>>>>>>> master
 	file->f_pos = lower_file->f_pos;
 	if (rc < 0)
 		goto out;
@@ -239,7 +252,10 @@ static int read_or_initialize_metadata(struct dentry *dentry)
 		goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 	/*
 	 * no passthrough/xattr for sensitive files
@@ -248,7 +264,10 @@ static int read_or_initialize_metadata(struct dentry *dentry)
 		goto out;
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (mount_crypt_stat->flags & ECRYPTFS_PLAINTEXT_PASSTHROUGH_ENABLED) {
 		crypt_stat->flags &= ~(ECRYPTFS_I_SIZE_INITIALIZED
 				       | ECRYPTFS_ENCRYPTED);
@@ -267,7 +286,10 @@ static int read_or_initialize_metadata(struct dentry *dentry)
 out:
 	mutex_unlock(&crypt_stat->cs_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 	if(!rc)
 	{
@@ -287,7 +309,10 @@ out:
 		}
 	}
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return rc;
 }
 
@@ -318,17 +343,24 @@ static int ecryptfs_open(struct inode *inode, struct file *file)
 	int rc = 0;
 	struct ecryptfs_crypt_stat *crypt_stat = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
     struct ecryptfs_mount_crypt_stat *mount_crypt_stat;
 =======
 	struct ecryptfs_mount_crypt_stat *mount_crypt_stat;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct ecryptfs_mount_crypt_stat *mount_crypt_stat;
+>>>>>>> master
 	struct dentry *ecryptfs_dentry = file->f_path.dentry;
 	/* Private value of ecryptfs_dentry allocated in
 	 * ecryptfs_lookup() */
 	struct ecryptfs_file_info *file_info;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_DLP
 	sdp_fs_command_t *cmd = NULL;
 	ssize_t dlp_len = 0;
@@ -347,7 +379,10 @@ static int ecryptfs_open(struct inode *inode, struct file *file)
 		rc = -EPERM;
 		goto out;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Released in ecryptfs_release or end of function if failure */
 	file_info = kmem_cache_zalloc(ecryptfs_file_info_cache, GFP_KERNEL);
 	ecryptfs_set_file_private(file, file_info);
@@ -385,7 +420,10 @@ static int ecryptfs_open(struct inode *inode, struct file *file)
 		file, ecryptfs_inode_to_private(inode)->lower_file);
 	if (S_ISDIR(ecryptfs_dentry->d_inode->i_mode)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 		/*
 		 * it's possible to have a sensitive directory. (vault)
@@ -393,7 +431,10 @@ static int ecryptfs_open(struct inode *inode, struct file *file)
 		if (mount_crypt_stat->flags & ECRYPTFS_MOUNT_SDP_ENABLED)
 			crypt_stat->flags |= ECRYPTFS_DEK_SDP_ENABLED;
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		ecryptfs_printk(KERN_DEBUG, "This is a directory\n");
 		mutex_lock(&crypt_stat->cs_mutex);
 		crypt_stat->flags &= ~(ECRYPTFS_ENCRYPTED);
@@ -404,9 +445,12 @@ static int ecryptfs_open(struct inode *inode, struct file *file)
 	rc = read_or_initialize_metadata(ecryptfs_dentry);
 	if (rc) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto out_put;
 	}
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 		if(file->f_flags & O_SDP){
 			printk("Failed to initialize metadata, "
@@ -523,7 +567,10 @@ static int ecryptfs_open(struct inode *inode, struct file *file)
 	}
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ecryptfs_printk(KERN_DEBUG, "inode w/ addr = [0x%p], i_ino = "
 			"[0x%.16lx] size: [0x%.16llx]\n", inode, inode->i_ino,
 			(unsigned long long)i_size_read(inode));
@@ -535,14 +582,20 @@ out_free:
 			ecryptfs_file_to_private(file));
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_DLP
 	if(cmd) {
 		sdp_fs_request(cmd, NULL);
 		sdp_fs_command_free(cmd);
 	}
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return rc;
 }
 
@@ -564,8 +617,11 @@ static int ecryptfs_release(struct inode *inode, struct file *file)
 	crypt_stat = &ecryptfs_inode_to_private(inode)->crypt_stat;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ecryptfs_put_lower_file(inode);
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 	mutex_lock(&crypt_stat->cs_mutex);
 #endif
@@ -573,7 +629,10 @@ static int ecryptfs_release(struct inode *inode, struct file *file)
 #ifdef CONFIG_SDP
 	mutex_unlock(&crypt_stat->cs_mutex);
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	kmem_cache_free(ecryptfs_file_info_cache,
 			ecryptfs_file_to_private(file));
 	return 0;
@@ -647,7 +706,10 @@ ecryptfs_unlocked_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 	rc = ecryptfs_do_sdp_ioctl(file, cmd, arg);
 	if (rc != EOPNOTSUPP)
@@ -656,7 +718,10 @@ ecryptfs_unlocked_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 	printk("%s CONFIG_SDP not enabled \n", __func__);
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (ecryptfs_file_to_private(file))
 		lower_file = ecryptfs_file_to_lower(file);
 	if (lower_file && lower_file->f_op && lower_file->f_op->unlocked_ioctl)
@@ -672,7 +737,10 @@ ecryptfs_compat_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 	long rc = -ENOIOCTLCMD;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 	rc = ecryptfs_do_sdp_ioctl(file, cmd, arg);
 	if (rc != EOPNOTSUPP)
@@ -681,7 +749,10 @@ ecryptfs_compat_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 	printk("%s CONFIG_SDP not enabled \n", __func__);
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (ecryptfs_file_to_private(file))
 		lower_file = ecryptfs_file_to_lower(file);
 	if (lower_file && lower_file->f_op && lower_file->f_op->compat_ioctl)

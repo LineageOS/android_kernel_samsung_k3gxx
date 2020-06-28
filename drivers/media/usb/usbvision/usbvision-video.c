@@ -1460,9 +1460,12 @@ static void usbvision_release(struct usb_usbvision *usbvision)
 	usbvision_remove_sysfs(usbvision->vdev);
 	usbvision_unregister_video(usbvision);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kfree(usbvision->alt_max_pkt_size);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	usb_free_urb(usbvision->ctrl_urb);
 
@@ -1525,10 +1528,14 @@ static int usbvision_probe(struct usb_interface *intf,
 	struct usb_usbvision *usbvision = NULL;
 	const struct usb_endpoint_descriptor *endpoint;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int model, i, ret;
 =======
 	int model, i;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int model, i;
+>>>>>>> master
 
 	PDEBUG(DBG_PROBE, "VID=%#04x, PID=%#04x, ifnum=%u",
 				dev->descriptor.idVendor,
@@ -1538,17 +1545,22 @@ static int usbvision_probe(struct usb_interface *intf,
 	if (model < 0 || model >= usbvision_device_data_size) {
 		PDEBUG(DBG_PROBE, "model out of bounds %d", model);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = -ENODEV;
 		goto err_usb;
 =======
 		return -ENODEV;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return -ENODEV;
+>>>>>>> master
 	}
 	printk(KERN_INFO "%s: %s found\n", __func__,
 				usbvision_device_data[model].model_string);
 
 	if (usbvision_device_data[model].interface >= 0)
 		interface = &dev->actconfig->interface[usbvision_device_data[model].interface]->altsetting[0];
+<<<<<<< HEAD
 <<<<<<< HEAD
 	else if (ifnum < dev->actconfig->desc.bNumInterfaces)
 		interface = &dev->actconfig->interface[ifnum]->altsetting[0];
@@ -1572,38 +1584,55 @@ static int usbvision_probe(struct usb_interface *intf,
 		interface = &dev->actconfig->interface[ifnum]->altsetting[0];
 	endpoint = &interface->endpoint[1].desc;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	else
+		interface = &dev->actconfig->interface[ifnum]->altsetting[0];
+	endpoint = &interface->endpoint[1].desc;
+>>>>>>> master
 	if (!usb_endpoint_xfer_isoc(endpoint)) {
 		dev_err(&intf->dev, "%s: interface %d. has non-ISO endpoint!\n",
 		    __func__, ifnum);
 		dev_err(&intf->dev, "%s: Endpoint attributes %d",
 		    __func__, endpoint->bmAttributes);
 <<<<<<< HEAD
-		ret = -ENODEV;
-		goto err_usb;
-=======
-		return -ENODEV;
->>>>>>> 671a46baf1b... some performance improvements
-	}
-	if (usb_endpoint_dir_out(endpoint)) {
-		dev_err(&intf->dev, "%s: interface %d. has ISO OUT endpoint!\n",
-		    __func__, ifnum);
 <<<<<<< HEAD
 		ret = -ENODEV;
 		goto err_usb;
 =======
 		return -ENODEV;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return -ENODEV;
+>>>>>>> master
+	}
+	if (usb_endpoint_dir_out(endpoint)) {
+		dev_err(&intf->dev, "%s: interface %d. has ISO OUT endpoint!\n",
+		    __func__, ifnum);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ret = -ENODEV;
+		goto err_usb;
+=======
+		return -ENODEV;
+>>>>>>> 671a46baf1b... some performance improvements
+=======
+		return -ENODEV;
+>>>>>>> master
 	}
 
 	usbvision = usbvision_alloc(dev, intf);
 	if (usbvision == NULL) {
 		dev_err(&intf->dev, "%s: couldn't allocate USBVision struct\n", __func__);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = -ENOMEM;
 		goto err_usb;
 =======
 		return -ENOMEM;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return -ENOMEM;
+>>>>>>> master
 	}
 
 	if (dev->descriptor.bNumConfigurations > 1)
@@ -1623,11 +1652,15 @@ static int usbvision_probe(struct usb_interface *intf,
 	if (usbvision->alt_max_pkt_size == NULL) {
 		dev_err(&intf->dev, "usbvision: out of memory!\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = -ENOMEM;
 		goto err_pkt;
 =======
 		return -ENOMEM;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return -ENOMEM;
+>>>>>>> master
 	}
 
 	for (i = 0; i < usbvision->num_alt; i++) {
@@ -1663,6 +1696,7 @@ static int usbvision_probe(struct usb_interface *intf,
 	PDEBUG(DBG_PROBE, "success");
 	return 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 err_pkt:
 	usbvision_release(usbvision);
@@ -1671,6 +1705,8 @@ err_usb:
 	return ret;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 

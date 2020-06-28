@@ -199,11 +199,14 @@ extern size_t vmcoreinfo_size;
 extern size_t vmcoreinfo_max_size;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* flag to track if kexec reboot is in progress */
 extern bool kexec_in_progress;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 int __init parse_crashkernel(char *cmdline, unsigned long long system_ram,
 		unsigned long long *crash_size, unsigned long long *crash_base);
 int parse_crashkernel_high(char *cmdline, unsigned long long system_ram,

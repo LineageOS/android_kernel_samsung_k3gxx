@@ -56,9 +56,12 @@ struct serial_private {
 	void __iomem		*remapped_bar[PCI_NUM_BAR_RESOURCES];
 	struct pci_serial_quirk	*quirk;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct pciserial_board *board;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	int			line[0];
 };
 
@@ -73,10 +76,14 @@ static void moan_device(const char *str, struct pci_dev *dev)
 	       "message (0x%04x,0x%04x,0x%04x,0x%04x), the\n"
 	       "manufacturer and name of serial board or\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	       "modem board to <linux-serial@vger.kernel.org>.\n",
 =======
 	       "modem board to rmk+serial@arm.linux.org.uk.\n",
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	       "modem board to rmk+serial@arm.linux.org.uk.\n",
+>>>>>>> master
 	       pci_name(dev), str, dev->vendor, dev->device,
 	       dev->subsystem_vendor, dev->subsystem_device);
 }
@@ -1269,16 +1276,22 @@ static int pci_quatech_init(struct pci_dev *dev)
 		if (base) {
 			u32 tmp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			outl(inl(base + 0x38) | 0x00002000, base + 0x38);
 			tmp = inl(base + 0x3c);
 			outl(tmp | 0x01000000, base + 0x3c);
 			outl(tmp &= ~0x01000000, base + 0x3c);
 =======
+=======
+>>>>>>> master
 			outl(inl(base + 0x38), base + 0x38);
 			tmp = inl(base + 0x3c);
 			outl(tmp | 0x01000000, base + 0x3c);
 			outl(tmp, base + 0x3c);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		}
 	}
 	return 0;
@@ -1561,9 +1574,12 @@ pci_wch_ch353_setup(struct serial_private *priv,
 #define PCI_DEVICE_ID_TITAN_200EI	0xA016
 #define PCI_DEVICE_ID_TITAN_200EISI	0xA017
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define PCI_DEVICE_ID_TITAN_200V3	0xA306
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #define PCI_DEVICE_ID_TITAN_400V3	0xA310
 #define PCI_DEVICE_ID_TITAN_410V3	0xA312
 #define PCI_DEVICE_ID_TITAN_800V3	0xA314
@@ -3393,9 +3409,12 @@ pciserial_init_ports(struct pci_dev *dev, const struct pciserial_board *board)
 	}
 	priv->nr = i;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	priv->board = board;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return priv;
 
 err_deinit:
@@ -3407,10 +3426,14 @@ err_out:
 EXPORT_SYMBOL_GPL(pciserial_init_ports);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void pciserial_detach_ports(struct serial_private *priv)
 =======
 void pciserial_remove_ports(struct serial_private *priv)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+void pciserial_remove_ports(struct serial_private *priv)
+>>>>>>> master
 {
 	struct pci_serial_quirk *quirk;
 	int i;
@@ -3431,6 +3454,7 @@ void pciserial_remove_ports(struct serial_private *priv)
 	if (quirk->exit)
 		quirk->exit(priv->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 
 void pciserial_remove_ports(struct serial_private *priv)
@@ -3439,6 +3463,9 @@ void pciserial_remove_ports(struct serial_private *priv)
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+>>>>>>> master
 	kfree(priv);
 }
 EXPORT_SYMBOL_GPL(pciserial_remove_ports);
@@ -4175,11 +4202,14 @@ static struct pci_device_id serial_pci_tbl[] = {
 		PCI_ANY_ID, PCI_ANY_ID, 0, 0,
 		pbn_oxsemi_2_4000000 },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{	PCI_VENDOR_ID_TITAN, PCI_DEVICE_ID_TITAN_200V3,
 		PCI_ANY_ID, PCI_ANY_ID, 0, 0,
 		pbn_b0_bt_2_921600 },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{	PCI_VENDOR_ID_TITAN, PCI_DEVICE_ID_TITAN_400V3,
 		PCI_ANY_ID, PCI_ANY_ID, 0, 0,
 		pbn_b0_4_921600 },
@@ -4981,10 +5011,14 @@ static pci_ers_result_t serial8250_io_error_detected(struct pci_dev *dev,
 
 	if (priv)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pciserial_detach_ports(priv);
 =======
 		pciserial_suspend_ports(priv);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		pciserial_suspend_ports(priv);
+>>>>>>> master
 
 	pci_disable_device(dev);
 
@@ -5010,6 +5044,7 @@ static void serial8250_io_resume(struct pci_dev *dev)
 {
 	struct serial_private *priv = pci_get_drvdata(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct pciserial_board *board;
 
 	if (!priv)
@@ -5027,6 +5062,11 @@ static void serial8250_io_resume(struct pci_dev *dev)
 	if (priv)
 		pciserial_resume_ports(priv);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	if (priv)
+		pciserial_resume_ports(priv);
+>>>>>>> master
 }
 
 static const struct pci_error_handlers serial8250_err_handler = {

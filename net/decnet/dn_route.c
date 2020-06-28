@@ -1031,6 +1031,7 @@ source_ok:
 		fld.daddr = fld.saddr;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (dev_out)
 			dev_put(dev_out);
 		err = -EINVAL;
@@ -1039,11 +1040,16 @@ source_ok:
 			goto out;
 		err = -EADDRNOTAVAIL;
 =======
+=======
+>>>>>>> master
 		err = -EADDRNOTAVAIL;
 		if (dev_out)
 			dev_put(dev_out);
 		dev_out = init_net.loopback_dev;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		dev_hold(dev_out);
 		if (!fld.daddr) {
 			fld.daddr =
@@ -1117,10 +1123,13 @@ source_ok:
 			goto out;
 		dn_db = rcu_dereference_raw(dev_out->dn_ptr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!dn_db)
 			goto e_inval;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		/* Possible improvement - check all devices for local addr */
 		if (dn_dev_islocal(dev_out, fld.daddr)) {
 			dev_put(dev_out);
@@ -1163,10 +1172,13 @@ select_source:
 		dev_out = init_net.loopback_dev;
 		dev_hold(dev_out);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!dev_out->dn_ptr)
 			goto e_inval;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		fld.flowidn_oif = dev_out->ifindex;
 		if (res.fi)
 			dn_fib_info_put(res.fi);

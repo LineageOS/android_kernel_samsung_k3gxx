@@ -173,10 +173,13 @@ void br_dev_delete(struct net_device *dev, struct list_head *head)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	br_fdb_delete_by_port(br, NULL, 1);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	del_timer_sync(&br->gc_timer);
 
 	br_sysfs_delbr(br->dev);

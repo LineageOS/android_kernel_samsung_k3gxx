@@ -41,9 +41,12 @@
 #include <linux/mm.h>
 #include <linux/random.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/vmalloc.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 #include "qib.h"
 #include "qib_common.h"
@@ -2089,6 +2092,7 @@ int qib_register_ib_device(struct qib_devdata *dd)
 	 */
 	spin_lock_init(&dev->lk_table.lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* insure generation is at least 4 bits see keys.c */
 	if (ib_qib_lkey_table_size > MAX_LKEY_TABLE_BITS) {
 		qib_dev_warn(dd, "lkey bits %u too large, reduced to %u\n",
@@ -2100,11 +2104,16 @@ int qib_register_ib_device(struct qib_devdata *dd)
 	dev->lk_table.table = (struct qib_mregion __rcu **)
 		vmalloc(lk_tab_size);
 =======
+=======
+>>>>>>> master
 	dev->lk_table.max = 1 << ib_qib_lkey_table_size;
 	lk_tab_size = dev->lk_table.max * sizeof(*dev->lk_table.table);
 	dev->lk_table.table = (struct qib_mregion __rcu **)
 		__get_free_pages(GFP_KERNEL, get_order(lk_tab_size));
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (dev->lk_table.table == NULL) {
 		ret = -ENOMEM;
 		goto err_lk;
@@ -2278,10 +2287,14 @@ err_tx:
 				  dev->pio_hdrs, dev->pio_hdrs_phys);
 err_hdrs:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vfree(dev->lk_table.table);
 =======
 	free_pages((unsigned long) dev->lk_table.table, get_order(lk_tab_size));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	free_pages((unsigned long) dev->lk_table.table, get_order(lk_tab_size));
+>>>>>>> master
 err_lk:
 	kfree(dev->qp_table);
 err_qpt:
@@ -2336,11 +2349,16 @@ void qib_unregister_ib_device(struct qib_devdata *dd)
 				  dev->pio_hdrs, dev->pio_hdrs_phys);
 	lk_tab_size = dev->lk_table.max * sizeof(*dev->lk_table.table);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vfree(dev->lk_table.table);
 =======
 	free_pages((unsigned long) dev->lk_table.table,
 		   get_order(lk_tab_size));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	free_pages((unsigned long) dev->lk_table.table,
+		   get_order(lk_tab_size));
+>>>>>>> master
 	kfree(dev->qp_table);
 }
 

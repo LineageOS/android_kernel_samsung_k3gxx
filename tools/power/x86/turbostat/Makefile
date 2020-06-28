@@ -1,5 +1,6 @@
 CC		= $(CROSS_COMPILE)gcc
 <<<<<<< HEAD
+<<<<<<< HEAD
 BUILD_OUTPUT	:= $(CURDIR)
 PREFIX		:= /usr
 DESTDIR		:=
@@ -12,6 +13,8 @@ turbostat : turbostat.c
 CFLAGS +=	-Wall
 CFLAGS +=	-DMSRHEADER='"../../../../arch/x86/include/uapi/asm/msr-index.h"'
 =======
+=======
+>>>>>>> master
 BUILD_OUTPUT	:= $(PWD)
 PREFIX		:= /usr
 DESTDIR		:=
@@ -19,7 +22,10 @@ DESTDIR		:=
 turbostat : turbostat.c
 CFLAGS +=	-Wall
 CFLAGS +=	-I../../../../arch/x86/include/uapi/
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 %: %.c
 	@mkdir -p $(BUILD_OUTPUT)

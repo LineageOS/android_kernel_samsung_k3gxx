@@ -501,9 +501,12 @@ int qxl_hw_surface_alloc(struct qxl_device *qdev,
 	cmd = (struct qxl_surface_cmd *)qxl_release_map(qdev, release);
 	cmd->type = QXL_SURFACE_CMD_CREATE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cmd->flags = QXL_SURF_FLAG_KEEP_DATA;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	cmd->u.surface_create.format = surf->surf.format;
 	cmd->u.surface_create.width = surf->surf.width;
 	cmd->u.surface_create.height = surf->surf.height;

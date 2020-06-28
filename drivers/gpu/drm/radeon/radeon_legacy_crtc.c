@@ -332,10 +332,13 @@ static void radeon_crtc_dpms(struct drm_crtc *crtc, int mode)
 		}
 		drm_vblank_post_modeset(dev, radeon_crtc->crtc_id);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Make sure vblank interrupt is still enabled if needed */
 		radeon_irq_set(rdev);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		radeon_crtc_load_lut(crtc);
 		break;
 	case DRM_MODE_DPMS_STANDBY:
@@ -428,9 +431,12 @@ int radeon_crtc_do_set_base(struct drm_crtc *crtc,
 	obj = radeon_fb->obj;
 	rbo = gem_to_radeon_bo(obj);
 <<<<<<< HEAD
+<<<<<<< HEAD
 retry:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	r = radeon_bo_reserve(rbo, false);
 	if (unlikely(r != 0))
 		return r;
@@ -439,6 +445,7 @@ retry:
 				     &base);
 	if (unlikely(r != 0)) {
 		radeon_bo_unreserve(rbo);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 		/* On old GPU like RN50 with little vram pining can fails because
@@ -469,6 +476,8 @@ retry:
 		}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return -EINVAL;
 	}
 	radeon_bo_get_tiling_flags(rbo, &tiling_flags, NULL);

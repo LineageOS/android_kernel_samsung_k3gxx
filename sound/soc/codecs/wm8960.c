@@ -182,10 +182,14 @@ static int wm8960_get_deemph(struct snd_kcontrol *kcontrol,
 	struct wm8960_priv *wm8960 = snd_soc_codec_get_drvdata(codec);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ucontrol->value.integer.value[0] = wm8960->deemph;
 =======
 	ucontrol->value.enumerated.item[0] = wm8960->deemph;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ucontrol->value.enumerated.item[0] = wm8960->deemph;
+>>>>>>> master
 	return 0;
 }
 
@@ -195,10 +199,14 @@ static int wm8960_put_deemph(struct snd_kcontrol *kcontrol,
 	struct snd_soc_codec *codec = snd_kcontrol_chip(kcontrol);
 	struct wm8960_priv *wm8960 = snd_soc_codec_get_drvdata(codec);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int deemph = ucontrol->value.integer.value[0];
 =======
 	int deemph = ucontrol->value.enumerated.item[0];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int deemph = ucontrol->value.enumerated.item[0];
+>>>>>>> master
 
 	if (deemph > 1)
 		return -EINVAL;
@@ -251,10 +259,14 @@ SOC_ENUM("ADC Polarity", wm8960_enum[0]),
 SOC_SINGLE("ADC High Pass Filter Switch", WM8960_DACCTL1, 0, 1, 0),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 SOC_ENUM("DAC Polarity", wm8960_enum[1]),
 =======
 SOC_ENUM("DAC Polarity", wm8960_enum[2]),
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+SOC_ENUM("DAC Polarity", wm8960_enum[2]),
+>>>>>>> master
 SOC_SINGLE_BOOL_EXT("DAC Deemphasis Switch", 0,
 		    wm8960_get_deemph, wm8960_put_deemph),
 
@@ -405,10 +417,14 @@ static const struct snd_soc_dapm_route audio_paths[] = {
 	{ "Right Input Mixer", NULL, "RINPUT1", },  /* Really Boost Switch */
 	{ "Right Input Mixer", NULL, "RINPUT2" },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ "Right Input Mixer", NULL, "RINPUT3" },
 =======
 	{ "Right Input Mixer", NULL, "LINPUT3" },
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	{ "Right Input Mixer", NULL, "LINPUT3" },
+>>>>>>> master
 
 	{ "Left ADC", NULL, "Left Input Mixer" },
 	{ "Right ADC", NULL, "Right Input Mixer" },
@@ -572,10 +588,14 @@ static struct {
 	{ 24000, 2 },
 	{ 16000, 3 },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ 11025, 4 },
 =======
 	{ 11250, 4 },
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	{ 11250, 4 },
+>>>>>>> master
 	{ 12000, 4 },
 	{  8000, 5 },
 };
@@ -878,6 +898,7 @@ static int wm8960_set_dai_pll(struct snd_soc_dai *codec_dai, int pll_id,
 		reg |= 0x20;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		snd_soc_write(codec, WM8960_PLL2, (pll_div.k >> 16) & 0xff);
 		snd_soc_write(codec, WM8960_PLL3, (pll_div.k >> 8) & 0xff);
 		snd_soc_write(codec, WM8960_PLL4, pll_div.k & 0xff);
@@ -886,6 +907,11 @@ static int wm8960_set_dai_pll(struct snd_soc_dai *codec_dai, int pll_id,
 		snd_soc_write(codec, WM8960_PLL3, (pll_div.k >> 9) & 0x1ff);
 		snd_soc_write(codec, WM8960_PLL4, pll_div.k & 0x1ff);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		snd_soc_write(codec, WM8960_PLL2, (pll_div.k >> 18) & 0x3f);
+		snd_soc_write(codec, WM8960_PLL3, (pll_div.k >> 9) & 0x1ff);
+		snd_soc_write(codec, WM8960_PLL4, pll_div.k & 0x1ff);
+>>>>>>> master
 	}
 	snd_soc_write(codec, WM8960_PLL1, reg);
 

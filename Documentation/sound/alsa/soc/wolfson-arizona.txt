@@ -1,19 +1,26 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 This document lists the features of the Cirrus Logic / Wolfson Microelectronics
 'Arizona' class SmartCodecs that are supported by the kernel drivers.
 Note that some features are covered by other classes of driver (extcon,
 regulator, etc.), the list below shows the full set of features related
 =======
+=======
+>>>>>>> master
 This document lists the features of the Wolfson 'Arizona' class audio hubs
 supported by the kernel drivers.
 Note that some features are covered by other classes of driver (extcon,
 regulator, etc.) and this list below shows the full set of features related
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 to sound:
 
 '-' means not relevant for that audio hub model
 
                                                                 WM8280
+<<<<<<< HEAD
 <<<<<<< HEAD
 Feature                                    WM8997 WM8998 WM5102 WM8281 CS47L24 CS47L85 CS47L35
 ----------------------------------------------------------------------------------------------
@@ -78,6 +85,8 @@ Configure mapping of headset button
 Configure available firmwares [note 3]        -      -      Y      Y      Y      Y        Y
 Support SoundClear Control                    -      -      N      Y      Y      Y        Y
 =======
+=======
+>>>>>>> master
 Feature                                    WM8997 WM8998 WM5102 WM8281 CS47L24
 ------------------------------------------------------------------------------
 24-bit samples                                Y      Y      Y      Y      Y
@@ -141,7 +150,10 @@ Configure mapping of headset button
 Configure available firmwares [note 3]        -      -      Y      Y      Y
 Support Ez2Control                            -      -      N      Y      Y
 Support trace firmware                        -      -      -      Y      N
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 Notes:
 1. Integration-time configuration. Not possible to change at runtime
@@ -161,6 +173,7 @@ Notes:
 7. Configuration from device tree is work-in-progress so there may be some
         pdata settings that have not yet been migrated to device tree
 <<<<<<< HEAD
+<<<<<<< HEAD
 8. See below for a description of the input mux routing.
 
 
@@ -177,6 +190,8 @@ For example on the WM8998:
 A diagram of the route through the input muxes on the WM8998 is shown below
 (the other SmartCodecs with input muxes are similar):
 =======
+=======
+>>>>>>> master
 8. See below for a description of the input mux routing on WM8998. The input
         mux should be set _before_ connecting it into an audio path. If one
         input is configured as digital, that setting will be applied only when
@@ -197,11 +212,15 @@ path.
   - The IN2 path can be selected between IN2A or IN2B and is mono
 
 A diagram of the route through the input muxes is:
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 Input pin      ALSA control      Internal signal path
 -------------------------------------------------------
 
+<<<<<<< HEAD
 <<<<<<< HEAD
                +------------+
 IN1AL ---> "A" |            |
@@ -225,6 +244,8 @@ IN2B  ---> "B" |            |
 WM8998 input muxes
 ------------------
 =======
+=======
+>>>>>>> master
                +-----------+
 IN1AL ---> "A" |           |
                | "IN1LMUX" | --> IN1L
@@ -243,16 +264,22 @@ IN2A  ---> "A" |           |
 IN2B  ---> "B" |           |
                +-----------+
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 IN1A and IN2A can be set as digital. IN1B and IN2B are analogue only.
 
 It is important to note that although the left and right paths of IN1 have
 separate mux controls, these are only separate for analogue paths. The setting
 of digital/analogue applies jointly to both channels of IN1. Because of this,
 <<<<<<< HEAD
+<<<<<<< HEAD
 if IN1A is digital _both_ the left and right mux are ganged together and
 changing the mux on one channel will automatically change the other.
 =======
+=======
+>>>>>>> master
 if IN1A is digital _both_ the left and right mux must be set to "A" before
 connecting the input to any internal codec blocks. When IN1 is part of an
 active path the whole of IN1 will be set to digital or analogue depending on
@@ -263,7 +290,10 @@ To change from a digital IN1A to an analogue IN1B follow this sequence:
 1) Disconnect IN1 from the input of any codec blocks
 2) Change the IN1MUXL and IN1MUXR to "B"
 3) Connect IN1 as an input to codec blocks
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 The input mode pdata for WM8998 is defined as:
 

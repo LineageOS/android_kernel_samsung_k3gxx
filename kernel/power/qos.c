@@ -592,10 +592,14 @@ void pm_qos_update_request(struct pm_qos_request *req,
 	if (delayed_work_pending(&req->work))
 		cancel_delayed_work_sync(&req->work);
 <<<<<<< HEAD
+<<<<<<< HEAD
     
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+>>>>>>> master
 	__pm_qos_update_request(req, new_value);
 }
 EXPORT_SYMBOL_GPL(pm_qos_update_request);

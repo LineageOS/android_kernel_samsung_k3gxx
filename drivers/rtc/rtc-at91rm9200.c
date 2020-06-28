@@ -50,9 +50,12 @@ struct at91_rtc_config {
 static const struct at91_rtc_config *at91_rtc_config;
 static DECLARE_COMPLETION(at91_rtc_updated);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DECLARE_COMPLETION(at91_rtc_upd_rdy);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static unsigned int at91_alarm_year = AT91_RTC_EPOCH;
 static void __iomem *at91_rtc_regs;
 static int irq;
@@ -167,10 +170,13 @@ static int at91_rtc_settime(struct device *dev, struct rtc_time *tm)
 		tm->tm_hour, tm->tm_min, tm->tm_sec);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	wait_for_completion(&at91_rtc_upd_rdy);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Stop Time/Calendar from counting */
 	cr = at91_rtc_read(AT91_RTC_CR);
 	at91_rtc_write(AT91_RTC_CR, cr | AT91_RTC_UPDCAL | AT91_RTC_UPDTIM);
@@ -194,12 +200,16 @@ static int at91_rtc_settime(struct device *dev, struct rtc_time *tm)
 	/* Restart Time/Calendar */
 	cr = at91_rtc_read(AT91_RTC_CR);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	at91_rtc_write(AT91_RTC_SCCR, AT91_RTC_SECEV);
 	at91_rtc_write(AT91_RTC_CR, cr & ~(AT91_RTC_UPDCAL | AT91_RTC_UPDTIM));
 	at91_rtc_write_ier(AT91_RTC_SECEV);
 =======
 	at91_rtc_write(AT91_RTC_CR, cr & ~(AT91_RTC_UPDCAL | AT91_RTC_UPDTIM));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	at91_rtc_write(AT91_RTC_CR, cr & ~(AT91_RTC_UPDCAL | AT91_RTC_UPDTIM));
+>>>>>>> master
 
 	return 0;
 }
@@ -237,10 +247,13 @@ static int at91_rtc_setalarm(struct device *dev, struct rtc_wkalrm *alrm)
 	at91_alarm_year = tm.tm_year;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tm.tm_mon = alrm->time.tm_mon;
 	tm.tm_mday = alrm->time.tm_mday;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	tm.tm_hour = alrm->time.tm_hour;
 	tm.tm_min = alrm->time.tm_min;
 	tm.tm_sec = alrm->time.tm_sec;
@@ -310,6 +323,7 @@ static irqreturn_t at91_rtc_interrupt(int irq, void *dev_id)
 		if (rtsr & AT91_RTC_ALARM)
 			events |= (RTC_AF | RTC_IRQF);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (rtsr & AT91_RTC_SECEV) {
 			complete(&at91_rtc_upd_rdy);
 			at91_rtc_write_idr(AT91_RTC_SECEV);
@@ -318,6 +332,10 @@ static irqreturn_t at91_rtc_interrupt(int irq, void *dev_id)
 		if (rtsr & AT91_RTC_SECEV)
 			events |= (RTC_UF | RTC_IRQF);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (rtsr & AT91_RTC_SECEV)
+			events |= (RTC_UF | RTC_IRQF);
+>>>>>>> master
 		if (rtsr & AT91_RTC_ACKUPD)
 			complete(&at91_rtc_updated);
 
@@ -441,6 +459,7 @@ static int __init at91_rtc_probe(struct platform_device *pdev)
 	platform_set_drvdata(pdev, rtc);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* enable SECEV interrupt in order to initialize at91_rtc_upd_rdy
 	 * completion.
 	 */
@@ -448,6 +467,8 @@ static int __init at91_rtc_probe(struct platform_device *pdev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	dev_info(&pdev->dev, "AT91 Real Time Clock driver.\n");
 	return 0;
 

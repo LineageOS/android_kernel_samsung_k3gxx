@@ -1212,10 +1212,14 @@ MODULE_PARM_DESC(swcrypto, "using crypto in software (default 0 [hardware])");
 module_param_named(11n_disable, iwlwifi_mod_params.disable_11n, uint, S_IRUGO);
 MODULE_PARM_DESC(11n_disable,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	"disable 11n functionality, bitmap: 1: full, 2: disable agg TX, 4: disable agg RX, 8 enable agg TX");
 =======
 	"disable 11n functionality, bitmap: 1: full, 2: agg TX, 4: agg RX");
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	"disable 11n functionality, bitmap: 1: full, 2: agg TX, 4: agg RX");
+>>>>>>> master
 module_param_named(amsdu_size_8K, iwlwifi_mod_params.amsdu_size_8K,
 		   int, S_IRUGO);
 MODULE_PARM_DESC(amsdu_size_8K, "enable 8K amsdu size (default 0)");

@@ -394,11 +394,15 @@ static void __mv_xor_slot_cleanup(struct mv_xor_chan *mv_chan)
 	int busy = mv_chan_is_busy(mv_chan);
 	u32 current_desc = mv_chan_get_current_desc(mv_chan);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int current_cleaned = 0;
 	struct mv_xor_desc *hw_desc;
 =======
 	int seen_current = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int seen_current = 0;
+>>>>>>> master
 
 	dev_dbg(mv_chan_to_devp(mv_chan), "%s %d\n", __func__, __LINE__);
 	dev_dbg(mv_chan_to_devp(mv_chan), "current_desc %x\n", current_desc);
@@ -410,6 +414,7 @@ static void __mv_xor_slot_cleanup(struct mv_xor_chan *mv_chan)
 
 	list_for_each_entry_safe(iter, _iter, &mv_chan->chain,
 					chain_node) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 		/* clean finished descriptors */
@@ -463,6 +468,8 @@ static void __mv_xor_slot_cleanup(struct mv_xor_chan *mv_chan)
 			}
 		}
 =======
+=======
+>>>>>>> master
 		prefetch(_iter);
 		prefetch(&_iter->async_tx);
 
@@ -495,7 +502,10 @@ static void __mv_xor_slot_cleanup(struct mv_xor_chan *mv_chan)
 					chain_node);
 
 		mv_xor_start_new_chain(mv_chan, chain_head);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	if (cookie > 0)

@@ -7,9 +7,13 @@ endif
 
 obj-$(CONFIG_ECRYPT_FS) += ecryptfs.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 obj-$(CONFIG_SDP) += ecryptfs_dek.o mm.o ecryptfs_sdp_chamber.o
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+obj-$(CONFIG_SDP) += ecryptfs_dek.o mm.o ecryptfs_sdp_chamber.o
+>>>>>>> master
 
 ecryptfs-y := dentry.o file.o inode.o main.o super.o mmap.o read_write.o \
 	      crypto.o keystore.o kthread.o debug.o

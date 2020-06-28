@@ -33,12 +33,15 @@
 
 		internal-regs {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			rtc@10300 {
 				/* No crystal connected to the internal RTC */
 				status = "disabled";
 			};
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			serial@12000 {
 				clock-frequency = <250000000>;
 				status = "okay";
@@ -160,10 +163,14 @@
 
 				/* Read parameters */
 <<<<<<< HEAD
+<<<<<<< HEAD
 				devbus,bus-width    = <16>;
 =======
 				devbus,bus-width    = <8>;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				devbus,bus-width    = <8>;
+>>>>>>> master
 				devbus,turn-off-ps  = <60000>;
 				devbus,badr-skew-ps = <0>;
 				devbus,acc-first-ps = <124000>;

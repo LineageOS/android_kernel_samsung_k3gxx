@@ -231,6 +231,7 @@ static int wm831x_status_probe(struct platform_device *pdev)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	res = platform_get_resource(pdev, IORESOURCE_REG, 0);
 	if (res == NULL) {
 		dev_err(&pdev->dev, "No register resource\n");
@@ -239,6 +240,11 @@ static int wm831x_status_probe(struct platform_device *pdev)
 	if (res == NULL) {
 		dev_err(&pdev->dev, "No I/O resource\n");
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	res = platform_get_resource(pdev, IORESOURCE_IO, 0);
+	if (res == NULL) {
+		dev_err(&pdev->dev, "No I/O resource\n");
+>>>>>>> master
 		ret = -EINVAL;
 		goto err;
 	}

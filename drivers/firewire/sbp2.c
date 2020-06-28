@@ -147,9 +147,12 @@ struct sbp2_logical_unit {
 	int generation;
 	int retries;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	work_func_t workfn;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	struct delayed_work work;
 	bool has_sdev;
 	bool blocked;
@@ -869,10 +872,14 @@ static void sbp2_login(struct work_struct *work)
 	sbp2_set_busy_timeout(lu);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	lu->workfn = sbp2_reconnect;
 =======
 	PREPARE_DELAYED_WORK(&lu->work, sbp2_reconnect);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	PREPARE_DELAYED_WORK(&lu->work, sbp2_reconnect);
+>>>>>>> master
 	sbp2_agent_reset(lu);
 
 	/* This was a re-login. */
@@ -927,10 +934,14 @@ static void sbp2_login(struct work_struct *work)
 	 * lu->work already.  Reset the work from reconnect to login.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	lu->workfn = sbp2_login;
 =======
 	PREPARE_DELAYED_WORK(&lu->work, sbp2_login);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	PREPARE_DELAYED_WORK(&lu->work, sbp2_login);
+>>>>>>> master
 }
 
 static void sbp2_reconnect(struct work_struct *work)
@@ -965,10 +976,14 @@ static void sbp2_reconnect(struct work_struct *work)
 			dev_err(tgt_dev(tgt), "failed to reconnect\n");
 			lu->retries = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			lu->workfn = sbp2_login;
 =======
 			PREPARE_DELAYED_WORK(&lu->work, sbp2_login);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			PREPARE_DELAYED_WORK(&lu->work, sbp2_login);
+>>>>>>> master
 		}
 		sbp2_queue_work(lu, DIV_ROUND_UP(HZ, 5));
 
@@ -989,6 +1004,7 @@ static void sbp2_reconnect(struct work_struct *work)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void sbp2_lu_workfn(struct work_struct *work)
 {
 	struct sbp2_logical_unit *lu = container_of(to_delayed_work(work),
@@ -998,6 +1014,8 @@ static void sbp2_lu_workfn(struct work_struct *work)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int sbp2_add_logical_unit(struct sbp2_target *tgt, int lun_entry)
 {
 	struct sbp2_logical_unit *lu;
@@ -1025,11 +1043,15 @@ static int sbp2_add_logical_unit(struct sbp2_target *tgt, int lun_entry)
 	++tgt->dont_block;
 	INIT_LIST_HEAD(&lu->orb_list);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	lu->workfn = sbp2_login;
 	INIT_DELAYED_WORK(&lu->work, sbp2_lu_workfn);
 =======
 	INIT_DELAYED_WORK(&lu->work, sbp2_login);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	INIT_DELAYED_WORK(&lu->work, sbp2_login);
+>>>>>>> master
 
 	list_add_tail(&lu->link, &tgt->lu_list);
 	return 0;

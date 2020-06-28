@@ -423,11 +423,16 @@ struct dst_entry *inet_csk_route_req(struct sock *sk,
 			   flags,
 			   (opt && opt->opt.srr) ? opt->opt.faddr : ireq->rmt_addr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			   ireq->loc_addr, ireq->rmt_port, inet_sk(sk)->inet_sport);
 =======
 			   ireq->loc_addr, ireq->rmt_port, inet_sk(sk)->inet_sport,
 			   sock_i_uid(sk));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			   ireq->loc_addr, ireq->rmt_port, inet_sk(sk)->inet_sport,
+			   sock_i_uid(sk));
+>>>>>>> master
 	security_req_classify_flow(req, flowi4_to_flowi(fl4));
 	rt = ip_route_output_flow(net, fl4, sk);
 	if (IS_ERR(rt))
@@ -464,11 +469,16 @@ struct dst_entry *inet_csk_route_child_sock(struct sock *sk,
 			   sk->sk_protocol, inet_sk_flowi_flags(sk),
 			   (opt && opt->opt.srr) ? opt->opt.faddr : ireq->rmt_addr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			   ireq->loc_addr, ireq->rmt_port, inet_sk(sk)->inet_sport);
 =======
 			   ireq->loc_addr, ireq->rmt_port, inet_sk(sk)->inet_sport,
 			   sock_i_uid(sk));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			   ireq->loc_addr, ireq->rmt_port, inet_sk(sk)->inet_sport,
+			   sock_i_uid(sk));
+>>>>>>> master
 	security_req_classify_flow(req, flowi4_to_flowi(fl4));
 	rt = ip_route_output_flow(net, fl4, sk);
 	if (IS_ERR(rt))
@@ -699,11 +709,16 @@ struct sock *inet_csk_clone_lock(const struct sock *sk,
 		newsk->sk_write_space = sk_stream_write_space;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		inet_sk(newsk)->mc_list = NULL;
 =======
 		newsk->sk_mark = inet_rsk(req)->ir_mark;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		newsk->sk_mark = inet_rsk(req)->ir_mark;
+
+>>>>>>> master
 		newicsk->icsk_retransmits = 0;
 		newicsk->icsk_backoff	  = 0;
 		newicsk->icsk_probes_out  = 0;

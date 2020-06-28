@@ -244,6 +244,7 @@ static void *atkbd_platform_fixup_data;
 static unsigned int (*atkbd_platform_scancode_fixup)(struct atkbd *, unsigned int);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Certain keyboards to not like ATKBD_CMD_RESET_DIS and stop responding
  * to many commands until full reset (ATKBD_CMD_RESET_BAT) is performed.
@@ -252,6 +253,8 @@ static bool atkbd_skip_deactivate;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static ssize_t atkbd_attr_show_helper(struct device *dev, char *buf,
 				ssize_t (*handler)(struct atkbd *, char *));
 static ssize_t atkbd_attr_set_helper(struct device *dev, const char *buf, size_t count,
@@ -778,11 +781,15 @@ static int atkbd_probe(struct atkbd *atkbd)
  * internal state.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!atkbd_skip_deactivate)
 		atkbd_deactivate(atkbd);
 =======
 	atkbd_deactivate(atkbd);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	atkbd_deactivate(atkbd);
+>>>>>>> master
 
 	return 0;
 }
@@ -1653,6 +1660,7 @@ static int __init atkbd_setup_scancode_fixup(const struct dmi_system_id *id)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __init atkbd_deactivate_fixup(const struct dmi_system_id *id)
 {
 	atkbd_skip_deactivate = true;
@@ -1661,6 +1669,8 @@ static int __init atkbd_deactivate_fixup(const struct dmi_system_id *id)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static const struct dmi_system_id atkbd_dmi_quirk_table[] __initconst = {
 	{
 		.matches = {
@@ -1799,6 +1809,7 @@ static const struct dmi_system_id atkbd_dmi_quirk_table[] __initconst = {
 		.driver_data = atkbd_oqo_01plus_scancode_fixup,
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{
 		.matches = {
 			DMI_MATCH(DMI_SYS_VENDOR, "LG Electronics"),
@@ -1807,6 +1818,8 @@ static const struct dmi_system_id atkbd_dmi_quirk_table[] __initconst = {
 	},
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ }
 };
 

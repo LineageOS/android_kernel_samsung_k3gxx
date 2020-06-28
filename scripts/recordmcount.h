@@ -164,18 +164,24 @@ static int mcount_adjust = 0;
 static int MIPS_is_fake_mcount(Elf_Rel const *rp)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	static Elf_Addr old_r_offset = ~(Elf_Addr)0;
 	Elf_Addr current_r_offset = _w(rp->r_offset);
 	int is_fake;
 
 	is_fake = (old_r_offset != ~(Elf_Addr)0) &&
 =======
+=======
+>>>>>>> master
 	static Elf_Addr old_r_offset;
 	Elf_Addr current_r_offset = _w(rp->r_offset);
 	int is_fake;
 
 	is_fake = old_r_offset &&
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		(current_r_offset - old_r_offset == MIPS_FAKEMCOUNT_OFFSET);
 	old_r_offset = current_r_offset;
 
@@ -386,10 +392,14 @@ static void nop_mcount(Elf_Shdr const *const relhdr,
 		if (mcountsym == Elf_r_sym(relp) && !is_fake_mcount(relp)) {
 			if (make_nop)
 <<<<<<< HEAD
+<<<<<<< HEAD
 				ret = make_nop((void *)ehdr, _w(shdr->sh_offset) + _w(relp->r_offset));
 =======
 				ret = make_nop((void *)ehdr, shdr->sh_offset + relp->r_offset);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				ret = make_nop((void *)ehdr, shdr->sh_offset + relp->r_offset);
+>>>>>>> master
 			if (warn_on_notrace_sect && !once) {
 				printf("Section %s has mcount callers being ignored\n",
 				       txtname);

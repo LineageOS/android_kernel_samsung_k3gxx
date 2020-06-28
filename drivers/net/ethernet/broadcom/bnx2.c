@@ -2870,10 +2870,14 @@ bnx2_tx_int(struct bnx2 *bp, struct bnx2_napi *bnapi, int budget)
 
 		tx_bytes += skb->len;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_kfree_skb_any(skb);
 =======
 		dev_kfree_skb(skb);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		dev_kfree_skb(skb);
+>>>>>>> master
 		tx_pkt++;
 		if (tx_pkt == budget)
 			break;
@@ -6615,10 +6619,14 @@ bnx2_start_xmit(struct sk_buff *skb, struct net_device *dev)
 	mapping = dma_map_single(&bp->pdev->dev, skb->data, len, PCI_DMA_TODEVICE);
 	if (dma_mapping_error(&bp->pdev->dev, mapping)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_kfree_skb_any(skb);
 =======
 		dev_kfree_skb(skb);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		dev_kfree_skb(skb);
+>>>>>>> master
 		return NETDEV_TX_OK;
 	}
 
@@ -6712,10 +6720,14 @@ dma_error:
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_kfree_skb_any(skb);
 =======
 	dev_kfree_skb(skb);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	dev_kfree_skb(skb);
+>>>>>>> master
 	return NETDEV_TX_OK;
 }
 

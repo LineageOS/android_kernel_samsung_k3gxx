@@ -1358,6 +1358,7 @@ static int media_not_present(struct scsi_disk *sdkp,
 static unsigned int sd_check_events(struct gendisk *disk, unsigned int clearing)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct scsi_disk *sdkp = scsi_disk_get(disk);
 	struct scsi_device *sdp;
 	struct scsi_sense_hdr *sshdr = NULL;
@@ -1368,12 +1369,17 @@ static unsigned int sd_check_events(struct gendisk *disk, unsigned int clearing)
 
 	sdp = sdkp->device;
 =======
+=======
+>>>>>>> master
 	struct scsi_disk *sdkp = scsi_disk(disk);
 	struct scsi_device *sdp = sdkp->device;
 	struct scsi_sense_hdr *sshdr = NULL;
 	int retval;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	SCSI_LOG_HLQUEUE(3, sd_printk(KERN_INFO, sdkp, "sd_check_events\n"));
 
 	/*
@@ -1431,9 +1437,12 @@ out:
 	retval = sdp->changed ? DISK_EVENT_MEDIA_CHANGE : 0;
 	sdp->changed = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	scsi_disk_put(sdkp);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return retval;
 }
 
@@ -1939,6 +1948,7 @@ static void read_capacity_error(struct scsi_disk *sdkp, struct scsi_device *sdp,
 #define READ_CAPACITY_RETRIES_ON_RESET	10
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Ensure that we don't overflow sector_t when CONFIG_LBDAF is not set
  * and the reported logical block size is bigger than 512 bytes. Note
@@ -1957,6 +1967,8 @@ static bool sd_addressable_capacity(u64 lba, unsigned int sector_size)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int read_capacity_16(struct scsi_disk *sdkp, struct scsi_device *sdp,
 						unsigned char *buffer)
 {
@@ -2023,10 +2035,14 @@ static int read_capacity_16(struct scsi_disk *sdkp, struct scsi_device *sdp,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!sd_addressable_capacity(lba, sector_size)) {
 =======
 	if ((sizeof(sdkp->capacity) == 4) && (lba >= 0xffffffffULL)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if ((sizeof(sdkp->capacity) == 4) && (lba >= 0xffffffffULL)) {
+>>>>>>> master
 		sd_printk(KERN_ERR, sdkp, "Too big for this kernel. Use a "
 			"kernel compiled with support for large block "
 			"devices.\n");
@@ -2113,10 +2129,14 @@ static int read_capacity_10(struct scsi_disk *sdkp, struct scsi_device *sdp,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!sd_addressable_capacity(lba, sector_size)) {
 =======
 	if ((sizeof(sdkp->capacity) == 4) && (lba == 0xffffffff)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if ((sizeof(sdkp->capacity) == 4) && (lba == 0xffffffff)) {
+>>>>>>> master
 		sd_printk(KERN_ERR, sdkp, "Too big for this kernel. Use a "
 			"kernel compiled with support for large block "
 			"devices.\n");
@@ -2456,10 +2476,13 @@ sd_read_cache_type(struct scsi_disk *sdkp, unsigned char *buffer)
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		sd_printk(KERN_ERR, sdkp, "No Caching mode page found\n");
 		goto defaults;
 
 =======
+=======
+>>>>>>> master
 		if (modepage == 0x3F) {
 			sd_printk(KERN_ERR, sdkp, "No Caching mode page "
 				  "present\n");
@@ -2468,7 +2491,10 @@ sd_read_cache_type(struct scsi_disk *sdkp, unsigned char *buffer)
 			sd_printk(KERN_ERR, sdkp, "Got wrong page\n");
 			goto defaults;
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	Page_found:
 		if (modepage == 8) {
 			sdkp->WCE = ((buffer[offset + 2] & 0x04) != 0);
@@ -2685,6 +2711,7 @@ static void sd_read_write_same(struct scsi_disk *sdkp, unsigned char *buffer)
 	struct scsi_device *sdev = sdkp->device;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (sdev->host->no_write_same) {
 		sdev->no_write_same = 1;
 
@@ -2698,6 +2725,9 @@ static void sd_read_write_same(struct scsi_disk *sdkp, unsigned char *buffer)
 =======
 	if (scsi_report_opcode(sdev, buffer, SD_BUF_SIZE, INQUIRY) < 0) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (scsi_report_opcode(sdev, buffer, SD_BUF_SIZE, INQUIRY) < 0) {
+>>>>>>> master
 		sdev->no_report_opcodes = 1;
 
 		/* Disable WRITE SAME if REPORT SUPPORTED OPERATION
@@ -2705,10 +2735,14 @@ static void sd_read_write_same(struct scsi_disk *sdkp, unsigned char *buffer)
 		 * Information VPD page (SAT).
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!scsi_get_vpd_page(sdev, 0x89, buffer, vpd_buf_len))
 =======
 		if (!scsi_get_vpd_page(sdev, 0x89, buffer, SD_BUF_SIZE))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (!scsi_get_vpd_page(sdev, 0x89, buffer, SD_BUF_SIZE))
+>>>>>>> master
 			sdev->no_write_same = 1;
 	}
 
@@ -3024,9 +3058,12 @@ static void sd_probe_async(void *data, async_cookie_t cookie)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	blk_pm_runtime_init(sdp->request_queue, dev);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	add_disk(gd);
 #ifdef CONFIG_USB_HOST_NOTIFY
 	sdkp->prv_media_present = sdkp->media_present;
@@ -3039,9 +3076,13 @@ static void sd_probe_async(void *data, async_cookie_t cookie)
 	sd_printk(KERN_NOTICE, sdkp, "Attached SCSI %sdisk\n",
 		  sdp->removable ? "removable " : "");
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	blk_pm_runtime_init(sdp->request_queue, dev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	blk_pm_runtime_init(sdp->request_queue, dev);
+>>>>>>> master
 	scsi_autopm_put_device(sdp);
 	put_device(&sdkp->dev);
 #ifdef CONFIG_USB_HOST_NOTIFY
@@ -3300,12 +3341,17 @@ static int sd_suspend(struct device *dev)
 	int ret = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!sdkp)	/* E.g.: runtime suspend following sd_remove() */
 		return 0;
 =======
 	if (!sdkp)
 		return 0;	/* this can happen */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!sdkp)
+		return 0;	/* this can happen */
+>>>>>>> master
 
 	if (sdkp->WCE) {
 		sd_printk(KERN_NOTICE, sdkp, "Synchronizing SCSI cache\n");
@@ -3330,11 +3376,14 @@ static int sd_resume(struct device *dev)
 	int ret = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!sdkp)	/* E.g.: runtime resume at the start of sd_probe() */
 		return 0;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (!sdkp->device->manage_start_stop)
 		goto done;
 

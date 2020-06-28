@@ -93,6 +93,7 @@
 #include <trace/events/sched.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static atomic_t __su_instances;
 
 int su_instances(void)
@@ -127,6 +128,8 @@ void su_exit(void)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 void start_bandwidth_timer(struct hrtimer *period_timer, ktime_t period)
 {
 	unsigned long delta;
@@ -218,21 +221,31 @@ struct static_key sched_feat_keys[__SCHED_FEAT_NR] = {
 static void sched_feat_disable(int i)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	static_key_disable(&sched_feat_keys[i]);
 =======
 	if (static_key_enabled(&sched_feat_keys[i]))
 		static_key_slow_dec(&sched_feat_keys[i]);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (static_key_enabled(&sched_feat_keys[i]))
+		static_key_slow_dec(&sched_feat_keys[i]);
+>>>>>>> master
 }
 
 static void sched_feat_enable(int i)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	static_key_enable(&sched_feat_keys[i]);
 =======
 	if (!static_key_enabled(&sched_feat_keys[i]))
 		static_key_slow_inc(&sched_feat_keys[i]);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!static_key_enabled(&sched_feat_keys[i]))
+		static_key_slow_inc(&sched_feat_keys[i]);
+>>>>>>> master
 }
 #else
 static void sched_feat_disable(int i) { };
@@ -1282,10 +1295,14 @@ out:
 		 */
 		if (p->mm && printk_ratelimit()) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			printk_deferred("process %d (%s) no longer affine to cpu%d\n",
 =======
 			printk_sched("process %d (%s) no longer affine to cpu%d\n",
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			printk_sched("process %d (%s) no longer affine to cpu%d\n",
+>>>>>>> master
 					task_pid_nr(p), p->comm, cpu);
 		}
 	}
@@ -1538,6 +1555,7 @@ try_to_wake_up(struct task_struct *p, unsigned int state, int wake_flags)
 	int cpu, success = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * If we are going to wake up a thread waiting for CONDITION we
 	 * need to ensure that CONDITION=1 done by the caller can not be
@@ -1548,6 +1566,9 @@ try_to_wake_up(struct task_struct *p, unsigned int state, int wake_flags)
 =======
 	smp_wmb();
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	smp_wmb();
+>>>>>>> master
 	raw_spin_lock_irqsave(&p->pi_lock, flags);
 	if (!(p->state & state))
 		goto out;
@@ -1555,6 +1576,7 @@ try_to_wake_up(struct task_struct *p, unsigned int state, int wake_flags)
 	success = 1; /* we're going to change ->state */
 	cpu = task_cpu(p);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/*
 	 * Ensure we load p->on_rq _after_ p->state, otherwise it would
@@ -1580,11 +1602,14 @@ try_to_wake_up(struct task_struct *p, unsigned int state, int wake_flags)
 	smp_rmb();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (p->on_rq && ttwu_remote(p, wake_flags))
 		goto stat;
 
 #ifdef CONFIG_SMP
 	/*
+<<<<<<< HEAD
 <<<<<<< HEAD
 	 * Ensure we load p->on_cpu _after_ p->on_rq, otherwise it would be
 	 * possible to, falsely, observe p->on_cpu == 0.
@@ -1607,6 +1632,8 @@ try_to_wake_up(struct task_struct *p, unsigned int state, int wake_flags)
 	/*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	 * If the owning (remote) cpu is still in the middle of schedule() with
 	 * this task as prev, wait until its done referencing the task.
 	 */
@@ -1689,9 +1716,13 @@ out:
 int wake_up_process(struct task_struct *p)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	WARN_ON(task_is_stopped_or_traced(p));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	WARN_ON(task_is_stopped_or_traced(p));
+>>>>>>> master
 	return try_to_wake_up(p, TASK_NORMAL, 0);
 }
 EXPORT_SYMBOL(wake_up_process);
@@ -3090,6 +3121,7 @@ need_resched:
 		hrtick_clear(rq);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * Make sure that signal_pending_state()->signal_pending() below
 	 * can't be reordered with __set_current_state(TASK_INTERRUPTIBLE)
@@ -3098,6 +3130,8 @@ need_resched:
 	smp_mb__before_spinlock();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	raw_spin_lock_irq(&rq->lock);
 
 	switch_count = &prev->nivcsw;
@@ -4837,11 +4871,15 @@ void show_state_filter(unsigned long state_filter)
 
 #ifdef CONFIG_SCHED_DEBUG
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!state_filter)
 		sysrq_sched_debug_show();
 =======
 	sysrq_sched_debug_show();
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	sysrq_sched_debug_show();
+>>>>>>> master
 #endif
 	rcu_read_unlock();
 	/*
@@ -5357,9 +5395,12 @@ migration_call(struct notifier_block *nfb, unsigned long action, void *hcpu)
 	case CPU_UP_PREPARE:
 		rq->calc_load_update = calc_load_update;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		account_reset_rq(rq);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		break;
 
 	case CPU_ONLINE:
@@ -5413,9 +5454,13 @@ static int __cpuinit sched_cpu_active(struct notifier_block *nfb,
 {
 	switch (action & ~CPU_TASKS_FROZEN) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case CPU_STARTING:
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	case CPU_STARTING:
+>>>>>>> master
 	case CPU_DOWN_FAILED:
 		set_cpu_active((long)hcpu, true);
 		return NOTIFY_OK;
@@ -7877,7 +7922,10 @@ static void cpu_cgroup_css_offline(struct cgroup *cgrp)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 static int
 cpu_cgroup_allow_attach(struct cgroup *cgrp, struct cgroup_taskset *tset)
 {
@@ -7895,7 +7943,10 @@ cpu_cgroup_allow_attach(struct cgroup *cgrp, struct cgroup_taskset *tset)
 	return 0;
 }
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int cpu_cgroup_can_attach(struct cgroup *cgrp,
 				 struct cgroup_taskset *tset)
 {
@@ -7992,6 +8043,7 @@ static int tg_set_cfs_bandwidth(struct task_group *tg, u64 period, u64 quota)
 	runtime_enabled = quota != RUNTIME_INF;
 	runtime_was_enabled = cfs_b->quota != RUNTIME_INF;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * If we need to toggle cfs_bandwidth_used, off->on must occur
 	 * before making related changes, and on->off must occur afterwards
@@ -8001,6 +8053,9 @@ static int tg_set_cfs_bandwidth(struct task_group *tg, u64 period, u64 quota)
 =======
 	account_cfs_bandwidth_used(runtime_enabled, runtime_was_enabled);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	account_cfs_bandwidth_used(runtime_enabled, runtime_was_enabled);
+>>>>>>> master
 	raw_spin_lock_irq(&cfs_b->lock);
 	cfs_b->period = ns_to_ktime(period);
 	cfs_b->quota = quota;
@@ -8027,10 +8082,13 @@ static int tg_set_cfs_bandwidth(struct task_group *tg, u64 period, u64 quota)
 		raw_spin_unlock_irq(&rq->lock);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (runtime_was_enabled && !runtime_enabled)
 		cfs_bandwidth_usage_dec();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 out_unlock:
 	mutex_unlock(&cfs_constraints_mutex);
 
@@ -8270,10 +8328,14 @@ struct cgroup_subsys cpu_cgroup_subsys = {
 	.can_attach	= cpu_cgroup_can_attach,
 	.attach		= cpu_cgroup_attach,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.allow_attach	= subsys_cgroup_allow_attach,
 =======
 	.allow_attach	= cpu_cgroup_allow_attach,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	.allow_attach	= cpu_cgroup_allow_attach,
+>>>>>>> master
 	.exit		= cpu_cgroup_exit,
 	.subsys_id	= cpu_cgroup_subsys_id,
 	.base_cftypes	= cpu_files,

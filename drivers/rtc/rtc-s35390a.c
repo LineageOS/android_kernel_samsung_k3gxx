@@ -16,9 +16,12 @@
 #include <linux/bcd.h>
 #include <linux/slab.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/delay.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 #define S35390A_CMD_STATUS1	0
 #define S35390A_CMD_STATUS2	1
@@ -39,6 +42,7 @@
 #define S35390A_ALRM_BYTE_MINS	2
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* flags for STATUS1 */
 #define S35390A_FLAG_POC	0x01
 #define S35390A_FLAG_BLD	0x02
@@ -53,6 +57,12 @@
 #define S35390A_FLAG_24H	0x40
 #define S35390A_FLAG_RESET	0x80
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define S35390A_FLAG_POC	0x01
+#define S35390A_FLAG_BLD	0x02
+#define S35390A_FLAG_24H	0x40
+#define S35390A_FLAG_RESET	0x80
+>>>>>>> master
 #define S35390A_FLAG_TEST	0x01
 
 #define S35390A_INT2_MODE_MASK		0xF0
@@ -109,6 +119,7 @@ static int s35390a_get_reg(struct s35390a *s35390a, int reg, char *buf, int len)
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /*
  * Returns <0 on error, 0 if rtc is setup fine and 1 if the chip was reset.
@@ -168,6 +179,8 @@ initialize:
 
 	return 1;
 =======
+=======
+>>>>>>> master
 static int s35390a_reset(struct s35390a *s35390a)
 {
 	char buf[1];
@@ -181,7 +194,10 @@ static int s35390a_reset(struct s35390a *s35390a)
 	buf[0] |= (S35390A_FLAG_RESET | S35390A_FLAG_24H);
 	buf[0] &= 0xf0;
 	return s35390a_set_reg(s35390a, S35390A_CMD_STATUS1, buf, sizeof(buf));
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static int s35390a_disable_test_mode(struct s35390a *s35390a)
@@ -341,6 +357,7 @@ static int s35390a_read_alarm(struct i2c_client *client, struct rtc_wkalrm *alm)
 	int i, err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * initialize all members to -1 to signal the core that they are not
 	 * defined by the hardware.
@@ -357,6 +374,8 @@ static int s35390a_read_alarm(struct i2c_client *client, struct rtc_wkalrm *alm)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	err = s35390a_get_reg(s35390a, S35390A_CMD_STATUS2, &sts, sizeof(sts));
 	if (err < 0)
 		return err;
@@ -420,18 +439,24 @@ static int s35390a_probe(struct i2c_client *client,
 			 const struct i2c_device_id *id)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err, err_reset;
 	unsigned int i;
 	struct s35390a *s35390a;
 	struct rtc_time tm;
 	char buf, status1;
 =======
+=======
+>>>>>>> master
 	int err;
 	unsigned int i;
 	struct s35390a *s35390a;
 	struct rtc_time tm;
 	char buf[1];
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C)) {
 		err = -ENODEV;
@@ -461,6 +486,7 @@ static int s35390a_probe(struct i2c_client *client,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err_reset = s35390a_reset(s35390a, &status1);
 	if (err_reset < 0) {
 		err = err_reset;
@@ -468,13 +494,20 @@ static int s35390a_probe(struct i2c_client *client,
 	err = s35390a_reset(s35390a);
 	if (err < 0) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	err = s35390a_reset(s35390a);
+	if (err < 0) {
+>>>>>>> master
 		dev_err(&client->dev, "error resetting chip\n");
 		goto exit_dummy;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (status1 & S35390A_FLAG_24H)
 =======
+=======
+>>>>>>> master
 	err = s35390a_disable_test_mode(s35390a);
 	if (err < 0) {
 		dev_err(&client->dev, "error disabling test mode\n");
@@ -487,11 +520,15 @@ static int s35390a_probe(struct i2c_client *client,
 		goto exit_dummy;
 	}
 	if (buf[0] & S35390A_FLAG_24H)
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		s35390a->twentyfourhour = 1;
 	else
 		s35390a->twentyfourhour = 0;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (status1 & S35390A_FLAG_INT2) {
 		/* disable alarm (and maybe test mode) */
@@ -513,6 +550,9 @@ static int s35390a_probe(struct i2c_client *client,
 =======
 	if (s35390a_get_datetime(client, &tm) < 0)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (s35390a_get_datetime(client, &tm) < 0)
+>>>>>>> master
 		dev_warn(&client->dev, "clock needs to be set\n");
 
 	device_set_wakeup_capable(&client->dev, 1);
@@ -526,12 +566,15 @@ static int s35390a_probe(struct i2c_client *client,
 		goto exit_dummy;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (status1 & S35390A_FLAG_INT2)
 		rtc_update_irq(s35390a->rtc, 1, RTC_AF);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 
 exit_dummy:

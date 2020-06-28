@@ -231,9 +231,12 @@ static int send_argument(const char *key)
 static int read_smc(u8 cmd, const char *key, u8 *buffer, u8 len)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 status, data = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	int i;
 
 	if (send_command(cmd) || send_argument(key)) {
@@ -242,9 +245,12 @@ static int read_smc(u8 cmd, const char *key, u8 *buffer, u8 len)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* This has no effect on newer (2012) SMCs */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (send_byte(len, APPLESMC_DATA_PORT)) {
 		pr_warn("%.4s: read len fail\n", key);
 		return -EIO;
@@ -259,6 +265,7 @@ static int read_smc(u8 cmd, const char *key, u8 *buffer, u8 len)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Read the data port until bit0 is cleared */
 	for (i = 0; i < 16; i++) {
 		udelay(APPLESMC_MIN_WAIT);
@@ -272,6 +279,8 @@ static int read_smc(u8 cmd, const char *key, u8 *buffer, u8 len)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 }
 
@@ -548,15 +557,19 @@ static int applesmc_init_smcreg_try(void)
 	struct applesmc_registers *s = &smcreg;
 	bool left_light_sensor, right_light_sensor;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int count;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	u8 tmp[1];
 	int ret;
 
 	if (s->init_complete)
 		return 0;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ret = read_register_count(&count);
 	if (ret)
@@ -571,11 +584,16 @@ static int applesmc_init_smcreg_try(void)
 	s->key_count = count;
 
 =======
+=======
+>>>>>>> master
 	ret = read_register_count(&s->key_count);
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (!s->cache)
 		s->cache = kcalloc(s->key_count, sizeof(*s->cache), GFP_KERNEL);
 	if (!s->cache)

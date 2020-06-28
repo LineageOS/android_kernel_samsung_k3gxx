@@ -178,7 +178,10 @@ static int bL_cpufreq_init(struct cpufreq_policy *policy)
 	cpufreq_frequency_table_get_attr(freq_table[cur_cluster], policy->cpu);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 if (cur_cluster < MAX_CLUSTERS) {
 	int cpu;
 
@@ -191,7 +194,10 @@ if (cur_cluster < MAX_CLUSTERS) {
 		per_cpu(physical_cluster, policy->cpu) = A15_CLUSTER;
 }
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (arm_bL_ops->get_transition_latency)
 		policy->cpuinfo.transition_latency =
 			arm_bL_ops->get_transition_latency(cpu_dev);

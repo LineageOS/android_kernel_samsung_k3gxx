@@ -964,6 +964,7 @@ acpi_status acpi_ex_opcode_1A_0T_1R(struct acpi_walk_state *walk_state)
 					return_desc =
 					    *(operand[0]->reference.where);
 <<<<<<< HEAD
+<<<<<<< HEAD
 					if (!return_desc) {
 						/*
 						 * Element is NULL, do not allow the dereference.
@@ -976,11 +977,16 @@ acpi_status acpi_ex_opcode_1A_0T_1R(struct acpi_walk_state *walk_state)
 
 					acpi_ut_add_reference(return_desc);
 =======
+=======
+>>>>>>> master
 					if (return_desc) {
 						acpi_ut_add_reference
 						    (return_desc);
 					}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 					break;
 
 				default:
@@ -1005,6 +1011,7 @@ acpi_status acpi_ex_opcode_1A_0T_1R(struct acpi_walk_state *walk_state)
 									 acpi_namespace_node
 									 *)
 									return_desc);
+<<<<<<< HEAD
 <<<<<<< HEAD
 					if (!return_desc) {
 						break;
@@ -1041,12 +1048,17 @@ acpi_status acpi_ex_opcode_1A_0T_1R(struct acpi_walk_state *walk_state)
 					}
 				}
 =======
+=======
+>>>>>>> master
 				}
 
 				/* Add another reference to the object! */
 
 				acpi_ut_add_reference(return_desc);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				break;
 
 			default:

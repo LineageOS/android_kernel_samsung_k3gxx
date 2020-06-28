@@ -111,11 +111,15 @@ int aa_audit_file(struct aa_profile *profile, struct file_perms *perms,
 	struct common_audit_data sa;
 	struct apparmor_audit_data aad = {0,};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sa.type = LSM_AUDIT_DATA_TASK;
 	sa.u.tsk = NULL;
 =======
 	sa.type = LSM_AUDIT_DATA_NONE;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	sa.type = LSM_AUDIT_DATA_NONE;
+>>>>>>> master
 	sa.aad = &aad;
 	aad.op = op,
 	aad.fs.request = request;

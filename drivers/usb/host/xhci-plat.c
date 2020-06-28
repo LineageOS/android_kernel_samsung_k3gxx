@@ -206,10 +206,13 @@ static int xhci_plat_remove(struct platform_device *dev)
 	struct xhci_hcd	*xhci = hcd_to_xhci(hcd);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xhci->xhc_state |= XHCI_STATE_REMOVING;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	usb_remove_hcd(xhci->shared_hcd);
 	usb_put_hcd(xhci->shared_hcd);
 

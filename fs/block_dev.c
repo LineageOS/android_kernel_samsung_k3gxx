@@ -656,10 +656,14 @@ static bool bd_may_claim(struct block_device *bdev, struct block_device *whole,
 	else if (bdev->bd_holder != NULL)
 		return false; 	 /* held by someone else */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	else if (whole == bdev)
 =======
 	else if (bdev->bd_contains == bdev)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	else if (bdev->bd_contains == bdev)
+>>>>>>> master
 		return true;  	 /* is a whole device which isn't held */
 
 	else if (whole->bd_holder == bd_may_claim)
@@ -1697,9 +1701,12 @@ void iterate_bdevs(void (*func)(struct block_device *, void *), void *arg)
 	list_for_each_entry(inode, &blockdev_superblock->s_inodes, i_sb_list) {
 		struct address_space *mapping = inode->i_mapping;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct block_device *bdev;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		spin_lock(&inode->i_lock);
 		if (inode->i_state & (I_FREEING|I_WILL_FREE|I_NEW) ||
@@ -1721,6 +1728,7 @@ void iterate_bdevs(void (*func)(struct block_device *, void *), void *arg)
 		iput(old_inode);
 		old_inode = inode;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		bdev = I_BDEV(inode);
 
 		mutex_lock(&bdev->bd_mutex);
@@ -1731,6 +1739,10 @@ void iterate_bdevs(void (*func)(struct block_device *, void *), void *arg)
 
 		func(I_BDEV(inode), arg);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+		func(I_BDEV(inode), arg);
+>>>>>>> master
 
 		spin_lock(&inode_sb_list_lock);
 	}

@@ -38,16 +38,22 @@ struct outer_cache_fns {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern struct outer_cache_fns outer_cache;
 
 #ifdef CONFIG_OUTER_CACHE
 
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_OUTER_CACHE
 
 extern struct outer_cache_fns outer_cache;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static inline void outer_inv_range(phys_addr_t start, phys_addr_t end)
 {
 	if (outer_cache.inv_range)

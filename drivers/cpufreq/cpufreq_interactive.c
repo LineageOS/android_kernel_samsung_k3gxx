@@ -49,10 +49,15 @@
 #include <trace/events/cpufreq_interactive.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define DOWN_LOW_LOAD_THRESHOLD 5
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define DOWN_LOW_LOAD_THRESHOLD 5
+
+>>>>>>> master
 struct cpufreq_interactive_cpuinfo {
 	struct timer_list cpu_timer;
 	struct timer_list cpu_slack_timer;
@@ -368,10 +373,14 @@ static unsigned int choose_freq(struct cpufreq_interactive_cpuinfo *pcpu,
 		if (cpufreq_frequency_table_target(
 			    pcpu->policy, pcpu->freq_table, loadadjfreq / tl,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			    CPUFREQ_RELATION_C, &index))
 =======
 			    CPUFREQ_RELATION_L, &index))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			    CPUFREQ_RELATION_L, &index))
+>>>>>>> master
 			break;
 		freq = pcpu->freq_table[index].frequency;
 
@@ -414,10 +423,14 @@ static unsigned int choose_freq(struct cpufreq_interactive_cpuinfo *pcpu,
 				if (cpufreq_frequency_table_target(
 					    pcpu->policy, pcpu->freq_table,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					    freqmin + 1, CPUFREQ_RELATION_C,
 =======
 					    freqmin + 1, CPUFREQ_RELATION_L,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+					    freqmin + 1, CPUFREQ_RELATION_L,
+>>>>>>> master
 					    &index))
 					break;
 				freq = pcpu->freq_table[index].frequency;
@@ -673,10 +686,15 @@ static void cpufreq_interactive_timer(unsigned long data)
 				new_freq = tunables->hispeed_freq;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 } else if (cpu_load <= DOWN_LOW_LOAD_THRESHOLD) {
 		new_freq = pcpu->policy->cpuinfo.min_freq;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+} else if (cpu_load <= DOWN_LOW_LOAD_THRESHOLD) {
+		new_freq = pcpu->policy->cpuinfo.min_freq;
+>>>>>>> master
 	} else {
 		new_freq = choose_freq(pcpu, loadadjfreq);
 		if (new_freq > tunables->hispeed_freq &&
@@ -1661,10 +1679,14 @@ static ssize_t show_cpu_util(struct cpufreq_interactive_tunables
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sprintf(buf + ret - 1, "\n");
 =======
 	ret += sprintf(buf + --ret, "\n");
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ret += sprintf(buf + --ret, "\n");
+>>>>>>> master
 	return ret;
 }
 #endif
@@ -2152,10 +2174,14 @@ static int cpufreq_governor_interactive(struct cpufreq_policy *policy,
 		else if (policy->min > policy->cur)
 			__cpufreq_driver_target(policy,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					policy->min, CPUFREQ_RELATION_C);
 =======
 					policy->min, CPUFREQ_RELATION_L);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+					policy->min, CPUFREQ_RELATION_L);
+>>>>>>> master
 		for_each_cpu(j, policy->cpus) {
 			pcpu = &per_cpu(cpuinfo, j);
 

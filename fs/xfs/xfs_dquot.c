@@ -310,11 +310,16 @@ xfs_dquot_buf_verify_crc(
 		ndquots = mp->m_quotainfo->qi_dqperchunk;
 	else
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ndquots = xfs_qm_calc_dquots_per_chunk(mp, bp->b_length);
 =======
 		ndquots = xfs_qm_calc_dquots_per_chunk(mp,
 					XFS_BB_TO_FSB(mp, bp->b_length));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		ndquots = xfs_qm_calc_dquots_per_chunk(mp,
+					XFS_BB_TO_FSB(mp, bp->b_length));
+>>>>>>> master
 
 	for (i = 0; i < ndquots; i++, d++) {
 		if (!xfs_verify_cksum((char *)d, sizeof(struct xfs_dqblk),
@@ -1109,11 +1114,15 @@ xfs_qm_dqflush(
 	 */
 	error = xfs_trans_read_buf(mp, NULL, mp->m_ddev_targp, dqp->q_blkno,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				   mp->m_quotainfo->qi_dqchunklen, 0, &bp,
 				   &xfs_dquot_buf_ops);
 =======
 				   mp->m_quotainfo->qi_dqchunklen, 0, &bp, NULL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				   mp->m_quotainfo->qi_dqchunklen, 0, &bp, NULL);
+>>>>>>> master
 	if (error)
 		goto out_unlock;
 

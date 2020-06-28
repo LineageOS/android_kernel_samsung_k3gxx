@@ -52,6 +52,7 @@ static inline int nilfs_add_nondir(struct dentry *dentry, struct inode *inode)
 	if (!err) {
 		d_instantiate(dentry, inode);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		unlock_new_inode(inode);
 		return 0;
 	}
@@ -62,6 +63,11 @@ static inline int nilfs_add_nondir(struct dentry *dentry, struct inode *inode)
 	}
 	inode_dec_link_count(inode);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return 0;
+	}
+	inode_dec_link_count(inode);
+>>>>>>> master
 	iput(inode);
 	return err;
 }
@@ -191,9 +197,12 @@ out_fail:
 	drop_nlink(inode);
 	nilfs_mark_inode_dirty(inode);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unlock_new_inode(inode);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	iput(inode);
 	goto out;
 }
@@ -214,6 +223,7 @@ static int nilfs_link(struct dentry *old_dentry, struct inode *dir,
 	ihold(inode);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = nilfs_add_link(dentry, inode);
 	if (!err) {
 		d_instantiate(dentry, inode);
@@ -224,12 +234,17 @@ static int nilfs_link(struct dentry *old_dentry, struct inode *dir,
 		nilfs_transaction_abort(dir->i_sb);
 	}
 =======
+=======
+>>>>>>> master
 	err = nilfs_add_nondir(dentry, inode);
 	if (!err)
 		err = nilfs_transaction_commit(dir->i_sb);
 	else
 		nilfs_transaction_abort(dir->i_sb);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return err;
 }
@@ -268,9 +283,12 @@ static int nilfs_mkdir(struct inode *dir, struct dentry *dentry, umode_t mode)
 	nilfs_mark_inode_dirty(inode);
 	d_instantiate(dentry, inode);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unlock_new_inode(inode);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 out:
 	if (!err)
 		err = nilfs_transaction_commit(dir->i_sb);
@@ -284,9 +302,12 @@ out_fail:
 	drop_nlink(inode);
 	nilfs_mark_inode_dirty(inode);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unlock_new_inode(inode);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	iput(inode);
 out_dir:
 	drop_nlink(dir);

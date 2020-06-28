@@ -104,9 +104,12 @@ static inline void anon_vma_free(struct anon_vma *anon_vma)
 	 * happen _before_ what follows.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	might_sleep();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (rwsem_is_locked(&anon_vma->root->rwsem)) {
 		anon_vma_lock_write(anon_vma);
 		anon_vma_unlock_write(anon_vma);
@@ -431,6 +434,7 @@ struct anon_vma *page_get_anon_vma(struct page *page)
 	 */
 	if (!page_mapped(page)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rcu_read_unlock();
 		put_anon_vma(anon_vma);
 		return NULL;
@@ -438,6 +442,10 @@ struct anon_vma *page_get_anon_vma(struct page *page)
 		put_anon_vma(anon_vma);
 		anon_vma = NULL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		put_anon_vma(anon_vma);
+		anon_vma = NULL;
+>>>>>>> master
 	}
 out:
 	rcu_read_unlock();
@@ -488,6 +496,7 @@ struct anon_vma *page_lock_anon_vma_read(struct page *page)
 
 	if (!page_mapped(page)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rcu_read_unlock();
 		put_anon_vma(anon_vma);
 		return NULL;
@@ -496,6 +505,11 @@ struct anon_vma *page_lock_anon_vma_read(struct page *page)
 		anon_vma = NULL;
 		goto out;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		put_anon_vma(anon_vma);
+		anon_vma = NULL;
+		goto out;
+>>>>>>> master
 	}
 
 	/* we pinned the anon_vma, its safe to sleep */
@@ -617,6 +631,7 @@ pte_t *__page_check_address(struct page *page, struct mm_struct *mm,
 
 	if (unlikely(PageHuge(page))) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* when pud is not present, pte will be NULL */
 		pte = huge_pte_offset(mm, address);
 		if (!pte)
@@ -625,6 +640,9 @@ pte_t *__page_check_address(struct page *page, struct mm_struct *mm,
 =======
 		pte = huge_pte_offset(mm, address);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		pte = huge_pte_offset(mm, address);
+>>>>>>> master
 		ptl = &mm->page_table_lock;
 		goto check;
 	}
@@ -1718,15 +1736,21 @@ void __put_anon_vma(struct anon_vma *anon_vma)
 	struct anon_vma *root = anon_vma->root;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	anon_vma_free(anon_vma);
 	if (root != anon_vma && atomic_dec_and_test(&root->refcount))
 		anon_vma_free(root);
 =======
+=======
+>>>>>>> master
 	if (root != anon_vma && atomic_dec_and_test(&root->refcount))
 		anon_vma_free(root);
 
 	anon_vma_free(anon_vma);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 #ifdef CONFIG_MIGRATION

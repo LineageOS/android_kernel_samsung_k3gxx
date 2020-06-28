@@ -386,11 +386,17 @@ EXPORT_SYMBOL(hashbin_new);
  *    just supply kfree, which should take care of the job.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_LOCKDEP
 static int hashbin_lock_depth = 0;
 #endif
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#ifdef CONFIG_LOCKDEP
+static int hashbin_lock_depth = 0;
+#endif
+>>>>>>> master
 int hashbin_delete( hashbin_t* hashbin, FREE_FUNC free_func)
 {
 	irda_queue_t* queue;
@@ -402,20 +408,27 @@ int hashbin_delete( hashbin_t* hashbin, FREE_FUNC free_func)
 
 	/* Synchronize */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (hashbin->hb_type & HB_LOCK)
 		spin_lock_irqsave(&hashbin->hb_spinlock, flags);
 =======
+=======
+>>>>>>> master
 	if ( hashbin->hb_type & HB_LOCK ) {
 		spin_lock_irqsave_nested(&hashbin->hb_spinlock, flags,
 					 hashbin_lock_depth++);
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/*
 	 *  Free the entries in the hashbin, TODO: use hashbin_clear when
 	 *  it has been shown to work
 	 */
 	for (i = 0; i < HASHBIN_SIZE; i ++ ) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		while (1) {
 			queue = dequeue_first((irda_queue_t**) &hashbin->hb_queue[i]);
@@ -431,13 +444,18 @@ int hashbin_delete( hashbin_t* hashbin, FREE_FUNC free_func)
 					spin_lock_irqsave(&hashbin->hb_spinlock, flags);
 			}
 =======
+=======
+>>>>>>> master
 		queue = dequeue_first((irda_queue_t**) &hashbin->hb_queue[i]);
 		while (queue ) {
 			if (free_func)
 				(*free_func)(queue);
 			queue = dequeue_first(
 				(irda_queue_t**) &hashbin->hb_queue[i]);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		}
 	}
 
@@ -447,16 +465,22 @@ int hashbin_delete( hashbin_t* hashbin, FREE_FUNC free_func)
 
 	/* Release lock */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (hashbin->hb_type & HB_LOCK)
 		spin_unlock_irqrestore(&hashbin->hb_spinlock, flags);
 =======
+=======
+>>>>>>> master
 	if ( hashbin->hb_type & HB_LOCK) {
 		spin_unlock_irqrestore(&hashbin->hb_spinlock, flags);
 #ifdef CONFIG_LOCKDEP
 		hashbin_lock_depth--;
 #endif
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/*
 	 *  Free the hashbin structure

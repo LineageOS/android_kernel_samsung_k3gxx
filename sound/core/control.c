@@ -151,10 +151,13 @@ void snd_ctl_notify(struct snd_card *card, unsigned int mask,
 	if (snd_BUG_ON(!card || !id))
 		return;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (card->shutdown)
 		return;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	read_lock(&card->ctl_files_rwlock);
 #if defined(CONFIG_SND_MIXER_OSS) || defined(CONFIG_SND_MIXER_OSS_MODULE)
 	card->mixer_oss_change_count++;
@@ -1092,10 +1095,14 @@ static int snd_ctl_elem_user_tlv(struct snd_kcontrol *kcontrol,
 		change = ue->tlv_data_size != size;
 		if (!change)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			change = memcmp(ue->tlv_data, new_data, size) != 0;
 =======
 			change = memcmp(ue->tlv_data, new_data, size);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			change = memcmp(ue->tlv_data, new_data, size);
+>>>>>>> master
 		kfree(ue->tlv_data);
 		ue->tlv_data = new_data;
 		ue->tlv_data_size = size;
@@ -1178,12 +1185,15 @@ static int snd_ctl_elem_add(struct snd_ctl_file *file,
 	if (info->count < 1)
 		return -EINVAL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!*info->id.name)
 		return -EINVAL;
 	if (strnlen(info->id.name, sizeof(info->id.name)) >= sizeof(info->id.name))
 		return -EINVAL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	access = info->access == 0 ? SNDRV_CTL_ELEM_ACCESS_READWRITE :
 		(info->access & (SNDRV_CTL_ELEM_ACCESS_READWRITE|
 				 SNDRV_CTL_ELEM_ACCESS_INACTIVE|
@@ -1338,10 +1348,13 @@ static int snd_ctl_tlv_ioctl(struct snd_ctl_file *file,
 	if (tlv.length < sizeof(unsigned int) * 2)
 		return -EINVAL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!tlv.numid)
 		return -EINVAL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	down_read(&card->controls_rwsem);
 	kctl = snd_ctl_find_numid(card, tlv.numid);
 	if (kctl == NULL) {

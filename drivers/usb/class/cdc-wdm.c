@@ -210,9 +210,12 @@ static void wdm_int_callback(struct urb *urb)
 {
 	int rv = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int responding;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	int status = urb->status;
 	struct wdm_device *desc;
 	struct usb_cdc_notification *dr;
@@ -248,10 +251,14 @@ static void wdm_int_callback(struct urb *urb)
 		dev_dbg(&desc->intf->dev,
 			"NOTIFY_RESPONSE_AVAILABLE received: index %d len %d",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			le16_to_cpu(dr->wIndex), le16_to_cpu(dr->wLength));
 =======
 			dr->wIndex, dr->wLength);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			dr->wIndex, dr->wLength);
+>>>>>>> master
 		break;
 
 	case USB_CDC_NOTIFY_NETWORK_CONNECTION:
@@ -265,17 +272,22 @@ static void wdm_int_callback(struct urb *urb)
 		dev_err(&desc->intf->dev,
 			"unknown notification %d received: index %d len %d\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dr->bNotificationType,
 			le16_to_cpu(dr->wIndex),
 			le16_to_cpu(dr->wLength));
 =======
 			dr->bNotificationType, dr->wIndex, dr->wLength);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			dr->bNotificationType, dr->wIndex, dr->wLength);
+>>>>>>> master
 		goto exit;
 	}
 
 	spin_lock(&desc->iuspin);
 	clear_bit(WDM_READ, &desc->flags);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	responding = test_and_set_bit(WDM_RESPONDING, &desc->flags);
 	if (!responding && !test_bit(WDM_DISCONNECTING, &desc->flags)
@@ -283,6 +295,10 @@ static void wdm_int_callback(struct urb *urb)
 	set_bit(WDM_RESPONDING, &desc->flags);
 	if (!test_bit(WDM_DISCONNECTING, &desc->flags)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	set_bit(WDM_RESPONDING, &desc->flags);
+	if (!test_bit(WDM_DISCONNECTING, &desc->flags)
+>>>>>>> master
 		&& !test_bit(WDM_SUSPENDING, &desc->flags)) {
 		rv = usb_submit_urb(desc->response, GFP_ATOMIC);
 		dev_dbg(&desc->intf->dev, "%s: usb_submit_urb %d",
@@ -422,10 +438,14 @@ static ssize_t wdm_write
 	req->bRequest = USB_CDC_SEND_ENCAPSULATED_COMMAND;
 	req->wValue = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	req->wIndex = desc->inum; /* already converted */
 =======
 	req->wIndex = desc->inum;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	req->wIndex = desc->inum;
+>>>>>>> master
 	req->wLength = cpu_to_le16(count);
 	set_bit(WDM_IN_USE, &desc->flags);
 	desc->outbuf = buf;
@@ -440,10 +460,14 @@ static ssize_t wdm_write
 	} else {
 		dev_dbg(&desc->intf->dev, "Tx URB has been submitted index=%d",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			le16_to_cpu(req->wIndex));
 =======
 			req->wIndex);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			req->wIndex);
+>>>>>>> master
 	}
 out:
 	usb_autopm_put_interface(desc->intf);
@@ -713,16 +737,21 @@ static void wdm_rxwork(struct work_struct *work)
 	struct wdm_device *desc = container_of(work, struct wdm_device, rxwork);
 	unsigned long flags;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int rv = 0;
 	int responding;
 =======
 	int rv;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int rv;
+>>>>>>> master
 
 	spin_lock_irqsave(&desc->iuspin, flags);
 	if (test_bit(WDM_DISCONNECTING, &desc->flags)) {
 		spin_unlock_irqrestore(&desc->iuspin, flags);
 	} else {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		responding = test_and_set_bit(WDM_RESPONDING, &desc->flags);
 		spin_unlock_irqrestore(&desc->iuspin, flags);
@@ -732,11 +761,16 @@ static void wdm_rxwork(struct work_struct *work)
 			spin_lock_irqsave(&desc->iuspin, flags);
 			clear_bit(WDM_RESPONDING, &desc->flags);
 =======
+=======
+>>>>>>> master
 		spin_unlock_irqrestore(&desc->iuspin, flags);
 		rv = usb_submit_urb(desc->response, GFP_KERNEL);
 		if (rv < 0 && rv != -EPERM) {
 			spin_lock_irqsave(&desc->iuspin, flags);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			if (!test_bit(WDM_DISCONNECTING, &desc->flags))
 				schedule_work(&desc->rxwork);
 			spin_unlock_irqrestore(&desc->iuspin, flags);
@@ -818,10 +852,14 @@ static int wdm_create(struct usb_interface *intf, struct usb_endpoint_descriptor
 	desc->irq->bRequest = USB_CDC_GET_ENCAPSULATED_RESPONSE;
 	desc->irq->wValue = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	desc->irq->wIndex = desc->inum; /* already converted */
 =======
 	desc->irq->wIndex = desc->inum;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	desc->irq->wIndex = desc->inum;
+>>>>>>> master
 	desc->irq->wLength = cpu_to_le16(desc->wMaxCommand);
 
 	usb_fill_control_urb(
@@ -862,12 +900,15 @@ static int wdm_manage_power(struct usb_interface *intf, int on)
 	/* need autopm_get/put here to ensure the usbcore sees the new value */
 	int rv = usb_autopm_get_interface(intf);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	intf->needs_remote_wakeup = on;
 	if (!rv)
 		usb_autopm_put_interface(intf);
 	return 0;
 =======
+=======
+>>>>>>> master
 	if (rv < 0)
 		goto err;
 
@@ -875,7 +916,10 @@ static int wdm_manage_power(struct usb_interface *intf, int on)
 	usb_autopm_put_interface(intf);
 err:
 	return rv;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static int wdm_probe(struct usb_interface *intf, const struct usb_device_id *id)

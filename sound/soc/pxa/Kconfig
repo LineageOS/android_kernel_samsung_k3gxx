@@ -2,9 +2,13 @@ config SND_PXA2XX_SOC
 	tristate "SoC Audio for the Intel PXA2xx chip"
 	depends on ARCH_PXA
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	select SND_ARM
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	select SND_ARM
+>>>>>>> master
 	select SND_PXA2XX_LIB
 	help
 	  Say Y or M if you want to add support for codecs attached to
@@ -28,9 +32,13 @@ config SND_PXA2XX_SOC_AC97
 	tristate
 	select AC97_BUS
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	select SND_ARM
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	select SND_ARM
+>>>>>>> master
 	select SND_PXA2XX_LIB_AC97
 	select SND_SOC_AC97_BUS
 

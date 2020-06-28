@@ -55,10 +55,14 @@ static LIST_HEAD(g_tiqn_list);
 static LIST_HEAD(g_np_list);
 static DEFINE_SPINLOCK(tiqn_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DEFINE_MUTEX(np_lock);
 =======
 static DEFINE_SPINLOCK(np_lock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static DEFINE_SPINLOCK(np_lock);
+>>>>>>> master
 
 static struct idr tiqn_idr;
 struct idr sess_idr;
@@ -308,11 +312,14 @@ bool iscsit_check_np_match(
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Called with mutex np_lock held
  */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static struct iscsi_np *iscsit_get_np(
 	struct __kernel_sockaddr_storage *sockaddr,
 	int network_transport)
@@ -321,17 +328,23 @@ static struct iscsi_np *iscsit_get_np(
 	bool match;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	list_for_each_entry(np, &g_np_list, np_list) {
 		spin_lock_bh(&np->np_thread_lock);
 		if (np->np_thread_state != ISCSI_NP_THREAD_ACTIVE) {
 			spin_unlock_bh(&np->np_thread_lock);
 =======
+=======
+>>>>>>> master
 	spin_lock_bh(&np_lock);
 	list_for_each_entry(np, &g_np_list, np_list) {
 		spin_lock(&np->np_thread_lock);
 		if (np->np_thread_state != ISCSI_NP_THREAD_ACTIVE) {
 			spin_unlock(&np->np_thread_lock);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			continue;
 		}
 
@@ -344,12 +357,15 @@ static struct iscsi_np *iscsit_get_np(
 			 */
 			np->np_exports++;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			spin_unlock_bh(&np->np_thread_lock);
 			return np;
 		}
 		spin_unlock_bh(&np->np_thread_lock);
 	}
 =======
+=======
+>>>>>>> master
 			spin_unlock(&np->np_thread_lock);
 			spin_unlock_bh(&np_lock);
 			return np;
@@ -357,7 +373,10 @@ static struct iscsi_np *iscsit_get_np(
 		spin_unlock(&np->np_thread_lock);
 	}
 	spin_unlock_bh(&np_lock);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return NULL;
 }
@@ -372,15 +391,19 @@ struct iscsi_np *iscsit_add_np(
 	struct iscsi_np *np;
 	int ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	mutex_lock(&np_lock);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/*
 	 * Locate the existing struct iscsi_np if already active..
 	 */
 	np = iscsit_get_np(sockaddr, network_transport);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (np) {
 		mutex_unlock(&np_lock);
@@ -390,14 +413,21 @@ struct iscsi_np *iscsit_add_np(
 	if (np)
 		return np;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (np)
+		return np;
+>>>>>>> master
 
 	np = kzalloc(sizeof(struct iscsi_np), GFP_KERNEL);
 	if (!np) {
 		pr_err("Unable to allocate memory for struct iscsi_np\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mutex_unlock(&np_lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return ERR_PTR(-ENOMEM);
 	}
 
@@ -421,9 +451,12 @@ struct iscsi_np *iscsit_add_np(
 	if (ret != 0) {
 		kfree(np);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mutex_unlock(&np_lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return ERR_PTR(ret);
 	}
 
@@ -433,9 +466,12 @@ struct iscsi_np *iscsit_add_np(
 		ret = PTR_ERR(np->np_thread);
 		kfree(np);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mutex_unlock(&np_lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return ERR_PTR(ret);
 	}
 	/*
@@ -447,16 +483,22 @@ struct iscsi_np *iscsit_add_np(
 	 */
 	np->np_exports = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	np->np_thread_state = ISCSI_NP_THREAD_ACTIVE;
 
 	list_add_tail(&np->np_list, &g_np_list);
 	mutex_unlock(&np_lock);
 =======
+=======
+>>>>>>> master
 
 	spin_lock_bh(&np_lock);
 	list_add_tail(&np->np_list, &g_np_list);
 	spin_unlock_bh(&np_lock);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	pr_debug("CORE[0] - Added Network Portal: %s:%hu on %s\n",
 		np->np_ip, np->np_port, np->np_transport->name);
@@ -510,9 +552,12 @@ int iscsit_del_np(struct iscsi_np *np)
 	np->np_exports--;
 	if (np->np_exports) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		np->enabled = true;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		spin_unlock_bh(&np->np_thread_lock);
 		return 0;
 	}
@@ -531,6 +576,7 @@ int iscsit_del_np(struct iscsi_np *np)
 	np->np_transport->iscsit_free_np(np);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_lock(&np_lock);
 	list_del(&np->np_list);
 	mutex_unlock(&np_lock);
@@ -539,6 +585,11 @@ int iscsit_del_np(struct iscsi_np *np)
 	list_del(&np->np_list);
 	spin_unlock_bh(&np_lock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	spin_lock_bh(&np_lock);
+	list_del(&np->np_list);
+	spin_unlock_bh(&np_lock);
+>>>>>>> master
 
 	pr_debug("CORE[0] - Removed Network Portal: %s:%hu on %s\n",
 		np->np_ip, np->np_port, np->np_transport->name);
@@ -577,10 +628,14 @@ static struct iscsit_transport iscsi_target_transport = {
 static int __init iscsi_target_init_module(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret = 0, size;
 =======
 	int ret = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int ret = 0;
+>>>>>>> master
 
 	pr_debug("iSCSI-Target "ISCSIT_VERSION"\n");
 
@@ -590,9 +645,12 @@ static int __init iscsi_target_init_module(void)
 		return -1;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock_init(&iscsit_global->ts_bitmap_lock);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	mutex_init(&auth_id_lock);
 	spin_lock_init(&sess_idr_lock);
 	idr_init(&tiqn_idr);
@@ -603,12 +661,15 @@ static int __init iscsi_target_init_module(void)
 		goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	size = BITS_TO_LONGS(ISCSIT_BITMAP_BITS) * sizeof(long);
 	iscsit_global->ts_bitmap = vzalloc(size);
 	if (!iscsit_global->ts_bitmap) {
 		pr_err("Unable to allocate iscsit_global->ts_bitmap\n");
 		goto configfs_out;
 =======
+=======
+>>>>>>> master
 	ret = iscsi_thread_set_init();
 	if (ret < 0)
 		goto configfs_out;
@@ -618,7 +679,10 @@ static int __init iscsi_target_init_module(void)
 		pr_err("iscsi_allocate_thread_sets() returned"
 			" unexpected value!\n");
 		goto ts_out1;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	lio_cmd_cache = kmem_cache_create("lio_cmd_cache",
@@ -628,10 +692,14 @@ static int __init iscsi_target_init_module(void)
 		pr_err("Unable to kmem_cache_create() for"
 				" lio_cmd_cache\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto bitmap_out;
 =======
 		goto ts_out2;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		goto ts_out2;
+>>>>>>> master
 	}
 
 	lio_qr_cache = kmem_cache_create("lio_qr_cache",
@@ -687,14 +755,20 @@ qr_out:
 cmd_out:
 	kmem_cache_destroy(lio_cmd_cache);
 <<<<<<< HEAD
+<<<<<<< HEAD
 bitmap_out:
 	vfree(iscsit_global->ts_bitmap);
 =======
+=======
+>>>>>>> master
 ts_out2:
 	iscsi_deallocate_thread_sets();
 ts_out1:
 	iscsi_thread_set_free();
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 configfs_out:
 	iscsi_target_deregister_configfs();
 out:
@@ -705,10 +779,15 @@ out:
 static void __exit iscsi_target_cleanup_module(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	iscsi_deallocate_thread_sets();
 	iscsi_thread_set_free();
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	iscsi_deallocate_thread_sets();
+	iscsi_thread_set_free();
+>>>>>>> master
 	iscsit_release_discovery_tpg();
 	iscsit_unregister_transport(&iscsi_target_transport);
 	kmem_cache_destroy(lio_cmd_cache);
@@ -720,9 +799,12 @@ static void __exit iscsi_target_cleanup_module(void)
 	iscsi_target_deregister_configfs();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vfree(iscsit_global->ts_bitmap);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	kfree(iscsit_global);
 }
 
@@ -938,6 +1020,7 @@ int iscsit_setup_scsi_cmd(struct iscsi_conn *conn, struct iscsi_cmd *cmd,
 	     (hdr->flags & ISCSI_FLAG_CMD_WRITE)) && !hdr->data_length) {
 		/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 * From RFC-3720 Section 10.3.1:
 		 *
 		 * "Either or both of R and W MAY be 1 when either the
@@ -955,6 +1038,8 @@ int iscsit_setup_scsi_cmd(struct iscsi_conn *conn, struct iscsi_cmd *cmd,
 			" CDB: 0x%02x, Fixing up flags\n", hdr->cdb[0]);
 	}
 =======
+=======
+>>>>>>> master
 		 * Vmware ESX v3.0 uses a modified Cisco Initiator (v3.4.2)
 		 * that adds support for RESERVE/RELEASE.  There is a bug
 		 * add with this new functionality that sets R/W bits when
@@ -973,7 +1058,10 @@ int iscsit_setup_scsi_cmd(struct iscsi_conn *conn, struct iscsi_cmd *cmd,
 					     ISCSI_REASON_BOOKMARK_INVALID, buf);
 	}
 done:
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (!(hdr->flags & ISCSI_FLAG_CMD_READ) &&
 	    !(hdr->flags & ISCSI_FLAG_CMD_WRITE) && (hdr->data_length != 0)) {
@@ -1205,9 +1293,13 @@ int iscsit_process_scsi_cmd(struct iscsi_conn *conn, struct iscsi_cmd *cmd,
 			return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		target_put_sess_cmd(conn->sess->se_sess, &cmd->se_cmd);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		target_put_sess_cmd(conn->sess->se_sess, &cmd->se_cmd);
+>>>>>>> master
 		return 1;
 	}
 	/*
@@ -1246,11 +1338,14 @@ after_immediate_data:
 		cmdsn_ret = iscsit_sequence_cmd(cmd->conn, cmd,
 					(unsigned char *)hdr, hdr->cmdsn);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (cmdsn_ret == CMDSN_ERROR_CANNOT_RECOVER)
 			return -1;
 
 		if (cmd->sense_reason || cmdsn_ret == CMDSN_LOWER_THAN_EXP) {
 =======
+=======
+>>>>>>> master
 		if (cmdsn_ret == CMDSN_ERROR_CANNOT_RECOVER) {
 			return -1;
 		} else if (cmdsn_ret == CMDSN_LOWER_THAN_EXP) {
@@ -1259,7 +1354,10 @@ after_immediate_data:
 		}
 
 		if (cmd->sense_reason) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			int rc;
 
 			rc = iscsit_dump_data_payload(cmd->conn,
@@ -1306,10 +1404,14 @@ iscsit_handle_scsi_cmd(struct iscsi_conn *conn, struct iscsi_cmd *cmd,
 	 */
 	if (iscsit_allocate_iovecs(cmd) < 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return iscsit_reject_cmd(cmd,
 =======
 		return iscsit_add_reject_cmd(cmd,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return iscsit_add_reject_cmd(cmd,
+>>>>>>> master
 				ISCSI_REASON_BOOKMARK_NO_RESOURCES, buf);
 	}
 	immed_data = cmd->immediate_data;
@@ -1444,10 +1546,14 @@ iscsit_check_dataout_hdr(struct iscsi_conn *conn, unsigned char *buf,
 		pr_err("Command ITT: 0x%08x received DataOUT for a"
 			" NON-WRITE command.\n", cmd->init_task_tag);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return iscsit_dump_data_payload(conn, payload_length, 1);
 =======
 		return iscsit_reject_cmd(cmd, ISCSI_REASON_PROTOCOL_ERROR, buf);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return iscsit_reject_cmd(cmd, ISCSI_REASON_PROTOCOL_ERROR, buf);
+>>>>>>> master
 	}
 	se_cmd = &cmd->se_cmd;
 	iscsit_mod_dataout_timer(cmd);
@@ -1678,12 +1784,15 @@ int iscsit_handle_nop_out(struct iscsi_conn *conn, struct iscsi_cmd *cmd,
 		pr_err("NOPOUT ITT is reserved, but Immediate Bit is"
 			" not set, protocol error.\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!cmd)
 			return iscsit_add_reject(conn, ISCSI_REASON_PROTOCOL_ERROR,
 						 (unsigned char *)hdr);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return iscsit_reject_cmd(cmd, ISCSI_REASON_PROTOCOL_ERROR,
 					 (unsigned char *)hdr);
 	}
@@ -1694,12 +1803,15 @@ int iscsit_handle_nop_out(struct iscsi_conn *conn, struct iscsi_cmd *cmd,
 			" error.\n", payload_length,
 			conn->conn_ops->MaxXmitDataSegmentLength);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!cmd)
 			return iscsit_add_reject(conn, ISCSI_REASON_PROTOCOL_ERROR,
 						 (unsigned char *)hdr);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return iscsit_reject_cmd(cmd, ISCSI_REASON_PROTOCOL_ERROR,
 					 (unsigned char *)hdr);
 	}
@@ -2596,9 +2708,12 @@ static void iscsit_build_conn_drop_async_message(struct iscsi_conn *conn)
 	struct iscsi_cmd *cmd;
 	struct iscsi_conn *conn_p;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool found = false;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/*
 	 * Only send a Asynchronous Message on connections whos network
@@ -2608,18 +2723,25 @@ static void iscsit_build_conn_drop_async_message(struct iscsi_conn *conn)
 		if (conn_p->conn_state == TARG_CONN_STATE_LOGGED_IN) {
 			iscsit_inc_conn_usage_count(conn_p);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			found = true;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			break;
 		}
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!found)
 =======
 	if (!conn_p)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!conn_p)
+>>>>>>> master
 		return;
 
 	cmd = iscsit_allocate_cmd(conn_p, GFP_ATOMIC);
@@ -3741,6 +3863,7 @@ static int iscsit_send_reject(
 void iscsit_thread_get_cpumask(struct iscsi_conn *conn)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ord, cpu;
 	/*
 	 * bitmap_id is assigned from iscsit_global->ts_bitmap from
@@ -3752,6 +3875,8 @@ void iscsit_thread_get_cpumask(struct iscsi_conn *conn)
 	 */
 	ord = conn->bitmap_id % cpumask_weight(cpu_online_mask);
 =======
+=======
+>>>>>>> master
 	struct iscsi_thread_set *ts = conn->thread_set;
 	int ord, cpu;
 	/*
@@ -3763,7 +3888,10 @@ void iscsit_thread_get_cpumask(struct iscsi_conn *conn)
 	 * execute upon.
 	 */
 	ord = ts->thread_id % cpumask_weight(cpu_online_mask);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	for_each_online_cpu(cpu) {
 		if (ord-- == 0) {
 			cpumask_set_cpu(cpu, conn->conn_cpumask);
@@ -3820,10 +3948,14 @@ iscsit_immediate_queue(struct iscsi_conn *conn, struct iscsi_cmd *cmd, int state
 	case ISTATE_REMOVE:
 		spin_lock_bh(&conn->cmd_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		list_del_init(&cmd->i_conn_node);
 =======
 		list_del(&cmd->i_conn_node);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		list_del(&cmd->i_conn_node);
+>>>>>>> master
 		spin_unlock_bh(&conn->cmd_lock);
 
 		iscsit_free_cmd(cmd, false);
@@ -3960,10 +4092,14 @@ check_rsp_state:
 	case ISTATE_SEND_LOGOUTRSP:
 		if (!iscsit_logout_post_handler(cmd, conn))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return -ECONNRESET;
 =======
 			goto restart;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			goto restart;
+>>>>>>> master
 		/* fall through */
 	case ISTATE_SEND_STATUS:
 	case ISTATE_SEND_ASYNCMSG:
@@ -3992,10 +4128,15 @@ check_rsp_state:
 err:
 	return -1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 restart:
 	return -EAGAIN;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+restart:
+	return -EAGAIN;
+>>>>>>> master
 }
 
 static int iscsit_handle_response_queue(struct iscsi_conn *conn)
@@ -4023,11 +4164,16 @@ int iscsi_target_tx_thread(void *arg)
 {
 	int ret = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct iscsi_conn *conn = arg;
 =======
 	struct iscsi_conn *conn;
 	struct iscsi_thread_set *ts = arg;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct iscsi_conn *conn;
+	struct iscsi_thread_set *ts = arg;
+>>>>>>> master
 	/*
 	 * Allow ourselves to be interrupted by SIGINT so that a
 	 * connection recovery / failure event can be triggered externally.
@@ -4035,7 +4181,10 @@ int iscsi_target_tx_thread(void *arg)
 	allow_signal(SIGINT);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 restart:
 	conn = iscsi_tx_thread_pre_handler(ts);
 	if (!conn)
@@ -4043,7 +4192,10 @@ restart:
 
 	ret = 0;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	while (!kthread_should_stop()) {
 		/*
 		 * Ensure that both TX and RX per connection kthreads
@@ -4053,16 +4205,22 @@ restart:
 
 		wait_event_interruptible(conn->queues_wq,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					 !iscsit_conn_all_queues_empty(conn));
 
 		if (signal_pending(current))
 =======
+=======
+>>>>>>> master
 					 !iscsit_conn_all_queues_empty(conn) ||
 					 ts->status == ISCSI_THREAD_SET_RESET);
 
 		if ((ts->status == ISCSI_THREAD_SET_RESET) ||
 		     signal_pending(current))
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			goto transport_err;
 
 get_immediate:
@@ -4074,17 +4232,23 @@ get_immediate:
 		if (ret == 1)
 			goto get_immediate;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		else if (ret == -ECONNRESET)
 			goto out;
 =======
 		else if (ret == -EAGAIN)
 			goto restart;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		else if (ret == -EAGAIN)
+			goto restart;
+>>>>>>> master
 		else if (ret < 0)
 			goto transport_err;
 	}
 
 transport_err:
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/*
 	 * Avoid the normal connection failure code-path if this connection
@@ -4097,6 +4261,10 @@ transport_err:
 	iscsit_take_action_for_connection_exit(conn);
 	goto restart;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	iscsit_take_action_for_connection_exit(conn);
+	goto restart;
+>>>>>>> master
 out:
 	return 0;
 }
@@ -4177,6 +4345,7 @@ reject:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static bool iscsi_target_check_conn_state(struct iscsi_conn *conn)
 {
 	bool ret;
@@ -4195,6 +4364,8 @@ int iscsi_target_rx_thread(void *arg)
 	u32 checksum = 0, digest = 0;
 	struct iscsi_conn *conn = arg;
 =======
+=======
+>>>>>>> master
 int iscsi_target_rx_thread(void *arg)
 {
 	int ret;
@@ -4202,13 +4373,17 @@ int iscsi_target_rx_thread(void *arg)
 	u32 checksum = 0, digest = 0;
 	struct iscsi_conn *conn = NULL;
 	struct iscsi_thread_set *ts = arg;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	struct kvec iov;
 	/*
 	 * Allow ourselves to be interrupted by SIGINT so that a
 	 * connection recovery / failure event can be triggered externally.
 	 */
 	allow_signal(SIGINT);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/*
 	 * Wait for iscsi_post_login_handler() to complete before allowing
@@ -4221,6 +4396,8 @@ int iscsi_target_rx_thread(void *arg)
 	if (conn->conn_transport->transport_type == ISCSI_INFINIBAND) {
 		struct completion comp;
 =======
+=======
+>>>>>>> master
 
 restart:
 	conn = iscsi_rx_thread_pre_handler(ts);
@@ -4230,7 +4407,10 @@ restart:
 	if (conn->conn_transport->transport_type == ISCSI_INFINIBAND) {
 		struct completion comp;
 		int rc;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		init_completion(&comp);
 		rc = wait_for_completion_interruptible(&comp);
@@ -4238,10 +4418,14 @@ restart:
 			goto transport_err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto transport_err;
 =======
 		goto out;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		goto out;
+>>>>>>> master
 	}
 
 	while (!kthread_should_stop()) {
@@ -4325,10 +4509,15 @@ transport_err:
 		atomic_set(&conn->transport_failed, 1);
 	iscsit_take_action_for_connection_exit(conn);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	goto restart;
 out:
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	goto restart;
+out:
+>>>>>>> master
 	return 0;
 }
 
@@ -4345,10 +4534,14 @@ static void iscsit_release_commands_from_conn(struct iscsi_conn *conn)
 	list_for_each_entry_safe(cmd, cmd_tmp, &conn->conn_cmd_list, i_conn_node) {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		list_del_init(&cmd->i_conn_node);
 =======
 		list_del(&cmd->i_conn_node);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		list_del(&cmd->i_conn_node);
+>>>>>>> master
 		spin_unlock_bh(&conn->cmd_lock);
 
 		iscsit_increment_maxcmdsn(cmd, sess);
@@ -4383,6 +4576,7 @@ int iscsit_close_connection(
 		" %u\n", conn->cid, sess->sid);
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * Always up conn_logout_comp for the traditional TCP case just in case
 	 * the RX Thread in iscsi_target_rx_opcode() is sleeping and the logout
 	 * response never got sent because the connection failed.
@@ -4414,6 +4608,8 @@ int iscsit_close_connection(
 			      get_order(1));
 	spin_unlock(&iscsit_global->ts_bitmap_lock);
 =======
+=======
+>>>>>>> master
 	 * Always up conn_logout_comp just in case the RX Thread is sleeping
 	 * and the logout response never got sent because the connection
 	 * failed.
@@ -4421,11 +4617,15 @@ int iscsit_close_connection(
 	complete(&conn->conn_logout_comp);
 
 	iscsi_release_thread_set(conn);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	iscsit_stop_timers_for_cmds(conn);
 	iscsit_stop_nopin_response_timer(conn);
 	iscsit_stop_nopin_timer(conn);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	if (conn->conn_transport->iscsit_wait_conn)
@@ -4433,6 +4633,9 @@ int iscsit_close_connection(
 =======
 	iscsit_free_queue_reqs_for_conn(conn);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	iscsit_free_queue_reqs_for_conn(conn);
+>>>>>>> master
 
 	/*
 	 * During Connection recovery drop unacknowledged out of order
@@ -4451,9 +4654,12 @@ int iscsit_close_connection(
 		iscsit_release_commands_from_conn(conn);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	iscsit_free_queue_reqs_for_conn(conn);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/*
 	 * Handle decrementing session or connection usage count if
@@ -4708,6 +4914,7 @@ static void iscsit_logout_post_handler_closesession(
 {
 	struct iscsi_session *sess = conn->sess;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int sleep = 1;
 	/*
 	 * Traditional iscsi/tcp will invoke this logic from TX thread
@@ -4725,16 +4932,25 @@ static void iscsit_logout_post_handler_closesession(
 	iscsi_set_thread_clear(conn, ISCSI_CLEAR_TX_THREAD);
 	iscsi_set_thread_set_signal(conn, ISCSI_SIGNAL_TX_THREAD);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	iscsi_set_thread_clear(conn, ISCSI_CLEAR_TX_THREAD);
+	iscsi_set_thread_set_signal(conn, ISCSI_SIGNAL_TX_THREAD);
+>>>>>>> master
 
 	atomic_set(&conn->conn_logout_remove, 0);
 	complete(&conn->conn_logout_comp);
 
 	iscsit_dec_conn_usage_count(conn);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	iscsit_stop_session(sess, sleep, sleep);
 =======
 	iscsit_stop_session(sess, 1, 1);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	iscsit_stop_session(sess, 1, 1);
+>>>>>>> master
 	iscsit_dec_session_usage_count(sess);
 	target_put_session(sess->se_sess);
 }
@@ -4742,6 +4958,7 @@ static void iscsit_logout_post_handler_closesession(
 static void iscsit_logout_post_handler_samecid(
 	struct iscsi_conn *conn)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int sleep = 1;
 
@@ -4751,15 +4968,23 @@ static void iscsit_logout_post_handler_samecid(
 	iscsi_set_thread_clear(conn, ISCSI_CLEAR_TX_THREAD);
 	iscsi_set_thread_set_signal(conn, ISCSI_SIGNAL_TX_THREAD);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	iscsi_set_thread_clear(conn, ISCSI_CLEAR_TX_THREAD);
+	iscsi_set_thread_set_signal(conn, ISCSI_SIGNAL_TX_THREAD);
+>>>>>>> master
 
 	atomic_set(&conn->conn_logout_remove, 0);
 	complete(&conn->conn_logout_comp);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	iscsit_cause_connection_reinstatement(conn, sleep);
 =======
 	iscsit_cause_connection_reinstatement(conn, 1);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	iscsit_cause_connection_reinstatement(conn, 1);
+>>>>>>> master
 	iscsit_dec_conn_usage_count(conn);
 }
 
@@ -4770,9 +4995,12 @@ static void iscsit_logout_post_handler_diffcid(
 	struct iscsi_conn *l_conn;
 	struct iscsi_session *sess = conn->sess;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool conn_found = false;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (!sess)
 		return;
@@ -4782,19 +5010,26 @@ static void iscsit_logout_post_handler_diffcid(
 		if (l_conn->cid == cid) {
 			iscsit_inc_conn_usage_count(l_conn);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			conn_found = true;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			break;
 		}
 	}
 	spin_unlock_bh(&sess->conn_lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!conn_found)
 =======
 	if (!l_conn)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!l_conn)
+>>>>>>> master
 		return;
 
 	if (l_conn->sock)
@@ -4984,9 +5219,12 @@ int iscsit_release_sessions_for_tpg(struct iscsi_portal_group *tpg, int force)
 	struct se_portal_group *se_tpg = &tpg->tpg_se_tpg;
 	struct se_session *se_sess, *se_sess_tmp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	LIST_HEAD(free_list);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	int session_count = 0;
 
 	spin_lock_bh(&se_tpg->session_lock);
@@ -5009,6 +5247,7 @@ int iscsit_release_sessions_for_tpg(struct iscsi_portal_group *tpg, int force)
 		atomic_set(&sess->session_reinstatement, 1);
 		spin_unlock(&sess->conn_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		list_move_tail(&se_sess->sess_list, &free_list);
 	}
@@ -5021,6 +5260,8 @@ int iscsit_release_sessions_for_tpg(struct iscsi_portal_group *tpg, int force)
 		session_count++;
 	}
 =======
+=======
+>>>>>>> master
 		spin_unlock_bh(&se_tpg->session_lock);
 
 		iscsit_free_session(sess);
@@ -5029,7 +5270,10 @@ int iscsit_release_sessions_for_tpg(struct iscsi_portal_group *tpg, int force)
 		session_count++;
 	}
 	spin_unlock_bh(&se_tpg->session_lock);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	pr_debug("Released %d iSCSI Session(s) from Target Portal"
 			" Group: %hu\n", session_count, tpg->tpgt);

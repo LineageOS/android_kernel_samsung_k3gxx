@@ -207,6 +207,7 @@ void usb_put_intf(struct usb_interface *intf);
 #define USB_MAXIADS		(USB_MAXINTERFACES/2)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * USB Resume Timer: Every Host controller driver should drive the resume
  * signalling on the bus for the amount of time defined by this macro.
@@ -235,6 +236,8 @@ void usb_put_intf(struct usb_interface *intf);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /**
  * struct usb_interface_cache - long-term representation of a device interface
  * @num_altsetting: number of altsettings defined.

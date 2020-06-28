@@ -67,12 +67,17 @@ struct gen_pool_chunk {
 	atomic_t avail;
 	phys_addr_t phys_addr;		/* physical starting address of memory chunk */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long start_addr;	/* start address of memory chunk */
 	unsigned long end_addr;		/* end address of memory chunk (inclusive) */
 =======
 	unsigned long start_addr;	/* starting address of memory chunk */
 	unsigned long end_addr;		/* ending address of memory chunk */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned long start_addr;	/* starting address of memory chunk */
+	unsigned long end_addr;		/* ending address of memory chunk */
+>>>>>>> master
 	unsigned long bits[0];		/* bitmap for allocating memory chunk */
 };
 

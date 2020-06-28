@@ -115,6 +115,7 @@ void bio_integrity_free(struct bio *bio)
 EXPORT_SYMBOL(bio_integrity_free);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline unsigned int bip_integrity_vecs(struct bio_integrity_payload *bip)
 {
 	if (bip->bip_slab == BIO_POOL_NONE)
@@ -125,6 +126,8 @@ static inline unsigned int bip_integrity_vecs(struct bio_integrity_payload *bip)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /**
  * bio_integrity_add_page - Attach integrity metadata
  * @bio:	bio to update
@@ -141,10 +144,14 @@ int bio_integrity_add_page(struct bio *bio, struct page *page,
 	struct bio_vec *iv;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (bip->bip_vcnt >= bip_integrity_vecs(bip)) {
 =======
 	if (bip->bip_vcnt >= bvec_nr_vecs(bip->bip_slab)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (bip->bip_vcnt >= bvec_nr_vecs(bip->bip_slab)) {
+>>>>>>> master
 		printk(KERN_ERR "%s: bip_vec full\n", __func__);
 		return 0;
 	}
@@ -466,10 +473,14 @@ static int bio_integrity_verify(struct bio *bio)
 	bix.sector_size = bi->sector_size;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bio_for_each_segment_all(bv, bio, i) {
 =======
 	bio_for_each_segment(bv, bio, i) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	bio_for_each_segment(bv, bio, i) {
+>>>>>>> master
 		void *kaddr = kmap_atomic(bv->bv_page);
 		bix.data_buf = kaddr + bv->bv_offset;
 		bix.data_size = bv->bv_len;
@@ -754,10 +765,14 @@ void bioset_integrity_free(struct bio_set *bs)
 
 	if (bs->bvec_integrity_pool)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mempool_destroy(bs->bvec_integrity_pool);
 =======
 		mempool_destroy(bs->bio_integrity_pool);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		mempool_destroy(bs->bio_integrity_pool);
+>>>>>>> master
 }
 EXPORT_SYMBOL(bioset_integrity_free);
 

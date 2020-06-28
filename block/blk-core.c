@@ -646,6 +646,7 @@ struct request_queue *blk_alloc_queue_node(gfp_t gfp_mask, int node_id)
 
 	if (blkcg_init_queue(q))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto fail_bdi;
 
 	return q;
@@ -653,11 +654,16 @@ struct request_queue *blk_alloc_queue_node(gfp_t gfp_mask, int node_id)
 fail_bdi:
 	bdi_destroy(&q->backing_dev_info);
 =======
+=======
+>>>>>>> master
 		goto fail_id;
 
 	return q;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 fail_id:
 	ida_simple_remove(&blk_queue_ida, q->id);
 fail_q:
@@ -749,6 +755,7 @@ blk_init_allocated_queue(struct request_queue *q, request_fn_proc *rfn,
 	q->sg_reserved_size = INT_MAX;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Protect q->elevator from elevator_change */
 	mutex_lock(&q->sysfs_lock);
 
@@ -765,6 +772,11 @@ blk_init_allocated_queue(struct request_queue *q, request_fn_proc *rfn,
 	if (elevator_init(q, NULL))
 		return NULL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	/* init elevator */
+	if (elevator_init(q, NULL))
+		return NULL;
+>>>>>>> master
 	return q;
 }
 EXPORT_SYMBOL(blk_init_allocated_queue);
@@ -2253,9 +2265,12 @@ void blk_start_request(struct request *req)
 		req->next_rq->resid_len = blk_rq_bytes(req->next_rq);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	BUG_ON(test_bit(REQ_ATOM_COMPLETE, &req->atomic_flags));
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	blk_add_timer(req);
 }
 EXPORT_SYMBOL(blk_start_request);
@@ -2316,10 +2331,14 @@ bool blk_update_request(struct request *req, int error, unsigned int nr_bytes)
 		return false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	trace_block_rq_complete(req->q, req, nr_bytes);
 =======
 	trace_block_rq_complete(req->q, req);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	trace_block_rq_complete(req->q, req);
+>>>>>>> master
 
 	/*
 	 * For fs requests, rq is just carrier of independent bio's
@@ -3118,11 +3137,14 @@ int blk_pre_runtime_suspend(struct request_queue *q)
 	int ret = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!q->dev)
 		return ret;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	spin_lock_irq(q->queue_lock);
 	if (q->nr_pending) {
 		ret = -EBUSY;
@@ -3151,11 +3173,14 @@ EXPORT_SYMBOL(blk_pre_runtime_suspend);
 void blk_post_runtime_suspend(struct request_queue *q, int err)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!q->dev)
 		return;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	spin_lock_irq(q->queue_lock);
 	if (!err) {
 		q->rpm_status = RPM_SUSPENDED;
@@ -3181,11 +3206,14 @@ EXPORT_SYMBOL(blk_post_runtime_suspend);
 void blk_pre_runtime_resume(struct request_queue *q)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!q->dev)
 		return;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	spin_lock_irq(q->queue_lock);
 	q->rpm_status = RPM_RESUMING;
 	spin_unlock_irq(q->queue_lock);
@@ -3209,11 +3237,14 @@ EXPORT_SYMBOL(blk_pre_runtime_resume);
 void blk_post_runtime_resume(struct request_queue *q, int err)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!q->dev)
 		return;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	spin_lock_irq(q->queue_lock);
 	if (!err) {
 		q->rpm_status = RPM_ACTIVE;
@@ -3236,11 +3267,15 @@ int __init blk_dev_init(void)
 	/* used for unplugging and affects IO latency/throughput - HIGHPRI */
 	kblockd_workqueue = alloc_workqueue("kblockd",
 <<<<<<< HEAD
+<<<<<<< HEAD
 					    WQ_MEM_RECLAIM | WQ_HIGHPRI |
 					    WQ_POWER_EFFICIENT, 0);
 =======
 					    WQ_MEM_RECLAIM | WQ_HIGHPRI, 0);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+					    WQ_MEM_RECLAIM | WQ_HIGHPRI, 0);
+>>>>>>> master
 	if (!kblockd_workqueue)
 		panic("Failed to create kblockd\n");
 

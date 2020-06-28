@@ -54,11 +54,15 @@ struct persistent_ram_zone {
 
 struct persistent_ram_zone *persistent_ram_new(phys_addr_t start, size_t size,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			u32 sig, struct persistent_ram_ecc_info *ecc_info,
 			unsigned int memtype);
 =======
 			u32 sig, struct persistent_ram_ecc_info *ecc_info);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			u32 sig, struct persistent_ram_ecc_info *ecc_info);
+>>>>>>> master
 void persistent_ram_free(struct persistent_ram_zone *prz);
 void persistent_ram_zap(struct persistent_ram_zone *prz);
 
@@ -82,9 +86,12 @@ struct ramoops_platform_data {
 	unsigned long	mem_size;
 	unsigned long	mem_address;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int	mem_type;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	unsigned long	record_size;
 	unsigned long	console_size;
 	unsigned long	ftrace_size;

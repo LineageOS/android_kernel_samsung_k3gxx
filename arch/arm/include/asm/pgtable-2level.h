@@ -145,9 +145,12 @@
 #define L_PTE_MT_DEV_WC		(_AT(pteval_t, 0x09) << 2)	/* 1001 */
 #define L_PTE_MT_DEV_CACHED	(_AT(pteval_t, 0x0b) << 2)	/* 1011 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define L_PTE_MT_VECTORS	(_AT(pteval_t, 0x0f) << 2)	/* 1111 */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #define L_PTE_MT_MASK		(_AT(pteval_t, 0x0f) << 2)
 
 #ifndef __ASSEMBLY__

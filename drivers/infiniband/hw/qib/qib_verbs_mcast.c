@@ -287,23 +287,33 @@ int qib_multicast_detach(struct ib_qp *ibqp, union ib_gid *gid, u16 lid)
 	struct qib_ibport *ibp = to_iport(ibqp->device, qp->port_num);
 	struct qib_mcast *mcast = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct qib_mcast_qp *p, *tmp, *delp = NULL;
 =======
 	struct qib_mcast_qp *p, *tmp;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct qib_mcast_qp *p, *tmp;
+>>>>>>> master
 	struct rb_node *n;
 	int last = 0;
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ibqp->qp_num <= 1 || qp->state == IB_QPS_RESET)
 		return -EINVAL;
 =======
+=======
+>>>>>>> master
 	if (ibqp->qp_num <= 1 || qp->state == IB_QPS_RESET) {
 		ret = -EINVAL;
 		goto bail;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	spin_lock_irq(&ibp->lock);
 
@@ -313,11 +323,16 @@ int qib_multicast_detach(struct ib_qp *ibqp, union ib_gid *gid, u16 lid)
 		if (n == NULL) {
 			spin_unlock_irq(&ibp->lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return -EINVAL;
 =======
 			ret = -EINVAL;
 			goto bail;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			ret = -EINVAL;
+			goto bail;
+>>>>>>> master
 		}
 
 		mcast = rb_entry(n, struct qib_mcast, rb_node);
@@ -342,9 +357,12 @@ int qib_multicast_detach(struct ib_qp *ibqp, union ib_gid *gid, u16 lid)
 		list_del_rcu(&p->list);
 		mcast->n_attached--;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		delp = p;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		/* If this was the last attached QP, remove the GID too. */
 		if (list_empty(&mcast->qp_list)) {
@@ -355,6 +373,7 @@ int qib_multicast_detach(struct ib_qp *ibqp, union ib_gid *gid, u16 lid)
 	}
 
 	spin_unlock_irq(&ibp->lock);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* QP not attached */
 	if (!delp)
@@ -367,6 +386,8 @@ int qib_multicast_detach(struct ib_qp *ibqp, union ib_gid *gid, u16 lid)
 	qib_mcast_qp_free(delp);
 
 =======
+=======
+>>>>>>> master
 
 	if (p) {
 		/*
@@ -376,7 +397,10 @@ int qib_multicast_detach(struct ib_qp *ibqp, union ib_gid *gid, u16 lid)
 		wait_event(mcast->wait, atomic_read(&mcast->refcount) <= 1);
 		qib_mcast_qp_free(p);
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (last) {
 		atomic_dec(&mcast->refcount);
 		wait_event(mcast->wait, !atomic_read(&mcast->refcount));
@@ -386,14 +410,20 @@ int qib_multicast_detach(struct ib_qp *ibqp, union ib_gid *gid, u16 lid)
 		spin_unlock_irq(&dev->n_mcast_grps_lock);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return 0;
 =======
+=======
+>>>>>>> master
 
 	ret = 0;
 
 bail:
 	return ret;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 int qib_mcast_tree_empty(struct qib_ibport *ibp)

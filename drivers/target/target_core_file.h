@@ -8,6 +8,7 @@
 #define FD_MAX_DEVICE_QUEUE_DEPTH 128
 #define FD_BLOCKSIZE		512
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Limited by the number of iovecs (2048) per vfs_[writev,readv] call
  */
@@ -15,6 +16,9 @@
 =======
 #define FD_MAX_SECTORS		2048
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define FD_MAX_SECTORS		2048
+>>>>>>> master
 
 #define RRF_EMULATE_CDB		0x01
 #define RRF_GOT_LBA		0x02

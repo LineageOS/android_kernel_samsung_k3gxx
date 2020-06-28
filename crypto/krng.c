@@ -63,8 +63,12 @@ module_exit(krng_mod_fini);
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Kernel Random Number Generator");
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("stdrng");
 MODULE_ALIAS_CRYPTO("krng");
 =======
 MODULE_ALIAS("stdrng");
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+MODULE_ALIAS("stdrng");
+>>>>>>> master

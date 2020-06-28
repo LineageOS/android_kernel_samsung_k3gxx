@@ -37,10 +37,13 @@
 #include "mt312.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Max transfer size done by I2C transfer functions */
 #define MAX_XFER_SIZE  64
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 struct mt312_state {
 	struct i2c_adapter *i2c;
@@ -102,6 +105,7 @@ static int mt312_write(struct mt312_state *state, const enum mt312_reg_addr reg,
 {
 	int ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 buf[MAX_XFER_SIZE];
 	struct i2c_msg msg;
 
@@ -116,6 +120,11 @@ static int mt312_write(struct mt312_state *state, const enum mt312_reg_addr reg,
 	struct i2c_msg msg;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u8 buf[count + 1];
+	struct i2c_msg msg;
+
+>>>>>>> master
 	if (debug) {
 		int i;
 		dprintk("W(%d):", reg & 0x7f);

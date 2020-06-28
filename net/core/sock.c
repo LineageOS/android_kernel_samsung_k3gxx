@@ -152,6 +152,7 @@ static DEFINE_MUTEX(proto_list_mutex);
 static LIST_HEAD(proto_list);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /**
  * sk_ns_capable - General socket capability test
  * @sk: Socket to use a capability on or through
@@ -203,6 +204,8 @@ EXPORT_SYMBOL(sk_net_capable);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #ifdef CONFIG_MEMCG_KMEM
 int mem_cgroup_sockets_init(struct mem_cgroup *memcg, struct cgroup_subsys *ss)
 {
@@ -432,10 +435,15 @@ static void sock_warn_obsolete_bsdism(const char *name)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define SK_FLAGS_TIMESTAMP ((1UL << SOCK_TIMESTAMP) | (1UL << SOCK_TIMESTAMPING_RX_SOFTWARE))
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define SK_FLAGS_TIMESTAMP ((1UL << SOCK_TIMESTAMP) | (1UL << SOCK_TIMESTAMPING_RX_SOFTWARE))
+
+>>>>>>> master
 static void sock_disable_timestamp(struct sock *sk, unsigned long flags)
 {
 	if (sk->sk_flags & flags) {
@@ -950,10 +958,14 @@ set_rcvbuf:
 	case SO_PEEK_OFF:
 		if (sock->ops->set_peek_off)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ret = sock->ops->set_peek_off(sk, val);
 =======
 			sock->ops->set_peek_off(sk, val);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			sock->ops->set_peek_off(sk, val);
+>>>>>>> master
 		else
 			ret = -EOPNOTSUPP;
 		break;
@@ -1430,6 +1442,7 @@ static void __sk_free(struct sock *sk)
 			 __func__, atomic_read(&sk->sk_omem_alloc));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (sk->sk_frag.page) {
 		put_page(sk->sk_frag.page);
 		sk->sk_frag.page = NULL;
@@ -1437,6 +1450,8 @@ static void __sk_free(struct sock *sk)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (sk->sk_peer_cred)
 		put_cred(sk->sk_peer_cred);
 	put_pid(sk->sk_peer_pid);
@@ -1500,10 +1515,13 @@ struct sock *sk_clone_lock(const struct sock *sk, const gfp_t priority)
 		sock_copy(newsk, sk);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		newsk->sk_prot_creator = sk->sk_prot;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		/* SANITY */
 		get_net(sock_net(newsk));
 		sk_node_init(&newsk->sk_node);
@@ -1555,9 +1573,12 @@ struct sock *sk_clone_lock(const struct sock *sk, const gfp_t priority)
 
 		newsk->sk_err	   = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		newsk->sk_err_soft = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		newsk->sk_priority = 0;
 		/*
 		 * Before updating sk_refcnt, we must commit prior changes to memory
@@ -1905,10 +1926,14 @@ bool sk_page_frag_refill(struct sock *sk, struct page_frag *pfrag)
 
 		if (order)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			gfp |= __GFP_COMP | __GFP_NOWARN | __GFP_NORETRY;
 =======
 			gfp |= __GFP_COMP | __GFP_NOWARN;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			gfp |= __GFP_COMP | __GFP_NOWARN;
+>>>>>>> master
 		pfrag->page = alloc_pages(gfp, order);
 		if (likely(pfrag->page)) {
 			pfrag->offset = 0;
@@ -2096,6 +2121,7 @@ EXPORT_SYMBOL(__sk_mem_schedule);
  *	__sk_reclaim - reclaim memory_allocated
  *	@sk: socket
 <<<<<<< HEAD
+<<<<<<< HEAD
  *	@amount: number of bytes (rounded down to a SK_MEM_QUANTUM multiple)
  */
 void __sk_mem_reclaim(struct sock *sk, int amount)
@@ -2104,13 +2130,18 @@ void __sk_mem_reclaim(struct sock *sk, int amount)
 	sk_memory_allocated_sub(sk, amount);
 	sk->sk_forward_alloc -= amount << SK_MEM_QUANTUM_SHIFT;
 =======
+=======
+>>>>>>> master
  */
 void __sk_mem_reclaim(struct sock *sk)
 {
 	sk_memory_allocated_sub(sk,
 				sk->sk_forward_alloc >> SK_MEM_QUANTUM_SHIFT);
 	sk->sk_forward_alloc &= SK_MEM_QUANTUM - 1;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (sk_under_memory_pressure(sk) &&
 	    (sk_memory_allocated(sk) < sk_prot_mem_limits(sk, 0)))
@@ -2348,6 +2379,7 @@ void sock_init_data(struct socket *sock, struct sock *sk)
 		sk->sk_wq	=	sock->wq;
 		sock->sk	=	sk;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		sk->sk_uid	=	SOCK_INODE(sock)->i_uid;
 	} else {
 		sk->sk_wq	=	NULL;
@@ -2357,6 +2389,10 @@ void sock_init_data(struct socket *sock, struct sock *sk)
 	} else
 		sk->sk_wq	=	NULL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	} else
+		sk->sk_wq	=	NULL;
+>>>>>>> master
 
 	spin_lock_init(&sk->sk_dst_lock);
 	rwlock_init(&sk->sk_callback_lock);
@@ -2384,9 +2420,12 @@ void sock_init_data(struct socket *sock, struct sock *sk)
 	sk->sk_stamp = ktime_set(-1L, 0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sk->sk_pacing_rate = ~0U;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/*
 	 * Before updating sk_refcnt, we must commit prior changes to memory
 	 * (Documentation/RCU/rculist_nulls.txt for details)
@@ -2425,6 +2464,7 @@ void release_sock(struct sock *sk)
 		__release_sock(sk);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Warning : release_cb() might need to release sk ownership,
 	 * ie call sock_release_ownership(sk) before us.
 	 */
@@ -2433,11 +2473,16 @@ void release_sock(struct sock *sk)
 
 	sock_release_ownership(sk);
 =======
+=======
+>>>>>>> master
 	if (sk->sk_prot->release_cb)
 		sk->sk_prot->release_cb(sk);
 
 	sk->sk_lock.owned = 0;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (waitqueue_active(&sk->sk_lock.wq))
 		wake_up(&sk->sk_lock.wq);
 	spin_unlock_bh(&sk->sk_lock.slock);
@@ -2630,13 +2675,19 @@ void sk_common_release(struct sock *sk)
 	sk_refcnt_debug_release(sk);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	if (sk->sk_frag.page) {
 		put_page(sk->sk_frag.page);
 		sk->sk_frag.page = NULL;
 	}
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	sock_put(sk);
 }
 EXPORT_SYMBOL(sk_common_release);

@@ -38,9 +38,12 @@
 #include <linux/ip.h>
 #include <linux/module.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/udp.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 /*
  *NOTICE!!!: This file will be very big, we should
@@ -1071,6 +1074,7 @@ u8 rtl_is_special_data(struct ieee80211_hw *hw, struct sk_buff *skb, u8 is_tx)
 		return false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ip = (const struct iphdr *)(skb->data + mac_hdr_len +
 				    SNAP_SIZE + PROTOC_TYPE_SIZE);
 	ether_type = be16_to_cpup((__be16 *)
@@ -1118,6 +1122,8 @@ u8 rtl_is_special_data(struct ieee80211_hw *hw, struct sk_buff *skb, u8 is_tx)
 	}
 	return true;
 =======
+=======
+>>>>>>> master
 
 	ip = (struct iphdr *)((u8 *) skb->data + mac_hdr_len +
 			      SNAP_SIZE + PROTOC_TYPE_SIZE);
@@ -1176,7 +1182,10 @@ u8 rtl_is_special_data(struct ieee80211_hw *hw, struct sk_buff *skb, u8 is_tx)
 	}
 
 	return false;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /*********************************************************
@@ -1457,6 +1466,7 @@ void rtl_watchdog_wq_callback(void *data)
 		      rtlpriv->link_info.num_tx_inperiod) > 8) ||
 		    (rtlpriv->link_info.num_rx_inperiod > 2))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			rtlpriv->enter_ps = false;
 		else
 			rtlpriv->enter_ps = true;
@@ -1465,6 +1475,11 @@ void rtl_watchdog_wq_callback(void *data)
 		else
 			rtlpriv->enter_ps = false;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			rtlpriv->enter_ps = true;
+		else
+			rtlpriv->enter_ps = false;
+>>>>>>> master
 
 		/* LeisurePS only work in infra mode. */
 		schedule_work(&rtlpriv->works.lps_change_work);
@@ -1498,11 +1513,15 @@ void rtl_watchdog_wq_callback(void *data)
 			 * reconnect this AP
 			 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if ((rtlpriv->link_info.roam_times >= 3) &&
 			    !is_zero_ether_addr(rtlpriv->mac80211.bssid)) {
 =======
 			if (rtlpriv->link_info.roam_times >= 3) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			if (rtlpriv->link_info.roam_times >= 3) {
+>>>>>>> master
 				RT_TRACE(rtlpriv, COMP_ERR, DBG_EMERG,
 					 "AP off, try to reconnect now\n");
 				rtlpriv->link_info.roam_times = 0;

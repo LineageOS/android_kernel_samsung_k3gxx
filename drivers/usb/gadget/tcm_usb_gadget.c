@@ -1615,10 +1615,14 @@ static struct se_wwn *usbg_make_tport(
 	}
 	tport->tport_wwpn = wwpn;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	snprintf(tport->tport_name, sizeof(tport->tport_name), "%s", wnn_name);
 =======
 	snprintf(tport->tport_name, sizeof(tport->tport_name), wnn_name);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	snprintf(tport->tport_name, sizeof(tport->tport_name), wnn_name);
+>>>>>>> master
 	return &tport->tport_wwn;
 }
 

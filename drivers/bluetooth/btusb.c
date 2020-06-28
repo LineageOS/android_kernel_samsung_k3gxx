@@ -50,9 +50,12 @@ static struct usb_driver btusb_driver;
 #define BTUSB_ATH3012		0x80
 #define BTUSB_INTEL		0x100
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define BTUSB_INTEL_BOOT	0x200
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 static struct usb_device_id btusb_table[] = {
 	/* Generic Bluetooth USB device */
@@ -107,9 +110,12 @@ static struct usb_device_id btusb_table[] = {
 	/* Broadcom BCM20702A0 */
 	{ USB_DEVICE(0x0b05, 0x17b5) },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ USB_DEVICE(0x0b05, 0x17cb) },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ USB_DEVICE(0x04ca, 0x2003) },
 	{ USB_DEVICE(0x0489, 0xe042) },
 	{ USB_DEVICE(0x413c, 0x8197) },
@@ -121,6 +127,7 @@ static struct usb_device_id btusb_table[] = {
 	{ USB_VENDOR_AND_INTERFACE_INFO(0x0a5c, 0xff, 0x01, 0x01) },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* IMC Networks - Broadcom based */
 	{ USB_VENDOR_AND_INTERFACE_INFO(0x13d3, 0xff, 0x01, 0x01) },
 
@@ -130,6 +137,8 @@ static struct usb_device_id btusb_table[] = {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ }	/* Terminating entry */
 };
 
@@ -159,15 +168,19 @@ static struct usb_device_id blacklist_table[] = {
 	{ USB_DEVICE(0x0cf3, 0x3008), .driver_info = BTUSB_ATH3012 },
 	{ USB_DEVICE(0x0cf3, 0x311d), .driver_info = BTUSB_ATH3012 },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ USB_DEVICE(0x0cf3, 0x311e), .driver_info = BTUSB_ATH3012 },
 	{ USB_DEVICE(0x0cf3, 0x311f), .driver_info = BTUSB_ATH3012 },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ USB_DEVICE(0x0cf3, 0x817a), .driver_info = BTUSB_ATH3012 },
 	{ USB_DEVICE(0x13d3, 0x3375), .driver_info = BTUSB_ATH3012 },
 	{ USB_DEVICE(0x04ca, 0x3004), .driver_info = BTUSB_ATH3012 },
 	{ USB_DEVICE(0x04ca, 0x3005), .driver_info = BTUSB_ATH3012 },
 	{ USB_DEVICE(0x04ca, 0x3006), .driver_info = BTUSB_ATH3012 },
+<<<<<<< HEAD
 <<<<<<< HEAD
 	{ USB_DEVICE(0x04ca, 0x3007), .driver_info = BTUSB_ATH3012 },
 	{ USB_DEVICE(0x04ca, 0x3008), .driver_info = BTUSB_ATH3012 },
@@ -179,6 +192,11 @@ static struct usb_device_id blacklist_table[] = {
 	{ USB_DEVICE(0x13d3, 0x3362), .driver_info = BTUSB_ATH3012 },
 	{ USB_DEVICE(0x0cf3, 0xe004), .driver_info = BTUSB_ATH3012 },
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	{ USB_DEVICE(0x04ca, 0x3008), .driver_info = BTUSB_ATH3012 },
+	{ USB_DEVICE(0x13d3, 0x3362), .driver_info = BTUSB_ATH3012 },
+	{ USB_DEVICE(0x0cf3, 0xe004), .driver_info = BTUSB_ATH3012 },
+>>>>>>> master
 	{ USB_DEVICE(0x0930, 0x0219), .driver_info = BTUSB_ATH3012 },
 	{ USB_DEVICE(0x0489, 0xe057), .driver_info = BTUSB_ATH3012 },
 	{ USB_DEVICE(0x13d3, 0x3393), .driver_info = BTUSB_ATH3012 },
@@ -331,11 +349,14 @@ static void btusb_intr_complete(struct urb *urb)
 			hdev->stat.err_rx++;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (urb->status == -ENOENT) {
 		/* Avoid suspend failed when usb_kill_urb */
 		return;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	if (!test_bit(BTUSB_INTR_RUNNING, &data->flags))
@@ -425,11 +446,14 @@ static void btusb_bulk_complete(struct urb *urb)
 			hdev->stat.err_rx++;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (urb->status == -ENOENT) {
 		/* Avoid suspend failed when usb_kill_urb */
 		return;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	if (!test_bit(BTUSB_BULK_RUNNING, &data->flags))
@@ -525,11 +549,14 @@ static void btusb_isoc_complete(struct urb *urb)
 			}
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (urb->status == -ENOENT) {
 		/* Avoid suspend failed when usb_kill_urb */
 		return;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	if (!test_bit(BTUSB_ISOC_RUNNING, &data->flags))
@@ -1262,10 +1289,13 @@ static int btusb_setup_intel(struct hci_dev *hdev)
 	fw_ptr = fw->data;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kfree_skb(skb);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* This Intel specific command enables the manufacturer mode of the
 	 * controller.
 	 *
@@ -1487,11 +1517,14 @@ static int btusb_probe(struct usb_interface *intf,
 		hdev->setup = btusb_setup_intel;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (id->driver_info & BTUSB_INTEL_BOOT)
 		set_bit(HCI_QUIRK_RAW_DEVICE, &hdev->quirks);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Interface numbers are hardcoded in the specification */
 	data->isoc = usb_ifnum_to_if(data->udev, 1);
 

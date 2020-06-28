@@ -1101,9 +1101,12 @@ xfs_trans_apply_sb_deltas(
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xfs_trans_buf_set_type(tp, bp, XFS_BLFT_SB_BUF);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (whole)
 		/*
 		 * Log the whole thing, the fields are noncontiguous.

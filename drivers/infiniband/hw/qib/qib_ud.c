@@ -58,15 +58,19 @@ static void qib_ud_loopback(struct qib_qp *sqp, struct qib_swqe *swqe)
 	struct ib_wc wc;
 	u32 length;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	enum ib_qp_type sqptype, dqptype;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	qp = qib_lookup_qpn(ibp, swqe->wr.wr.ud.remote_qpn);
 	if (!qp) {
 		ibp->n_pkt_drops++;
 		return;
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	sqptype = sqp->ibqp.qp_type == IB_QPT_GSI ?
@@ -78,6 +82,9 @@ static void qib_ud_loopback(struct qib_qp *sqp, struct qib_swqe *swqe)
 =======
 	if (qp->ibqp.qp_type != sqp->ibqp.qp_type ||
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (qp->ibqp.qp_type != sqp->ibqp.qp_type ||
+>>>>>>> master
 	    !(ib_qib_state_ops[qp->state] & QIB_PROCESS_RECV_OK)) {
 		ibp->n_pkt_drops++;
 		goto drop;

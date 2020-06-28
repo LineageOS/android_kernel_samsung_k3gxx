@@ -469,10 +469,14 @@ static int vfio_msi_enable(struct vfio_pci_device *vdev, int nvec, bool msix)
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vdev->ctx = kcalloc(nvec, sizeof(struct vfio_pci_irq_ctx), GFP_KERNEL);
 =======
 	vdev->ctx = kzalloc(nvec * sizeof(struct vfio_pci_irq_ctx), GFP_KERNEL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	vdev->ctx = kzalloc(nvec * sizeof(struct vfio_pci_irq_ctx), GFP_KERNEL);
+>>>>>>> master
 	if (!vdev->ctx)
 		return -ENOMEM;
 

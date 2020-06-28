@@ -1354,9 +1354,13 @@ config SCSI_LPFC
 	depends on PCI && SCSI
 	select SCSI_FC_ATTRS
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	select GENERIC_CSUM
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	select GENERIC_CSUM
+>>>>>>> master
 	select CRC_T10DIF
 	help
           This lpfc driver supports the Emulex LightPulse

@@ -105,18 +105,24 @@ loff_t dcache_dir_lseek(struct file *file, loff_t offset, int whence)
 			spin_lock(&dentry->d_lock);
 			/* d_lock not required for cursor */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			list_del(&cursor->d_child);
 			p = dentry->d_subdirs.next;
 			while (n && p != &dentry->d_subdirs) {
 				struct dentry *next;
 				next = list_entry(p, struct dentry, d_child);
 =======
+=======
+>>>>>>> master
 			list_del(&cursor->d_u.d_child);
 			p = dentry->d_subdirs.next;
 			while (n && p != &dentry->d_subdirs) {
 				struct dentry *next;
 				next = list_entry(p, struct dentry, d_u.d_child);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				spin_lock_nested(&next->d_lock, DENTRY_D_LOCK_NESTED);
 				if (simple_positive(next))
 					n--;
@@ -124,10 +130,14 @@ loff_t dcache_dir_lseek(struct file *file, loff_t offset, int whence)
 				p = p->next;
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 			list_add_tail(&cursor->d_child, p);
 =======
 			list_add_tail(&cursor->d_u.d_child, p);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			list_add_tail(&cursor->d_u.d_child, p);
+>>>>>>> master
 			spin_unlock(&dentry->d_lock);
 		}
 	}
@@ -152,10 +162,14 @@ int dcache_readdir(struct file * filp, void * dirent, filldir_t filldir)
 	struct dentry *dentry = filp->f_path.dentry;
 	struct dentry *cursor = filp->private_data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct list_head *p, *q = &cursor->d_child;
 =======
 	struct list_head *p, *q = &cursor->d_u.d_child;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct list_head *p, *q = &cursor->d_u.d_child;
+>>>>>>> master
 	ino_t ino;
 	int i = filp->f_pos;
 
@@ -182,10 +196,14 @@ int dcache_readdir(struct file * filp, void * dirent, filldir_t filldir)
 			for (p=q->next; p != &dentry->d_subdirs; p=p->next) {
 				struct dentry *next;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				next = list_entry(p, struct dentry, d_child);
 =======
 				next = list_entry(p, struct dentry, d_u.d_child);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				next = list_entry(p, struct dentry, d_u.d_child);
+>>>>>>> master
 				spin_lock_nested(&next->d_lock, DENTRY_D_LOCK_NESTED);
 				if (!simple_positive(next)) {
 					spin_unlock(&next->d_lock);
@@ -310,10 +328,14 @@ int simple_empty(struct dentry *dentry)
 
 	spin_lock(&dentry->d_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	list_for_each_entry(child, &dentry->d_subdirs, d_child) {
 =======
 	list_for_each_entry(child, &dentry->d_subdirs, d_u.d_child) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	list_for_each_entry(child, &dentry->d_subdirs, d_u.d_child) {
+>>>>>>> master
 		spin_lock_nested(&child->d_lock, DENTRY_D_LOCK_NESTED);
 		if (simple_positive(child)) {
 			spin_unlock(&child->d_lock);

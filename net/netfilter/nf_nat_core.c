@@ -488,6 +488,7 @@ static int nf_nat_proto_remove(struct nf_conn *i, void *data)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int nf_nat_proto_clean(struct nf_conn *ct, void *data)
 {
 	struct nf_conn_nat *nat = nfct_nat(ct);
@@ -523,6 +524,8 @@ static int nf_nat_proto_clean(struct nf_conn *ct, void *data)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static void nf_nat_l4proto_clean(u8 l3proto, u8 l4proto)
 {
 	struct nf_nat_proto_clean clean = {
@@ -786,10 +789,14 @@ static void __net_exit nf_nat_net_exit(struct net *net)
 	struct nf_nat_proto_clean clean = {};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nf_ct_iterate_cleanup(net, nf_nat_proto_clean, &clean);
 =======
 	nf_ct_iterate_cleanup(net, &nf_nat_proto_remove, &clean);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	nf_ct_iterate_cleanup(net, &nf_nat_proto_remove, &clean);
+>>>>>>> master
 	synchronize_rcu();
 	nf_ct_free_hashtable(net->ct.nat_bysource, net->ct.nat_htable_size);
 }
@@ -861,10 +868,13 @@ static void __exit nf_nat_cleanup(void)
 	RCU_INIT_POINTER(nf_nat_decode_session_hook, NULL);
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 	synchronize_rcu();
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	for (i = 0; i < NFPROTO_NUMPROTO; i++)
 		kfree(nf_nat_l4protos[i]);
 	synchronize_net();

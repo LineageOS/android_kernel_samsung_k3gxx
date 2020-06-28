@@ -128,10 +128,14 @@ struct arizona_extcon_info {
 	int jack_flips;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int hpdet_ip_version;
 =======
 	int hpdet_ip;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int hpdet_ip;
+>>>>>>> master
 	const struct arizona_hpdet_d_trims *hpdet_d_trims;
 	const struct arizona_hpdet_calibration_data *calib_data;
 	int calib_data_size;
@@ -294,6 +298,7 @@ static void arizona_extcon_hp_clamp(struct arizona_extcon_info *info,
 	unsigned int cap_sel = 0;
 	unsigned int edre_reg = 0, edre_val = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int ep_sel = 0;
 	int ret;
 
@@ -304,6 +309,10 @@ static void arizona_extcon_hp_clamp(struct arizona_extcon_info *info,
 	int ret;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int ret;
+
+>>>>>>> master
 	switch (arizona->type) {
 	case WM5102:
 	case WM8997:
@@ -353,18 +362,24 @@ static void arizona_extcon_hp_clamp(struct arizona_extcon_info *info,
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	arizona->hpdet_clamp = clamp;
 
 	/* Keep the HP output stages disabled while doing the clamp */
 	if (clamp && !ep_sel) {
 =======
+=======
+>>>>>>> master
 	mutex_lock(&arizona->dapm->card->dapm_mutex);
 
 	arizona->hpdet_clamp = clamp;
 
 	/* Keep the HP output stages disabled while doing the clamp */
 	if (clamp) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		ret = regmap_update_bits(arizona->regmap,
 					 ARIZONA_OUTPUT_ENABLES_1,
 					 ARIZONA_OUT1L_ENA |
@@ -376,10 +391,14 @@ static void arizona_extcon_hp_clamp(struct arizona_extcon_info *info,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (edre_reg && !ep_sel) {
 =======
 	if (edre_reg) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (edre_reg) {
+>>>>>>> master
 			ret = regmap_write(arizona->regmap, edre_reg, edre_val);
 			if (ret != 0)
 				dev_warn(arizona->dev,
@@ -403,11 +422,15 @@ static void arizona_extcon_hp_clamp(struct arizona_extcon_info *info,
 
 	/* Restore the desired state while not doing the clamp */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!clamp && (arizona->hp_impedance >
 			arizona->pdata.hpdet_short_circuit_imp) && !ep_sel) {
 =======
 	if (!clamp && (arizona->hp_impedance > arizona->pdata.hpdet_short_circuit_imp)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!clamp && (arizona->hp_impedance > arizona->pdata.hpdet_short_circuit_imp)) {
+>>>>>>> master
 		ret = regmap_update_bits(arizona->regmap,
 					 ARIZONA_OUTPUT_ENABLES_1,
 					 ARIZONA_OUT1L_ENA |
@@ -503,7 +526,10 @@ static int arizona_micd_adc_read(struct arizona_extcon_info *info)
 	val &= ARIZONA_ACCDET_MODE_MASK;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	if ((info->detecting) && (val == ARIZONA_ACCDET_MODE_ADC)) {
 		bool micd_ena;
 
@@ -520,7 +546,10 @@ static int arizona_micd_adc_read(struct arizona_extcon_info *info)
 		}
 	}
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Must disable MICD before we read the ADCVAL */
 	ret = regmap_update_bits(arizona->regmap, ARIZONA_MIC_DETECT_1,
 				 ARIZONA_MICD_ENA, 0);
@@ -645,10 +674,14 @@ static int arizona_hpdet_d_calibrate(const struct arizona_extcon_info *info,
 	s64 n;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_dbg(info->arizona->dev, "hpdet_d calib range %d dac %d\n", range, dacval);
 =======
 	dev_warn(info->arizona->dev, "hpdet_d calib range %d dac %d\n", range, dacval);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	dev_warn(info->arizona->dev, "hpdet_d calib range %d dac %d\n", range, dacval);
+>>>>>>> master
 
 	val = (val * 1000000) + info->calib_data[range].dacval_adjust;
 	val = div64_s64(val, info->calib_data[range].C2);
@@ -693,10 +726,14 @@ static int arizona_hpdet_read(struct arizona_extcon_info *info)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	switch (info->hpdet_ip_version) {
 =======
 	switch (info->hpdet_ip) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	switch (info->hpdet_ip) {
+>>>>>>> master
 	case 0:
 		if (!(val & ARIZONA_HP_DONE)) {
 			dev_err(arizona->dev, "HPDET did not complete: %x\n",
@@ -758,10 +795,14 @@ static int arizona_hpdet_read(struct arizona_extcon_info *info)
 	default:
 		dev_warn(arizona->dev, "Unknown HPDET IP revision %d\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 info->hpdet_ip_version);
 =======
 			 info->hpdet_ip);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			 info->hpdet_ip);
+>>>>>>> master
 	case 2:
 		if (!(val & ARIZONA_HP_DONE_B)) {
 			dev_err(arizona->dev, "HPDET did not complete: %x\n",
@@ -842,10 +883,14 @@ static int arizona_hpdet_read(struct arizona_extcon_info *info)
 		val = (val >> ARIZONA_HP_DACVAL_SHIFT) & ARIZONA_HP_DACVAL_MASK;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (info->hpdet_ip_version == 4) {
 =======
 		if (info->hpdet_ip == 4) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (info->hpdet_ip == 4) {
+>>>>>>> master
 			ret = regmap_read(arizona->regmap,
 					  ARIZONA_HP_DACVAL,
 					  &val_down);
@@ -1744,6 +1789,7 @@ static int arizona_antenna_remove_reading(struct arizona_extcon_info *info,
 static int arizona_add_micd_levels(struct arizona_extcon_info *info);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static unsigned int arizona_antenna_get_micd_level(int imp, int range)
 {
 	unsigned int micd_lvl;
@@ -1752,6 +1798,11 @@ static int arizona_antenna_get_micd_level(int imp, int range)
 {
 	int micd_lvl;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int arizona_antenna_get_micd_level(int imp, int range)
+{
+	int micd_lvl;
+>>>>>>> master
 	int impd_lvl;
 
 	impd_lvl = imp + range;
@@ -1763,11 +1814,17 @@ static int arizona_antenna_get_micd_level(int imp, int range)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (micd_lvl == ARIZONA_NUM_MICD_BUTTON_LEVELS)
 		return -EINVAL;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (micd_lvl == ARIZONA_NUM_MICD_BUTTON_LEVELS)
+		return -EINVAL;
+
+>>>>>>> master
 	return micd_lvl;
 }
 
@@ -1777,12 +1834,16 @@ static int arizona_antenna_add_micd_level(struct arizona_extcon_info *info, int 
 	struct arizona_pdata *pdata = &arizona->pdata;
 	int i, j, micd_lvl;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret = 0;
 	unsigned int hp_imp_range_lo = ARIZONA_NUM_MICD_BUTTON_LEVELS;
 	unsigned int hp_imp_range_hi = ARIZONA_NUM_MICD_BUTTON_LEVELS;
 =======
 	int hp_imp_range_lo = -1, hp_imp_range_hi = -1, ret = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int hp_imp_range_lo = -1, hp_imp_range_hi = -1, ret = 0;
+>>>>>>> master
 
 	/* check if additional impedance levels can be added */
 	if (info->num_micd_ranges + 2 > ARIZONA_MAX_MICD_RANGE) {
@@ -1814,6 +1875,7 @@ static int arizona_antenna_add_micd_level(struct arizona_extcon_info *info, int 
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (hp_imp_range_lo == ARIZONA_NUM_MICD_BUTTON_LEVELS ||
 		hp_imp_range_hi == ARIZONA_NUM_MICD_BUTTON_LEVELS) {
 		hp_imp_range_hi = arizona_antenna_get_micd_level(imp, 0);
@@ -1826,6 +1888,11 @@ static int arizona_antenna_add_micd_level(struct arizona_extcon_info *info, int 
 		hp_imp_range_hi = arizona_antenna_get_micd_level(imp, 0);
 		hp_imp_range_lo = hp_imp_range_hi - 2;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (hp_imp_range_lo < 0 || hp_imp_range_hi < 0) {
+		hp_imp_range_hi = arizona_antenna_get_micd_level(imp, 0);
+		hp_imp_range_lo = hp_imp_range_hi - 2;
+>>>>>>> master
 	}
 
 	/* find index to insert an impedance level */
@@ -1843,17 +1910,23 @@ static int arizona_antenna_add_micd_level(struct arizona_extcon_info *info, int 
 
 	if (hp_imp_range_lo == hp_imp_range_hi) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if ((hp_imp_range_hi != 0) && (i == 0))
 			hp_imp_range_lo = hp_imp_range_hi - 1;
 		else if ((hp_imp_range_hi != 0) &&
 			(info->micd_ranges[i-1].max <
 			arizona_micd_levels[hp_imp_range_hi - 1]))
 =======
+=======
+>>>>>>> master
 		if (i == 0)
 			hp_imp_range_lo = hp_imp_range_hi - 1;
 		else if (info->micd_ranges[i-1].max <
 			arizona_micd_levels[hp_imp_range_hi - 1])
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			hp_imp_range_lo = hp_imp_range_hi - 1;
 		else {
 			dev_info(arizona->dev, "MICD level range cannot be added %d\n",
@@ -1919,6 +1992,7 @@ static int arizona_antenna_button_start(struct arizona_extcon_info *info)
 	struct arizona *arizona = info->arizona;
 	struct arizona_pdata *pdata = &arizona->pdata;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i;
 	unsigned int micd_lvl = ARIZONA_NUM_MICD_BUTTON_LEVELS;
 	unsigned int hp_imp_range_hi = ARIZONA_NUM_MICD_BUTTON_LEVELS;
@@ -1926,6 +2000,10 @@ static int arizona_antenna_button_start(struct arizona_extcon_info *info)
 	int i, micd_lvl;
 	int hp_imp_range_hi = -1;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int i, micd_lvl;
+	int hp_imp_range_hi = -1;
+>>>>>>> master
 
 	info->button_impedance = 0;
 	info->button_check = 0;
@@ -1935,10 +2013,14 @@ static int arizona_antenna_button_start(struct arizona_extcon_info *info)
 	micd_lvl = arizona_antenna_get_micd_level(arizona->hp_impedance, 0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (micd_lvl == ARIZONA_NUM_MICD_BUTTON_LEVELS)
 =======
 	if (micd_lvl < 0)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (micd_lvl < 0)
+>>>>>>> master
 		goto micd_start;
 
 	if (pdata->antenna_hp_imp_range_hi)
@@ -1946,10 +2028,14 @@ static int arizona_antenna_button_start(struct arizona_extcon_info *info)
 							pdata->antenna_hp_imp_range_hi);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (hp_imp_range_hi == ARIZONA_NUM_MICD_BUTTON_LEVELS)
 =======
 	if (hp_imp_range_hi < 0)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (hp_imp_range_hi < 0)
+>>>>>>> master
 		hp_imp_range_hi = micd_lvl;
 
 	for (i = 0; i < info->num_micd_ranges; i++) {
@@ -2442,15 +2528,19 @@ static void arizona_micd_handler(struct work_struct *work)
 			     micd_detect_work.work);
 	struct arizona *arizona = info->arizona;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int mode;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	int ret;
 
 	arizona_jds_cancel_timeout(info);
 
 	mutex_lock(&info->lock);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Must check that we are in a micd state before accessing
 	 * any codec registers
@@ -2466,22 +2556,29 @@ static void arizona_micd_handler(struct work_struct *work)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (arizona_jack_present(info, NULL) <= 0)
 		goto spurious;
 
 	arizona_hs_mic_control(arizona, ARIZONA_MIC_MUTE);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	switch (mode) {
 =======
 	switch (arizona_jds_get_mode(info)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	switch (arizona_jds_get_mode(info)) {
+>>>>>>> master
 	case ARIZONA_ACCDET_MODE_MIC:
 		ret = arizona_micd_read(info);
 		break;
 	case ARIZONA_ACCDET_MODE_ADC:
 		ret = arizona_micd_adc_read(info);
 		break;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	default:	/* we can't get here but compiler still warns */
 		ret = 0;
@@ -2490,6 +2587,10 @@ static void arizona_micd_handler(struct work_struct *work)
 	default:
 		goto spurious;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	default:
+		goto spurious;
+>>>>>>> master
 	}
 
 	if (ret == -EAGAIN)
@@ -2562,6 +2663,7 @@ static irqreturn_t arizona_micdet(int irq, void *data)
 	mutex_unlock(&info->lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Defer to the workqueue to ensure serialization
 	 * and prevent race conditions if an IRQ occurs while
 	 * running the delayed work
@@ -2569,12 +2671,17 @@ static irqreturn_t arizona_micdet(int irq, void *data)
 	schedule_delayed_work(&info->micd_detect_work,
 				msecs_to_jiffies(debounce));
 =======
+=======
+>>>>>>> master
 	if (debounce)
 		schedule_delayed_work(&info->micd_detect_work,
 				      msecs_to_jiffies(debounce));
 	else
 		arizona_micd_handler(&info->micd_detect_work.work);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return IRQ_HANDLED;
 }
@@ -2734,6 +2841,7 @@ static irqreturn_t arizona_jackdet(int irq, void *data)
 	struct arizona_extcon_info *info = data;
 	struct arizona *arizona = info->arizona;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int reg, val, mask;
 	bool cancelled_hp, cancelled_state;
 	int i, present;
@@ -2742,6 +2850,11 @@ static irqreturn_t arizona_jackdet(int irq, void *data)
 	bool cancelled_hp, cancelled_state;
 	int i;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned int reg, val, present, mask;
+	bool cancelled_hp, cancelled_state;
+	int i;
+>>>>>>> master
 
 	cancelled_hp = cancel_delayed_work_sync(&info->hpdet_work);
 	cancelled_state = arizona_jds_cancel_timeout(info);
@@ -2840,10 +2953,13 @@ static irqreturn_t arizona_jackdet(int irq, void *data)
 		arizona_hs_mic_control(arizona, ARIZONA_MIC_MUTE);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		arizona_hs_mic_control(arizona, ARIZONA_MIC_MUTE);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		info->num_hpdet_res = 0;
 		for (i = 0; i < ARRAY_SIZE(info->hpdet_res); i++)
 			info->hpdet_res[i] = 0;
@@ -2854,9 +2970,13 @@ static irqreturn_t arizona_jackdet(int irq, void *data)
 		info->micd_count = 0;
 		info->moisture_count = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		arizona->hp_impedance = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		arizona->hp_impedance = 0;
+>>>>>>> master
 		arizona_jds_set_state(info, NULL);
 
 		for (i = 0; i < info->num_micd_ranges; i++)
@@ -2869,8 +2989,11 @@ static irqreturn_t arizona_jackdet(int irq, void *data)
 		regmap_update_bits(arizona->regmap, reg, mask, mask);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		arizona_set_headphone_imp(info, ARIZONA_HP_Z_OPEN);
 =======
+=======
+>>>>>>> master
 		switch (arizona->type) {
 		case WM5110:
 			arizona_wm5110_tune_headphone(info, ARIZONA_HP_Z_OPEN);
@@ -2886,7 +3009,10 @@ static irqreturn_t arizona_jackdet(int irq, void *data)
 		if (arizona->pdata.hpdet_cb) {
 			arizona->pdata.hpdet_cb(ARIZONA_HP_Z_OPEN);
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		if (arizona->pdata.micd_cb)
 			arizona->pdata.micd_cb(false);
@@ -3486,10 +3612,14 @@ static int arizona_extcon_probe(struct platform_device *pdev)
 		default:
 			info->micd_clamp = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			info->hpdet_ip_version = 1;
 =======
 			info->hpdet_ip = 1;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			info->hpdet_ip = 1;
+>>>>>>> master
 			break;
 		}
 		break;
@@ -3501,10 +3631,14 @@ static int arizona_extcon_probe(struct platform_device *pdev)
 		default:
 			info->micd_clamp = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			info->hpdet_ip_version = 3;
 =======
 			info->hpdet_ip = 3;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			info->hpdet_ip = 3;
+>>>>>>> master
 			break;
 		}
 		break;
@@ -3512,18 +3646,24 @@ static int arizona_extcon_probe(struct platform_device *pdev)
 	case WM1840:
 		info->micd_clamp = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		info->hpdet_ip_version = 4;
 		break;
 	default:
 		info->micd_clamp = true;
 		info->hpdet_ip_version = 2;
 =======
+=======
+>>>>>>> master
 		info->hpdet_ip = 4;
 		break;
 	default:
 		info->micd_clamp = true;
 		info->hpdet_ip = 2;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		break;
 	}
 
@@ -3674,27 +3814,37 @@ static int arizona_extcon_probe(struct platform_device *pdev)
 	pm_runtime_get_sync(&pdev->dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	switch (info->hpdet_ip_version) {
 	case 3:
 		arizona_hpdet_d_read_calibration(info);
 		if (!info->hpdet_d_trims)
 			info->hpdet_ip_version = 2;
 =======
+=======
+>>>>>>> master
 	switch (info->hpdet_ip) {
 	case 3:
 		arizona_hpdet_d_read_calibration(info);
 		if (!info->hpdet_d_trims)
 			info->hpdet_ip = 2;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		break;
 	case 4:
 		arizona_hpdet_clearwater_read_calibration(info);
 		if (!info->hpdet_d_trims)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			info->hpdet_ip_version = 2;
 =======
 			info->hpdet_ip = 2;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			info->hpdet_ip = 2;
+>>>>>>> master
 		else
 			/* as per the hardware steps - below bit needs to be set
 			 * for clearwater for accurate HP impedance detection */

@@ -48,6 +48,7 @@ static inline void shm_exit_ns(struct ipc_namespace *ns) { }
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct ipc_rcu {
 	struct rcu_head rcu;
 	atomic_t refcount;
@@ -57,6 +58,8 @@ struct ipc_rcu {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  * Structure that holds the parameters needed by the ipc operations
  * (see after)
@@ -105,16 +108,22 @@ void __init ipc_init_proc_interface(const char *path, const char *header,
 #define ipcid_to_seqx(id) ((id) / SEQ_MULTIPLIER)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* must be called with ids->rwsem acquired for writing */
 int ipc_addid(struct ipc_ids *, struct kern_ipc_perm *, int);
 
 /* must be called with ids->rwsem acquired for reading */
 =======
+=======
+>>>>>>> master
 /* must be called with ids->rw_mutex acquired for writing */
 int ipc_addid(struct ipc_ids *, struct kern_ipc_perm *, int);
 
 /* must be called with ids->rw_mutex acquired for reading */
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 int ipc_get_maxid(struct ipc_ids *);
 
 /* must be called with both locks acquired. */
@@ -138,11 +147,15 @@ void ipc_free(void* ptr, int size);
 void* ipc_rcu_alloc(int size);
 int ipc_rcu_getref(void *ptr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void ipc_rcu_putref(void *ptr, void (*func)(struct rcu_head *head));
 void ipc_rcu_free(struct rcu_head *head);
 =======
 void ipc_rcu_putref(void *ptr);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+void ipc_rcu_putref(void *ptr);
+>>>>>>> master
 
 struct kern_ipc_perm *ipc_lock(struct ipc_ids *, int);
 struct kern_ipc_perm *ipc_obtain_object(struct ipc_ids *ids, int id);
@@ -154,11 +167,17 @@ struct kern_ipc_perm *ipcctl_pre_down_nolock(struct ipc_namespace *ns,
 					     struct ipc_ids *ids, int id, int cmd,
 					     struct ipc64_perm *perm, int extra_perm);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 struct kern_ipc_perm *ipcctl_pre_down(struct ipc_namespace *ns,
 				      struct ipc_ids *ids, int id, int cmd,
 				      struct ipc64_perm *perm, int extra_perm);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+struct kern_ipc_perm *ipcctl_pre_down(struct ipc_namespace *ns,
+				      struct ipc_ids *ids, int id, int cmd,
+				      struct ipc64_perm *perm, int extra_perm);
+>>>>>>> master
 
 #ifndef CONFIG_ARCH_WANT_IPC_PARSE_VERSION
   /* On IA-64, we always use the "64-bit version" of the IPC structures.  */ 
@@ -169,6 +188,7 @@ int ipc_parse_version (int *cmd);
 
 extern void free_msg(struct msg_msg *msg);
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern struct msg_msg *load_msg(const void __user *src, size_t len);
 extern struct msg_msg *copy_msg(struct msg_msg *src, struct msg_msg *dst);
 extern int store_msg(void __user *dest, struct msg_msg *msg, size_t len);
@@ -177,6 +197,11 @@ extern struct msg_msg *load_msg(const void __user *src, int len);
 extern struct msg_msg *copy_msg(struct msg_msg *src, struct msg_msg *dst);
 extern int store_msg(void __user *dest, struct msg_msg *msg, int len);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+extern struct msg_msg *load_msg(const void __user *src, int len);
+extern struct msg_msg *copy_msg(struct msg_msg *src, struct msg_msg *dst);
+extern int store_msg(void __user *dest, struct msg_msg *msg, int len);
+>>>>>>> master
 
 extern void recompute_msgmni(struct ipc_namespace *);
 
@@ -190,6 +215,7 @@ static inline int ipc_checkid(struct kern_ipc_perm *ipcp, int uid)
 	return uid / SEQ_MULTIPLIER != ipcp->seq;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static inline void ipc_lock_object(struct kern_ipc_perm *perm)
 {
@@ -213,6 +239,8 @@ static inline void ipc_unlock(struct kern_ipc_perm *perm)
 }
 
 =======
+=======
+>>>>>>> master
 static inline void ipc_lock_by_ptr(struct kern_ipc_perm *perm)
 {
 	rcu_read_lock();
@@ -231,7 +259,10 @@ static inline void ipc_lock_object(struct kern_ipc_perm *perm)
 }
 
 struct kern_ipc_perm *ipc_lock_check(struct ipc_ids *ids, int id);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 struct kern_ipc_perm *ipc_obtain_object_check(struct ipc_ids *ids, int id);
 int ipcget(struct ipc_namespace *ns, struct ipc_ids *ids,
 			struct ipc_ops *ops, struct ipc_params *params);

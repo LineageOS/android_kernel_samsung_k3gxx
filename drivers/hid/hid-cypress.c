@@ -40,11 +40,14 @@ static __u8 *cp_report_fixup(struct hid_device *hdev, __u8 *rdesc,
 		return rdesc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (*rsize < 4)
 		return rdesc;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	for (i = 0; i < *rsize - 4; i++)
 		if (rdesc[i] == 0x29 && rdesc[i + 2] == 0x19) {
 			__u8 tmp;

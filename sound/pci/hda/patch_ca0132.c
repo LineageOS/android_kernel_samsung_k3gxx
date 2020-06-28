@@ -2663,7 +2663,10 @@ static bool dspload_wait_loaded(struct hda_codec *codec)
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
  * PCM stuffs
  */
 static void ca0132_setup_stream(struct hda_codec *codec, hda_nid_t nid,
@@ -2718,7 +2721,10 @@ static void ca0132_cleanup_stream(struct hda_codec *codec, hda_nid_t nid)
 }
 
 /*
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  * PCM callbacks
  */
 static int ca0132_playback_pcm_prepare(struct hda_pcm_stream *hinfo,
@@ -2730,10 +2736,14 @@ static int ca0132_playback_pcm_prepare(struct hda_pcm_stream *hinfo,
 	struct ca0132_spec *spec = codec->spec;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	snd_hda_codec_setup_stream(codec, spec->dacs[0], stream_tag, 0, format);
 =======
 	ca0132_setup_stream(codec, spec->dacs[0], stream_tag, 0, format);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ca0132_setup_stream(codec, spec->dacs[0], stream_tag, 0, format);
+>>>>>>> master
 
 	return 0;
 }
@@ -2753,10 +2763,14 @@ static int ca0132_playback_pcm_cleanup(struct hda_pcm_stream *hinfo,
 		msleep(50);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	snd_hda_codec_cleanup_stream(codec, spec->dacs[0]);
 =======
 	ca0132_cleanup_stream(codec, spec->dacs[0]);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ca0132_cleanup_stream(codec, spec->dacs[0]);
+>>>>>>> master
 
 	return 0;
 }
@@ -2834,14 +2848,20 @@ static int ca0132_capture_pcm_prepare(struct hda_pcm_stream *hinfo,
 					struct snd_pcm_substream *substream)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	snd_hda_codec_setup_stream(codec, hinfo->nid,
 				   stream_tag, 0, format);
 =======
+=======
+>>>>>>> master
 	struct ca0132_spec *spec = codec->spec;
 
 	ca0132_setup_stream(codec, spec->adcs[substream->number],
 			    stream_tag, 0, format);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return 0;
 }
@@ -2856,10 +2876,14 @@ static int ca0132_capture_pcm_cleanup(struct hda_pcm_stream *hinfo,
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	snd_hda_codec_cleanup_stream(codec, hinfo->nid);
 =======
 	ca0132_cleanup_stream(codec, hinfo->nid);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ca0132_cleanup_stream(codec, hinfo->nid);
+>>>>>>> master
 	return 0;
 }
 
@@ -4456,11 +4480,14 @@ static void ca0132_download_dsp(struct hda_codec *codec)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (spec->dsp_state == DSP_DOWNLOAD_FAILED)
 		return; /* don't retry failures */
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	chipio_enable_clocks(codec);
 	spec->dsp_state = DSP_DOWNLOADING;
 	if (!ca0132_download_dsp_images(codec))
@@ -4638,11 +4665,15 @@ static int ca0132_init(struct hda_codec *codec)
 	int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (spec->dsp_state != DSP_DOWNLOAD_FAILED)
 		spec->dsp_state = DSP_DOWNLOAD_INIT;
 =======
 	spec->dsp_state = DSP_DOWNLOAD_INIT;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	spec->dsp_state = DSP_DOWNLOAD_INIT;
+>>>>>>> master
 	spec->curr_chip_addx = INVALID_CHIP_ADDRESS;
 
 	snd_hda_power_up(codec);
@@ -4754,9 +4785,12 @@ static int patch_ca0132(struct hda_codec *codec)
 	spec->codec = codec;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spec->dsp_state = DSP_DOWNLOAD_INIT;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	spec->num_mixers = 1;
 	spec->mixers[0] = ca0132_mixer;
 
@@ -4778,10 +4812,13 @@ static int patch_ca0132(struct hda_codec *codec)
 
 	codec->patch_ops = ca0132_patch_ops;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	codec->pcm_format_first = 1;
 	codec->no_sticky_stream = 1;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return 0;
 }

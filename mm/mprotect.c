@@ -136,9 +136,12 @@ static inline unsigned long change_pmd_range(struct vm_area_struct *vma,
 	unsigned long next;
 	unsigned long pages = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long nr_huge_updates = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	bool all_same_node;
 
 	pmd = pmd_offset(pud, addr);
@@ -151,9 +154,12 @@ static inline unsigned long change_pmd_range(struct vm_area_struct *vma,
 						 prot_numa)) {
 				pages += HPAGE_PMD_NR;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				nr_huge_updates++;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				continue;
 			}
 			/* fall through */
@@ -174,11 +180,14 @@ static inline unsigned long change_pmd_range(struct vm_area_struct *vma,
 	} while (pmd++, addr = next, addr != end);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (nr_huge_updates)
 		count_vm_numa_events(NUMA_HUGE_PTE_UPDATES, nr_huge_updates);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return pages;
 }
 
@@ -216,9 +225,12 @@ static unsigned long change_protection_range(struct vm_area_struct *vma,
 	pgd = pgd_offset(mm, addr);
 	flush_cache_range(vma, addr, end);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	set_tlb_flush_pending(mm);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	do {
 		next = pgd_addr_end(addr, end);
 		if (pgd_none_or_clear_bad(pgd))
@@ -231,9 +243,12 @@ static unsigned long change_protection_range(struct vm_area_struct *vma,
 	if (pages)
 		flush_tlb_range(vma, start, end);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	clear_tlb_flush_pending(mm);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return pages;
 }

@@ -76,6 +76,7 @@ static struct regdata mb86a20s_init1[] = {
 
 static struct regdata mb86a20s_init2[] = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ 0x50, 0xd1 }, { 0x51, 0x22 },
 	{ 0x39, 0x01 },
 	{ 0x71, 0x00 },
@@ -98,6 +99,8 @@ static struct regdata mb86a20s_init2[] = {
 	{ 0x04, 0x29 }, { 0x05, 0x0a },
 	{ 0x04, 0x32 }, { 0x05, 0x0a },
 =======
+=======
+>>>>>>> master
 	{ 0x28, 0x22 }, { 0x29, 0x00 }, { 0x2a, 0x1f }, { 0x2b, 0xf0 },
 	{ 0x3b, 0x21 },
 	{ 0x3c, 0x38 },
@@ -117,7 +120,10 @@ static struct regdata mb86a20s_init2[] = {
 	{ 0x04, 0x1e }, { 0x05, 0x00 },
 	{ 0x04, 0x29 }, { 0x05, 0x64 },
 	{ 0x04, 0x32 }, { 0x05, 0x02 },
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ 0x04, 0x14 }, { 0x05, 0x02 },
 	{ 0x04, 0x04 }, { 0x05, 0x00 },
 	{ 0x04, 0x05 }, { 0x05, 0x22 },
@@ -126,10 +132,15 @@ static struct regdata mb86a20s_init2[] = {
 	{ 0x04, 0x12 }, { 0x05, 0x00 },
 	{ 0x04, 0x13 }, { 0x05, 0xff },
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	{ 0x04, 0x15 }, { 0x05, 0x4e },
 	{ 0x04, 0x16 }, { 0x05, 0x20 },
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	{ 0x04, 0x15 }, { 0x05, 0x4e },
+	{ 0x04, 0x16 }, { 0x05, 0x20 },
+>>>>>>> master
 
 	/*
 	 * On this demod, when the bit count reaches the count below,
@@ -184,6 +195,7 @@ static struct regdata mb86a20s_init2[] = {
 	{ 0x45, 0x04 },				/* CN symbol 4 */
 	{ 0x48, 0x04 },				/* CN manual mode */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ 0x50, 0xd5 }, { 0x51, 0x01 },
 	{ 0x50, 0xd6 }, { 0x51, 0x1f },
 	{ 0x50, 0xd2 }, { 0x51, 0x03 },
@@ -215,6 +227,8 @@ static struct regdata mb86a20s_init2[] = {
 	{ 0x28, 0x1d }, { 0x29, 0x00 }, { 0x2a, 0x04 }, { 0x2b, 0xba },
 	{ 0x28, 0x1e }, { 0x29, 0x00 }, { 0x2a, 0x06 }, { 0x2b, 0x14 },
 =======
+=======
+>>>>>>> master
 
 	{ 0x50, 0xd5 }, { 0x51, 0x01 },		/* Serial */
 	{ 0x50, 0xd6 }, { 0x51, 0x1f },
@@ -252,7 +266,10 @@ static struct regdata mb86a20s_init2[] = {
 	{ 0x28, 0x1c }, { 0x29, 0x00 }, { 0x2a, 0x00 }, { 0x2b, 0x3d },
 	{ 0x28, 0x1d }, { 0x29, 0x00 }, { 0x2a, 0x00 }, { 0x2b, 0x94 },
 	{ 0x28, 0x1e }, { 0x29, 0x00 }, { 0x2a, 0x00 }, { 0x2b, 0xba },
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ 0x50, 0x1e }, { 0x51, 0x5d },
 	{ 0x50, 0x22 }, { 0x51, 0x00 },
 	{ 0x50, 0x23 }, { 0x51, 0xc8 },
@@ -262,12 +279,18 @@ static struct regdata mb86a20s_init2[] = {
 	{ 0x50, 0x27 }, { 0x51, 0xc3 },
 	{ 0x50, 0x39 }, { 0x51, 0x02 },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ 0x50, 0xd5 }, { 0x51, 0x01 },
 =======
 	{ 0xec, 0x0f },
 	{ 0xeb, 0x1f },
 	{ 0x28, 0x6a }, { 0x29, 0x00 }, { 0x2a, 0x00 }, { 0x2b, 0x00 },
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	{ 0xec, 0x0f },
+	{ 0xeb, 0x1f },
+	{ 0x28, 0x6a }, { 0x29, 0x00 }, { 0x2a, 0x00 }, { 0x2b, 0x00 },
+>>>>>>> master
 	{ 0xd0, 0x00 },
 };
 
@@ -387,6 +410,7 @@ static int mb86a20s_read_status(struct dvb_frontend *fe, fe_status_t *status)
 		*status |= FE_HAS_SYNC;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * Actually, on state S8, it starts receiving TS, but the TS
 	 * output is only on normal state after the transition to S9.
@@ -395,6 +419,9 @@ static int mb86a20s_read_status(struct dvb_frontend *fe, fe_status_t *status)
 =======
 	if (val >= 8)				/* Maybe 9? */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (val >= 8)				/* Maybe 9? */
+>>>>>>> master
 		*status |= FE_HAS_LOCK;
 
 	dev_dbg(&state->i2c->dev, "%s: Status = 0x%02x (state = %d)\n",
@@ -1933,6 +1960,7 @@ static int mb86a20s_initfe(struct dvb_frontend *fe)
 		__func__, state->if_freq, (long long)pll);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!state->config->is_serial)
 		regD5 &= ~1;
 
@@ -1943,6 +1971,8 @@ static int mb86a20s_initfe(struct dvb_frontend *fe)
 	if (rc < 0)
 		goto err;
 =======
+=======
+>>>>>>> master
 	if (!state->config->is_serial) {
 		regD5 &= ~1;
 
@@ -1953,7 +1983,10 @@ static int mb86a20s_initfe(struct dvb_frontend *fe)
 		if (rc < 0)
 			goto err;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	rc = mb86a20s_writeregdata(state, mb86a20s_init2);
 	if (rc < 0)
@@ -2167,6 +2200,7 @@ static void mb86a20s_release(struct dvb_frontend *fe)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int mb86a20s_get_frontend_algo(struct dvb_frontend *fe)
 {
         return DVBFE_ALGO_HW;
@@ -2174,6 +2208,8 @@ static int mb86a20s_get_frontend_algo(struct dvb_frontend *fe)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static struct dvb_frontend_ops mb86a20s_ops;
 
 struct dvb_frontend *mb86a20s_attach(const struct mb86a20s_config *config,
@@ -2248,9 +2284,12 @@ static struct dvb_frontend_ops mb86a20s_ops = {
 	.read_signal_strength = mb86a20s_read_signal_strength_from_cache,
 	.tune = mb86a20s_tune,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.get_frontend_algo = mb86a20s_get_frontend_algo,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 
 MODULE_DESCRIPTION("DVB Frontend module for Fujitsu mb86A20s hardware");

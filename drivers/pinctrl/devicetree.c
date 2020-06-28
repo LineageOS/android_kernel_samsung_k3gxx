@@ -93,14 +93,20 @@ static int dt_remember_or_free_map(struct pinctrl *p, const char *statename,
 	list_add_tail(&dt_map->node, &p->dt_maps);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return pinctrl_register_map(map, num_maps, false);
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_MULTITHREAD_PROBE
 	return pinctrl_register_map(map, num_maps, false, false);
 #else
 	return pinctrl_register_map(map, num_maps, false, true);
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 struct pinctrl_dev *of_pinctrl_get(struct device_node *np)

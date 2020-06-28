@@ -462,10 +462,14 @@ config ARM_CHARLCD
 
 config BMP085
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tristate
 =======
 	bool
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	bool
+>>>>>>> master
 	depends on SYSFS
 
 config BMP085_I2C

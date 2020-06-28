@@ -71,21 +71,29 @@ static int snd_timer_user_status_compat(struct file *file,
 {
 	struct snd_timer_user *tu;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct snd_timer_status32 status;
 =======
 	struct snd_timer_status status;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct snd_timer_status status;
+>>>>>>> master
 	
 	tu = file->private_data;
 	if (snd_BUG_ON(!tu->timeri))
 		return -ENXIO;
 	memset(&status, 0, sizeof(status));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	status.tstamp.tv_sec = tu->tstamp.tv_sec;
 	status.tstamp.tv_nsec = tu->tstamp.tv_nsec;
 =======
 	status.tstamp = tu->tstamp;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	status.tstamp = tu->tstamp;
+>>>>>>> master
 	status.resolution = snd_timer_resolution(tu->timeri);
 	status.lost = tu->timeri->lost;
 	status.overrun = tu->overrun;
@@ -98,6 +106,7 @@ static int snd_timer_user_status_compat(struct file *file,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_X86_X32
 /* X32 ABI has the same struct as x86-64 */
 #define snd_timer_user_status_x32(file, s) \
@@ -106,6 +115,8 @@ static int snd_timer_user_status_compat(struct file *file,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  */
 
@@ -113,11 +124,14 @@ enum {
 	SNDRV_TIMER_IOCTL_INFO32 = _IOR('T', 0x11, struct snd_timer_info32),
 	SNDRV_TIMER_IOCTL_STATUS32 = _IOW('T', 0x14, struct snd_timer_status32),
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_X86_X32
 	SNDRV_TIMER_IOCTL_STATUS_X32 = _IOW('T', 0x14, struct snd_timer_status),
 #endif /* CONFIG_X86_X32 */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 
 static long snd_timer_user_ioctl_compat(struct file *file, unsigned int cmd, unsigned long arg)
@@ -147,12 +161,15 @@ static long snd_timer_user_ioctl_compat(struct file *file, unsigned int cmd, uns
 	case SNDRV_TIMER_IOCTL_STATUS32:
 		return snd_timer_user_status_compat(file, argp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_X86_X32
 	case SNDRV_TIMER_IOCTL_STATUS_X32:
 		return snd_timer_user_status_x32(file, argp);
 #endif /* CONFIG_X86_X32 */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 	return -ENOIOCTLCMD;
 }

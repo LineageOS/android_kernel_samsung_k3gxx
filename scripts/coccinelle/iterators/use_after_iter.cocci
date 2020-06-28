@@ -124,10 +124,14 @@ list_remove_head(x,c,...)
 sizeof(<+...c...+>)
 |
 <<<<<<< HEAD
+<<<<<<< HEAD
  &c->member
 =======
 &c->member
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+&c->member
+>>>>>>> master
 |
 c = E
 |

@@ -1405,10 +1405,13 @@ static int snd_pcm_do_drain_init(struct snd_pcm_substream *substream, int state)
 				snd_pcm_do_start(substream, SNDRV_PCM_STATE_DRAINING);
 				snd_pcm_post_start(substream, SNDRV_PCM_STATE_DRAINING);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			} else {
 				runtime->status->state = SNDRV_PCM_STATE_SETUP;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			}
 			break;
 		case SNDRV_PCM_STATE_RUNNING:
@@ -1595,6 +1598,7 @@ static int snd_pcm_drop(struct snd_pcm_substream *substream)
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static bool is_pcm_file(struct file *file)
 {
 	struct inode *inode = file_inode(file);
@@ -1606,6 +1610,8 @@ static bool is_pcm_file(struct file *file)
 	return snd_lookup_minor_data(minor, SNDRV_DEVICE_TYPE_PCM_PLAYBACK) ||
 		snd_lookup_minor_data(minor, SNDRV_DEVICE_TYPE_PCM_CAPTURE);
 =======
+=======
+>>>>>>> master
 /* WARNING: Don't forget to fput back the file */
 static struct file *snd_pcm_file_fd(int fd, int *fput_needed)
 {
@@ -1629,7 +1635,10 @@ static struct file *snd_pcm_file_fd(int fd, int *fput_needed)
 		return NULL;
 	}
 	return file;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /*
@@ -1638,6 +1647,7 @@ static struct file *snd_pcm_file_fd(int fd, int *fput_needed)
 static int snd_pcm_link(struct snd_pcm_substream *substream, int fd)
 {
 	int res = 0;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct snd_pcm_file *pcm_file;
 	struct snd_pcm_substream *substream1;
@@ -1652,6 +1662,8 @@ static int snd_pcm_link(struct snd_pcm_substream *substream, int fd)
 	}
 	pcm_file = f.file->private_data;
 =======
+=======
+>>>>>>> master
 	struct file *file;
 	struct snd_pcm_file *pcm_file;
 	struct snd_pcm_substream *substream1;
@@ -1662,7 +1674,10 @@ static int snd_pcm_link(struct snd_pcm_substream *substream, int fd)
 	if (!file)
 		return -EBADFD;
 	pcm_file = file->private_data;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	substream1 = pcm_file->substream;
 	group = kmalloc(sizeof(*group), GFP_KERNEL);
 	if (!group) {
@@ -1697,6 +1712,7 @@ static int snd_pcm_link(struct snd_pcm_substream *substream, int fd)
  _nolock:
 	snd_card_unref(substream1->pcm->card);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kfree(group);
  _badf:
 	fdput(f);
@@ -1704,6 +1720,10 @@ static int snd_pcm_link(struct snd_pcm_substream *substream, int fd)
 	fput_light(file, fput_needed);
 	kfree(group);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	fput_light(file, fput_needed);
+	kfree(group);
+>>>>>>> master
 	return res;
 }
 
@@ -3237,10 +3257,14 @@ static const struct vm_operations_struct snd_pcm_vm_ops_data_fault = {
 #ifndef ARCH_HAS_DMA_MMAP_COHERENT
 /* This should be defined / handled globally! */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if defined(CONFIG_ARM) || defined(CONFIG_ARM64)
 =======
 #ifdef CONFIG_ARM
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#ifdef CONFIG_ARM
+>>>>>>> master
 #define ARCH_HAS_DMA_MMAP_COHERENT
 #endif
 #endif

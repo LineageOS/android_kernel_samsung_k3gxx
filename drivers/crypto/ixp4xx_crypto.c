@@ -916,9 +916,13 @@ static int ablk_perform(struct ablkcipher_request *req, int encrypt)
 		/* This was never tested by Intel
 		 * for more than one dst buffer, I think. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		BUG_ON(req->dst->length < nbytes);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		BUG_ON(req->dst->length < nbytes);
+>>>>>>> master
 		req_ctx->dst = NULL;
 		if (!chainup_buffers(dev, req->dst, nbytes, &dst_hook,
 					flags, DMA_FROM_DEVICE))

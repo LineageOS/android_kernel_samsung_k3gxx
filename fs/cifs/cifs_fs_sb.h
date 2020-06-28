@@ -46,11 +46,14 @@
 #define CIFS_MOUNT_CIFS_BACKUPUID 0x200000 /* backup intent bit for a user */
 #define CIFS_MOUNT_CIFS_BACKUPGID 0x400000 /* backup intent bit for a group */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define CIFS_MOUNT_USE_PREFIX_PATH 0x1000000 /* make subpath with unaccessible
 					      * root mountable
 					      */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 struct cifs_sb_info {
 	struct rb_root tlink_tree;
@@ -72,8 +75,11 @@ struct cifs_sb_info {
 	struct backing_dev_info bdi;
 	struct delayed_work prune_tlinks;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	char *prepath;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 #endif				/* _CIFS_FS_SB_H */

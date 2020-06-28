@@ -1372,6 +1372,7 @@ config FUTEX
 	  run glibc-based applications correctly.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 config HAVE_FUTEX_CMPXCHG
 	bool
 	depends on FUTEX
@@ -1382,6 +1383,8 @@ config HAVE_FUTEX_CMPXCHG
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 config EPOLL
 	bool "Enable eventpoll support" if EXPERT
 	default y

@@ -264,10 +264,15 @@ int unpin_extent_cache(struct extent_map_tree *tree, u64 start, u64 len,
 		goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!test_bit(EXTENT_FLAG_LOGGING, &em->flags))
 		list_move(&em->list, &tree->modified_extents);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!test_bit(EXTENT_FLAG_LOGGING, &em->flags))
+		list_move(&em->list, &tree->modified_extents);
+>>>>>>> master
 	em->generation = gen;
 	clear_bit(EXTENT_FLAG_PINNED, &em->flags);
 	em->mod_start = em->start;

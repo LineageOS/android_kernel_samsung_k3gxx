@@ -475,10 +475,13 @@ static int kvaser_usb_get_card_info(struct kvaser_usb *dev)
 
 	dev->nchannels = msg.u.cardinfo.nchannels;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (dev->nchannels > MAX_NET_DEVICES)
 		return -EINVAL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return 0;
 }
@@ -583,10 +586,14 @@ static int kvaser_usb_simple_msg_async(struct kvaser_usb_net_priv *priv,
 					  dev->bulk_out->bEndpointAddress),
 			  buf, msg->len,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			  kvaser_usb_simple_msg_callback, netdev);
 =======
 			  kvaser_usb_simple_msg_callback, priv);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			  kvaser_usb_simple_msg_callback, priv);
+>>>>>>> master
 	usb_anchor_urb(urb, &priv->tx_submitted);
 
 	err = usb_submit_urb(urb, GFP_ATOMIC);
@@ -662,13 +669,19 @@ static void kvaser_usb_rx_error(const struct kvaser_usb *dev,
 	stats = &priv->netdev->stats;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	if (status & M16C_STATE_BUS_RESET) {
 		kvaser_usb_unlink_tx_urbs(priv);
 		return;
 	}
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	skb = alloc_can_err_skb(priv->netdev, &cf);
 	if (!skb) {
 		stats->rx_dropped++;
@@ -680,10 +693,14 @@ static void kvaser_usb_rx_error(const struct kvaser_usb *dev,
 	netdev_dbg(priv->netdev, "Error status: 0x%02x\n", status);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (status & (M16C_STATE_BUS_OFF | M16C_STATE_BUS_RESET)) {
 =======
 	if (status & M16C_STATE_BUS_OFF) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (status & M16C_STATE_BUS_OFF) {
+>>>>>>> master
 		cf->can_id |= CAN_ERR_BUSOFF;
 
 		priv->can.can_stats.bus_off++;
@@ -710,12 +727,18 @@ static void kvaser_usb_rx_error(const struct kvaser_usb *dev,
 
 		new_state = CAN_STATE_ERROR_PASSIVE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (status & M16C_STATE_BUS_ERROR) {
 =======
 	}
 
 	if (status == M16C_STATE_BUS_ERROR) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	}
+
+	if (status == M16C_STATE_BUS_ERROR) {
+>>>>>>> master
 		if ((priv->can.state < CAN_STATE_ERROR_WARNING) &&
 		    ((txerr >= 96) || (rxerr >= 96))) {
 			cf->can_id |= CAN_ERR_CRTL;
@@ -726,11 +749,15 @@ static void kvaser_usb_rx_error(const struct kvaser_usb *dev,
 			priv->can.can_stats.error_warning++;
 			new_state = CAN_STATE_ERROR_WARNING;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		} else if ((priv->can.state > CAN_STATE_ERROR_ACTIVE) &&
 			   ((txerr < 96) && (rxerr < 96))) {
 =======
 		} else if (priv->can.state > CAN_STATE_ERROR_ACTIVE) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		} else if (priv->can.state > CAN_STATE_ERROR_ACTIVE) {
+>>>>>>> master
 			cf->can_id |= CAN_ERR_PROT;
 			cf->data[2] = CAN_ERR_PROT_ACTIVE;
 
@@ -1262,11 +1289,14 @@ static int kvaser_usb_close(struct net_device *netdev)
 		netdev_warn(netdev, "Cannot stop device, error %d\n", err);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* reset tx contexts */
 	kvaser_usb_unlink_tx_urbs(priv);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	priv->can.state = CAN_STATE_STOPPED;
 	close_candev(priv->netdev);
 
@@ -1316,20 +1346,27 @@ static netdev_tx_t kvaser_usb_start_xmit(struct sk_buff *skb,
 		netdev_err(netdev, "No memory left for URBs\n");
 		stats->tx_dropped++;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_kfree_skb(skb);
 		return NETDEV_TX_OK;
 =======
 		goto nourbmem;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		goto nourbmem;
+>>>>>>> master
 	}
 
 	buf = kmalloc(sizeof(struct kvaser_msg), GFP_ATOMIC);
 	if (!buf) {
 		stats->tx_dropped++;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_kfree_skb(skb);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		goto nobufmem;
 	}
 
@@ -1365,9 +1402,12 @@ static netdev_tx_t kvaser_usb_start_xmit(struct sk_buff *skb,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* This should never happen; it implies a flow control bug */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (!context) {
 		netdev_warn(netdev, "cannot find free context\n");
 		ret =  NETDEV_TX_BUSY;
@@ -1399,11 +1439,17 @@ static netdev_tx_t kvaser_usb_start_xmit(struct sk_buff *skb,
 		can_free_echo_skb(netdev, context->echo_index);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		skb = NULL; /* set to NULL to avoid double free in
 			     * dev_kfree_skb(skb) */
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		skb = NULL; /* set to NULL to avoid double free in
+			     * dev_kfree_skb(skb) */
+
+>>>>>>> master
 		atomic_dec(&priv->active_tx_urbs);
 		usb_unanchor_urb(urb);
 
@@ -1426,10 +1472,15 @@ releasebuf:
 nobufmem:
 	usb_free_urb(urb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 nourbmem:
 	dev_kfree_skb(skb);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+nourbmem:
+	dev_kfree_skb(skb);
+>>>>>>> master
 	return ret;
 }
 
@@ -1542,12 +1593,15 @@ static int kvaser_usb_init_one(struct usb_interface *intf,
 	int i, err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = kvaser_usb_send_simple_msg(dev, CMD_RESET_CHIP, channel);
 	if (err)
 		return err;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	netdev = alloc_candev(sizeof(*priv), MAX_TX_URBS);
 	if (!netdev) {
 		dev_err(&intf->dev, "Cannot alloc candev\n");
@@ -1602,6 +1656,7 @@ static int kvaser_usb_init_one(struct usb_interface *intf,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int kvaser_usb_get_endpoints(const struct usb_interface *intf,
 				    struct usb_endpoint_descriptor **in,
 				    struct usb_endpoint_descriptor **out)
@@ -1610,6 +1665,11 @@ static void kvaser_usb_get_endpoints(const struct usb_interface *intf,
 				     struct usb_endpoint_descriptor **in,
 				     struct usb_endpoint_descriptor **out)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static void kvaser_usb_get_endpoints(const struct usb_interface *intf,
+				     struct usb_endpoint_descriptor **in,
+				     struct usb_endpoint_descriptor **out)
+>>>>>>> master
 {
 	const struct usb_host_interface *iface_desc;
 	struct usb_endpoint_descriptor *endpoint;
@@ -1620,6 +1680,7 @@ static void kvaser_usb_get_endpoints(const struct usb_interface *intf,
 	for (i = 0; i < iface_desc->desc.bNumEndpoints; ++i) {
 		endpoint = &iface_desc->endpoint[i].desc;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (!*in && usb_endpoint_is_bulk_in(endpoint))
 			*in = endpoint;
@@ -1634,13 +1695,18 @@ static void kvaser_usb_get_endpoints(const struct usb_interface *intf,
 
 	return -ENODEV;
 =======
+=======
+>>>>>>> master
 		if (usb_endpoint_is_bulk_in(endpoint))
 			*in = endpoint;
 
 		if (usb_endpoint_is_bulk_out(endpoint))
 			*out = endpoint;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static int kvaser_usb_probe(struct usb_interface *intf,
@@ -1649,15 +1715,20 @@ static int kvaser_usb_probe(struct usb_interface *intf,
 	struct kvaser_usb *dev;
 	int err = -ENOMEM;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i, retry = 3;
 =======
 	int i;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int i;
+>>>>>>> master
 
 	dev = devm_kzalloc(&intf->dev, sizeof(*dev), GFP_KERNEL);
 	if (!dev)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	err = kvaser_usb_get_endpoints(intf, &dev->bulk_in, &dev->bulk_out);
 	if (err) {
@@ -1665,6 +1736,10 @@ static int kvaser_usb_probe(struct usb_interface *intf,
 	kvaser_usb_get_endpoints(intf, &dev->bulk_in, &dev->bulk_out);
 	if (!dev->bulk_in || !dev->bulk_out) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	kvaser_usb_get_endpoints(intf, &dev->bulk_in, &dev->bulk_out);
+	if (!dev->bulk_in || !dev->bulk_out) {
+>>>>>>> master
 		dev_err(&intf->dev, "Cannot get usb endpoint(s)");
 		return err;
 	}
@@ -1676,6 +1751,7 @@ static int kvaser_usb_probe(struct usb_interface *intf,
 	usb_set_intfdata(intf, dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* On some x86 laptops, plugging a Kvaser device again after
 	 * an unplug makes the firmware always ignore the very first
 	 * command. For such a case, provide some room for retries
@@ -1686,11 +1762,16 @@ static int kvaser_usb_probe(struct usb_interface *intf,
 	} while (--retry && err == -ETIMEDOUT);
 
 =======
+=======
+>>>>>>> master
 	for (i = 0; i < MAX_NET_DEVICES; i++)
 		kvaser_usb_send_simple_msg(dev, CMD_RESET_CHIP, i);
 
 	err = kvaser_usb_get_software_info(dev);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (err) {
 		dev_err(&intf->dev,
 			"Cannot get software infos, error %d\n", err);

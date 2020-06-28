@@ -515,6 +515,7 @@ void conn_try_outdate_peer_async(struct drbd_tconn *tconn)
 
 	kref_get(&tconn->kref);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* We may just have force_sig()'ed this thread
 	 * to get it out of some blocking network function.
 	 * Clear signals; otherwise kthread_run(), which internally uses
@@ -523,6 +524,8 @@ void conn_try_outdate_peer_async(struct drbd_tconn *tconn)
 	flush_signals(current);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	opa = kthread_run(_try_outdate_peer_async, tconn, "drbd_async_h");
 	if (IS_ERR(opa)) {
 		conn_err(tconn, "out of mem, failed to invoke fence-peer helper\n");

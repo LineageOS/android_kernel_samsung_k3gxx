@@ -181,10 +181,14 @@ static void hid_io_error(struct hid_device *hid)
 
 		/* Retries failed, so do a port reset unless we lack bandwidth*/
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!test_bit(HID_NO_BANDWIDTH, &usbhid->iofl)
 =======
 		if (test_bit(HID_NO_BANDWIDTH, &usbhid->iofl)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (test_bit(HID_NO_BANDWIDTH, &usbhid->iofl)
+>>>>>>> master
 		     && !test_and_set_bit(HID_RESET_PENDING, &usbhid->iofl)) {
 
 			schedule_work(&usbhid->reset_work);
@@ -498,10 +502,15 @@ static void hid_ctrl(struct urb *urb)
 	int unplug = 0, status = urb->status;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	spin_lock(&usbhid->lock);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	spin_lock(&usbhid->lock);
+
+>>>>>>> master
 	switch (status) {
 	case 0:			/* success */
 		if (usbhid->ctrl[usbhid->ctrltail].dir == USB_DIR_IN)
@@ -522,10 +531,13 @@ static void hid_ctrl(struct urb *urb)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock(&usbhid->lock);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (unplug) {
 		usbhid->ctrltail = usbhid->ctrlhead;
 	} else {
@@ -551,9 +563,13 @@ static void __usbhid_submit_report(struct hid_device *hid, struct hid_report *re
 	int head;
 	struct usbhid_device *usbhid = hid->driver_data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int len = ((report->size - 1) >> 3) + 1 + (report->id > 0);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int len = ((report->size - 1) >> 3) + 1 + (report->id > 0);
+>>>>>>> master
 
 	if ((hid->quirks & HID_QUIRK_NOGET) && dir == USB_DIR_IN)
 		return;
@@ -565,10 +581,14 @@ static void __usbhid_submit_report(struct hid_device *hid, struct hid_report *re
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		usbhid->out[usbhid->outhead].raw_report = hid_alloc_report_buf(report, GFP_ATOMIC);
 =======
 		usbhid->out[usbhid->outhead].raw_report = kmalloc(len, GFP_ATOMIC);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		usbhid->out[usbhid->outhead].raw_report = kmalloc(len, GFP_ATOMIC);
+>>>>>>> master
 		if (!usbhid->out[usbhid->outhead].raw_report) {
 			hid_warn(hid, "output queueing failed\n");
 			return;
@@ -618,10 +638,14 @@ static void __usbhid_submit_report(struct hid_device *hid, struct hid_report *re
 
 	if (dir == USB_DIR_OUT) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		usbhid->ctrl[usbhid->ctrlhead].raw_report = hid_alloc_report_buf(report, GFP_ATOMIC);
 =======
 		usbhid->ctrl[usbhid->ctrlhead].raw_report = kmalloc(len, GFP_ATOMIC);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		usbhid->ctrl[usbhid->ctrlhead].raw_report = kmalloc(len, GFP_ATOMIC);
+>>>>>>> master
 		if (!usbhid->ctrl[usbhid->ctrlhead].raw_report) {
 			hid_warn(hid, "control queueing failed\n");
 			return;
@@ -1016,7 +1040,10 @@ static int usbhid_output_raw_report(struct hid_device *hid, __u8 *buf, size_t co
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 static void usbhid_restart_queues(struct usbhid_device *usbhid)
 {
 	if (usbhid->urbout && !test_bit(HID_OUT_RUNNING, &usbhid->iofl))
@@ -1025,7 +1052,10 @@ static void usbhid_restart_queues(struct usbhid_device *usbhid)
 		usbhid_restart_ctrl_queue(usbhid);
 }
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static void hid_free_buffers(struct usb_device *dev, struct hid_device *hid)
 {
 	struct usbhid_device *usbhid = hid->driver_data;
@@ -1443,6 +1473,7 @@ static void hid_cease_io(struct usbhid_device *usbhid)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void hid_restart_io(struct hid_device *hid)
 {
 	struct usbhid_device *usbhid = hid->driver_data;
@@ -1476,6 +1507,8 @@ static void hid_restart_io(struct hid_device *hid)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /* Treat USB reset pretty much the same as suspend/resume */
 static int hid_pre_reset(struct usb_interface *intf)
 {
@@ -1526,6 +1559,7 @@ static int hid_post_reset(struct usb_interface *intf)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* No need to do another reset or clear a halted endpoint */
 	spin_lock_irq(&usbhid->lock);
 	clear_bit(HID_RESET_PENDING, &usbhid->iofl);
@@ -1535,6 +1569,8 @@ static int hid_post_reset(struct usb_interface *intf)
 
 	hid_restart_io(hid);
 =======
+=======
+>>>>>>> master
 	spin_lock_irq(&usbhid->lock);
 	clear_bit(HID_RESET_PENDING, &usbhid->iofl);
 	spin_unlock_irq(&usbhid->lock);
@@ -1543,7 +1579,10 @@ static int hid_post_reset(struct usb_interface *intf)
 	if (status < 0)
 		hid_io_error(hid);
 	usbhid_restart_queues(usbhid);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return 0;
 }
@@ -1567,10 +1606,13 @@ void usbhid_put_power(struct hid_device *hid)
 static int hid_resume_common(struct hid_device *hid, bool driver_suspended)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int status = 0;
 
 	hid_restart_io(hid);
 =======
+=======
+>>>>>>> master
 	struct usbhid_device *usbhid = hid->driver_data;
 	int status;
 
@@ -1590,7 +1632,10 @@ static int hid_resume_common(struct hid_device *hid, bool driver_suspended)
 	if (status < 0)
 		hid_io_error(hid);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (driver_suspended && hid->driver && hid->driver->resume)
 		status = hid->driver->resume(hid);
 	return status;
@@ -1658,16 +1703,22 @@ static int hid_resume(struct usb_interface *intf)
 {
 	struct hid_device *hid = usb_get_intfdata (intf);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int status;
 
 =======
+=======
+>>>>>>> master
 	struct usbhid_device *usbhid = hid->driver_data;
 	int status;
 
 	if (!test_bit(HID_STARTED, &usbhid->iofl))
 		return 0;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	status = hid_resume_common(hid, true);
 	dev_dbg(&intf->dev, "resume status %d\n", status);
 	return 0;
@@ -1677,14 +1728,20 @@ static int hid_reset_resume(struct usb_interface *intf)
 {
 	struct hid_device *hid = usb_get_intfdata(intf);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int status;
 
 =======
+=======
+>>>>>>> master
 	struct usbhid_device *usbhid = hid->driver_data;
 	int status;
 
 	clear_bit(HID_SUSPENDED, &usbhid->iofl);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	status = hid_post_reset(intf);
 	if (status >= 0 && hid->driver && hid->driver->reset_resume) {
 		int ret = hid->driver->reset_resume(hid);

@@ -92,10 +92,14 @@ static void qxl_fb_dirty_flush(struct fb_info *info)
 
 	/* TODO: hard coding 32 bpp */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int stride = qfbdev->qfb.base.pitches[0];
 =======
 	int stride = qfbdev->qfb.base.pitches[0] * 4;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int stride = qfbdev->qfb.base.pitches[0] * 4;
+>>>>>>> master
 
 	x1 = qfbdev->dirty.x1;
 	x2 = qfbdev->dirty.x2;

@@ -1296,11 +1296,14 @@ static void cache_set_flush(struct closure *cl)
 	wake_up(&c->alloc_wait);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!c)
 		closure_return(cl);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	bch_cache_accounting_destroy(&c->accounting);
 
 	kobject_put(&c->internal);
@@ -1966,6 +1969,7 @@ static int __init bcache_init(void)
 
 	bcache_major = register_blkdev(0, "bcache");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (bcache_major < 0) {
 		unregister_reboot_notifier(&reboot);
 		return bcache_major;
@@ -1974,6 +1978,10 @@ static int __init bcache_init(void)
 	if (bcache_major < 0)
 		return bcache_major;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (bcache_major < 0)
+		return bcache_major;
+>>>>>>> master
 
 	if (!(bcache_wq = create_workqueue("bcache")) ||
 	    !(bcache_kobj = kobject_create_and_add("bcache", fs_kobj)) ||

@@ -1291,10 +1291,13 @@ void ipoib_cm_destroy_tx(struct ipoib_cm_tx *tx)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define QPN_AND_OPTIONS_OFFSET	4
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static void ipoib_cm_tx_start(struct work_struct *work)
 {
 	struct ipoib_dev_priv *priv = container_of(work, struct ipoib_dev_priv,
@@ -1304,9 +1307,12 @@ static void ipoib_cm_tx_start(struct work_struct *work)
 	struct ipoib_cm_tx *p;
 	unsigned long flags;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct ipoib_path *path;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	int ret;
 
 	struct ib_sa_path_rec pathrec;
@@ -1319,6 +1325,7 @@ static void ipoib_cm_tx_start(struct work_struct *work)
 		p = list_entry(priv->cm.start_list.next, typeof(*p), list);
 		list_del_init(&p->list);
 		neigh = p->neigh;
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 		qpn = IPOIB_QPN(neigh->daddr);
@@ -1336,6 +1343,9 @@ static void ipoib_cm_tx_start(struct work_struct *work)
 =======
 		qpn = IPOIB_QPN(neigh->daddr);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		qpn = IPOIB_QPN(neigh->daddr);
+>>>>>>> master
 		memcpy(&pathrec, &p->path->pathrec, sizeof pathrec);
 
 		spin_unlock_irqrestore(&priv->lock, flags);
@@ -1348,9 +1358,12 @@ static void ipoib_cm_tx_start(struct work_struct *work)
 
 		if (ret) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 free_neigh:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			neigh = p->neigh;
 			if (neigh) {
 				neigh->cm = NULL;
@@ -1496,6 +1509,7 @@ static ssize_t set_mode(struct device *d, struct device_attribute *attr,
 	ret = ipoib_set_mode(dev, buf);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* The assumption is that the function ipoib_set_mode returned
 	 * with the rtnl held by it, if not the value -EBUSY returned,
 	 * then no need to rtnl_unlock
@@ -1505,13 +1519,18 @@ static ssize_t set_mode(struct device *d, struct device_attribute *attr,
 
 	return (!ret || ret == -EBUSY) ? count : ret;
 =======
+=======
+>>>>>>> master
 	rtnl_unlock();
 
 	if (!ret)
 		return count;
 
 	return ret;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static DEVICE_ATTR(mode, S_IWUSR | S_IRUGO, show_mode, set_mode);

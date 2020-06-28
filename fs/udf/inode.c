@@ -1238,12 +1238,17 @@ int udf_setsize(struct inode *inode, loff_t newsize)
 		}
 set_size:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		up_write(&iinfo->i_data_sem);
 		truncate_setsize(inode, newsize);
 =======
 		truncate_setsize(inode, newsize);
 		up_write(&iinfo->i_data_sem);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		truncate_setsize(inode, newsize);
+		up_write(&iinfo->i_data_sem);
+>>>>>>> master
 	} else {
 		if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB) {
 			down_write(&iinfo->i_data_sem);
@@ -1261,6 +1266,7 @@ set_size:
 		if (err)
 			return err;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		truncate_setsize(inode, newsize);
 		down_write(&iinfo->i_data_sem);
 		udf_clear_extent_cache(inode);
@@ -1269,6 +1275,11 @@ set_size:
 		udf_clear_extent_cache(inode);
 		truncate_setsize(inode, newsize);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		down_write(&iinfo->i_data_sem);
+		udf_clear_extent_cache(inode);
+		truncate_setsize(inode, newsize);
+>>>>>>> master
 		udf_truncate_extents(inode);
 		up_write(&iinfo->i_data_sem);
 	}
@@ -1282,6 +1293,7 @@ update_time:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Maximum length of linked list formed by ICB hierarchy. The chosen number is
  * arbitrary - just that we hopefully don't limit any real use of rewritten
@@ -1291,6 +1303,8 @@ update_time:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static void __udf_read_inode(struct inode *inode)
 {
 	struct buffer_head *bh = NULL;
@@ -1298,12 +1312,16 @@ static void __udf_read_inode(struct inode *inode)
 	uint16_t ident;
 	struct udf_inode_info *iinfo = UDF_I(inode);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int indirections = 0;
 
 reread:
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+>>>>>>> master
 	/*
 	 * Set defaults, but the inode is still incomplete!
 	 * Note: get_new_inode() sets the following on a new inode:
@@ -1341,15 +1359,20 @@ reread:
 					&ident);
 		if (ident == TAG_IDENT_IE && ibh) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			struct buffer_head *nbh = NULL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			struct buffer_head *nbh = NULL;
+>>>>>>> master
 			struct kernel_lb_addr loc;
 			struct indirectEntry *ie;
 
 			ie = (struct indirectEntry *)ibh->b_data;
 			loc = lelb_to_cpu(ie->indirectICB.extLocation);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 			if (ie->indirectICB.extLength) {
 				brelse(bh);
@@ -1366,6 +1389,8 @@ reread:
 				}
 				goto reread;
 =======
+=======
+>>>>>>> master
 			if (ie->indirectICB.extLength &&
 				(nbh = udf_read_ptagged(inode->i_sb, &loc, 0,
 							&ident))) {
@@ -1381,7 +1406,10 @@ reread:
 					return;
 				}
 				brelse(nbh);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			}
 		}
 		brelse(ibh);
@@ -1536,6 +1564,7 @@ static void udf_fill_inode(struct inode *inode, struct buffer_head *bh)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * Sanity check length of allocation descriptors and extended attrs to
 	 * avoid integer overflows
@@ -1548,6 +1577,8 @@ static void udf_fill_inode(struct inode *inode, struct buffer_head *bh)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	switch (fe->icbTag.fileType) {
 	case ICBTAG_FILE_TYPE_DIRECTORY:
 		inode->i_op = &udf_dir_inode_operations;
@@ -2099,6 +2130,7 @@ void udf_write_aext(struct inode *inode, struct extent_position *epos,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Only 1 indirect extent in a row really makes sense but allow upto 16 in case
  * someone does some weird stuff.
@@ -2107,18 +2139,24 @@ void udf_write_aext(struct inode *inode, struct extent_position *epos,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 int8_t udf_next_aext(struct inode *inode, struct extent_position *epos,
 		     struct kernel_lb_addr *eloc, uint32_t *elen, int inc)
 {
 	int8_t etype;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int indirections = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	while ((etype = udf_current_aext(inode, epos, eloc, elen, inc)) ==
 	       (EXT_NEXT_EXTENT_ALLOCDECS >> 30)) {
 		int block;
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 		if (++indirections > UDF_MAX_INDIR_EXTS) {
@@ -2130,6 +2168,8 @@ int8_t udf_next_aext(struct inode *inode, struct extent_position *epos,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		epos->block = *eloc;
 		epos->offset = sizeof(struct allocExtDesc);
 		brelse(epos->bh);

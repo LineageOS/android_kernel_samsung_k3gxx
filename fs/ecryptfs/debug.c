@@ -96,10 +96,13 @@ void ecryptfs_dump_auth_tok(struct ecryptfs_auth_tok *auth_tok)
  * Dump hexadecimal representation of char array
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 void ecryptfs_dump_hex(char *data, int bytes)
 {
 }
 =======
+=======
+>>>>>>> master
 #ifndef CONFIG_SDP
 void ecryptfs_dump_hex(char *data, int bytes)
 {
@@ -129,4 +132,7 @@ void ecryptfs_dump_hex(char *data, int bytes)
 {
 }
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master

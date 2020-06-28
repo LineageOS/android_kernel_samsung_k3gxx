@@ -453,12 +453,16 @@ static bool radeon_atom_apply_quirks(struct drm_device *dev,
 
 	/* Fujitsu D3003-S2 board lists DVI-I as DVI-D and VGA */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (((dev->pdev->device == 0x9802) ||
 	     (dev->pdev->device == 0x9805) ||
 	     (dev->pdev->device == 0x9806)) &&
 =======
 	if (((dev->pdev->device == 0x9802) || (dev->pdev->device == 0x9806)) &&
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (((dev->pdev->device == 0x9802) || (dev->pdev->device == 0x9806)) &&
+>>>>>>> master
 	    (dev->pdev->subsystem_vendor == 0x1734) &&
 	    (dev->pdev->subsystem_device == 0x11bd)) {
 		if (*connector_type == DRM_MODE_CONNECTOR_VGA) {
@@ -470,9 +474,13 @@ static bool radeon_atom_apply_quirks(struct drm_device *dev,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+>>>>>>> master
 	return true;
 }
 
@@ -725,6 +733,7 @@ bool radeon_get_atom_connector_info_from_object_table(struct drm_device *dev)
 								(ctx->bios + data_offset +
 								 le16_to_cpu(router_obj->asObjects[k].usSrcDstTableOffset));
 <<<<<<< HEAD
+<<<<<<< HEAD
 							u8 *num_dst_objs = (u8 *)
 								((u8 *)router_src_dst_table + 1 +
 								 (router_src_dst_table->ucNumberOfSrc * 2));
@@ -736,6 +745,8 @@ bool radeon_get_atom_connector_info_from_object_table(struct drm_device *dev)
 								if (le16_to_cpu(path->usConnObjectId) ==
 								    le16_to_cpu(dst_objs[enum_id]))
 =======
+=======
+>>>>>>> master
 							int enum_id;
 
 							router.router_id = router_obj_id;
@@ -743,7 +754,10 @@ bool radeon_get_atom_connector_info_from_object_table(struct drm_device *dev)
 							     enum_id++) {
 								if (le16_to_cpu(path->usConnObjectId) ==
 								    le16_to_cpu(router_src_dst_table->usDstObjectID[enum_id]))
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 									break;
 							}
 
@@ -1163,10 +1177,14 @@ bool radeon_atom_get_clock_info(struct drm_device *dev)
 		p1pll->reference_div = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if ((frev < 2) && (crev < 2))
 =======
 		if (crev < 2)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (crev < 2)
+>>>>>>> master
 			p1pll->pll_out_min =
 				le16_to_cpu(firmware_info->info.usMinPixelClockPLL_Output);
 		else
@@ -1176,10 +1194,14 @@ bool radeon_atom_get_clock_info(struct drm_device *dev)
 		    le32_to_cpu(firmware_info->info.ulMaxPixelClockPLL_Output);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (((frev < 2) && (crev >= 4)) || (frev >= 2)) {
 =======
 		if (crev >= 4) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (crev >= 4) {
+>>>>>>> master
 			p1pll->lcd_pll_out_min =
 				le16_to_cpu(firmware_info->info_14.usLcdMinPixelClockPLL_Output) * 100;
 			if (p1pll->lcd_pll_out_min == 0)
@@ -1682,12 +1704,16 @@ struct radeon_encoder_atom_dig *radeon_atombios_get_lvds_info(struct
 						}
 					}
 <<<<<<< HEAD
+<<<<<<< HEAD
 					record += fake_edid_record->ucFakeEDIDLength ?
 						fake_edid_record->ucFakeEDIDLength + 2 :
 						sizeof(ATOM_FAKE_EDID_PATCH_RECORD);
 =======
 					record += sizeof(ATOM_FAKE_EDID_PATCH_RECORD);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+					record += sizeof(ATOM_FAKE_EDID_PATCH_RECORD);
+>>>>>>> master
 					break;
 				case LCD_PANEL_RESOLUTION_RECORD_TYPE:
 					panel_res_record = (ATOM_PANEL_RESOLUTION_PATCH_RECORD *)record;
@@ -1940,10 +1966,14 @@ static const char *thermal_controller_names[] = {
 	"adm1030",
 	"max6649",
 <<<<<<< HEAD
+<<<<<<< HEAD
 	"lm63", /* lm64 */
 =======
 	"lm64",
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	"lm64",
+>>>>>>> master
 	"f75375",
 	"asc7xxx",
 };
@@ -1955,10 +1985,14 @@ static const char *pp_lib_thermal_controller_names[] = {
 	"adm1030",
 	"max6649",
 <<<<<<< HEAD
+<<<<<<< HEAD
 	"lm63", /* lm64 */
 =======
 	"lm64",
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	"lm64",
+>>>>>>> master
 	"f75375",
 	"RV6xx",
 	"RV770",
@@ -2966,12 +3000,15 @@ void radeon_atom_initialize_bios_scratch_regs(struct drm_device *dev)
 	bios_6_scratch |= ATOM_S6_ACC_BLOCK_DISPLAY_SWITCH;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* clear the vbios dpms state */
 	if (ASIC_IS_DCE4(rdev))
 		bios_2_scratch &= ~ATOM_S2_DEVICE_DPMS_STATE;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (rdev->family >= CHIP_R600) {
 		WREG32(R600_BIOS_2_SCRATCH, bios_2_scratch);
 		WREG32(R600_BIOS_6_SCRATCH, bios_6_scratch);

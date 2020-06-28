@@ -85,6 +85,7 @@ void i915_update_dri1_breadcrumb(struct drm_device *dev)
 	struct drm_i915_master_private *master_priv;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * The dri breadcrumb update races against the drm master disappearing.
 	 * Instead of trying to fix this (this is by far not the only ums issue)
@@ -95,6 +96,8 @@ void i915_update_dri1_breadcrumb(struct drm_device *dev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (dev->primary->master) {
 		master_priv = dev->primary->master->driver_priv;
 		if (master_priv->sarea_priv)
@@ -1691,9 +1694,12 @@ out_gem_unload:
 	intel_teardown_gmbus(dev);
 	intel_teardown_mchbar(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pm_qos_remove_request(&dev_priv->pm_qos);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	destroy_workqueue(dev_priv->wq);
 out_mtrrfree:
 	if (dev_priv->mm.gtt_mtrr >= 0) {
@@ -1863,6 +1869,7 @@ void i915_driver_lastclose(struct drm_device * dev)
 void i915_driver_preclose(struct drm_device * dev, struct drm_file *file_priv)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_lock(&dev->struct_mutex);
 	i915_gem_context_close(dev, file_priv);
 	i915_gem_release(dev, file_priv);
@@ -1871,6 +1878,10 @@ void i915_driver_preclose(struct drm_device * dev, struct drm_file *file_priv)
 	i915_gem_context_close(dev, file_priv);
 	i915_gem_release(dev, file_priv);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	i915_gem_context_close(dev, file_priv);
+	i915_gem_release(dev, file_priv);
+>>>>>>> master
 }
 
 void i915_driver_postclose(struct drm_device *dev, struct drm_file *file)

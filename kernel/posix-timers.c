@@ -635,9 +635,12 @@ SYSCALL_DEFINE3(timer_create, const clockid_t, which_clock,
 		}
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		memset(&event.sigev_value, 0, sizeof(event.sigev_value));
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		event.sigev_notify = SIGEV_SIGNAL;
 		event.sigev_signo = SIGALRM;
 		event.sigev_value.sival_int = new_timer->it_id;

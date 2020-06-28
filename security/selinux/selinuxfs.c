@@ -134,6 +134,7 @@ static ssize_t sel_read_enforce(struct file *filp, char __user *buf,
 				size_t count, loff_t *ppos)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int display_state = selinux_enforcing;
 	char tmpbuf[TMPBUFLEN];
 	ssize_t length;
@@ -243,6 +244,8 @@ static const struct file_operations sel_enforce_ops = {
 	.read		= sel_read_enforce,
 	.write		= sel_write_enforce,
 =======
+=======
+>>>>>>> master
 	char tmpbuf[TMPBUFLEN];
 	ssize_t length;
 
@@ -253,7 +256,10 @@ static const struct file_operations sel_enforce_ops = {
 static const struct file_operations sel_enforce_ops = {
 	.read		= sel_read_enforce,
 	.write		= NULL,
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	.llseek		= generic_file_llseek,
 };
 
@@ -1251,10 +1257,14 @@ static void sel_remove_entries(struct dentry *de)
 	node = de->d_subdirs.next;
 	while (node != &de->d_subdirs) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct dentry *d = list_entry(node, struct dentry, d_child);
 =======
 		struct dentry *d = list_entry(node, struct dentry, d_u.d_child);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		struct dentry *d = list_entry(node, struct dentry, d_u.d_child);
+>>>>>>> master
 
 		spin_lock_nested(&d->d_lock, DENTRY_D_LOCK_NESTED);
 		list_del_init(node);
@@ -1729,19 +1739,27 @@ static void sel_remove_classes(void)
 	list_for_each(class_node, &class_dir->d_subdirs) {
 		struct dentry *class_subdir = list_entry(class_node,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					struct dentry, d_child);
 =======
 					struct dentry, d_u.d_child);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+					struct dentry, d_u.d_child);
+>>>>>>> master
 		struct list_head *class_subdir_node;
 
 		list_for_each(class_subdir_node, &class_subdir->d_subdirs) {
 			struct dentry *d = list_entry(class_subdir_node,
 <<<<<<< HEAD
+<<<<<<< HEAD
 						struct dentry, d_child);
 =======
 						struct dentry, d_u.d_child);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+						struct dentry, d_u.d_child);
+>>>>>>> master
 
 			if (d->d_inode)
 				if (d->d_inode->i_mode & S_IFDIR)

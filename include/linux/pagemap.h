@@ -26,11 +26,17 @@ enum mapping_flags {
 	AS_UNEVICTABLE	= __GFP_BITS_SHIFT + 3,	/* e.g., ramdisk, SHM_LOCK */
 	AS_BALLOON_MAP  = __GFP_BITS_SHIFT + 4, /* balloon page special map */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_SDP
 	AS_SENSITIVE = __GFP_BITS_SHIFT + 5, /* Group of sensitive pages to be cleaned up */
 #endif
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#ifdef CONFIG_SDP
+	AS_SENSITIVE = __GFP_BITS_SHIFT + 5, /* Group of sensitive pages to be cleaned up */
+#endif
+>>>>>>> master
 };
 
 static inline void mapping_set_error(struct address_space *mapping, int error)
@@ -91,7 +97,10 @@ static inline void mapping_set_gfp_mask(struct address_space *m, gfp_t mask)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 static inline void mapping_set_sensitive(struct address_space *mapping)
 {
@@ -111,7 +120,10 @@ static inline int mapping_sensitive(struct address_space *mapping)
 }
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  * The page cache can done in larger chunks than
  * one page, because it allows for more efficient
@@ -511,6 +523,7 @@ static inline int fault_in_pages_readable(const char __user *uaddr, int size)
 static inline int fault_in_multipages_writeable(char __user *uaddr, int size)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	char __user *end = uaddr + size - 1;
 
 	if (unlikely(size == 0))
@@ -519,17 +532,23 @@ static inline int fault_in_multipages_writeable(char __user *uaddr, int size)
 	if (unlikely(uaddr > end))
 		return -EFAULT;
 =======
+=======
+>>>>>>> master
 	int ret = 0;
 	char __user *end = uaddr + size - 1;
 
 	if (unlikely(size == 0))
 		return ret;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/*
 	 * Writing zeroes into userspace here is OK, because we know that if
 	 * the zero gets there, we'll be overwriting it.
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	do {
 		if (unlikely(__put_user(0, uaddr) != 0))
@@ -537,17 +556,23 @@ static inline int fault_in_multipages_writeable(char __user *uaddr, int size)
 		uaddr += PAGE_SIZE;
 	} while (uaddr <= end);
 =======
+=======
+>>>>>>> master
 	while (uaddr <= end) {
 		ret = __put_user(0, uaddr);
 		if (ret != 0)
 			return ret;
 		uaddr += PAGE_SIZE;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* Check whether the range spilled into the next page. */
 	if (((unsigned long)uaddr & PAGE_MASK) ==
 			((unsigned long)end & PAGE_MASK))
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return __put_user(0, end);
 
@@ -557,12 +582,18 @@ static inline int fault_in_multipages_writeable(char __user *uaddr, int size)
 
 	return ret;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		ret = __put_user(0, end);
+
+	return ret;
+>>>>>>> master
 }
 
 static inline int fault_in_multipages_readable(const char __user *uaddr,
 					       int size)
 {
 	volatile char c;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	const char __user *end = uaddr + size - 1;
 
@@ -578,6 +609,8 @@ static inline int fault_in_multipages_readable(const char __user *uaddr,
 		uaddr += PAGE_SIZE;
 	} while (uaddr <= end);
 =======
+=======
+>>>>>>> master
 	int ret = 0;
 	const char __user *end = uaddr + size - 1;
 
@@ -590,23 +623,32 @@ static inline int fault_in_multipages_readable(const char __user *uaddr,
 			return ret;
 		uaddr += PAGE_SIZE;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* Check whether the range spilled into the next page. */
 	if (((unsigned long)uaddr & PAGE_MASK) ==
 			((unsigned long)end & PAGE_MASK)) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return __get_user(c, end);
 	}
 
 	return 0;
 =======
+=======
+>>>>>>> master
 		ret = __get_user(c, end);
 		(void)c;
 	}
 
 	return ret;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 int add_to_page_cache_locked(struct page *page, struct address_space *mapping,

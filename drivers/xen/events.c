@@ -347,10 +347,14 @@ static void init_evtchn_cpu_bindings(void)
 	for_each_possible_cpu(i)
 		memset(per_cpu(cpu_evtchn_mask, i),
 <<<<<<< HEAD
+<<<<<<< HEAD
 		       (i == 0) ? ~0 : 0, NR_EVENT_CHANNELS/8);
 =======
 		       (i == 0) ? ~0 : 0, sizeof(*per_cpu(cpu_evtchn_mask, i)));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		       (i == 0) ? ~0 : 0, sizeof(*per_cpu(cpu_evtchn_mask, i)));
+>>>>>>> master
 }
 
 static inline void clear_evtchn(int port)
@@ -1497,6 +1501,7 @@ void rebind_evtchn_irq(int evtchn, int irq)
 static int rebind_irq_to_cpu(unsigned irq, unsigned tcpu)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct shared_info *s = HYPERVISOR_shared_info;
 	struct evtchn_bind_vcpu bind_vcpu;
 	int evtchn = evtchn_from_irq(irq);
@@ -1505,6 +1510,10 @@ static int rebind_irq_to_cpu(unsigned irq, unsigned tcpu)
 	struct evtchn_bind_vcpu bind_vcpu;
 	int evtchn = evtchn_from_irq(irq);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct evtchn_bind_vcpu bind_vcpu;
+	int evtchn = evtchn_from_irq(irq);
+>>>>>>> master
 
 	if (!VALID_EVTCHN(evtchn))
 		return -1;
@@ -1522,6 +1531,7 @@ static int rebind_irq_to_cpu(unsigned irq, unsigned tcpu)
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * Mask the event while changing the VCPU binding to prevent
 	 * it being delivered on an unexpected VCPU.
 	 */
@@ -1530,6 +1540,8 @@ static int rebind_irq_to_cpu(unsigned irq, unsigned tcpu)
 	/*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	 * If this fails, it usually just indicates that we're dealing with a
 	 * virq or IPI channel, which don't actually need to be rebound. Ignore
 	 * it, but don't do the xenlinux-level rebind in that case.
@@ -1538,11 +1550,14 @@ static int rebind_irq_to_cpu(unsigned irq, unsigned tcpu)
 		bind_evtchn_to_cpu(evtchn, tcpu);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!masked)
 		unmask_evtchn(evtchn);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 }
 

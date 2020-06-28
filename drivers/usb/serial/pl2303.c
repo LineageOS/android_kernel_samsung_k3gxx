@@ -48,9 +48,12 @@ static const struct usb_device_id id_table[] = {
 	{ USB_DEVICE(PL2303_VENDOR_ID, PL2303_PRODUCT_ID_HCR331) },
 	{ USB_DEVICE(PL2303_VENDOR_ID, PL2303_PRODUCT_ID_MOTOROLA) },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ USB_DEVICE(PL2303_VENDOR_ID, PL2303_PRODUCT_ID_ZTEK) },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ USB_DEVICE(IODATA_VENDOR_ID, IODATA_PRODUCT_ID) },
 	{ USB_DEVICE(IODATA_VENDOR_ID, IODATA_PRODUCT_ID_RSAQ5) },
 	{ USB_DEVICE(ATEN_VENDOR_ID, ATEN_PRODUCT_ID) },
@@ -67,9 +70,13 @@ static const struct usb_device_id id_table[] = {
 	{ USB_DEVICE(SITECOM_VENDOR_ID, SITECOM_PRODUCT_ID) },
 	{ USB_DEVICE(ALCATEL_VENDOR_ID, ALCATEL_PRODUCT_ID) },
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	{ USB_DEVICE(SAMSUNG_VENDOR_ID, SAMSUNG_PRODUCT_ID) },
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	{ USB_DEVICE(SAMSUNG_VENDOR_ID, SAMSUNG_PRODUCT_ID) },
+>>>>>>> master
 	{ USB_DEVICE(SIEMENS_VENDOR_ID, SIEMENS_PRODUCT_ID_SX1) },
 	{ USB_DEVICE(SIEMENS_VENDOR_ID, SIEMENS_PRODUCT_ID_X65) },
 	{ USB_DEVICE(SIEMENS_VENDOR_ID, SIEMENS_PRODUCT_ID_X75) },
@@ -90,11 +97,14 @@ static const struct usb_device_id id_table[] = {
 	{ USB_DEVICE(SUPERIAL_VENDOR_ID, SUPERIAL_PRODUCT_ID) },
 	{ USB_DEVICE(HP_VENDOR_ID, HP_LD220_PRODUCT_ID) },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ USB_DEVICE(HP_VENDOR_ID, HP_LD960_PRODUCT_ID) },
 	{ USB_DEVICE(HP_VENDOR_ID, HP_LCM220_PRODUCT_ID) },
 	{ USB_DEVICE(HP_VENDOR_ID, HP_LCM960_PRODUCT_ID) },
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	{ USB_DEVICE(CRESSI_VENDOR_ID, CRESSI_EDY_PRODUCT_ID) },
 	{ USB_DEVICE(ZEAGLE_VENDOR_ID, ZEAGLE_N2ITION3_PRODUCT_ID) },
 	{ USB_DEVICE(SONY_VENDOR_ID, SONY_QN3USB_PRODUCT_ID) },
@@ -155,10 +165,13 @@ struct pl2303_private {
 	u8 line_control;
 	u8 line_status;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	u8 line_settings[7];
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 
 static int pl2303_vendor_read(__u16 value, __u16 index,
@@ -189,6 +202,7 @@ static int pl2303_startup(struct usb_serial *serial)
 {
 	struct pl2303_serial_private *spriv;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned char num_ports = serial->num_ports;
 	enum pl2303_type type = type_0;
 	unsigned char *buf;
@@ -205,6 +219,11 @@ static int pl2303_startup(struct usb_serial *serial)
 	unsigned char *buf;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	enum pl2303_type type = type_0;
+	unsigned char *buf;
+
+>>>>>>> master
 	spriv = kzalloc(sizeof(*spriv), GFP_KERNEL);
 	if (!spriv)
 		return -ENOMEM;
@@ -313,12 +332,18 @@ static void pl2303_set_termios(struct tty_struct *tty,
 	int k;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	/* The PL2303 is reported to lose bytes if you change
 	   serial settings even to the same values as before. Thus
 	   we actually need to filter in this specific case */
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (old_termios && !tty_termios_hw_change(&tty->termios, old_termios))
 		return;
 
@@ -340,6 +365,7 @@ static void pl2303_set_termios(struct tty_struct *tty,
 	    buf[0], buf[1], buf[2], buf[3], buf[4], buf[5], buf[6]);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	switch (cflag & CSIZE) {
 	case CS5:
 		buf[6] = 5;
@@ -357,6 +383,8 @@ static void pl2303_set_termios(struct tty_struct *tty,
 	}
 	dev_dbg(&port->dev, "data bits = %d\n", buf[6]);
 =======
+=======
+>>>>>>> master
 	if (cflag & CSIZE) {
 		switch (cflag & CSIZE) {
 		case CS5:
@@ -375,7 +403,10 @@ static void pl2303_set_termios(struct tty_struct *tty,
 		}
 		dev_dbg(&port->dev, "data bits = %d\n", buf[6]);
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* For reference buf[0]:buf[3] baud rate value */
 	/* NOTE: Only the values defined in baud_sup are supported !
@@ -479,6 +510,7 @@ static void pl2303_set_termios(struct tty_struct *tty,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * Some PL2303 are known to lose bytes if you change serial settings
 	 * even to the same values as before. Thus we actually need to filter
@@ -503,11 +535,16 @@ static void pl2303_set_termios(struct tty_struct *tty,
 			memcpy(priv->line_settings, buf, 7);
 	}
 =======
+=======
+>>>>>>> master
 	i = usb_control_msg(serial->dev, usb_sndctrlpipe(serial->dev, 0),
 			    SET_LINE_REQUEST, SET_LINE_REQUEST_TYPE,
 			    0, 0, buf, 7, 100);
 	dev_dbg(&port->dev, "0x21:0x20:0:0  %d\n", i);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* change control lines if we are switching to or from B0 */
 	spin_lock_irqsave(&priv->lock, flags);

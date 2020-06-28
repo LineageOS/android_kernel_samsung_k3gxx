@@ -137,6 +137,7 @@ static const struct usb_device_id	products [] = {
 	USB_DEVICE(0x050d, 0x258a),     /* Belkin F5U258/F5U279 (PL-25A1) */
 	.driver_info =  (unsigned long) &prolific_info,
 <<<<<<< HEAD
+<<<<<<< HEAD
 }, {
 	USB_DEVICE(0x3923, 0x7825),     /* National Instruments USB
 					 * Host-to-Host Cable
@@ -144,6 +145,8 @@ static const struct usb_device_id	products [] = {
 	.driver_info =  (unsigned long) &prolific_info,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 },
 
 	{ },		// END

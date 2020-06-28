@@ -145,6 +145,7 @@ static bool e1000_clean_jumbo_rx_irq(struct e1000_adapter *adapter,
 				     struct e1000_rx_ring *rx_ring,
 				     int *work_done, int work_to_do);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void e1000_alloc_dummy_rx_buffers(struct e1000_adapter *adapter,
 					 struct e1000_rx_ring *rx_ring,
 					 int cleaned_count)
@@ -152,6 +153,8 @@ static void e1000_alloc_dummy_rx_buffers(struct e1000_adapter *adapter,
 }
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static void e1000_alloc_rx_buffers(struct e1000_adapter *adapter,
 				   struct e1000_rx_ring *rx_ring,
 				   int cleaned_count);
@@ -3564,6 +3567,7 @@ static int e1000_change_mtu(struct net_device *netdev, int new_mtu)
 	/* e1000_down has a dependency on max_frame_size */
 	hw->max_frame_size = max_frame;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (netif_running(netdev)) {
 		/* prevent buffers from being reallocated */
 		adapter->alloc_rx_buf = e1000_alloc_dummy_rx_buffers;
@@ -3573,6 +3577,10 @@ static int e1000_change_mtu(struct net_device *netdev, int new_mtu)
 	if (netif_running(netdev))
 		e1000_down(adapter);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (netif_running(netdev))
+		e1000_down(adapter);
+>>>>>>> master
 
 	/* NOTE: netdev_alloc_skb reserves 16 bytes, and typically NET_IP_ALIGN
 	 * means we reserve 2 more, this pushes us to allocate from the next

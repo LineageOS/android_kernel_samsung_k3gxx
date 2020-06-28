@@ -2769,11 +2769,15 @@ int copy_siginfo_to_user(siginfo_t __user *to, siginfo_t *from)
 		 * so check explicitly for the right codes here.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (from->si_signo == SIGBUS &&
 		    (from->si_code == BUS_MCEERR_AR || from->si_code == BUS_MCEERR_AO))
 =======
 		if (from->si_code == BUS_MCEERR_AR || from->si_code == BUS_MCEERR_AO)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (from->si_code == BUS_MCEERR_AR || from->si_code == BUS_MCEERR_AO)
+>>>>>>> master
 			err |= __put_user(from->si_addr_lsb, &to->si_addr_lsb);
 #endif
 		break;
@@ -3009,16 +3013,22 @@ static int do_rt_sigqueueinfo(pid_t pid, int sig, siginfo_t *info)
 	 */
 	if ((info->si_code >= 0 || info->si_code == SI_TKILL) &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    (task_pid_vnr(current) != pid))
 		return -EPERM;
 
 =======
+=======
+>>>>>>> master
 	    (task_pid_vnr(current) != pid)) {
 		/* We used to allow any < 0 si_code */
 		WARN_ON_ONCE(info->si_code < 0);
 		return -EPERM;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	info->si_signo = sig;
 
 	/* POSIX.1b doesn't mention process groups.  */
@@ -3047,10 +3057,14 @@ COMPAT_SYSCALL_DEFINE3(rt_sigqueueinfo,
 			struct compat_siginfo __user *, uinfo)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	siginfo_t info = {};
 =======
 	siginfo_t info;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	siginfo_t info;
+>>>>>>> master
 	int ret = copy_siginfo_from_user32(&info, uinfo);
 	if (unlikely(ret))
 		return ret;
@@ -3068,18 +3082,24 @@ static int do_rt_tgsigqueueinfo(pid_t tgid, pid_t pid, int sig, siginfo_t *info)
 	 * Nor can they impersonate a kill()/tgkill(), which adds source info.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if ((info->si_code >= 0 || info->si_code == SI_TKILL) &&
 	    (task_pid_vnr(current) != pid))
 		return -EPERM;
 
 =======
+=======
+>>>>>>> master
 	if (((info->si_code >= 0 || info->si_code == SI_TKILL)) &&
 	    (task_pid_vnr(current) != pid)) {
 		/* We used to allow any < 0 si_code */
 		WARN_ON_ONCE(info->si_code < 0);
 		return -EPERM;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	info->si_signo = sig;
 
 	return do_send_specific(tgid, pid, sig, info);
@@ -3104,10 +3124,14 @@ COMPAT_SYSCALL_DEFINE4(rt_tgsigqueueinfo,
 			struct compat_siginfo __user *, uinfo)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	siginfo_t info = {};
 =======
 	siginfo_t info;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	siginfo_t info;
+>>>>>>> master
 
 	if (copy_siginfo_from_user32(&info, uinfo))
 		return -EFAULT;
@@ -3577,10 +3601,14 @@ SYSCALL_DEFINE0(pause)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int sigsuspend(sigset_t *set)
 =======
 int sigsuspend(sigset_t *set)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+int sigsuspend(sigset_t *set)
+>>>>>>> master
 {
 	current->saved_sigmask = current->blocked;
 	set_current_blocked(set);

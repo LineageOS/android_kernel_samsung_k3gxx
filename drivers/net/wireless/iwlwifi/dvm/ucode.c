@@ -426,11 +426,17 @@ int iwl_run_init_ucode(struct iwl_priv *priv)
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (priv->init_ucode_run)
 		return 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (priv->init_ucode_run)
+		return 0;
+
+>>>>>>> master
 	iwl_init_notification_wait(&priv->notif_wait, &calib_wait,
 				   calib_complete, ARRAY_SIZE(calib_complete),
 				   iwlagn_wait_calib, priv);
@@ -451,10 +457,15 @@ int iwl_run_init_ucode(struct iwl_priv *priv)
 	ret = iwl_wait_notification(&priv->notif_wait, &calib_wait,
 					UCODE_CALIB_TIMEOUT);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!ret)
 		priv->init_ucode_run = true;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!ret)
+		priv->init_ucode_run = true;
+>>>>>>> master
 
 	goto out;
 

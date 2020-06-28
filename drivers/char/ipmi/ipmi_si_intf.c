@@ -245,11 +245,14 @@ struct smi_info {
 	struct timer_list   si_timer;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* This flag is set, if the timer is running (timer_pending() isn't enough) */
 	bool		    timer_running;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* The time (in jiffies) the last timeout occurred at. */
 	unsigned long       last_timeout_jiffies;
 
@@ -434,6 +437,7 @@ static void start_clear_flags(struct smi_info *smi_info)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void smi_mod_timer(struct smi_info *smi_info, unsigned long new_val)
 {
 	smi_info->last_timeout_jiffies = jiffies;
@@ -443,6 +447,8 @@ static void smi_mod_timer(struct smi_info *smi_info, unsigned long new_val)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  * When we have a situtaion where we run out of memory and cannot
  * allocate messages, we just leave them in the BMC and run the system
@@ -456,11 +462,16 @@ static inline void disable_si_irq(struct smi_info *smi_info)
 		smi_info->interrupt_disabled = 1;
 		if (!atomic_read(&smi_info->stop_operation))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			smi_mod_timer(smi_info, jiffies + SI_TIMEOUT_JIFFIES);
 =======
 			mod_timer(&smi_info->si_timer,
 				  jiffies + SI_TIMEOUT_JIFFIES);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			mod_timer(&smi_info->si_timer,
+				  jiffies + SI_TIMEOUT_JIFFIES);
+>>>>>>> master
 	}
 }
 
@@ -921,8 +932,11 @@ static void sender(void                *send_info,
 
 	if (smi_info->si_state == SI_NORMAL && smi_info->curr_msg == NULL) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		smi_mod_timer(smi_info, jiffies + SI_TIMEOUT_JIFFIES);
 =======
+=======
+>>>>>>> master
 		/*
 		 * last_timeout_jiffies is updated here to avoid
 		 * smi_timeout() handler passing very large time_diff
@@ -932,7 +946,10 @@ static void sender(void                *send_info,
 		smi_info->last_timeout_jiffies = jiffies;
 
 		mod_timer(&smi_info->si_timer, jiffies + SI_TIMEOUT_JIFFIES);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		if (smi_info->thread)
 			wake_up_process(smi_info->thread);
@@ -1022,6 +1039,7 @@ static int ipmi_thread(void *data)
 		spin_lock_irqsave(&(smi_info->si_lock), flags);
 		smi_result = smi_event_handler(smi_info, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		/*
 		 * If the driver is doing something, there is a possible
@@ -1035,6 +1053,8 @@ static int ipmi_thread(void *data)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		spin_unlock_irqrestore(&(smi_info->si_lock), flags);
 		busy_wait = ipmi_thread_busy_wait(smi_result, smi_info,
 						  &busy_until);
@@ -1105,12 +1125,18 @@ static void smi_timeout(unsigned long data)
 	smi_result = smi_event_handler(smi_info, time_diff);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	spin_unlock_irqrestore(&(smi_info->si_lock), flags);
 
 	smi_info->last_timeout_jiffies = jiffies_now;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if ((smi_info->irq) && (!smi_info->interrupt_disabled)) {
 		/* Running with interrupts, only do long timeouts. */
 		timeout = jiffies + SI_TIMEOUT_JIFFIES;
@@ -1133,6 +1159,7 @@ static void smi_timeout(unsigned long data)
  do_mod_timer:
 	if (smi_result != SI_SM_IDLE)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		smi_mod_timer(smi_info, timeout);
 	else
 		smi_info->timer_running = false;
@@ -1140,6 +1167,9 @@ static void smi_timeout(unsigned long data)
 =======
 		mod_timer(&(smi_info->si_timer), timeout);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		mod_timer(&(smi_info->si_timer), timeout);
+>>>>>>> master
 }
 
 static irqreturn_t si_irq_handler(int irq, void *data)
@@ -1182,24 +1212,33 @@ static int smi_start_processing(void       *send_info,
 	new_smi->intf = intf;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Set up the timer that drives the interface. */
 	setup_timer(&new_smi->si_timer, smi_timeout, (long)new_smi);
 	smi_mod_timer(new_smi, jiffies + SI_TIMEOUT_JIFFIES);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Try to claim any interrupts. */
 	if (new_smi->irq_setup)
 		new_smi->irq_setup(new_smi);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	/* Set up the timer that drives the interface. */
 	setup_timer(&new_smi->si_timer, smi_timeout, (long)new_smi);
 	new_smi->last_timeout_jiffies = jiffies;
 	mod_timer(&new_smi->si_timer, jiffies + SI_TIMEOUT_JIFFIES);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/*
 	 * Check if the user forcefully enabled the daemon.
 	 */
@@ -2766,10 +2805,14 @@ static int wait_for_msg_done(struct smi_info *smi_info)
 			schedule_timeout_uninterruptible(1);
 			smi_result = smi_info->handlers->event(
 <<<<<<< HEAD
+<<<<<<< HEAD
 				smi_info->si_sm, jiffies_to_usecs(1));
 =======
 				smi_info->si_sm, 100);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				smi_info->si_sm, 100);
+>>>>>>> master
 		} else if (smi_result == SI_SM_CALL_WITHOUT_DELAY) {
 			smi_result = smi_info->handlers->event(
 				smi_info->si_sm, 0);

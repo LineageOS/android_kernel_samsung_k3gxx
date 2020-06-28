@@ -512,10 +512,15 @@ static int mlx4_slave_cap(struct mlx4_dev *dev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	mlx4_log_num_mgm_entry_size = hca_param.log_mc_entry_sz;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	mlx4_log_num_mgm_entry_size = hca_param.log_mc_entry_sz;
+
+>>>>>>> master
 	dev->caps.hca_core_clock = hca_param.hca_core_clock;
 
 	memset(&dev_cap, 0, sizeof(dev_cap));
@@ -2133,9 +2138,12 @@ static int __mlx4_init_one(struct pci_dev *pdev, int pci_dev_data)
 	dma_set_max_seg_size(&pdev->dev, 1024 * 1024 * 1024);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev       = pci_get_drvdata(pdev);
 	priv      = mlx4_priv(dev);
 =======
+=======
+>>>>>>> master
 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
 	if (!priv) {
 		err = -ENOMEM;
@@ -2143,7 +2151,10 @@ static int __mlx4_init_one(struct pci_dev *pdev, int pci_dev_data)
 	}
 
 	dev       = &priv->dev;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	dev->pdev = pdev;
 	INIT_LIST_HEAD(&priv->ctx_list);
 	spin_lock_init(&priv->ctx_lock);
@@ -2309,11 +2320,16 @@ slave_start:
 	mlx4_start_sense(dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	priv->removed = 0;
 =======
 	priv->pci_dev_data = pci_dev_data;
 	pci_set_drvdata(pdev, dev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	priv->pci_dev_data = pci_dev_data;
+	pci_set_drvdata(pdev, dev);
+>>>>>>> master
 
 	return 0;
 
@@ -2379,6 +2395,7 @@ err_disable_pdev:
 
 static int mlx4_init_one(struct pci_dev *pdev, const struct pci_device_id *id)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct mlx4_priv *priv;
 	struct mlx4_dev *dev;
@@ -2485,6 +2502,8 @@ static void mlx4_remove_one(struct pci_dev *pdev)
 	kfree(priv);
 	pci_set_drvdata(pdev, NULL);
 =======
+=======
+>>>>>>> master
 	printk_once(KERN_INFO "%s", mlx4_version);
 
 	return __mlx4_init_one(pdev, id->driver_data);
@@ -2563,7 +2582,10 @@ static void mlx4_remove_one(struct pci_dev *pdev)
 		pci_disable_device(pdev);
 		pci_set_drvdata(pdev, NULL);
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 int mlx4_restart_one(struct pci_dev *pdev)
@@ -2574,10 +2596,14 @@ int mlx4_restart_one(struct pci_dev *pdev)
 
 	pci_dev_data = priv->pci_dev_data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__mlx4_remove_one(pdev);
 =======
 	mlx4_remove_one(pdev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	mlx4_remove_one(pdev);
+>>>>>>> master
 	return __mlx4_init_one(pdev, pci_dev_data);
 }
 
@@ -2633,10 +2659,14 @@ static pci_ers_result_t mlx4_pci_err_detected(struct pci_dev *pdev,
 					      pci_channel_state_t state)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__mlx4_remove_one(pdev);
 =======
 	mlx4_remove_one(pdev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	mlx4_remove_one(pdev);
+>>>>>>> master
 
 	return state == pci_channel_io_perm_failure ?
 		PCI_ERS_RESULT_DISCONNECT : PCI_ERS_RESULT_NEED_RESET;
@@ -2644,6 +2674,7 @@ static pci_ers_result_t mlx4_pci_err_detected(struct pci_dev *pdev,
 
 static pci_ers_result_t mlx4_pci_slot_reset(struct pci_dev *pdev)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct mlx4_dev	 *dev  = pci_get_drvdata(pdev);
 	struct mlx4_priv *priv = mlx4_priv(dev);
@@ -2653,6 +2684,9 @@ static pci_ers_result_t mlx4_pci_slot_reset(struct pci_dev *pdev)
 =======
 	int ret = __mlx4_init_one(pdev, 0);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int ret = __mlx4_init_one(pdev, 0);
+>>>>>>> master
 
 	return ret ? PCI_ERS_RESULT_DISCONNECT : PCI_ERS_RESULT_RECOVERED;
 }

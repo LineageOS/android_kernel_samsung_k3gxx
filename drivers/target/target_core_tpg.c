@@ -41,9 +41,12 @@
 
 #include "target_core_internal.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "target_core_pr.h"
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 extern struct se_device *g_lun0_dev;
 
@@ -170,6 +173,7 @@ void core_tpg_add_node_to_devs(
 		core_enable_device_list_for_node(lun, NULL, lun->unpacked_lun,
 				lun_access, acl, tpg);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * Check to see if there are any existing persistent reservation
 		 * APTPL pre-registrations that need to be enabled for this dynamic
@@ -179,6 +183,8 @@ void core_tpg_add_node_to_devs(
 						    lun->unpacked_lun);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		spin_lock(&tpg->tpg_lun_lock);
 	}
 	spin_unlock(&tpg->tpg_lun_lock);
@@ -846,10 +852,13 @@ static void core_tpg_shutdown_lun(
 	struct se_lun *lun)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	lun->lun_shutdown = true;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	core_clear_lun_from_tpg(lun, tpg);
 	transport_clear_lun_from_sessions(lun);
 }
@@ -880,9 +889,12 @@ struct se_lun *core_tpg_pre_dellun(
 		return ERR_PTR(-ENODEV);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	lun->lun_shutdown = false;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	spin_unlock(&tpg->tpg_lun_lock);
 
 	return lun;

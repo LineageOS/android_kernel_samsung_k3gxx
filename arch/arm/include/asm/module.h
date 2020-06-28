@@ -13,10 +13,13 @@ enum {
 	ARM_SEC_EXIT,
 	ARM_SEC_DEVEXIT,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ARM_SEC_HOT,
 	ARM_SEC_UNLIKELY,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ARM_SEC_MAX,
 };
 

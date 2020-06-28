@@ -163,10 +163,14 @@ static ssize_t store_hyst(struct device *dev,
 		goto fail;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hyst = retval * 1000 - val;
 =======
 	hyst = val - retval * 1000;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	hyst = val - retval * 1000;
+>>>>>>> master
 	hyst = DIV_ROUND_CLOSEST(hyst, 1000);
 	if (hyst < 0 || hyst > 255) {
 		retval = -ERANGE;
@@ -300,10 +304,14 @@ static int emc1403_detect(struct i2c_client *client,
 
 	id = i2c_smbus_read_byte_data(client, THERMAL_REVISION_REG);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (id < 0x01 || id > 0x04)
 =======
 	if (id != 0x01)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (id != 0x01)
+>>>>>>> master
 		return -ENODEV;
 
 	return 0;

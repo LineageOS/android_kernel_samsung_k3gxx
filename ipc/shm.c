@@ -20,11 +20,14 @@
  * OpenVZ, SWsoft Inc.
  * Pavel Emelianov <xemul@openvz.org>
 <<<<<<< HEAD
+<<<<<<< HEAD
  *
  * Better ipc lock (kern_ipc_perm.lock) handling
  * Davidlohr Bueso <davidlohr.bueso@hp.com>, June 2013.
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  */
 
 #include <linux/slab.h>
@@ -87,12 +90,17 @@ void shm_init_ns(struct ipc_namespace *ns)
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Called with shm_ids.rwsem (writer) and the shp structure locked.
  * Only shm_ids.rwsem remains locked on exit.
 =======
  * Called with shm_ids.rw_mutex (writer) and the shp structure locked.
  * Only shm_ids.rw_mutex remains locked on exit.
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ * Called with shm_ids.rw_mutex (writer) and the shp structure locked.
+ * Only shm_ids.rw_mutex remains locked on exit.
+>>>>>>> master
  */
 static void do_shm_rmid(struct ipc_namespace *ns, struct kern_ipc_perm *ipcp)
 {
@@ -136,6 +144,7 @@ void __init shm_init (void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline struct shmid_kernel *shm_obtain_object(struct ipc_namespace *ns, int id)
 {
 	struct kern_ipc_perm *ipcp = ipc_obtain_object(&shm_ids(ns), id);
@@ -162,6 +171,10 @@ static inline struct shmid_kernel *shm_obtain_object_check(struct ipc_namespace 
 /*
  * shm_lock_(check_) routines are called in the paths where the rw_mutex
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+/*
+ * shm_lock_(check_) routines are called in the paths where the rw_mutex
+>>>>>>> master
  * is not necessarily held.
  */
 static inline struct shmid_kernel *shm_lock(struct ipc_namespace *ns, int id)
@@ -178,6 +191,7 @@ static inline void shm_lock_by_ptr(struct shmid_kernel *ipcp)
 {
 	rcu_read_lock();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ipc_lock_object(&ipcp->shm_perm);
 }
 
@@ -189,6 +203,8 @@ static void shm_rcu_free(struct rcu_head *head)
 	security_shm_free(shp);
 	ipc_rcu_free(head);
 =======
+=======
+>>>>>>> master
 	spin_lock(&ipcp->shm_perm.lock);
 }
 
@@ -201,7 +217,10 @@ static inline struct shmid_kernel *shm_lock_check(struct ipc_namespace *ns,
 		return (struct shmid_kernel *)ipcp;
 
 	return container_of(ipcp, struct shmid_kernel, shm_perm);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static inline void shm_rmid(struct ipc_namespace *ns, struct shmid_kernel *s)
@@ -232,14 +251,19 @@ static void shm_open(struct vm_area_struct *vma)
  * @shp: struct to free
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * It has to be called with shp and shm_ids.rwsem (writer) locked,
 =======
  * It has to be called with shp and shm_ids.rw_mutex (writer) locked,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ * It has to be called with shp and shm_ids.rw_mutex (writer) locked,
+>>>>>>> master
  * but returns with shp unlocked and freed.
  */
 static void shm_destroy(struct ipc_namespace *ns, struct shmid_kernel *shp)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct file *shm_file;
 
@@ -255,6 +279,8 @@ static void shm_destroy(struct ipc_namespace *ns, struct shmid_kernel *shp)
 	fput(shm_file);
 	ipc_rcu_putref(shp, shm_rcu_free);
 =======
+=======
+>>>>>>> master
 	ns->shm_tot -= (shp->shm_segsz + PAGE_SIZE - 1) >> PAGE_SHIFT;
 	shm_rmid(ns, shp);
 	shm_unlock(shp);
@@ -266,7 +292,10 @@ static void shm_destroy(struct ipc_namespace *ns, struct shmid_kernel *shp)
 	fput (shp->shm_file);
 	security_shm_free(shp);
 	ipc_rcu_putref(shp);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /*
@@ -300,10 +329,14 @@ static void shm_close(struct vm_area_struct *vma)
 	struct ipc_namespace *ns = sfd->ns;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	down_write(&shm_ids(ns).rwsem);
 =======
 	down_write(&shm_ids(ns).rw_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	down_write(&shm_ids(ns).rw_mutex);
+>>>>>>> master
 	/* remove from the list of attaches of the shm segment */
 	shp = shm_lock(ns, sfd->id);
 	BUG_ON(IS_ERR(shp));
@@ -315,16 +348,22 @@ static void shm_close(struct vm_area_struct *vma)
 	else
 		shm_unlock(shp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	up_write(&shm_ids(ns).rwsem);
 }
 
 /* Called with ns->shm_ids(ns).rwsem locked */
 =======
+=======
+>>>>>>> master
 	up_write(&shm_ids(ns).rw_mutex);
 }
 
 /* Called with ns->shm_ids(ns).rw_mutex locked */
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int shm_try_destroy_current(int id, void *p, void *data)
 {
 	struct ipc_namespace *ns = data;
@@ -356,10 +395,14 @@ static int shm_try_destroy_current(int id, void *p, void *data)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Called with ns->shm_ids(ns).rwsem locked */
 =======
 /* Called with ns->shm_ids(ns).rw_mutex locked */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+/* Called with ns->shm_ids(ns).rw_mutex locked */
+>>>>>>> master
 static int shm_try_destroy_orphaned(int id, void *p, void *data)
 {
 	struct ipc_namespace *ns = data;
@@ -371,10 +414,14 @@ static int shm_try_destroy_orphaned(int id, void *p, void *data)
 	 * exit'ed originating process.
 	 *
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * As shp->* are changed under rwsem, it's safe to skip shp locking.
 =======
 	 * As shp->* are changed under rw_mutex, it's safe to skip shp locking.
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	 * As shp->* are changed under rw_mutex, it's safe to skip shp locking.
+>>>>>>> master
 	 */
 	if (shp->shm_creator != NULL)
 		return 0;
@@ -389,16 +436,22 @@ static int shm_try_destroy_orphaned(int id, void *p, void *data)
 void shm_destroy_orphaned(struct ipc_namespace *ns)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	down_write(&shm_ids(ns).rwsem);
 	if (shm_ids(ns).in_use)
 		idr_for_each(&shm_ids(ns).ipcs_idr, &shm_try_destroy_orphaned, ns);
 	up_write(&shm_ids(ns).rwsem);
 =======
+=======
+>>>>>>> master
 	down_write(&shm_ids(ns).rw_mutex);
 	if (shm_ids(ns).in_use)
 		idr_for_each(&shm_ids(ns).ipcs_idr, &shm_try_destroy_orphaned, ns);
 	up_write(&shm_ids(ns).rw_mutex);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 
@@ -411,16 +464,22 @@ void exit_shm(struct task_struct *task)
 
 	/* Destroy all already created segments, but not mapped yet */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	down_write(&shm_ids(ns).rwsem);
 	if (shm_ids(ns).in_use)
 		idr_for_each(&shm_ids(ns).ipcs_idr, &shm_try_destroy_current, ns);
 	up_write(&shm_ids(ns).rwsem);
 =======
+=======
+>>>>>>> master
 	down_write(&shm_ids(ns).rw_mutex);
 	if (shm_ids(ns).in_use)
 		idr_for_each(&shm_ids(ns).ipcs_idr, &shm_try_destroy_current, ns);
 	up_write(&shm_ids(ns).rw_mutex);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static int shm_fault(struct vm_area_struct *vma, struct vm_fault *vmf)
@@ -555,10 +614,14 @@ static const struct vm_operations_struct shm_vm_ops = {
  * @params: ptr to the structure that contains key, size and shmflg
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Called with shm_ids.rwsem held as a writer.
 =======
  * Called with shm_ids.rw_mutex held as a writer.
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ * Called with shm_ids.rw_mutex held as a writer.
+>>>>>>> master
  */
 
 static int newseg(struct ipc_namespace *ns, struct ipc_params *params)
@@ -592,10 +655,14 @@ static int newseg(struct ipc_namespace *ns, struct ipc_params *params)
 	error = security_shm_alloc(shp);
 	if (error) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ipc_rcu_putref(shp, ipc_rcu_free);
 =======
 		ipc_rcu_putref(shp);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		ipc_rcu_putref(shp);
+>>>>>>> master
 		return error;
 	}
 
@@ -632,14 +699,20 @@ static int newseg(struct ipc_namespace *ns, struct ipc_params *params)
 		goto no_file;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	id = ipc_addid(&shm_ids(ns), &shp->shm_perm, ns->shm_ctlmni);
 	if (id < 0) {
 		error = id;
 		goto no_id;
 	}
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	shp->shm_cprid = task_tgid_vnr(current);
 	shp->shm_lprid = 0;
 	shp->shm_atim = shp->shm_dtim = 0;
@@ -649,6 +722,7 @@ static int newseg(struct ipc_namespace *ns, struct ipc_params *params)
 	shp->shm_file = file;
 	shp->shm_creator = current;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	id = ipc_addid(&shm_ids(ns), &shp->shm_perm, ns->shm_ctlmni);
 	if (id < 0) {
@@ -658,6 +732,8 @@ static int newseg(struct ipc_namespace *ns, struct ipc_params *params)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/*
 	 * shmid gets reported as "inode#" in /proc/pid/maps.
 	 * proc-ps tools use this. Changing this will break them.
@@ -667,12 +743,16 @@ static int newseg(struct ipc_namespace *ns, struct ipc_params *params)
 	ns->shm_tot += numpages;
 	error = shp->shm_perm.id;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	ipc_unlock_object(&shp->shm_perm);
 	rcu_read_unlock();
 =======
 	shm_unlock(shp);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	shm_unlock(shp);
+>>>>>>> master
 	return error;
 
 no_id:
@@ -681,20 +761,29 @@ no_id:
 	fput(file);
 no_file:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ipc_rcu_putref(shp, shm_rcu_free);
 =======
 	security_shm_free(shp);
 	ipc_rcu_putref(shp);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	security_shm_free(shp);
+	ipc_rcu_putref(shp);
+>>>>>>> master
 	return error;
 }
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Called with shm_ids.rwsem and ipcp locked.
 =======
  * Called with shm_ids.rw_mutex and ipcp locked.
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ * Called with shm_ids.rw_mutex and ipcp locked.
+>>>>>>> master
  */
 static inline int shm_security(struct kern_ipc_perm *ipcp, int shmflg)
 {
@@ -706,10 +795,14 @@ static inline int shm_security(struct kern_ipc_perm *ipcp, int shmflg)
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Called with shm_ids.rwsem and ipcp locked.
 =======
  * Called with shm_ids.rw_mutex and ipcp locked.
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ * Called with shm_ids.rw_mutex and ipcp locked.
+>>>>>>> master
  */
 static inline int shm_more_checks(struct kern_ipc_perm *ipcp,
 				struct ipc_params *params)
@@ -823,10 +916,14 @@ static inline unsigned long copy_shminfo_to_user(void __user *buf, struct shminf
 /*
  * Calculate and add used RSS and swap pages of a shm.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Called with shm_ids.rwsem held as a reader
 =======
  * Called with shm_ids.rw_mutex held as a reader
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ * Called with shm_ids.rw_mutex held as a reader
+>>>>>>> master
  */
 static void shm_add_rss_swap(struct shmid_kernel *shp,
 	unsigned long *rss_add, unsigned long *swp_add)
@@ -854,10 +951,14 @@ static void shm_add_rss_swap(struct shmid_kernel *shp,
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Called with shm_ids.rwsem held as a reader
 =======
  * Called with shm_ids.rw_mutex held as a reader
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ * Called with shm_ids.rw_mutex held as a reader
+>>>>>>> master
  */
 static void shm_get_stat(struct ipc_namespace *ns, unsigned long *rss,
 		unsigned long *swp)
@@ -887,6 +988,7 @@ static void shm_get_stat(struct ipc_namespace *ns, unsigned long *rss,
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * This function handles some shmctl commands which require the rwsem
  * to be held in write mode.
  * NOTE: no locks must be held, the rwsem is taken inside this function.
@@ -895,6 +997,11 @@ static void shm_get_stat(struct ipc_namespace *ns, unsigned long *rss,
  * to be held in write mode.
  * NOTE: no locks must be held, the rw_mutex is taken inside this function.
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ * This function handles some shmctl commands which require the rw_mutex
+ * to be held in write mode.
+ * NOTE: no locks must be held, the rw_mutex is taken inside this function.
+>>>>>>> master
  */
 static int shmctl_down(struct ipc_namespace *ns, int shmid, int cmd,
 		       struct shmid_ds __user *buf, int version)
@@ -910,6 +1017,7 @@ static int shmctl_down(struct ipc_namespace *ns, int shmid, int cmd,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	down_write(&shm_ids(ns).rwsem);
 	rcu_read_lock();
 
@@ -920,16 +1028,22 @@ static int shmctl_down(struct ipc_namespace *ns, int shmid, int cmd,
 		goto out_unlock1;
 	}
 =======
+=======
+>>>>>>> master
 	ipcp = ipcctl_pre_down(ns, &shm_ids(ns), shmid, cmd,
 			       &shmid64.shm_perm, 0);
 	if (IS_ERR(ipcp))
 		return PTR_ERR(ipcp);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	shp = container_of(ipcp, struct shmid_kernel, shm_perm);
 
 	err = security_shm_shmctl(shp, cmd);
 	if (err)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		goto out_unlock1;
 
@@ -945,6 +1059,8 @@ static int shmctl_down(struct ipc_namespace *ns, int shmid, int cmd,
 		if (err)
 			goto out_unlock0;
 =======
+=======
+>>>>>>> master
 		goto out_unlock;
 	switch (cmd) {
 	case IPC_RMID:
@@ -954,11 +1070,15 @@ static int shmctl_down(struct ipc_namespace *ns, int shmid, int cmd,
 		err = ipc_update_perm(&shmid64.shm_perm, ipcp);
 		if (err)
 			goto out_unlock;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		shp->shm_ctim = get_seconds();
 		break;
 	default:
 		err = -EINVAL;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		goto out_unlock1;
 	}
@@ -987,6 +1107,8 @@ static int shmctl_nolock(struct ipc_namespace *ns, int shmid,
 
 	switch (cmd) {
 =======
+=======
+>>>>>>> master
 	}
 out_unlock:
 	shm_unlock(shp);
@@ -1010,18 +1132,27 @@ SYSCALL_DEFINE3(shmctl, int, shmid, int, cmd, struct shmid_ds __user *, buf)
 	ns = current->nsproxy->ipc_ns;
 
 	switch (cmd) { /* replace with proc interface ? */
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	case IPC_INFO:
 	{
 		struct shminfo64 shminfo;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 		err = security_shm_shmctl(NULL, cmd);
 		if (err)
 			return err;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		memset(&shminfo, 0, sizeof(shminfo));
 		shminfo.shmmni = shminfo.shmseg = ns->shm_ctlmni;
 		shminfo.shmmax = ns->shm_ctlmax;
@@ -1032,6 +1163,7 @@ SYSCALL_DEFINE3(shmctl, int, shmid, int, cmd, struct shmid_ds __user *, buf)
 			return -EFAULT;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		down_read(&shm_ids(ns).rwsem);
 		err = ipc_get_maxid(&shm_ids(ns));
 		up_read(&shm_ids(ns).rwsem);
@@ -1040,6 +1172,11 @@ SYSCALL_DEFINE3(shmctl, int, shmid, int, cmd, struct shmid_ds __user *, buf)
 		err = ipc_get_maxid(&shm_ids(ns));
 		up_read(&shm_ids(ns).rw_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		down_read(&shm_ids(ns).rw_mutex);
+		err = ipc_get_maxid(&shm_ids(ns));
+		up_read(&shm_ids(ns).rw_mutex);
+>>>>>>> master
 
 		if(err<0)
 			err = 0;
@@ -1050,16 +1187,22 @@ SYSCALL_DEFINE3(shmctl, int, shmid, int, cmd, struct shmid_ds __user *, buf)
 		struct shm_info shm_info;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		memset(&shm_info, 0, sizeof(shm_info));
 		down_read(&shm_ids(ns).rwsem);
 =======
+=======
+>>>>>>> master
 		err = security_shm_shmctl(NULL, cmd);
 		if (err)
 			return err;
 
 		memset(&shm_info, 0, sizeof(shm_info));
 		down_read(&shm_ids(ns).rw_mutex);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		shm_info.used_ids = shm_ids(ns).in_use;
 		shm_get_stat (ns, &shm_info.shm_rss, &shm_info.shm_swp);
 		shm_info.shm_tot = ns->shm_tot;
@@ -1067,10 +1210,14 @@ SYSCALL_DEFINE3(shmctl, int, shmid, int, cmd, struct shmid_ds __user *, buf)
 		shm_info.swap_successes = 0;
 		err = ipc_get_maxid(&shm_ids(ns));
 <<<<<<< HEAD
+<<<<<<< HEAD
 		up_read(&shm_ids(ns).rwsem);
 =======
 		up_read(&shm_ids(ns).rw_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		up_read(&shm_ids(ns).rw_mutex);
+>>>>>>> master
 		if (copy_to_user(buf, &shm_info, sizeof(shm_info))) {
 			err = -EFAULT;
 			goto out;
@@ -1085,6 +1232,7 @@ SYSCALL_DEFINE3(shmctl, int, shmid, int, cmd, struct shmid_ds __user *, buf)
 		struct shmid64_ds tbuf;
 		int result;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		rcu_read_lock();
 		if (cmd == SHM_STAT) {
@@ -1112,6 +1260,8 @@ SYSCALL_DEFINE3(shmctl, int, shmid, int, cmd, struct shmid_ds __user *, buf)
 			goto out_unlock;
 
 =======
+=======
+>>>>>>> master
 		if (cmd == SHM_STAT) {
 			shp = shm_lock(ns, shmid);
 			if (IS_ERR(shp)) {
@@ -1133,7 +1283,10 @@ SYSCALL_DEFINE3(shmctl, int, shmid, int, cmd, struct shmid_ds __user *, buf)
 		err = security_shm_shmctl(shp, cmd);
 		if (err)
 			goto out_unlock;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		memset(&tbuf, 0, sizeof(tbuf));
 		kernel_to_ipc64_perm(&shp->shm_perm, &tbuf.shm_perm);
 		tbuf.shm_segsz	= shp->shm_segsz;
@@ -1144,6 +1297,7 @@ SYSCALL_DEFINE3(shmctl, int, shmid, int, cmd, struct shmid_ds __user *, buf)
 		tbuf.shm_lpid	= shp->shm_lprid;
 		tbuf.shm_nattch	= shp->shm_nattch;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rcu_read_unlock();
 
 		if (copy_shmid_to_user(buf, &tbuf, version))
@@ -1151,11 +1305,16 @@ SYSCALL_DEFINE3(shmctl, int, shmid, int, cmd, struct shmid_ds __user *, buf)
 		shm_unlock(shp);
 		if(copy_shmid_to_user (buf, &tbuf, version))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		shm_unlock(shp);
+		if(copy_shmid_to_user (buf, &tbuf, version))
+>>>>>>> master
 			err = -EFAULT;
 		else
 			err = result;
 		goto out;
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	default:
 		return -EINVAL;
@@ -1190,11 +1349,14 @@ SYSCALL_DEFINE3(shmctl, int, shmid, int, cmd, struct shmid_ds __user *, buf)
 		return shmctl_down(ns, shmid, cmd, buf, version);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	case SHM_LOCK:
 	case SHM_UNLOCK:
 	{
 		struct file *shm_file;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		rcu_read_lock();
 		shp = shm_obtain_object_check(ns, shmid);
@@ -1233,6 +1395,8 @@ SYSCALL_DEFINE3(shmctl, int, shmid, int, cmd, struct shmid_ds __user *, buf)
 		if (is_file_hugepages(shm_file))
 			goto out_unlock0;
 =======
+=======
+>>>>>>> master
 		shp = shm_lock_check(ns, shmid);
 		if (IS_ERR(shp)) {
 			err = PTR_ERR(shp);
@@ -1258,7 +1422,10 @@ SYSCALL_DEFINE3(shmctl, int, shmid, int, cmd, struct shmid_ds __user *, buf)
 		shm_file = shp->shm_file;
 		if (is_file_hugepages(shm_file))
 			goto out_unlock;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		if (cmd == SHM_LOCK) {
 			struct user_struct *user = current_user();
@@ -1268,23 +1435,32 @@ SYSCALL_DEFINE3(shmctl, int, shmid, int, cmd, struct shmid_ds __user *, buf)
 				shp->mlock_user = user;
 			}
 <<<<<<< HEAD
-			goto out_unlock0;
-=======
-			goto out_unlock;
->>>>>>> 671a46baf1b... some performance improvements
-		}
-
-		/* SHM_UNLOCK */
-		if (!(shp->shm_perm.mode & SHM_LOCKED))
 <<<<<<< HEAD
 			goto out_unlock0;
 =======
 			goto out_unlock;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			goto out_unlock;
+>>>>>>> master
+		}
+
+		/* SHM_UNLOCK */
+		if (!(shp->shm_perm.mode & SHM_LOCKED))
+<<<<<<< HEAD
+<<<<<<< HEAD
+			goto out_unlock0;
+=======
+			goto out_unlock;
+>>>>>>> 671a46baf1b... some performance improvements
+=======
+			goto out_unlock;
+>>>>>>> master
 		shmem_lock(shm_file, 0, shp->mlock_user);
 		shp->shm_perm.mode &= ~SHM_LOCKED;
 		shp->mlock_user = NULL;
 		get_file(shm_file);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		ipc_unlock_object(&shp->shm_perm);
 		rcu_read_unlock();
@@ -1294,6 +1470,8 @@ SYSCALL_DEFINE3(shmctl, int, shmid, int, cmd, struct shmid_ds __user *, buf)
 		return err;
 	}
 =======
+=======
+>>>>>>> master
 		shm_unlock(shp);
 		shmem_unlock_mapping(shm_file->f_mapping);
 		fput(shm_file);
@@ -1303,11 +1481,15 @@ SYSCALL_DEFINE3(shmctl, int, shmid, int, cmd, struct shmid_ds __user *, buf)
 	case IPC_SET:
 		err = shmctl_down(ns, shmid, cmd, buf, version);
 		return err;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	default:
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 out_unlock0:
 	ipc_unlock_object(&shp->shm_perm);
@@ -1318,6 +1500,11 @@ out_unlock:
 	shm_unlock(shp);
 out:
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+out_unlock:
+	shm_unlock(shp);
+out:
+>>>>>>> master
 	return err;
 }
 
@@ -1329,12 +1516,17 @@ out:
  * this.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 long do_shmat(int shmid, char __user *shmaddr, int shmflg,
 	      ulong *raddr, unsigned long shmlba)
 =======
 long do_shmat(int shmid, char __user *shmaddr, int shmflg, ulong *raddr,
 	      unsigned long shmlba)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+long do_shmat(int shmid, char __user *shmaddr, int shmflg, ulong *raddr,
+	      unsigned long shmlba)
+>>>>>>> master
 {
 	struct shmid_kernel *shp;
 	unsigned long addr;
@@ -1356,6 +1548,7 @@ long do_shmat(int shmid, char __user *shmaddr, int shmflg, ulong *raddr,
 	else if ((addr = (ulong)shmaddr)) {
 		if (addr & (shmlba - 1)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			/*
 			 * Round down to the nearest multiple of shmlba.
 			 * For sane do_mmap_pgoff() parameters, avoid
@@ -1367,6 +1560,10 @@ long do_shmat(int shmid, char __user *shmaddr, int shmflg, ulong *raddr,
 			if (shmflg & SHM_RND)
 				addr &= ~(shmlba - 1);	   /* round down */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			if (shmflg & SHM_RND)
+				addr &= ~(shmlba - 1);	   /* round down */
+>>>>>>> master
 			else
 #ifndef __ARCH_FORCE_SHMLBA
 				if (addr & ~PAGE_MASK)
@@ -1401,17 +1598,23 @@ long do_shmat(int shmid, char __user *shmaddr, int shmflg, ulong *raddr,
 	 */
 	ns = current->nsproxy->ipc_ns;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rcu_read_lock();
 	shp = shm_obtain_object_check(ns, shmid);
 	if (IS_ERR(shp)) {
 		err = PTR_ERR(shp);
 		goto out_unlock;
 =======
+=======
+>>>>>>> master
 	shp = shm_lock_check(ns, shmid);
 	if (IS_ERR(shp)) {
 		err = PTR_ERR(shp);
 		goto out;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	err = -EACCES;
@@ -1422,6 +1625,7 @@ long do_shmat(int shmid, char __user *shmaddr, int shmflg, ulong *raddr,
 	if (err)
 		goto out_unlock;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ipc_lock_object(&shp->shm_perm);
 
@@ -1434,10 +1638,13 @@ long do_shmat(int shmid, char __user *shmaddr, int shmflg, ulong *raddr,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	path = shp->shm_file->f_path;
 	path_get(&path);
 	shp->shm_nattch++;
 	size = i_size_read(path.dentry->d_inode);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ipc_unlock_object(&shp->shm_perm);
 	rcu_read_unlock();
@@ -1449,19 +1656,25 @@ long do_shmat(int shmid, char __user *shmaddr, int shmflg, ulong *raddr,
 		goto out_nattch;
 	}
 =======
+=======
+>>>>>>> master
 	shm_unlock(shp);
 
 	err = -ENOMEM;
 	sfd = kzalloc(sizeof(*sfd), GFP_KERNEL);
 	if (!sfd)
 		goto out_put_dentry;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	file = alloc_file(&path, f_mode,
 			  is_file_hugepages(shp->shm_file) ?
 				&shm_file_operations_huge :
 				&shm_file_operations);
 	err = PTR_ERR(file);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (IS_ERR(file)) {
 		kfree(sfd);
@@ -1472,6 +1685,10 @@ long do_shmat(int shmid, char __user *shmaddr, int shmflg, ulong *raddr,
 	if (IS_ERR(file))
 		goto out_free;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (IS_ERR(file))
+		goto out_free;
+>>>>>>> master
 
 	file->private_data = sfd;
 	file->f_mapping = shp->shm_file->f_mapping;
@@ -1498,10 +1715,14 @@ long do_shmat(int shmid, char __user *shmaddr, int shmflg, ulong *raddr,
 			goto invalid;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 		
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		
+>>>>>>> master
 	addr = do_mmap_pgoff(file, addr, size, prot, flags, 0, &populate);
 	*raddr = addr;
 	err = 0;
@@ -1517,10 +1738,14 @@ out_fput:
 
 out_nattch:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	down_write(&shm_ids(ns).rwsem);
 =======
 	down_write(&shm_ids(ns).rw_mutex);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	down_write(&shm_ids(ns).rw_mutex);
+>>>>>>> master
 	shp = shm_lock(ns, shmid);
 	BUG_ON(IS_ERR(shp));
 	shp->shm_nattch--;
@@ -1528,6 +1753,7 @@ out_nattch:
 		shm_destroy(ns, shp);
 	else
 		shm_unlock(shp);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	up_write(&shm_ids(ns).rwsem);
 	return err;
@@ -1537,6 +1763,8 @@ out_unlock:
 out:
 	return err;
 =======
+=======
+>>>>>>> master
 	up_write(&shm_ids(ns).rw_mutex);
 
 out:
@@ -1551,7 +1779,10 @@ out_free:
 out_put_dentry:
 	path_put(&path);
 	goto out_nattch;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 SYSCALL_DEFINE3(shmat, int, shmid, char __user *, shmaddr, int, shmflg)
@@ -1657,11 +1888,16 @@ SYSCALL_DEFINE1(shmdt, char __user *, shmaddr)
 	/* under NOMMU conditions, the exact address to be destroyed must be
 	 * given */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (vma && vma->vm_start == addr && vma->vm_ops == &shm_vm_ops) {
 =======
 	retval = -EINVAL;
 	if (vma->vm_start == addr && vma->vm_ops == &shm_vm_ops) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	retval = -EINVAL;
+	if (vma->vm_start == addr && vma->vm_ops == &shm_vm_ops) {
+>>>>>>> master
 		do_munmap(mm, vma->vm_start, vma->vm_end - vma->vm_start);
 		retval = 0;
 	}

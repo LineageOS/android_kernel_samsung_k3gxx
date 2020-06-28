@@ -91,12 +91,17 @@ static void blk_rq_timed_out(struct request *req)
 		break;
 	case BLK_EH_RESET_TIMER:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		blk_add_timer(req);
 		blk_clear_rq_complete(req);
 =======
 		blk_clear_rq_complete(req);
 		blk_add_timer(req);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		blk_clear_rq_complete(req);
+		blk_add_timer(req);
+>>>>>>> master
 		break;
 	case BLK_EH_NOT_HANDLED:
 		/*
@@ -179,9 +184,13 @@ void blk_add_timer(struct request *req)
 
 	BUG_ON(!list_empty(&req->timeout_list));
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	BUG_ON(test_bit(REQ_ATOM_COMPLETE, &req->atomic_flags));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	BUG_ON(test_bit(REQ_ATOM_COMPLETE, &req->atomic_flags));
+>>>>>>> master
 
 	/*
 	 * Some LLDs, like scsi, peek at the timeout to prevent a

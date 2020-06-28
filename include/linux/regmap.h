@@ -17,9 +17,12 @@
 #include <linux/rbtree.h>
 #include <linux/err.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/bug.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 struct module;
 struct device;
@@ -51,6 +54,7 @@ struct reg_default {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /**
  * Register/value pairs for sequences of writes
  *
@@ -64,6 +68,8 @@ struct reg_sequence {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #ifdef CONFIG_REGMAP
 
 enum regmap_endian {
@@ -395,16 +401,22 @@ int regmap_raw_write(struct regmap *map, unsigned int reg,
 int regmap_bulk_write(struct regmap *map, unsigned int reg, const void *val,
 			size_t val_count);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int regmap_multi_reg_write(struct regmap *map, const struct reg_sequence *regs,
 			int num_regs);
 int regmap_multi_reg_write_bypassed(struct regmap *map,
 				    const struct reg_sequence *regs,
 =======
+=======
+>>>>>>> master
 int regmap_multi_reg_write(struct regmap *map, const struct reg_default *regs,
 			int num_regs);
 int regmap_multi_reg_write_bypassed(struct regmap *map,
 				    const struct reg_default *regs,
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				    int num_regs);
 int regmap_raw_write_async(struct regmap *map, unsigned int reg,
 			   const void *val, size_t val_len);

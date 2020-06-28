@@ -919,6 +919,7 @@ struct bkey *bch_next_recurse_key(struct btree *b, struct bkey *search)
 /* Mergesort */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void sort_key_next(struct btree_iter *iter,
 			  struct btree_iter_set *i)
 {
@@ -933,17 +934,23 @@ static struct bkey *btree_sort_fixup(struct btree_iter *iter, struct bkey *tmp)
 	while (iter->used > 1) {
 		struct btree_iter_set *top = iter->data, *i = top + 1;
 =======
+=======
+>>>>>>> master
 static void btree_sort_fixup(struct btree_iter *iter)
 {
 	while (iter->used > 1) {
 		struct btree_iter_set *top = iter->data, *i = top + 1;
 		struct bkey *k;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		if (iter->used > 2 &&
 		    btree_iter_cmp(i[0], i[1]))
 			i++;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (bkey_cmp(top->k, &START_KEY(i->k)) <= 0)
 			break;
@@ -981,6 +988,8 @@ static void btree_sort_fixup(struct btree_iter *iter)
 
 	return NULL;
 =======
+=======
+>>>>>>> master
 		for (k = i->k;
 		     k != i->end && bkey_cmp(top->k, &START_KEY(k)) > 0;
 		     k = bkey_next(k))
@@ -994,7 +1003,10 @@ static void btree_sort_fixup(struct btree_iter *iter)
 
 		heap_sift(iter, i - top, btree_iter_cmp);
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static void btree_mergesort(struct btree *b, struct bset *out,
@@ -1003,15 +1015,19 @@ static void btree_mergesort(struct btree *b, struct bset *out,
 {
 	struct bkey *k, *last = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	BKEY_PADDED(k) tmp;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	bool (*bad)(struct btree *, const struct bkey *) = remove_stale
 		? bch_ptr_bad
 		: bch_ptr_invalid;
 
 	while (!btree_iter_end(iter)) {
 		if (fixup && !b->level)
+<<<<<<< HEAD
 <<<<<<< HEAD
 			k = btree_sort_fixup(iter, &tmp.k);
 		else
@@ -1025,6 +1041,11 @@ static void btree_mergesort(struct btree *b, struct bset *out,
 
 		k = bch_btree_iter_next(iter);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			btree_sort_fixup(iter);
+
+		k = bch_btree_iter_next(iter);
+>>>>>>> master
 		if (bad(b, k))
 			continue;
 

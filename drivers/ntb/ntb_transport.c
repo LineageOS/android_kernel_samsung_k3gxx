@@ -158,9 +158,13 @@ struct ntb_transport {
 	struct delayed_work link_work;
 	struct work_struct link_cleanup;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct dentry *debugfs_dir;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct dentry *debugfs_dir;
+>>>>>>> master
 };
 
 enum {
@@ -828,19 +832,27 @@ static void ntb_transport_init_queue(struct ntb_transport *nt,
 	qp->tx_max_entry = tx_size / qp->tx_max_frame;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ntb_query_debugfs(nt->ndev)) {
 =======
 	if (nt->debugfs_dir) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (nt->debugfs_dir) {
+>>>>>>> master
 		char debugfs_name[4];
 
 		snprintf(debugfs_name, 4, "qp%d", qp_num);
 		qp->debugfs_dir = debugfs_create_dir(debugfs_name,
 <<<<<<< HEAD
+<<<<<<< HEAD
 						 ntb_query_debugfs(nt->ndev));
 =======
 						     nt->debugfs_dir);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+						     nt->debugfs_dir);
+>>>>>>> master
 
 		qp->debugfs_stats = debugfs_create_file("stats", S_IRUSR,
 							qp->debugfs_dir, qp,
@@ -869,13 +881,19 @@ int ntb_transport_init(struct pci_dev *pdev)
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	if (debugfs_initialized())
 		nt->debugfs_dir = debugfs_create_dir(KBUILD_MODNAME, NULL);
 	else
 		nt->debugfs_dir = NULL;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	nt->ndev = ntb_register_transport(pdev, nt);
 	if (!nt->ndev) {
 		rc = -EIO;
@@ -922,9 +940,13 @@ err1:
 	ntb_unregister_transport(nt->ndev);
 err:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	debugfs_remove_recursive(nt->debugfs_dir);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	debugfs_remove_recursive(nt->debugfs_dir);
+>>>>>>> master
 	kfree(nt);
 	return rc;
 }
@@ -939,6 +961,7 @@ void ntb_transport_free(void *transport)
 
 	/* verify that all the qp's are freed */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	for (i = 0; i < nt->max_qps; i++) {
 		if (!test_bit(i, &nt->qp_bitmap))
 			ntb_transport_free_queue(&nt->qps[i]);
@@ -949,16 +972,26 @@ void ntb_transport_free(void *transport)
 		if (!test_bit(i, &nt->qp_bitmap))
 			ntb_transport_free_queue(&nt->qps[i]);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	for (i = 0; i < nt->max_qps; i++)
+		if (!test_bit(i, &nt->qp_bitmap))
+			ntb_transport_free_queue(&nt->qps[i]);
+>>>>>>> master
 
 	ntb_bus_remove(nt);
 
 	cancel_delayed_work_sync(&nt->link_work);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	debugfs_remove_recursive(nt->debugfs_dir);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	debugfs_remove_recursive(nt->debugfs_dir);
+
+>>>>>>> master
 	ntb_unregister_event_callback(nt->ndev);
 
 	pdev = ntb_query_pdev(nt->ndev);

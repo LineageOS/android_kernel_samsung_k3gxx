@@ -62,6 +62,7 @@ MODULE_PARM_DESC(mem_size,
 		"size of reserved RAM used to store oops/panic logs");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static unsigned int mem_type;
 module_param(mem_type, uint, 0600);
 MODULE_PARM_DESC(mem_type,
@@ -69,6 +70,8 @@ MODULE_PARM_DESC(mem_type,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int dump_oops = 1;
 module_param(dump_oops, int, 0600);
 MODULE_PARM_DESC(dump_oops,
@@ -88,9 +91,12 @@ struct ramoops_context {
 	phys_addr_t phys_addr;
 	unsigned long size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int memtype;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	size_t record_size;
 	size_t console_size;
 	size_t ftrace_size;
@@ -99,9 +105,12 @@ struct ramoops_context {
 	unsigned int max_dump_cnt;
 	unsigned int dump_write_cnt;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* _read_cnt need clear on ramoops_pstore_open */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	unsigned int dump_read_cnt;
 	unsigned int console_read_cnt;
 	unsigned int ftrace_read_cnt;
@@ -118,9 +127,12 @@ static int ramoops_pstore_open(struct pstore_info *psi)
 	cxt->dump_read_cnt = 0;
 	cxt->console_read_cnt = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cxt->ftrace_read_cnt = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 }
 
@@ -138,6 +150,7 @@ ramoops_get_next_prz(struct persistent_ram_zone *przs[], uint *c, uint max,
 
 	prz = przs[i];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!prz)
 		return NULL;
 
@@ -148,6 +161,8 @@ ramoops_get_next_prz(struct persistent_ram_zone *przs[], uint *c, uint max,
 	if (!persistent_ram_old_size(prz))
 		return NULL;
 =======
+=======
+>>>>>>> master
 
 	if (update) {
 		/* Update old/shadowed buffer. */
@@ -155,7 +170,10 @@ ramoops_get_next_prz(struct persistent_ram_zone *przs[], uint *c, uint max,
 		if (!persistent_ram_old_size(prz))
 			return NULL;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	*typep = type;
 	*id = i;
@@ -364,11 +382,15 @@ static int ramoops_init_przs(struct device *dev, struct ramoops_context *cxt,
 
 		cxt->przs[i] = persistent_ram_new(*paddr, sz, 0,
 <<<<<<< HEAD
+<<<<<<< HEAD
 						  &cxt->ecc_info,
 						  cxt->memtype);
 =======
 						  &cxt->ecc_info);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+						  &cxt->ecc_info);
+>>>>>>> master
 		if (IS_ERR(cxt->przs[i])) {
 			err = PTR_ERR(cxt->przs[i]);
 			dev_err(dev, "failed to request mem region (0x%zx@0x%llx): %d\n",
@@ -399,10 +421,14 @@ static int ramoops_init_prz(struct device *dev, struct ramoops_context *cxt,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	*prz = persistent_ram_new(*paddr, sz, sig, &cxt->ecc_info, cxt->memtype);
 =======
 	*prz = persistent_ram_new(*paddr, sz, sig, &cxt->ecc_info);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	*prz = persistent_ram_new(*paddr, sz, sig, &cxt->ecc_info);
+>>>>>>> master
 	if (IS_ERR(*prz)) {
 		int err = PTR_ERR(*prz);
 
@@ -450,6 +476,7 @@ static int ramoops_probe(struct platform_device *pdev)
 		pdata->ftrace_size = rounddown_pow_of_two(pdata->ftrace_size);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cxt->size = pdata->mem_size;
 	cxt->phys_addr = pdata->mem_address;
 	cxt->memtype = pdata->mem_type;
@@ -458,6 +485,11 @@ static int ramoops_probe(struct platform_device *pdev)
 	cxt->size = pdata->mem_size;
 	cxt->phys_addr = pdata->mem_address;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	cxt->dump_read_cnt = 0;
+	cxt->size = pdata->mem_size;
+	cxt->phys_addr = pdata->mem_address;
+>>>>>>> master
 	cxt->record_size = pdata->record_size;
 	cxt->console_size = pdata->console_size;
 	cxt->ftrace_size = pdata->ftrace_size;
@@ -589,9 +621,12 @@ static void ramoops_register_dummy(void)
 	dummy_data->mem_size = mem_size;
 	dummy_data->mem_address = mem_address;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dummy_data->mem_type = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	dummy_data->record_size = record_size;
 	dummy_data->console_size = ramoops_console_size;
 	dummy_data->ftrace_size = ramoops_ftrace_size;

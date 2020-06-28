@@ -9,7 +9,10 @@
 #include <linux/ceph/types.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 /* This seemed to be the easiest place to define these */
 
 #define	U8_MAX	((u8)(~0U))
@@ -27,7 +30,10 @@
 #define	S32_MIN	((s32)(-S32_MAX - 1))
 #define	S64_MIN	((s64)(-S64_MAX - 1LL))
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  * in all cases,
  *   void **p     pointer to position pointer

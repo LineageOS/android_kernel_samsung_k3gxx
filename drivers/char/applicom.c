@@ -346,9 +346,13 @@ out:
 		iounmap(apbs[i].RamIO);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	pci_disable_device(dev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	pci_disable_device(dev);
+>>>>>>> master
 	return ret;
 }
 

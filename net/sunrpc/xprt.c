@@ -1291,10 +1291,14 @@ struct rpc_xprt *xprt_create_transport(struct xprt_create *args)
 	}
 	spin_unlock(&xprt_list_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dprintk("RPC: transport (%d) not supported\n", args->ident);
 =======
 	printk(KERN_ERR "RPC: transport (%d) not supported\n", args->ident);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	printk(KERN_ERR "RPC: transport (%d) not supported\n", args->ident);
+>>>>>>> master
 	return ERR_PTR(-EIO);
 
 found:

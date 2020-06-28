@@ -258,10 +258,13 @@ void atombios_crtc_dpms(struct drm_crtc *crtc, int mode)
 		atombios_blank_crtc(crtc, ATOM_DISABLE);
 		drm_vblank_post_modeset(dev, radeon_crtc->crtc_id);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Make sure vblank interrupt is still enabled if needed */
 		radeon_irq_set(rdev);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		radeon_crtc_load_lut(crtc);
 		break;
 	case DRM_MODE_DPMS_STANDBY:
@@ -318,6 +321,7 @@ atombios_set_crtc_dtd_timing(struct drm_crtc *crtc,
 	if (mode->flags & DRM_MODE_FLAG_INTERLACE)
 		misc |= ATOM_INTERLACE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (mode->flags & DRM_MODE_FLAG_DBLCLK)
 		misc |= ATOM_DOUBLE_CLOCK_MODE;
 	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
@@ -326,6 +330,10 @@ atombios_set_crtc_dtd_timing(struct drm_crtc *crtc,
 	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
 		misc |= ATOM_DOUBLE_CLOCK_MODE;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
+		misc |= ATOM_DOUBLE_CLOCK_MODE;
+>>>>>>> master
 
 	args.susModeMiscInfo.usAccess = cpu_to_le16(misc);
 	args.ucCRTC = radeon_crtc->crtc_id;
@@ -369,6 +377,7 @@ static void atombios_crtc_set_timing(struct drm_crtc *crtc,
 	if (mode->flags & DRM_MODE_FLAG_INTERLACE)
 		misc |= ATOM_INTERLACE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (mode->flags & DRM_MODE_FLAG_DBLCLK)
 		misc |= ATOM_DOUBLE_CLOCK_MODE;
 	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
@@ -377,6 +386,10 @@ static void atombios_crtc_set_timing(struct drm_crtc *crtc,
 	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
 		misc |= ATOM_DOUBLE_CLOCK_MODE;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
+		misc |= ATOM_DOUBLE_CLOCK_MODE;
+>>>>>>> master
 
 	args.susModeMiscInfo.usAccess = cpu_to_le16(misc);
 	args.ucCRTC = radeon_crtc->crtc_id;
@@ -859,6 +872,7 @@ static void atombios_crtc_program_pll(struct drm_crtc *crtc,
 			if (ss_enabled && (ss->type & ATOM_EXTERNAL_SS_MASK))
 				args.v5.ucMiscInfo |= PIXEL_CLOCK_V5_MISC_REF_DIV_SRC;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (encoder_mode == ATOM_ENCODER_MODE_HDMI) {
 				switch (bpc) {
 				case 8:
@@ -870,6 +884,8 @@ static void atombios_crtc_program_pll(struct drm_crtc *crtc,
 					break;
 				}
 =======
+=======
+>>>>>>> master
 			switch (bpc) {
 			case 8:
 			default:
@@ -878,7 +894,10 @@ static void atombios_crtc_program_pll(struct drm_crtc *crtc,
 			case 10:
 				args.v5.ucMiscInfo |= PIXEL_CLOCK_V5_MISC_HDMI_30BPP;
 				break;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			}
 			args.v5.ucTransmitterID = encoder_id;
 			args.v5.ucEncoderMode = encoder_mode;
@@ -893,6 +912,7 @@ static void atombios_crtc_program_pll(struct drm_crtc *crtc,
 			args.v6.ucMiscInfo = 0; /* HDMI depth, etc. */
 			if (ss_enabled && (ss->type & ATOM_EXTERNAL_SS_MASK))
 				args.v6.ucMiscInfo |= PIXEL_CLOCK_V6_MISC_REF_DIV_SRC;
+<<<<<<< HEAD
 <<<<<<< HEAD
 			if (encoder_mode == ATOM_ENCODER_MODE_HDMI) {
 				switch (bpc) {
@@ -911,6 +931,8 @@ static void atombios_crtc_program_pll(struct drm_crtc *crtc,
 					break;
 				}
 =======
+=======
+>>>>>>> master
 			switch (bpc) {
 			case 8:
 			default:
@@ -925,7 +947,10 @@ static void atombios_crtc_program_pll(struct drm_crtc *crtc,
 			case 16:
 				args.v6.ucMiscInfo |= PIXEL_CLOCK_V6_MISC_HDMI_48BPP;
 				break;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			}
 			args.v6.ucTransmitterID = encoder_id;
 			args.v6.ucEncoderMode = encoder_mode;
@@ -990,20 +1015,27 @@ static bool atombios_crtc_prepare_pll(struct drm_crtc *crtc, struct drm_display_
 											 &radeon_crtc->ss,
 											 ATOM_DP_SS_ID1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 				} else {
 =======
 				} else
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				} else
+>>>>>>> master
 					radeon_crtc->ss_enabled =
 						radeon_atombios_get_ppll_ss_info(rdev,
 										 &radeon_crtc->ss,
 										 ATOM_DP_SS_ID1);
+<<<<<<< HEAD
 <<<<<<< HEAD
 				}
 				/* disable spread spectrum on DCE3 DP */
 				radeon_crtc->ss_enabled = false;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			}
 			break;
 		case ATOM_ENCODER_MODE_LVDS:
@@ -1238,12 +1270,16 @@ static int dce4_crtc_do_set_base(struct drm_crtc *crtc,
 	    (rdev->family == CHIP_PITCAIRN))
 		fb_format |= SI_GRPH_PIPE_CONFIG(SI_ADDR_SURF_P8_32x32_8x16);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	else if ((rdev->family == CHIP_VERDE) ||
 		 (rdev->family == CHIP_OLAND) ||
 		 (rdev->family == CHIP_HAINAN)) /* for completeness.  HAINAN has no display hw */
 =======
 	else if (rdev->family == CHIP_VERDE)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	else if (rdev->family == CHIP_VERDE)
+>>>>>>> master
 		fb_format |= SI_GRPH_PIPE_CONFIG(SI_ADDR_SURF_P4_8x16);
 
 	switch (radeon_crtc->crtc_id) {
@@ -1724,6 +1760,7 @@ static int radeon_atom_pick_pll(struct drm_crtc *crtc)
 		DRM_ERROR("unable to allocate a PPLL\n");
 		return ATOM_PPLL_INVALID;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (ASIC_IS_DCE41(rdev)) {
 		/* Don't share PLLs on DCE4.1 chips */
 		if (ENCODER_MODE_IS_DP(atombios_get_encoder_mode(radeon_crtc->encoder))) {
@@ -1740,6 +1777,8 @@ static int radeon_atom_pick_pll(struct drm_crtc *crtc)
 		return ATOM_PPLL_INVALID;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	} else if (ASIC_IS_DCE4(rdev)) {
 		/* in DP mode, the DP ref clock can come from PPLL, DCPLL, or ext clock,
 		 * depending on the asic:

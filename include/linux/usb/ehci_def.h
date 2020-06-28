@@ -179,18 +179,24 @@ struct ehci_regs {
  */
 	/* HOSTPC: offset 0x84 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32		hostpc[0];	/* HOSTPC extension */
 #define HOSTPC_PHCD	(1<<22)		/* Phy clock disable */
 #define HOSTPC_PSPD	(3<<25)		/* Port speed detection */
 
 	u32		reserved5[17];
 =======
+=======
+>>>>>>> master
 	u32		hostpc[1];	/* HOSTPC extension */
 #define HOSTPC_PHCD	(1<<22)		/* Phy clock disable */
 #define HOSTPC_PSPD	(3<<25)		/* Port speed detection */
 
 	u32		reserved5[16];
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* USBMODE_EX: offset 0xc8 */
 	u32		usbmode_ex;	/* USB Device mode extension */

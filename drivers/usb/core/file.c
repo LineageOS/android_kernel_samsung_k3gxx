@@ -30,6 +30,7 @@ static DECLARE_RWSEM(minor_rwsem);
 static int usb_open(struct inode * inode, struct file * file)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err = -ENODEV;
 	const struct file_operations *new_fops;
 
@@ -44,6 +45,8 @@ static int usb_open(struct inode * inode, struct file * file)
 	if (file->f_op->open)
 		err = file->f_op->open(inode,file);
 =======
+=======
+>>>>>>> master
 	int minor = iminor(inode);
 	const struct file_operations *c;
 	int err = -ENODEV;
@@ -65,7 +68,10 @@ static int usb_open(struct inode * inode, struct file * file)
 		file->f_op = fops_get(old_fops);
 	}
 	fops_put(old_fops);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  done:
 	up_read(&minor_rwsem);
 	return err;

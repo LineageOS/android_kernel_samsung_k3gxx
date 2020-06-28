@@ -173,10 +173,14 @@ static void nf_ct_frag6_expire(unsigned long data)
 static inline struct frag_queue *fq_find(struct net *net, __be32 id,
 					 u32 user, struct in6_addr *src,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					 struct in6_addr *dst, int iif, u8 ecn)
 =======
 					 struct in6_addr *dst, u8 ecn)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+					 struct in6_addr *dst, u8 ecn)
+>>>>>>> master
 {
 	struct inet_frag_queue *q;
 	struct ip6_create_arg arg;
@@ -187,9 +191,12 @@ static inline struct frag_queue *fq_find(struct net *net, __be32 id,
 	arg.src = src;
 	arg.dst = dst;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	arg.iif = iif;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	arg.ecn = ecn;
 
 	read_lock_bh(&nf_frags.lock);
@@ -577,11 +584,14 @@ struct sk_buff *nf_ct_frag6_gather(struct sk_buff *skb, u32 user)
 		return skb;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!net->nf_frag.frags.high_thresh)
 		return skb;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	clone = skb_clone(skb, GFP_ATOMIC);
 	if (clone == NULL) {
 		pr_debug("Can't clone skb\n");
@@ -605,10 +615,14 @@ struct sk_buff *nf_ct_frag6_gather(struct sk_buff *skb, u32 user)
 
 	fq = fq_find(net, fhdr->identification, user, &hdr->saddr, &hdr->daddr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		     skb->dev ? skb->dev->ifindex : 0, ip6_frag_ecn(hdr));
 =======
 		     ip6_frag_ecn(hdr));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		     ip6_frag_ecn(hdr));
+>>>>>>> master
 	if (fq == NULL) {
 		pr_debug("Can't find and can't create new queue\n");
 		goto ret_orig;
@@ -640,6 +654,7 @@ ret_orig:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void nf_ct_frag6_consume_orig(struct sk_buff *skb)
 {
 	struct sk_buff *s, *s2;
@@ -651,6 +666,8 @@ void nf_ct_frag6_consume_orig(struct sk_buff *skb)
 		s = s2;
 	}
 =======
+=======
+>>>>>>> master
 void nf_ct_frag6_output(unsigned int hooknum, struct sk_buff *skb,
 			struct net_device *in, struct net_device *out,
 			int (*okfn)(struct sk_buff *))
@@ -676,7 +693,10 @@ void nf_ct_frag6_output(unsigned int hooknum, struct sk_buff *skb,
 		s = s2;
 	}
 	nf_conntrack_put_reasm(skb);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static int nf_ct_net_init(struct net *net)

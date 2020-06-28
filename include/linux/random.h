@@ -18,9 +18,12 @@ extern void get_random_bytes(void *buf, int nbytes);
 extern void get_random_bytes_arch(void *buf, int nbytes);
 void generate_random_uuid(unsigned char uuid_out[16]);
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern int random_int_secret_init(void);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 #ifndef MODULE
 extern const struct file_operations random_fops, urandom_fops;
@@ -54,6 +57,7 @@ static inline void prandom_seed_state(struct rnd_state *state, u64 seed)
 	u32 i = (seed >> 32) ^ (seed << 10) ^ seed;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	state->s1 = __seed(i, 2);
 	state->s2 = __seed(i, 8);
 	state->s3 = __seed(i, 16);
@@ -62,6 +66,11 @@ static inline void prandom_seed_state(struct rnd_state *state, u64 seed)
 	state->s2 = __seed(i, 7);
 	state->s3 = __seed(i, 15);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	state->s1 = __seed(i, 1);
+	state->s2 = __seed(i, 7);
+	state->s3 = __seed(i, 15);
+>>>>>>> master
 }
 
 #ifdef CONFIG_ARCH_RANDOM

@@ -155,10 +155,14 @@ int dm_tm_pre_commit(struct dm_transaction_manager *tm)
 		return r;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return dm_bm_flush(tm->bm);
 =======
 	return 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return 0;
+>>>>>>> master
 }
 EXPORT_SYMBOL_GPL(dm_tm_pre_commit);
 
@@ -169,6 +173,7 @@ int dm_tm_commit(struct dm_transaction_manager *tm, struct dm_block *root)
 
 	wipe_shadow_table(tm);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dm_bm_unlock(root);
 
 	return dm_bm_flush(tm->bm);
@@ -176,6 +181,10 @@ int dm_tm_commit(struct dm_transaction_manager *tm, struct dm_block *root)
 
 	return dm_bm_flush_and_unlock(tm->bm, root);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	return dm_bm_flush_and_unlock(tm->bm, root);
+>>>>>>> master
 }
 EXPORT_SYMBOL_GPL(dm_tm_commit);
 

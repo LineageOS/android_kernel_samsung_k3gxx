@@ -318,9 +318,12 @@
 #define   PIPE_CONTROL_CS_STALL				(1<<20)
 #define   PIPE_CONTROL_TLB_INVALIDATE			(1<<18)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define   PIPE_CONTROL_MEDIA_STATE_CLEAR		(1<<16)
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #define   PIPE_CONTROL_QW_WRITE				(1<<14)
 #define   PIPE_CONTROL_DEPTH_STALL			(1<<13)
 #define   PIPE_CONTROL_WRITE_FLUSH			(1<<12)
@@ -622,10 +625,13 @@
 					be delivered when out of C3. */
 #define   INSTPM_FORCE_ORDERING				(1<<7) /* GEN6+ */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define   INSTPM_TLB_INVALIDATE	(1<<9)
 #define   INSTPM_SYNC_FLUSH	(1<<5)
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #define ACTHD	        0x020c8
 #define FW_BLC		0x020d8
 #define FW_BLC2		0x020dc
@@ -916,9 +922,12 @@
 #define   GMBUS_CYCLE_STOP	(4<<25)
 #define   GMBUS_BYTE_COUNT_SHIFT 16
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define   GMBUS_BYTE_COUNT_MAX   256U
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #define   GMBUS_SLAVE_INDEX_SHIFT 8
 #define   GMBUS_SLAVE_ADDR_SHIFT 1
 #define   GMBUS_SLAVE_READ	(1<<0)
@@ -1687,6 +1696,7 @@
 
 #define PORT_HOTPLUG_STAT	(dev_priv->info->display_mmio_offset + 0x61114)
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * HDMI/DP bits are gen4+
  *
@@ -1702,11 +1712,16 @@
 #define   PORTC_HOTPLUG_LIVE_STATUS_VLV		(1 << 28)
 #define   PORTB_HOTPLUG_LIVE_STATUS_VLV		(1 << 29)
 =======
+=======
+>>>>>>> master
 /* HDMI/DP bits are gen4+ */
 #define   PORTB_HOTPLUG_LIVE_STATUS               (1 << 29)
 #define   PORTC_HOTPLUG_LIVE_STATUS               (1 << 28)
 #define   PORTD_HOTPLUG_LIVE_STATUS               (1 << 27)
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #define   PORTD_HOTPLUG_INT_STATUS		(3 << 21)
 #define   PORTC_HOTPLUG_INT_STATUS		(3 << 19)
 #define   PORTB_HOTPLUG_INT_STATUS		(3 << 17)
@@ -4275,10 +4290,14 @@
 #define EDP_LINK_TRAIN_600MV_3_5DB_IVB		(0x36 <<22)
 #define EDP_LINK_TRAIN_800MV_0DB_IVB		(0x38 <<22)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define EDP_LINK_TRAIN_800MV_3_5DB_IVB		(0x3e <<22)
 =======
 #define EDP_LINK_TRAIN_800MV_3_5DB_IVB		(0x33 <<22)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define EDP_LINK_TRAIN_800MV_3_5DB_IVB		(0x33 <<22)
+>>>>>>> master
 
 /* legacy values */
 #define EDP_LINK_TRAIN_500MV_0DB_IVB		(0x00 <<22)

@@ -73,10 +73,14 @@ static void tk_set_wall_to_mono(struct timekeeper *tk, struct timespec wtm)
 	set_normalized_timespec(&tmp, -wtm.tv_sec, -wtm.tv_nsec);
 	tk->offs_real = timespec_to_ktime(tmp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tk->offs_tai = ktime_add(tk->offs_real, ktime_set(tk->tai_offset, 0));
 =======
 	tk->offs_tai = ktime_sub(tk->offs_real, ktime_set(tk->tai_offset, 0));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	tk->offs_tai = ktime_sub(tk->offs_real, ktime_set(tk->tai_offset, 0));
+>>>>>>> master
 }
 
 static void tk_set_sleep_time(struct timekeeper *tk, struct timespec t)
@@ -595,10 +599,14 @@ static void __timekeeping_set_tai_offset(struct timekeeper *tk, s32 tai_offset)
 {
 	tk->tai_offset = tai_offset;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tk->offs_tai = ktime_add(tk->offs_real, ktime_set(tai_offset, 0));
 =======
 	tk->offs_tai = ktime_sub(tk->offs_real, ktime_set(tai_offset, 0));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	tk->offs_tai = ktime_sub(tk->offs_real, ktime_set(tai_offset, 0));
+>>>>>>> master
 }
 
 /**
@@ -614,9 +622,12 @@ void timekeeping_set_tai_offset(s32 tai_offset)
 	write_seqcount_begin(&timekeeper_seq);
 	__timekeeping_set_tai_offset(tk, tai_offset);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	timekeeping_update(tk, false, true);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	write_seqcount_end(&timekeeper_seq);
 	raw_spin_unlock_irqrestore(&timekeeper_lock, flags);
 	clock_was_set();
@@ -1020,10 +1031,13 @@ static int timekeeping_suspend(void)
 			timespec_add(timekeeping_suspend_time, delta_delta);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	timekeeping_update(tk, false, true);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	write_seqcount_end(&timekeeper_seq);
 	raw_spin_unlock_irqrestore(&timekeeper_lock, flags);
 
@@ -1254,6 +1268,7 @@ out_adjust:
  *
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline unsigned int accumulate_nsecs_to_secs(struct timekeeper *tk)
 {
 	u64 nsecps = (u64)NSEC_PER_SEC << tk->shift;
@@ -1263,6 +1278,11 @@ static inline void accumulate_nsecs_to_secs(struct timekeeper *tk)
 {
 	u64 nsecps = (u64)NSEC_PER_SEC << tk->shift;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static inline void accumulate_nsecs_to_secs(struct timekeeper *tk)
+{
+	u64 nsecps = (u64)NSEC_PER_SEC << tk->shift;
+>>>>>>> master
 
 	while (tk->xtime_nsec >= nsecps) {
 		int leap;
@@ -1285,6 +1305,7 @@ static inline void accumulate_nsecs_to_secs(struct timekeeper *tk)
 			__timekeeping_set_tai_offset(tk, tk->tai_offset - leap);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			clock_set = 1;
 		}
 	}
@@ -1294,6 +1315,11 @@ static inline void accumulate_nsecs_to_secs(struct timekeeper *tk)
 		}
 	}
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			clock_was_set_delayed();
+		}
+	}
+>>>>>>> master
 }
 
 /**
@@ -1307,11 +1333,15 @@ static inline void accumulate_nsecs_to_secs(struct timekeeper *tk)
  */
 static cycle_t logarithmic_accumulation(struct timekeeper *tk, cycle_t offset,
 <<<<<<< HEAD
+<<<<<<< HEAD
 						u32 shift,
 						unsigned int *clock_set)
 =======
 						u32 shift)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+						u32 shift)
+>>>>>>> master
 {
 	cycle_t interval = tk->cycle_interval << shift;
 	u64 raw_nsecs;
@@ -1326,10 +1356,14 @@ static cycle_t logarithmic_accumulation(struct timekeeper *tk, cycle_t offset,
 
 	tk->xtime_nsec += tk->xtime_interval << shift;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	*clock_set |= accumulate_nsecs_to_secs(tk);
 =======
 	accumulate_nsecs_to_secs(tk);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	accumulate_nsecs_to_secs(tk);
+>>>>>>> master
 
 	/* Accumulate raw time */
 	raw_nsecs = (u64)tk->raw_interval << shift;
@@ -1369,10 +1403,14 @@ static inline void old_vsyscall_fixup(struct timekeeper *tk)
 	tk->xtime_nsec += 1ULL << tk->shift;
 	tk->ntp_error += remainder << tk->ntp_error_shift;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tk->ntp_error -= (1ULL << tk->shift) << tk->ntp_error_shift;
 =======
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+>>>>>>> master
 }
 #else
 #define old_vsyscall_fixup(tk)
@@ -1392,9 +1430,12 @@ static void update_wall_time(void)
 	cycle_t offset;
 	int shift = 0, maxshift;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int clock_set = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	unsigned long flags;
 
 	raw_spin_lock_irqsave(&timekeeper_lock, flags);
@@ -1430,11 +1471,15 @@ static void update_wall_time(void)
 	shift = min(shift, maxshift);
 	while (offset >= tk->cycle_interval) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		offset = logarithmic_accumulation(tk, offset, shift,
 							&clock_set);
 =======
 		offset = logarithmic_accumulation(tk, offset, shift);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		offset = logarithmic_accumulation(tk, offset, shift);
+>>>>>>> master
 		if (offset < tk->cycle_interval<<shift)
 			shift--;
 	}
@@ -1453,10 +1498,14 @@ static void update_wall_time(void)
 	 * xtime_nsec isn't larger than NSEC_PER_SEC
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	clock_set |= accumulate_nsecs_to_secs(tk);
 =======
 	accumulate_nsecs_to_secs(tk);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	accumulate_nsecs_to_secs(tk);
+>>>>>>> master
 
 	write_seqcount_begin(&timekeeper_seq);
 	/* Update clock->cycle_last with the new value */
@@ -1477,12 +1526,15 @@ static void update_wall_time(void)
 out:
 	raw_spin_unlock_irqrestore(&timekeeper_lock, flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (clock_set)
 		/* have to call outside the timekeeper_seq */
 		clock_was_set_delayed();
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /**
@@ -1742,14 +1794,19 @@ int do_adjtimex(struct timex *txc)
 	if (tai != orig_tai) {
 		__timekeeping_set_tai_offset(tk, tai);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		timekeeping_update(tk, false, true);
 =======
 		clock_was_set_delayed();
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		clock_was_set_delayed();
+>>>>>>> master
 	}
 	write_seqcount_end(&timekeeper_seq);
 	raw_spin_unlock_irqrestore(&timekeeper_lock, flags);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (tai != orig_tai)
 		clock_was_set();
@@ -1758,6 +1815,8 @@ int do_adjtimex(struct timex *txc)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return ret;
 }
 

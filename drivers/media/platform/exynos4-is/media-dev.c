@@ -1442,6 +1442,7 @@ err_unlock:
 	mutex_unlock(&fmd->media_dev.graph_mutex);
 err_clk:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fimc_md_put_clocks(fmd);
 	fimc_md_unregister_entities(fmd);
 	media_device_unregister(&fmd->media_dev);
@@ -1450,6 +1451,11 @@ err_clk:
 	fimc_md_put_clocks(fmd);
 	fimc_md_unregister_entities(fmd);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	media_device_unregister(&fmd->media_dev);
+	fimc_md_put_clocks(fmd);
+	fimc_md_unregister_entities(fmd);
+>>>>>>> master
 err_md:
 	v4l2_device_unregister(&fmd->v4l2_dev);
 	return ret;

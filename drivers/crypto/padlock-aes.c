@@ -564,7 +564,11 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Michal Ludvig");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("aes");
 =======
 MODULE_ALIAS("aes");
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+MODULE_ALIAS("aes");
+>>>>>>> master

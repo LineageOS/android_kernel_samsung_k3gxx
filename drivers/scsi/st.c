@@ -1263,6 +1263,7 @@ static int st_open(struct inode *inode, struct file *filp)
 	STp->in_use = 0;
 	spin_unlock(&st_use_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (resumed)
 		scsi_autopm_put_device(STp->device);
 	scsi_tape_put(STp);
@@ -1271,6 +1272,11 @@ static int st_open(struct inode *inode, struct file *filp)
 	if (resumed)
 		scsi_autopm_put_device(STp->device);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	scsi_tape_put(STp);
+	if (resumed)
+		scsi_autopm_put_device(STp->device);
+>>>>>>> master
 	return retval;
 
 }

@@ -204,6 +204,7 @@ static inline int phy_find_valid(int idx, u32 features)
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * phy_check_valid - check if there is a valid PHY setting which matches
  *		     speed, duplex, and feature mask
  * @speed: speed to match
@@ -225,6 +226,8 @@ static inline bool phy_check_valid(int speed, int duplex, u32 features)
 /**
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  * phy_sanitize_settings - make sure the PHY is set to supported speed and duplex
  * @phydev: the target phy_device struct
  *
@@ -462,10 +465,14 @@ void phy_start_machine(struct phy_device *phydev,
 	phydev->adjust_state = handler;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	queue_delayed_work(system_power_efficient_wq, &phydev->state_queue, HZ);
 =======
 	schedule_delayed_work(&phydev->state_queue, HZ);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	schedule_delayed_work(&phydev->state_queue, HZ);
+>>>>>>> master
 }
 
 /**
@@ -482,10 +489,14 @@ void phy_stop_machine(struct phy_device *phydev)
 
 	mutex_lock(&phydev->lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (phydev->state > PHY_UP && phydev->state != PHY_HALTED)
 =======
 	if (phydev->state > PHY_UP)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (phydev->state > PHY_UP)
+>>>>>>> master
 		phydev->state = PHY_UP;
 	mutex_unlock(&phydev->lock);
 
@@ -531,10 +542,14 @@ static irqreturn_t phy_interrupt(int irq, void *phy_dat)
 	atomic_inc(&phydev->irq_disable);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	queue_work(system_power_efficient_wq, &phydev->phy_queue);
 =======
 	schedule_work(&phydev->phy_queue);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	schedule_work(&phydev->phy_queue);
+>>>>>>> master
 
 	return IRQ_HANDLED;
 }
@@ -690,10 +705,14 @@ static void phy_change(struct work_struct *work)
 	/* reschedule state queue work to run as soon as possible */
 	cancel_delayed_work_sync(&phydev->state_queue);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	queue_delayed_work(system_power_efficient_wq, &phydev->state_queue, 0);
 =======
 	schedule_delayed_work(&phydev->state_queue, 0);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	schedule_delayed_work(&phydev->state_queue, 0);
+>>>>>>> master
 
 	return;
 
@@ -957,11 +976,15 @@ void phy_state_machine(struct work_struct *work)
 		phy_error(phydev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	queue_delayed_work(system_power_efficient_wq, &phydev->state_queue,
 			PHY_STATE_TIME * HZ);
 =======
 	schedule_delayed_work(&phydev->state_queue, PHY_STATE_TIME * HZ);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	schedule_delayed_work(&phydev->state_queue, PHY_STATE_TIME * HZ);
+>>>>>>> master
 }
 
 static inline void mmd_phy_indirect(struct mii_bus *bus, int prtad, int devad,
@@ -1047,15 +1070,20 @@ int phy_init_eee(struct phy_device *phydev, bool clk_stop_enable)
 	/* According to 802.3az,the EEE is supported only in full duplex-mode.
 	 * Also EEE feature is active when core is operating with MII, GMII
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * or RGMII (all kinds). Internal PHYs are also allowed to proceed and
 	 * should return an error if they do not support EEE.
 =======
 	 * or RGMII.
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	 * or RGMII.
+>>>>>>> master
 	 */
 	if ((phydev->duplex == DUPLEX_FULL) &&
 	    ((phydev->interface == PHY_INTERFACE_MODE_MII) ||
 	    (phydev->interface == PHY_INTERFACE_MODE_GMII) ||
+<<<<<<< HEAD
 <<<<<<< HEAD
 	     (phydev->interface >= PHY_INTERFACE_MODE_RGMII &&
 	      phydev->interface <= PHY_INTERFACE_MODE_RGMII_TXID))) {
@@ -1063,11 +1091,16 @@ int phy_init_eee(struct phy_device *phydev, bool clk_stop_enable)
 		u32 lp, cap, adv;
 		int status;
 =======
+=======
+>>>>>>> master
 	    (phydev->interface == PHY_INTERFACE_MODE_RGMII))) {
 		int eee_lp, eee_cap, eee_adv;
 		u32 lp, cap, adv;
 		int idx, status;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		/* Read phy status to properly get the right settings */
 		status = phy_read_status(phydev);
@@ -1100,11 +1133,16 @@ int phy_init_eee(struct phy_device *phydev, bool clk_stop_enable)
 		adv = mmd_eee_adv_to_ethtool_adv_t(eee_adv);
 		lp = mmd_eee_adv_to_ethtool_adv_t(eee_lp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!phy_check_valid(phydev->speed, phydev->duplex, lp & adv))
 =======
 		idx = phy_find_setting(phydev->speed, phydev->duplex);
 		if (!(lp & adv & settings[idx].setting))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		idx = phy_find_setting(phydev->speed, phydev->duplex);
+		if (!(lp & adv & settings[idx].setting))
+>>>>>>> master
 			goto eee_exit;
 
 		if (clk_stop_enable) {

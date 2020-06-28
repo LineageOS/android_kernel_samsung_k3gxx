@@ -46,9 +46,12 @@ static struct list_head sel_netif_hash[SEL_NETIF_HASH_SIZE];
 /**
  * sel_netif_hashfn - Hashing function for the interface table
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @ns: the network namespace
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  * @ifindex: the network interface
  *
  * Description:
@@ -56,6 +59,7 @@ static struct list_head sel_netif_hash[SEL_NETIF_HASH_SIZE];
  * bucket number for the given interface.
  *
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 static inline u32 sel_netif_hashfn(const struct net *ns, int ifindex)
 {
@@ -65,14 +69,22 @@ static inline u32 sel_netif_hashfn(int ifindex)
 {
 	return (ifindex & (SEL_NETIF_HASH_SIZE - 1));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static inline u32 sel_netif_hashfn(int ifindex)
+{
+	return (ifindex & (SEL_NETIF_HASH_SIZE - 1));
+>>>>>>> master
 }
 
 /**
  * sel_netif_find - Search for an interface record
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @ns: the network namespace
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  * @ifindex: the network interface
  *
  * Description:
@@ -80,6 +92,7 @@ static inline u32 sel_netif_hashfn(int ifindex)
  * If an entry can not be found in the table return NULL.
  *
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 static inline struct sel_netif *sel_netif_find(const struct net *ns,
 					       int ifindex)
@@ -91,6 +104,8 @@ static inline struct sel_netif *sel_netif_find(const struct net *ns,
 		if (net_eq(netif->nsec.ns, ns) &&
 		    netif->nsec.ifindex == ifindex)
 =======
+=======
+>>>>>>> master
 static inline struct sel_netif *sel_netif_find(int ifindex)
 {
 	int idx = sel_netif_hashfn(ifindex);
@@ -100,7 +115,10 @@ static inline struct sel_netif *sel_netif_find(int ifindex)
 		/* all of the devices should normally fit in the hash, so we
 		 * optimize for that case */
 		if (likely(netif->nsec.ifindex == ifindex))
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			return netif;
 
 	return NULL;
@@ -123,10 +141,14 @@ static int sel_netif_insert(struct sel_netif *netif)
 		return -ENOSPC;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	idx = sel_netif_hashfn(netif->nsec.ns, netif->nsec.ifindex);
 =======
 	idx = sel_netif_hashfn(netif->nsec.ifindex);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	idx = sel_netif_hashfn(netif->nsec.ifindex);
+>>>>>>> master
 	list_add_rcu(&netif->list, &sel_netif_hash[idx]);
 	sel_netif_total++;
 
@@ -151,9 +173,12 @@ static void sel_netif_destroy(struct sel_netif *netif)
 /**
  * sel_netif_sid_slow - Lookup the SID of a network interface using the policy
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @ns: the network namespace
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  * @ifindex: the network interface
  * @sid: interface SID
  *
@@ -165,10 +190,14 @@ static void sel_netif_destroy(struct sel_netif *netif)
  *
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int sel_netif_sid_slow(struct net *ns, int ifindex, u32 *sid)
 =======
 static int sel_netif_sid_slow(int ifindex, u32 *sid)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int sel_netif_sid_slow(int ifindex, u32 *sid)
+>>>>>>> master
 {
 	int ret;
 	struct sel_netif *netif;
@@ -179,10 +208,14 @@ static int sel_netif_sid_slow(int ifindex, u32 *sid)
 	 * currently support containers */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev = dev_get_by_index(ns, ifindex);
 =======
 	dev = dev_get_by_index(&init_net, ifindex);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	dev = dev_get_by_index(&init_net, ifindex);
+>>>>>>> master
 	if (unlikely(dev == NULL)) {
 		printk(KERN_WARNING
 		       "SELinux: failure in sel_netif_sid_slow(),"
@@ -192,10 +225,14 @@ static int sel_netif_sid_slow(int ifindex, u32 *sid)
 
 	spin_lock_bh(&sel_netif_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	netif = sel_netif_find(ns, ifindex);
 =======
 	netif = sel_netif_find(ifindex);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	netif = sel_netif_find(ifindex);
+>>>>>>> master
 	if (netif != NULL) {
 		*sid = netif->nsec.sid;
 		ret = 0;
@@ -210,9 +247,12 @@ static int sel_netif_sid_slow(int ifindex, u32 *sid)
 	if (ret != 0)
 		goto out;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	new->nsec.ns = ns;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	new->nsec.ifindex = ifindex;
 	ret = sel_netif_insert(new);
 	if (ret != 0)
@@ -235,9 +275,12 @@ out:
 /**
  * sel_netif_sid - Lookup the SID of a network interface
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @ns: the network namespace
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  * @ifindex: the network interface
  * @sid: interface SID
  *
@@ -250,19 +293,27 @@ out:
  *
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 int sel_netif_sid(struct net *ns, int ifindex, u32 *sid)
 =======
 int sel_netif_sid(int ifindex, u32 *sid)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+int sel_netif_sid(int ifindex, u32 *sid)
+>>>>>>> master
 {
 	struct sel_netif *netif;
 
 	rcu_read_lock();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	netif = sel_netif_find(ns, ifindex);
 =======
 	netif = sel_netif_find(ifindex);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	netif = sel_netif_find(ifindex);
+>>>>>>> master
 	if (likely(netif != NULL)) {
 		*sid = netif->nsec.sid;
 		rcu_read_unlock();
@@ -271,18 +322,25 @@ int sel_netif_sid(int ifindex, u32 *sid)
 	rcu_read_unlock();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sel_netif_sid_slow(ns, ifindex, sid);
 =======
 	return sel_netif_sid_slow(ifindex, sid);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return sel_netif_sid_slow(ifindex, sid);
+>>>>>>> master
 }
 
 /**
  * sel_netif_kill - Remove an entry from the network interface table
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @ns: the network namespace
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  * @ifindex: the network interface
  *
  * Description:
@@ -291,20 +349,28 @@ int sel_netif_sid(int ifindex, u32 *sid)
  *
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void sel_netif_kill(const struct net *ns, int ifindex)
 =======
 static void sel_netif_kill(int ifindex)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static void sel_netif_kill(int ifindex)
+>>>>>>> master
 {
 	struct sel_netif *netif;
 
 	rcu_read_lock();
 	spin_lock_bh(&sel_netif_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	netif = sel_netif_find(ns, ifindex);
 =======
 	netif = sel_netif_find(ifindex);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	netif = sel_netif_find(ifindex);
+>>>>>>> master
 	if (netif)
 		sel_netif_destroy(netif);
 	spin_unlock_bh(&sel_netif_lock);
@@ -319,10 +385,14 @@ static void sel_netif_kill(int ifindex)
  *
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 void sel_netif_flush(void)
 =======
 static void sel_netif_flush(void)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static void sel_netif_flush(void)
+>>>>>>> master
 {
 	int idx;
 	struct sel_netif *netif;
@@ -335,7 +405,10 @@ static void sel_netif_flush(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 static int sel_netif_avc_callback(u32 event)
 {
 	if (event == AVC_CALLBACK_RESET) {
@@ -345,22 +418,31 @@ static int sel_netif_avc_callback(u32 event)
 	return 0;
 }
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int sel_netif_netdev_notifier_handler(struct notifier_block *this,
 					     unsigned long event, void *ptr)
 {
 	struct net_device *dev = ptr;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (event == NETDEV_DOWN)
 		sel_netif_kill(dev_net(dev), dev->ifindex);
 =======
+=======
+>>>>>>> master
 	if (dev_net(dev) != &init_net)
 		return NOTIFY_DONE;
 
 	if (event == NETDEV_DOWN)
 		sel_netif_kill(dev->ifindex);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return NOTIFY_DONE;
 }
@@ -374,11 +456,15 @@ static __init int sel_netif_init(void)
 	int i, err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if defined(SELINUX_ALWAYS_ENFORCE) || \
 	defined(SELINUX_ALWAYS_PERMISSIVE)
 =======
 #ifdef CONFIG_ALWAYS_ENFORCE
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#ifdef CONFIG_ALWAYS_ENFORCE
+>>>>>>> master
 	selinux_enabled = 1;
 #endif
 	if (!selinux_enabled)
@@ -390,12 +476,18 @@ static __init int sel_netif_init(void)
 	register_netdevice_notifier(&sel_netif_netdev_notifier);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	err = avc_add_callback(sel_netif_avc_callback, AVC_CALLBACK_RESET);
 	if (err)
 		panic("avc_add_callback() failed, error %d\n", err);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return err;
 }
 

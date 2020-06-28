@@ -185,6 +185,7 @@ static int reiserfs_quota_on_mount(struct super_block *, int);
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Look for uncompleted unlinks and truncates and complete them
  *
@@ -197,6 +198,9 @@ static int reiserfs_quota_on_mount(struct super_block *, int);
 =======
 /* look for uncompleted unlinks and truncates and complete them */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+/* look for uncompleted unlinks and truncates and complete them */
+>>>>>>> master
 static int finish_unfinished(struct super_block *s)
 {
 	INITIALIZE_PATH(path);
@@ -244,12 +248,16 @@ static int finish_unfinished(struct super_block *s)
 				continue;
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 			reiserfs_write_unlock(s);
 			ret = reiserfs_quota_on_mount(s, i);
 			reiserfs_write_lock(s);
 =======
 			ret = reiserfs_quota_on_mount(s, i);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			ret = reiserfs_quota_on_mount(s, i);
+>>>>>>> master
 			if (ret < 0)
 				reiserfs_warning(s, "reiserfs-2500",
 						 "cannot turn on journaled "

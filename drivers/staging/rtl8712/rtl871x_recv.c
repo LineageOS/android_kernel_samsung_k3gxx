@@ -255,10 +255,14 @@ union recv_frame *r8712_portctrl(struct _adapter *adapter,
 	struct	sta_priv *pstapriv;
 	union recv_frame *prtnframe;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u16 ether_type;
 =======
 	u16 ether_type = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u16 ether_type = 0;
+>>>>>>> master
 
 	pstapriv = &adapter->stapriv;
 	ptr = get_recvframe_data(precv_frame);
@@ -267,6 +271,7 @@ union recv_frame *r8712_portctrl(struct _adapter *adapter,
 	psta = r8712_get_stainfo(pstapriv, psta_addr);
 	auth_alg = adapter->securitypriv.AuthAlgrthm;
 	if (auth_alg == 2) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		/* get ether_type */
 		ptr = ptr + pfhdr->attrib.hdrlen + LLC_HEADER_SIZE;
@@ -277,6 +282,8 @@ union recv_frame *r8712_portctrl(struct _adapter *adapter,
 			/* blocked
 			 * only accept EAPOL frame */
 =======
+=======
+>>>>>>> master
 		if ((psta != NULL) && (psta->ieee8021x_blocked)) {
 			/* blocked
 			 * only accept EAPOL frame */
@@ -286,7 +293,10 @@ union recv_frame *r8712_portctrl(struct _adapter *adapter,
 			      pfhdr->attrib.iv_len + LLC_HEADER_SIZE;
 			memcpy(&ether_type, ptr, 2);
 			ether_type = ntohs((unsigned short)ether_type);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			if (ether_type == 0x888e)
 				prtnframe = precv_frame;
 			else {

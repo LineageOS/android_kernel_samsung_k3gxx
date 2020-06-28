@@ -232,37 +232,50 @@ static int ohci_urb_enqueue (
 			frame |= ed->branch;
 			urb->start_frame = frame;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ed->last_iso = frame + ed->interval * (size - 1);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		}
 	} else if (ed->type == PIPE_ISOCHRONOUS) {
 		u16	next = ohci_frame_no(ohci) + 1;
 		u16	frame = ed->last_iso + ed->interval;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		u16	length = ed->interval * (size - 1);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		/* Behind the scheduling threshold? */
 		if (unlikely(tick_before(frame, next))) {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			/* URB_ISO_ASAP: Round up to the first available slot */
 =======
 			/* USB_ISO_ASAP: Round up to the first available slot */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			/* USB_ISO_ASAP: Round up to the first available slot */
+>>>>>>> master
 			if (urb->transfer_flags & URB_ISO_ASAP) {
 				frame += (next - frame + ed->interval - 1) &
 						-ed->interval;
 
 			/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 * Not ASAP: Use the next slot in the stream,
 			 * no matter what.
 			 */
 			} else {
 =======
+=======
+>>>>>>> master
 			 * Not ASAP: Use the next slot in the stream.  If
 			 * the entire URB falls before the threshold, fail.
 			 */
@@ -274,7 +287,10 @@ static int ohci_urb_enqueue (
 					goto fail;
 				}
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				/*
 				 * Some OHCI hardware doesn't handle late TDs
 				 * correctly.  After retiring them it proceeds
@@ -285,6 +301,7 @@ static int ohci_urb_enqueue (
 				urb_priv->td_cnt = DIV_ROUND_UP(
 						(u16) (next - frame),
 						ed->interval);
+<<<<<<< HEAD
 <<<<<<< HEAD
 				if (urb_priv->td_cnt >= urb_priv->length) {
 					++urb_priv->td_cnt;	/* Mark it */
@@ -301,6 +318,11 @@ static int ohci_urb_enqueue (
 		}
 		urb->start_frame = frame;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			}
+		}
+		urb->start_frame = frame;
+>>>>>>> master
 	}
 
 	/* fill the TDs and link them to the ed; and

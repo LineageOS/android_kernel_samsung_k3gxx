@@ -17,9 +17,12 @@ struct lockd_net {
 	unsigned int nsm_users;
 	struct rpc_clnt *nsm_clnt;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct list_head nsm_handles;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 
 extern int lockd_net_id;

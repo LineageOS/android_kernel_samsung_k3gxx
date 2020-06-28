@@ -847,9 +847,12 @@ static int ssb_pci_sprom_get(struct ssb_bus *bus,
 				ssb_warn("WARNING: Using fallback SPROM failed (err %d)\n",
 					 err);
 <<<<<<< HEAD
+<<<<<<< HEAD
 				goto out_free;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			} else {
 				ssb_dbg("Using SPROM revision %d provided by platform\n",
 					sprom->revision);

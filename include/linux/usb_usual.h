@@ -67,12 +67,16 @@
 		/* Initial READ(10) (and others) must be retried */	\
 	US_FLAG(WRITE_CACHE,	0x00200000)			\
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Write Cache status is not available */	\
 	US_FLAG(NEEDS_CAP16,	0x00400000)
 		/* cannot handle READ_CAPACITY_10 */
 =======
 		/* Write Cache status is not available */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		/* Write Cache status is not available */
+>>>>>>> master
 
 #define US_FLAG(name, value)	US_FL_##name = value ,
 enum { US_DO_ALL_FLAGS };

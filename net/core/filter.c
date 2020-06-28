@@ -37,9 +37,13 @@
 #include <asm/unaligned.h>
 #include <linux/filter.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <linux/reciprocal_div.h>
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#include <linux/reciprocal_div.h>
+>>>>>>> master
 #include <linux/ratelimit.h>
 #include <linux/seccomp.h>
 #include <linux/if_vlan.h>
@@ -72,6 +76,7 @@ static inline void *load_pointer(const struct sk_buff *skb, int k,
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  *	sk_filter_trim_cap - run a packet through a socket filter
  *	@sk: sock associated with &sk_buff
  *	@skb: buffer to filter
@@ -81,6 +86,11 @@ static inline void *load_pointer(const struct sk_buff *skb, int k,
  *	@sk: sock associated with &sk_buff
  *	@skb: buffer to filter
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ *	sk_filter - run a packet through a socket filter
+ *	@sk: sock associated with &sk_buff
+ *	@skb: buffer to filter
+>>>>>>> master
  *
  * Run the filter code and then cut skb->data to correct size returned by
  * sk_run_filter. If pkt_len is 0 we toss packet. If skb->len is smaller
@@ -90,10 +100,14 @@ static inline void *load_pointer(const struct sk_buff *skb, int k,
  *
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 int sk_filter_trim_cap(struct sock *sk, struct sk_buff *skb, unsigned int cap)
 =======
 int sk_filter(struct sock *sk, struct sk_buff *skb)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+int sk_filter(struct sock *sk, struct sk_buff *skb)
+>>>>>>> master
 {
 	int err;
 	struct sk_filter *filter;
@@ -115,21 +129,30 @@ int sk_filter(struct sock *sk, struct sk_buff *skb)
 	if (filter) {
 		unsigned int pkt_len = SK_RUN_FILTER(filter, skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		err = pkt_len ? pskb_trim(skb, max(cap, pkt_len)) : -EPERM;
 =======
 
 		err = pkt_len ? pskb_trim(skb, pkt_len) : -EPERM;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+		err = pkt_len ? pskb_trim(skb, pkt_len) : -EPERM;
+>>>>>>> master
 	}
 	rcu_read_unlock();
 
 	return err;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL(sk_filter_trim_cap);
 =======
 EXPORT_SYMBOL(sk_filter);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+EXPORT_SYMBOL(sk_filter);
+>>>>>>> master
 
 /**
  *	sk_run_filter - run a filter on a socket
@@ -189,10 +212,14 @@ unsigned int sk_run_filter(const struct sk_buff *skb,
 			continue;
 		case BPF_S_ALU_DIV_K:
 <<<<<<< HEAD
+<<<<<<< HEAD
 			A /= K;
 =======
 			A = reciprocal_divide(A, K);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			A = reciprocal_divide(A, K);
+>>>>>>> master
 			continue;
 		case BPF_S_ALU_MOD_X:
 			if (X == 0)
@@ -383,10 +410,13 @@ load_b:
 			if (skb_is_nonlinear(skb))
 				return 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (skb->len < sizeof(struct nlattr))
 				return 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			if (A > skb->len - sizeof(struct nlattr))
 				return 0;
 
@@ -404,19 +434,26 @@ load_b:
 			if (skb_is_nonlinear(skb))
 				return 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (skb->len < sizeof(struct nlattr))
 				return 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			if (A > skb->len - sizeof(struct nlattr))
 				return 0;
 
 			nla = (struct nlattr *)&skb->data[A];
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (nla->nla_len > skb->len - A)
 =======
 			if (nla->nla_len > A - skb->len)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			if (nla->nla_len > A - skb->len)
+>>>>>>> master
 				return 0;
 
 			nla = nla_find_nested(nla, X);
@@ -594,13 +631,19 @@ int sk_chk_filter(struct sock_filter *filter, unsigned int flen)
 		switch (code) {
 		case BPF_S_ALU_DIV_K:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 			/* check for division by zero */
 			if (ftest->k == 0)
 				return -EINVAL;
 			ftest->k = reciprocal_value(ftest->k);
 			break;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		case BPF_S_ALU_MOD_K:
 			/* check for division by zero */
 			if (ftest->k == 0)
@@ -897,8 +940,11 @@ void sk_decode_filter(struct sock_filter *filt, struct sock_filter *to)
 	to->jt = filt->jt;
 	to->jf = filt->jf;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	to->k = filt->k;
 =======
+=======
+>>>>>>> master
 
 	if (code == BPF_S_ALU_DIV_K) {
 		/*
@@ -920,7 +966,10 @@ void sk_decode_filter(struct sock_filter *filt, struct sock_filter *to)
 		BUG_ON(reciprocal_value(to->k) != filt->k);
 	} else
 		to->k = filt->k;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 int sk_get_filter(struct sock *sk, struct sock_filter __user *ubuf, unsigned int len)

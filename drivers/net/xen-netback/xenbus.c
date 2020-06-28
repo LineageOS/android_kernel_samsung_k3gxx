@@ -25,6 +25,7 @@ struct backend_info {
 	struct xenbus_device *dev;
 	struct xenvif *vif;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* This is the state that will be reflected in xenstore when any
 	 * active hotplug script completes.
@@ -41,6 +42,11 @@ struct backend_info {
 	struct xenbus_watch hotplug_status_watch;
 	u8 have_hotplug_status_watch:1;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	enum xenbus_state frontend_state;
+	struct xenbus_watch hotplug_status_watch;
+	u8 have_hotplug_status_watch:1;
+>>>>>>> master
 };
 
 static int connect_rings(struct backend_info *);
@@ -48,24 +54,31 @@ static void connect(struct backend_info *);
 static void backend_create_xenvif(struct backend_info *be);
 static void unregister_hotplug_status_watch(struct backend_info *be);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void set_backend_state(struct backend_info *be,
 			      enum xenbus_state state);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 static int netback_remove(struct xenbus_device *dev)
 {
 	struct backend_info *be = dev_get_drvdata(&dev->dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	set_backend_state(be, XenbusStateClosed);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	unregister_hotplug_status_watch(be);
 	if (be->vif) {
 		kobject_uevent(&dev->dev.kobj, KOBJ_OFFLINE);
 		xenbus_rm(XBT_NIL, dev->nodename, "hotplug-status");
+<<<<<<< HEAD
 <<<<<<< HEAD
 		xenvif_free(be->vif);
 		be->vif = NULL;
@@ -76,6 +89,11 @@ static int netback_remove(struct xenbus_device *dev)
 		be->vif = NULL;
 	}
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		xenvif_disconnect(be->vif);
+		be->vif = NULL;
+	}
+>>>>>>> master
 	kfree(be);
 	dev_set_drvdata(&dev->dev, NULL);
 	return 0;
@@ -94,9 +112,12 @@ static int netback_probe(struct xenbus_device *dev,
 	int err;
 	int sg;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const char *script;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	struct backend_info *be = kzalloc(sizeof(struct backend_info),
 					  GFP_KERNEL);
 	if (!be) {
@@ -158,6 +179,7 @@ static int netback_probe(struct xenbus_device *dev,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	script = xenbus_read(XBT_NIL, dev->nodename, "script", NULL);
 	if (IS_ERR(script)) {
 		err = PTR_ERR(script);
@@ -169,15 +191,20 @@ static int netback_probe(struct xenbus_device *dev,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	err = xenbus_switch_state(dev, XenbusStateInitWait);
 	if (err)
 		goto fail;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	be->state = XenbusStateInitWait;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* This kicks hotplug scripts, so do it immediately. */
 	backend_create_xenvif(be);
 
@@ -203,6 +230,7 @@ static int netback_uevent(struct xenbus_device *xdev,
 {
 	struct backend_info *be = dev_get_drvdata(&xdev->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (!be)
 		return 0;
@@ -212,6 +240,8 @@ static int netback_uevent(struct xenbus_device *xdev,
 
 	if (!be->vif)
 =======
+=======
+>>>>>>> master
 	char *val;
 
 	val = xenbus_read(XBT_NIL, xdev->nodename, "script", NULL);
@@ -228,7 +258,10 @@ static int netback_uevent(struct xenbus_device *xdev,
 	}
 
 	if (!be || !be->vif)
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return 0;
 
 	return add_uevent_var(env, "vif=%s", be->vif->dev->name);
@@ -261,6 +294,7 @@ static void backend_create_xenvif(struct backend_info *be)
 	kobject_uevent(&dev->dev.kobj, KOBJ_ONLINE);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void backend_disconnect(struct backend_info *be)
 {
@@ -370,6 +404,8 @@ static void set_backend_state(struct backend_info *be,
 			BUG();
 		}
 =======
+=======
+>>>>>>> master
 
 static void disconnect_backend(struct xenbus_device *dev)
 {
@@ -379,7 +415,10 @@ static void disconnect_backend(struct xenbus_device *dev)
 		xenbus_rm(XBT_NIL, dev->nodename, "hotplug-status");
 		xenvif_disconnect(be->vif);
 		be->vif = NULL;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 }
 
@@ -392,30 +431,41 @@ static void frontend_changed(struct xenbus_device *dev,
 	struct backend_info *be = dev_get_drvdata(&dev->dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pr_debug("%s -> %s\n", dev->otherend, xenbus_strstate(frontend_state));
 =======
 	pr_debug("frontend state %s", xenbus_strstate(frontend_state));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	pr_debug("frontend state %s", xenbus_strstate(frontend_state));
+>>>>>>> master
 
 	be->frontend_state = frontend_state;
 
 	switch (frontend_state) {
 	case XenbusStateInitialising:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		set_backend_state(be, XenbusStateInitWait);
 =======
+=======
+>>>>>>> master
 		if (dev->state == XenbusStateClosed) {
 			printk(KERN_INFO "%s: %s: prepare for reconnect\n",
 			       __func__, dev->nodename);
 			xenbus_switch_state(dev, XenbusStateInitWait);
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		break;
 
 	case XenbusStateInitialised:
 		break;
 
 	case XenbusStateConnected:
+<<<<<<< HEAD
 <<<<<<< HEAD
 		set_backend_state(be, XenbusStateConnected);
 		break;
@@ -427,6 +477,8 @@ static void frontend_changed(struct xenbus_device *dev,
 	case XenbusStateClosed:
 		set_backend_state(be, XenbusStateClosed);
 =======
+=======
+>>>>>>> master
 		if (dev->state == XenbusStateConnected)
 			break;
 		backend_create_xenvif(be);
@@ -443,15 +495,21 @@ static void frontend_changed(struct xenbus_device *dev,
 
 	case XenbusStateClosed:
 		xenbus_switch_state(dev, XenbusStateClosed);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		if (xenbus_dev_is_online(dev))
 			break;
 		/* fall through if not online */
 	case XenbusStateUnknown:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		set_backend_state(be, XenbusStateClosed);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		device_unregister(&dev->dev);
 		break;
 
@@ -545,12 +603,16 @@ static void hotplug_status_changed(struct xenbus_watch *watch,
 		return;
 	if (len == sizeof("connected")-1 && !memcmp(str, "connected", len)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Complete any pending state change */
 		xenbus_switch_state(be->dev, be->state);
 
 =======
 		xenbus_switch_state(be->dev, XenbusStateConnected);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		xenbus_switch_state(be->dev, XenbusStateConnected);
+>>>>>>> master
 		/* Not interested in this watch anymore. */
 		unregister_hotplug_status_watch(be);
 	}
@@ -581,16 +643,22 @@ static void connect(struct backend_info *be)
 				   hotplug_status_changed,
 				   "%s/%s", dev->nodename, "hotplug-status");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!err)
 		be->have_hotplug_status_watch = 1;
 =======
+=======
+>>>>>>> master
 	if (err) {
 		/* Switch now, since we can't do a watch. */
 		xenbus_switch_state(dev, XenbusStateConnected);
 	} else {
 		be->have_hotplug_status_watch = 1;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	netif_wake_queue(be->vif->dev);
 }

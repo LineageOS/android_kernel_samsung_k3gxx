@@ -674,11 +674,15 @@ static int em28xx_pctv_290e_set_lna(struct dvb_frontend *fe)
 {
 	struct dtv_frontend_properties *c = &fe->dtv_property_cache;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct em28xx_i2c_bus *i2c_bus = fe->dvb->priv;
 	struct em28xx *dev = i2c_bus->dev;
 =======
 	struct em28xx *dev = fe->dvb->priv;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct em28xx *dev = fe->dvb->priv;
+>>>>>>> master
 #ifdef CONFIG_GPIOLIB
 	struct em28xx_dvb *dvb = dev->dvb;
 	int ret;

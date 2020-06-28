@@ -77,9 +77,12 @@
 #define ACPI_DATA_TABLE_DISASSEMBLY
 #define ACPI_SINGLE_THREADED
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define ACPI_32BIT_PHYSICAL_ADDRESS
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #endif
 
 /* acpi_exec configuration. Multithreaded with full AML debugger */

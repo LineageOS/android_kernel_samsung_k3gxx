@@ -68,10 +68,13 @@ struct hdmi_spec_per_pin {
 	struct snd_kcontrol *eld_ctl;
 	int repoll_count;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool setup; /* the stream has been set up by prepare callback */
 	int channels; /* current number of channels */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	bool non_pcm;
 	bool chmap_set;		/* channel-map override by ALSA API? */
 	unsigned char chmap[8]; /* ALSA API channel-map */
@@ -90,11 +93,14 @@ struct hdmi_spec {
 
 	struct hdmi_eld temp_eld;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	bool dyn_pin_out;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/*
 	 * Non-generic ATI/NVIDIA specific
 	 */
@@ -460,15 +466,19 @@ static void hdmi_write_dip_byte(struct hda_codec *codec, hda_nid_t pin_nid,
 static void hdmi_init_pin(struct hda_codec *codec, hda_nid_t pin_nid)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hdmi_spec *spec = codec->spec;
 	int pin_out;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Unmute */
 	if (get_wcaps(codec, pin_nid) & AC_WCAP_OUT_AMP)
 		snd_hda_codec_write(codec, pin_nid, 0,
 				AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	if (spec->dyn_pin_out)
@@ -483,12 +493,17 @@ static void hdmi_init_pin(struct hda_codec *codec, hda_nid_t pin_nid)
 	snd_hda_codec_write(codec, pin_nid, 0,
 			    AC_VERB_SET_PIN_WIDGET_CONTROL, pin_out);
 =======
+=======
+>>>>>>> master
 	/* Enable pin out: some machines with GM965 gets broken output when
 	 * the pin is disabled or changed while using with HDMI
 	 */
 	snd_hda_codec_write(codec, pin_nid, 0,
 			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static int hdmi_get_channel_count(struct hda_codec *codec, hda_nid_t cvt_nid)
@@ -584,6 +599,7 @@ static int hdmi_channel_allocation(struct hdmi_eld *eld, int channels)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!ca) {
 		/* if there was no match, select the regular ALSA channel
 		 * allocation with the matching number of channels */
@@ -597,6 +613,8 @@ static int hdmi_channel_allocation(struct hdmi_eld *eld, int channels)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	snd_print_channel_allocation(eld->info.spk_alloc, buf, sizeof(buf));
 	snd_printdd("HDMI: select CA 0x%x for %d-channel allocation: %s\n",
 		    ca, channels, buf);
@@ -772,6 +790,7 @@ static void hdmi_setup_fake_chmap(unsigned char *map, int ca)
 {
 	int i;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ordered_ca = get_channel_allocation_order(ca);
 	for (i = 0; i < 8; i++) {
 		if (i < channel_allocations[ordered_ca].channels)
@@ -781,6 +800,11 @@ static void hdmi_setup_fake_chmap(unsigned char *map, int ca)
 		if (i < channel_allocations[ca].channels)
 			map[i] = from_cea_slot((hdmi_channel_mapping[ca][i] >> 4) & 0x0f);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	for (i = 0; i < 8; i++) {
+		if (i < channel_allocations[ca].channels)
+			map[i] = from_cea_slot((hdmi_channel_mapping[ca][i] >> 4) & 0x0f);
+>>>>>>> master
 		else
 			map[i] = 0;
 	}
@@ -922,6 +946,7 @@ static bool hdmi_infoframe_uptodate(struct hda_codec *codec, hda_nid_t pin_nid,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void hdmi_setup_audio_infoframe(struct hda_codec *codec,
 				       struct hdmi_spec_per_pin *per_pin,
 				       bool non_pcm)
@@ -929,6 +954,8 @@ static void hdmi_setup_audio_infoframe(struct hda_codec *codec,
 	hda_nid_t pin_nid = per_pin->pin_nid;
 	int channels = per_pin->channels;
 =======
+=======
+>>>>>>> master
 static void hdmi_setup_audio_infoframe(struct hda_codec *codec, int pin_idx,
 				       bool non_pcm,
 				       struct snd_pcm_substream *substream)
@@ -937,17 +964,23 @@ static void hdmi_setup_audio_infoframe(struct hda_codec *codec, int pin_idx,
 	struct hdmi_spec_per_pin *per_pin = get_pin(spec, pin_idx);
 	hda_nid_t pin_nid = per_pin->pin_nid;
 	int channels = substream->runtime->channels;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	struct hdmi_eld *eld;
 	int ca;
 	union audio_infoframe ai;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!channels)
 		return;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	eld = &per_pin->sink_eld;
 	if (!eld->monitor_present)
 		return;
@@ -985,6 +1018,7 @@ static void hdmi_setup_audio_infoframe(struct hda_codec *codec, int pin_idx,
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * always configure channel mapping, it may have been changed by the
 	 * user in the meantime
 	 */
@@ -995,6 +1029,8 @@ static void hdmi_setup_audio_infoframe(struct hda_codec *codec, int pin_idx,
 	/*
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	 * sizeof(ai) is used instead of sizeof(*hdmi_ai) or
 	 * sizeof(*dp_ai) to avoid partial match/update problems when
 	 * the user switches between HDMI/DP monitors.
@@ -1006,17 +1042,26 @@ static void hdmi_setup_audio_infoframe(struct hda_codec *codec, int pin_idx,
 			    pin_nid,
 			    channels);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		hdmi_setup_channel_mapping(codec, pin_nid, non_pcm, ca,
 					   channels, per_pin->chmap,
 					   per_pin->chmap_set);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		hdmi_setup_channel_mapping(codec, pin_nid, non_pcm, ca,
+					   channels, per_pin->chmap,
+					   per_pin->chmap_set);
+>>>>>>> master
 		hdmi_stop_infoframe_trans(codec, pin_nid);
 		hdmi_fill_audio_infoframe(codec, pin_nid,
 					    ai.bytes, sizeof(ai));
 		hdmi_start_infoframe_trans(codec, pin_nid);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	} else {
 		/* For non-pcm audio switch, setup new channel mapping
 		 * accordingly */
@@ -1024,7 +1069,10 @@ static void hdmi_setup_audio_infoframe(struct hda_codec *codec, int pin_idx,
 			hdmi_setup_channel_mapping(codec, pin_nid, non_pcm, ca,
 						   channels, per_pin->chmap,
 						   per_pin->chmap_set);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	per_pin->non_pcm = non_pcm;
@@ -1349,9 +1397,12 @@ static void hdmi_present_sense(struct hdmi_spec_per_pin *per_pin, int repoll)
 	}
 	if (update_eld) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		bool old_eld_valid = pin_eld->eld_valid;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		pin_eld->eld_valid = eld->eld_valid;
 		eld_changed = pin_eld->eld_size != eld->eld_size ||
 			      memcmp(pin_eld->eld_buffer, eld->eld_buffer,
@@ -1361,6 +1412,7 @@ static void hdmi_present_sense(struct hdmi_spec_per_pin *per_pin, int repoll)
 			       eld->eld_size);
 		pin_eld->eld_size = eld->eld_size;
 		pin_eld->info = eld->info;
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 		/* Haswell-specific workaround: re-setup when the transcoder is
@@ -1376,6 +1428,8 @@ static void hdmi_present_sense(struct hdmi_spec_per_pin *per_pin, int repoll)
 		}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 	mutex_unlock(&pin_eld->lock);
 
@@ -1549,6 +1603,7 @@ static int generic_hdmi_playback_pcm_prepare(struct hda_pcm_stream *hinfo,
 	struct hdmi_spec *spec = codec->spec;
 	int pin_idx = hinfo_to_pin_index(spec, hinfo);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hdmi_spec_per_pin *per_pin = get_pin(spec, pin_idx);
 	hda_nid_t pin_nid = per_pin->pin_nid;
 	bool non_pcm;
@@ -1570,6 +1625,8 @@ static int generic_hdmi_playback_pcm_prepare(struct hda_pcm_stream *hinfo,
 				    pinctl | PIN_OUT);
 	}
 =======
+=======
+>>>>>>> master
 	hda_nid_t pin_nid = get_pin(spec, pin_idx)->pin_nid;
 	bool non_pcm;
 
@@ -1578,7 +1635,10 @@ static int generic_hdmi_playback_pcm_prepare(struct hda_pcm_stream *hinfo,
 	hdmi_set_channel_count(codec, cvt_nid, substream->runtime->channels);
 
 	hdmi_setup_audio_infoframe(codec, pin_idx, non_pcm, substream);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return hdmi_setup_stream(codec, cvt_nid, pin_nid, stream_tag, format);
 }
@@ -1600,9 +1660,12 @@ static int hdmi_pcm_close(struct hda_pcm_stream *hinfo,
 	struct hdmi_spec_per_cvt *per_cvt;
 	struct hdmi_spec_per_pin *per_pin;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int pinctl;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (hinfo->nid) {
 		cvt_idx = cvt_nid_to_cvt_index(spec, hinfo->nid);
@@ -1619,6 +1682,7 @@ static int hdmi_pcm_close(struct hda_pcm_stream *hinfo,
 			return -EINVAL;
 		per_pin = get_pin(spec, pin_idx);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (spec->dyn_pin_out) {
 			pinctl = snd_hda_codec_read(codec, per_pin->pin_nid, 0,
@@ -1639,6 +1703,11 @@ static int hdmi_pcm_close(struct hda_pcm_stream *hinfo,
 		per_pin->chmap_set = false;
 		memset(per_pin->chmap, 0, sizeof(per_pin->chmap));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		snd_hda_spdif_ctls_unassign(codec, pin_idx);
+		per_pin->chmap_set = false;
+		memset(per_pin->chmap, 0, sizeof(per_pin->chmap));
+>>>>>>> master
 	}
 
 	return 0;
@@ -1775,11 +1844,16 @@ static int hdmi_chmap_ctl_put(struct snd_kcontrol *kcontrol,
 	memcpy(per_pin->chmap, chmap, sizeof(chmap));
 	if (prepared)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		hdmi_setup_audio_infoframe(codec, per_pin, per_pin->non_pcm);
 =======
 		hdmi_setup_audio_infoframe(codec, pin_idx, per_pin->non_pcm,
 					   substream);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		hdmi_setup_audio_infoframe(codec, pin_idx, per_pin->non_pcm,
+					   substream);
+>>>>>>> master
 
 	return 0;
 }
@@ -1868,11 +1942,14 @@ static int generic_hdmi_build_controls(struct hda_codec *codec)
 		struct snd_kcontrol *kctl;
 		int i;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		if (!codec->pcm_info[pin_idx].pcm)
 			break;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		err = snd_pcm_add_chmap_ctls(codec->pcm_info[pin_idx].pcm,
 					     SNDRV_PCM_STREAM_PLAYBACK,
 					     NULL, 0, pin_idx, &chmap);
@@ -2126,6 +2203,7 @@ static int simple_playback_build_controls(struct hda_codec *codec)
 
 	per_cvt = get_cvt(spec, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = snd_hda_create_dig_out_ctls(codec, per_cvt->cvt_nid,
 					  per_cvt->cvt_nid,
 					  HDA_PCM_TYPE_HDMI);
@@ -2133,6 +2211,10 @@ static int simple_playback_build_controls(struct hda_codec *codec)
 	err = snd_hda_create_spdif_out_ctls(codec, per_cvt->cvt_nid,
 					    per_cvt->cvt_nid);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	err = snd_hda_create_spdif_out_ctls(codec, per_cvt->cvt_nid,
+					    per_cvt->cvt_nid);
+>>>>>>> master
 	if (err < 0)
 		return err;
 	return simple_hdmi_build_jack(codec, 0);
@@ -2606,6 +2688,7 @@ static int patch_nvhdmi_8ch_7x(struct hda_codec *codec)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int patch_nvhdmi(struct hda_codec *codec)
 {
 	struct hdmi_spec *spec;
@@ -2623,6 +2706,8 @@ static int patch_nvhdmi(struct hda_codec *codec)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  * ATI-specific implementations
  *
@@ -2696,6 +2781,7 @@ static const struct hda_codec_preset snd_hda_preset_hdmi[] = {
 { .id = 0x10de0006, .name = "MCP77/78 HDMI",	.patch = patch_nvhdmi_8ch_7x },
 { .id = 0x10de0007, .name = "MCP79/7A HDMI",	.patch = patch_nvhdmi_8ch_7x },
 <<<<<<< HEAD
+<<<<<<< HEAD
 { .id = 0x10de000a, .name = "GPU 0a HDMI/DP",	.patch = patch_nvhdmi },
 { .id = 0x10de000b, .name = "GPU 0b HDMI/DP",	.patch = patch_nvhdmi },
 { .id = 0x10de000c, .name = "MCP89 HDMI",	.patch = patch_nvhdmi },
@@ -2721,6 +2807,8 @@ static const struct hda_codec_preset snd_hda_preset_hdmi[] = {
 { .id = 0x10de0051, .name = "GPU 51 HDMI/DP",	.patch = patch_nvhdmi },
 { .id = 0x10de0060, .name = "GPU 60 HDMI/DP",	.patch = patch_nvhdmi },
 =======
+=======
+>>>>>>> master
 { .id = 0x10de000a, .name = "GPU 0a HDMI/DP",	.patch = patch_generic_hdmi },
 { .id = 0x10de000b, .name = "GPU 0b HDMI/DP",	.patch = patch_generic_hdmi },
 { .id = 0x10de000c, .name = "MCP89 HDMI",	.patch = patch_generic_hdmi },
@@ -2745,7 +2833,10 @@ static const struct hda_codec_preset snd_hda_preset_hdmi[] = {
 { .id = 0x10de0044, .name = "GPU 44 HDMI/DP",	.patch = patch_generic_hdmi },
 { .id = 0x10de0051, .name = "GPU 51 HDMI/DP",	.patch = patch_generic_hdmi },
 { .id = 0x10de0060, .name = "GPU 60 HDMI/DP",	.patch = patch_generic_hdmi },
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 { .id = 0x10de0067, .name = "MCP67 HDMI",	.patch = patch_nvhdmi_2ch },
 { .id = 0x10de8001, .name = "MCP73 HDMI",	.patch = patch_nvhdmi_2ch },
 { .id = 0x11069f80, .name = "VX900 HDMI/DP",	.patch = patch_via_hdmi },

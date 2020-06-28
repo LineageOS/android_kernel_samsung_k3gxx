@@ -956,12 +956,15 @@ bytes respectively. Such letter suffixes can also be entirely omitted.
 			debugfs files are removed at module unload time.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	goldfish	[X86] Enable the goldfish android emulator platform.
 			Don't use this when you are not running on the
 			android emulator
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	gpt		[EFI] Forces disk with valid GPT signature but
 			invalid Protective MBR to be treated as GPT.
 
@@ -1069,9 +1072,12 @@ bytes respectively. Such letter suffixes can also be entirely omitted.
 	i8042.reset	[HW] Reset the controller during init and cleanup
 	i8042.unlock	[HW] Unlock (ignore) the keylock
 <<<<<<< HEAD
+<<<<<<< HEAD
 	i8042.kbdreset  [HW] Reset device connected to KBD port
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	i810=		[HW,DRM]
 
@@ -1477,12 +1483,15 @@ bytes respectively. Such letter suffixes can also be entirely omitted.
 			* dump_id: dump IDENTIFY data.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			* atapi_dmadir: Enable ATAPI DMADIR bridge support
 
 			* disable: Disable this device.
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			If there are multiple matching configurations changing
 			the same attribute, the last one is used.
 
@@ -2908,6 +2917,7 @@ bytes respectively. Such letter suffixes can also be entirely omitted.
 	spia_peddr=
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	stack_guard_gap=	[MM]
 			override the default stack gap protection. The value
 			is in page units and it defines how many pages prior
@@ -2917,6 +2927,8 @@ bytes respectively. Such letter suffixes can also be entirely omitted.
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	stacktrace	[FTRACE]
 			Enabled the stack tracer on boot up.
 
@@ -3379,6 +3391,7 @@ bytes respectively. Such letter suffixes can also be entirely omitted.
 			workqueues visible under /sys/bus/workqueue/.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	workqueue.power_efficient
 			Per-cpu workqueues are generally preferred because
 			they show better performance thanks to cache
@@ -3396,6 +3409,8 @@ bytes respectively. Such letter suffixes can also be entirely omitted.
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	x2apic_phys	[X86-64,APIC] Use x2apic physical mode instead of
 			default x2apic cluster mode on platforms
 			supporting x2apic.

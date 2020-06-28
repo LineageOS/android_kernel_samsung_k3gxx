@@ -962,6 +962,7 @@ struct resource * __request_region(struct resource *parent,
 			break;
 		if (conflict != parent) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (!(conflict->flags & IORESOURCE_BUSY)) {
 				parent = conflict;
 				continue;
@@ -971,6 +972,11 @@ struct resource * __request_region(struct resource *parent,
 			if (!(conflict->flags & IORESOURCE_BUSY))
 				continue;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			parent = conflict;
+			if (!(conflict->flags & IORESOURCE_BUSY))
+				continue;
+>>>>>>> master
 		}
 		if (conflict->flags & flags & IORESOURCE_MUXED) {
 			add_wait_queue(&muxed_resource_wait, &wait);

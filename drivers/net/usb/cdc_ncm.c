@@ -465,6 +465,7 @@ advance:
 	iface_no = ctx->data->cur_altsetting->desc.bInterfaceNumber;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Reset data interface. Some devices will not reset properly
 	 * unless they are configured first.  Toggle the altsetting to
 	 * force a reset
@@ -473,6 +474,9 @@ advance:
 =======
 	/* reset data interface */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	/* reset data interface */
+>>>>>>> master
 	temp = usb_set_interface(dev->udev, iface_no, 0);
 	if (temp)
 		goto error2;
@@ -481,6 +485,7 @@ advance:
 	if (cdc_ncm_setup(ctx))
 		goto error2;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Some firmwares need a pause here or they will silently fail
 	 * to set up the interface properly.  This value was decided
@@ -491,6 +496,8 @@ advance:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* configure data interface */
 	temp = usb_set_interface(dev->udev, iface_no, data_altsetting);
 	if (temp)
@@ -613,10 +620,15 @@ EXPORT_SYMBOL_GPL(cdc_ncm_select_altsetting);
 static int cdc_ncm_bind(struct usbnet *dev, struct usb_interface *intf)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int ret;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int ret;
+
+>>>>>>> master
 	/* MBIM backwards compatible function? */
 	cdc_ncm_select_altsetting(dev, intf);
 	if (cdc_ncm_comm_intf_is_mbim(intf->cur_altsetting))
@@ -624,8 +636,11 @@ static int cdc_ncm_bind(struct usbnet *dev, struct usb_interface *intf)
 
 	/* NCM data altsetting is always 1 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return cdc_ncm_bind_common(dev, intf, 1);
 =======
+=======
+>>>>>>> master
 	ret = cdc_ncm_bind_common(dev, intf, 1);
 
 	/*
@@ -636,7 +651,10 @@ static int cdc_ncm_bind(struct usbnet *dev, struct usb_interface *intf)
 	 */
 	usbnet_link_change(dev, 0, 0);
 	return ret;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static void cdc_ncm_align_tail(struct sk_buff *skb, size_t modulus, size_t remainder, size_t max)
@@ -1183,11 +1201,15 @@ static void cdc_ncm_disconnect(struct usb_interface *intf)
 static const struct driver_info cdc_ncm_info = {
 	.description = "CDC NCM",
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.flags = FLAG_POINTTOPOINT | FLAG_NO_SETINT | FLAG_MULTI_PACKET
 			| FLAG_LINK_INTR,
 =======
 	.flags = FLAG_POINTTOPOINT | FLAG_NO_SETINT | FLAG_MULTI_PACKET,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	.flags = FLAG_POINTTOPOINT | FLAG_NO_SETINT | FLAG_MULTI_PACKET,
+>>>>>>> master
 	.bind = cdc_ncm_bind,
 	.unbind = cdc_ncm_unbind,
 	.check_connect = cdc_ncm_check_connect,
@@ -1202,10 +1224,14 @@ static const struct driver_info wwan_info = {
 	.description = "Mobile Broadband Network Device",
 	.flags = FLAG_POINTTOPOINT | FLAG_NO_SETINT | FLAG_MULTI_PACKET
 <<<<<<< HEAD
+<<<<<<< HEAD
 			| FLAG_LINK_INTR | FLAG_WWAN,
 =======
 			| FLAG_WWAN,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			| FLAG_WWAN,
+>>>>>>> master
 	.bind = cdc_ncm_bind,
 	.unbind = cdc_ncm_unbind,
 	.check_connect = cdc_ncm_check_connect,
@@ -1220,10 +1246,14 @@ static const struct driver_info wwan_noarp_info = {
 	.description = "Mobile Broadband Network Device (NO ARP)",
 	.flags = FLAG_POINTTOPOINT | FLAG_NO_SETINT | FLAG_MULTI_PACKET
 <<<<<<< HEAD
+<<<<<<< HEAD
 			| FLAG_LINK_INTR | FLAG_WWAN | FLAG_NOARP,
 =======
 			| FLAG_WWAN | FLAG_NOARP,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			| FLAG_WWAN | FLAG_NOARP,
+>>>>>>> master
 	.bind = cdc_ncm_bind,
 	.unbind = cdc_ncm_unbind,
 	.check_connect = cdc_ncm_check_connect,

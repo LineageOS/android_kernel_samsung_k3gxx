@@ -232,6 +232,7 @@ int usb_wwan_write(struct tty_struct *tty, struct usb_serial_port *port,
 
 		err = usb_autopm_get_interface_async(port->serial->interface);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (err < 0) {
 			clear_bit(i, &portdata->out_busy);
 			break;
@@ -240,6 +241,10 @@ int usb_wwan_write(struct tty_struct *tty, struct usb_serial_port *port,
 		if (err < 0)
 			break;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (err < 0)
+			break;
+>>>>>>> master
 
 		/* send the data */
 		memcpy(this_urb->transfer_buffer, buf, todo);
@@ -520,6 +525,7 @@ int usb_wwan_open(struct tty_struct *tty, struct usb_serial_port *port)
 	intfdata = serial->private;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (port->interrupt_in_urb) {
 		err = usb_submit_urb(port->interrupt_in_urb, GFP_KERNEL);
 		if (err) {
@@ -530,6 +536,8 @@ int usb_wwan_open(struct tty_struct *tty, struct usb_serial_port *port)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	set_bit(TTY_NO_WRITE_SPLIT, &tty->flags);
 	/* Start reading from the IN endpoint */
 	for (i = 0; i < N_IN_URB; i++) {
@@ -560,6 +568,7 @@ int usb_wwan_open(struct tty_struct *tty, struct usb_serial_port *port)
 EXPORT_SYMBOL(usb_wwan_open);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void unbusy_queued_urb(struct urb *urb,
 					struct usb_wwan_port_private *portdata)
 {
@@ -575,6 +584,8 @@ static void unbusy_queued_urb(struct urb *urb,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 void usb_wwan_close(struct usb_serial_port *port)
 {
 	int i;
@@ -582,9 +593,12 @@ void usb_wwan_close(struct usb_serial_port *port)
 	struct usb_wwan_port_private *portdata;
 	struct usb_wwan_intf_private *intfdata = port->serial->private;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct urb *urb;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	portdata = usb_get_serial_port_data(port);
 
@@ -593,6 +607,7 @@ void usb_wwan_close(struct usb_serial_port *port)
 	portdata->opened = 0;
 	spin_unlock_irq(&intfdata->susp_lock);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	for (;;) {
 		urb = usb_get_from_anchor(&portdata->delayed);
@@ -604,14 +619,19 @@ void usb_wwan_close(struct usb_serial_port *port)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	for (i = 0; i < N_IN_URB; i++)
 		usb_kill_urb(portdata->in_urbs[i]);
 	for (i = 0; i < N_OUT_URB; i++)
 		usb_kill_urb(portdata->out_urbs[i]);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	usb_kill_urb(port->interrupt_in_urb);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* balancing - important as an error cannot be handled*/
 	usb_autopm_get_interface_no_resume(serial->interface);
@@ -650,9 +670,13 @@ int usb_wwan_port_probe(struct usb_serial_port *port)
 	struct urb *urb;
 	u8 *buffer;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int err;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int err;
+>>>>>>> master
 	int i;
 
 	dev_info(&port->dev, "%s, %d, %d\n", __func__, port->serial->dev->actconfig->desc.bNumInterfaces,
@@ -664,11 +688,14 @@ int usb_wwan_port_probe(struct usb_serial_port *port)
 	dev_info(&port->dev, "%s\n", __func__);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!port->bulk_in_size || !port->bulk_out_size)
 		return -ENODEV;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	portdata = kzalloc(sizeof(*portdata), GFP_KERNEL);
 	if (!portdata)
 		return -ENOMEM;
@@ -681,12 +708,18 @@ int usb_wwan_port_probe(struct usb_serial_port *port)
 
 	for (i = 0; i < N_IN_URB; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         
 =======
 		if (!port->bulk_in_size)
 			break;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (!port->bulk_in_size)
+			break;
+
+>>>>>>> master
 		buffer = kmalloc(IN_BUFLEN, GFP_KERNEL);
 		if (!buffer)
 			goto bail_out_error;
@@ -701,11 +734,17 @@ int usb_wwan_port_probe(struct usb_serial_port *port)
 
 	for (i = 0; i < N_OUT_URB; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		if (!port->bulk_out_size)
 			break;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (!port->bulk_out_size)
+			break;
+
+>>>>>>> master
 		buffer = kmalloc(OUT_BUFLEN, GFP_KERNEL);
 		if (!buffer)
 			goto bail_out_error2;
@@ -721,7 +760,10 @@ int usb_wwan_port_probe(struct usb_serial_port *port)
 	usb_set_serial_port_data(port, portdata);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	if (port->interrupt_in_urb) {
 		err = usb_submit_urb(port->interrupt_in_urb, GFP_KERNEL);
 		if (err)
@@ -729,7 +771,10 @@ int usb_wwan_port_probe(struct usb_serial_port *port)
 				__func__, err);
 	}
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 
 bail_out_error2:
@@ -808,6 +853,7 @@ int usb_wwan_suspend(struct usb_serial *serial, pm_message_t message)
 {
 	struct usb_wwan_intf_private *intfdata = serial->private;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	spin_lock_irq(&intfdata->susp_lock);
 	if (PMSG_IS_AUTO(message)) {
@@ -820,6 +866,8 @@ int usb_wwan_suspend(struct usb_serial *serial, pm_message_t message)
 	spin_unlock_irq(&intfdata->susp_lock);
 
 =======
+=======
+>>>>>>> master
 	int b;
 
 	if (PMSG_IS_AUTO(message)) {
@@ -834,7 +882,10 @@ int usb_wwan_suspend(struct usb_serial *serial, pm_message_t message)
 	spin_lock_irq(&intfdata->susp_lock);
 	intfdata->suspended = 1;
 	spin_unlock_irq(&intfdata->susp_lock);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	stop_read_write_urbs(serial);
 
 	return 0;
@@ -842,8 +893,11 @@ int usb_wwan_suspend(struct usb_serial *serial, pm_message_t message)
 EXPORT_SYMBOL(usb_wwan_suspend);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int play_delayed(struct usb_serial_port *port)
 =======
+=======
+>>>>>>> master
 static void unbusy_queued_urb(struct urb *urb, struct usb_wwan_port_private *portdata)
 {
 	int i;
@@ -857,16 +911,23 @@ static void unbusy_queued_urb(struct urb *urb, struct usb_wwan_port_private *por
 }
 
 static void play_delayed(struct usb_serial_port *port)
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 {
 	struct usb_wwan_intf_private *data;
 	struct usb_wwan_port_private *portdata;
 	struct urb *urb;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err = 0;
 =======
 	int err;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int err;
+>>>>>>> master
 
 	portdata = usb_get_serial_port_data(port);
 	data = port->serial->private;
@@ -886,10 +947,13 @@ static void play_delayed(struct usb_serial_port *port)
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	return err;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 int usb_wwan_resume(struct usb_serial *serial)
@@ -900,9 +964,12 @@ int usb_wwan_resume(struct usb_serial *serial)
 	struct usb_wwan_port_private *portdata;
 	struct urb *urb;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err;
 	int err_count = 0;
 =======
+=======
+>>>>>>> master
 	int err = 0;
 
 	/* get the interrupt URBs resubmitted unconditionally */
@@ -920,7 +987,10 @@ int usb_wwan_resume(struct usb_serial *serial)
 			goto err_out;
 		}
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	spin_lock_irq(&intfdata->susp_lock);
 	intfdata->suspended = 0;
@@ -932,6 +1002,7 @@ int usb_wwan_resume(struct usb_serial *serial)
 		/* skip closed ports */
 		if (!portdata || !portdata->opened)
 			continue;
+<<<<<<< HEAD
 <<<<<<< HEAD
         
 		if (port->interrupt_in_urb) {
@@ -950,6 +1021,8 @@ int usb_wwan_resume(struct usb_serial *serial)
 			err_count++;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		for (j = 0; j < N_IN_URB; j++) {
 			urb = portdata->in_urbs[j];
@@ -962,6 +1035,7 @@ int usb_wwan_resume(struct usb_serial *serial)
 			usb_anchor_urb(urb, &portdata->submitted);
 			err = usb_submit_urb(urb, GFP_ATOMIC);
 			if (err < 0) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 				dev_err(&port->dev, "%s: Error %d for bulk URB %d\n",
 					__func__, err, i);
@@ -977,6 +1051,8 @@ int usb_wwan_resume(struct usb_serial *serial)
 
 	return 0;
 =======
+=======
+>>>>>>> master
 				dev_err(&port->dev, "%s: Error %d for bulk URB[%d]: %p %d\n",
 					__func__, err, j, urb, i);
 				usb_unanchor_urb(urb);
@@ -991,7 +1067,10 @@ int usb_wwan_resume(struct usb_serial *serial)
 
 err_out:
 	return err;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 EXPORT_SYMBOL(usb_wwan_resume);
 #endif

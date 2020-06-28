@@ -173,10 +173,14 @@ static struct crypto_alg *crypto_larval_wait(struct crypto_alg *alg)
 	long timeout;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	timeout = wait_for_completion_killable_timeout(
 =======
 	timeout = wait_for_completion_interruptible_timeout(
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	timeout = wait_for_completion_interruptible_timeout(
+>>>>>>> master
 		&larval->completion, 60 * HZ);
 
 	alg = larval->adult;
@@ -221,18 +225,24 @@ struct crypto_alg *crypto_larval_lookup(const char *name, u32 type, u32 mask)
 	alg = crypto_alg_lookup(name, type, mask);
 	if (!alg) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		request_module("crypto-%s", name);
 
 		if (!((type ^ CRYPTO_ALG_NEED_FALLBACK) & mask &
 		      CRYPTO_ALG_NEED_FALLBACK))
 			request_module("crypto-%s-all", name);
 =======
+=======
+>>>>>>> master
 		request_module("%s", name);
 
 		if (!((type ^ CRYPTO_ALG_NEED_FALLBACK) & mask &
 		      CRYPTO_ALG_NEED_FALLBACK))
 			request_module("%s-all", name);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		alg = crypto_alg_lookup(name, type, mask);
 	}
@@ -464,10 +474,14 @@ err:
 		if (err != -EAGAIN)
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (fatal_signal_pending(current)) {
 =======
 		if (signal_pending(current)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (signal_pending(current)) {
+>>>>>>> master
 			err = -EINTR;
 			break;
 		}
@@ -597,10 +611,14 @@ err:
 		if (err != -EAGAIN)
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (fatal_signal_pending(current)) {
 =======
 		if (signal_pending(current)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (signal_pending(current)) {
+>>>>>>> master
 			err = -EINTR;
 			break;
 		}

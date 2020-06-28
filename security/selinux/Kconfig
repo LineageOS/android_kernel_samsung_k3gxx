@@ -139,6 +139,7 @@ config SEC_SELINUX
 	  This option adds sec selinux feature
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 config SECURITY_SELINUX_DEFAULT_ENFORCE
 	bool "NSA SELinux use Enforced as default"
 	depends on SECURITY_SELINUX
@@ -177,3 +178,5 @@ config SECURITY_SELINUX_PRETEND_ENFORCE
 	  Pretends to use the "Enforced"-state, regarding the current state
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master

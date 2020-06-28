@@ -38,6 +38,7 @@ static inline unsigned int sk_filter_len(const struct sk_filter *fp)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int sk_filter_trim_cap(struct sock *sk, struct sk_buff *skb, unsigned int cap);
 static inline int sk_filter(struct sock *sk, struct sk_buff *skb)
 {
@@ -46,6 +47,9 @@ static inline int sk_filter(struct sock *sk, struct sk_buff *skb)
 =======
 extern int sk_filter(struct sock *sk, struct sk_buff *skb);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+extern int sk_filter(struct sock *sk, struct sk_buff *skb);
+>>>>>>> master
 extern unsigned int sk_run_filter(const struct sk_buff *skb,
 				  const struct sock_filter *filter);
 extern int sk_unattached_filter_create(struct sk_filter **pfp,

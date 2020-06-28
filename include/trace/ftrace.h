@@ -300,6 +300,7 @@ static struct trace_event_functions ftrace_event_type_funcs_##call = {	\
 #define __array(type, item, len)					\
 	do {								\
 <<<<<<< HEAD
+<<<<<<< HEAD
 		char *type_str = #type"["__stringify(len)"]";		\
 		BUILD_BUG_ON(len > MAX_FILTER_STR_VAL);			\
 		ret = trace_define_field(event_call, type_str, #item,	\
@@ -307,6 +308,8 @@ static struct trace_event_functions ftrace_event_type_funcs_##call = {	\
 				 sizeof(field.item),			\
 				 is_signed_type(type), FILTER_OTHER);	\
 =======
+=======
+>>>>>>> master
 		mutex_lock(&event_storage_mutex);			\
 		BUILD_BUG_ON(len > MAX_FILTER_STR_VAL);			\
 		snprintf(event_storage, sizeof(event_storage),		\
@@ -316,7 +319,10 @@ static struct trace_event_functions ftrace_event_type_funcs_##call = {	\
 				 sizeof(field.item),			\
 				 is_signed_type(type), FILTER_OTHER);	\
 		mutex_unlock(&event_storage_mutex);			\
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		if (ret)						\
 			return ret;					\
 	} while (0);
@@ -378,11 +384,15 @@ ftrace_define_fields_##call(struct ftrace_event_call *event_call)	\
 
 #undef __string
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define __string(item, src) __dynamic_array(char, item,			\
 		    strlen((src) ? (const char *)(src) : "(null)") + 1)
 =======
 #define __string(item, src) __dynamic_array(char, item, strlen(src) + 1)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define __string(item, src) __dynamic_array(char, item, strlen(src) + 1)
+>>>>>>> master
 
 #undef DECLARE_EVENT_CLASS
 #define DECLARE_EVENT_CLASS(call, proto, args, tstruct, assign, print)	\
@@ -513,10 +523,14 @@ static inline notrace int ftrace_get_offsets_##call(			\
 #undef __assign_str
 #define __assign_str(dst, src)						\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	strcpy(__get_str(dst), (src) ? (const char *)(src) : "(null)");
 =======
 	strcpy(__get_str(dst), src);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	strcpy(__get_str(dst), src);
+>>>>>>> master
 
 #undef TP_fast_assign
 #define TP_fast_assign(args...) args

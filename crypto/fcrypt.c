@@ -421,6 +421,9 @@ MODULE_LICENSE("Dual BSD/GPL");
 MODULE_DESCRIPTION("FCrypt Cipher Algorithm");
 MODULE_AUTHOR("David Howells <dhowells@redhat.com>");
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("fcrypt");
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master

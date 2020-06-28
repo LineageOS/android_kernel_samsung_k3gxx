@@ -108,10 +108,14 @@ int gen_split_key(struct device *jrdev, u8 *key_out, int split_key_len,
 	if (!ret) {
 		/* in progress */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		wait_for_completion(&result.completion);
 =======
 		wait_for_completion_interruptible(&result.completion);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		wait_for_completion_interruptible(&result.completion);
+>>>>>>> master
 		ret = result.err;
 #ifdef DEBUG
 		print_hex_dump(KERN_ERR, "ctx.key@"xstr(__LINE__)": ",

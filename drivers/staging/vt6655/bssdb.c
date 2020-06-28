@@ -1027,10 +1027,14 @@ start:
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (pDevice->eCommandState == WLAN_ASSOCIATE_WAIT) {
 =======
 	{
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	{
+>>>>>>> master
 		pDevice->byReAssocCount++;
 		if ((pDevice->byReAssocCount > 10) && (pDevice->bLinkPass != true)) {  //10 sec timeout
 			printk("Re-association timeout!!!\n");

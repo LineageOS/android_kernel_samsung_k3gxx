@@ -19,10 +19,13 @@ extern int tick_do_timer_cpu __read_mostly;
 extern void tick_setup_periodic(struct clock_event_device *dev, int broadcast);
 extern void tick_handle_periodic(struct clock_event_device *dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern void tick_notify(unsigned long reason, void *dev);
 extern void tick_check_new_device(struct clock_event_device *dev);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 extern void clockevents_shutdown(struct clock_event_device *dev);
 
@@ -96,10 +99,14 @@ static inline bool tick_broadcast_oneshot_available(void) { return false; }
 #ifdef CONFIG_GENERIC_CLOCKEVENTS_BROADCAST
 extern int tick_device_uses_broadcast(struct clock_event_device *dev, int cpu);
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern void tick_install_broadcast_device(struct clock_event_device *dev);
 =======
 extern int tick_check_broadcast_device(struct clock_event_device *dev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+extern int tick_check_broadcast_device(struct clock_event_device *dev);
+>>>>>>> master
 extern int tick_is_broadcast_device(struct clock_event_device *dev);
 extern void tick_broadcast_on_off(unsigned long reason, int *oncpu);
 extern void tick_shutdown_broadcast(unsigned int *cpup);
@@ -112,6 +119,7 @@ tick_set_periodic_handler(struct clock_event_device *dev, int broadcast);
 #else /* !BROADCAST */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline void tick_install_broadcast_device(struct clock_event_device *dev)
 {
 =======
@@ -119,6 +127,11 @@ static inline int tick_check_broadcast_device(struct clock_event_device *dev)
 {
 	return 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static inline int tick_check_broadcast_device(struct clock_event_device *dev)
+{
+	return 0;
+>>>>>>> master
 }
 
 static inline int tick_is_broadcast_device(struct clock_event_device *dev)

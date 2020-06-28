@@ -1390,17 +1390,23 @@ openRetry:
  */
 static int
 <<<<<<< HEAD
+<<<<<<< HEAD
 discard_remaining_data(struct TCP_Server_Info *server)
 {
 	unsigned int rfclen = get_rfc1002_length(server->smallbuf);
 	int remaining = rfclen + 4 - server->total_read;
 =======
+=======
+>>>>>>> master
 cifs_readv_discard(struct TCP_Server_Info *server, struct mid_q_entry *mid)
 {
 	unsigned int rfclen = get_rfc1002_length(server->smallbuf);
 	int remaining = rfclen + 4 - server->total_read;
 	struct cifs_readdata *rdata = mid->callback_data;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	while (remaining > 0) {
 		int length;
@@ -1414,6 +1420,7 @@ cifs_readv_discard(struct TCP_Server_Info *server, struct mid_q_entry *mid)
 		remaining -= length;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return 0;
 }
@@ -1431,6 +1438,10 @@ cifs_readv_discard(struct TCP_Server_Info *server, struct mid_q_entry *mid)
 	dequeue_mid(mid, rdata->result);
 	return 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	dequeue_mid(mid, rdata->result);
+	return 0;
+>>>>>>> master
 }
 
 int
@@ -1462,6 +1473,7 @@ cifs_readv_receive(struct TCP_Server_Info *server, struct mid_q_entry *mid)
 	server->total_read += length;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (server->ops->is_status_pending &&
 	    server->ops->is_status_pending(buf, server, 0)) {
 		discard_remaining_data(server);
@@ -1470,6 +1482,8 @@ cifs_readv_receive(struct TCP_Server_Info *server, struct mid_q_entry *mid)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Was the SMB read successful? */
 	rdata->result = server->ops->map_error(buf, false);
 	if (rdata->result != 0) {
@@ -3338,6 +3352,7 @@ static __u16 ACL_to_cifs_posix(char *parm_data, const char *pACL,
 	}
 	cifs_acl->version = cpu_to_le16(1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (acl_type == ACL_TYPE_ACCESS) {
 		cifs_acl->access_entry_count = cpu_to_le16(count);
 		cifs_acl->default_entry_count = __constant_cpu_to_le16(0xFFFF);
@@ -3346,12 +3361,17 @@ static __u16 ACL_to_cifs_posix(char *parm_data, const char *pACL,
 		cifs_acl->access_entry_count = __constant_cpu_to_le16(0xFFFF);
 	} else {
 =======
+=======
+>>>>>>> master
 	if (acl_type == ACL_TYPE_ACCESS)
 		cifs_acl->access_entry_count = cpu_to_le16(count);
 	else if (acl_type == ACL_TYPE_DEFAULT)
 		cifs_acl->default_entry_count = cpu_to_le16(count);
 	else {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		cifs_dbg(FYI, "unknown ACL type %d\n", acl_type);
 		return 0;
 	}

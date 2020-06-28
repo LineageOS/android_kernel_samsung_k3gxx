@@ -576,10 +576,15 @@ static struct sdio_driver brcmf_sdmmc_driver = {
 static int brcmf_sdio_pd_probe(struct platform_device *pdev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int ret;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int ret;
+
+>>>>>>> master
 	brcmf_dbg(SDIO, "Enter\n");
 
 	brcmfmac_sdio_pdata = pdev->dev.platform_data;
@@ -588,14 +593,20 @@ static int brcmf_sdio_pd_probe(struct platform_device *pdev)
 		brcmfmac_sdio_pdata->power_on();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return 0;
 =======
+=======
+>>>>>>> master
 	ret = sdio_register_driver(&brcmf_sdmmc_driver);
 	if (ret)
 		brcmf_err("sdio_register_driver failed: %d\n", ret);
 
 	return ret;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static int brcmf_sdio_pd_remove(struct platform_device *pdev)
@@ -618,6 +629,7 @@ static struct platform_driver brcmf_sdio_pd = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void brcmf_sdio_register(void)
 {
 	int ret;
@@ -629,6 +641,8 @@ void brcmf_sdio_register(void)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 void brcmf_sdio_exit(void)
 {
 	brcmf_dbg(SDIO, "Enter\n");
@@ -640,10 +654,14 @@ void brcmf_sdio_exit(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void __init brcmf_sdio_init(void)
 =======
 void brcmf_sdio_init(void)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+void brcmf_sdio_init(void)
+>>>>>>> master
 {
 	int ret;
 
@@ -651,9 +669,12 @@ void brcmf_sdio_init(void)
 
 	ret = platform_driver_probe(&brcmf_sdio_pd, brcmf_sdio_pd_probe);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret == -ENODEV)
 		brcmf_dbg(SDIO, "No platform data available.\n");
 =======
+=======
+>>>>>>> master
 	if (ret == -ENODEV) {
 		brcmf_dbg(SDIO, "No platform data available, registering without.\n");
 		ret = sdio_register_driver(&brcmf_sdmmc_driver);
@@ -661,5 +682,8 @@ void brcmf_sdio_init(void)
 
 	if (ret)
 		brcmf_err("driver registration failed: %d\n", ret);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }

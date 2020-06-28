@@ -1768,10 +1768,14 @@ static u16 be_tx_compl_process(struct be_adapter *adapter,
 	} while (cur_index != last_index);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_kfree_skb_any(sent_skb);
 =======
 	kfree_skb(sent_skb);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	kfree_skb(sent_skb);
+>>>>>>> master
 	return num_wrbs;
 }
 
@@ -2566,12 +2570,17 @@ static int be_close(struct net_device *netdev)
 	 * all tx skbs are freed.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	netif_tx_disable(netdev);
 	be_tx_compl_clean(adapter);
 =======
 	be_tx_compl_clean(adapter);
 	netif_tx_disable(netdev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	be_tx_compl_clean(adapter);
+	netif_tx_disable(netdev);
+>>>>>>> master
 
 	be_rx_qs_destroy(adapter);
 
@@ -2673,10 +2682,14 @@ static int be_open(struct net_device *netdev)
 	for_all_evt_queues(adapter, eqo, i) {
 		napi_enable(&eqo->napi);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		be_eq_notify(adapter, eqo->q.id, true, true, 0);
 =======
 		be_eq_notify(adapter, eqo->q.id, true, false, 0);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		be_eq_notify(adapter, eqo->q.id, true, false, 0);
+>>>>>>> master
 	}
 	adapter->flags |= BE_FLAGS_NAPI_ENABLED;
 

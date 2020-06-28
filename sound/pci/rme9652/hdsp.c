@@ -2924,10 +2924,14 @@ static int snd_hdsp_get_dds_offset(struct snd_kcontrol *kcontrol, struct snd_ctl
 	struct hdsp *hdsp = snd_kcontrol_chip(kcontrol);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ucontrol->value.integer.value[0] = hdsp_dds_offset(hdsp);
 =======
 	ucontrol->value.enumerated.item[0] = hdsp_dds_offset(hdsp);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ucontrol->value.enumerated.item[0] = hdsp_dds_offset(hdsp);
+>>>>>>> master
 	return 0;
 }
 
@@ -2940,10 +2944,14 @@ static int snd_hdsp_put_dds_offset(struct snd_kcontrol *kcontrol, struct snd_ctl
 	if (!snd_hdsp_use_is_exclusive(hdsp))
 		return -EBUSY;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	val = ucontrol->value.integer.value[0];
 =======
 	val = ucontrol->value.enumerated.item[0];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	val = ucontrol->value.enumerated.item[0];
+>>>>>>> master
 	spin_lock_irq(&hdsp->lock);
 	if (val != hdsp_dds_offset(hdsp))
 		change = (hdsp_set_dds_offset(hdsp, val) == 0) ? 1 : 0;

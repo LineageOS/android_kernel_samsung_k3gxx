@@ -744,9 +744,12 @@ struct mlx4_priv {
 
 	int			pci_dev_data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int                     removed;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	struct list_head        pgdir_list;
 	struct mutex            pgdir_mutex;

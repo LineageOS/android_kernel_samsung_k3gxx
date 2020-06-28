@@ -1105,9 +1105,12 @@ int ocfs2_setattr(struct dentry *dentry, struct iattr *attr)
 {
 	int status = 0, size_change;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int inode_locked = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	struct inode *inode = dentry->d_inode;
 	struct super_block *sb = inode->i_sb;
 	struct ocfs2_super *osb = OCFS2_SB(sb);
@@ -1154,9 +1157,12 @@ int ocfs2_setattr(struct dentry *dentry, struct iattr *attr)
 		goto bail_unlock_rw;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	inode_locked = 1;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (size_change && attr->ia_size != i_size_read(inode)) {
 		status = inode_newsize_ok(inode, attr->ia_size);
@@ -1238,6 +1244,7 @@ bail_commit:
 	ocfs2_commit_trans(osb, handle);
 bail_unlock:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (status) {
 		ocfs2_inode_unlock(inode, 1);
 		inode_locked = 0;
@@ -1245,6 +1252,9 @@ bail_unlock:
 =======
 	ocfs2_inode_unlock(inode, 1);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ocfs2_inode_unlock(inode, 1);
+>>>>>>> master
 bail_unlock_rw:
 	if (size_change)
 		ocfs2_rw_unlock(inode, 1);
@@ -1261,10 +1271,13 @@ bail:
 			mlog_errno(status);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (inode_locked)
 		ocfs2_inode_unlock(inode, 1);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return status;
 }
@@ -1520,11 +1533,15 @@ static int ocfs2_zero_partial_clusters(struct inode *inode,
 {
 	int ret = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 tmpend = 0;
 	u64 end = start + len;
 =======
 	u64 tmpend, end = start + len;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u64 tmpend, end = start + len;
+>>>>>>> master
 	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
 	unsigned int csize = osb->s_clustersize;
 	handle_t *handle;
@@ -1557,6 +1574,7 @@ static int ocfs2_zero_partial_clusters(struct inode *inode,
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * If start is on a cluster boundary and end is somewhere in another
 	 * cluster, we have not COWed the cluster starting at start, unless
 	 * end is also within the same cluster. So, in this case, we skip this
@@ -1583,6 +1601,8 @@ static int ocfs2_zero_partial_clusters(struct inode *inode,
 			mlog_errno(ret);
 	}
 =======
+=======
+>>>>>>> master
 	 * We want to get the byte offset of the end of the 1st cluster.
 	 */
 	tmpend = (u64)osb->s_clustersize + (start & ~(osb->s_clustersize - 1));
@@ -1595,7 +1615,10 @@ static int ocfs2_zero_partial_clusters(struct inode *inode,
 	ret = ocfs2_zero_range_for_truncate(inode, handle, start, tmpend);
 	if (ret)
 		mlog_errno(ret);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (tmpend < end) {
 		/*
@@ -2426,6 +2449,7 @@ out_dio:
 	BUG_ON(ret == -EIOCBQUEUED && !(file->f_flags & O_DIRECT));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(written <= 0))
 		goto no_sync;
 
@@ -2435,11 +2459,16 @@ out_dio:
 					       iocb->ki_pos - written,
 					       iocb->ki_pos - 1);
 =======
+=======
+>>>>>>> master
 	if (((file->f_flags & O_DSYNC) && !direct_io) || IS_SYNC(inode) ||
 	    ((file->f_flags & O_DIRECT) && !direct_io)) {
 		ret = filemap_fdatawrite_range(file->f_mapping, pos,
 					       pos + count - 1);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		if (ret < 0)
 			written = ret;
 
@@ -2453,6 +2482,7 @@ out_dio:
 
 		if (!ret)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ret = filemap_fdatawait_range(file->f_mapping,
 						      iocb->ki_pos - written,
 						      iocb->ki_pos - 1);
@@ -2460,11 +2490,16 @@ out_dio:
 
 no_sync:
 =======
+=======
+>>>>>>> master
 			ret = filemap_fdatawait_range(file->f_mapping, pos,
 						      pos + count - 1);
 	}
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/*
 	 * deep in g_f_a_w_n()->ocfs2_direct_IO we pass in a ocfs2_dio_end_io
 	 * function pointer which is called when o_direct io completes so that
@@ -2527,6 +2562,7 @@ static ssize_t ocfs2_file_splice_write(struct pipe_inode_info *pipe,
 	struct inode *inode = mapping->host;
 	struct splice_desc sd = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.flags = flags,
 		.u.file = out,
 	};
@@ -2536,13 +2572,18 @@ static ssize_t ocfs2_file_splice_write(struct pipe_inode_info *pipe,
 	sd.total_len = len;
 	sd.pos = *ppos;
 =======
+=======
+>>>>>>> master
 		.total_len = len,
 		.flags = flags,
 		.pos = *ppos,
 		.u.file = out,
 	};
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	trace_ocfs2_file_splice_write(inode, out, out->f_path.dentry,
 			(unsigned long long)OCFS2_I(inode)->ip_blkno,

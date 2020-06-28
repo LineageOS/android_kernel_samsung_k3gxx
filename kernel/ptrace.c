@@ -152,6 +152,7 @@ static void ptrace_unfreeze_traced(struct task_struct *task)
 	WARN_ON(!task->ptrace || task->parent != current);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * PTRACE_LISTEN can allow ptrace_trap_notify to wake us up remotely.
 	 * Recheck state under the lock to close this race.
@@ -164,12 +165,17 @@ static void ptrace_unfreeze_traced(struct task_struct *task)
 			task->state = TASK_TRACED;
 	}
 =======
+=======
+>>>>>>> master
 	spin_lock_irq(&task->sighand->siglock);
 	if (__fatal_signal_pending(task))
 		wake_up_state(task, __TASK_TRACED);
 	else
 		task->state = TASK_TRACED;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	spin_unlock_irq(&task->sighand->siglock);
 }
 
@@ -261,6 +267,7 @@ static int __ptrace_may_access(struct task_struct *task, unsigned int mode)
 {
 	const struct cred *cred = current_cred(), *tcred;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int dumpable = 0;
 	kuid_t caller_uid;
 	kgid_t caller_gid;
@@ -271,6 +278,8 @@ static int __ptrace_may_access(struct task_struct *task, unsigned int mode)
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* May we inspect the given task?
 	 * This check is used both for attaching with ptrace
@@ -280,6 +289,7 @@ static int __ptrace_may_access(struct task_struct *task, unsigned int mode)
 	 * because setting up the necessary parent/child relationship
 	 * or halting the specified task is impossible.
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	/* Don't let security modules deny introspection */
@@ -309,6 +319,8 @@ static int __ptrace_may_access(struct task_struct *task, unsigned int mode)
 	    gid_eq(caller_gid, tcred->sgid) &&
 	    gid_eq(caller_gid, tcred->gid))
 =======
+=======
+>>>>>>> master
 	int dumpable = 0;
 	/* Don't let security modules deny introspection */
 	if (task == current)
@@ -321,7 +333,10 @@ static int __ptrace_may_access(struct task_struct *task, unsigned int mode)
 	    gid_eq(cred->gid, tcred->egid) &&
 	    gid_eq(cred->gid, tcred->sgid) &&
 	    gid_eq(cred->gid, tcred->gid))
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		goto ok;
 	if (ptrace_has_cap(tcred, mode))
 		goto ok;
@@ -388,10 +403,14 @@ static int ptrace_attach(struct task_struct *task, long request,
 
 	task_lock(task);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	retval = __ptrace_may_access(task, PTRACE_MODE_ATTACH_REALCREDS);
 =======
 	retval = __ptrace_may_access(task, PTRACE_MODE_ATTACH);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	retval = __ptrace_may_access(task, PTRACE_MODE_ATTACH);
+>>>>>>> master
 	task_unlock(task);
 	if (retval)
 		goto unlock_creds;
@@ -800,10 +819,13 @@ static int ptrace_resume(struct task_struct *child, long request,
 			 unsigned long data)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool need_siglock;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (!valid_signal(data))
 		return -EIO;
 
@@ -832,6 +854,7 @@ static int ptrace_resume(struct task_struct *child, long request,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * Change ->exit_code and ->state under siglock to avoid the race
 	 * with wait_task_stopped() in between; a non-zero ->exit_code will
@@ -856,6 +879,10 @@ static int ptrace_resume(struct task_struct *child, long request,
 	child->exit_code = data;
 	wake_up_state(child, __TASK_TRACED);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	child->exit_code = data;
+	wake_up_state(child, __TASK_TRACED);
+>>>>>>> master
 
 	return 0;
 }

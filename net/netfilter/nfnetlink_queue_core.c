@@ -228,6 +228,7 @@ nfqnl_flush(struct nfqnl_instance *queue, nfqnl_cmpfn cmpfn, unsigned long data)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int
 nfqnl_zcopy(struct sk_buff *to, struct sk_buff *from, int len, int hlen)
 {
@@ -235,16 +236,22 @@ nfqnl_zcopy(struct sk_buff *to, struct sk_buff *from, int len, int hlen)
 	int plen = 0; /* length of skb->head fragment */
 	int ret;
 =======
+=======
+>>>>>>> master
 static void
 nfqnl_zcopy(struct sk_buff *to, const struct sk_buff *from, int len, int hlen)
 {
 	int i, j = 0;
 	int plen = 0; /* length of skb->head fragment */
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	struct page *page;
 	unsigned int offset;
 
 	/* dont bother with small payloads */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (len <= skb_tailroom(to))
 		return skb_copy_bits(from, 0, skb_put(to, len), len);
@@ -254,6 +261,8 @@ nfqnl_zcopy(struct sk_buff *to, const struct sk_buff *from, int len, int hlen)
 		if (unlikely(ret))
 			return ret;
 =======
+=======
+>>>>>>> master
 	if (len <= skb_tailroom(to)) {
 		skb_copy_bits(from, 0, skb_put(to, len), len);
 		return;
@@ -261,7 +270,10 @@ nfqnl_zcopy(struct sk_buff *to, const struct sk_buff *from, int len, int hlen)
 
 	if (hlen) {
 		skb_copy_bits(from, 0, skb_put(to, hlen), hlen);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		len -= hlen;
 	} else {
 		plen = min_t(int, skb_headlen(from), len);
@@ -290,10 +302,13 @@ nfqnl_zcopy(struct sk_buff *to, const struct sk_buff *from, int len, int hlen)
 	}
 	skb_shinfo(to)->nr_frags = j;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	return 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static int nfqnl_put_packet_info(struct sk_buff *nlskb, struct sk_buff *packet)
@@ -380,6 +395,7 @@ nfqnl_build_packet_message(struct nfqnl_instance *queue,
 	skb = nfnetlink_alloc_skb(&init_net, size, queue->peer_portid,
 				  GFP_ATOMIC);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!skb) {
 		skb_tx_error(entskb);
 		return NULL;
@@ -388,15 +404,22 @@ nfqnl_build_packet_message(struct nfqnl_instance *queue,
 	if (!skb)
 		return NULL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!skb)
+		return NULL;
+>>>>>>> master
 
 	nlh = nlmsg_put(skb, 0, 0,
 			NFNL_SUBSYS_QUEUE << 8 | NFQNL_MSG_PACKET,
 			sizeof(struct nfgenmsg), 0);
 	if (!nlh) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		skb_tx_error(entskb);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		kfree_skb(skb);
 		return NULL;
 	}
@@ -517,11 +540,15 @@ nfqnl_build_packet_message(struct nfqnl_instance *queue,
 		nla->nla_len = nla_attr_size(data_len);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (nfqnl_zcopy(skb, entskb, data_len, hlen))
 			goto nla_put_failure;
 =======
 		nfqnl_zcopy(skb, entskb, data_len, hlen);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		nfqnl_zcopy(skb, entskb, data_len, hlen);
+>>>>>>> master
 	}
 
 	nlh->nlmsg_len = skb->len;
@@ -529,9 +556,12 @@ nfqnl_build_packet_message(struct nfqnl_instance *queue,
 
 nla_put_failure:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	skb_tx_error(entskb);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	kfree_skb(skb);
 	net_err_ratelimited("nf_queue: error creating packet message\n");
 	return NULL;

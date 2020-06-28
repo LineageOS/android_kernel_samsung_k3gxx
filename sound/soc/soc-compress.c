@@ -335,6 +335,7 @@ static int soc_compr_copy(struct snd_compr_stream *cstream,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int sst_compr_set_next_track_param(struct snd_compr_stream *cstream,
 				union snd_codec_options *codec_options)
 {
@@ -352,6 +353,8 @@ static int sst_compr_set_next_track_param(struct snd_compr_stream *cstream,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int sst_compr_set_metadata(struct snd_compr_stream *cstream,
 				struct snd_compr_metadata *metadata)
 {
@@ -384,9 +387,12 @@ static struct snd_compr_ops soc_compr_ops = {
 	.set_params	= soc_compr_set_params,
 	.set_metadata   = sst_compr_set_metadata,
 <<<<<<< HEAD
+<<<<<<< HEAD
     .set_next_track_param	= sst_compr_set_next_track_param,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	.get_metadata	= sst_compr_get_metadata,
 	.get_params	= soc_compr_get_params,
 	.trigger	= soc_compr_trigger,
@@ -407,15 +413,19 @@ int soc_new_compress(struct snd_soc_pcm_runtime *rtd, int num)
 	char new_name[64];
 	int ret = 0, direction = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int playback = 0, capture = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* check client and interface hw capabilities */
 	snprintf(new_name, sizeof(new_name), "%s %s-%d",
 			rtd->dai_link->stream_name, codec_dai->name, num);
 
 	if (codec_dai->driver->playback.channels_min)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		playback = 1;
 	if (codec_dai->driver->capture.channels_min)
@@ -439,12 +449,17 @@ int soc_new_compress(struct snd_soc_pcm_runtime *rtd, int num)
 	else
 		direction = SND_COMPRESS_CAPTURE;
 =======
+=======
+>>>>>>> master
 		direction = SND_COMPRESS_PLAYBACK;
 	else if (codec_dai->driver->capture.channels_min)
 		direction = SND_COMPRESS_CAPTURE;
 	else
 		return -EINVAL;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	compr = kzalloc(sizeof(*compr), GFP_KERNEL);
 	if (compr == NULL) {

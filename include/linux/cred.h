@@ -123,9 +123,12 @@ struct cred {
 	kernel_cap_t	cap_effective;	/* caps we can actually use */
 	kernel_cap_t	cap_bset;	/* capability bounding set */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kernel_cap_t	cap_ambient;	/* Ambient capability set */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #ifdef CONFIG_KEYS
 	unsigned char	jit_keyring;	/* default keyring to attach requested
 					 * keys to */
@@ -215,6 +218,7 @@ static inline void validate_process_creds(void)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline bool cap_ambient_invariant_ok(const struct cred *cred)
 {
 	return cap_issubset(cred->cap_ambient,
@@ -224,6 +228,8 @@ static inline bool cap_ambient_invariant_ok(const struct cred *cred)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /**
  * get_new_cred - Get a reference on a new set of credentials
  * @cred: The new credentials to reference
@@ -381,6 +387,7 @@ extern struct user_namespace init_user_ns;
 #define current_user_ns()	(current_cred_xxx(user_ns))
 #else
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline struct user_namespace *current_user_ns(void)
 {
 	return &init_user_ns;
@@ -388,6 +395,9 @@ static inline struct user_namespace *current_user_ns(void)
 =======
 #define current_user_ns()	(&init_user_ns)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define current_user_ns()	(&init_user_ns)
+>>>>>>> master
 #endif
 
 

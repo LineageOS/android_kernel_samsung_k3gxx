@@ -61,6 +61,7 @@ struct ieee80211_local;
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Some APs experience problems when working with U-APSD. Decreasing the
  * probability of that happening by using legacy mode for all ACs but VO isn't
  * enough.
@@ -80,6 +81,8 @@ struct ieee80211_local;
  */
 #define IEEE80211_DEFAULT_UAPSD_QUEUES 0
 =======
+=======
+>>>>>>> master
  * Some APs experience problems when working with U-APSD. Decrease the
  * probability of that happening by using legacy mode for all ACs but VO.
  * The AP that caused us trouble was a Cisco 4410N. It ignores our
@@ -87,7 +90,10 @@ struct ieee80211_local;
  */
 #define IEEE80211_DEFAULT_UAPSD_QUEUES \
 	IEEE80211_WMM_IE_STA_QOSINFO_AC_VO
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 #define IEEE80211_DEFAULT_MAX_SP_LEN		\
 	IEEE80211_WMM_IE_STA_QOSINFO_SP_ALL
@@ -333,9 +339,12 @@ struct ieee80211_roc_work {
 	bool started, abort, hw_begun, notified;
 	bool to_be_freed;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool on_channel;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	unsigned long hw_start_time;
 
@@ -868,10 +877,13 @@ struct tpt_led_trigger {
  * @SCAN_ABORTED: Set for our scan work function when the driver reported
  *	a scan complete for an aborted scan.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @SCAN_HW_CANCELLED: Set for our scan work function when the scan is being
  *	cancelled.
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  */
 enum {
 	SCAN_SW_SCANNING,
@@ -880,9 +892,12 @@ enum {
 	SCAN_COMPLETED,
 	SCAN_ABORTED,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SCAN_HW_CANCELLED,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 
 /**
@@ -1302,9 +1317,12 @@ void ieee80211_mgd_stop(struct ieee80211_sub_if_data *sdata);
 void ieee80211_mgd_conn_tx_status(struct ieee80211_sub_if_data *sdata,
 				  __le16 fc, bool acked);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void ieee80211_mgd_quiesce(struct ieee80211_sub_if_data *sdata);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 void ieee80211_sta_restart(struct ieee80211_sub_if_data *sdata);
 
 /* IBSS code */

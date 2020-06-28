@@ -363,6 +363,9 @@ module_exit(crypto_module_exit);
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("XTS block cipher mode");
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("xts");
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master

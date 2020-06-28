@@ -1423,6 +1423,7 @@ mptspi_probe(struct pci_dev *pdev, const struct pci_device_id *id)
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* VMWare emulation doesn't properly implement WRITE_SAME
 	 */
 	if (pdev->subsystem_vendor == 0x15AD)
@@ -1430,6 +1431,8 @@ mptspi_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	spin_lock_irqsave(&ioc->FreeQlock, flags);
 
 	/* Attach the SCSI Host to the IOC structure

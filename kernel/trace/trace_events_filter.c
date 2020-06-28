@@ -1018,11 +1018,14 @@ static void parse_init(struct filter_parse_state *ps,
 static char infix_next(struct filter_parse_state *ps)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!ps->infix.cnt)
 		return 0;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ps->infix.cnt--;
 
 	return ps->infix.string[ps->infix.tail++];
@@ -1039,11 +1042,14 @@ static char infix_peek(struct filter_parse_state *ps)
 static void infix_advance(struct filter_parse_state *ps)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!ps->infix.cnt)
 		return;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ps->infix.cnt--;
 	ps->infix.tail++;
 }
@@ -1343,6 +1349,7 @@ static int check_preds(struct filter_parse_state *ps)
 	int n_normal_preds = 0, n_logical_preds = 0;
 	struct postfix_elt *elt;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int cnt = 0;
 
 	list_for_each_entry(elt, &ps->postfix, list) {
@@ -1353,17 +1360,23 @@ static int check_preds(struct filter_parse_state *ps)
 
 		cnt--;
 =======
+=======
+>>>>>>> master
 
 	list_for_each_entry(elt, &ps->postfix, list) {
 		if (elt->op == OP_NONE)
 			continue;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		if (elt->op == OP_AND || elt->op == OP_OR) {
 			n_logical_preds++;
 			continue;
 		}
 		n_normal_preds++;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		/* all ops should have operands */
 		if (cnt < 0)
@@ -1376,6 +1389,11 @@ static int check_preds(struct filter_parse_state *ps)
 
 	if (!n_normal_preds || n_logical_preds >= n_normal_preds) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	}
+
+	if (!n_normal_preds || n_logical_preds >= n_normal_preds) {
+>>>>>>> master
 		parse_error(ps, FILT_ERR_INVALID_FILTER, 0);
 		return -EINVAL;
 	}

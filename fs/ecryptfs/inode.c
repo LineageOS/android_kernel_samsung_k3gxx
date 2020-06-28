@@ -37,7 +37,10 @@
 #include "ecryptfs_kernel.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 #include <sdp/fs_request.h>
 #include "ecryptfs_sdp_chamber.h"
@@ -49,7 +52,10 @@
 #include "ecryptfs_dlp.h"
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /* Do not directly use this function. Use ECRYPTFS_OVERRIDE_CRED() instead. */
 const struct cred * ecryptfs_override_fsids(uid_t fsuid, gid_t fsgid)
 {
@@ -79,10 +85,14 @@ void ecryptfs_revert_fsids(const struct cred * old_cred)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 #ifndef CONFIG_SDP
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#ifndef CONFIG_SDP
+>>>>>>> master
 static struct dentry *lock_parent(struct dentry *dentry)
 {
 	struct dentry *dir;
@@ -98,9 +108,13 @@ static void unlock_dir(struct dentry *dir)
 	dput(dir);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #endif
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#endif
+>>>>>>> master
 
 static int ecryptfs_inode_test(struct inode *inode, void *lower_inode)
 {
@@ -195,7 +209,10 @@ static int ecryptfs_interpose(struct dentry *lower_dentry,
 		d_rehash(dentry);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 	if(S_ISDIR(inode->i_mode) && dentry) {
 		if(IS_UNDER_ROOT(dentry)) {
@@ -226,7 +243,10 @@ static int ecryptfs_interpose(struct dentry *lower_dentry,
 	}
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 }
 
@@ -322,12 +342,18 @@ int ecryptfs_initialize_file(struct dentry *ecryptfs_dentry,
 	int rc = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_DLP
 	sdp_fs_command_t *cmd = NULL;
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (S_ISDIR(ecryptfs_inode->i_mode)) {
 		ecryptfs_printk(KERN_DEBUG, "This is a directory\n");
 		crypt_stat->flags &= ~(ECRYPTFS_ENCRYPTED);
@@ -349,7 +375,10 @@ int ecryptfs_initialize_file(struct dentry *ecryptfs_dentry,
 		goto out;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_DLP
 	if(crypt_stat->mount_crypt_stat->flags & ECRYPTFS_MOUNT_DLP_ENABLED) {
 #if DLP_DEBUG
@@ -379,7 +408,10 @@ int ecryptfs_initialize_file(struct dentry *ecryptfs_dentry,
 		}
 	}
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #ifdef CONFIG_WTL_ENCRYPTION_FILTER
 	mutex_lock(&crypt_stat->cs_mutex);
 	if (crypt_stat->flags & ECRYPTFS_ENCRYPTED) {
@@ -420,14 +452,20 @@ int ecryptfs_initialize_file(struct dentry *ecryptfs_dentry,
 #endif
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_DLP
 	if(cmd) {
 		sdp_fs_request(cmd, NULL);
 		sdp_fs_command_free(cmd);
 	}
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return rc;
 }
 
@@ -553,7 +591,10 @@ static int ecryptfs_lookup_interpose(struct dentry *dentry,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 	if (S_ISDIR(inode->i_mode) && dentry) {
 		if(IS_UNDER_ROOT(dentry)) {
@@ -586,7 +627,10 @@ static int ecryptfs_lookup_interpose(struct dentry *dentry,
 	}
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (inode->i_state & I_NEW)
 		unlock_new_inode(inode);
 	d_add(dentry, inode);
@@ -595,7 +639,10 @@ static int ecryptfs_lookup_interpose(struct dentry *dentry,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 static inline int isdigit(int ch)
 {
@@ -603,7 +650,10 @@ static inline int isdigit(int ch)
 }
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /**
  * ecryptfs_lookup
  * @ecryptfs_dir_inode: The eCryptfs directory inode
@@ -656,10 +706,13 @@ static struct dentry *ecryptfs_lookup(struct inode *ecryptfs_dir_inode,
 	mutex_lock(&lower_dir_dentry->d_inode->i_mutex);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	lower_dentry = lookup_one_len(encrypted_and_encoded_name,
 				      lower_dir_dentry,
 				      encrypted_and_encoded_name_size);
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 	if(!strncmp(lower_dir_dentry->d_sb->s_type->name, "sdcardfs", 8)) {
 		struct sdcardfs_dentry_info *dinfo = SDCARDFS_D(lower_dir_dentry);
@@ -687,7 +740,10 @@ static struct dentry *ecryptfs_lookup(struct inode *ecryptfs_dir_inode,
 		dinfo->userid = -1;
 	}
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	mutex_unlock(&lower_dir_dentry->d_inode->i_mutex);
 	if (IS_ERR(lower_dentry)) {
 		rc = PTR_ERR(lower_dentry);
@@ -793,7 +849,10 @@ static int ecryptfs_mkdir(struct inode *dir, struct dentry *dentry, umode_t mode
 	lower_dir_dentry = lock_parent(lower_dentry);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 	if(!strncmp(lower_dir_dentry->d_sb->s_type->name, "sdcardfs", 8)) {
 		struct sdcardfs_dentry_info *dinfo = SDCARDFS_D(lower_dir_dentry);
@@ -811,7 +870,10 @@ static int ecryptfs_mkdir(struct inode *dir, struct dentry *dentry, umode_t mode
 		}
 	}
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	rc = vfs_mkdir(lower_dir_dentry->d_inode, lower_dentry, mode);
 	if (rc || !lower_dentry->d_inode)
 		goto out;
@@ -823,7 +885,10 @@ static int ecryptfs_mkdir(struct inode *dir, struct dentry *dentry, umode_t mode
 	set_nlink(dir, lower_dir_dentry->d_inode->i_nlink);
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 	if(!strncmp(lower_dir_dentry->d_sb->s_type->name, "sdcardfs", 8)) {
 		struct sdcardfs_dentry_info *dinfo = SDCARDFS_D(lower_dir_dentry);
@@ -831,7 +896,10 @@ out:
 		dinfo->userid = -1;
 	}
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	unlock_dir(lower_dir_dentry);
 	if (!dentry->d_inode)
 		d_drop(dentry);
@@ -845,7 +913,10 @@ static int ecryptfs_rmdir(struct inode *dir, struct dentry *dentry)
 	int rc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 	if(IS_CHAMBER_DENTRY(dentry)) {
 		printk("You're removing chamber directory. I/O error\n");
@@ -853,7 +924,10 @@ static int ecryptfs_rmdir(struct inode *dir, struct dentry *dentry)
 	}
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	lower_dentry = ecryptfs_dentry_to_lower(dentry);
 	dget(dentry);
 	lower_dir_dentry = lock_parent(lower_dentry);
@@ -896,10 +970,15 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define ECRYPTFS_SDP_RENAME_DEBUG 0
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define ECRYPTFS_SDP_RENAME_DEBUG 0
+
+>>>>>>> master
 static int
 ecryptfs_rename(struct inode *old_dir, struct dentry *old_dentry,
 		struct inode *new_dir, struct dentry *new_dentry)
@@ -912,7 +991,10 @@ ecryptfs_rename(struct inode *old_dir, struct dentry *old_dentry,
 	struct dentry *trap = NULL;
 	struct inode *target_inode;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_DLP
 	sdp_fs_command_t *cmd1 = NULL;
 	unsigned long old_inode = old_dentry->d_inode->i_ino;
@@ -983,7 +1065,10 @@ ecryptfs_rename(struct inode *old_dir, struct dentry *old_dentry,
 			IS_SENSITIVE_DENTRY(new_dentry->d_parent))
 		rename_event |= ECRYPTFS_EVT_RENAME_TO_CHAMBER;
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	lower_old_dentry = ecryptfs_dentry_to_lower(old_dentry);
 	lower_new_dentry = ecryptfs_dentry_to_lower(new_dentry);
@@ -1015,7 +1100,10 @@ ecryptfs_rename(struct inode *old_dir, struct dentry *old_dentry,
 		fsstack_copy_attr_all(old_dir, lower_old_dir_dentry->d_inode);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 	if(!rc) {
 		crypt_stat = &(ecryptfs_inode_to_private(old_dentry->d_inode)->crypt_stat);
@@ -1055,7 +1143,10 @@ ecryptfs_rename(struct inode *old_dir, struct dentry *old_dentry,
     }
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 out_lock:
 	unlock_rename(lower_old_dir_dentry, lower_new_dir_dentry);
 	dput(lower_new_dir_dentry);
@@ -1064,7 +1155,10 @@ out_lock:
 	dput(lower_old_dentry);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_SDP
 	if(!rc && cmd != NULL) {
 	    sdp_fs_request(cmd, ecryptfs_fs_request_callback);
@@ -1088,7 +1182,10 @@ out_lock:
 	}
     //end- Handle transient case MS-Apps
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return rc;
 }
 
@@ -1485,7 +1582,10 @@ ecryptfs_setxattr(struct dentry *dentry, const char *name, const void *value,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_DLP
 	if (!strcmp(name, KNOX_DLP_XATTR_NAME)) {
 #if DLP_DEBUG
@@ -1499,7 +1599,10 @@ ecryptfs_setxattr(struct dentry *dentry, const char *name, const void *value,
 	}
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	rc = vfs_setxattr(lower_dentry, name, value, size, flags);
 	if (!rc && dentry->d_inode)
 		fsstack_copy_attr_all(dentry->d_inode, lower_dentry->d_inode);
@@ -1565,7 +1668,10 @@ static int ecryptfs_removexattr(struct dentry *dentry, const char *name)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_DLP
 	if (!strcmp(name, KNOX_DLP_XATTR_NAME)) {
 #if DLP_DEBUG
@@ -1578,7 +1684,10 @@ static int ecryptfs_removexattr(struct dentry *dentry, const char *name)
 	}
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	mutex_lock(&lower_dentry->d_inode->i_mutex);
 	rc = lower_dentry->d_inode->i_op->removexattr(lower_dentry, name);
 	mutex_unlock(&lower_dentry->d_inode->i_mutex);

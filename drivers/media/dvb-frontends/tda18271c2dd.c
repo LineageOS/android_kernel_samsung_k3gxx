@@ -35,11 +35,14 @@
 #include "tda18271c2dd.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Max transfer size done by I2C transfer functions */
 #define MAX_XFER_SIZE  64
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 struct SStandardParam {
 	s32   m_IFFrequency;
 	u32   m_BandWidth;
@@ -146,6 +149,7 @@ static int WriteRegs(struct tda_state *state,
 		     u8 SubAddr, u8 *Regs, u16 nRegs)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 data[MAX_XFER_SIZE];
 
 	if (1 + nRegs > sizeof(data)) {
@@ -159,12 +163,17 @@ static int WriteRegs(struct tda_state *state,
 	memcpy(data + 1, Regs, nRegs);
 	return i2c_write(state->i2c, state->adr, data, nRegs + 1);
 =======
+=======
+>>>>>>> master
 	u8 data[nRegs+1];
 
 	data[0] = SubAddr;
 	memcpy(data + 1, Regs, nRegs);
 	return i2c_write(state->i2c, state->adr, data, nRegs+1);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static int WriteReg(struct tda_state *state, u8 SubAddr, u8 Reg)

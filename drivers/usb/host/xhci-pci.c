@@ -88,6 +88,7 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
 	if (pdev->vendor == PCI_VENDOR_ID_AMD && usb_amd_find_chipset_info())
 		xhci->quirks |= XHCI_AMD_PLL_FIX;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (pdev->vendor == PCI_VENDOR_ID_AMD)
 		xhci->quirks |= XHCI_TRUST_TX_LENGTH;
@@ -101,6 +102,11 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
 		xhci->quirks |= XHCI_LPM_SUPPORT;
 		xhci->quirks |= XHCI_INTEL_HOST;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (pdev->vendor == PCI_VENDOR_ID_INTEL) {
+		xhci->quirks |= XHCI_LPM_SUPPORT;
+		xhci->quirks |= XHCI_INTEL_HOST;
+>>>>>>> master
 	}
 	if (pdev->vendor == PCI_VENDOR_ID_INTEL &&
 			pdev->device == PCI_DEVICE_ID_INTEL_PANTHERPOINT_XHCI) {
@@ -117,9 +123,13 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
 		 */
 		xhci->quirks |= XHCI_SPURIOUS_REBOOT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		xhci->quirks |= XHCI_AVOID_BEI;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		xhci->quirks |= XHCI_AVOID_BEI;
+>>>>>>> master
 	}
 	if (pdev->vendor == PCI_VENDOR_ID_ETRON &&
 			pdev->device == PCI_DEVICE_ID_ASROCK_P67) {
@@ -128,11 +138,14 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
 		xhci->quirks |= XHCI_TRUST_TX_LENGTH;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (pdev->vendor == PCI_VENDOR_ID_RENESAS &&
 			pdev->device == 0x0015)
 		xhci->quirks |= XHCI_RESET_ON_RESUME;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (pdev->vendor == PCI_VENDOR_ID_VIA)
 		xhci->quirks |= XHCI_RESET_ON_RESUME;
 }
@@ -177,12 +190,15 @@ static int xhci_pci_probe(struct pci_dev *dev, const struct pci_device_id *id)
 
 	driver = (struct hc_driver *)id->driver_data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* Prevent runtime suspending between USB-2 and USB-3 initialization */
 	pm_runtime_get_noresume(&dev->dev);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Register the USB 2.0 roothub.
 	 * FIXME: USB core must know to register the USB 2.0 roothub first.
 	 * This is sort of silly, because we could just set the HCD driver flags
@@ -193,10 +209,14 @@ static int xhci_pci_probe(struct pci_dev *dev, const struct pci_device_id *id)
 
 	if (retval)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto put_runtime_pm;
 =======
 		return retval;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return retval;
+>>>>>>> master
 
 	/* USB 2.0 roothub is stored in the PCI device now. */
 	hcd = dev_get_drvdata(&dev->dev);
@@ -226,11 +246,14 @@ static int xhci_pci_probe(struct pci_dev *dev, const struct pci_device_id *id)
 		hcd_to_bus(xhci->shared_hcd)->root_hub->lpm_capable = 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* USB-2 and USB-3 roothubs initialized, allow runtime pm suspend */
 	pm_runtime_put_noidle(&dev->dev);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 
 put_usb3_hcd:
@@ -238,10 +261,13 @@ put_usb3_hcd:
 dealloc_usb2_hcd:
 	usb_hcd_pci_remove(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 put_runtime_pm:
 	pm_runtime_put_noidle(&dev->dev);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return retval;
 }
 
@@ -251,9 +277,12 @@ static void xhci_pci_remove(struct pci_dev *dev)
 
 	xhci = hcd_to_xhci(pci_get_drvdata(dev));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xhci->xhc_state |= XHCI_STATE_REMOVING;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (xhci->shared_hcd) {
 		usb_remove_hcd(xhci->shared_hcd);
 		usb_put_hcd(xhci->shared_hcd);
@@ -392,10 +421,14 @@ static struct pci_driver xhci_pci_driver = {
 
 	.shutdown = 	usb_hcd_pci_shutdown,
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_PM
 =======
 #ifdef CONFIG_PM_SLEEP
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#ifdef CONFIG_PM_SLEEP
+>>>>>>> master
 	.driver = {
 		.pm = &usb_hcd_pci_pm_ops
 	},

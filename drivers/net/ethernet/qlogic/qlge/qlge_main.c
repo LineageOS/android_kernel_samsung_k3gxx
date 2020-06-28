@@ -1621,6 +1621,7 @@ static void ql_process_mac_rx_skb(struct ql_adapter *qdev,
 	}
 	skb_reserve(new_skb, NET_IP_ALIGN);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	pci_dma_sync_single_for_cpu(qdev->pdev,
 				    dma_unmap_addr(sbq_desc, mapaddr),
@@ -1636,6 +1637,9 @@ static void ql_process_mac_rx_skb(struct ql_adapter *qdev,
 =======
 	memcpy(skb_put(new_skb, length), skb->data, length);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	memcpy(skb_put(new_skb, length), skb->data, length);
+>>>>>>> master
 	skb = new_skb;
 
 	/* Frame error, so drop the packet. */

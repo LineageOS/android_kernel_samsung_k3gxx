@@ -184,9 +184,13 @@ void radeon_atom_backlight_init(struct radeon_encoder *radeon_encoder,
 	struct radeon_backlight_privdata *pdata;
 	struct radeon_encoder_atom_dig *dig;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	u8 backlight_level;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u8 backlight_level;
+>>>>>>> master
 	char bl_name[16];
 
 	/* Mac laptops with multiple GPUs use the gmux driver for backlight
@@ -226,14 +230,20 @@ void radeon_atom_backlight_init(struct radeon_encoder *radeon_encoder,
 	pdata->encoder = radeon_encoder;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	backlight_level = radeon_atom_get_backlight_level_from_reg(rdev);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	backlight_level = radeon_atom_get_backlight_level_from_reg(rdev);
+
+>>>>>>> master
 	dig = radeon_encoder->enc_priv;
 	dig->bl_dev = bd;
 
 	bd->props.brightness = radeon_atom_backlight_get_brightness(bd);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Set a reasonable default here if the level is 0 otherwise
 	 * fbdev will attempt to turn the backlight on after console
@@ -244,6 +254,8 @@ void radeon_atom_backlight_init(struct radeon_encoder *radeon_encoder,
 		bd->props.brightness = RADEON_MAX_BL_LEVEL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	bd->props.power = FB_BLANK_UNBLANK;
 	backlight_update_status(bd);
 
@@ -883,10 +895,15 @@ atombios_dig_encoder_setup(struct drm_encoder *encoder, int action, int panel_mo
 				args.v1.ucLaneNum = 4;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			if (ENCODER_MODE_IS_DP(args.v1.ucEncoderMode) && (dp_clock == 270000))
 				args.v1.ucConfig |= ATOM_ENCODER_CONFIG_DPLINKRATE_2_70GHZ;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			if (ENCODER_MODE_IS_DP(args.v1.ucEncoderMode) && (dp_clock == 270000))
+				args.v1.ucConfig |= ATOM_ENCODER_CONFIG_DPLINKRATE_2_70GHZ;
+>>>>>>> master
 			switch (radeon_encoder->encoder_id) {
 			case ENCODER_OBJECT_ID_INTERNAL_UNIPHY:
 				args.v1.ucConfig = ATOM_ENCODER_CONFIG_V2_TRANSMITTER1;
@@ -904,12 +921,15 @@ atombios_dig_encoder_setup(struct drm_encoder *encoder, int action, int panel_mo
 			else
 				args.v1.ucConfig |= ATOM_ENCODER_CONFIG_LINKA;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 			if (ENCODER_MODE_IS_DP(args.v1.ucEncoderMode) && (dp_clock == 270000))
 				args.v1.ucConfig |= ATOM_ENCODER_CONFIG_DPLINKRATE_2_70GHZ;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			break;
 		case 2:
 		case 3:
@@ -1308,10 +1328,14 @@ atombios_dig_transmitter_setup(struct drm_encoder *encoder, int action, uint8_t 
 			if (is_dp)
 				args.v5.ucLaneNum = dp_lane_count;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			else if (radeon_dig_monitor_is_duallink(encoder, radeon_encoder->pixel_clock))
 =======
 			else if (radeon_encoder->pixel_clock > 165000)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			else if (radeon_encoder->pixel_clock > 165000)
+>>>>>>> master
 				args.v5.ucLaneNum = 8;
 			else
 				args.v5.ucLaneNum = 4;
@@ -1667,6 +1691,7 @@ radeon_atom_encoder_dpms_dig(struct drm_encoder *encoder, int mode)
 			atombios_dig_transmitter_setup(encoder, ATOM_TRANSMITTER_ACTION_SETUP, 0, 0);
 			atombios_dig_transmitter_setup(encoder, ATOM_TRANSMITTER_ACTION_ENABLE, 0, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			/* some dce3.x boards have a bug in their transmitter control table.
 			 * ACTION_ENABLE_OUTPUT can probably be dropped since ACTION_ENABLE
 			 * does the same thing and more.
@@ -1677,6 +1702,10 @@ radeon_atom_encoder_dpms_dig(struct drm_encoder *encoder, int mode)
 			/* some early dce3.2 boards have a bug in their transmitter control table */
 			if ((rdev->family != CHIP_RV710) && (rdev->family != CHIP_RV730))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			/* some early dce3.2 boards have a bug in their transmitter control table */
+			if ((rdev->family != CHIP_RV710) && (rdev->family != CHIP_RV730))
+>>>>>>> master
 				atombios_dig_transmitter_setup(encoder, ATOM_TRANSMITTER_ACTION_ENABLE_OUTPUT, 0, 0);
 		}
 		if (ENCODER_MODE_IS_DP(atombios_get_encoder_mode(encoder)) && connector) {
@@ -1913,6 +1942,7 @@ atombios_set_encoder_crtc_source(struct drm_encoder *encoder)
 				else
 					args.v2.ucEncodeMode = atombios_get_encoder_mode(encoder);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			} else if (radeon_encoder->devices & (ATOM_DEVICE_LCD_SUPPORT)) {
 				args.v2.ucEncodeMode = ATOM_ENCODER_MODE_LVDS;
 			} else {
@@ -1922,6 +1952,10 @@ atombios_set_encoder_crtc_source(struct drm_encoder *encoder)
 			} else
 				args.v2.ucEncodeMode = atombios_get_encoder_mode(encoder);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			} else
+				args.v2.ucEncodeMode = atombios_get_encoder_mode(encoder);
+>>>>>>> master
 			switch (radeon_encoder->encoder_id) {
 			case ENCODER_OBJECT_ID_INTERNAL_UNIPHY:
 			case ENCODER_OBJECT_ID_INTERNAL_UNIPHY1:

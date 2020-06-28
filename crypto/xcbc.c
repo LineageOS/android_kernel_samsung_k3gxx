@@ -287,6 +287,9 @@ module_exit(crypto_xcbc_module_exit);
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("XCBC keyed hash algorithm");
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("xcbc");
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master

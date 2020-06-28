@@ -571,6 +571,7 @@ static int msm_ipc_router_close(struct socket *sock)
 {
 	struct sock *sk = sock->sk;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct msm_ipc_port *port_ptr;
 	int ret;
 
@@ -584,11 +585,16 @@ static int msm_ipc_router_close(struct socket *sock)
 		return -EINVAL;
 	}
 =======
+=======
+>>>>>>> master
 	struct msm_ipc_port *port_ptr = msm_ipc_sk_port(sk);
 	int ret;
 
 	lock_sock(sk);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ret = msm_ipc_router_close_port(port_ptr);
 	msm_ipc_unload_default_node(msm_ipc_sk(sk)->default_node_vote_info);
 	release_sock(sk);

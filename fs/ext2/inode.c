@@ -633,10 +633,13 @@ static int ext2_get_blocks(struct inode *inode,
 	ext2_fsblk_t first_block = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	BUG_ON(maxblocks == 0);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	depth = ext2_block_to_path(inode,iblock,offsets,&blocks_to_boundary);
 
 	if (depth == 0)

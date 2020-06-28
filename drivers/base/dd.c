@@ -56,9 +56,12 @@ static LIST_HEAD(deferred_probe_pending_list);
 static LIST_HEAD(deferred_probe_active_list);
 static struct workqueue_struct *deferred_wq;
 <<<<<<< HEAD
+<<<<<<< HEAD
 static atomic_t deferred_trigger_count = ATOMIC_INIT(0);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 /**
  * deferred_probe_work_func() - Retry probing devices in the active list.
@@ -155,6 +158,7 @@ static bool driver_deferred_probe_enable = false;
  * list and schedules the deferred probe workqueue to process them.  It
  * should be called anytime a driver is successfully bound to a device.
 <<<<<<< HEAD
+<<<<<<< HEAD
  *
  * Note, there is a race condition in multi-threaded probe. In the case where
  * more than one device is probing at the same time, it is possible for one
@@ -168,6 +172,8 @@ static bool driver_deferred_probe_enable = false;
  * again.
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  */
 static void driver_deferred_probe_trigger(void)
 {
@@ -181,9 +187,12 @@ static void driver_deferred_probe_trigger(void)
 	 */
 	mutex_lock(&deferred_probe_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_inc(&deferred_trigger_count);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	list_splice_tail_init(&deferred_probe_pending_list,
 			      &deferred_probe_active_list);
 	mutex_unlock(&deferred_probe_mutex);
@@ -316,9 +325,12 @@ static int really_probe(struct device *dev, struct device_driver *drv)
 #endif
 	int ret = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int local_trigger_count = atomic_read(&deferred_trigger_count);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	atomic_inc(&probe_count);
 	pr_debug("bus: '%s': %s: probing driver %s with device %s\n",
@@ -366,11 +378,14 @@ probe_failed:
 		dev_info(dev, "Driver %s requests probe deferral\n", drv->name);
 		driver_deferred_probe_add(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Did a trigger occur while probing? Need to re-trigger if yes */
 		if (local_trigger_count != atomic_read(&deferred_trigger_count))
 			driver_deferred_probe_trigger();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	} else if (ret != -ENODEV && ret != -ENXIO) {
 		/* driver matched but the probe failed */
 		printk(KERN_WARNING
@@ -586,10 +601,14 @@ static void __device_release_driver(struct device *dev)
 						     dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pm_runtime_put_sync(dev);
 =======
 		pm_runtime_put(dev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		pm_runtime_put(dev);
+>>>>>>> master
 
 		if (dev->bus && dev->bus->remove)
 			dev->bus->remove(dev);

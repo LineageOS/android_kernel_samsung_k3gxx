@@ -392,6 +392,7 @@ static int xs_send_kvec(struct socket *sock, struct sockaddr *addr, int addrlen,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int xs_send_pagedata(struct socket *sock, struct xdr_buf *xdr, unsigned int base, int more, bool zerocopy)
 {
 	ssize_t (*do_sendpage)(struct socket *sock, struct page *page,
@@ -400,6 +401,10 @@ static int xs_send_pagedata(struct socket *sock, struct xdr_buf *xdr, unsigned i
 static int xs_send_pagedata(struct socket *sock, struct xdr_buf *xdr, unsigned int base, int more)
 {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int xs_send_pagedata(struct socket *sock, struct xdr_buf *xdr, unsigned int base, int more)
+{
+>>>>>>> master
 	struct page **ppage;
 	unsigned int remainder;
 	int err, sent = 0;
@@ -409,11 +414,14 @@ static int xs_send_pagedata(struct socket *sock, struct xdr_buf *xdr, unsigned i
 	ppage = xdr->pages + (base >> PAGE_SHIFT);
 	base &= ~PAGE_MASK;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	do_sendpage = sock->ops->sendpage;
 	if (!zerocopy)
 		do_sendpage = sock_no_sendpage;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	for(;;) {
 		unsigned int len = min_t(unsigned int, PAGE_SIZE - base, remainder);
 		int flags = XS_SENDMSG_FLAGS;
@@ -422,10 +430,14 @@ static int xs_send_pagedata(struct socket *sock, struct xdr_buf *xdr, unsigned i
 		if (remainder != 0 || more)
 			flags |= MSG_MORE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		err = do_sendpage(sock, *ppage, base, len, flags);
 =======
 		err = sock->ops->sendpage(sock, *ppage, base, len, flags);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		err = sock->ops->sendpage(sock, *ppage, base, len, flags);
+>>>>>>> master
 		if (remainder == 0 || err != len)
 			break;
 		sent += err;
@@ -447,6 +459,7 @@ static int xs_send_pagedata(struct socket *sock, struct xdr_buf *xdr, unsigned i
  * @xdr: buffer containing this request
  * @base: starting position in the buffer
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @zerocopy: true if it is safe to use sendpage()
  *
  */
@@ -456,6 +469,11 @@ static int xs_sendpages(struct socket *sock, struct sockaddr *addr, int addrlen,
  */
 static int xs_sendpages(struct socket *sock, struct sockaddr *addr, int addrlen, struct xdr_buf *xdr, unsigned int base)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ *
+ */
+static int xs_sendpages(struct socket *sock, struct sockaddr *addr, int addrlen, struct xdr_buf *xdr, unsigned int base)
+>>>>>>> master
 {
 	unsigned int remainder = xdr->len - base;
 	int err, sent = 0;
@@ -484,10 +502,14 @@ static int xs_sendpages(struct socket *sock, struct sockaddr *addr, int addrlen,
 		unsigned int len = xdr->page_len - base;
 		remainder -= len;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		err = xs_send_pagedata(sock, xdr, base, remainder != 0, zerocopy);
 =======
 		err = xs_send_pagedata(sock, xdr, base, remainder != 0);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		err = xs_send_pagedata(sock, xdr, base, remainder != 0);
+>>>>>>> master
 		if (remainder == 0 || err != len)
 			goto out;
 		sent += err;
@@ -525,9 +547,12 @@ static int xs_nospace(struct rpc_task *task)
 	struct rpc_xprt *xprt = req->rq_xprt;
 	struct sock_xprt *transport = container_of(xprt, struct sock_xprt, xprt);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct sock *sk = transport->inet;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	int ret = -EAGAIN;
 
 	dprintk("RPC: %5u xmit incomplete (%u left of %u)\n",
@@ -546,10 +571,14 @@ static int xs_nospace(struct rpc_task *task)
 			 */
 			set_bit(SOCK_NOSPACE, &transport->sock->flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			sk->sk_write_pending++;
 =======
 			transport->inet->sk_write_pending++;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			transport->inet->sk_write_pending++;
+>>>>>>> master
 			/* ...and wait for more buffer space */
 			xprt_wait_for_buffer_space(task, xs_nospace_callback);
 		}
@@ -560,11 +589,14 @@ static int xs_nospace(struct rpc_task *task)
 
 	spin_unlock_bh(&xprt->transport_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* Race breaker in case memory is freed before above code is called */
 	sk->sk_write_space(sk);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return ret;
 }
 
@@ -605,10 +637,14 @@ static int xs_local_send_request(struct rpc_task *task)
 
 	status = xs_sendpages(transport->sock, NULL, 0,
 <<<<<<< HEAD
+<<<<<<< HEAD
 						xdr, req->rq_bytes_sent, true);
 =======
 						xdr, req->rq_bytes_sent);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+						xdr, req->rq_bytes_sent);
+>>>>>>> master
 	dprintk("RPC:       %s(%u) = %d\n",
 			__func__, xdr->len - req->rq_bytes_sent, status);
 	if (likely(status >= 0)) {
@@ -665,10 +701,14 @@ static int xs_udp_send_request(struct rpc_task *task)
 			      xs_addr(xprt),
 			      xprt->addrlen, xdr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			      req->rq_bytes_sent, true);
 =======
 			      req->rq_bytes_sent);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			      req->rq_bytes_sent);
+>>>>>>> master
 
 	dprintk("RPC:       xs_udp_send_request(%u) = %d\n",
 			xdr->len - req->rq_bytes_sent, status);
@@ -740,9 +780,12 @@ static int xs_tcp_send_request(struct rpc_task *task)
 	struct sock_xprt *transport = container_of(xprt, struct sock_xprt, xprt);
 	struct xdr_buf *xdr = &req->rq_snd_buf;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool zerocopy = true;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	int status;
 
 	xs_encode_stream_record_marker(&req->rq_snd_buf);
@@ -750,6 +793,7 @@ static int xs_tcp_send_request(struct rpc_task *task)
 	xs_pktdump("packet data:",
 				req->rq_svec->iov_base,
 				req->rq_svec->iov_len);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Don't use zero copy if this is a resend. If the RPC call
 	 * completes while the socket holds a reference to the pages,
@@ -759,6 +803,8 @@ static int xs_tcp_send_request(struct rpc_task *task)
 		zerocopy = false;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* Continue transmitting the packet/record. We must be careful
 	 * to cope with writespace callbacks arriving _after_ we have
@@ -766,11 +812,15 @@ static int xs_tcp_send_request(struct rpc_task *task)
 	while (1) {
 		status = xs_sendpages(transport->sock,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					NULL, 0, xdr, req->rq_bytes_sent,
 					zerocopy);
 =======
 					NULL, 0, xdr, req->rq_bytes_sent);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+					NULL, 0, xdr, req->rq_bytes_sent);
+>>>>>>> master
 
 		dprintk("RPC:       xs_tcp_send_request(%u) = %d\n",
 				xdr->len - req->rq_bytes_sent, status);

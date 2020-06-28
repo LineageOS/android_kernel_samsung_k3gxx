@@ -73,6 +73,7 @@
 #define SPI_AGGR_BUFFER_SIZE (4 * PAGE_SIZE)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Maximum number of SPI write chunks */
 #define WSPI_MAX_NUM_OF_CHUNKS \
 	((SPI_AGGR_BUFFER_SIZE / WSPI_MAX_CHUNK_SIZE) + 1)
@@ -80,6 +81,9 @@
 =======
 #define WSPI_MAX_NUM_OF_CHUNKS (SPI_AGGR_BUFFER_SIZE / WSPI_MAX_CHUNK_SIZE)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define WSPI_MAX_NUM_OF_CHUNKS (SPI_AGGR_BUFFER_SIZE / WSPI_MAX_CHUNK_SIZE)
+>>>>>>> master
 
 struct wl12xx_spi_glue {
 	struct device *dev;
@@ -278,6 +282,7 @@ static int __must_check wl12xx_spi_raw_write(struct device *child, int addr,
 {
 	struct wl12xx_spi_glue *glue = dev_get_drvdata(child->parent);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* SPI write buffers - 2 for each chunk */
 	struct spi_transfer t[2 * WSPI_MAX_NUM_OF_CHUNKS];
 	struct spi_message m;
@@ -287,6 +292,11 @@ static int __must_check wl12xx_spi_raw_write(struct device *child, int addr,
 	struct spi_message m;
 	u32 commands[WSPI_MAX_NUM_OF_CHUNKS];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct spi_transfer t[2 * (WSPI_MAX_NUM_OF_CHUNKS + 1)];
+	struct spi_message m;
+	u32 commands[WSPI_MAX_NUM_OF_CHUNKS];
+>>>>>>> master
 	u32 *cmd;
 	u32 chunk_len;
 	int i;

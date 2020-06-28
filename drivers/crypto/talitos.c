@@ -624,10 +624,14 @@ static void talitos_unregister_rng(struct device *dev)
  */
 #define TALITOS_CRA_PRIORITY		3000
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define TALITOS_MAX_KEY_SIZE		(AES_MAX_KEY_SIZE + SHA512_BLOCK_SIZE)
 =======
 #define TALITOS_MAX_KEY_SIZE		96
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define TALITOS_MAX_KEY_SIZE		96
+>>>>>>> master
 #define TALITOS_MAX_IV_LENGTH		16 /* max of AES_BLOCK_SIZE, DES3_EDE_BLOCK_SIZE */
 
 #define MD5_BLOCK_SIZE    64
@@ -940,11 +944,15 @@ static int sg_to_link_tbl(struct scatterlist *sg, int sg_count,
 		link_tbl_ptr--;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	link_tbl_ptr->len = cpu_to_be16(be16_to_cpu(link_tbl_ptr->len)
 					+ cryptlen);
 =======
 	be16_add_cpu(&link_tbl_ptr->len, cryptlen);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	be16_add_cpu(&link_tbl_ptr->len, cryptlen);
+>>>>>>> master
 
 	/* tag end of link table */
 	link_tbl_ptr->j_extent = DESC_PTR_LNKTBL_RETURN;
@@ -1389,6 +1397,7 @@ static int ablkcipher_setkey(struct crypto_ablkcipher *cipher,
 	struct talitos_ctx *ctx = crypto_ablkcipher_ctx(cipher);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (keylen > TALITOS_MAX_KEY_SIZE) {
 		crypto_ablkcipher_set_flags(cipher, CRYPTO_TFM_RES_BAD_KEY_LEN);
 		return -EINVAL;
@@ -1396,6 +1405,8 @@ static int ablkcipher_setkey(struct crypto_ablkcipher *cipher,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	memcpy(&ctx->key, key, keylen);
 	ctx->keylen = keylen;
 
@@ -2639,9 +2650,12 @@ static struct talitos_crypto_alg *talitos_alg_alloc(struct device *dev,
 	default:
 		dev_err(dev, "unknown algorithm type %d\n", t_alg->algt.type);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		kfree(t_alg);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return ERR_PTR(-EINVAL);
 	}
 

@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 SDCARDFS_VERSION="0.1"
 
 EXTRA_CFLAGS += -DSDCARDFS_VERSION=\"$(SDCARDFS_VERSION)\"
@@ -7,11 +8,20 @@ ifeq ($(CONFIG_SDCARD_FS_XATTR),y)
 EXTRA_CFLAGS += -DSDCARD_FS_XATTR
 endif
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ifeq ($(CONFIG_SDCARD_FS_XATTR),y)
+EXTRA_CFLAGS += -DSDCARD_FS_XATTR
+endif
+>>>>>>> master
 
 obj-$(CONFIG_SDCARD_FS) += sdcardfs.o
 
 sdcardfs-y := dentry.o file.o inode.o main.o super.o lookup.o mmap.o packagelist.o derived_perm.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 sdcardfs-$(CONFIG_SDCARD_FS_XATTR) += xattr.o
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+sdcardfs-$(CONFIG_SDCARD_FS_XATTR) += xattr.o
+>>>>>>> master

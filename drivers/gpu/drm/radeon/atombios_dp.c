@@ -51,10 +51,14 @@ static char *pre_emph_names[] = {
  * dw units.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 void radeon_atom_copy_swap(u8 *dst, u8 *src, u8 num_bytes, bool to_le)
 =======
 static void radeon_copy_swap(u8 *dst, u8 *src, u8 num_bytes, bool to_le)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static void radeon_copy_swap(u8 *dst, u8 *src, u8 num_bytes, bool to_le)
+>>>>>>> master
 {
 #ifdef __BIG_ENDIAN
 	u8 src_tmp[20], dst_tmp[20]; /* used for byteswapping */
@@ -105,10 +109,14 @@ static int radeon_process_aux_ch(struct radeon_i2c_chan *chan,
 	base = (unsigned char *)(rdev->mode_info.atom_context->scratch + 1);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	radeon_atom_copy_swap(base, send, send_bytes, true);
 =======
 	radeon_copy_swap(base, send, send_bytes, true);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	radeon_copy_swap(base, send, send_bytes, true);
+>>>>>>> master
 
 	args.v1.lpAuxRequest = cpu_to_le16((u16)(0 + 4));
 	args.v1.lpDataOut = cpu_to_le16((u16)(16 + 4));
@@ -146,10 +154,14 @@ static int radeon_process_aux_ch(struct radeon_i2c_chan *chan,
 
 	if (recv && recv_size)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		radeon_atom_copy_swap(recv, base + 16, recv_bytes, false);
 =======
 		radeon_copy_swap(recv, base + 16, recv_bytes, false);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		radeon_copy_swap(recv, base + 16, recv_bytes, false);
+>>>>>>> master
 
 	return recv_bytes;
 }
@@ -397,6 +409,7 @@ static int dp_get_max_dp_pix_clock(int link_rate,
 /***** radeon specific DP functions *****/
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int radeon_dp_get_max_link_rate(struct drm_connector *connector,
 				       u8 dpcd[DP_DPCD_SIZE])
 {
@@ -412,6 +425,8 @@ static int radeon_dp_get_max_link_rate(struct drm_connector *connector,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /* First get the min lane# when low rate is used according to pixel clock
  * (prefer low rate), second check max lane# supported by DP panel,
  * if the max lane# < low rate lane# then use max lane# instead.
@@ -422,10 +437,14 @@ static int radeon_dp_get_dp_lane_number(struct drm_connector *connector,
 {
 	int bpp = convert_bpc_to_bpp(radeon_get_monitor_bpc(connector));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int max_link_rate = radeon_dp_get_max_link_rate(connector, dpcd);
 =======
 	int max_link_rate = drm_dp_max_link_rate(dpcd);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int max_link_rate = drm_dp_max_link_rate(dpcd);
+>>>>>>> master
 	int max_lane_num = drm_dp_max_lane_count(dpcd);
 	int lane_num;
 	int max_dp_pix_clock;
@@ -464,10 +483,14 @@ static int radeon_dp_get_dp_link_clock(struct drm_connector *connector,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return radeon_dp_get_max_link_rate(connector, dpcd);
 =======
 	return drm_dp_max_link_rate(dpcd);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return drm_dp_max_link_rate(dpcd);
+>>>>>>> master
 }
 
 static u8 radeon_dp_encoder_service(struct radeon_device *rdev,
@@ -598,12 +621,15 @@ int radeon_dp_mode_valid_helper(struct drm_connector *connector,
 	int dp_clock;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if ((mode->clock > 340000) &&
 	    (!radeon_connector_is_dp12_capable(connector)))
 		return MODE_CLOCK_HIGH;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (!radeon_connector->con_priv)
 		return MODE_CLOCK_HIGH;
 	dig_connector = radeon_connector->con_priv;

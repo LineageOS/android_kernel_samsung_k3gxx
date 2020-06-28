@@ -142,10 +142,14 @@ void prandom_seed(u32 entropy)
 	for_each_possible_cpu (i) {
 		struct rnd_state *state = &per_cpu(net_rand_state, i);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		state->s1 = __seed(state->s1 ^ entropy, 2);
 =======
 		state->s1 = __seed(state->s1 ^ entropy, 1);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		state->s1 = __seed(state->s1 ^ entropy, 1);
+>>>>>>> master
 	}
 }
 EXPORT_SYMBOL(prandom_seed);
@@ -163,6 +167,7 @@ static int __init prandom_init(void)
 
 #define LCG(x)	((x) * 69069)	/* super-duper LCG */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		state->s1 = __seed(LCG(i + jiffies), 2);
 		state->s2 = __seed(LCG(state->s1), 8);
 		state->s3 = __seed(LCG(state->s2), 16);
@@ -171,6 +176,11 @@ static int __init prandom_init(void)
 		state->s2 = __seed(LCG(state->s1), 7);
 		state->s3 = __seed(LCG(state->s2), 15);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		state->s1 = __seed(LCG(i + jiffies), 1);
+		state->s2 = __seed(LCG(state->s1), 7);
+		state->s3 = __seed(LCG(state->s2), 15);
+>>>>>>> master
 
 		/* "warm it up" */
 		prandom_u32_state(state);
@@ -198,6 +208,7 @@ static int __init prandom_reseed(void)
 
 		get_random_bytes(&seeds, sizeof(seeds));
 <<<<<<< HEAD
+<<<<<<< HEAD
 		state->s1 = __seed(seeds[0], 2);
 		state->s2 = __seed(seeds[1], 8);
 		state->s3 = __seed(seeds[2], 16);
@@ -206,6 +217,11 @@ static int __init prandom_reseed(void)
 		state->s2 = __seed(seeds[1], 7);
 		state->s3 = __seed(seeds[2], 15);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		state->s1 = __seed(seeds[0], 1);
+		state->s2 = __seed(seeds[1], 7);
+		state->s3 = __seed(seeds[2], 15);
+>>>>>>> master
 
 		/* mix it in */
 		prandom_u32_state(state);

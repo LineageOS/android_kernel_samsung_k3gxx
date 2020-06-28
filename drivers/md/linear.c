@@ -98,6 +98,7 @@ static int linear_mergeable_bvec(struct request_queue *q,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * In linear_congested() conf->raid_disks is used as a copy of
  * mddev->raid_disks to iterate conf->disks[], because conf->raid_disks
@@ -106,6 +107,8 @@ static int linear_mergeable_bvec(struct request_queue *q,
  */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int linear_congested(void *data, int bits)
 {
 	struct mddev *mddev = data;
@@ -119,10 +122,14 @@ static int linear_congested(void *data, int bits)
 	conf = rcu_dereference(mddev->private);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	for (i = 0; i < conf->raid_disks && !ret ; i++) {
 =======
 	for (i = 0; i < mddev->raid_disks && !ret ; i++) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	for (i = 0; i < mddev->raid_disks && !ret ; i++) {
+>>>>>>> master
 		struct request_queue *q = bdev_get_queue(conf->disks[i].rdev->bdev);
 		ret |= bdi_congested(&q->backing_dev_info, bits);
 	}
@@ -210,6 +217,7 @@ static struct linear_conf *linear_conf(struct mddev *mddev, int raid_disks)
 			conf->disks[i].rdev->sectors;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * conf->raid_disks is copy of mddev->raid_disks. The reason to
 	 * keep a copy of mddev->raid_disks in struct linear_conf is,
@@ -225,6 +233,8 @@ static struct linear_conf *linear_conf(struct mddev *mddev, int raid_disks)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return conf;
 
 out:
@@ -282,6 +292,7 @@ static int linear_add(struct mddev *mddev, struct md_rdev *rdev)
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* newconf->raid_disks already keeps a copy of * the increased
 	 * value of mddev->raid_disks, WARN_ONCE() is just used to make
 	 * sure of this. It is possible that oldconf is still referenced
@@ -290,15 +301,20 @@ static int linear_add(struct mddev *mddev, struct md_rdev *rdev)
 	 */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	oldconf = rcu_dereference_protected(mddev->private,
 					    lockdep_is_held(
 						    &mddev->reconfig_mutex));
 	mddev->raid_disks++;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WARN_ONCE(mddev->raid_disks != newconf->raid_disks,
 		"copied raid_disks doesn't match mddev->raid_disks");
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	rcu_assign_pointer(mddev->private, newconf);
 	md_set_array_sectors(mddev, linear_size(mddev, 0, 0));
 	set_capacity(mddev->gendisk, mddev->array_sectors);

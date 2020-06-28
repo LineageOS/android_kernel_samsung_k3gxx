@@ -433,9 +433,12 @@ int acpi_pci_irq_enable(struct pci_dev *dev)
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		kfree(entry);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return 0;
 	}
 

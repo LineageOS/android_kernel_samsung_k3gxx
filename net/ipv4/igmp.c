@@ -197,6 +197,7 @@ static void igmp_gq_start_timer(struct in_device *in_dev)
 {
 	int tv = net_random() % in_dev->mr_maxdelay;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long exp = jiffies + tv + 2;
 
 	if (in_dev->mr_gq_running &&
@@ -210,6 +211,11 @@ static void igmp_gq_start_timer(struct in_device *in_dev)
 	in_dev->mr_gq_running = 1;
 	if (!mod_timer(&in_dev->mr_gq_timer, jiffies+tv+2))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	in_dev->mr_gq_running = 1;
+	if (!mod_timer(&in_dev->mr_gq_timer, jiffies+tv+2))
+>>>>>>> master
 		in_dev_hold(in_dev);
 }
 
@@ -355,10 +361,14 @@ static struct sk_buff *igmpv3_newpack(struct net_device *dev, int size)
 	pip->protocol = IPPROTO_IGMP;
 	pip->tot_len  = 0;	/* filled in later */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ip_select_ident(skb, NULL);
 =======
 	ip_select_ident(pip, &rt->dst, NULL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ip_select_ident(pip, &rt->dst, NULL);
+>>>>>>> master
 	((u8 *)&pip[1])[0] = IPOPT_RA;
 	((u8 *)&pip[1])[1] = 4;
 	((u8 *)&pip[1])[2] = 0;
@@ -703,10 +713,14 @@ static int igmp_send_report(struct in_device *in_dev, struct ip_mc_list *pmc,
 	iph->saddr    = fl4.saddr;
 	iph->protocol = IPPROTO_IGMP;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ip_select_ident(skb, NULL);
 =======
 	ip_select_ident(iph, &rt->dst, NULL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ip_select_ident(iph, &rt->dst, NULL);
+>>>>>>> master
 	((u8 *)&iph[1])[0] = IPOPT_RA;
 	((u8 *)&iph[1])[1] = 4;
 	((u8 *)&iph[1])[2] = 0;
@@ -729,10 +743,14 @@ static void igmp_gq_timer_expire(unsigned long data)
 	in_dev->mr_gq_running = 0;
 	igmpv3_send_report(in_dev, NULL);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	in_dev_put(in_dev);
 =======
 	__in_dev_put(in_dev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	__in_dev_put(in_dev);
+>>>>>>> master
 }
 
 static void igmp_ifc_timer_expire(unsigned long data)
@@ -745,10 +763,14 @@ static void igmp_ifc_timer_expire(unsigned long data)
 		igmp_ifc_start_timer(in_dev, IGMP_Unsolicited_Report_Interval);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	in_dev_put(in_dev);
 =======
 	__in_dev_put(in_dev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	__in_dev_put(in_dev);
+>>>>>>> master
 }
 
 static void igmp_ifc_event(struct in_device *in_dev)
@@ -1954,12 +1976,15 @@ int ip_mc_leave_group(struct sock *sk, struct ip_mreqn *imr)
 	rtnl_lock();
 	in_dev = ip_mc_find_dev(net, imr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!imr->imr_ifindex && !imr->imr_address.s_addr && !in_dev) {
 		ret = -ENODEV;
 		goto out;
 	}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ifindex = imr->imr_ifindex;
 #ifdef CONFIG_WIFI_MULTICAST_LOG
 	if (in_dev) {
@@ -1989,20 +2014,28 @@ int ip_mc_leave_group(struct sock *sk, struct ip_mreqn *imr)
 			ip_mc_dec_group(in_dev, group);
 		rtnl_unlock();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		/* decrease mem now to avoid the memleak warning */
 		atomic_sub(sizeof(*iml), &sk->sk_omem_alloc);
 		kfree_rcu(iml, rcu);
 		return 0;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 out:
 =======
 	if (!in_dev)
 		ret = -ENODEV;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!in_dev)
+		ret = -ENODEV;
+>>>>>>> master
 	rtnl_unlock();
 	return ret;
 }

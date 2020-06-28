@@ -114,10 +114,14 @@ struct ip_tunnel *ip_tunnel_lookup(struct ip_tunnel_net *itn,
 
 int ip_tunnel_rcv(struct ip_tunnel *tunnel, struct sk_buff *skb,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		  const struct tnl_ptk_info *tpi, int hdr_len, bool log_ecn_error);
 =======
 		  const struct tnl_ptk_info *tpi, bool log_ecn_error);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		  const struct tnl_ptk_info *tpi, bool log_ecn_error);
+>>>>>>> master
 int ip_tunnel_changelink(struct net_device *dev, struct nlattr *tb[],
 			 struct ip_tunnel_parm *p);
 int ip_tunnel_newlink(struct net_device *dev, struct nlattr *tb[],
@@ -146,7 +150,10 @@ static inline u8 ip_tunnel_ecn_encap(u8 tos, const struct iphdr *iph,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 static inline void tunnel_ip_select_ident(struct sk_buff *skb,
 					  const struct iphdr  *old_iph,
 					  struct dst_entry *dst)
@@ -161,7 +168,10 @@ static inline void tunnel_ip_select_ident(struct sk_buff *skb,
 				  (skb_shinfo(skb)->gso_segs ?: 1) - 1);
 }
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static inline void iptunnel_xmit(struct sk_buff *skb, struct net_device *dev)
 {
 	int err;

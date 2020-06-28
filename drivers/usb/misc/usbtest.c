@@ -8,6 +8,7 @@
 #include <linux/scatterlist.h>
 #include <linux/mutex.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/timer.h>
 #include <linux/usb.h>
 
@@ -17,6 +18,11 @@
 #include <linux/usb.h>
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+#include <linux/usb.h>
+
+>>>>>>> master
 
 /*-------------------------------------------------------------------------*/
 
@@ -374,9 +380,12 @@ static int simple_io(
 	struct completion	completion;
 	int			retval = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long		expire;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	urb->context = &completion;
 	while (retval == 0 && iterations-- > 0) {
@@ -389,6 +398,7 @@ static int simple_io(
 		if (retval != 0)
 			break;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		expire = msecs_to_jiffies(SIMPLE_IO_TIMEOUT);
 		if (!wait_for_completion_timeout(&completion, expire)) {
@@ -404,6 +414,11 @@ static int simple_io(
 		wait_for_completion(&completion);
 		retval = urb->status;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		/* NOTE:  no timeouts; can't be broken out of by interrupt */
+		wait_for_completion(&completion);
+		retval = urb->status;
+>>>>>>> master
 		urb->dev = udev;
 		if (retval == 0 && usb_pipein(urb->pipe))
 			retval = simple_check_buf(tdev, urb);
@@ -500,6 +515,7 @@ alloc_sglist(int nents, int max, int vary)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void sg_timeout(unsigned long _req)
 {
 	struct usb_sg_request	*req = (struct usb_sg_request *) _req;
@@ -510,6 +526,8 @@ static void sg_timeout(unsigned long _req)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int perform_sglist(
 	struct usbtest_dev	*tdev,
 	unsigned		iterations,
@@ -522,11 +540,14 @@ static int perform_sglist(
 	struct usb_device	*udev = testdev_to_usbdev(tdev);
 	int			retval = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct timer_list	sg_timer;
 
 	setup_timer_on_stack(&sg_timer, sg_timeout, (unsigned long) req);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	while (retval == 0 && iterations-- > 0) {
 		retval = usb_sg_init(req, udev, pipe,
@@ -538,6 +559,7 @@ static int perform_sglist(
 		if (retval)
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mod_timer(&sg_timer, jiffies +
 				msecs_to_jiffies(SIMPLE_IO_TIMEOUT));
 		usb_sg_wait(req);
@@ -545,6 +567,9 @@ static int perform_sglist(
 =======
 		usb_sg_wait(req);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		usb_sg_wait(req);
+>>>>>>> master
 		retval = req->status;
 
 		/* FIXME check resulting data pattern */
@@ -1197,6 +1222,7 @@ static int unlink1(struct usbtest_dev *dev, int pipe, int size, int async)
 	urb->complete = unlink1_callback;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (usb_pipeout(urb->pipe)) {
 		simple_fill_buf(urb);
 		urb->transfer_flags |= URB_ZERO_PACKET;
@@ -1204,6 +1230,8 @@ static int unlink1(struct usbtest_dev *dev, int pipe, int size, int async)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* keep the endpoint busy.  there are lots of hc/hcd-internal
 	 * states, and testing should get to all of them over time.
 	 *
@@ -1335,6 +1363,7 @@ static int unlink_queued(struct usbtest_dev *dev, int pipe, unsigned num,
 		ctx.urbs[i]->transfer_dma = buf_dma;
 		ctx.urbs[i]->transfer_flags = URB_NO_TRANSFER_DMA_MAP;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		if (usb_pipeout(ctx.urbs[i]->pipe)) {
 			simple_fill_buf(ctx.urbs[i]);
@@ -1342,6 +1371,8 @@ static int unlink_queued(struct usbtest_dev *dev, int pipe, unsigned num,
 		}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	/* Submit all the URBs and then unlink URBs num - 4 and num - 2. */

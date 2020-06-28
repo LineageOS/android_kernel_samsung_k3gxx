@@ -994,9 +994,12 @@ struct journal_s
 						 * data write error in ordered
 						 * mode */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define JBD2_REC_ERR	0x080	/* The errno in the sb has been recorded */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 /*
  * Function declarations for the journaling transaction and buffer
@@ -1026,10 +1029,14 @@ int jbd2_journal_next_log_block(journal_t *, unsigned long long *);
 int jbd2_journal_get_log_tail(journal_t *journal, tid_t *tid,
 			      unsigned long *block);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int __jbd2_update_log_tail(journal_t *journal, tid_t tid, unsigned long block);
 =======
 void __jbd2_update_log_tail(journal_t *journal, tid_t tid, unsigned long block);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+void __jbd2_update_log_tail(journal_t *journal, tid_t tid, unsigned long block);
+>>>>>>> master
 void jbd2_update_log_tail(journal_t *journal, tid_t tid, unsigned long block);
 
 /* Commit management */
@@ -1148,10 +1155,14 @@ extern int	   jbd2_journal_wipe       (journal_t *, int);
 extern int	   jbd2_journal_skip_recovery	(journal_t *);
 extern void	   jbd2_journal_update_sb_errno(journal_t *);
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern int	   jbd2_journal_update_sb_log_tail	(journal_t *, tid_t,
 =======
 extern void	   jbd2_journal_update_sb_log_tail	(journal_t *, tid_t,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+extern void	   jbd2_journal_update_sb_log_tail	(journal_t *, tid_t,
+>>>>>>> master
 				unsigned long, int);
 extern void	   __jbd2_journal_abort_hard	(journal_t *);
 extern void	   jbd2_journal_abort      (journal_t *, int);

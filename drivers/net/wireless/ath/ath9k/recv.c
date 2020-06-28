@@ -43,10 +43,15 @@ static void ath_rx_buf_link(struct ath_softc *sc, struct ath_buf *bf)
 	struct sk_buff *skb;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ATH_RXBUF_RESET(bf);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ATH_RXBUF_RESET(bf);
+
+>>>>>>> master
 	ds = bf->bf_desc;
 	ds->ds_link = 0; /* link to null */
 	ds->ds_data = bf->bf_buf_addr;
@@ -74,6 +79,7 @@ static void ath_rx_buf_link(struct ath_softc *sc, struct ath_buf *bf)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void ath_rx_buf_relink(struct ath_softc *sc, struct ath_buf *bf)
 {
 	if (sc->rx.buf_hold)
@@ -84,6 +90,8 @@ static void ath_rx_buf_relink(struct ath_softc *sc, struct ath_buf *bf)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static void ath_setdefantenna(struct ath_softc *sc, u32 antenna)
 {
 	/* XXX block beacon interrupts */
@@ -132,9 +140,13 @@ static bool ath_rx_edma_buf_link(struct ath_softc *sc,
 	skb = bf->bf_mpdu;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ATH_RXBUF_RESET(bf);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	ATH_RXBUF_RESET(bf);
+>>>>>>> master
 	memset(skb->data, 0, ah->caps.rx_status_len);
 	dma_sync_single_for_device(sc->dev, bf->bf_buf_addr,
 				ah->caps.rx_status_len, DMA_TO_DEVICE);
@@ -450,9 +462,12 @@ int ath_startrecv(struct ath_softc *sc)
 		goto start_recv;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sc->rx.buf_hold = NULL;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	sc->rx.rxlink = NULL;
 	list_for_each_entry_safe(bf, tbf, &sc->rx.rxbuf, list) {
 		ath_rx_buf_link(sc, bf);
@@ -699,11 +714,14 @@ static struct ath_buf *ath_get_next_rx_buf(struct ath_softc *sc,
 
 	bf = list_first_entry(&sc->rx.rxbuf, struct ath_buf, list);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (bf == sc->rx.buf_hold)
 		return NULL;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ds = bf->bf_desc;
 
 	/*
@@ -1406,10 +1424,14 @@ requeue:
 			ath_rx_edma_buf_link(sc, qtype);
 		} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ath_rx_buf_relink(sc, bf);
 =======
 			ath_rx_buf_link(sc, bf);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			ath_rx_buf_link(sc, bf);
+>>>>>>> master
 			ath9k_hw_rxena(ah);
 		}
 	} while (1);

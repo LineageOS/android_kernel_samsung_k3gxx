@@ -100,12 +100,17 @@ static void exynos4_mct_write(unsigned int value, unsigned long offset)
 
 	if (likely(offset >= EXYNOS4_MCT_L_BASE(0))) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		stat_addr = (offset & EXYNOS4_MCT_L_MASK) + MCT_L_WSTAT_OFFSET;
 		switch (offset & ~EXYNOS4_MCT_L_MASK) {
 =======
 		stat_addr = (offset & ~EXYNOS4_MCT_L_MASK) + MCT_L_WSTAT_OFFSET;
 		switch (offset & EXYNOS4_MCT_L_MASK) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		stat_addr = (offset & ~EXYNOS4_MCT_L_MASK) + MCT_L_WSTAT_OFFSET;
+		switch (offset & EXYNOS4_MCT_L_MASK) {
+>>>>>>> master
 		case MCT_L_TCON_OFFSET:
 			mask = 1 << 3;		/* L_TCON write status */
 			break;

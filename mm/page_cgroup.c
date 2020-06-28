@@ -171,9 +171,12 @@ static void free_page_cgroup(void *addr)
 
 		BUG_ON(PageReserved(page));
 <<<<<<< HEAD
+<<<<<<< HEAD
 		kmemleak_free(addr);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		free_pages_exact(addr, table_size);
 	}
 }

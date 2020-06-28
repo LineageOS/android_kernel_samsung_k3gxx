@@ -71,16 +71,22 @@ static int addr_doit(struct sk_buff *skb, struct nlmsghdr *nlh)
 	u8 pnaddr;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!netlink_capable(skb, CAP_NET_ADMIN))
 		return -EPERM;
 
 	if (!netlink_capable(skb, CAP_SYS_ADMIN))
 =======
+=======
+>>>>>>> master
 	if (!capable(CAP_NET_ADMIN))
 		return -EPERM;
 
 	if (!capable(CAP_SYS_ADMIN))
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return -EPERM;
 
 	ASSERT_RTNL();
@@ -241,16 +247,22 @@ static int route_doit(struct sk_buff *skb, struct nlmsghdr *nlh)
 	u8 dst;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!netlink_capable(skb, CAP_NET_ADMIN))
 		return -EPERM;
 
 	if (!netlink_capable(skb, CAP_SYS_ADMIN))
 =======
+=======
+>>>>>>> master
 	if (!capable(CAP_NET_ADMIN))
 		return -EPERM;
 
 	if (!capable(CAP_SYS_ADMIN))
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return -EPERM;
 
 	ASSERT_RTNL();

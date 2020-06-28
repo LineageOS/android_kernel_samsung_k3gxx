@@ -245,6 +245,7 @@ static void heartbeat_onchannelcallback(void *context)
 	u8 *hbeat_txf_buf = util_heartbeat.recv_buffer;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	while (1) {
 
 		vmbus_recvpacket(channel, hbeat_txf_buf,
@@ -254,11 +255,16 @@ static void heartbeat_onchannelcallback(void *context)
 			break;
 
 =======
+=======
+>>>>>>> master
 	vmbus_recvpacket(channel, hbeat_txf_buf,
 			 PAGE_SIZE, &recvlen, &requestid);
 
 	if (recvlen > 0) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		icmsghdrp = (struct icmsg_hdr *)&hbeat_txf_buf[
 				sizeof(struct vmbuspipe_hdr)];
 
@@ -291,10 +297,14 @@ static int util_probe(struct hv_device *dev,
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	srv->recv_buffer = kmalloc(PAGE_SIZE * 4, GFP_KERNEL);
 =======
 	srv->recv_buffer = kmalloc(PAGE_SIZE * 2, GFP_KERNEL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	srv->recv_buffer = kmalloc(PAGE_SIZE * 2, GFP_KERNEL);
+>>>>>>> master
 	if (!srv->recv_buffer)
 		return -ENOMEM;
 	if (srv->util_init) {

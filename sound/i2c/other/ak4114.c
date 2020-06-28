@@ -67,11 +67,16 @@ static void reg_dump(struct ak4114 *ak4114)
 static void snd_ak4114_free(struct ak4114 *chip)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_inc(&chip->wq_processing);	/* don't schedule new work */
 =======
 	chip->init = 1;	/* don't schedule new work */
 	mb();
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	chip->init = 1;	/* don't schedule new work */
+	mb();
+>>>>>>> master
 	cancel_delayed_work_sync(&chip->work);
 	kfree(chip);
 }
@@ -105,9 +110,12 @@ int snd_ak4114_create(struct snd_card *card,
 	chip->private_data = private_data;
 	INIT_DELAYED_WORK(&chip->work, ak4114_stats);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_set(&chip->wq_processing, 0);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	for (reg = 0; reg < 7; reg++)
 		chip->regmap[reg] = pgm[reg];
@@ -161,12 +169,15 @@ static void ak4114_init_regs(struct ak4114 *chip)
 void snd_ak4114_reinit(struct ak4114 *chip)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (atomic_inc_return(&chip->wq_processing) == 1)
 		cancel_delayed_work_sync(&chip->work);
 	ak4114_init_regs(chip);
 	/* bring up statistics / event queing */
 	if (atomic_dec_and_test(&chip->wq_processing))
 =======
+=======
+>>>>>>> master
 	chip->init = 1;
 	mb();
 	flush_delayed_work(&chip->work);
@@ -174,7 +185,10 @@ void snd_ak4114_reinit(struct ak4114 *chip)
 	/* bring up statistics / event queing */
 	chip->init = 0;
 	if (chip->kctls[0])
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		schedule_delayed_work(&chip->work, HZ / 10);
 }
 
@@ -629,16 +643,22 @@ static void ak4114_stats(struct work_struct *work)
 	struct ak4114 *chip = container_of(work, struct ak4114, work.work);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (atomic_inc_return(&chip->wq_processing) == 1)
 		snd_ak4114_check_rate_and_errors(chip, chip->check_flags);
 	if (atomic_dec_and_test(&chip->wq_processing))
 		schedule_delayed_work(&chip->work, HZ / 10);
 =======
+=======
+>>>>>>> master
 	if (!chip->init)
 		snd_ak4114_check_rate_and_errors(chip, chip->check_flags);
 
 	schedule_delayed_work(&chip->work, HZ / 10);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 EXPORT_SYMBOL(snd_ak4114_create);

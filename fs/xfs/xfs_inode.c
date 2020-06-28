@@ -1656,9 +1656,12 @@ xfs_iunlink(
 	offset = offsetof(xfs_agi_t, agi_unlinked) +
 		(sizeof(xfs_agino_t) * bucket_index);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xfs_trans_buf_set_type(tp, agibp, XFS_BLFT_AGI_BUF);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	xfs_trans_log_buf(tp, agibp, offset,
 			  (offset + sizeof(xfs_agino_t) - 1));
 	return 0;
@@ -1751,9 +1754,12 @@ xfs_iunlink_remove(
 		offset = offsetof(xfs_agi_t, agi_unlinked) +
 			(sizeof(xfs_agino_t) * bucket_index);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		xfs_trans_buf_set_type(tp, agibp, XFS_BLFT_AGI_BUF);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		xfs_trans_log_buf(tp, agibp, offset,
 				  (offset + sizeof(xfs_agino_t) - 1));
 	} else {
@@ -2611,6 +2617,7 @@ xfs_iflush_cluster(
 		 * here. Skip it if it is not valid or the wrong inode.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		spin_lock(&iq->i_flags_lock);
 		if (!iq->i_ino ||
 		    __xfs_iflags_test(iq, XFS_ISTALE) ||
@@ -2620,6 +2627,8 @@ xfs_iflush_cluster(
 		}
 		spin_unlock(&iq->i_flags_lock);
 =======
+=======
+>>>>>>> master
 		spin_lock(&ip->i_flags_lock);
 		if (!ip->i_ino ||
 		    (XFS_INO_TO_AGINO(mp, iq->i_ino) & mask) != first_index) {
@@ -2627,7 +2636,10 @@ xfs_iflush_cluster(
 			continue;
 		}
 		spin_unlock(&ip->i_flags_lock);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 		/*
 		 * Do an un-protected check to see if the inode is dirty and
@@ -2744,10 +2756,14 @@ xfs_iflush(
 {
 	struct xfs_mount	*mp = ip->i_mount;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xfs_buf		*bp = NULL;
 =======
 	struct xfs_buf		*bp;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct xfs_buf		*bp;
+>>>>>>> master
 	struct xfs_dinode	*dip;
 	int			error;
 
@@ -2790,6 +2806,7 @@ xfs_iflush(
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * Get the buffer containing the on-disk inode. We are doing a try-lock
 	 * operation here, so we may get  an EAGAIN error. In that case, we
 	 * simply want to return with the inode still dirty.
@@ -2807,6 +2824,8 @@ xfs_iflush(
 	if (error)
 		goto corrupt_out;
 =======
+=======
+>>>>>>> master
 	 * Get the buffer containing the on-disk inode.
 	 */
 	error = xfs_imap_to_bp(mp, NULL, &ip->i_imap, &dip, &bp, XBF_TRYLOCK,
@@ -2815,7 +2834,10 @@ xfs_iflush(
 		xfs_ifunlock(ip);
 		return error;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/*
 	 * First flush out the inode that xfs_iflush was called with.
@@ -2844,11 +2866,15 @@ xfs_iflush(
 
 corrupt_out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (bp)
 		xfs_buf_relse(bp);
 =======
 	xfs_buf_relse(bp);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	xfs_buf_relse(bp);
+>>>>>>> master
 	xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
 cluster_corrupt_out:
 	error = XFS_ERROR(EFSCORRUPTED);

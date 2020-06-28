@@ -341,6 +341,7 @@ static int p9_get_mapped_pages(struct virtio_chan *chan,
 		while (nr_pages) {
 			s = rest_of_page(data);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (is_vmalloc_addr(data))
 				pages[index++] = vmalloc_to_page(data);
 			else
@@ -348,6 +349,9 @@ static int p9_get_mapped_pages(struct virtio_chan *chan,
 =======
 			pages[index++] = kmap_to_page(data);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			pages[index++] = kmap_to_page(data);
+>>>>>>> master
 			data += s;
 			nr_pages--;
 		}
@@ -585,12 +589,15 @@ static int p9_virtio_probe(struct virtio_device *vdev)
 	list_add_tail(&chan->chan_list, &virtio_chan_list);
 	mutex_unlock(&virtio_9p_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* Let udev rules use the new mount_tag attribute. */
 	kobject_uevent(&(vdev->dev.kobj), KOBJ_CHANGE);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 
 out_free_tag:
@@ -669,9 +676,12 @@ static void p9_virtio_remove(struct virtio_device *vdev)
 	mutex_unlock(&virtio_9p_lock);
 	sysfs_remove_file(&(vdev->dev.kobj), &dev_attr_mount_tag.attr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kobject_uevent(&(vdev->dev.kobj), KOBJ_CHANGE);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	kfree(chan->tag);
 	kfree(chan->vc_wq);
 	kfree(chan);

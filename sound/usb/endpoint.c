@@ -468,12 +468,15 @@ struct snd_usb_endpoint *snd_usb_add_endpoint(struct snd_usb_audio *chip,
 
 		ep->syncmaxsize = le16_to_cpu(get_endpoint(alts, 1)->wMaxPacketSize);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		if (chip->usb_id == USB_ID(0x0644, 0x8038) /* TEAC UD-H01 */ &&
 		    ep->syncmaxsize == 4)
 			ep->udh01_fb_quirk = 1;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	list_add_tail(&ep->list, &chip->ep_list);
@@ -1083,6 +1086,7 @@ void snd_usb_handle_sync_urb(struct snd_usb_endpoint *ep,
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(sender->udh01_fb_quirk)) {
 		/*
 		 * The TEAC UD-H01 firmware sometimes changes the feedback value
@@ -1096,6 +1100,9 @@ void snd_usb_handle_sync_urb(struct snd_usb_endpoint *ep,
 =======
 	if (unlikely(ep->freqshift == INT_MIN)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (unlikely(ep->freqshift == INT_MIN)) {
+>>>>>>> master
 		/*
 		 * The first time we see a feedback value, determine its format
 		 * by shifting it left or right until it matches the nominal

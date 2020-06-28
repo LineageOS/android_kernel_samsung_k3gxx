@@ -1098,6 +1098,7 @@ bfa_fcs_lport_init(struct bfa_fcs_lport_s *lport,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void
 bfa_fcs_lport_set_symname(struct bfa_fcs_lport_s *port,
 				char *symname)
@@ -1111,6 +1112,8 @@ bfa_fcs_lport_set_symname(struct bfa_fcs_lport_s *port,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  *  fcs_lport_api
  */
@@ -4965,11 +4968,17 @@ bfa_fcs_lport_ns_util_send_rspn_id(void *cbarg, struct bfa_fcxp_s *fcxp_alloced)
 	int len;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!bfa_sm_cmp_state(port, bfa_fcs_lport_sm_online))
 		return;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!bfa_sm_cmp_state(port, bfa_fcs_lport_sm_online))
+		return;
+
+>>>>>>> master
 	/* Avoid sending RSPN in the following states. */
 	if (bfa_sm_cmp_state(ns, bfa_fcs_lport_ns_sm_offline) ||
 	    bfa_sm_cmp_state(ns, bfa_fcs_lport_ns_sm_plogi_sending) ||

@@ -34,6 +34,7 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "utils/bbd_utils.h"
 #include "transport/transport_layer_custom.h"
 #include "utils/crc8bits_c.h"
@@ -42,6 +43,11 @@
 #include "../transport/transport_layer_custom.h"
 #include "../utils/crc8bits_c.h"
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#include "../utils/bbd_utils.h"
+#include "../transport/transport_layer_custom.h"
+#include "../utils/crc8bits_c.h"
+>>>>>>> master
 
 #ifndef TRANSPORT_LAYER_H
 /* prototype for callback associated with a packet for reliable transactions */

@@ -362,10 +362,14 @@ static int wm8994_put_drc_enum(struct snd_kcontrol *kcontrol,
 	struct wm8994_pdata *pdata = &control->pdata;
 	int drc = wm8994_get_drc(kcontrol->id.name);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int value = ucontrol->value.enumerated.item[0];
 =======
 	int value = ucontrol->value.integer.value[0];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int value = ucontrol->value.integer.value[0];
+>>>>>>> master
 
 	if (drc < 0)
 		return drc;
@@ -473,10 +477,14 @@ static int wm8994_put_retune_mobile_enum(struct snd_kcontrol *kcontrol,
 	struct wm8994_pdata *pdata = &control->pdata;
 	int block = wm8994_get_retune_mobile_block(kcontrol->id.name);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int value = ucontrol->value.enumerated.item[0];
 =======
 	int value = ucontrol->value.integer.value[0];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int value = ucontrol->value.integer.value[0];
+>>>>>>> master
 
 	if (block < 0)
 		return block;
@@ -1449,12 +1457,18 @@ static int wm8994_put_class_w(struct snd_kcontrol *kcontrol,
 			      struct snd_ctl_elem_value *ucontrol)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct snd_soc_codec *codec = snd_soc_dapm_kcontrol_codec(kcontrol);
 =======
 	struct snd_soc_dapm_widget_list *wlist = snd_kcontrol_chip(kcontrol);
 	struct snd_soc_dapm_widget *w = wlist->widgets[0];
 	struct snd_soc_codec *codec = w->codec;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct snd_soc_dapm_widget_list *wlist = snd_kcontrol_chip(kcontrol);
+	struct snd_soc_dapm_widget *w = wlist->widgets[0];
+	struct snd_soc_codec *codec = w->codec;
+>>>>>>> master
 	int ret;
 
 	ret = snd_soc_dapm_put_volsw(kcontrol, ucontrol);
@@ -2692,10 +2706,14 @@ static struct {
 
 static int fs_ratios[] = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	64, 128, 192, 256, 384, 512, 768, 1024, 1408, 1536
 =======
 	64, 128, 192, 256, 348, 512, 768, 1024, 1408, 1536
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	64, 128, 192, 256, 348, 512, 768, 1024, 1408, 1536
+>>>>>>> master
 };
 
 static int bclk_divs[] = {

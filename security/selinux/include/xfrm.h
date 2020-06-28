@@ -48,9 +48,12 @@ int selinux_xfrm_postroute_last(u32 isec_sid, struct sk_buff *skb,
 			struct common_audit_data *ad, u8 proto);
 int selinux_xfrm_decode_session(struct sk_buff *skb, u32 *sid, int ckall);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int selinux_xfrm_skb_sid(struct sk_buff *skb, u32 *sid);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 static inline void selinux_xfrm_notify_policyload(void)
 {
@@ -85,6 +88,7 @@ static inline void selinux_xfrm_notify_policyload(void)
 {
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 static inline int selinux_xfrm_skb_sid(struct sk_buff *skb, u32 *sid)
 {
@@ -93,6 +97,8 @@ static inline int selinux_xfrm_skb_sid(struct sk_buff *skb, u32 *sid)
 }
 #endif
 =======
+=======
+>>>>>>> master
 #endif
 
 static inline void selinux_skb_xfrm_sid(struct sk_buff *skb, u32 *sid)
@@ -100,6 +106,9 @@ static inline void selinux_skb_xfrm_sid(struct sk_buff *skb, u32 *sid)
 	int err = selinux_xfrm_decode_session(skb, sid, 0);
 	BUG_ON(err);
 }
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 #endif /* _SELINUX_XFRM_H_ */

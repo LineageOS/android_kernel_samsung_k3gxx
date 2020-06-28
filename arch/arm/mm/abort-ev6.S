@@ -18,14 +18,20 @@
 	.align	5
 ENTRY(v6_early_abort)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_CPU_V6
 	sub	r1, sp, #4			@ Get unused stack location
 	strex	r0, r1, [r1]			@ Clear the exclusive monitor
 #elif defined(CONFIG_CPU_32v6K)
 	clrex
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	mrc	p15, 0, r1, c5, c0, 0		@ get FSR
 	mrc	p15, 0, r0, c6, c0, 0		@ get FAR
 /*

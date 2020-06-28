@@ -457,9 +457,13 @@ static struct hfs_bnode *__hfs_bnode_create(struct hfs_btree *tree, u32 cnid)
 			goto fail;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		page_cache_release(page);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		page_cache_release(page);
+>>>>>>> master
 		node->page[i] = page;
 	}
 
@@ -572,18 +576,26 @@ node_error:
 void hfs_bnode_free(struct hfs_bnode *node)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #if 0
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#if 0
+>>>>>>> master
 	int i;
 
 	for (i = 0; i < node->tree->pages_per_bnode; i++)
 		if (node->page[i])
 			page_cache_release(node->page[i]);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #endif
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#endif
+>>>>>>> master
 	kfree(node);
 }
 

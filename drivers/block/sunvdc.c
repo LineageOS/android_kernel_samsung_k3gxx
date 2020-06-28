@@ -10,9 +10,12 @@
 #include <linux/hdreg.h>
 #include <linux/genhd.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/cdrom.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #include <linux/slab.h>
 #include <linux/spinlock.h>
 #include <linux/completion.h>
@@ -27,12 +30,17 @@
 #define DRV_MODULE_NAME		"sunvdc"
 #define PFX DRV_MODULE_NAME	": "
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define DRV_MODULE_VERSION	"1.1"
 #define DRV_MODULE_RELDATE	"February 13, 2013"
 =======
 #define DRV_MODULE_VERSION	"1.0"
 #define DRV_MODULE_RELDATE	"June 25, 2007"
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define DRV_MODULE_VERSION	"1.0"
+#define DRV_MODULE_RELDATE	"June 25, 2007"
+>>>>>>> master
 
 static char version[] =
 	DRV_MODULE_NAME ".c:v" DRV_MODULE_VERSION " (" DRV_MODULE_RELDATE ")\n";
@@ -42,10 +50,14 @@ MODULE_LICENSE("GPL");
 MODULE_VERSION(DRV_MODULE_VERSION);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define VDC_TX_RING_SIZE	512
 =======
 #define VDC_TX_RING_SIZE	256
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define VDC_TX_RING_SIZE	256
+>>>>>>> master
 
 #define WAITING_FOR_LINK_UP	0x01
 #define WAITING_FOR_TX_SPACE	0x02
@@ -79,16 +91,22 @@ struct vdc_port {
 	u32			vdisk_size;
 	u8			vdisk_type;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8			vdisk_mtype;
 
 	char			disk_name[32];
 =======
+=======
+>>>>>>> master
 
 	char			disk_name[32];
 
 	struct vio_disk_geom	geom;
 	struct vio_disk_vtoc	label;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };
 
 static inline struct vdc_port *to_vdc_port(struct vio_driver_state *vio)
@@ -98,6 +116,7 @@ static inline struct vdc_port *to_vdc_port(struct vio_driver_state *vio)
 
 /* Ordered from largest major to lowest */
 static struct vio_version vdc_versions[] = {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	{ .major = 1, .minor = 1 },
 	{ .major = 1, .minor = 0 },
@@ -114,6 +133,11 @@ static inline int vdc_version_supported(struct vdc_port *port,
 };
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	{ .major = 1, .minor = 0 },
+};
+
+>>>>>>> master
 #define VDCBLK_NAME	"vdisk"
 static int vdc_major;
 #define PARTITION_SHIFT	3
@@ -127,6 +151,7 @@ static int vdc_getgeo(struct block_device *bdev, struct hd_geometry *geo)
 {
 	struct gendisk *disk = bdev->bd_disk;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sector_t nsect = get_capacity(disk);
 	sector_t cylinders = nsect;
 
@@ -137,16 +162,22 @@ static int vdc_getgeo(struct block_device *bdev, struct hd_geometry *geo)
 	if ((sector_t)(geo->cylinders + 1) * geo->heads * geo->sectors < nsect)
 		geo->cylinders = 0xffff;
 =======
+=======
+>>>>>>> master
 	struct vdc_port *port = disk->private_data;
 
 	geo->heads = (u8) port->geom.num_hd;
 	geo->sectors = (u8) port->geom.num_sec;
 	geo->cylinders = port->geom.num_cyl;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* Add ioctl/CDROM_GET_CAPABILITY to support cdrom_id in udev
  * when vdisk_mtype is VD_MEDIA_TYPE_CD or VD_MEDIA_TYPE_DVD.
@@ -188,6 +219,11 @@ static const struct block_device_operations vdc_fops = {
 	.owner		= THIS_MODULE,
 	.getgeo		= vdc_getgeo,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static const struct block_device_operations vdc_fops = {
+	.owner		= THIS_MODULE,
+	.getgeo		= vdc_getgeo,
+>>>>>>> master
 };
 
 static void vdc_finish(struct vio_driver_state *vio, int err, int waiting_for)
@@ -248,6 +284,7 @@ static int vdc_handle_attr(struct vio_driver_state *vio, void *arg)
 
 	viodbg(HS, "GOT ATTR stype[0x%x] ops[%llx] disk_size[%llu] disk_type[%x] "
 <<<<<<< HEAD
+<<<<<<< HEAD
 	       "mtype[0x%x] xfer_mode[0x%x] blksz[%u] max_xfer[%llu]\n",
 	       pkt->tag.stype, pkt->operations,
 	       pkt->vdisk_size, pkt->vdisk_type, pkt->vdisk_mtype,
@@ -256,6 +293,11 @@ static int vdc_handle_attr(struct vio_driver_state *vio, void *arg)
 	       pkt->tag.stype, pkt->operations,
 	       pkt->vdisk_size, pkt->vdisk_type,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	       "xfer_mode[0x%x] blksz[%u] max_xfer[%llu]\n",
+	       pkt->tag.stype, pkt->operations,
+	       pkt->vdisk_size, pkt->vdisk_type,
+>>>>>>> master
 	       pkt->xfer_mode, pkt->vdisk_block_size,
 	       pkt->max_xfer_size);
 
@@ -281,6 +323,7 @@ static int vdc_handle_attr(struct vio_driver_state *vio, void *arg)
 
 		port->operations = pkt->operations;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		port->vdisk_type = pkt->vdisk_type;
 		if (vdc_version_supported(port, 1, 1)) {
 			port->vdisk_size = pkt->vdisk_size;
@@ -290,6 +333,10 @@ static int vdc_handle_attr(struct vio_driver_state *vio, void *arg)
 		port->vdisk_size = pkt->vdisk_size;
 		port->vdisk_type = pkt->vdisk_type;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		port->vdisk_size = pkt->vdisk_size;
+		port->vdisk_type = pkt->vdisk_type;
+>>>>>>> master
 		if (pkt->max_xfer_size < port->max_xfer_size)
 			port->max_xfer_size = pkt->max_xfer_size;
 		port->vdisk_block_size = pkt->vdisk_block_size;
@@ -333,12 +380,16 @@ static void vdc_end_one(struct vdc_port *port, struct vio_dring_state *dr,
 	__blk_end_request(req, (desc->status ? -EIO : 0), desc->size);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* restart blk queue when ring is half emptied */
 	if (blk_queue_stopped(port->disk->queue) &&
 	    vdc_tx_dring_avail(dr) * 100 / VDC_TX_RING_SIZE >= 50)
 =======
 	if (blk_queue_stopped(port->disk->queue))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (blk_queue_stopped(port->disk->queue))
+>>>>>>> master
 		blk_start_queue(port->disk->queue);
 }
 
@@ -491,14 +542,20 @@ static int __send_request(struct request *req)
 		len += sg[i].length;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	if (unlikely(vdc_tx_dring_avail(dr) < 1)) {
 		blk_stop_queue(port->disk->queue);
 		err = -ENOMEM;
 		goto out;
 	}
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	desc = vio_dring_cur(dr);
 
 	err = ldc_map_sg(port->vio.lp, sg, nsg,
@@ -539,13 +596,18 @@ static int __send_request(struct request *req)
 		dr->prod = (dr->prod + 1) & (VDC_TX_RING_SIZE - 1);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 out:
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+out:
+>>>>>>> master
 
 	return err;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void do_vdc_request(struct request_queue *rq)
 {
@@ -570,6 +632,8 @@ wait:
 			break;
 		}
 =======
+=======
+>>>>>>> master
 static void do_vdc_request(struct request_queue *q)
 {
 	while (1) {
@@ -580,7 +644,10 @@ static void do_vdc_request(struct request_queue *q)
 
 		if (__send_request(req) < 0)
 			__blk_end_request_all(req, -EIO);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 }
 
@@ -790,6 +857,7 @@ static int probe_disk(struct vdc_port *port)
 		return comp.err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (vdc_version_supported(port, 1, 1)) {
 		/* vdisk_size should be set during the handshake, if it wasn't
 		 * then the underlying disk is reserved by another system
@@ -812,6 +880,8 @@ static int probe_disk(struct vdc_port *port)
 	}
 
 =======
+=======
+>>>>>>> master
 	err = generic_request(port, VD_OP_GET_VTOC,
 			      &port->label, sizeof(port->label));
 	if (err < 0) {
@@ -831,7 +901,10 @@ static int probe_disk(struct vdc_port *port)
 			    (u64)port->geom.num_hd *
 			    (u64)port->geom.num_sec);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	q = blk_init_queue(do_vdc_request, &port->vio.lock);
 	if (!q) {
 		printk(KERN_ERR PFX "%s: Could not allocate queue.\n",
@@ -849,12 +922,15 @@ static int probe_disk(struct vdc_port *port)
 	port->disk = g;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Each segment in a request is up to an aligned page in size. */
 	blk_queue_segment_boundary(q, PAGE_SIZE - 1);
 	blk_queue_max_segment_size(q, PAGE_SIZE);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	blk_queue_max_segments(q, port->ring_cookies);
 	blk_queue_max_hw_sectors(q, port->max_xfer_size);
 	g->major = vdc_major;
@@ -868,6 +944,7 @@ static int probe_disk(struct vdc_port *port)
 
 	set_capacity(g, port->vdisk_size);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (vdc_version_supported(port, 1, 1)) {
 		switch (port->vdisk_mtype) {
@@ -900,6 +977,11 @@ static int probe_disk(struct vdc_port *port)
 	       g->disk_name,
 	       port->vdisk_size, (port->vdisk_size >> (20 - 9)));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	printk(KERN_INFO PFX "%s: %u sectors (%u MB)\n",
+	       g->disk_name,
+	       port->vdisk_size, (port->vdisk_size >> (20 - 9)));
+>>>>>>> master
 
 	add_disk(g);
 
@@ -959,9 +1041,12 @@ static int vdc_port_probe(struct vio_dev *vdev, const struct vio_device_id *id)
 		snprintf(port->disk_name, sizeof(port->disk_name),
 			 VDCBLK_NAME "%c", 'a' + ((int)vdev->dev_no % 26));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	port->vdisk_size = -1;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	err = vio_driver_init(&port->vio, vdev, VDEV_DISK,
 			      vdc_versions, ARRAY_SIZE(vdc_versions),

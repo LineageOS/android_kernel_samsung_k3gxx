@@ -264,6 +264,7 @@ static int tc6393xb_ohci_disable(struct platform_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int tc6393xb_ohci_suspend(struct platform_device *dev)
 {
 	struct tc6393xb_platform_data *tcpd = dev_get_platdata(dev->dev.parent);
@@ -277,6 +278,8 @@ static int tc6393xb_ohci_suspend(struct platform_device *dev)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int tc6393xb_fb_enable(struct platform_device *dev)
 {
 	struct tc6393xb *tc6393xb = dev_get_drvdata(dev->dev.parent);
@@ -418,10 +421,14 @@ static struct mfd_cell tc6393xb_cells[] = {
 		.resources = tc6393xb_ohci_resources,
 		.enable = tc6393xb_ohci_enable,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.suspend = tc6393xb_ohci_suspend,
 =======
 		.suspend = tc6393xb_ohci_disable,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		.suspend = tc6393xb_ohci_disable,
+>>>>>>> master
 		.resume = tc6393xb_ohci_enable,
 		.disable = tc6393xb_ohci_disable,
 	},

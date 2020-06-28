@@ -783,6 +783,7 @@ static struct dma_pte *pfn_to_dma_pte(struct dmar_domain *domain,
 
 	BUG_ON(!domain->pgd);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (addr_width < BITS_PER_LONG && pfn >> addr_width)
 		/* Address beyond IOMMU's addressing capabilities. */
@@ -791,6 +792,9 @@ static struct dma_pte *pfn_to_dma_pte(struct dmar_domain *domain,
 =======
 	BUG_ON(addr_width < BITS_PER_LONG && pfn >> addr_width);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	BUG_ON(addr_width < BITS_PER_LONG && pfn >> addr_width);
+>>>>>>> master
 	parent = domain->pgd;
 
 	while (level > 0) {
@@ -899,6 +903,7 @@ static int dma_pte_clear_range(struct dmar_domain *domain,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void dma_pte_free_level(struct dmar_domain *domain, int level,
 			       struct dma_pte *pte, unsigned long pfn,
 			       unsigned long start_pfn, unsigned long last_pfn)
@@ -934,6 +939,8 @@ next:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /* free page table pages. last level pte should already be cleared */
 static void dma_pte_free_pagetable(struct dmar_domain *domain,
 				   unsigned long start_pfn,
@@ -941,13 +948,19 @@ static void dma_pte_free_pagetable(struct dmar_domain *domain,
 {
 	int addr_width = agaw_to_width(domain->agaw) - VTD_PAGE_SHIFT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	struct dma_pte *first_pte, *pte;
 	int total = agaw_to_level(domain->agaw);
 	int level;
 	unsigned long tmp;
 	int large_page = 2;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	BUG_ON(addr_width < BITS_PER_LONG && start_pfn >> addr_width);
 	BUG_ON(addr_width < BITS_PER_LONG && last_pfn >> addr_width);
@@ -955,10 +968,13 @@ static void dma_pte_free_pagetable(struct dmar_domain *domain,
 
 	/* We don't need lock here; nobody else touches the iova range */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma_pte_free_level(domain, agaw_to_level(domain->agaw),
 			   domain->pgd, 0, start_pfn, last_pfn);
 
 =======
+=======
+>>>>>>> master
 	level = 2;
 	while (level <= total) {
 		tmp = align_to_level(start_pfn, level);
@@ -992,7 +1008,10 @@ static void dma_pte_free_pagetable(struct dmar_domain *domain,
 		} while (tmp && tmp + level_size(level) - 1 <= last_pfn);
 		level++;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* free pgd */
 	if (start_pfn == 0 && last_pfn == DOMAIN_MAX_PFN(domain->gaw)) {
 		free_pgtable_page(domain->pgd);
@@ -1848,10 +1867,14 @@ static int __domain_mapping(struct dmar_domain *domain, unsigned long iov_pfn,
 	phys_addr_t uninitialized_var(pteval);
 	int addr_width = agaw_to_width(domain->agaw) - VTD_PAGE_SHIFT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long sg_res = 0;
 =======
 	unsigned long sg_res;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	unsigned long sg_res;
+>>>>>>> master
 	unsigned int largepage_lvl = 0;
 	unsigned long lvl_pages = 0;
 
@@ -1863,14 +1886,20 @@ static int __domain_mapping(struct dmar_domain *domain, unsigned long iov_pfn,
 	prot &= DMA_PTE_READ | DMA_PTE_WRITE | DMA_PTE_SNP;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!sg) {
 		sg_res = nr_pages;
 =======
+=======
+>>>>>>> master
 	if (sg)
 		sg_res = 0;
 	else {
 		sg_res = nr_pages + 1;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		pteval = ((phys_addr_t)phys_pfn << VTD_PAGE_SHIFT) | prot;
 	}
 

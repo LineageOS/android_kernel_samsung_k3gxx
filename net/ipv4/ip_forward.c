@@ -40,6 +40,7 @@
 #include <net/xfrm.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static bool ip_may_fragment(const struct sk_buff *skb)
 {
 	return unlikely((ip_hdr(skb)->frag_off & htons(IP_DF)) == 0) ||
@@ -107,6 +108,8 @@ static int ip_forward_finish_gso(struct sk_buff *skb)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int ip_forward_finish(struct sk_buff *skb)
 {
 	struct ip_options *opt	= &(IPCB(skb)->opt);
@@ -118,11 +121,14 @@ static int ip_forward_finish(struct sk_buff *skb)
 		ip_forward_options(skb);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ip_gso_exceeds_dst_mtu(skb))
 		return ip_forward_finish_gso(skb);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return dst_output(skb);
 }
 
@@ -133,11 +139,14 @@ int ip_forward(struct sk_buff *skb)
 	struct ip_options *opt	= &(IPCB(skb)->opt);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(skb->sk))
 		goto drop;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	if (skb_warn_if_lro(skb))
 		goto drop;
 
@@ -169,11 +178,16 @@ int ip_forward(struct sk_buff *skb)
 		goto sr_failed;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!ip_may_fragment(skb) && ip_exceeds_mtu(skb, dst_mtu(&rt->dst))) {
 =======
 	if (unlikely(skb->len > dst_mtu(&rt->dst) && !skb_is_gso(skb) &&
 		     (ip_hdr(skb)->frag_off & htons(IP_DF))) && !skb->local_df) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (unlikely(skb->len > dst_mtu(&rt->dst) && !skb_is_gso(skb) &&
+		     (ip_hdr(skb)->frag_off & htons(IP_DF))) && !skb->local_df) {
+>>>>>>> master
 		IP_INC_STATS(dev_net(rt->dst.dev), IPSTATS_MIB_FRAGFAILS);
 		icmp_send(skb, ICMP_DEST_UNREACH, ICMP_FRAG_NEEDED,
 			  htonl(dst_mtu(&rt->dst)));

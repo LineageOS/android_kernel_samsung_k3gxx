@@ -272,6 +272,9 @@ module_exit(hmac_module_exit);
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("HMAC hash algorithm");
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("hmac");
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master

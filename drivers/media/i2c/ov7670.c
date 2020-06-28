@@ -1111,10 +1111,14 @@ static int ov7670_enum_framesizes(struct v4l2_subdev *sd,
 	 */
 	for (i = 0; i < n_win_sizes; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct ov7670_win_size *win = &info->devtype->win_sizes[i];
 =======
 		struct ov7670_win_size *win = &info->devtype->win_sizes[index];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		struct ov7670_win_size *win = &info->devtype->win_sizes[index];
+>>>>>>> master
 		if (info->min_width && win->width < info->min_width)
 			continue;
 		if (info->min_height && win->height < info->min_height)

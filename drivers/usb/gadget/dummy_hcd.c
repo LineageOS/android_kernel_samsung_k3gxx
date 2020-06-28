@@ -267,10 +267,14 @@ static void nuke(struct dummy *dum, struct dummy_ep *ep)
 static void stop_activity(struct dummy *dum)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i;
 =======
 	struct dummy_ep	*ep;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct dummy_ep	*ep;
+>>>>>>> master
 
 	/* prevent any more requests */
 	dum->address = 0;
@@ -279,12 +283,17 @@ static void stop_activity(struct dummy *dum)
 
 	/* nuke any pending requests first, so driver i/o is quiesced */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	for (i = 0; i < DUMMY_ENDPOINTS; ++i)
 		nuke(dum, &dum->ep[i]);
 =======
 	list_for_each_entry(ep, &dum->gadget.ep_list, ep.ep_list)
 		nuke(dum, ep);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	list_for_each_entry(ep, &dum->gadget.ep_list, ep.ep_list)
+		nuke(dum, ep);
+>>>>>>> master
 
 	/* driver now does any non-usb quiescing necessary */
 }
@@ -933,6 +942,7 @@ static int dummy_udc_stop(struct usb_gadget *g,
 	struct dummy		*dum = dum_hcd->dum;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (driver)
 		dev_dbg(udc_dev(dum), "unregister gadget driver '%s'\n",
 				driver->driver.name);
@@ -940,6 +950,10 @@ static int dummy_udc_stop(struct usb_gadget *g,
 	dev_dbg(udc_dev(dum), "unregister gadget driver '%s'\n",
 			driver->driver.name);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	dev_dbg(udc_dev(dum), "unregister gadget driver '%s'\n",
+			driver->driver.name);
+>>>>>>> master
 
 	dum->driver = NULL;
 
@@ -1016,12 +1030,17 @@ static int dummy_udc_remove(struct platform_device *pdev)
 	struct dummy	*dum = platform_get_drvdata(pdev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	device_remove_file(&dum->gadget.dev, &dev_attr_function);
 	usb_del_gadget_udc(&dum->gadget);
 =======
 	usb_del_gadget_udc(&dum->gadget);
 	device_remove_file(&dum->gadget.dev, &dev_attr_function);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	usb_del_gadget_udc(&dum->gadget);
+	device_remove_file(&dum->gadget.dev, &dev_attr_function);
+>>>>>>> master
 	return 0;
 }
 

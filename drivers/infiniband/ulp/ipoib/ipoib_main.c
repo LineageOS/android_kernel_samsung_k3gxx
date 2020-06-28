@@ -235,11 +235,16 @@ int ipoib_set_mode(struct net_device *dev, const char *buf)
 
 		ipoib_flush_paths(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return (!rtnl_trylock()) ? -EBUSY : 0;
 =======
 		rtnl_lock();
 		return 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		rtnl_lock();
+		return 0;
+>>>>>>> master
 	}
 
 	if (!strcmp(buf, "datagram\n")) {
@@ -249,21 +254,30 @@ int ipoib_set_mode(struct net_device *dev, const char *buf)
 		rtnl_unlock();
 		ipoib_flush_paths(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return (!rtnl_trylock()) ? -EBUSY : 0;
 =======
 		rtnl_lock();
 		return 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		rtnl_lock();
+		return 0;
+>>>>>>> master
 	}
 
 	return -EINVAL;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct ipoib_path *__path_find(struct net_device *dev, void *gid)
 =======
 static struct ipoib_path *__path_find(struct net_device *dev, void *gid)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static struct ipoib_path *__path_find(struct net_device *dev, void *gid)
+>>>>>>> master
 {
 	struct ipoib_dev_priv *priv = netdev_priv(dev);
 	struct rb_node *n = priv->path_tree.rb_node;
@@ -900,12 +914,16 @@ struct ipoib_neigh *ipoib_neigh_get(struct net_device *dev, u8 *daddr)
 				goto out_unlock;
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 			if (likely(skb_queue_len(&neigh->queue) < IPOIB_MAX_PATH_REC_QUEUE))
 				neigh->alive = jiffies;
 =======
 			neigh->alive = jiffies;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			neigh->alive = jiffies;
+>>>>>>> master
 			goto out_unlock;
 		}
 	}

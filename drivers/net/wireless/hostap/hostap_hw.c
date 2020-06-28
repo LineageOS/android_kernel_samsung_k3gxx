@@ -837,6 +837,7 @@ static int hfa384x_get_rid(struct net_device *dev, u16 rid, void *buf, int len,
 
 	res = hfa384x_setup_bap(dev, BAP0, rid, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (res)
 		goto unlock;
 
@@ -847,10 +848,15 @@ static int hfa384x_get_rid(struct net_device *dev, u16 rid, void *buf, int len,
 	if (!res)
 		res = hfa384x_from_bap(dev, BAP0, &rec, sizeof(rec));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!res)
+		res = hfa384x_from_bap(dev, BAP0, &rec, sizeof(rec));
+>>>>>>> master
 
 	if (le16_to_cpu(rec.len) == 0) {
 		/* RID not available */
 		res = -ENODATA;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		goto unlock;
 	}
@@ -858,17 +864,23 @@ static int hfa384x_get_rid(struct net_device *dev, u16 rid, void *buf, int len,
 	rlen = (le16_to_cpu(rec.len) - 1) * 2;
 	if (exact_len && rlen != len) {
 =======
+=======
+>>>>>>> master
 	}
 
 	rlen = (le16_to_cpu(rec.len) - 1) * 2;
 	if (!res && exact_len && rlen != len) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		printk(KERN_DEBUG "%s: hfa384x_get_rid - RID len mismatch: "
 		       "rid=0x%04x, len=%d (expected %d)\n",
 		       dev->name, rid, rlen, len);
 		res = -ENODATA;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	res = hfa384x_from_bap(dev, BAP0, buf, len);
 
@@ -878,6 +890,11 @@ unlock:
 		res = hfa384x_from_bap(dev, BAP0, buf, len);
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!res)
+		res = hfa384x_from_bap(dev, BAP0, buf, len);
+
+>>>>>>> master
 	spin_unlock_bh(&local->baplock);
 	mutex_unlock(&local->rid_bap_mtx);
 

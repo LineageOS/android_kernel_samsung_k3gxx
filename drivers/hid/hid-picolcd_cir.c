@@ -146,10 +146,14 @@ void picolcd_exit_cir(struct picolcd_data *data)
 
 	data->rc_dev = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (rdev)
 		rc_unregister_device(rdev);
 =======
 	rc_unregister_device(rdev);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	rc_unregister_device(rdev);
+>>>>>>> master
 }
 

@@ -164,11 +164,15 @@ static int do_udf_readdir(struct inode *dir, struct file *filp,
 
 			iblock = udf_get_lb_pblock(dir->i_sb, &tloc, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			flen = udf_get_filename(dir->i_sb, nameptr, lfi, fname,
 						UDF_NAME_LEN);
 =======
 			flen = udf_get_filename(dir->i_sb, nameptr, fname, lfi);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			flen = udf_get_filename(dir->i_sb, nameptr, fname, lfi);
+>>>>>>> master
 			dt_type = DT_UNKNOWN;
 		}
 

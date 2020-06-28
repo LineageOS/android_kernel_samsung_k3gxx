@@ -129,9 +129,13 @@ static int shrink_tnc(struct ubifs_info *c, int nr, int age, int *contention)
 			atomic_long_sub(freed, &ubifs_clean_zn_cnt);
 			atomic_long_sub(freed, &c->clean_zn_cnt);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			ubifs_assert(atomic_long_read(&c->clean_zn_cnt) >= 0);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			ubifs_assert(atomic_long_read(&c->clean_zn_cnt) >= 0);
+>>>>>>> master
 			total_freed += freed;
 			znode = zprev;
 		}

@@ -318,6 +318,7 @@ static int shadow_ablock(struct dm_array_info *info, dm_block_t *root,
 	 * copied data.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (dm_block_location(*block) != b) {
 		/*
 		 * dm_tm_shadow_block will have already decremented the old
@@ -332,6 +333,10 @@ static int shadow_ablock(struct dm_array_info *info, dm_block_t *root,
 	if (dm_block_location(*block) != b)
 		r = insert_ablock(info, index, *block, root);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (dm_block_location(*block) != b)
+		r = insert_ablock(info, index, *block, root);
+>>>>>>> master
 
 	return r;
 }
@@ -523,6 +528,7 @@ static int grow_needs_more_blocks(struct resize *resize)
 {
 	int r;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned old_nr_blocks = resize->old_nr_full_blocks;
 
 	if (resize->old_nr_entries_in_last_block > 0) {
@@ -532,6 +538,10 @@ static int grow_needs_more_blocks(struct resize *resize)
 
 	if (resize->old_nr_entries_in_last_block > 0) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	if (resize->old_nr_entries_in_last_block > 0) {
+>>>>>>> master
 		r = grow_extend_tail_block(resize, resize->max_entries);
 		if (r)
 			return r;
@@ -539,10 +549,14 @@ static int grow_needs_more_blocks(struct resize *resize)
 
 	r = insert_full_ablocks(resize->info, resize->size_of_block,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				old_nr_blocks,
 =======
 				resize->old_nr_full_blocks,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				resize->old_nr_full_blocks,
+>>>>>>> master
 				resize->new_nr_full_blocks,
 				resize->max_entries, resize->value,
 				&resize->root);

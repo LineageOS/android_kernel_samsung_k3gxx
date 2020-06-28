@@ -468,8 +468,12 @@ module_exit(crypto_ctr_module_exit);
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("CTR Counter block mode");
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("rfc3686");
 MODULE_ALIAS_CRYPTO("ctr");
 =======
 MODULE_ALIAS("rfc3686");
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+MODULE_ALIAS("rfc3686");
+>>>>>>> master

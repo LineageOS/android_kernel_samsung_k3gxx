@@ -47,9 +47,12 @@
 #include <linux/slab.h>
 #include <linux/module.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/sysctl.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 #include <rdma/iw_cm.h>
 #include <rdma/ib_addr.h>
@@ -70,6 +73,7 @@ struct iwcm_work {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static unsigned int default_backlog = 256;
 
 static struct ctl_table_header *iwcm_ctl_table_hdr;
@@ -86,6 +90,8 @@ static struct ctl_table iwcm_ctl_table[] = {
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /*
  * The following services provide a mechanism for pre-allocating iwcm_work
  * elements.  The design pre-allocates them  based on the cm_id type:
@@ -441,11 +447,14 @@ int iw_cm_listen(struct iw_cm_id *cm_id, int backlog)
 	cm_id_priv = container_of(cm_id, struct iwcm_id_private, id);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!backlog)
 		backlog = default_backlog;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ret = alloc_work_entries(cm_id_priv, backlog);
 	if (ret)
 		return ret;
@@ -1052,6 +1061,7 @@ static int __init iw_cm_init(void)
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	iwcm_ctl_table_hdr = register_net_sysctl(&init_net, "net/iw_cm",
 						 iwcm_ctl_table);
 	if (!iwcm_ctl_table_hdr) {
@@ -1062,15 +1072,20 @@ static int __init iw_cm_init(void)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return 0;
 }
 
 static void __exit iw_cm_cleanup(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unregister_net_sysctl_table(iwcm_ctl_table_hdr);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	destroy_workqueue(iwcm_wq);
 }
 

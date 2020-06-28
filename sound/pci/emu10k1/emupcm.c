@@ -380,10 +380,14 @@ static void snd_emu10k1_pcm_init_voice(struct snd_emu10k1 *emu,
 	snd_emu10k1_ptr_write(emu, Z2, voice, 0);
 	/* invalidate maps */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	silent_page = ((unsigned int)emu->silent_page.addr << emu->address_mode) | (emu->address_mode ? MAP_PTI_MASK1 : MAP_PTI_MASK0);
 =======
 	silent_page = ((unsigned int)emu->silent_page.addr << 1) | MAP_PTI_MASK;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	silent_page = ((unsigned int)emu->silent_page.addr << 1) | MAP_PTI_MASK;
+>>>>>>> master
 	snd_emu10k1_ptr_write(emu, MAPA, voice, silent_page);
 	snd_emu10k1_ptr_write(emu, MAPB, voice, silent_page);
 	/* modulation envelope */

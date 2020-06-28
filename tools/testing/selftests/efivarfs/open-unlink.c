@@ -1,11 +1,15 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <errno.h>
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
+<<<<<<< HEAD
 <<<<<<< HEAD
 #include <sys/ioctl.h>
 #include <sys/types.h>
@@ -72,6 +76,11 @@ static int get_immutable(const char *path)
 #include <sys/stat.h>
 #include <fcntl.h>
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+>>>>>>> master
 
 int main(int argc, char **argv)
 {
@@ -95,10 +104,14 @@ int main(int argc, char **argv)
 
 	/* create a test variable */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fd = open(path, O_WRONLY | O_CREAT, 0600);
 =======
 	fd = open(path, O_WRONLY | O_CREAT);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	fd = open(path, O_WRONLY | O_CREAT);
+>>>>>>> master
 	if (fd < 0) {
 		perror("open(O_WRONLY)");
 		return EXIT_FAILURE;
@@ -112,6 +125,7 @@ int main(int argc, char **argv)
 
 	close(fd);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	rc = get_immutable(path);
 	if (rc < 0) {
@@ -127,6 +141,8 @@ int main(int argc, char **argv)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	fd = open(path, O_RDONLY);
 	if (fd < 0) {
 		perror("open");

@@ -1187,10 +1187,14 @@ static struct ib_qp *nes_create_qp(struct ib_pd *ibpd,
 					kfree(nesqp->allocated_buffer);
 					nes_debug(NES_DBG_QP, "ib_copy_from_udata() Failed \n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 					return ERR_PTR(-EFAULT);
 =======
 					return NULL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+					return NULL;
+>>>>>>> master
 				}
 				if (req.user_wqe_buffers) {
 					virt_wqs = 1;

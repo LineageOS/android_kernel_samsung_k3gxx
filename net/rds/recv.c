@@ -411,10 +411,15 @@ int rds_recvmsg(struct kiocb *iocb, struct socket *sock, struct msghdr *msg,
 	rdsdebug("size %zu flags 0x%x timeo %ld\n", size, msg_flags, timeo);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	msg->msg_namelen = 0;
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	msg->msg_namelen = 0;
+
+>>>>>>> master
 	if (msg_flags & MSG_OOB)
 		goto out;
 

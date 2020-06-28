@@ -865,11 +865,15 @@ static void ieee80211_rx_reorder_ampdu(struct ieee80211_rx_data *rx,
 	u8 tid, ack_policy;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!ieee80211_is_data_qos(hdr->frame_control) ||
 	    is_multicast_ether_addr(hdr->addr1))
 =======
 	if (!ieee80211_is_data_qos(hdr->frame_control))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!ieee80211_is_data_qos(hdr->frame_control))
+>>>>>>> master
 		goto dont_reorder;
 
 	/*
@@ -1590,6 +1594,7 @@ ieee80211_rx_h_defragment(struct ieee80211_rx_data *rx)
 	frag = sc & IEEE80211_SCTL_FRAG;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (is_multicast_ether_addr(hdr->addr1)) {
 		rx->local->dot11MulticastReceivedFrameCount++;
 		goto out_no_led;
@@ -1599,12 +1604,17 @@ ieee80211_rx_h_defragment(struct ieee80211_rx_data *rx)
 		goto out;
 
 =======
+=======
+>>>>>>> master
 	if (likely((!ieee80211_has_morefrags(fc) && frag == 0) ||
 		   is_multicast_ether_addr(hdr->addr1))) {
 		/* not fragmented */
 		goto out;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	I802_DEBUG_INC(rx->local->rx_handlers_fragments);
 
 	if (skb_linearize(rx->skb))
@@ -1696,18 +1706,24 @@ ieee80211_rx_h_defragment(struct ieee80211_rx_data *rx)
 
  out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ieee80211_led_rx(rx->local);
  out_no_led:
 	if (rx->sta)
 		rx->sta->rx_packets++;
 =======
+=======
+>>>>>>> master
 	if (rx->sta)
 		rx->sta->rx_packets++;
 	if (is_multicast_ether_addr(hdr->addr1))
 		rx->local->dot11MulticastReceivedFrameCount++;
 	else
 		ieee80211_led_rx(rx->local);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return RX_CONTINUE;
 }
 
@@ -1974,6 +1990,7 @@ ieee80211_rx_h_amsdu(struct ieee80211_rx_data *rx)
 		return RX_CONTINUE;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(ieee80211_has_a4(hdr->frame_control))) {
 		switch (rx->sdata->vif.type) {
 		case NL80211_IFTYPE_AP_VLAN:
@@ -1991,6 +2008,8 @@ ieee80211_rx_h_amsdu(struct ieee80211_rx_data *rx)
 
 	if (is_multicast_ether_addr(hdr->addr1))
 =======
+=======
+>>>>>>> master
 	if (ieee80211_has_a4(hdr->frame_control) &&
 	    rx->sdata->vif.type == NL80211_IFTYPE_AP_VLAN &&
 	    !rx->sdata->u.vlan.sta)
@@ -2001,7 +2020,10 @@ ieee80211_rx_h_amsdu(struct ieee80211_rx_data *rx)
 	      rx->sdata->u.vlan.sta) ||
 	     (rx->sdata->vif.type == NL80211_IFTYPE_STATION &&
 	      rx->sdata->u.mgd.use_4addr)))
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		return RX_DROP_UNUSABLE;
 
 	skb->dev = dev;
@@ -2064,11 +2086,14 @@ ieee80211_rx_h_mesh_fwding(struct ieee80211_rx_data *rx)
 	mesh_hdr = (struct ieee80211s_hdr *) (skb->data + hdrlen);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ieee80211_drop_unencrypted(rx, hdr->frame_control))
 		return RX_DROP_MONITOR;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* frame is in RMC, don't forward */
 	if (ieee80211_is_data(hdr->frame_control) &&
 	    is_multicast_ether_addr(hdr->addr1) &&
@@ -3051,11 +3076,14 @@ static int prepare_for_handlers(struct ieee80211_rx_data *rx,
 		if (!bssid)
 			return 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (ether_addr_equal(sdata->vif.addr, hdr->addr2) ||
 		    ether_addr_equal(sdata->u.ibss.bssid, hdr->addr2))
 			return 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		if (ieee80211_is_beacon(hdr->frame_control)) {
 			return 1;
 		} else if (!ieee80211_bssid_match(bssid, sdata->u.ibss.bssid)) {

@@ -37,10 +37,14 @@
 #include <linux/rtc.h>
 #include <linux/time.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 //#include "../staging/android/android_alarm.h"
 =======
 //#include "../../staging/android/android_alarm.h"
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+//#include "../../staging/android/android_alarm.h"
+>>>>>>> master
 #include <linux/regulator/consumer.h>
 #include <linux/ssp_platformdata.h>
 #ifdef CONFIG_SENSORS_SSP_STM

@@ -638,6 +638,7 @@ static struct rpc_cred *get_backchannel_cred(struct nfs4_client *clp, struct rpc
 static int setup_callback_client(struct nfs4_client *clp, struct nfs4_cb_conn *conn, struct nfsd4_session *ses)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int maxtime = max_cb_time(clp->net);
 	struct rpc_timeout	timeparms = {
 		.to_initval	= maxtime,
@@ -648,6 +649,11 @@ static int setup_callback_client(struct nfs4_client *clp, struct nfs4_cb_conn *c
 		.to_initval	= max_cb_time(clp->net),
 		.to_retries	= 0,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct rpc_timeout	timeparms = {
+		.to_initval	= max_cb_time(clp->net),
+		.to_retries	= 0,
+>>>>>>> master
 	};
 	struct rpc_create_args args = {
 		.net		= clp->net,
@@ -679,11 +685,15 @@ static int setup_callback_client(struct nfs4_client *clp, struct nfs4_cb_conn *c
 		args.bc_xprt = conn->cb_xprt;
 		args.prognumber = clp->cl_cb_session->se_cb_prog;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		args.protocol = conn->cb_xprt->xpt_class->xcl_ident |
 				XPRT_TRANSPORT_BC;
 =======
 		args.protocol = XPRT_TRANSPORT_BC_TCP;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		args.protocol = XPRT_TRANSPORT_BC_TCP;
+>>>>>>> master
 		args.authflavor = ses->se_cb_sec.flavor;
 	}
 	/* Create RPC client */
@@ -795,6 +805,7 @@ static bool nfsd41_cb_get_slot(struct nfs4_client *clp, struct rpc_task *task)
 	if (test_and_set_bit(0, &clp->cl_cb_slot_busy) != 0) {
 		rpc_sleep_on(&clp->cl_cb_waitq, task, NULL);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Race breaker */
 		if (test_and_set_bit(0, &clp->cl_cb_slot_busy) != 0) {
 			dprintk("%s slot is busy\n", __func__);
@@ -805,6 +816,10 @@ static bool nfsd41_cb_get_slot(struct nfs4_client *clp, struct rpc_task *task)
 		dprintk("%s slot is busy\n", __func__);
 		return false;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		dprintk("%s slot is busy\n", __func__);
+		return false;
+>>>>>>> master
 	}
 	return true;
 }

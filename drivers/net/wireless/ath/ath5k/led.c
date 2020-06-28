@@ -78,10 +78,14 @@ static DEFINE_PCI_DEVICE_TABLE(ath5k_led_devices) = {
 	{ ATH_SDEVICE(PCI_VENDOR_ID_HP, 0x0137a), ATH_LED(3, 1) },
 	/* HP Compaq C700 (nitrousnrg@gmail.com) */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ ATH_SDEVICE(PCI_VENDOR_ID_HP, 0x0137b), ATH_LED(3, 0) },
 =======
 	{ ATH_SDEVICE(PCI_VENDOR_ID_HP, 0x0137b), ATH_LED(3, 1) },
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	{ ATH_SDEVICE(PCI_VENDOR_ID_HP, 0x0137b), ATH_LED(3, 1) },
+>>>>>>> master
 	/* LiteOn AR5BXB63 (magooz@salug.it) */
 	{ ATH_SDEVICE(PCI_VENDOR_ID_ATHEROS, 0x3067), ATH_LED(3, 0) },
 	/* IBM-specific AR5212 (all others) */

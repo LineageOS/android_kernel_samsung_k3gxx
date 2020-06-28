@@ -90,6 +90,7 @@ static int usb_port_runtime_resume(struct device *dev)
 	if (port_dev->child && !retval) {
 		/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 * Attempt to wait for usb hub port to be reconnected in order
 		 * to make the resume procedure successful.  The device may have
 		 * disconnected while the port was powered off, so ignore the
@@ -104,6 +105,8 @@ static int usb_port_runtime_resume(struct device *dev)
 	}
 
 =======
+=======
+>>>>>>> master
 		 * Wait for usb hub port to be reconnected in order to make
 		 * the resume procedure successful.
 		 */
@@ -120,7 +123,10 @@ static int usb_port_runtime_resume(struct device *dev)
 	}
 
 out:
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	clear_bit(port1, hub->busy_bits);
 	usb_autopm_put_interface(intf);
 	return retval;

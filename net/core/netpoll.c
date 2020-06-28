@@ -387,6 +387,7 @@ void netpoll_send_skb_on_dev(struct netpoll *np, struct sk_buff *skb,
 								     skb->vlan_proto)) {
 						skb = __vlan_put_tag(skb, skb->vlan_proto, vlan_tx_tag_get(skb));
 <<<<<<< HEAD
+<<<<<<< HEAD
 						if (unlikely(!skb)) {
 							/* This is actually a packet drop, but we
 							 * don't want the code at the end of this
@@ -399,6 +400,10 @@ void netpoll_send_skb_on_dev(struct netpoll *np, struct sk_buff *skb,
 						if (unlikely(!skb))
 							break;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+						if (unlikely(!skb))
+							break;
+>>>>>>> master
 						skb->vlan_tci = 0;
 					}
 
@@ -407,9 +412,12 @@ void netpoll_send_skb_on_dev(struct netpoll *np, struct sk_buff *skb,
 						txq_trans_update(txq);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 			unlock_txq:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 				__netif_tx_unlock(txq);
 
 				if (status == NETDEV_TX_OK)
@@ -566,10 +574,14 @@ static void netpoll_neigh_reply(struct sk_buff *skb, struct netpoll_info *npinfo
 
 	proto = ntohs(eth_hdr(skb)->h_proto);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (proto == ETH_P_ARP) {
 =======
 	if (proto == ETH_P_IP) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (proto == ETH_P_IP) {
+>>>>>>> master
 		struct arphdr *arp;
 		unsigned char *arp_ptr;
 		/* No arp on this interface */
@@ -758,10 +770,14 @@ static bool pkt_is_ns(struct sk_buff *skb)
 	struct ipv6hdr *hdr;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (skb->protocol != htons(ETH_P_IPV6))
 =======
 	if (skb->protocol != htons(ETH_P_ARP))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (skb->protocol != htons(ETH_P_ARP))
+>>>>>>> master
 		return false;
 	if (!pskb_may_pull(skb, sizeof(struct ipv6hdr) + sizeof(struct nd_msg)))
 		return false;
@@ -965,9 +981,12 @@ int netpoll_parse_options(struct netpoll *np, char *opt)
 	char *cur=opt, *delim;
 	int ipv6;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool ipversion_set = false;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (*cur != '@') {
 		if ((delim = strchr(cur, '@')) == NULL)
@@ -981,9 +1000,12 @@ int netpoll_parse_options(struct netpoll *np, char *opt)
 
 	if (*cur != '/') {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ipversion_set = true;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		if ((delim = strchr(cur, '/')) == NULL)
 			goto parse_failed;
 		*delim = 0;
@@ -1027,10 +1049,14 @@ int netpoll_parse_options(struct netpoll *np, char *opt)
 	if (ipv6 < 0)
 		goto parse_failed;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	else if (ipversion_set && np->ipv6 != (bool)ipv6)
 =======
 	else if (np->ipv6 != (bool)ipv6)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	else if (np->ipv6 != (bool)ipv6)
+>>>>>>> master
 		goto parse_failed;
 	else
 		np->ipv6 = (bool)ipv6;
@@ -1325,6 +1351,7 @@ EXPORT_SYMBOL_GPL(__netpoll_free_async);
 void netpoll_cleanup(struct netpoll *np)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rtnl_lock();
 	if (!np->dev)
 		goto out;
@@ -1334,6 +1361,8 @@ void netpoll_cleanup(struct netpoll *np)
 out:
 	rtnl_unlock();
 =======
+=======
+>>>>>>> master
 	if (!np->dev)
 		return;
 
@@ -1343,7 +1372,10 @@ out:
 
 	dev_put(np->dev);
 	np->dev = NULL;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 EXPORT_SYMBOL(netpoll_cleanup);
 

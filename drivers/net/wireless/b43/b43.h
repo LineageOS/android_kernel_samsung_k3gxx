@@ -732,10 +732,15 @@ struct b43_request_fw_context {
 	/* The device we are requesting the fw for. */
 	struct b43_wldev *dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* a completion event structure needed if this call is asynchronous */
 	struct completion fw_load_complete;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	/* a completion event structure needed if this call is asynchronous */
+	struct completion fw_load_complete;
+>>>>>>> master
 	/* a pointer to the firmware object */
 	const struct firmware *blob;
 	/* The type of firmware to request. */
@@ -813,10 +818,13 @@ struct b43_wldev {
 	struct b43_bus_dev *dev;
 	struct b43_wl *wl;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* a completion event structure needed if this call is asynchronous */
 	struct completion fw_load_complete;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* The device initialization status.
 	 * Use b43_status() to query. */

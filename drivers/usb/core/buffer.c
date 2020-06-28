@@ -23,6 +23,7 @@
 
 /* FIXME tune these based on pool statistics ... */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static size_t pool_max[HCD_BUFFER_POOLS] = {
 	32, 128, 512, 2048,
 };
@@ -43,6 +44,8 @@ void __init usb_init_pool_max(void)
 		BUILD_BUG();		/* We don't allow this */
 }
 =======
+=======
+>>>>>>> master
 static const size_t	pool_max[HCD_BUFFER_POOLS] = {
 	/* platforms without dma-friendly caches might need to
 	 * prevent cacheline sharing...
@@ -54,7 +57,10 @@ static const size_t	pool_max[HCD_BUFFER_POOLS] = {
 	/* bigger --> allocate pages */
 };
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 /* SETUP primitives */
 

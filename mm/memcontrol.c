@@ -303,9 +303,12 @@ struct mem_cgroup {
 	bool		oom_lock;
 	atomic_t	under_oom;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_t	oom_wakeups;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	atomic_t	refcnt;
 
@@ -384,10 +387,14 @@ static size_t memcg_size(void)
 {
 	return sizeof(struct mem_cgroup) +
 <<<<<<< HEAD
+<<<<<<< HEAD
 		nr_node_ids * sizeof(struct mem_cgroup_per_node *);
 =======
 		nr_node_ids * sizeof(struct mem_cgroup_per_node);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		nr_node_ids * sizeof(struct mem_cgroup_per_node);
+>>>>>>> master
 }
 
 /* internal only representation about the status of kmem accounting. */
@@ -1229,10 +1236,14 @@ struct mem_cgroup *mem_cgroup_iter(struct mem_cgroup *root,
 				smp_rmb();
 				last_visited = iter->last_visited;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if (last_visited && last_visited != root &&
 =======
 				if (last_visited &&
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				if (last_visited &&
+>>>>>>> master
 				    !css_tryget(&last_visited->css))
 					last_visited = NULL;
 			}
@@ -1242,10 +1253,14 @@ struct mem_cgroup *mem_cgroup_iter(struct mem_cgroup *root,
 
 		if (reclaim) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (last_visited && last_visited != root)
 =======
 			if (last_visited)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			if (last_visited)
+>>>>>>> master
 				css_put(&last_visited->css);
 
 			iter->last_visited = memcg;
@@ -2092,6 +2107,7 @@ static int mem_cgroup_soft_reclaim(struct mem_cgroup *root_memcg,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DEFINE_SPINLOCK(memcg_oom_lock);
 
 /*
@@ -2105,6 +2121,8 @@ static bool mem_cgroup_oom_trylock(struct mem_cgroup *memcg)
 	spin_lock(&memcg_oom_lock);
 
 =======
+=======
+>>>>>>> master
 /*
  * Check OOM-Killer is already running under our hierarchy.
  * If someone is running, return false.
@@ -2114,7 +2132,10 @@ static bool mem_cgroup_oom_lock(struct mem_cgroup *memcg)
 {
 	struct mem_cgroup *iter, *failed = NULL;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	for_each_mem_cgroup_tree(iter, memcg) {
 		if (iter->oom_lock) {
 			/*
@@ -2128,6 +2149,7 @@ static bool mem_cgroup_oom_lock(struct mem_cgroup *memcg)
 			iter->oom_lock = true;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (failed) {
 		/*
@@ -2157,6 +2179,8 @@ static void mem_cgroup_oom_unlock(struct mem_cgroup *memcg)
 		iter->oom_lock = false;
 	spin_unlock(&memcg_oom_lock);
 =======
+=======
+>>>>>>> master
 	if (!failed)
 		return true;
 
@@ -2184,7 +2208,10 @@ static int mem_cgroup_oom_unlock(struct mem_cgroup *memcg)
 	for_each_mem_cgroup_tree(iter, memcg)
 		iter->oom_lock = false;
 	return 0;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static void mem_cgroup_mark_under_oom(struct mem_cgroup *memcg)
@@ -2209,9 +2236,13 @@ static void mem_cgroup_unmark_under_oom(struct mem_cgroup *memcg)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static DEFINE_SPINLOCK(memcg_oom_lock);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static DEFINE_SPINLOCK(memcg_oom_lock);
+>>>>>>> master
 static DECLARE_WAIT_QUEUE_HEAD(memcg_oom_waitq);
 
 struct oom_wait_info {
@@ -2242,9 +2273,12 @@ static int memcg_oom_wake_function(wait_queue_t *wait,
 static void memcg_wakeup_oom(struct mem_cgroup *memcg)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_inc(&memcg->oom_wakeups);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* for filtering, pass "memcg" as argument. */
 	__wake_up(&memcg_oom_waitq, TASK_NORMAL, 0, memcg);
 }
@@ -2255,6 +2289,7 @@ static void memcg_oom_recover(struct mem_cgroup *memcg)
 		memcg_wakeup_oom(memcg);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void mem_cgroup_oom(struct mem_cgroup *memcg, gfp_t mask, int order)
 {
@@ -2310,6 +2345,8 @@ bool mem_cgroup_oom_synchronize(bool handle)
 	if (!handle)
 		goto cleanup;
 =======
+=======
+>>>>>>> master
 /*
  * try to call OOM killer. returns false if we should exit memory-reclaim loop.
  */
@@ -2318,13 +2355,17 @@ static bool mem_cgroup_handle_oom(struct mem_cgroup *memcg, gfp_t mask,
 {
 	struct oom_wait_info owait;
 	bool locked, need_to_kill;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	owait.memcg = memcg;
 	owait.wait.flags = 0;
 	owait.wait.func = memcg_oom_wake_function;
 	owait.wait.private = current;
 	INIT_LIST_HEAD(&owait.wait.task_list);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	prepare_to_wait(&memcg_oom_waitq, &owait.wait, TASK_KILLABLE);
@@ -2359,6 +2400,8 @@ cleanup:
 	current->memcg_oom.memcg = NULL;
 	css_put(&memcg->css);
 =======
+=======
+>>>>>>> master
 	need_to_kill = true;
 	mem_cgroup_mark_under_oom(memcg);
 
@@ -2396,7 +2439,10 @@ cleanup:
 		return false;
 	/* Give chance to dying process */
 	schedule_timeout_uninterruptible(1);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return true;
 }
 
@@ -2710,18 +2756,26 @@ enum {
 	CHARGE_NOMEM,		/* we can't do more. return -ENOMEM */
 	CHARGE_WOULDBLOCK,	/* GFP_WAIT wasn't set and no enough res. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	CHARGE_OOM_DIE,		/* the current is killed because of OOM */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	CHARGE_OOM_DIE,		/* the current is killed because of OOM */
+>>>>>>> master
 };
 
 static int mem_cgroup_do_charge(struct mem_cgroup *memcg, gfp_t gfp_mask,
 				unsigned int nr_pages, unsigned int min_pages,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				bool invoke_oom)
 =======
 				bool oom_check)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				bool oom_check)
+>>>>>>> master
 {
 	unsigned long csize = nr_pages * PAGE_SIZE;
 	struct mem_cgroup *mem_over_limit;
@@ -2779,11 +2833,14 @@ static int mem_cgroup_do_charge(struct mem_cgroup *memcg, gfp_t gfp_mask,
 		return CHARGE_RETRY;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (invoke_oom)
 		mem_cgroup_oom(mem_over_limit, gfp_mask, get_order(csize));
 
 	return CHARGE_NOMEM;
 =======
+=======
+>>>>>>> master
 	/* If we don't need to call oom-killer at el, return immediately */
 	if (!oom_check)
 		return CHARGE_NOMEM;
@@ -2792,7 +2849,10 @@ static int mem_cgroup_do_charge(struct mem_cgroup *memcg, gfp_t gfp_mask,
 		return CHARGE_OOM_DIE;
 
 	return CHARGE_RETRY;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 /*
@@ -2837,11 +2897,14 @@ static int __mem_cgroup_try_charge(struct mm_struct *mm,
 		goto bypass;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(task_in_memcg_oom(current)))
 		goto bypass;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/*
 	 * We always charge the cgroup the mm_struct belongs to.
 	 * The mm_struct's mem_cgroup changes on task migration if the
@@ -2902,10 +2965,14 @@ again:
 
 	do {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		bool invoke_oom = oom && !nr_oom_retries;
 =======
 		bool oom_check;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		bool oom_check;
+>>>>>>> master
 
 		/* If killed, bypass charge */
 		if (fatal_signal_pending(current)) {
@@ -2914,9 +2981,12 @@ again:
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = mem_cgroup_do_charge(memcg, gfp_mask, batch,
 					   nr_pages, invoke_oom);
 =======
+=======
+>>>>>>> master
 		oom_check = false;
 		if (oom && !nr_oom_retries) {
 			oom_check = true;
@@ -2925,7 +2995,10 @@ again:
 
 		ret = mem_cgroup_do_charge(memcg, gfp_mask, batch, nr_pages,
 		    oom_check);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		switch (ret) {
 		case CHARGE_OK:
 			break;
@@ -2939,6 +3012,7 @@ again:
 			goto nomem;
 		case CHARGE_NOMEM: /* OOM routine works */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (!oom || invoke_oom) {
 				css_put(&memcg->css);
 				goto nomem;
@@ -2946,6 +3020,8 @@ again:
 			nr_oom_retries--;
 			break;
 =======
+=======
+>>>>>>> master
 			if (!oom) {
 				css_put(&memcg->css);
 				goto nomem;
@@ -2956,7 +3032,10 @@ again:
 		case CHARGE_OOM_DIE: /* Killed by OOM Killer */
 			css_put(&memcg->css);
 			goto bypass;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		}
 	} while (ret != CHARGE_OK);
 
@@ -5782,6 +5861,7 @@ static int compare_thresholds(const void *a, const void *b)
 	const struct mem_cgroup_threshold *_b = b;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (_a->threshold > _b->threshold)
 		return 1;
 
@@ -5792,6 +5872,9 @@ static int compare_thresholds(const void *a, const void *b)
 =======
 	return _a->threshold - _b->threshold;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return _a->threshold - _b->threshold;
+>>>>>>> master
 }
 
 static int mem_cgroup_oom_notify_cb(struct mem_cgroup *memcg)
@@ -5960,6 +6043,7 @@ swap_buffers:
 	/* Swap primary and spare array */
 	thresholds->spare = thresholds->primary;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	rcu_assign_pointer(thresholds->primary, new);
 
@@ -5968,19 +6052,27 @@ swap_buffers:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* If all events are unregistered, free the spare array */
 	if (!new) {
 		kfree(thresholds->spare);
 		thresholds->spare = NULL;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 
 	rcu_assign_pointer(thresholds->primary, new);
 
 	/* To be sure that nobody uses thresholds */
 	synchronize_rcu();
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 unlock:
 	mutex_unlock(&memcg->thresholds_lock);
 }
@@ -6540,6 +6632,7 @@ static void mem_cgroup_css_offline(struct cgroup *cont)
 {
 	struct mem_cgroup *memcg = mem_cgroup_from_cont(cont);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct cgroup *iter;
 
 	mem_cgroup_invalidate_reclaim_iterators(memcg);
@@ -6562,6 +6655,11 @@ static void mem_cgroup_css_offline(struct cgroup *cont)
 	mem_cgroup_invalidate_reclaim_iterators(memcg);
 	mem_cgroup_reparent_charges(memcg);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	mem_cgroup_invalidate_reclaim_iterators(memcg);
+	mem_cgroup_reparent_charges(memcg);
+>>>>>>> master
 	mem_cgroup_destroy_all_caches(memcg);
 }
 

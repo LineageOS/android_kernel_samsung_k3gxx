@@ -1765,10 +1765,14 @@ static struct usb_device_id ar5523_id_table[] = {
 	AR5523_DEVICE_UG(0x1690, 0x0712),	/* Gigaset / AR5523 */
 	AR5523_DEVICE_UG(0x1690, 0x0710),	/* Gigaset / SMCWUSBTG */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	AR5523_DEVICE_UG(0x129b, 0x160b),	/* Gigaset / USB stick 108
 =======
 	AR5523_DEVICE_UG(0x129b, 0x160c),	/* Gigaset / USB stick 108
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	AR5523_DEVICE_UG(0x129b, 0x160c),	/* Gigaset / USB stick 108
+>>>>>>> master
 						   (CyberTAN Technology) */
 	AR5523_DEVICE_UG(0x16ab, 0x7801),	/* Globalsun / AR5523_1 */
 	AR5523_DEVICE_UX(0x16ab, 0x7811),	/* Globalsun / AR5523_2 */

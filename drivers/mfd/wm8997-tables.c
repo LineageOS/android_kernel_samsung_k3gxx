@@ -241,9 +241,13 @@ static const struct reg_default wm8997_reg_default[] = {
 	{ 0x000002A3, 0x1102 },    /* R675   - Mic Detect 1 */
 	{ 0x000002A4, 0x009F },    /* R676   - Mic Detect 2 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	{ 0x000002A5, 0x0000 },    /* R677   - Mic Detect 3 */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	{ 0x000002A5, 0x0000 },    /* R677   - Mic Detect 3 */
+>>>>>>> master
 	{ 0x000002C3, 0x0000 },    /* R707   - Mic noise mix control 1 */
 	{ 0x000002CB, 0x0000 },    /* R715   - Isolation control */
 	{ 0x000002D3, 0x0000 },    /* R723   - Jack detect analogue */
@@ -684,9 +688,13 @@ static const struct reg_default wm8997_reg_default[] = {
 	{ 0x00000D56, 0x0000 },    /* R3414  - Jack detect debounce */
 	{ 0x00000E00, 0x0000 },    /* R3584  - FX_Ctrl1 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	{ 0x00000E01, 0x0000 },    /* R3585  - FX_Ctrl2 */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	{ 0x00000E01, 0x0000 },    /* R3585  - FX_Ctrl2 */
+>>>>>>> master
 	{ 0x00000E10, 0x6318 },    /* R3600  - EQ1_1 */
 	{ 0x00000E11, 0x6300 },    /* R3601  - EQ1_2 */
 	{ 0x00000E12, 0x0FC8 },    /* R3602  - EQ1_3 */
@@ -791,10 +799,15 @@ static const struct reg_default wm8997_reg_default[] = {
 	{ 0x00000EF4, 0x0000 },    /* R3828  - ISRC 2 CTRL 2 */
 	{ 0x00000EF5, 0x0000 },    /* R3829  - ISRC 2 CTRL 3 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	{ 0x00001100, 0x0010 },    /* R4352  - DSP1 Control 1 */
 	{ 0x00001101, 0x0000 },    /* R4353  - DSP1 Clocking 1 */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	{ 0x00001100, 0x0010 },    /* R4352  - DSP1 Control 1 */
+	{ 0x00001101, 0x0000 },    /* R4353  - DSP1 Clocking 1 */
+>>>>>>> master
 };
 
 static bool wm8997_readable_register(struct device *dev, unsigned int reg)
@@ -1486,10 +1499,13 @@ static bool wm8997_volatile_register(struct device *dev, unsigned int reg)
 	case ARIZONA_SAMPLE_RATE_3_STATUS:
 	case ARIZONA_ASYNC_SAMPLE_RATE_1_STATUS:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case ARIZONA_FLL1_NCO_TEST_0:
 	case ARIZONA_FLL2_NCO_TEST_0:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	case ARIZONA_MIC_DETECT_3:
 	case ARIZONA_HEADPHONE_DETECT_2:
 	case ARIZONA_INPUT_ENABLES_STATUS:

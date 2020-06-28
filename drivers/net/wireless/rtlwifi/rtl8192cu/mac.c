@@ -779,10 +779,14 @@ static long _rtl92c_signal_scale_mapping(struct ieee80211_hw *hw,
 static void _rtl92c_query_rxphystatus(struct ieee80211_hw *hw,
 				      struct rtl_stats *pstats,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				      struct rx_desc_92c *p_desc,
 =======
 				      struct rx_desc_92c *pdesc,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				      struct rx_desc_92c *pdesc,
+>>>>>>> master
 				      struct rx_fwinfo_92c *p_drvinfo,
 				      bool packet_match_bssid,
 				      bool packet_toself,
@@ -798,18 +802,24 @@ static void _rtl92c_query_rxphystatus(struct ieee80211_hw *hw,
 	bool in_powersavemode = false;
 	bool is_cck_rate;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 *pdesc = (u8 *)p_desc;
 
 	is_cck_rate = RX_HAL_IS_CCK_RATE(p_desc);
 	pstats->packet_matchbssid = packet_match_bssid;
 	pstats->packet_toself = packet_toself;
 =======
+=======
+>>>>>>> master
 
 	is_cck_rate = RX_HAL_IS_CCK_RATE(pdesc);
 	pstats->packet_matchbssid = packet_match_bssid;
 	pstats->packet_toself = packet_toself;
 	pstats->is_cck = is_cck_rate;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	pstats->packet_beacon = packet_beacon;
 	pstats->is_cck = is_cck_rate;
 	pstats->RX_SIGQ[0] = -1;

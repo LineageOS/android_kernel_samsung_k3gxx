@@ -240,20 +240,27 @@ struct ib_cq *mlx4_ib_create_cq(struct ib_device *ibdev, int entries, int vector
 		if (ib_copy_to_udata(udata, &cq->mcq.cqn, sizeof (__u32))) {
 			err = -EFAULT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			goto err_cq_free;
 =======
 			goto err_dbmap;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			goto err_dbmap;
+>>>>>>> master
 		}
 
 	return &cq->ibcq;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 err_cq_free:
 	mlx4_cq_free(dev->dev, &cq->mcq);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 err_dbmap:
 	if (context)
 		mlx4_ib_db_unmap_user(to_mucontext(context), &cq->db);

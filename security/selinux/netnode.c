@@ -282,10 +282,14 @@ int sel_netnode_sid(void *addr, u16 family, u32 *sid)
  *
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 void sel_netnode_flush(void)
 =======
 static void sel_netnode_flush(void)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static void sel_netnode_flush(void)
+>>>>>>> master
 {
 	unsigned int idx;
 	struct sel_netnode *node, *node_tmp;
@@ -303,7 +307,10 @@ static void sel_netnode_flush(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 static int sel_netnode_avc_callback(u32 event)
 {
 	if (event == AVC_CALLBACK_RESET) {
@@ -313,18 +320,25 @@ static int sel_netnode_avc_callback(u32 event)
 	return 0;
 }
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static __init int sel_netnode_init(void)
 {
 	int iter;
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if defined(SELINUX_ALWAYS_ENFORCE) || \
 	defined(SELINUX_ALWAYS_PERMISSIVE)
 =======
 #ifdef CONFIG_ALWAYS_ENFORCE
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#ifdef CONFIG_ALWAYS_ENFORCE
+>>>>>>> master
 	selinux_enabled = 1;
 #endif
 	if (!selinux_enabled)
@@ -336,12 +350,18 @@ static __init int sel_netnode_init(void)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	ret = avc_add_callback(sel_netnode_avc_callback, AVC_CALLBACK_RESET);
 	if (ret != 0)
 		panic("avc_add_callback() failed, error %d\n", ret);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return ret;
 }
 

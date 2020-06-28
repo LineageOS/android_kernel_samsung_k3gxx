@@ -114,10 +114,14 @@ static ssize_t hidraw_send_report(struct file *file, const char __user *buffer, 
 	int ret = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!hidraw_table[minor] || !hidraw_table[minor]->exist) {
 =======
 	if (!hidraw_table[minor]) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!hidraw_table[minor]) {
+>>>>>>> master
 		ret = -ENODEV;
 		goto out;
 	}
@@ -266,10 +270,14 @@ static int hidraw_open(struct inode *inode, struct file *file)
 
 	mutex_lock(&minors_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!hidraw_table[minor] || !hidraw_table[minor]->exist) {
 =======
 	if (!hidraw_table[minor]) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!hidraw_table[minor]) {
+>>>>>>> master
 		err = -ENODEV;
 		goto out_unlock;
 	}
@@ -311,6 +319,7 @@ static int hidraw_fasync(int fd, struct file *file, int on)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void drop_ref(struct hidraw *hidraw, int exists_bit)
 {
 	if (exists_bit) {
@@ -344,6 +353,8 @@ static int hidraw_release(struct inode * inode, struct file * file)
 	mutex_unlock(&minors_lock);
 	return 0;
 =======
+=======
+>>>>>>> master
 static int hidraw_release(struct inode * inode, struct file * file)
 {
 	unsigned int minor = iminor(inode);
@@ -377,7 +388,10 @@ unlock:
 	mutex_unlock(&minors_lock);
 
 	return ret;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static long hidraw_ioctl(struct file *file, unsigned int cmd,
@@ -583,10 +597,13 @@ void hidraw_disconnect(struct hid_device *hid)
 
 	mutex_lock(&minors_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	drop_ref(hidraw, 1);
 
 =======
+=======
+>>>>>>> master
 	hidraw->exist = 0;
 
 	device_destroy(hidraw_class, MKDEV(hidraw_major, hidraw->minor));
@@ -599,7 +616,10 @@ void hidraw_disconnect(struct hid_device *hid)
 	} else {
 		kfree(hidraw);
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	mutex_unlock(&minors_lock);
 }
 EXPORT_SYMBOL_GPL(hidraw_disconnect);

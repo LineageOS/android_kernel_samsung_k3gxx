@@ -208,6 +208,7 @@ _shift_data_right_pages(struct page **pages, size_t pgto_base,
 
 		vto = kmap_atomic(*pgto);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (*pgto != *pgfrom) {
 			vfrom = kmap_atomic(*pgfrom);
 			memcpy(vto + pgto_base, vfrom + pgfrom_base, copy);
@@ -216,11 +217,16 @@ _shift_data_right_pages(struct page **pages, size_t pgto_base,
 			memmove(vto + pgto_base, vto + pgfrom_base, copy);
 		flush_dcache_page(*pgto);
 =======
+=======
+>>>>>>> master
 		vfrom = kmap_atomic(*pgfrom);
 		memmove(vto + pgto_base, vfrom + pgfrom_base, copy);
 		flush_dcache_page(*pgto);
 		kunmap_atomic(vfrom);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		kunmap_atomic(vto);
 
 	} while ((len -= copy) != 0);

@@ -152,11 +152,15 @@ int bch_journal_read(struct cache_set *c, struct list_head *list,
 		pr_debug("%u journal buckets", ca->sb.njournal_buckets);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * Read journal buckets ordered by golden ratio hash to quickly
 =======
 		/* Read journal buckets ordered by golden ratio hash to quickly
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		/* Read journal buckets ordered by golden ratio hash to quickly
+>>>>>>> master
 		 * find a sequence of buckets with valid journal entries
 		 */
 		for (i = 0; i < ca->sb.njournal_buckets; i++) {
@@ -170,15 +174,20 @@ int bch_journal_read(struct cache_set *c, struct list_head *list,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * If that fails, check all the buckets we haven't checked
 =======
 		/* If that fails, check all the buckets we haven't checked
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		/* If that fails, check all the buckets we haven't checked
+>>>>>>> master
 		 * already
 		 */
 		pr_debug("falling back to linear search");
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		for (l = find_first_zero_bit(bitmap, ca->sb.njournal_buckets);
 		     l < ca->sb.njournal_buckets;
@@ -189,6 +198,8 @@ int bch_journal_read(struct cache_set *c, struct list_head *list,
 		if (list_empty(list))
 			continue;
 =======
+=======
+>>>>>>> master
 		for (l = 0; l < ca->sb.njournal_buckets; l++) {
 			if (test_bit(l, bitmap))
 				continue;
@@ -196,7 +207,10 @@ int bch_journal_read(struct cache_set *c, struct list_head *list,
 			if (read_bucket(l))
 				goto bsearch;
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 bsearch:
 		/* Binary search */
 		m = r = find_next_bit(bitmap, ca->sb.njournal_buckets, l + 1);
@@ -217,6 +231,7 @@ bsearch:
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * Read buckets in reverse order until we stop finding more
 		 * journal entries
@@ -224,11 +239,16 @@ bsearch:
 		pr_debug("finishing up: m %u njournal_buckets %u",
 			 m, ca->sb.njournal_buckets);
 =======
+=======
+>>>>>>> master
 		/* Read buckets in reverse order until we stop finding more
 		 * journal entries
 		 */
 		pr_debug("finishing up");
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		l = m;
 
 		while (1) {
@@ -257,6 +277,7 @@ bsearch:
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!list_empty(list))
 		c->journal.seq = list_entry(list->prev,
 					    struct journal_replay,
@@ -266,6 +287,11 @@ bsearch:
 				    struct journal_replay,
 				    list)->j.seq;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	c->journal.seq = list_entry(list->prev,
+				    struct journal_replay,
+				    list)->j.seq;
+>>>>>>> master
 
 	return 0;
 #undef read_bucket
@@ -463,10 +489,14 @@ static void do_journal_discard(struct cache *ca)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	switch (atomic_read(&ja->discard_in_flight)) {
 =======
 	switch (atomic_read(&ja->discard_in_flight) == DISCARD_IN_FLIGHT) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	switch (atomic_read(&ja->discard_in_flight) == DISCARD_IN_FLIGHT) {
+>>>>>>> master
 	case DISCARD_IN_FLIGHT:
 		return;
 
@@ -664,10 +694,14 @@ static void journal_write_unlocked(struct closure *cl)
 		bio->bi_sector	= PTR_OFFSET(k, i);
 		bio->bi_bdev	= ca->bdev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		bio->bi_rw	= REQ_WRITE|REQ_SYNC|REQ_META|REQ_FLUSH|REQ_FUA;
 =======
 		bio->bi_rw	= REQ_WRITE|REQ_SYNC|REQ_META|REQ_FLUSH;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		bio->bi_rw	= REQ_WRITE|REQ_SYNC|REQ_META|REQ_FLUSH;
+>>>>>>> master
 		bio->bi_size	= sectors << 9;
 
 		bio->bi_end_io	= journal_write_endio;
@@ -732,9 +766,12 @@ void bch_journal_meta(struct cache_set *c, struct closure *cl)
 			BUG_ON(!closure_wait(&w->wait, cl));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		closure_flush(&c->journal.io);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		__journal_try_write(c, true);
 	}
 }

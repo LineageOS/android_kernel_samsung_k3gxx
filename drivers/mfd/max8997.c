@@ -219,6 +219,7 @@ static int max8997_i2c_probe(struct i2c_client *i2c,
 
 	max8997->rtc = i2c_new_dummy(i2c->adapter, I2C_ADDR_RTC);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!max8997->rtc) {
 		dev_err(max8997->dev, "Failed to allocate I2C device for RTC\n");
 		return -ENODEV;
@@ -245,6 +246,12 @@ static int max8997_i2c_probe(struct i2c_client *i2c,
 	i2c_set_clientdata(max8997->haptic, max8997);
 	max8997->muic = i2c_new_dummy(i2c->adapter, I2C_ADDR_MUIC);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	i2c_set_clientdata(max8997->rtc, max8997);
+	max8997->haptic = i2c_new_dummy(i2c->adapter, I2C_ADDR_HAPTIC);
+	i2c_set_clientdata(max8997->haptic, max8997);
+	max8997->muic = i2c_new_dummy(i2c->adapter, I2C_ADDR_MUIC);
+>>>>>>> master
 	i2c_set_clientdata(max8997->muic, max8997);
 
 	pm_runtime_set_active(max8997->dev);
@@ -272,12 +279,16 @@ err_mfd:
 	mfd_remove_devices(max8997->dev);
 	i2c_unregister_device(max8997->muic);
 <<<<<<< HEAD
+<<<<<<< HEAD
 err_i2c_muic:
 	i2c_unregister_device(max8997->haptic);
 err_i2c_haptic:
 =======
 	i2c_unregister_device(max8997->haptic);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	i2c_unregister_device(max8997->haptic);
+>>>>>>> master
 	i2c_unregister_device(max8997->rtc);
 err:
 	kfree(max8997);

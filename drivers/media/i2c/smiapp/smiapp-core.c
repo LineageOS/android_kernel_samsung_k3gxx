@@ -2140,10 +2140,14 @@ static int smiapp_set_selection(struct v4l2_subdev *subdev,
 		break;
 	default:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = -EINVAL;
 =======
 		BUG();
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		BUG();
+>>>>>>> master
 	}
 
 	mutex_unlock(&sensor->mutex);
@@ -2634,12 +2638,16 @@ static int smiapp_registered(struct v4l2_subdev *subdev)
 	pll->scale_n = sensor->limits[SMIAPP_LIMIT_SCALER_N_MIN];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_lock(&sensor->mutex);
 	rval = smiapp_update_mode(sensor);
 	mutex_unlock(&sensor->mutex);
 =======
 	rval = smiapp_update_mode(sensor);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	rval = smiapp_update_mode(sensor);
+>>>>>>> master
 	if (rval) {
 		dev_err(&client->dev, "update mode failed\n");
 		goto out_nvm_release;

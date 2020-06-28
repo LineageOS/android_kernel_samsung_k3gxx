@@ -53,15 +53,20 @@ int edac_mc_get_poll_msec(void)
 static int edac_set_poll_msec(const char *val, struct kernel_param *kp)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long l;
 =======
 	long l;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	long l;
+>>>>>>> master
 	int ret;
 
 	if (!val)
 		return -EINVAL;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ret = kstrtoul(val, 0, &l);
 	if (ret)
@@ -72,11 +77,16 @@ static int edac_set_poll_msec(const char *val, struct kernel_param *kp)
 
 	*((unsigned long *)kp->arg) = l;
 =======
+=======
+>>>>>>> master
 	ret = strict_strtol(val, 0, &l);
 	if (ret == -EINVAL || ((int)l != l))
 		return -EINVAL;
 	*((int *)kp->arg) = l;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* notify edac_mc engine to reset the poll period */
 	edac_mc_reset_delay_period(l);
@@ -985,15 +995,19 @@ nomem:
 int edac_create_sysfs_mci_device(struct mem_ctl_info *mci)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	char *name;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	int i, err;
 
 	/*
 	 * The memory controller needs its own bus, in order to avoid
 	 * namespace conflicts at /sys/bus/edac.
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	name = kasprintf(GFP_KERNEL, "mc%d", mci->mc_idx);
 	if (!name)
@@ -1009,6 +1023,8 @@ int edac_create_sysfs_mci_device(struct mem_ctl_info *mci)
 		return err;
 	}
 =======
+=======
+>>>>>>> master
 	mci->bus->name = kasprintf(GFP_KERNEL, "mc%d", mci->mc_idx);
 	if (!mci->bus->name)
 		return -ENOMEM;
@@ -1018,7 +1034,10 @@ int edac_create_sysfs_mci_device(struct mem_ctl_info *mci)
 	err = bus_register(mci->bus);
 	if (err < 0)
 		return err;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/* get the /sys/devices/system/edac subsys reference */
 	mci->dev.type = &mci_attr_type;
@@ -1103,11 +1122,15 @@ fail2:
 	device_unregister(&mci->dev);
 	bus_unregister(mci->bus);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kfree(name);
 
 =======
 	kfree(mci->bus->name);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	kfree(mci->bus->name);
+>>>>>>> master
 	return err;
 }
 
@@ -1139,6 +1162,7 @@ void edac_remove_sysfs_mci_device(struct mem_ctl_info *mci)
 void edac_unregister_sysfs(struct mem_ctl_info *mci)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const char *name = mci->bus->name;
 
 	edac_dbg(1, "Unregistering device %s\n", dev_name(&mci->dev));
@@ -1146,11 +1170,16 @@ void edac_unregister_sysfs(struct mem_ctl_info *mci)
 	bus_unregister(mci->bus);
 	kfree(name);
 =======
+=======
+>>>>>>> master
 	edac_dbg(1, "Unregistering device %s\n", dev_name(&mci->dev));
 	device_unregister(&mci->dev);
 	bus_unregister(mci->bus);
 	kfree(mci->bus->name);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 static void mc_attr_release(struct device *dev)

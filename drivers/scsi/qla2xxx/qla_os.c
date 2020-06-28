@@ -2343,16 +2343,22 @@ qla2x00_probe_one(struct pci_dev *pdev, const struct pci_device_id *id)
 	if (mem_only) {
 		if (pci_enable_device_mem(pdev))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return ret;
 	} else {
 		if (pci_enable_device(pdev))
 			return ret;
 =======
+=======
+>>>>>>> master
 			goto probe_out;
 	} else {
 		if (pci_enable_device(pdev))
 			goto probe_out;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	/* This may fail but that's ok */
@@ -2363,10 +2369,14 @@ qla2x00_probe_one(struct pci_dev *pdev, const struct pci_device_id *id)
 		ql_log_pci(ql_log_fatal, pdev, 0x0009,
 		    "Unable to allocate memory for ha.\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto disable_device;
 =======
 		goto probe_out;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		goto probe_out;
+>>>>>>> master
 	}
 	ql_dbg_pci(ql_dbg_init, pdev, 0x000a,
 	    "Memory allocated for ha=%p.\n", ha);
@@ -2565,10 +2575,14 @@ qla2x00_probe_one(struct pci_dev *pdev, const struct pci_device_id *id)
 	    "disable");
 	ret = qla2x00_mem_alloc(ha, req_length, rsp_length, &req, &rsp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret) {
 =======
 	if (!ret) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!ret) {
+>>>>>>> master
 		ql_log_pci(ql_log_fatal, pdev, 0x0031,
 		    "Failed to allocate memory for adapter, aborting.\n");
 
@@ -2915,10 +2929,14 @@ iospace_config_failed:
 	ha = NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 disable_device:
 =======
 probe_out:
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+probe_out:
+>>>>>>> master
 	pci_disable_device(pdev);
 	return ret;
 }
@@ -3321,10 +3339,14 @@ qla2x00_mem_alloc(struct qla_hw_data *ha, uint16_t req_len, uint16_t rsp_len,
 				SLAB_HWCACHE_ALIGN, NULL);
 			if (!ctx_cachep)
 <<<<<<< HEAD
+<<<<<<< HEAD
 				goto fail_free_srb_mempool;
 =======
 				goto fail_free_gid_list;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				goto fail_free_gid_list;
+>>>>>>> master
 		}
 		ha->ctx_mempool = mempool_create_slab_pool(SRB_MIN_REQ,
 			ctx_cachep);
@@ -3478,6 +3500,7 @@ qla2x00_mem_alloc(struct qla_hw_data *ha, uint16_t req_len, uint16_t rsp_len,
 	    GFP_KERNEL);
 	if (!ha->loop_id_map)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto fail_loop_id_map;
 	else {
 		qla2x00_set_reserved_loop_ids(ha);
@@ -3490,6 +3513,8 @@ qla2x00_mem_alloc(struct qla_hw_data *ha, uint16_t req_len, uint16_t rsp_len,
 fail_loop_id_map:
 	dma_pool_free(ha->s_dma_pool, ha->async_pd, ha->async_pd_dma);
 =======
+=======
+>>>>>>> master
 		goto fail_async_pd;
 	else {
 		qla2x00_set_reserved_loop_ids(ha);
@@ -3499,7 +3524,10 @@ fail_loop_id_map:
 
 	return 1;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 fail_async_pd:
 	dma_pool_free(ha->s_dma_pool, ha->ex_init_cb, ha->ex_init_cb_dma);
 fail_ex_init_cb:
@@ -3528,12 +3556,15 @@ fail_free_ms_iocb:
 	ha->ms_iocb = NULL;
 	ha->ms_iocb_dma = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (ha->sns_cmd)
 		dma_free_coherent(&ha->pdev->dev, sizeof(struct sns_cmd_pkt),
 		    ha->sns_cmd, ha->sns_cmd_dma);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 fail_dma_pool:
 	if (IS_QLA82XX(ha) || ql2xenabledif) {
 		dma_pool_destroy(ha->fcp_cmnd_dma_pool);
@@ -3552,6 +3583,7 @@ fail_free_nvram:
 	ha->nvram = NULL;
 fail_free_ctx_mempool:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ha->ctx_mempool)
 		mempool_destroy(ha->ctx_mempool);
 	ha->ctx_mempool = NULL;
@@ -3559,11 +3591,16 @@ fail_free_srb_mempool:
 	if (ha->srb_mempool)
 		mempool_destroy(ha->srb_mempool);
 =======
+=======
+>>>>>>> master
 	mempool_destroy(ha->ctx_mempool);
 	ha->ctx_mempool = NULL;
 fail_free_srb_mempool:
 	mempool_destroy(ha->srb_mempool);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	ha->srb_mempool = NULL;
 fail_free_gid_list:
 	dma_free_coherent(&ha->pdev->dev, qla2x00_gid_list_size(ha),

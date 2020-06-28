@@ -115,10 +115,14 @@ bool regmap_readable(struct regmap *map, unsigned int reg)
 bool regmap_volatile(struct regmap *map, unsigned int reg)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!map->format.format_write && !regmap_readable(map, reg))
 =======
 	if (!regmap_readable(map, reg))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!regmap_readable(map, reg))
+>>>>>>> master
 		return false;
 
 	if (map->volatile_reg)
@@ -1182,10 +1186,14 @@ int _regmap_write(struct regmap *map, unsigned int reg,
 
 #ifdef LOG_DEVICE
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (map->dev && strcmp(dev_name(map->dev), LOG_DEVICE) == 0)
 =======
 	if (strcmp(dev_name(map->dev), LOG_DEVICE) == 0)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (strcmp(dev_name(map->dev), LOG_DEVICE) == 0)
+>>>>>>> master
 		dev_info(map->dev, "%x <= %x\n", reg, val);
 #endif
 
@@ -1329,10 +1337,14 @@ EXPORT_SYMBOL_GPL(regmap_bulk_write);
 
 static int _regmap_multi_reg_write(struct regmap *map,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				   const struct reg_sequence *regs,
 =======
 				   const struct reg_default *regs,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				   const struct reg_default *regs,
+>>>>>>> master
 				   int num_regs)
 {
 	int i, ret;
@@ -1368,10 +1380,14 @@ static int _regmap_multi_reg_write(struct regmap *map,
  * be returned in error cases.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 int regmap_multi_reg_write(struct regmap *map, const struct reg_sequence *regs,
 =======
 int regmap_multi_reg_write(struct regmap *map, const struct reg_default *regs,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+int regmap_multi_reg_write(struct regmap *map, const struct reg_default *regs,
+>>>>>>> master
 			   int num_regs)
 {
 	int ret;
@@ -1405,10 +1421,14 @@ EXPORT_SYMBOL_GPL(regmap_multi_reg_write);
  */
 int regmap_multi_reg_write_bypassed(struct regmap *map,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				    const struct reg_sequence *regs,
 =======
 				    const struct reg_default *regs,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				    const struct reg_default *regs,
+>>>>>>> master
 				    int num_regs)
 {
 	int ret;
@@ -1548,10 +1568,14 @@ static int _regmap_read(struct regmap *map, unsigned int reg,
 	if (ret == 0) {
 #ifdef LOG_DEVICE
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (map->dev && strcmp(dev_name(map->dev), LOG_DEVICE) == 0)
 =======
 		if (strcmp(dev_name(map->dev), LOG_DEVICE) == 0)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (strcmp(dev_name(map->dev), LOG_DEVICE) == 0)
+>>>>>>> master
 			dev_info(map->dev, "%x => %x\n", reg, *val);
 #endif
 
@@ -1701,10 +1725,14 @@ int regmap_bulk_read(struct regmap *map, unsigned int reg, void *val,
 			if (ret != 0)
 				return ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			map->format.format_val(val + (i * val_bytes), ival, 0);
 =======
 			memcpy(val + (i * val_bytes), &ival, val_bytes);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			memcpy(val + (i * val_bytes), &ival, val_bytes);
+>>>>>>> master
 		}
 	}
 

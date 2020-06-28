@@ -881,6 +881,7 @@ int rtl8723ae_hw_init(struct ieee80211_hw *hw)
 	int err;
 	u8 tmp_u1b;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long flags;
 
 	rtlpriv->rtlhal.being_init_adapter = true;
@@ -898,16 +899,24 @@ int rtl8723ae_hw_init(struct ieee80211_hw *hw)
 
 	rtlpriv->rtlhal.being_init_adapter = true;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	rtlpriv->rtlhal.being_init_adapter = true;
+>>>>>>> master
 	rtlpriv->intf_ops->disable_aspm(hw);
 	rtstatus = _rtl8712e_init_mac(hw);
 	if (rtstatus != true) {
 		RT_TRACE(rtlpriv, COMP_ERR, DBG_EMERG, "Init MAC failed\n");
 		err = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto exit;
 =======
 		return err;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return err;
+>>>>>>> master
 	}
 
 	err = rtl8723ae_download_fw(hw);
@@ -916,11 +925,16 @@ int rtl8723ae_hw_init(struct ieee80211_hw *hw)
 			 "Failed to download FW. Init HW without FW now..\n");
 		err = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto exit;
 =======
 		rtlhal->fw_ready = false;
 		return err;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		rtlhal->fw_ready = false;
+		return err;
+>>>>>>> master
 	} else {
 		rtlhal->fw_ready = true;
 	}
@@ -996,10 +1010,13 @@ int rtl8723ae_hw_init(struct ieee80211_hw *hw)
 	}
 	rtl8723ae_dm_init(hw);
 <<<<<<< HEAD
+<<<<<<< HEAD
 exit:
 	local_irq_restore(flags);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	rtlpriv->rtlhal.being_init_adapter = false;
 	return err;
 }

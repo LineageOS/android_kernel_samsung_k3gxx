@@ -69,12 +69,16 @@
 #include "rtmutex_common.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifndef CONFIG_HAVE_FUTEX_CMPXCHG
 int __read_mostly futex_cmpxchg_enabled;
 #endif
 =======
 int __read_mostly futex_cmpxchg_enabled;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+int __read_mostly futex_cmpxchg_enabled;
+>>>>>>> master
 
 #define FUTEX_HASHBITS (CONFIG_BASE_SMALL ? 4 : 8)
 
@@ -295,10 +299,14 @@ again:
 		/* serialize against __split_huge_page_splitting() */
 		local_irq_disable();
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (likely(__get_user_pages_fast(address, 1, !ro, &page) == 1)) {
 =======
 		if (likely(__get_user_pages_fast(address, 1, 1, &page) == 1)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (likely(__get_user_pages_fast(address, 1, 1, &page) == 1)) {
+>>>>>>> master
 			page_head = compound_head(page);
 			/*
 			 * page_head is valid pointer but we must pin
@@ -602,6 +610,7 @@ void exit_pi_state_list(struct task_struct *curr)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * We need to check the following states:
  *
@@ -653,6 +662,8 @@ void exit_pi_state_list(struct task_struct *curr)
  */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int
 lookup_pi_state(u32 uval, struct futex_hash_bucket *hb,
 		union futex_key *key, struct futex_pi_state **ps)
@@ -669,6 +680,7 @@ lookup_pi_state(u32 uval, struct futex_hash_bucket *hb,
 		if (match_futex(&this->key, key)) {
 			/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 * Sanity check the waiter before increasing
 			 * the refcount and attaching to it.
 			 */
@@ -677,13 +689,18 @@ lookup_pi_state(u32 uval, struct futex_hash_bucket *hb,
 			 * Userspace might have messed up non-PI and
 			 * PI futexes [3]
 =======
+=======
+>>>>>>> master
 			 * Another waiter already exists - bump up
 			 * the refcount and return its pi_state:
 			 */
 			pi_state = this->pi_state;
 			/*
 			 * Userspace might have messed up non-PI and PI futexes
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			 */
 			if (unlikely(!pi_state))
 				return -EINVAL;
@@ -691,6 +708,7 @@ lookup_pi_state(u32 uval, struct futex_hash_bucket *hb,
 			WARN_ON(!atomic_read(&pi_state->refcount));
 
 			/*
+<<<<<<< HEAD
 <<<<<<< HEAD
 			 * Handle the owner died case:
 			 */
@@ -750,6 +768,8 @@ lookup_pi_state(u32 uval, struct futex_hash_bucket *hb,
 			atomic_inc(&pi_state->refcount);
 			*ps = pi_state;
 =======
+=======
+>>>>>>> master
 			 * When pi_state->owner is NULL then the owner died
 			 * and another waiter is on the fly. pi_state->owner
 			 * is fixed up by the task which acquires
@@ -771,7 +791,10 @@ lookup_pi_state(u32 uval, struct futex_hash_bucket *hb,
 			atomic_inc(&pi_state->refcount);
 			*ps = pi_state;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			return 0;
 		}
 	}
@@ -779,10 +802,14 @@ lookup_pi_state(u32 uval, struct futex_hash_bucket *hb,
 	/*
 	 * We are the first waiter - try to look up the real owner and attach
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * the new pi_state to it, but bail out when TID = 0 [1]
 =======
 	 * the new pi_state to it, but bail out when TID = 0
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	 * the new pi_state to it, but bail out when TID = 0
+>>>>>>> master
 	 */
 	if (!pid)
 		return -ESRCH;
@@ -791,6 +818,7 @@ lookup_pi_state(u32 uval, struct futex_hash_bucket *hb,
 		return -ESRCH;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!p->mm) {
 		put_task_struct(p);
 		return -EPERM;
@@ -798,6 +826,8 @@ lookup_pi_state(u32 uval, struct futex_hash_bucket *hb,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/*
 	 * We need to look at the task state flags to figure out,
 	 * whether the task is exiting. To protect against the do_exit
@@ -819,11 +849,14 @@ lookup_pi_state(u32 uval, struct futex_hash_bucket *hb,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * No existing pi state. First waiter. [2]
 	 */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	pi_state = alloc_pi_state();
 
 	/*
@@ -896,6 +929,7 @@ retry:
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * Surprise - we got the lock, but we do not trust user space at all.
 	 */
 	if (unlikely(!curval)) {
@@ -909,11 +943,16 @@ retry:
 		return futex_top_waiter(hb, key) ? -EINVAL : 1;
 	}
 =======
+=======
+>>>>>>> master
 	 * Surprise - we got the lock. Just return to userspace:
 	 */
 	if (unlikely(!curval))
 		return 1;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	uval = curval;
 
@@ -1044,9 +1083,12 @@ static int wake_futex_pi(u32 __user *uaddr, u32 uval, struct futex_q *this)
 	struct futex_pi_state *pi_state = this->pi_state;
 	u32 uninitialized_var(curval), newval;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret = 0;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (!pi_state)
 		return -EINVAL;
@@ -1071,6 +1113,7 @@ static int wake_futex_pi(u32 __user *uaddr, u32 uval, struct futex_q *this)
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * We pass it to the next owner. The WAITERS bit is always
 	 * kept enabled while there is PI state around. We cleanup the
 	 * owner died bit, because we are the owner.
@@ -1085,6 +1128,8 @@ static int wake_futex_pi(u32 __user *uaddr, u32 uval, struct futex_q *this)
 		raw_spin_unlock(&pi_state->pi_mutex.wait_lock);
 		return ret;
 =======
+=======
+>>>>>>> master
 	 * We pass it to the next owner. (The WAITERS bit is always
 	 * kept enabled while there is PI state around. We must also
 	 * preserve the owner died bit.)
@@ -1102,7 +1147,10 @@ static int wake_futex_pi(u32 __user *uaddr, u32 uval, struct futex_q *this)
 			raw_spin_unlock(&pi_state->pi_mutex.wait_lock);
 			return ret;
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	raw_spin_lock_irq(&pi_state->owner->pi_lock);
@@ -1382,10 +1430,14 @@ void requeue_pi_wake_futex(struct futex_q *q, union futex_key *key,
  * Return:
  *  0 - failed to acquire the lock atomically;
 <<<<<<< HEAD
+<<<<<<< HEAD
  * >0 - acquired the lock, return value is vpid of the top_waiter
 =======
  *  1 - acquired the lock;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ *  1 - acquired the lock;
+>>>>>>> master
  * <0 - error
  */
 static int futex_proxy_trylock_atomic(u32 __user *pifutex,
@@ -1397,10 +1449,14 @@ static int futex_proxy_trylock_atomic(u32 __user *pifutex,
 	struct futex_q *top_waiter = NULL;
 	u32 curval;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret, vpid;
 =======
 	int ret;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int ret;
+>>>>>>> master
 
 	if (get_futex_value_locked(&curval, pifutex))
 		return -EFAULT;
@@ -1429,6 +1485,7 @@ static int futex_proxy_trylock_atomic(u32 __user *pifutex,
 	 * in ps in contended cases.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vpid = task_pid_vnr(top_waiter->task);
 	ret = futex_lock_pi_atomic(pifutex, hb2, key2, ps, top_waiter->task,
 				   set_waiters);
@@ -1437,12 +1494,17 @@ static int futex_proxy_trylock_atomic(u32 __user *pifutex,
 		return vpid;
 	}
 =======
+=======
+>>>>>>> master
 	ret = futex_lock_pi_atomic(pifutex, hb2, key2, ps, top_waiter->task,
 				   set_waiters);
 	if (ret == 1)
 		requeue_pi_wake_futex(top_waiter, key2, hb2);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return ret;
 }
 
@@ -1475,9 +1537,13 @@ static int futex_requeue(u32 __user *uaddr1, unsigned int flags,
 	struct plist_head *head1;
 	struct futex_q *this, *next;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	u32 curval2;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u32 curval2;
+>>>>>>> master
 
 	if (requeue_pi) {
 		/*
@@ -1580,6 +1646,7 @@ retry_private:
 		 * waiting on it.  If the former, then the pi_state will not
 		 * exist yet, look it up one more time to ensure we have a
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 * reference to it. If the lock was taken, ret contains the
 		 * vpid of the top waiter task.
 		 */
@@ -1600,6 +1667,8 @@ retry_private:
 			 */
 			ret = lookup_pi_state(ret, hb2, &key2, &pi_state);
 =======
+=======
+>>>>>>> master
 		 * reference to it.
 		 */
 		if (ret == 1) {
@@ -1610,7 +1679,10 @@ retry_private:
 			if (!ret)
 				ret = lookup_pi_state(curval2, hb2, &key2,
 						      &pi_state);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		}
 
 		switch (ret) {
@@ -2381,6 +2453,7 @@ retry:
 	 * To avoid races, try to do the TID -> 0 atomic transition
 	 * again. If it succeeds then we can return without waking
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * anyone else up. We only try this if neither the waiters nor
 	 * the owner died bit are set.
 	 */
@@ -2390,6 +2463,11 @@ retry:
 	 */
 	if (!(uval & FUTEX_OWNER_DIED) &&
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	 * anyone else up:
+	 */
+	if (!(uval & FUTEX_OWNER_DIED) &&
+>>>>>>> master
 	    cmpxchg_futex_value_locked(&uval, uaddr, vpid, 0))
 		goto pi_faulted;
 	/*
@@ -2422,16 +2500,22 @@ retry:
 	 * No waiters - kernel unlocks the futex:
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = unlock_futex_pi(uaddr, uval);
 	if (ret == -EFAULT)
 		goto pi_faulted;
 =======
+=======
+>>>>>>> master
 	if (!(uval & FUTEX_OWNER_DIED)) {
 		ret = unlock_futex_pi(uaddr, uval);
 		if (ret == -EFAULT)
 			goto pi_faulted;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 out_unlock:
 	spin_unlock(&hb->lock);
@@ -2546,9 +2630,13 @@ static int futex_wait_requeue_pi(u32 __user *uaddr, unsigned int flags,
 	struct hrtimer_sleeper timeout, *to = NULL;
 	struct rt_mutex_waiter rt_waiter;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct rt_mutex *pi_mutex = NULL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct rt_mutex *pi_mutex = NULL;
+>>>>>>> master
 	struct futex_hash_bucket *hb;
 	union futex_key key2 = FUTEX_KEY_INIT;
 	struct futex_q q = futex_q_init;
@@ -2630,6 +2718,7 @@ static int futex_wait_requeue_pi(u32 __user *uaddr, unsigned int flags,
 			spin_lock(q.lock_ptr);
 			ret = fixup_pi_state_owner(uaddr2, &q, current);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (ret && rt_mutex_owner(&q.pi_state->pi_mutex) == current)
 				rt_mutex_unlock(&q.pi_state->pi_mutex);
 			/*
@@ -2647,6 +2736,11 @@ static int futex_wait_requeue_pi(u32 __user *uaddr, unsigned int flags,
 		}
 	} else {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			spin_unlock(q.lock_ptr);
+		}
+	} else {
+>>>>>>> master
 		/*
 		 * We have been woken up by futex_unlock_pi(), a timeout, or a
 		 * signal.  futex_unlock_pi() will not destroy the lock_ptr nor
@@ -2671,6 +2765,7 @@ static int futex_wait_requeue_pi(u32 __user *uaddr, unsigned int flags,
 			ret = (res < 0) ? res : 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * If fixup_pi_state_owner() faulted and was unable to handle
 		 * the fault, unlock the rt_mutex and return the fault to
@@ -2681,13 +2776,18 @@ static int futex_wait_requeue_pi(u32 __user *uaddr, unsigned int flags,
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		/* Unqueue and drop the lock. */
 		unqueue_me_pi(&q);
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret == -EINTR) {
 =======
+=======
+>>>>>>> master
 	/*
 	 * If fixup_pi_state_owner() faulted and was unable to handle the
 	 * fault, unlock the rt_mutex and return the fault to userspace.
@@ -2696,7 +2796,10 @@ static int futex_wait_requeue_pi(u32 __user *uaddr, unsigned int flags,
 		if (pi_mutex && rt_mutex_owner(pi_mutex) == current)
 			rt_mutex_unlock(pi_mutex);
 	} else if (ret == -EINTR) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		/*
 		 * We've already been requeued, but cannot restart by calling
 		 * futex_lock_pi() directly. We could restart this syscall, but
@@ -2786,10 +2889,14 @@ SYSCALL_DEFINE3(get_robust_list, int, pid,
 
 	ret = -EPERM;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!ptrace_may_access(p, PTRACE_MODE_READ_REALCREDS))
 =======
 	if (!ptrace_may_access(p, PTRACE_MODE_READ))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!ptrace_may_access(p, PTRACE_MODE_READ))
+>>>>>>> master
 		goto err_unlock;
 
 	head = p->robust_list;
@@ -3034,16 +3141,22 @@ SYSCALL_DEFINE6(futex, u32 __user *, uaddr, int, op, u32, val,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void __init futex_detect_cmpxchg(void)
 {
 #ifndef CONFIG_HAVE_FUTEX_CMPXCHG
 	u32 curval;
 =======
+=======
+>>>>>>> master
 static int __init futex_init(void)
 {
 	u32 curval;
 	int i;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/*
 	 * This will fail and we want it. Some arch implementations do
@@ -3058,6 +3171,7 @@ static int __init futex_init(void)
 	if (cmpxchg_futex_value_locked(&curval, NULL, 0, 0) == -EFAULT)
 		futex_cmpxchg_enabled = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 #endif
 }
 
@@ -3068,6 +3182,8 @@ static int __init futex_init(void)
 	futex_detect_cmpxchg();
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	for (i = 0; i < ARRAY_SIZE(futex_queues); i++) {
 		plist_head_init(&futex_queues[i].chain);
@@ -3077,7 +3193,11 @@ static int __init futex_init(void)
 	return 0;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 core_initcall(futex_init);
 =======
 __initcall(futex_init);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+__initcall(futex_init);
+>>>>>>> master

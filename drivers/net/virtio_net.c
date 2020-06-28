@@ -295,6 +295,7 @@ static struct sk_buff *page_to_skb(struct receive_queue *rq,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct sk_buff *receive_small(void *buf, unsigned int len)
 {
 	struct sk_buff * skb = buf;
@@ -338,6 +339,8 @@ static struct sk_buff *receive_mergeable(struct net_device *dev,
 		goto err_skb;
 
 =======
+=======
+>>>>>>> master
 static int receive_mergeable(struct receive_queue *rq, struct sk_buff *skb)
 {
 	struct skb_vnet_hdr *hdr = skb_vnet_hdr(skb);
@@ -345,12 +348,16 @@ static int receive_mergeable(struct receive_queue *rq, struct sk_buff *skb)
 	int num_buf, i, len;
 
 	num_buf = hdr->mhdr.num_buffers;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	while (--num_buf) {
 		i = skb_shinfo(skb)->nr_frags;
 		if (i >= MAX_SKB_FRAGS) {
 			pr_debug("%s: packet too long\n", skb->dev->name);
 			skb->dev->stats.rx_length_errors++;
+<<<<<<< HEAD
 <<<<<<< HEAD
 			goto err_frags;
 		}
@@ -361,6 +368,8 @@ static int receive_mergeable(struct receive_queue *rq, struct sk_buff *skb)
 			dev->stats.rx_length_errors++;
 			goto err_buf;
 =======
+=======
+>>>>>>> master
 			return -EINVAL;
 		}
 		page = virtqueue_get_buf(rq->vq, &len);
@@ -369,7 +378,10 @@ static int receive_mergeable(struct receive_queue *rq, struct sk_buff *skb)
 				 skb->dev->name, hdr->mhdr.num_buffers);
 			skb->dev->stats.rx_length_errors++;
 			return -EINVAL;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		}
 
 		if (len > PAGE_SIZE)
@@ -379,6 +391,7 @@ static int receive_mergeable(struct receive_queue *rq, struct sk_buff *skb)
 
 		--rq->num;
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return skb;
 err_skb:
@@ -403,6 +416,9 @@ err_buf:
 =======
 	return 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return 0;
+>>>>>>> master
 }
 
 static void receive_buf(struct receive_queue *rq, void *buf, unsigned int len)
@@ -412,9 +428,13 @@ static void receive_buf(struct receive_queue *rq, void *buf, unsigned int len)
 	struct virtnet_stats *stats = this_cpu_ptr(vi->stats);
 	struct sk_buff *skb;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct page *page;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	struct page *page;
+>>>>>>> master
 	struct skb_vnet_hdr *hdr;
 
 	if (unlikely(len < sizeof(struct virtio_net_hdr) + ETH_HLEN)) {
@@ -427,6 +447,7 @@ static void receive_buf(struct receive_queue *rq, void *buf, unsigned int len)
 		return;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (vi->mergeable_rx_bufs)
 		skb = receive_mergeable(dev, rq, buf, len);
 	else if (vi->big_packets)
@@ -437,6 +458,8 @@ static void receive_buf(struct receive_queue *rq, void *buf, unsigned int len)
 	if (unlikely(!skb))
 		return;
 =======
+=======
+>>>>>>> master
 
 	if (!vi->mergeable_rx_bufs && !vi->big_packets) {
 		skb = buf;
@@ -456,7 +479,10 @@ static void receive_buf(struct receive_queue *rq, void *buf, unsigned int len)
 				return;
 			}
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	hdr = skb_vnet_hdr(skb);
 
@@ -997,9 +1023,13 @@ static int virtnet_set_queues(struct virtnet_info *vi, u16 queue_pairs)
 	struct virtio_net_ctrl_mq s;
 	struct net_device *dev = vi->dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int i;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	int i;
+>>>>>>> master
 
 	if (!vi->has_cvq || !virtio_has_feature(vi->vdev, VIRTIO_NET_F_MQ))
 		return 0;
@@ -1014,16 +1044,22 @@ static int virtnet_set_queues(struct virtnet_info *vi, u16 queue_pairs)
 		return -EINVAL;
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		vi->curr_queue_pairs = queue_pairs;
 		/* virtnet_open() will refill when device is going to up. */
 		if (dev->flags & IFF_UP)
 			schedule_delayed_work(&vi->refill, 0);
 =======
+=======
+>>>>>>> master
 		for (i = vi->curr_queue_pairs; i < queue_pairs; i++)
 			if (!try_fill_recv(&vi->rq[i], GFP_KERNEL))
 				schedule_delayed_work(&vi->refill, 0);
 		vi->curr_queue_pairs = queue_pairs;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	}
 
 	return 0;
@@ -1214,9 +1250,12 @@ static int virtnet_cpu_callback(struct notifier_block *nfb,
 		break;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return NOTIFY_OK;
 }
 
@@ -1394,6 +1433,7 @@ static void virtnet_config_changed(struct virtio_device *vdev)
 static void virtnet_free_queues(struct virtnet_info *vi)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i;
 
 	for (i = 0; i < vi->max_queue_pairs; i++)
@@ -1401,6 +1441,8 @@ static void virtnet_free_queues(struct virtnet_info *vi)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	kfree(vi->rq);
 	kfree(vi->sq);
 }
@@ -1614,6 +1656,7 @@ static int virtnet_probe(struct virtio_device *vdev)
 	if (virtio_has_feature(vdev, VIRTIO_NET_F_CSUM)) {
 		/* This opens up the world of extra features. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev->hw_features |= NETIF_F_HW_CSUM | NETIF_F_SG;
 		if (csum)
 			dev->features |= NETIF_F_HW_CSUM | NETIF_F_SG;
@@ -1622,6 +1665,11 @@ static int virtnet_probe(struct virtio_device *vdev)
 		if (csum)
 			dev->features |= NETIF_F_HW_CSUM|NETIF_F_SG|NETIF_F_FRAGLIST;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		dev->hw_features |= NETIF_F_HW_CSUM|NETIF_F_SG|NETIF_F_FRAGLIST;
+		if (csum)
+			dev->features |= NETIF_F_HW_CSUM|NETIF_F_SG|NETIF_F_FRAGLIST;
+>>>>>>> master
 
 		if (virtio_has_feature(vdev, VIRTIO_NET_F_GSO)) {
 			dev->hw_features |= NETIF_F_TSO | NETIF_F_UFO
@@ -1672,11 +1720,15 @@ static int virtnet_probe(struct virtio_device *vdev)
 	if (virtio_has_feature(vdev, VIRTIO_NET_F_GUEST_TSO4) ||
 	    virtio_has_feature(vdev, VIRTIO_NET_F_GUEST_TSO6) ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    virtio_has_feature(vdev, VIRTIO_NET_F_GUEST_ECN) ||
 	    virtio_has_feature(vdev, VIRTIO_NET_F_GUEST_UFO))
 =======
 	    virtio_has_feature(vdev, VIRTIO_NET_F_GUEST_ECN))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	    virtio_has_feature(vdev, VIRTIO_NET_F_GUEST_ECN))
+>>>>>>> master
 		vi->big_packets = true;
 
 	if (virtio_has_feature(vdev, VIRTIO_NET_F_MRG_RXBUF))
@@ -1793,10 +1845,13 @@ static int virtnet_freeze(struct virtio_device *vdev)
 	int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unregister_hotcpu_notifier(&vi->nb);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Prevent config work handler from accessing the device */
 	mutex_lock(&vi->config_lock);
 	vi->config_enable = false;
@@ -1828,6 +1883,7 @@ static int virtnet_restore(struct virtio_device *vdev)
 		return err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (netif_running(vi->dev)) {
 		for (i = 0; i < vi->curr_queue_pairs; i++)
 			if (!try_fill_recv(&vi->rq[i], GFP_KERNEL))
@@ -1840,6 +1896,8 @@ static int virtnet_restore(struct virtio_device *vdev)
 	netif_device_attach(vi->dev);
 
 =======
+=======
+>>>>>>> master
 	if (netif_running(vi->dev))
 		for (i = 0; i < vi->max_queue_pairs; i++)
 			virtnet_napi_enable(&vi->rq[i]);
@@ -1850,11 +1908,15 @@ static int virtnet_restore(struct virtio_device *vdev)
 		if (!try_fill_recv(&vi->rq[i], GFP_KERNEL))
 			schedule_delayed_work(&vi->refill, 0);
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	mutex_lock(&vi->config_lock);
 	vi->config_enable = true;
 	mutex_unlock(&vi->config_lock);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	rtnl_lock();
 	virtnet_set_queues(vi, vi->curr_queue_pairs);
@@ -1866,6 +1928,9 @@ static int virtnet_restore(struct virtio_device *vdev)
 =======
 	virtnet_set_queues(vi, vi->curr_queue_pairs);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	virtnet_set_queues(vi, vi->curr_queue_pairs);
+>>>>>>> master
 
 	return 0;
 }

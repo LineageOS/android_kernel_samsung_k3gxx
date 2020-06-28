@@ -150,20 +150,28 @@ static int ipip_err(struct sk_buff *skb, u32 info)
 	if (type == ICMP_DEST_UNREACH && code == ICMP_FRAG_NEEDED) {
 		ipv4_update_pmtu(skb, dev_net(skb->dev), info,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				 t->parms.link, 0, IPPROTO_IPIP, 0);
 =======
 				 t->dev->ifindex, 0, IPPROTO_IPIP, 0);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				 t->dev->ifindex, 0, IPPROTO_IPIP, 0);
+>>>>>>> master
 		err = 0;
 		goto out;
 	}
 
 	if (type == ICMP_REDIRECT) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ipv4_redirect(skb, dev_net(skb->dev), t->parms.link, 0,
 =======
 		ipv4_redirect(skb, dev_net(skb->dev), t->dev->ifindex, 0,
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		ipv4_redirect(skb, dev_net(skb->dev), t->dev->ifindex, 0,
+>>>>>>> master
 			      IPPROTO_IPIP, 0);
 		err = 0;
 		goto out;
@@ -204,10 +212,14 @@ static int ipip_rcv(struct sk_buff *skb)
 		if (!xfrm4_policy_check(NULL, XFRM_POLICY_IN, skb))
 			goto drop;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return ip_tunnel_rcv(tunnel, skb, &tpi, 0, log_ecn_error);
 =======
 		return ip_tunnel_rcv(tunnel, skb, &tpi, log_ecn_error);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return ip_tunnel_rcv(tunnel, skb, &tpi, log_ecn_error);
+>>>>>>> master
 	}
 
 	return -1;
@@ -496,7 +508,10 @@ module_init(ipip_init);
 module_exit(ipip_fini);
 MODULE_LICENSE("GPL");
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_ALIAS_RTNL_LINK("ipip");
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 MODULE_ALIAS_NETDEV("tunl0");

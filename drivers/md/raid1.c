@@ -95,9 +95,12 @@ static void * r1buf_pool_alloc(gfp_t gfp_flags, void *data)
 	struct r1bio *r1_bio;
 	struct bio *bio;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int need_pages;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	int i, j;
 
 	r1_bio = r1bio_pool_alloc(gfp_flags, pi);
@@ -121,25 +124,35 @@ static void * r1buf_pool_alloc(gfp_t gfp_flags, void *data)
 	 */
 	if (test_bit(MD_RECOVERY_REQUESTED, &pi->mddev->recovery))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		need_pages = pi->raid_disks;
 	else
 		need_pages = 1;
 	for (j = 0; j < need_pages; j++) {
 =======
+=======
+>>>>>>> master
 		j = pi->raid_disks;
 	else
 		j = 1;
 	while(j--) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		bio = r1_bio->bios[j];
 		bio->bi_vcnt = RESYNC_PAGES;
 
 		if (bio_alloc_pages(bio, gfp_flags))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			goto out_free_pages;
 =======
 			goto out_free_bio;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			goto out_free_bio;
+>>>>>>> master
 	}
 	/* If not user-requests, copy the page pointers to all bios */
 	if (!test_bit(MD_RECOVERY_REQUESTED, &pi->mddev->recovery)) {
@@ -154,6 +167,7 @@ static void * r1buf_pool_alloc(gfp_t gfp_flags, void *data)
 	return r1_bio;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 out_free_pages:
 	while (--j >= 0) {
 		struct bio_vec *bv;
@@ -164,6 +178,8 @@ out_free_pages:
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 out_free_bio:
 	while (++j < pi->raid_disks)
 		bio_put(r1_bio->bios[j]);
@@ -345,10 +361,14 @@ static void raid1_end_read_request(struct bio *bio, int error)
 		if (r1_bio->mddev->degraded == conf->raid_disks ||
 		    (r1_bio->mddev->degraded == conf->raid_disks-1 &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 		     test_bit(In_sync, &conf->mirrors[mirror].rdev->flags)))
 =======
 		     !test_bit(Faulty, &conf->mirrors[mirror].rdev->flags)))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		     !test_bit(Faulty, &conf->mirrors[mirror].rdev->flags)))
+>>>>>>> master
 			uptodate = 1;
 		spin_unlock_irqrestore(&conf->device_lock, flags);
 	}
@@ -579,27 +599,37 @@ static int read_balance(struct r1conf *conf, struct r1bio *r1_bio, int *max_sect
 			/* Don't balance among write-mostly, just
 			 * use the first as a last resort */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (best_dist_disk < 0) {
 				if (is_badblock(rdev, this_sector, sectors,
 						&first_bad, &bad_sectors)) {
 					if (first_bad <= this_sector)
 =======
+=======
+>>>>>>> master
 			if (best_disk < 0) {
 				if (is_badblock(rdev, this_sector, sectors,
 						&first_bad, &bad_sectors)) {
 					if (first_bad < this_sector)
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 						/* Cannot use this */
 						continue;
 					best_good_sectors = first_bad - this_sector;
 				} else
 					best_good_sectors = sectors;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				best_dist_disk = disk;
 				best_pending_disk = disk;
 =======
 				best_disk = disk;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				best_disk = disk;
+>>>>>>> master
 			}
 			continue;
 		}
@@ -1415,9 +1445,12 @@ static void error(struct mddev *mddev, struct md_rdev *rdev)
 	char b[BDEVNAME_SIZE];
 	struct r1conf *conf = mddev->private;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long flags;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	/*
 	 * If it is not operational, then we have already marked it as dead
@@ -1438,6 +1471,7 @@ static void error(struct mddev *mddev, struct md_rdev *rdev)
 	}
 	set_bit(Blocked, &rdev->flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock_irqsave(&conf->device_lock, flags);
 	if (test_and_clear_bit(In_sync, &rdev->flags)) {
 		mddev->degraded++;
@@ -1450,6 +1484,8 @@ static void error(struct mddev *mddev, struct md_rdev *rdev)
 	 */
 	set_bit(MD_RECOVERY_INTR, &mddev->recovery);
 =======
+=======
+>>>>>>> master
 	if (test_and_clear_bit(In_sync, &rdev->flags)) {
 		unsigned long flags;
 		spin_lock_irqsave(&conf->device_lock, flags);
@@ -1462,7 +1498,10 @@ static void error(struct mddev *mddev, struct md_rdev *rdev)
 		set_bit(MD_RECOVERY_INTR, &mddev->recovery);
 	} else
 		set_bit(Faulty, &rdev->flags);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	set_bit(MD_CHANGE_DEVS, &mddev->flags);
 	printk(KERN_ALERT
 	       "md/raid1:%s: Disk failure on %s, disabling device.\n"
@@ -1517,6 +1556,7 @@ static int raid1_spare_active(struct mddev *mddev)
 	 * and mark them readable.
 	 * Called under mddev lock, so rcu protection not needed.
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * device_lock used to avoid races with raid1_end_read_request
 	 * which expects 'In_sync' flags and ->degraded to be consistent.
 	 */
@@ -1524,6 +1564,9 @@ static int raid1_spare_active(struct mddev *mddev)
 =======
 	 */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	 */
+>>>>>>> master
 	for (i = 0; i < conf->raid_disks; i++) {
 		struct md_rdev *rdev = conf->mirrors[i].rdev;
 		struct md_rdev *repl = conf->mirrors[conf->raid_disks + i].rdev;
@@ -1547,9 +1590,12 @@ static int raid1_spare_active(struct mddev *mddev)
 		}
 		if (rdev
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    && rdev->recovery_offset == MaxSector
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		    && !test_bit(Faulty, &rdev->flags)
 		    && !test_and_set_bit(In_sync, &rdev->flags)) {
 			count++;
@@ -1557,9 +1603,13 @@ static int raid1_spare_active(struct mddev *mddev)
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	spin_lock_irqsave(&conf->device_lock, flags);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	spin_lock_irqsave(&conf->device_lock, flags);
+>>>>>>> master
 	mddev->degraded -= count;
 	spin_unlock_irqrestore(&conf->device_lock, flags);
 
@@ -1928,6 +1978,7 @@ static int process_checks(struct r1bio *r1_bio)
 		int j;
 		int size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		int uptodate;
 		struct bio *b = r1_bio->bios[i];
 		if (b->bi_end_io != end_sync_read)
@@ -1938,12 +1989,17 @@ static int process_checks(struct r1bio *r1_bio)
 		if (!uptodate)
 			clear_bit(BIO_UPTODATE, &b->bi_flags);
 =======
+=======
+>>>>>>> master
 		struct bio *b = r1_bio->bios[i];
 		if (b->bi_end_io != end_sync_read)
 			continue;
 		/* fixup the bio for reuse */
 		bio_reset(b);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		b->bi_vcnt = vcnt;
 		b->bi_size = r1_bio->sectors << 9;
 		b->bi_sector = r1_bio->sector +
@@ -1977,6 +2033,7 @@ static int process_checks(struct r1bio *r1_bio)
 		struct bio *pbio = r1_bio->bios[primary];
 		struct bio *sbio = r1_bio->bios[i];
 <<<<<<< HEAD
+<<<<<<< HEAD
 		int uptodate = test_bit(BIO_UPTODATE, &sbio->bi_flags);
 
 		if (sbio->bi_end_io != end_sync_read)
@@ -1986,12 +2043,17 @@ static int process_checks(struct r1bio *r1_bio)
 
 		if (uptodate) {
 =======
+=======
+>>>>>>> master
 
 		if (sbio->bi_end_io != end_sync_read)
 			continue;
 
 		if (test_bit(BIO_UPTODATE, &sbio->bi_flags)) {
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			for (j = vcnt; j-- ; ) {
 				struct page *p, *s;
 				p = pbio->bi_io_vec[j].bv_page;
@@ -2007,10 +2069,14 @@ static int process_checks(struct r1bio *r1_bio)
 			atomic64_add(r1_bio->sectors, &mddev->resync_mismatches);
 		if (j < 0 || (test_bit(MD_RECOVERY_CHECK, &mddev->recovery)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			      && uptodate)) {
 =======
 			      && test_bit(BIO_UPTODATE, &sbio->bi_flags))) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			      && test_bit(BIO_UPTODATE, &sbio->bi_flags))) {
+>>>>>>> master
 			/* No need to write to this device. */
 			sbio->bi_end_io = NULL;
 			rdev_dec_pending(conf->mirrors[i].rdev, mddev);
@@ -2136,10 +2202,14 @@ static void fix_read_error(struct r1conf *conf, int read_disk,
 			rdev = conf->mirrors[d].rdev;
 			if (rdev &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 			    !test_bit(Faulty, &rdev->flags))
 =======
 			    test_bit(In_sync, &rdev->flags))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			    test_bit(In_sync, &rdev->flags))
+>>>>>>> master
 				r1_sync_page_io(rdev, sect, s,
 						conf->tmppage, WRITE);
 		}
@@ -2152,10 +2222,14 @@ static void fix_read_error(struct r1conf *conf, int read_disk,
 			rdev = conf->mirrors[d].rdev;
 			if (rdev &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 			    !test_bit(Faulty, &rdev->flags)) {
 =======
 			    test_bit(In_sync, &rdev->flags)) {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			    test_bit(In_sync, &rdev->flags)) {
+>>>>>>> master
 				if (r1_sync_page_io(rdev, sect, s,
 						    conf->tmppage, READ)) {
 					atomic_add(s, &rdev->corrected_errors);
@@ -2237,10 +2311,14 @@ static int narrow_write_error(struct r1bio *r1_bio, int i)
 		wbio->bi_sector += rdev->data_offset;
 		wbio->bi_bdev = rdev->bdev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (submit_bio_wait(WRITE, wbio) < 0)
 =======
 		if (submit_bio_wait(WRITE, wbio) == 0)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (submit_bio_wait(WRITE, wbio) == 0)
+>>>>>>> master
 			/* failure! */
 			ok = rdev_set_badblocks(rdev, sector,
 						sectors, 0)

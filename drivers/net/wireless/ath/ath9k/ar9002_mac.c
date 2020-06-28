@@ -77,6 +77,7 @@ static bool ar9002_hw_get_isr(struct ath_hw *ah, enum ath9k_int *masked)
 			if (isr2 & AR_ISR_S2_TSFOOR)
 				mask2 |= ATH9K_INT_TSFOOR;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 			if (!(pCap->hw_caps & ATH9K_HW_CAP_RAC_SUPPORTED)) {
 				REG_WRITE(ah, AR_ISR_S2, isr2);
@@ -92,6 +93,11 @@ static bool ar9002_hw_get_isr(struct ath_hw *ah, enum ath9k_int *masked)
 
 		isr = REG_READ(ah, AR_ISR_RAC);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		}
+
+		isr = REG_READ(ah, AR_ISR_RAC);
+>>>>>>> master
 		if (isr == 0xffffffff) {
 			*masked = 0;
 			return false;
@@ -111,6 +117,7 @@ static bool ar9002_hw_get_isr(struct ath_hw *ah, enum ath9k_int *masked)
 			*masked |= ATH9K_INT_TX;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (pCap->hw_caps & ATH9K_HW_CAP_RAC_SUPPORTED) {
 				s0_s = REG_READ(ah, AR_ISR_S0_S);
 				s1_s = REG_READ(ah, AR_ISR_S1_S);
@@ -129,12 +136,17 @@ static bool ar9002_hw_get_isr(struct ath_hw *ah, enum ath9k_int *masked)
 			ah->intr_txqs |= MS(s0_s, AR_ISR_S0_QCU_TXOK);
 			ah->intr_txqs |= MS(s0_s, AR_ISR_S0_QCU_TXDESC);
 =======
+=======
+>>>>>>> master
 			s0_s = REG_READ(ah, AR_ISR_S0_S);
 			ah->intr_txqs |= MS(s0_s, AR_ISR_S0_QCU_TXOK);
 			ah->intr_txqs |= MS(s0_s, AR_ISR_S0_QCU_TXDESC);
 
 			s1_s = REG_READ(ah, AR_ISR_S1_S);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			ah->intr_txqs |= MS(s1_s, AR_ISR_S1_QCU_TXERR);
 			ah->intr_txqs |= MS(s1_s, AR_ISR_S1_QCU_TXEOL);
 		}
@@ -148,6 +160,7 @@ static bool ar9002_hw_get_isr(struct ath_hw *ah, enum ath9k_int *masked)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!AR_SREV_9100(ah) && (isr & AR_ISR_GENTMR)) {
 		u32 s5_s;
 
@@ -158,6 +171,8 @@ static bool ar9002_hw_get_isr(struct ath_hw *ah, enum ath9k_int *masked)
 		}
 
 =======
+=======
+>>>>>>> master
 	if (AR_SREV_9100(ah))
 		return true;
 
@@ -165,7 +180,10 @@ static bool ar9002_hw_get_isr(struct ath_hw *ah, enum ath9k_int *masked)
 		u32 s5_s;
 
 		s5_s = REG_READ(ah, AR_ISR_S5_S);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		ah->intr_gen_timer_trigger =
 				MS(s5_s, AR_ISR_S5_GENTIMER_TRIG);
 
@@ -178,6 +196,7 @@ static bool ar9002_hw_get_isr(struct ath_hw *ah, enum ath9k_int *masked)
 		if ((s5_s & AR_ISR_S5_TIM_TIMER) &&
 		    !(pCap->hw_caps & ATH9K_HW_CAP_AUTOSLEEP))
 			*masked |= ATH9K_INT_TIM_TIMER;
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 		if (!(pCap->hw_caps & ATH9K_HW_CAP_RAC_SUPPORTED)) {
@@ -198,6 +217,10 @@ static bool ar9002_hw_get_isr(struct ath_hw *ah, enum ath9k_int *masked)
 	}
 
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	}
+
+>>>>>>> master
 	if (sync_cause) {
 		ath9k_debug_sync_cause(common, sync_cause);
 		fatal_int =

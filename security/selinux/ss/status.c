@@ -59,6 +59,7 @@ struct page *selinux_kernel_status_page(void)
 			status->version = SELINUX_KERNEL_STATUS_VERSION;
 			status->sequence = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if defined(SELINUX_ALWAYS_ENFORCE)
 			status->enforcing = 1;
 #elif defined(SELINUX_ALWAYS_PERMISSIVE)
@@ -66,11 +67,16 @@ struct page *selinux_kernel_status_page(void)
 #else
  			status->enforcing = selinux_enforcing;
 =======
+=======
+>>>>>>> master
 #ifdef CONFIG_ALWAYS_ENFORCE
 			status->enforcing = 1;
 #else
 			status->enforcing = selinux_enforcing;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #endif
 			/*
 			 * NOTE: the next policyload event shall set
@@ -80,10 +86,14 @@ struct page *selinux_kernel_status_page(void)
 			 */
 			status->policyload = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			status->deny_unknown = !security_get_allow_unknown();
 =======
 			status->deny_unknown = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			status->deny_unknown = 0;
+>>>>>>> master
 		}
 	}
 	result = selinux_status_page;
@@ -135,10 +145,14 @@ void selinux_status_update_policyload(int seqno)
 
 		status->policyload = seqno;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		status->deny_unknown = !security_get_allow_unknown();
 =======
 		status->deny_unknown = 0;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		status->deny_unknown = 0;
+>>>>>>> master
 
 		smp_wmb();
 		status->sequence++;

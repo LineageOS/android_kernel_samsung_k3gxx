@@ -193,9 +193,12 @@ __dabt_svc:
 	mov	r2, sp
 	dabt_helper
 <<<<<<< HEAD
+<<<<<<< HEAD
  THUMB(	ldr	r5, [sp, #S_PSR]	)	@ potentially updated CPSR
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	svc_exit r5				@ return from exception
  UNWIND(.fnend		)
 ENDPROC(__dabt_svc)
@@ -362,11 +365,15 @@ ENDPROC(__pabt_svc)
 
 	.macro	kuser_cmpxchg_check
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if !defined(CONFIG_CPU_32v6K) && defined(CONFIG_KUSER_HELPERS) && \
     !defined(CONFIG_NEEDS_SYSCALL_FOR_CMPXCHG)
 =======
 #if !defined(CONFIG_CPU_32v6K) && !defined(CONFIG_NEEDS_SYSCALL_FOR_CMPXCHG)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#if !defined(CONFIG_CPU_32v6K) && !defined(CONFIG_NEEDS_SYSCALL_FOR_CMPXCHG)
+>>>>>>> master
 #ifndef CONFIG_MMU
 #warning "NPTL on non MMU needs fixing"
 #else

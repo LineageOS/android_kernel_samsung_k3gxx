@@ -10,6 +10,7 @@ obj-$(CONFIG_SENSORS_SYSFS)		+= sensors_core.o
 obj-$(CONFIG_IIO)			+= ssp_iio_ring.o ssp_iio_trigger.o
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 obj-$(CONFIG_SENSORS_SSP_MPU6500)	+= accel_mpu6500.o gyro_mpu6500.o
 obj-$(CONFIG_SENSORS_SSP_BMI058)	+= accel_bmi058.o gyro_bmi058.o
 obj-$(CONFIG_SENSORS_SSP_YAS532)	+= magnetic_yas532.o
@@ -27,6 +28,8 @@ obj-$(CONFIG_SENSORS_SSP_STM32F401)	+= mcu_stm32f401.o
 
 obj-$(CONFIG_SENSORS_SSP_MOBEAM)	 += barcode_emul_tmg3992.o
 =======
+=======
+>>>>>>> master
 obj-$(CONFIG_SENSORS_SSP_MPU6500)	+= factory/accel_mpu6500.o factory/gyro_mpu6500.o
 obj-$(CONFIG_SENSORS_SSP_BMI058)	+= factory/accel_bmi058.o factory/gyro_bmi058.o
 obj-$(CONFIG_SENSORS_SSP_YAS532)	+= factory/magnetic_yas532.o
@@ -43,7 +46,10 @@ obj-$(CONFIG_SENSORS_SSP_SHTC1)		+= factory/temphumidity_shtc1.o
 obj-$(CONFIG_SENSORS_SSP_STM32F401)	+= factory/mcu_stm32f401.o
 
 obj-$(CONFIG_SENSORS_SSP_MOBEAM)	 += factory/barcode_emul_tmg3992.o
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 obj-$(CONFIG_SENSORS_SSP_SENSORHUB)	+= ssp_sensorhub.o
 obj-$(CONFIG_SENSORS_MAX86900) += max86900.o

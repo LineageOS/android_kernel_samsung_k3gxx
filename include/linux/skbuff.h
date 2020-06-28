@@ -347,13 +347,19 @@ typedef unsigned char *sk_buff_data_t;
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #if defined(CONFIG_NF_DEFRAG_IPV4) || defined(CONFIG_NF_DEFRAG_IPV4_MODULE) || \
     defined(CONFIG_NF_DEFRAG_IPV6) || defined(CONFIG_NF_DEFRAG_IPV6_MODULE)
 #define NET_SKBUFF_NF_DEFRAG_NEEDED 1
 #endif
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /** 
  *	struct sk_buff - socket buffer
  *	@next: Next buffer in list
@@ -387,9 +393,13 @@ typedef unsigned char *sk_buff_data_t;
  *	@destructor: Destruct function
  *	@nfct: Associated connection, if any
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  *	@nfct_reasm: netfilter conntrack re-assembly pointer
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+ *	@nfct_reasm: netfilter conntrack re-assembly pointer
+>>>>>>> master
  *	@nf_bridge: Saved data about a bridged frame - see br_netfilter.c
  *	@skb_iif: ifindex of device we arrived on
  *	@tc_index: Traffic control index
@@ -477,11 +487,17 @@ struct sk_buff {
 	struct nf_conntrack	*nfct;
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef NET_SKBUFF_NF_DEFRAG_NEEDED
 	struct sk_buff		*nfct_reasm;
 #endif
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#ifdef NET_SKBUFF_NF_DEFRAG_NEEDED
+	struct sk_buff		*nfct_reasm;
+#endif
+>>>>>>> master
 #ifdef CONFIG_BRIDGE_NETFILTER
 	struct nf_bridge_info	*nf_bridge;
 #endif
@@ -1333,6 +1349,7 @@ static inline int skb_pagelen(const struct sk_buff *skb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline bool skb_has_frags(const struct sk_buff *skb)
 {
 	return skb_shinfo(skb)->nr_frags;
@@ -1340,6 +1357,8 @@ static inline bool skb_has_frags(const struct sk_buff *skb)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /**
  * __skb_fill_page_desc - initialise a paged fragment in an skb
  * @skb: buffer containing fragment to be initialised
@@ -1778,6 +1797,7 @@ static inline void skb_set_mac_header(struct sk_buff *skb, const int offset)
 #endif /* NET_SKBUFF_DATA_USES_OFFSET */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline void skb_pop_mac_header(struct sk_buff *skb)
 {
 	skb->mac_header = skb->network_header;
@@ -1785,6 +1805,8 @@ static inline void skb_pop_mac_header(struct sk_buff *skb)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static inline void skb_probe_transport_header(struct sk_buff *skb,
 					      const int offset_hint)
 {
@@ -2403,11 +2425,14 @@ static inline void skb_postpull_rcsum(struct sk_buff *skb,
 	if (skb->ip_summed == CHECKSUM_COMPLETE)
 		skb->csum = csum_sub(skb->csum, csum_partial(start, len, 0));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	else if (skb->ip_summed == CHECKSUM_PARTIAL &&
 		 skb_checksum_start_offset(skb) < 0)
 		skb->ip_summed = CHECKSUM_NONE;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 }
 
 unsigned char *skb_pull_rcsum(struct sk_buff *skb, unsigned int len);
@@ -2534,10 +2559,13 @@ extern struct sk_buff *skb_segment(struct sk_buff *skb,
 				   netdev_features_t features);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 unsigned int skb_gso_transport_seglen(const struct sk_buff *skb);
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static inline void *skb_header_pointer(const struct sk_buff *skb, int offset,
 				       int len, void *buffer)
 {
@@ -2747,7 +2775,10 @@ static inline void nf_conntrack_get(struct nf_conntrack *nfct)
 }
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef NET_SKBUFF_NF_DEFRAG_NEEDED
 static inline void nf_conntrack_get_reasm(struct sk_buff *skb)
 {
@@ -2760,7 +2791,10 @@ static inline void nf_conntrack_put_reasm(struct sk_buff *skb)
 		kfree_skb(skb);
 }
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #ifdef CONFIG_BRIDGE_NETFILTER
 static inline void nf_bridge_put(struct nf_bridge_info *nf_bridge)
 {
@@ -2780,12 +2814,18 @@ static inline void nf_reset(struct sk_buff *skb)
 	skb->nfct = NULL;
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef NET_SKBUFF_NF_DEFRAG_NEEDED
 	nf_conntrack_put_reasm(skb->nfct_reasm);
 	skb->nfct_reasm = NULL;
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #ifdef CONFIG_BRIDGE_NETFILTER
 	nf_bridge_put(skb->nf_bridge);
 	skb->nf_bridge = NULL;
@@ -2808,12 +2848,18 @@ static inline void __nf_copy(struct sk_buff *dst, const struct sk_buff *src)
 	dst->nfctinfo = src->nfctinfo;
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 #ifdef NET_SKBUFF_NF_DEFRAG_NEEDED
 	dst->nfct_reasm = src->nfct_reasm;
 	nf_conntrack_get_reasm(src->nfct_reasm);
 #endif
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #ifdef CONFIG_BRIDGE_NETFILTER
 	dst->nf_bridge  = src->nf_bridge;
 	nf_bridge_get(src->nf_bridge);
@@ -2826,11 +2872,17 @@ static inline void nf_copy(struct sk_buff *dst, const struct sk_buff *src)
 	nf_conntrack_put(dst->nfct);
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef NET_SKBUFF_NF_DEFRAG_NEEDED
 	nf_conntrack_put_reasm(dst->nfct_reasm);
 #endif
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#ifdef NET_SKBUFF_NF_DEFRAG_NEEDED
+	nf_conntrack_put_reasm(dst->nfct_reasm);
+#endif
+>>>>>>> master
 #ifdef CONFIG_BRIDGE_NETFILTER
 	nf_bridge_put(dst->nf_bridge);
 #endif
@@ -2997,6 +3049,7 @@ static inline bool skb_head_is_locked(const struct sk_buff *skb)
 	return !skb->head_frag || skb_cloned(skb);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 /**
  * skb_gso_network_seglen - Return length of individual segments of a gso packet
@@ -3016,5 +3069,7 @@ static inline unsigned int skb_gso_network_seglen(const struct sk_buff *skb)
 }
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #endif	/* __KERNEL__ */
 #endif	/* _LINUX_SKBUFF_H */

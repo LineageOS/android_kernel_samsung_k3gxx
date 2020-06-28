@@ -798,28 +798,40 @@ nfs4_fl_prepare_ds(struct pnfs_layout_segment *lseg, u32 ds_idx)
 	struct nfs4_pnfs_ds *ds = dsaddr->ds_list[ds_idx];
 	struct nfs4_deviceid_node *devid = FILELAYOUT_DEVID_NODE(lseg);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct nfs4_pnfs_ds *ret = ds;
 =======
 
 	if (filelayout_test_devid_unavailable(devid))
 		return NULL;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+
+	if (filelayout_test_devid_unavailable(devid))
+		return NULL;
+>>>>>>> master
 
 	if (ds == NULL) {
 		printk(KERN_ERR "NFS: %s: No data server for offset index %d\n",
 			__func__, ds_idx);
 		filelayout_mark_devid_invalid(devid);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto out;
 	}
 	if (ds->ds_clp)
 		goto out_test_devid;
 =======
+=======
+>>>>>>> master
 		return NULL;
 	}
 	if (ds->ds_clp)
 		return ds;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	if (test_and_set_bit(NFS4DS_CONNECTING, &ds->ds_state) == 0) {
 		struct nfs_server *s = NFS_SERVER(lseg->pls_layout->plh_inode);
@@ -827,19 +839,26 @@ nfs4_fl_prepare_ds(struct pnfs_layout_segment *lseg, u32 ds_idx)
 
 		err = nfs4_ds_connect(s, ds);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (err)
 			nfs4_mark_deviceid_unavailable(devid);
 =======
+=======
+>>>>>>> master
 		if (err) {
 			nfs4_mark_deviceid_unavailable(devid);
 			ds = NULL;
 		}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		nfs4_clear_ds_conn_bit(ds);
 	} else {
 		/* Either ds is connected, or ds is NULL */
 		nfs4_wait_ds_connect(ds);
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 out_test_devid:
 	if (ret->ds_clp == NULL ||
@@ -850,6 +869,9 @@ out:
 =======
 	return ds;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	return ds;
+>>>>>>> master
 }
 
 module_param(dataserver_retrans, uint, 0644);

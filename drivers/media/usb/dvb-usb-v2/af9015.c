@@ -398,19 +398,26 @@ error:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define AF9015_EEPROM_SIZE 256
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 /* hash (and dump) eeprom */
 static int af9015_eeprom_hash(struct dvb_usb_device *d)
 {
 	struct af9015_state *state = d_to_priv(d);
 	int ret, i;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	static const unsigned int AF9015_EEPROM_SIZE = 256;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	static const unsigned int AF9015_EEPROM_SIZE = 256;
+>>>>>>> master
 	u8 buf[AF9015_EEPROM_SIZE];
 	struct req_t req = {READ_I2C, AF9015_I2C_EEPROM, 0, 0, 1, 1, NULL};
 

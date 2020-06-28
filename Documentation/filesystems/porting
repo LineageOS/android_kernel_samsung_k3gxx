@@ -446,8 +446,11 @@ object doesn't exist.  It's remote/distributed ones that might care...
 	FS_REVAL_DOT is gone; if you used to have it, add ->d_weak_revalidate()
 in your dentry operations instead.
 <<<<<<< HEAD
+<<<<<<< HEAD
 --
 [mandatory]
 	vfs_readdir() is gone; switch to iterate_dir() instead
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master

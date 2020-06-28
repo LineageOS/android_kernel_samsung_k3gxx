@@ -3,18 +3,24 @@
  *
  * Copyright (c) 2013 Samsung Electronics Co. Ltd
 <<<<<<< HEAD
+<<<<<<< HEAD
  *   Authors: Daeho Jeong, Woojoong Lee, Seunghwan Hyun,
  *               Sunghwan Yun, Sungjong Seo
  *
  * This program has been developed as a stackable file system based on
  * the WrapFS which written by
 =======
+=======
+>>>>>>> master
  *   Authors: Daeho Jeong, Woojoong Lee, Seunghwan Hyun, 
  *               Sunghwan Yun, Sungjong Seo
  *                      
  * This program has been developed as a stackable file system based on
  * the WrapFS which written by 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
  *
  * Copyright (c) 1998-2011 Erez Zadok
  * Copyright (c) 2009     Shrikar Archak
@@ -31,6 +37,7 @@
 static int sdcardfs_fault(struct vm_area_struct *vma, struct vm_fault *vmf)
 {
 	int err;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct file *file;
 	const struct vm_operations_struct *lower_vm_ops;
@@ -73,6 +80,8 @@ static int sdcardfs_page_mkwrite(struct vm_area_struct *vma,
 	err = lower_vm_ops->page_mkwrite(vma, vmf);
 out:
 =======
+=======
+>>>>>>> master
 	struct file *file, *lower_file;
 	const struct vm_operations_struct *lower_vm_ops;
 	struct vm_area_struct lower_vma;
@@ -95,7 +104,10 @@ out:
 	 */
 	lower_vma.vm_file = lower_file;
 	err = lower_vm_ops->fault(&lower_vma, vmf);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return err;
 }
 
@@ -103,6 +115,7 @@ static ssize_t sdcardfs_direct_IO(int rw, struct kiocb *iocb,
 			      const struct iovec *iov, loff_t offset,
 			      unsigned long nr_segs)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/*
 	 * This function should never be called directly.  We need it
@@ -114,6 +127,8 @@ static ssize_t sdcardfs_direct_IO(int rw, struct kiocb *iocb,
 
 const struct address_space_operations sdcardfs_aops = {
 =======
+=======
+>>>>>>> master
 	/* 
 	 * This function returns zero on purpose in order to support direct IO.
 	 * __dentry_open checks a_ops->direct_IO and returns EINVAL if it is null.
@@ -136,16 +151,22 @@ const struct address_space_operations sdcardfs_aops = {
  */
 const struct address_space_operations sdcardfs_aops = {
 	/* empty on purpose */
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	.direct_IO	= sdcardfs_direct_IO,
 };
 
 const struct vm_operations_struct sdcardfs_vm_ops = {
 	.fault		= sdcardfs_fault,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.page_mkwrite	= sdcardfs_page_mkwrite,
 	.open		= sdcardfs_vm_open,
 	.close		= sdcardfs_vm_close,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 };

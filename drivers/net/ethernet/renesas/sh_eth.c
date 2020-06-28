@@ -1162,11 +1162,15 @@ static void sh_eth_ring_format(struct net_device *ndev)
 
 	/* Mark the last entry as wrapping the ring. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (rxdesc)
 		rxdesc->status |= cpu_to_edmac(mdp, RD_RDEL);
 =======
 	rxdesc->status |= cpu_to_edmac(mdp, RD_RDEL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	rxdesc->status |= cpu_to_edmac(mdp, RD_RDEL);
+>>>>>>> master
 
 	memset(mdp->tx_ring, 0, tx_ringsize);
 
@@ -1427,9 +1431,12 @@ static int sh_eth_rx(struct net_device *ndev, u32 intr_status)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		skb = mdp->rx_skbuff[entry];
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		if (desc_status & (RD_RFS1 | RD_RFS2 | RD_RFS3 | RD_RFS4 |
 				   RD_RFS5 | RD_RFS6 | RD_RFS10)) {
 			ndev->stats.rx_errors++;
@@ -1446,18 +1453,26 @@ static int sh_eth_rx(struct net_device *ndev, u32 intr_status)
 			if (desc_status & RD_RFS10)
 				ndev->stats.rx_over_errors++;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		} else	if (skb) {
 =======
 		} else {
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		} else {
+>>>>>>> master
 			if (!mdp->cd->hw_swap)
 				sh_eth_soft_swap(
 					phys_to_virt(ALIGN(rxdesc->addr, 4)),
 					pkt_len + 2);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			skb = mdp->rx_skbuff[entry];
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			skb = mdp->rx_skbuff[entry];
+>>>>>>> master
 			mdp->rx_skbuff[entry] = NULL;
 			if (mdp->cd->rpadir)
 				skb_reserve(skb, NET_IP_ALIGN);

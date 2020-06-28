@@ -64,10 +64,14 @@
 #define CONTROL_RTS	0x10	/* request to send - flow control - host to device */
 #define UART_CTS	0x10	/* clear to send - flow control - device to host */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define UART_RI		0x80	/* ring indicator - modem - device to host */
 =======
 #define UART_RI		0x10	/* ring indicator - modem - device to host */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+#define UART_RI		0x10	/* ring indicator - modem - device to host */
+>>>>>>> master
 #define UART_CD		0x40	/* carrier detect - modem - device to host */
 #define CYP_ERROR	0x08	/* received from input report - device to host */
 /* Note - the below has nothing to do with the "feature report" reset */

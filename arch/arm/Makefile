@@ -56,6 +56,7 @@ endif
 comma = ,
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #
 # The Scalar Replacement of Aggregates (SRA) optimization pass in GCC 4.9 and
 # later may result in code being generated that handles signed short and signed
@@ -66,6 +67,8 @@ KBUILD_CFLAGS	+= $(call cc-option,-fno-ipa-sra)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 # This selects which instruction set is used.
 # Note that GCC does not numerically define an architecture version
 # macro, but instead defines a whole series of macros which makes

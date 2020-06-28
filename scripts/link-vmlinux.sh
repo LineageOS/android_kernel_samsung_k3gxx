@@ -83,10 +83,13 @@ kallsyms()
 	fi
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kallsymopt="${kallsymopt} --page-offset=$CONFIG_PAGE_OFFSET"
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	local aflags="${KBUILD_AFLAGS} ${KBUILD_AFLAGS_KERNEL}               \
 		      ${NOSTDINC_FLAGS} ${LINUXINCLUDE} ${KBUILD_CPPFLAGS}"
 

@@ -391,6 +391,7 @@ static int ext4_alloc_branch(handle_t *handle, struct inode *inode,
 failed:
 	for (; i >= 0; i--) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * We want to ext4_forget() only freshly allocated indirect
 		 * blocks.  Buffer for new_blocks[i-1] is at branch[i].bh and
@@ -401,6 +402,9 @@ failed:
 =======
 		if (i != indirect_blks && branch[i].bh)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if (i != indirect_blks && branch[i].bh)
+>>>>>>> master
 			ext4_forget(handle, 1, inode, branch[i].bh,
 				    branch[i].bh->b_blocknr);
 		ext4_free_blocks(handle, inode, NULL, new_blocks[i],
@@ -582,10 +586,14 @@ int ext4_ind_map_blocks(handle_t *handle, struct inode *inode,
 		EXT4_ERROR_INODE(inode, "Can't allocate blocks for "
 				 "non-extent mapped inodes with bigalloc");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EUCLEAN;
 =======
 		return -ENOSPC;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return -ENOSPC;
+>>>>>>> master
 	}
 
 	goal = ext4_find_goal(inode, map->m_lblk, partial);
@@ -1340,16 +1348,20 @@ static int free_hole_blocks(handle_t *handle, struct inode *inode,
 		if (level > 0) {
 			ext4_lblk_t first2;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ext4_lblk_t count2;
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			bh = sb_bread(inode->i_sb, le32_to_cpu(blk));
 			if (!bh) {
 				EXT4_ERROR_INODE_BLOCK(inode, le32_to_cpu(blk),
 						       "Read failure");
 				return -EIO;
 			}
+<<<<<<< HEAD
 <<<<<<< HEAD
 			if (first > offset) {
 				first2 = first - offset;
@@ -1362,11 +1374,16 @@ static int free_hole_blocks(handle_t *handle, struct inode *inode,
 					       (__le32 *)bh->b_data, level - 1,
 					       first2, count2,
 =======
+=======
+>>>>>>> master
 			first2 = (first > offset) ? first - offset : 0;
 			ret = free_hole_blocks(handle, inode, bh,
 					       (__le32 *)bh->b_data, level - 1,
 					       first2, count - offset,
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 					       inode->i_sb->s_blocksize >> 2);
 			if (ret) {
 				brelse(bh);

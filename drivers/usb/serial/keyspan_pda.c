@@ -698,6 +698,7 @@ MODULE_FIRMWARE("keyspan_pda/xircom_pgs.fw");
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int keyspan_pda_attach(struct usb_serial *serial)
 {
 	unsigned char num_ports = serial->num_ports;
@@ -713,6 +714,8 @@ static int keyspan_pda_attach(struct usb_serial *serial)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int keyspan_pda_port_probe(struct usb_serial_port *port)
 {
 
@@ -791,9 +794,12 @@ static struct usb_serial_driver keyspan_pda_device = {
 	.tiocmget =		keyspan_pda_tiocmget,
 	.tiocmset =		keyspan_pda_tiocmset,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.attach =		keyspan_pda_attach,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	.port_probe =		keyspan_pda_port_probe,
 	.port_remove =		keyspan_pda_port_remove,
 };

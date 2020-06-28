@@ -76,6 +76,7 @@ static unsigned int ipv6_defrag(unsigned int hooknum,
 		return NF_ACCEPT;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nf_ct_frag6_consume_orig(reasm);
 
 	NF_HOOK_THRESH(NFPROTO_IPV6, hooknum, reasm,
@@ -85,6 +86,10 @@ static unsigned int ipv6_defrag(unsigned int hooknum,
 	nf_ct_frag6_output(hooknum, reasm, (struct net_device *)in,
 			   (struct net_device *)out, okfn);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	nf_ct_frag6_output(hooknum, reasm, (struct net_device *)in,
+			   (struct net_device *)out, okfn);
+>>>>>>> master
 
 	return NF_STOLEN;
 }

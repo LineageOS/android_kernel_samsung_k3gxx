@@ -154,10 +154,14 @@ static int snd_open(struct inode *inode, struct file *file)
 	unsigned int minor = iminor(inode);
 	struct snd_minor *mptr = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct file_operations *new_fops;
 =======
 	const struct file_operations *old_fops;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	const struct file_operations *old_fops;
+>>>>>>> master
 	int err = 0;
 
 	if (minor >= ARRAY_SIZE(snd_minors))
@@ -172,6 +176,7 @@ static int snd_open(struct inode *inode, struct file *file)
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	new_fops = fops_get(mptr->f_ops);
 	mutex_unlock(&sound_mutex);
 	if (!new_fops)
@@ -181,6 +186,8 @@ static int snd_open(struct inode *inode, struct file *file)
 	if (file->f_op->open)
 		err = file->f_op->open(inode, file);
 =======
+=======
+>>>>>>> master
 	old_fops = file->f_op;
 	file->f_op = fops_get(mptr->f_ops);
 	if (file->f_op == NULL) {
@@ -199,7 +206,10 @@ static int snd_open(struct inode *inode, struct file *file)
 		}
 	}
 	fops_put(old_fops);
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	return err;
 }
 

@@ -835,11 +835,15 @@ static int choose_rate(struct snd_pcm_substream *substream,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int snd_pcm_oss_change_params(struct snd_pcm_substream *substream,
 				     bool trylock)
 =======
 static int snd_pcm_oss_change_params(struct snd_pcm_substream *substream)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+static int snd_pcm_oss_change_params(struct snd_pcm_substream *substream)
+>>>>>>> master
 {
 	struct snd_pcm_runtime *runtime = substream->runtime;
 	struct snd_pcm_hw_params *params, *sparams;
@@ -854,6 +858,7 @@ static int snd_pcm_oss_change_params(struct snd_pcm_substream *substream)
 	struct snd_mask mask;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (trylock) {
 		if (!(mutex_trylock(&runtime->oss.params_lock)))
 			return -EAGAIN;
@@ -861,6 +866,9 @@ static int snd_pcm_oss_change_params(struct snd_pcm_substream *substream)
 =======
 	if (mutex_lock_interruptible(&runtime->oss.params_lock))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (mutex_lock_interruptible(&runtime->oss.params_lock))
+>>>>>>> master
 		return -EINTR;
 	sw_params = kmalloc(sizeof(*sw_params), GFP_KERNEL);
 	params = kmalloc(sizeof(*params), GFP_KERNEL);
@@ -1104,10 +1112,14 @@ static int snd_pcm_oss_get_active_substream(struct snd_pcm_oss_file *pcm_oss_fil
 			asubstream = substream;
 		if (substream->runtime->oss.params) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			err = snd_pcm_oss_change_params(substream, false);
 =======
 			err = snd_pcm_oss_change_params(substream);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+			err = snd_pcm_oss_change_params(substream);
+>>>>>>> master
 			if (err < 0)
 				return err;
 		}
@@ -1147,10 +1159,14 @@ static int snd_pcm_oss_make_ready(struct snd_pcm_substream *substream)
 	runtime = substream->runtime;
 	if (runtime->oss.params) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		err = snd_pcm_oss_change_params(substream, false);
 =======
 		err = snd_pcm_oss_change_params(substream);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		err = snd_pcm_oss_change_params(substream);
+>>>>>>> master
 		if (err < 0)
 			return err;
 	}
@@ -2189,10 +2205,14 @@ static int snd_pcm_oss_get_space(struct snd_pcm_oss_file *pcm_oss_file, int stre
 
 	if (runtime->oss.params &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    (err = snd_pcm_oss_change_params(substream, false)) < 0)
 =======
 	    (err = snd_pcm_oss_change_params(substream)) < 0)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	    (err = snd_pcm_oss_change_params(substream)) < 0)
+>>>>>>> master
 		return err;
 
 	info.fragsize = runtime->oss.period_bytes;
@@ -2829,6 +2849,7 @@ static int snd_pcm_oss_mmap(struct file *file, struct vm_area_struct *area)
 	
 	if (runtime->oss.params) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* use mutex_trylock() for params_lock for avoiding a deadlock
 		 * between mmap_sem and params_lock taken by
 		 * copy_from/to_user() in snd_pcm_oss_write/read()
@@ -2838,6 +2859,9 @@ static int snd_pcm_oss_mmap(struct file *file, struct vm_area_struct *area)
 =======
 		if ((err = snd_pcm_oss_change_params(substream)) < 0)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		if ((err = snd_pcm_oss_change_params(substream)) < 0)
+>>>>>>> master
 			return err;
 	}
 #ifdef CONFIG_SND_PCM_OSS_PLUGINS

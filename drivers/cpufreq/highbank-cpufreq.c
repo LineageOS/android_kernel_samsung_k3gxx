@@ -67,11 +67,15 @@ static int hb_cpufreq_driver_init(void)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if ((!of_machine_is_compatible("calxeda,highbank")) &&
 		(!of_machine_is_compatible("calxeda,ecx-2000")))
 =======
 	if (!of_machine_is_compatible("calxeda,highbank"))
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	if (!of_machine_is_compatible("calxeda,highbank"))
+>>>>>>> master
 		return -ENODEV;
 
 	for_each_child_of_node(of_find_node_by_path("/cpus"), np)

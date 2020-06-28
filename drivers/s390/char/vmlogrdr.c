@@ -874,10 +874,14 @@ static int __init vmlogrdr_init(void)
 
 	for (i=0; i < MAXMINOR; ++i ) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		sys_ser[i].buffer = (char *) get_zeroed_page(GFP_KERNEL | GFP_DMA);
 =======
 		sys_ser[i].buffer = (char *) get_zeroed_page(GFP_KERNEL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		sys_ser[i].buffer = (char *) get_zeroed_page(GFP_KERNEL);
+>>>>>>> master
 		if (!sys_ser[i].buffer) {
 			rc = -ENOMEM;
 			break;

@@ -86,9 +86,12 @@ struct audit_names {
 	struct filename		*name;
 	int			name_len;	/* number of chars to log */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool			hidden;		/* don't log this record */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	bool			name_put;	/* call __putname()? */
 
 	unsigned long		ino;

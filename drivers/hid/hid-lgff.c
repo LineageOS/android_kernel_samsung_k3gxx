@@ -129,22 +129,31 @@ int lgff_init(struct hid_device* hid)
 {
 	struct hid_input *hidinput = list_entry(hid->inputs.next, struct hid_input, list);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct input_dev *dev = hidinput->input;
 =======
+=======
+>>>>>>> master
 	struct list_head *report_list = &hid->report_enum[HID_OUTPUT_REPORT].report_list;
 	struct input_dev *dev = hidinput->input;
 	struct hid_report *report;
 	struct hid_field *field;
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	const signed short *ff_bits = ff_joystick;
 	int error;
 	int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Check that the report looks ok */
 	if (!hid_validate_values(hid, HID_OUTPUT_REPORT, 0, 0, 7))
 		return -ENODEV;
 =======
+=======
+>>>>>>> master
 	/* Find the report to use */
 	if (list_empty(report_list)) {
 		hid_err(hid, "No output report found\n");
@@ -158,7 +167,10 @@ int lgff_init(struct hid_device* hid)
 		hid_err(hid, "NULL field\n");
 		return -1;
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 	for (i = 0; i < ARRAY_SIZE(devices); i++) {
 		if (dev->id.vendor == devices[i].idVendor &&

@@ -1594,7 +1594,10 @@ static ssize_t btrfs_file_aio_write(struct kiocb *iocb,
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 	 * we want to make sure fsync finds this change
 	 * but we haven't joined a transaction running right now.
 	 *
@@ -1606,15 +1609,22 @@ static ssize_t btrfs_file_aio_write(struct kiocb *iocb,
 	 * or the generation used for the next transaction if there isn't
 	 * one running right now.
 	 *
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	 * We also have to set last_sub_trans to the current log transid,
 	 * otherwise subsequent syncs to a file that's been synced in this
 	 * transaction will appear to have already occured.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	BTRFS_I(inode)->last_trans = root->fs_info->generation + 1;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	BTRFS_I(inode)->last_trans = root->fs_info->generation + 1;
+>>>>>>> master
 	BTRFS_I(inode)->last_sub_trans = root->log_transid;
 	if (num_written > 0 || num_written == -EIOCBQUEUED) {
 		err = generic_write_sync(file, pos, num_written);
@@ -1713,6 +1723,7 @@ int btrfs_sync_file(struct file *file, loff_t start, loff_t end, int datasync)
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * If the last transaction that changed this file was before the current
 	 * transaction and we have the full sync flag set in our inode, we can
 	 * bail out now without any syncing.
@@ -1745,6 +1756,8 @@ int btrfs_sync_file(struct file *file, loff_t start, loff_t end, int datasync)
 	    (full_sync && BTRFS_I(inode)->last_trans <=
 	     root->fs_info->last_trans_committed)) {
 =======
+=======
+>>>>>>> master
 	 * check the transaction that last modified this inode
 	 * and see if its already been committed
 	 */
@@ -1764,7 +1777,10 @@ int btrfs_sync_file(struct file *file, loff_t start, loff_t end, int datasync)
 	    root->fs_info->last_trans_committed) {
 		BTRFS_I(inode)->last_trans = 0;
 
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		/*
 		 * We'v had everything committed since the last time we were
 		 * modified so clear this flag in case it was set for whatever

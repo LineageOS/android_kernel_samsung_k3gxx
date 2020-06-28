@@ -199,9 +199,12 @@ static int blktrans_open(struct block_device *bdev, fmode_t mode)
 		return -ERESTARTSYS; /* FIXME: busy loop! -arnd*/
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_lock(&mtd_table_mutex);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	mutex_lock(&dev->lock);
 
 	if (dev->open)
@@ -228,9 +231,12 @@ unlock:
 	dev->open++;
 	mutex_unlock(&dev->lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_unlock(&mtd_table_mutex);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	blktrans_dev_put(dev);
 	return ret;
 
@@ -242,9 +248,12 @@ error_put:
 	kref_put(&dev->ref, blktrans_dev_release);
 	mutex_unlock(&dev->lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_unlock(&mtd_table_mutex);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	blktrans_dev_put(dev);
 	return ret;
 }
@@ -257,9 +266,12 @@ static void blktrans_release(struct gendisk *disk, fmode_t mode)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_lock(&mtd_table_mutex);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	mutex_lock(&dev->lock);
 
 	if (--dev->open)
@@ -276,9 +288,12 @@ static void blktrans_release(struct gendisk *disk, fmode_t mode)
 unlock:
 	mutex_unlock(&dev->lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_unlock(&mtd_table_mutex);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	blktrans_dev_put(dev);
 }
 

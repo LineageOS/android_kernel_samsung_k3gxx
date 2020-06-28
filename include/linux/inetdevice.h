@@ -262,10 +262,14 @@ static __inline__ __be32 inet_make_mask(int logmask)
 {
 	if (logmask)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return htonl(~((1U<<(32-logmask))-1));
 =======
 		return htonl(~((1<<(32-logmask))-1));
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		return htonl(~((1<<(32-logmask))-1));
+>>>>>>> master
 	return 0;
 }
 

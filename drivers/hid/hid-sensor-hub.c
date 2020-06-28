@@ -328,11 +328,15 @@ int sensor_hub_input_get_attribute_info(struct hid_sensor_hub_device *hsdev,
 				sensor_hub_fill_attr_info(info, i, report->id,
 					field->unit, field->unit_exponent,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					field->report_size *
 							field->report_count);
 =======
 					field->report_size);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+					field->report_size);
+>>>>>>> master
 				ret = 0;
 			} else {
 				for (j = 0; j < field->maxusage; ++j) {
@@ -345,11 +349,15 @@ int sensor_hub_input_get_attribute_info(struct hid_sensor_hub_device *hsdev,
 							field->unit,
 							field->unit_exponent,
 <<<<<<< HEAD
+<<<<<<< HEAD
 							field->report_size *
 							field->report_count);
 =======
 							field->report_size);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+							field->report_size);
+>>>>>>> master
 						ret = 0;
 						break;
 					}
@@ -437,6 +445,7 @@ static int sensor_hub_raw_event(struct hid_device *hdev,
 				i, report->field[i]->usage->collection_index,
 				report->field[i]->usage->hid,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				(report->field[i]->report_size *
 					report->field[i]->report_count)/8);
 		sz = (report->field[i]->report_size *
@@ -446,6 +455,11 @@ static int sensor_hub_raw_event(struct hid_device *hdev,
 
 		sz = report->field[i]->report_size/8;
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				report->field[i]->report_size/8);
+
+		sz = report->field[i]->report_size/8;
+>>>>>>> master
 		if (pdata->pending.status && pdata->pending.attr_usage_id ==
 				report->field[i]->usage->hid) {
 			hid_dbg(hdev, "data was pending ...\n");

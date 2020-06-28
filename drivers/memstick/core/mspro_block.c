@@ -759,10 +759,14 @@ static int mspro_block_complete_req(struct memstick_dev *card, int error)
 		if (error || (card->current_mrq.tpc == MSPRO_CMD_STOP)) {
 			if (msb->data_dir == READ) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				for (cnt = 0; cnt < msb->current_seg; cnt++) {
 =======
 				for (cnt = 0; cnt < msb->current_seg; cnt++)
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+				for (cnt = 0; cnt < msb->current_seg; cnt++)
+>>>>>>> master
 					t_len += msb->req_sg[cnt].length
 						 / msb->page_size;
 
@@ -771,9 +775,12 @@ static int mspro_block_complete_req(struct memstick_dev *card, int error)
 
 					t_len *= msb->page_size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				}
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 			}
 		} else
 			t_len = blk_rq_bytes(msb->block_req);

@@ -1042,9 +1042,12 @@ static int mos7840_open(struct tty_struct *tty, struct usb_serial_port *port)
 	 * were not set up at that time.)                        */
 	if (port0->open_ports == 1) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* FIXME: Buffer never NULL, so URB is not submitted. */
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 		if (serial->port[0]->interrupt_in_buffer == NULL) {
 			/* set up interrupt urb */
 			usb_fill_int_urb(serial->port[0]->interrupt_in_urb,
@@ -1443,12 +1446,17 @@ static int mos7840_write(struct tty_struct *tty, struct usb_serial_port *port,
 
 	if (urb->transfer_buffer == NULL) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		urb->transfer_buffer = kmalloc(URB_TRANSFER_BUFFER_SIZE,
 					       GFP_ATOMIC);
 =======
 		urb->transfer_buffer =
 		    kmalloc(URB_TRANSFER_BUFFER_SIZE, GFP_KERNEL);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+		urb->transfer_buffer =
+		    kmalloc(URB_TRANSFER_BUFFER_SIZE, GFP_KERNEL);
+>>>>>>> master
 
 		if (urb->transfer_buffer == NULL) {
 			dev_err_console(port, "%s no more kernel memory...\n",
@@ -1603,6 +1611,7 @@ static int mos7840_tiocmget(struct tty_struct *tty)
 
 	status = mos7840_get_uart_reg(port, MODEM_STATUS_REGISTER, &msr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (status != 1)
 		return -EIO;
 	status = mos7840_get_uart_reg(port, MODEM_CONTROL_REGISTER, &mcr);
@@ -1611,6 +1620,9 @@ static int mos7840_tiocmget(struct tty_struct *tty)
 =======
 	status = mos7840_get_uart_reg(port, MODEM_CONTROL_REGISTER, &mcr);
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	status = mos7840_get_uart_reg(port, MODEM_CONTROL_REGISTER, &mcr);
+>>>>>>> master
 	result = ((mcr & MCR_DTR) ? TIOCM_DTR : 0)
 	    | ((mcr & MCR_RTS) ? TIOCM_RTS : 0)
 	    | ((mcr & MCR_LOOPBACK) ? TIOCM_LOOP : 0)
@@ -1889,6 +1901,7 @@ static void mos7840_change_port_settings(struct tty_struct *tty,
 
 	/* Change the number of bits */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	switch (cflag & CSIZE) {
 	case CS5:
 		lData = LCR_BITS_5;
@@ -1909,6 +1922,8 @@ static void mos7840_change_port_settings(struct tty_struct *tty,
 	}
 
 =======
+=======
+>>>>>>> master
 	if (cflag & CSIZE) {
 		switch (cflag & CSIZE) {
 		case CS5:
@@ -1928,7 +1943,10 @@ static void mos7840_change_port_settings(struct tty_struct *tty,
 			break;
 		}
 	}
+<<<<<<< HEAD
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/* Change the Parity bit */
 	if (cflag & PARENB) {
 		if (cflag & PARODD) {
@@ -2291,6 +2309,7 @@ static int mos7840_calc_num_ports(struct usb_serial *serial)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int mos7840_attach(struct usb_serial *serial)
 {
 	if (serial->num_bulk_in < serial->num_ports ||
@@ -2305,6 +2324,8 @@ static int mos7840_attach(struct usb_serial *serial)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 static int mos7840_port_probe(struct usb_serial_port *port)
 {
 	struct usb_serial *serial = port->serial;
@@ -2588,9 +2609,12 @@ static struct usb_serial_driver moschip7840_4port_device = {
 	.tiocmiwait = usb_serial_generic_tiocmiwait,
 	.get_icount = usb_serial_generic_get_icount,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.attach = mos7840_attach,
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	.port_probe = mos7840_port_probe,
 	.port_remove = mos7840_port_remove,
 	.read_bulk_callback = mos7840_bulk_in_callback,

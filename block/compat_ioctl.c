@@ -690,9 +690,12 @@ long compat_blkdev_ioctl(struct file *file, unsigned cmd, unsigned long arg)
 	case BLKDISCARD:
 	case BLKSECDISCARD:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case BLKZEROOUT:
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 	/*
 	 * the ones below are implemented in blkdev_locked_ioctl,
 	 * but we call blkdev_ioctl, which gets the lock for us

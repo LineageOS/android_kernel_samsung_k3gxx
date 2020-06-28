@@ -291,9 +291,12 @@ extern int sysctl_tcp_early_retrans;
 extern int sysctl_tcp_limit_output_bytes;
 extern int sysctl_tcp_challenge_ack_limit;
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern int sysctl_tcp_min_tso_segs;
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 extern int sysctl_tcp_default_init_rwnd;
 
 extern atomic_long_t tcp_memory_allocated;
@@ -479,9 +482,12 @@ extern const u8 *tcp_parse_md5sig_option(const struct tcphdr *th);
 
 extern void tcp_v4_send_check(struct sock *sk, struct sk_buff *skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void tcp_v4_mtu_reduced(struct sock *sk);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 extern int tcp_v4_conn_request(struct sock *sk, struct sk_buff *skb);
 extern struct sock * tcp_create_openreq_child(struct sock *sk,
 					      struct request_sock *req,
@@ -1051,9 +1057,12 @@ static inline void tcp_prequeue_init(struct tcp_sock *tp)
 
 extern bool tcp_prequeue(struct sock *sk, struct sk_buff *skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int tcp_filter(struct sock *sk, struct sk_buff *skb);
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 
 #undef STATE_TRACE
 
@@ -1335,11 +1344,15 @@ struct tcp_fastopen_request {
 	struct tcp_fastopen_cookie	cookie;
 	struct msghdr			*data;  /* data in MSG_FASTOPEN */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	size_t				size;
 	int				copied;	/* queued in tcp_connect() */
 =======
 	u16				copied;	/* queued in tcp_connect() */
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+	u16				copied;	/* queued in tcp_connect() */
+>>>>>>> master
 };
 void tcp_free_fastopen_req(struct tcp_sock *tp);
 
@@ -1623,6 +1636,7 @@ extern void tcp_v4_init(void);
 extern void tcp_init(void);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* At how many jiffies into the future should the RTO fire? */
 static inline s32 tcp_rto_delta(const struct sock *sk)
 {
@@ -1635,4 +1649,6 @@ static inline s32 tcp_rto_delta(const struct sock *sk)
 
 =======
 >>>>>>> 671a46baf1b... some performance improvements
+=======
+>>>>>>> master
 #endif	/* _TCP_H */
